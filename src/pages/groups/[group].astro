@@ -1,0 +1,405 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import fs from 'node:fs';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+    let groups: any[] = [];
+    let malpediaActors: Record<string, any> = {};
+
+    // Read groups from pre-fetched local file (created by npm run sync:ransom)
+    const groupsPath = path.resolve('./src/data/remote/groups.json');
+    try {
+        if (fs.existsSync(groupsPath)) {
+            groups = JSON.parse(fs.readFileSync(groupsPath, 'utf8')) || [];
+        } else {
+            console.error("groups.json not found — run 'npm run sync:data' before building.");
+        }
+    } catch (error) {
+        console.error("Error reading groups.json:", error);
+    }
+
+    // Read Malpedia actors from pre-fetched local file (created by npm run sync:ransom)
+    const malpediaPath = path.resolve('./src/data/remote/malpedia_actors.json');
+    try {
+        if (fs.existsSync(malpediaPath)) {
+            malpediaActors = JSON.parse(fs.readFileSync(malpediaPath, 'utf8')) || {};
+        } else {
+            console.warn("malpedia_actors.json not found — Malpedia enrichment will be skipped.");
+        }
+    } catch (error) {
+        console.error("Error reading malpedia_actors.json:", error);
+    }
+
+    const malpediaLookup = new Map();
+    for (const [key, value] of Object.entries(malpediaActors)) {
+        const normalizedKey = key.toLowerCase().replace(/[\s-]/g, "");
+        malpediaLookup.set(normalizedKey, value);
+    }
+
+    return groups.map((g: any) => {
+        const normalizedGroup = g.name.toLowerCase().replace(/[\s-]/g, "");
+        let matchedActor = malpediaLookup.get(normalizedGroup) || null;
+
+        if (!matchedActor) {
+            for (const [mKey, mVal] of malpediaLookup.entries()) {
+                if (
+                    mKey.includes(normalizedGroup) ||
+                    normalizedGroup.includes(mKey)
+                ) {
+                    matchedActor = mVal;
+                    break;
+                }
+            }
+        }
+
+        return {
+            params: { group: g.name },
+            props: { malpediaActor: matchedActor },
+        };
+    });
+}
+
+const { group } = Astro.params;
+const { malpediaActor } = Astro.props;
+
+// Read group profile from pre-fetched local file (created by npm run sync:ransom)
+let profile: any = null;
+try {
+    const profilePath = path.resolve(`./src/data/remote/profiles/${encodeURIComponent(group as string)}.json`);
+    if (fs.existsSync(profilePath)) {
+        const profileData = fs.readFileSync(profilePath, 'utf8');
+        const data = JSON.parse(profileData);
+        profile = Array.isArray(data) ? data[0] : data;
+    } else {
+        console.warn(`Profile for ${group} not found locally. Run 'npm run sync:data' to fetch it.`);
+    }
+} catch (error) {
+    console.error(`Error reading profile for ${group}:`, error);
+}
+
+const paragraphs =
+    profile && profile.description
+        ? profile.description
+              .split("<BR>")
+              .map((p: string) => p.trim())
+              .filter((p: string) => p.length > 0)
+        : [];
+const locations = profile && profile.locations ? profile.locations : [];
+const tools =
+    profile && profile.tools && profile.tools.length > 0
+        ? profile.tools[0]
+        : {};
+const ttps = profile && profile.ttps ? profile.ttps : [];
+
+const malpediaDescription = malpediaActor?.description || null;
+const malpediaCountry = malpediaActor?.meta?.country || null;
+const malpediaRefs = malpediaActor?.meta?.refs || [];
+const malpediaName = malpediaActor?.value || null;
+---
+
+<Layout
+    title={`${group} - APT Profile - Crash0v3rr1d3`}
+    description={`Threat intelligence profile for ${group}`}
+>
+    <main
+        class="w-full max-w-5xl mx-auto flex flex-col justify-start items-start gap-8 px-4 sm:px-0"
+    >
+        <div class="flex flex-col gap-4 w-full">
+            <a
+                href="/groups"
+                class="text-sm text-neutral-500 hover:text-white transition-colors duration-300 mb-4 inline-block"
+            >
+                ← Back to Threat Actors
+            </a>
+
+            <div class="flex items-center gap-4 flex-wrap">
+                <h1
+                    class="font-bold text-4xl text-white glitch-hover"
+                    data-text={group}
+                >
+                    {group}
+                </h1>
+                {
+                    profile?.meta && (
+                        <span class="text-yellow-500 text-xs bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20 uppercase tracking-widest font-bold shadow-[0_0_5px_rgba(234,179,8,0.1)]">
+                            {profile.meta}
+                        </span>
+                    )
+                }
+                {
+                    malpediaCountry && (
+                        <span
+                            class="text-blue-500 text-xs bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20 tracking-widest font-bold shadow-[0_0_5px_rgba(59,130,246,0.1)]"
+                            title="Origin Country"
+                        >
+                            🌐 {malpediaCountry}
+                        </span>
+                    )
+                }
+            </div>
+        </div>
+
+        {
+            !profile && !malpediaActor ? (
+                <p class="text-red-500 font-mono animate-pulse">
+                    &gt;_ Profile data unavailable or offline.
+                </p>
+            ) : (
+                <div class="flex flex-col gap-8 w-full">
+                    {malpediaActor && (
+                        <div class="bg-black/50 border border-neutral-800 rounded-lg p-6 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-2 opacity-10">
+                                <span class="text-6xl font-mono text-white select-none">
+                                    M
+                                </span>
+                            </div>
+                            <h2 class="text-xl font-bold text-blue-500 mb-4 flex items-center gap-2 relative z-10">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                    <polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+                                    <polyline points="7.5 19.79 7.5 14.6 3 12" />
+                                    <polyline points="21 12 16.5 14.6 16.5 19.79" />
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                                </svg>
+                                Malpedia Intelligence
+                                {malpediaName && ` (${malpediaName})`}
+                            </h2>
+
+                            {malpediaDescription && (
+                                <p class="text-neutral-300 text-sm leading-relaxed text-justify relative z-10 mb-6 border-l-2 border-blue-500/50 pl-4 py-1 bg-gradient-to-r from-blue-500/5 to-transparent">
+                                    {malpediaDescription}
+                                </p>
+                            )}
+
+                            {malpediaRefs.length > 0 && (
+                                <div class="relative z-10">
+                                    <h3 class="text-xs uppercase tracking-widest text-neutral-500 mb-3 font-mono">
+                                        External References
+                                    </h3>
+                                    <ul class="flex flex-col gap-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                                        {malpediaRefs.map((ref: string) => (
+                                            <li class="flex items-start gap-2 group">
+                                                <span class="text-blue-500 mt-1 opacity-50 group-hover:opacity-100 transition-opacity">
+                                                    ↳
+                                                </span>
+                                                <a
+                                                    href={ref}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="text-xs text-neutral-400 font-mono hover:text-blue-400 transition-colors break-all underline decoration-neutral-700 decoration-1 underline-offset-4 group-hover:decoration-blue-400"
+                                                >
+                                                    {ref}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {paragraphs.length > 0 && (
+                        <div class="bg-black/50 border border-neutral-800 rounded-lg p-6">
+                            <h2 class="text-xl font-bold text-red-500 mb-4 flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" y1="16" x2="12" y2="12" />
+                                    <line x1="12" y1="8" x2="12.01" y2="8" />
+                                </svg>
+                                Ransomware Live Summary
+                            </h2>
+                            <div class="flex flex-col gap-4 text-neutral-300 text-sm leading-relaxed text-justify">
+                                {paragraphs.map((p: string) => {
+                                    if (p.startsWith("Source :")) {
+                                        const parts = p.split("Source :");
+                                        return (
+                                            <p class="text-xs text-neutral-500 mt-2 border-t border-neutral-800 pt-2">
+                                                Source: {parts[1]}
+                                            </p>
+                                        );
+                                    }
+                                    return <p>{p}</p>;
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {Object.keys(tools).length > 0 && (
+                        <div class="bg-black/50 border border-neutral-800 rounded-lg p-6">
+                            <h2 class="text-xl font-bold text-red-500 mb-4 flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                </svg>
+                                Associated Toolkit
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                {Object.entries(tools).map(
+                                    ([category, items]) => {
+                                        const toolItems = items as string[];
+                                        if (toolItems.length === 0) return null;
+                                        return (
+                                            <div class="flex flex-col gap-2">
+                                                <span class="text-neutral-400 font-mono text-xs uppercase tracking-wider">
+                                                    {category
+                                                        .replace(
+                                                            /([A-Z])/g,
+                                                            " $1"
+                                                        )
+                                                        .trim()}
+                                                </span>
+                                                <div class="flex flex-wrap gap-2">
+                                                    {toolItems.map((t) => (
+                                                        <span class="bg-neutral-900 border border-neutral-700 text-neutral-300 px-2 py-0.5 rounded text-xs">
+                                                            {t}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {ttps.length > 0 && (
+                        <div class="bg-black/50 border border-neutral-800 rounded-lg p-6">
+                            <h2 class="text-xl font-bold text-red-500 mb-4 flex items-center gap-2">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                                MITRE ATT&CK Matrix
+                            </h2>
+                            <div class="flex flex-col gap-4">
+                                {ttps.map((tactic: any) => (
+                                    <div class="bg-neutral-900/50 border border-neutral-800 p-3 rounded flex flex-col gap-2">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-red-400 font-mono text-xs font-bold w-16">
+                                                {tactic.tactic_id}
+                                            </span>
+                                            <span class="text-white text-sm uppercase tracking-wide">
+                                                {tactic.tactic_name}
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-col gap-1 pl-18">
+                                            {tactic.techniques.map(
+                                                (tech: any) => (
+                                                    <div class="flex items-center gap-2 text-xs">
+                                                        <span class="text-neutral-500 font-mono w-20">
+                                                            {tech.technique_id}
+                                                        </span>
+                                                        <span class="text-neutral-300">
+                                                            {
+                                                                tech.technique_name
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    <div class="bg-black/50 border border-neutral-800 rounded-lg p-6">
+                        <h2 class="text-xl font-bold text-red-500 mb-4 flex items-center gap-2">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="2" y1="12" x2="22" y2="12" />
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            </svg>
+                            Network Endpoints
+                        </h2>
+                        {locations.length > 0 ? (
+                            <ul class="flex flex-col gap-3">
+                                {locations.map((loc: any) => (
+                                    <li class="flex flex-col gap-1 border-b border-neutral-800/50 pb-3 last:border-0 last:pb-0">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class={`w-2 h-2 rounded-full flex-shrink-0 ${
+                                                    loc.available
+                                                        ? "bg-green-500 shadow-[0_0_5px_#22c55e]"
+                                                        : "bg-red-500 shadow-[0_0_5px_#ef4444]"
+                                                }`}
+                                            />
+                                            <span class="text-neutral-300 text-xs font-mono break-all">
+                                                {loc.title || "Unknown"}
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-col gap-0.5 pl-4 text-[10px] text-neutral-500 font-mono">
+                                            <p>FQDN: {loc.fqdn}</p>
+                                            <p>Type: {loc.type}</p>
+                                            <p>
+                                                Updated:{" "}
+                                                {loc.updated
+                                                    ? loc.updated.split(" ")[0]
+                                                    : "N/A"}
+                                            </p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p class="text-neutral-500 text-sm italic">
+                                No known active endpoints tracked.
+                            </p>
+                        )}
+                    </div>
+                </div>
+            )
+        }
+    </main>
+</Layout>

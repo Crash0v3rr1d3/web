@@ -1,0 +1,172 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import feedsData from "@/data/cert-feeds.json";
+import fs from 'node:fs';
+import path from 'node:path';
+
+let certsData: any[] = [];
+try {
+  const p = path.resolve('./src/data/remote/certs.json');
+  if (fs.existsSync(p)) certsData = JSON.parse(fs.readFileSync(p, 'utf8'));
+  else console.warn("certs.json not found — run 'npm run sync:data' before building.");
+} catch (e) { console.error("Error reading certs.json:", e); }
+
+// Sort by date descending
+const certs = certsData.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+
+// Get unique regions and cert names for filters
+const regions = [...new Set(feedsData.map(f => f.region))].sort();
+const certNames = [...new Set(feedsData.map(f => f.name))].sort();
+---
+
+<Layout 
+  title="CERT Intel - Global Alerts - Crash0v3rr1d3"
+  description="Consolidated feed of global CERT alerts and security notifications."
+>
+  <main class="w-full max-w-6xl mx-auto px-4 py-12">
+    <div class="flex flex-col gap-8">
+      <!-- Header -->
+      <div class="flex flex-col gap-4 border-l-4 border-green-500 pl-6 py-2">
+        <h1 class="text-5xl font-extrabold text-white tracking-tighter font-['Iceland']">
+          CERT INTEL <span class="text-green-500">//</span> GLOBAL ALERTS
+        </h1>
+        <p class="text-neutral-500 font-mono text-sm max-w-2xl uppercase tracking-widest">
+            Aggregated intelligence from national and international CERT organizations.
+        </p>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-neutral-900/30 p-6 rounded-lg border border-neutral-800">
+        <div class="md:col-span-2">
+          <label for="cert-search" class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono">Search Alerts</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="cert-search" 
+              placeholder="Search by keywords..." 
+              class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-green-500/50 transition-all pl-10"
+            />
+            <svg class="absolute left-3 top-3.5 text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+        </div>
+        <div>
+          <label for="region-filter" class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono">Region/Country</label>
+          <select id="region-filter" class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-green-500/50 transition-all appearance-none cursor-pointer">
+            <option value="all">All Regions</option>
+            {regions.map(region => (
+              <option value={region}>{region}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label for="cert-filter" class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono">Specific CERT</label>
+          <select id="cert-filter" class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-green-500/50 transition-all appearance-none cursor-pointer">
+            <option value="all">All CERTs</option>
+            {certNames.map(name => (
+              <option value={name}>{name}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <!-- Content Table -->
+      <div class="overflow-x-auto border border-neutral-800 rounded-lg">
+        <table class="w-full text-left border-collapse" id="cert-table">
+          <thead>
+            <tr class="bg-neutral-900/80 text-neutral-500 text-[10px] uppercase tracking-widest font-mono border-b border-neutral-800">
+              <th class="px-6 py-4 font-semibold">Date</th>
+              <th class="px-6 py-4 font-semibold">Source</th>
+              <th class="px-6 py-4 font-semibold">Alert Title</th>
+              <th class="px-6 py-4 font-semibold text-right">View</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-900" id="cert-tbody">
+            {certs.map((item) => (
+              <tr class="cert-row group hover:bg-green-500/[0.02] transition-colors" 
+                  data-cert={item.cert} 
+                  data-region={item.region} 
+                  data-title={item.title.toLowerCase()}
+                  data-snippet={item.contentSnippet.toLowerCase()}>
+                <td class="px-6 py-5">
+                  <span class="text-neutral-500 font-mono text-[10px]">{new Date(item.pubDate).toLocaleDateString()}</span>
+                </td>
+                <td class="px-6 py-5">
+                  <div class="flex flex-col">
+                    <span class="text-green-500 font-mono text-xs font-bold">{item.cert}</span>
+                    <span class="text-[10px] text-neutral-600 font-mono uppercase tracking-tighter">{item.region}</span>
+                  </div>
+                </td>
+                <td class="px-6 py-5">
+                  <p class="text-neutral-300 text-sm group-hover:text-white transition-colors leading-relaxed line-clamp-2">
+                    {item.title}
+                  </p>
+                </td>
+                <td class="px-6 py-5 text-right">
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-500 hover:text-white hover:border-green-500/50 hover:bg-green-500/10 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        
+        <div id="no-results" class="hidden py-20 text-center flex-col items-center gap-4">
+           <svg class="text-neutral-800" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+           <p class="text-neutral-600 font-mono uppercase tracking-widest text-xs">No matching CERT alerts found</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  // Security Note: Input is checked against dataset which is already rendered. 
+  // No execution of user input. OWASP Top 10: XSS prevention via safe DOM properties.
+  const searchInput = document.getElementById('cert-search') as HTMLInputElement;
+  const regionFilter = document.getElementById('region-filter') as HTMLSelectElement;
+  const certFilter = document.getElementById('cert-filter') as HTMLSelectElement;
+  const rows = document.querySelectorAll('.cert-row') as NodeListOf<HTMLElement>;
+  const noResults = document.getElementById('no-results');
+
+  function updateDisplay() {
+    const query = searchInput.value.toLowerCase().trim();
+    const region = regionFilter.value;
+    const cert = certFilter.value;
+    
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const rowCert = row.dataset.cert || '';
+      const rowRegion = row.dataset.region || '';
+      const rowTitle = row.dataset.title || '';
+      const rowSnippet = row.dataset.snippet || '';
+      
+      const matchesSearch = !query || rowTitle.includes(query) || rowSnippet.includes(query);
+      const matchesRegion = region === 'all' || rowRegion === region;
+      const matchesCert = cert === 'all' || rowCert === cert;
+      
+      if (matchesSearch && matchesRegion && matchesCert) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    if (noResults) {
+      noResults.classList.toggle('hidden', visibleCount > 0);
+      noResults.classList.toggle('flex', visibleCount === 0);
+    }
+  }
+
+  searchInput?.addEventListener('input', updateDisplay);
+  regionFilter?.addEventListener('change', updateDisplay);
+  certFilter?.addEventListener('change', updateDisplay);
+</script>
+
+<style>
+    .cert-row:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.02);
+    }
+</style>

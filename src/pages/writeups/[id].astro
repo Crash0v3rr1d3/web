@@ -53,7 +53,7 @@ const isSubpost = !!entry.data.tableOfContents;
 const currentEntryId = Astro.params.id;
 
 // Get all subposts
-const visibleWriteups = allWriteups.filter((post) => !entry.data.draft);
+const visibleWriteups = allWriteups.filter((post) => !post.data.draft);
 const stripCodeBlocks = (text: string) => text.replace(/```[\s\S]*?```/g, "");
 const totalBody = [entry.body!].map(stripCodeBlocks).join("");
 const readTime = readingTime(totalBody);
@@ -136,7 +136,7 @@ const { Content, headings } = await render(entry);
               {entry.data.tags?.length ? (
                 entry.data.tags.map((tag: string) => (
                   <a
-                    href={`/tags/${tag}`}
+                    href="#"
                     class={badgeVariants({ variant: "secondary" })}
                   >
                     <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />

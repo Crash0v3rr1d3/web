@@ -1,0 +1,154 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { formatDate } from "@/lib/helpers";
+import fs from 'node:fs';
+import path from 'node:path';
+
+let allVictims: any[] = [];
+try {
+  const p = path.resolve('./src/data/remote/all_victims.json');
+  if (fs.existsSync(p)) allVictims = JSON.parse(fs.readFileSync(p, 'utf8'));
+  else console.warn("all_victims.json not found — run 'npm run sync:data' before building.");
+} catch (e) { console.error("Error reading all_victims.json:", e); }
+
+// We'll pass the data to the client-side for searching/filtering
+---
+
+<Layout title="Ransom Live - Victim Search - Crash0v3rr1d3" description="Search and filter ransomware victims tracked by Ransomware.live">
+  <main class="w-full max-w-6xl mx-auto px-4 py-8">
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <a href="/" class="text-sm text-neutral-500 hover:text-white transition-colors duration-300 w-fit">
+          ← Back to Dashboard
+        </a>
+        <h1 class="text-4xl font-bold text-white font-['Iceland']">Ransom Live Radar</h1>
+        <p class="text-neutral-400 text-sm">Real-time tracking of ransomware victim announcements.</p>
+        <p class="text-[10px] text-neutral-600 mt-2 p-3 bg-neutral-900/50 rounded border border-neutral-800 italic">
+          <strong>Legal Disclaimer:</strong> This site does not engage in the acquisition, exfiltration, downloading, possession, hosting, access, consultation, redistribution, or disclosure of unlawfully obtained data. This platform indexes only publicly visible information posted by ransomware operators and open web sources without accessing or obtaining the underlying stolen content. The service is provided to support public awareness, legitimate research, and cyber-resilience. No stolen personal or confidential data is collected or distributed via this site. 
+          <span class="text-neutral-400 block mt-1">Please reach out to <a href="mailto:crash0v3rr1d3@icloud.com" class="underline hover:text-white transition-colors">crash0v3rr1d3@icloud.com</a> to get your entry removed.</span>
+        </p>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-neutral-900/50 p-4 rounded-lg border border-neutral-800">
+        <div class="flex flex-col gap-1">
+          <label for="search" class="text-xs text-neutral-500 uppercase font-mono">Search Victim</label>
+          <input 
+            type="text" 
+            id="search" 
+            placeholder="Search company name..." 
+            class="bg-black border border-neutral-700 p-2 rounded text-sm focus:border-red-500 outline-none transition-colors"
+          />
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="group-filter" class="text-xs text-neutral-500 uppercase font-mono">Filter by Group</label>
+          <select id="group-filter" class="bg-black border border-neutral-700 p-2 rounded text-sm focus:border-red-500 outline-none transition-colors">
+            <option value="">All Groups</option>
+            {Array.from(new Set(allVictims.map(v => v.group))).sort().map(group => (
+              <option value={group}>{group}</option>
+            ))}
+          </select>
+        </div>
+        <div class="flex flex-col gap-1 justify-end">
+            <div class="text-[10px] text-neutral-600 font-mono text-right">
+                Total Entries: <span id="total-count">{allVictims.length}</span>
+            </div>
+        </div>
+      </div>
+
+      <!-- Victim Table -->
+      <div class="overflow-x-auto border border-neutral-800 rounded-lg">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-neutral-900 text-neutral-500 text-xs uppercase font-mono">
+              <th class="p-4 font-normal">Victim</th>
+              <th class="p-4 font-normal">Ransomware Group</th>
+              <th class="p-4 font-normal">Date Discovered</th>
+              <th class="p-4 font-normal text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="victim-table-body" class="text-sm">
+            <!-- Table rows will be inserted here by script -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div id="no-results" class="hidden text-center py-12 text-neutral-500 font-mono italic">
+        No victims found matching those criteria.
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script define:vars={{ victims: allVictims }}>
+  const searchInput = document.getElementById('search');
+  const groupFilter = document.getElementById('group-filter');
+  const tableBody = document.getElementById('victim-table-body');
+  const totalCount = document.getElementById('total-count');
+  const noResults = document.getElementById('no-results');
+
+  function renderTable(filteredData) {
+    if (filteredData.length === 0) {
+      tableBody.innerHTML = '';
+      noResults.classList.remove('hidden');
+      totalCount.textContent = '0';
+      return;
+    }
+    
+    noResults.classList.add('hidden');
+    totalCount.textContent = filteredData.length;
+    
+    tableBody.innerHTML = filteredData.slice(0, 100).map(v => `
+      <tr class="border-t border-neutral-800 hover:bg-neutral-800/30 transition-colors group">
+        <td class="p-4 text-white font-medium font-['Iceland'] text-lg">${v.victim}</td>
+        <td class="p-4">
+          <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded font-mono uppercase">
+            ${v.group}
+          </span>
+        </td>
+        <td class="p-4 text-neutral-400 text-xs">${v.discovered ? v.discovered.split(' ')[0] : 'N/A'}</td>
+        <td class="p-4 text-right">
+          <a href="/ransomlive/victim/${encodeURIComponent(v.victim)}" class="text-xs text-neutral-500 hover:text-white border border-neutral-700 hover:border-white px-3 py-1 rounded transition-all">
+            View Intel
+          </a>
+        </td>
+      </tr>
+    `).join('');
+
+    if (filteredData.length > 100) {
+        const moreRow = document.createElement('tr');
+        moreRow.className = "border-t border-neutral-800";
+        moreRow.innerHTML = `
+            <td colspan="4" class="p-4 text-center text-neutral-600 text-[10px] italic">
+                Showing top 100 of ${filteredData.length} matches. Refine your search for more.
+            </td>
+        `;
+        tableBody.appendChild(moreRow);
+    }
+  }
+
+  function filterData() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedGroup = groupFilter.value;
+
+    const filtered = victims.filter(v => {
+      const matchSearch = v.victim.toLowerCase().includes(searchTerm);
+      const matchGroup = selectedGroup === '' || v.group === selectedGroup;
+      return matchSearch && matchGroup;
+    });
+
+    renderTable(filtered);
+  }
+
+  searchInput.addEventListener('input', filterData);
+  groupFilter.addEventListener('change', filterData);
+
+  // Initial render
+  renderTable(victims);
+</script>
+
+<style>
+  table th {
+    border-bottom: 1px solid #262626;
+  }
+</style>

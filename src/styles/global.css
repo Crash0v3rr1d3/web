@@ -94,8 +94,9 @@
     @apply !transition-none;
   }
 
-
-
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Iceland', cursive;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -117,36 +118,36 @@
       }
     }
 
-     pre::-webkit-scrollbar {
-        @apply h-2.5 w-2.5;
-      }
+    pre::-webkit-scrollbar {
+      @apply h-2.5 w-2.5;
+    }
 
-      pre::-webkit-scrollbar-track {
-        @apply bg-transparent;
-      }
+    pre::-webkit-scrollbar-track {
+      @apply bg-transparent;
+    }
 
-      pre::-webkit-scrollbar-thumb {
-        @apply rounded-full bg-border bg-clip-padding p-px;
-      }
+    pre::-webkit-scrollbar-thumb {
+      @apply rounded-full bg-border bg-clip-padding p-px;
+    }
 
     pre {
       @apply static max-h-[600px] overflow-auto rounded-xl border bg-secondary/20 py-4 text-sm leading-loose;
 
       /* Code block content */
-      > code {
+      >code {
         @apply whitespace-pre-wrap;
         counter-reset: step;
         counter-increment: step 0;
 
         /* For code blocks with line numbers */
         .line::before {
-            content: counter(step);
-            counter-increment: step;
-            width: 1rem;
-            margin-right: 1.5rem;
-            display: inline-block;
-            text-align: right;
-            color: rgba(115,138,148,.4);
+          content: counter(step);
+          counter-increment: step;
+          width: 1rem;
+          margin-right: 1.5rem;
+          display: inline-block;
+          text-align: right;
+          color: rgba(115, 138, 148, .4);
         }
 
         /* For each line in the code block */
@@ -225,3 +226,190 @@ code .line::before {
   text-align: right;
   color: rgba(115,138,148,.4)
 } */
+
+/* Hacker Enhancements */
+.glitch-hover {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-hover:hover {
+  animation: glitch-anim-1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  color: var(--primary);
+}
+
+.glitch-hover:hover::before,
+.glitch-hover:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  opacity: 0.8;
+}
+
+.glitch-hover:hover::before {
+  left: 2px;
+  text-shadow: -1px 0 red;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim-2 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite alternate;
+}
+
+.glitch-hover:hover::after {
+  left: -2px;
+  text-shadow: -1px 0 blue;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim-3 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite alternate;
+}
+
+@keyframes glitch-anim-1 {
+  0% {
+    transform: translate(0)
+  }
+
+  20% {
+    transform: translate(-2px, 2px)
+  }
+
+  40% {
+    transform: translate(-2px, -2px)
+  }
+
+  60% {
+    transform: translate(2px, 2px)
+  }
+
+  80% {
+    transform: translate(2px, -2px)
+  }
+
+  100% {
+    transform: translate(0)
+  }
+}
+
+/* Animated CRT Noise Effect using a real noise image */
+.noise-bg::before {
+  content: "";
+  position: fixed;
+  /* using fixed instead of absolute so it stays on screen without expanding body size */
+  inset: -200%;
+  opacity: 0.08;
+  background-image: url('/noise.bmp');
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 9999;
+  animation: shift 0.2s linear infinite both;
+}
+
+@keyframes shift {
+  0% {
+    transform: translateX(10%) translateY(10%);
+  }
+
+  100% {
+    transform: translateX(-10%) translateY(-10%);
+  }
+}
+
+
+
+@keyframes static-noise {
+  0% {
+    transform: translate(0, 0)
+  }
+
+  10% {
+    transform: translate(-1%, -1%)
+  }
+
+  20% {
+    transform: translate(-2%, 1%)
+  }
+
+  30% {
+    transform: translate(1%, -2%)
+  }
+
+  40% {
+    transform: translate(-1%, 3%)
+  }
+
+  50% {
+    transform: translate(-2%, 1%)
+  }
+
+  60% {
+    transform: translate(3%, 0)
+  }
+
+  70% {
+    transform: translate(0, 3%)
+  }
+
+  80% {
+    transform: translate(1%, 7%)
+  }
+
+  90% {
+    transform: translate(-2%, 2%)
+  }
+
+  100% {
+    transform: translate(0, 0)
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(25px, 9999px, 94px, 0)
+  }
+
+  20% {
+    clip: rect(6px, 9999px, 83px, 0)
+  }
+
+  40% {
+    clip: rect(98px, 9999px, 5px, 0)
+  }
+
+  60% {
+    clip: rect(80px, 9999px, 59px, 0)
+  }
+
+  80% {
+    clip: rect(38px, 9999px, 49px, 0)
+  }
+
+  100% {
+    clip: rect(42px, 9999px, 46px, 0)
+  }
+}
+
+@keyframes glitch-anim-3 {
+  0% {
+    clip: rect(35px, 9999px, 84px, 0)
+  }
+
+  20% {
+    clip: rect(18px, 9999px, 7px, 0)
+  }
+
+  40% {
+    clip: rect(69px, 9999px, 12px, 0)
+  }
+
+  60% {
+    clip: rect(10px, 9999px, 2px, 0)
+  }
+
+  80% {
+    clip: rect(96px, 9999px, 26px, 0)
+  }
+
+  100% {
+    clip: rect(72px, 9999px, 78px, 0)
+  }
+}

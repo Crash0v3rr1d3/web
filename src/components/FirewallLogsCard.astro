@@ -1,0 +1,101 @@
+---
+import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Card
+    colSpan="md:col-span-1 lg:col-span-1"
+    rowSpan="md:row-span-3"
+    title="Firewall Logs"
+>
+    <div class="h-full w-full flex flex-col pt-2">
+        <div class="flex items-center gap-2 mb-2">
+            <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+            <span class="text-xs text-red-500 font-mono tracking-wider"
+                >Honeypot Active</span
+            >
+        </div>
+
+        <div
+            id="honeypot-logs"
+            class="flex-1 overflow-hidden font-mono text-[10px] space-y-1 relative mask-image-bottom"
+        >
+            <!-- Logs will be inserted here by JS -->
+            <div class="text-neutral-500">Initializing honeypot...</div>
+        </div>
+    </div>
+</Card>
+
+<style>
+    .mask-image-bottom {
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 50%,
+            transparent 100%
+        );
+    }
+</style>
+
+<script>
+    const ports = [22, 23, 80, 443, 3389, 21, 53, 23, 445];
+    const paths = [
+        "/wp-admin",
+        "/.env",
+        "/api/v1/users",
+        "/login.php",
+        "/etc/passwd",
+        "root:root",
+    ];
+    const protocols = ["TCP", "UDP", "SSH", "HTTP", "RDP", "FTP"];
+
+    function generateIP() {
+        return `${Math.floor(Math.random() * 255)}.${Math.floor(
+            Math.random() * 255
+        )}.${Math.floor(Math.random() * 255)}.${Math.floor(
+            Math.random() * 255
+        )}`;
+    }
+
+    function generateLog() {
+        const ip = generateIP();
+        const port = ports[Math.floor(Math.random() * ports.length)];
+        const proto = protocols[Math.floor(Math.random() * protocols.length)];
+        const path = paths[Math.floor(Math.random() * paths.length)];
+
+        // 80% DROP, 20% BLOCK for variety
+        const action = Math.random() > 0.2 ? "[DROP]" : "[BLOCK]";
+        const colorClass =
+            action === "[DROP]" ? "text-yellow-500" : "text-red-500";
+
+        return `<span class="${colorClass}">${action}</span> ${proto} ${ip}:${port} <span class="text-neutral-500">-></span> ${path}`;
+    }
+
+    const container = document.getElementById("honeypot-logs");
+
+    if (container) {
+        // Initial populate
+        container.innerHTML = "";
+        for (let i = 0; i < 5; i++) {
+            const div = document.createElement("div");
+            div.innerHTML = generateLog();
+            div.className = "opacity-50";
+            container.insertBefore(div, container.firstChild);
+        }
+
+        // Add new logs periodically
+        setInterval(() => {
+            const div = document.createElement("div");
+            div.innerHTML = generateLog();
+            div.className =
+                "animate-fade-in-down whitespace-nowrap overflow-hidden text-ellipsis";
+
+            container.insertBefore(div, container.firstChild);
+
+            // Keep only 6 logs to prevent DOM bloat
+            if (container.children.length > 6) {
+                container.lastChild?.remove();
+            }
+        }, 1500 + Math.random() * 2000); // Random interval between 1.5s and 3.5s
+    }
+</script>

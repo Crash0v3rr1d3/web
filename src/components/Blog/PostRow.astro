@@ -5,27 +5,71 @@ interface Props {
   title: string;
   date: Date;
   id: string;
+  tags?: string[];
+  difficulty?: string;
 }
 
-const { title, date, id } = Astro.props;
+const { title, date, id, tags, difficulty } = Astro.props;
 ---
 
 <li
-  class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-2"
+  class="group list-none w-full text-neutral-300 hover:text-green-500 transition-all duration-300 ease-in-out border-b border-dashed border-neutral-700 hover:border-green-500/50 my-2 py-1"
 >
   <a
-    class="text-sm md:text-base decoration-none flex justify-between"
+    class="text-sm md:text-base text-inherit flex justify-between items-center w-full"
     href={`/blog/${id}`}
   >
-    <p class="inline-block whitespace-nowrap">
-      {title}
-    </p>
-    <time
-      class="text-right tabular-nums"
-      datetime={date.toISOString()}
-      data-date={date.toISOString()}
-    >
-      {formatDate(date)}
-    </time>
+    <div class="flex items-center gap-2 overflow-hidden w-full">
+      <div class="flex items-center">
+        <span
+          class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-1 text-green-500 font-bold"
+          >[</span
+        >
+        <p
+          class="inline-block whitespace-nowrap m-0 truncate group-hover:translate-x-1 transition-transform duration-300"
+          style="font-family: 'Iceland', cursive;"
+        >
+          {title}
+        </p>
+        <span
+          class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-1 text-green-500 font-bold"
+          >]</span
+        >
+      </div>
+      {
+        difficulty && (
+          <span
+            class={`text-[10px] px-2 py-0.5 rounded-full border hidden sm:block ${
+              difficulty.toLowerCase() === "easy"
+                ? "text-green-400 border-green-400/50 bg-green-400/10"
+                : difficulty.toLowerCase() === "medium"
+                ? "text-yellow-400 border-yellow-400/50 bg-yellow-400/10"
+                : "text-red-400 border-red-400/50 bg-red-400/10"
+            }`}
+          >
+            {difficulty}
+          </span>
+        )
+      }
+      {
+        tags &&
+          tags
+            .slice(0, 2)
+            .map((tag: string) => (
+              <span class="text-[10px] text-primary-400 border border-primary-500/50 bg-primary-500/10 px-2 py-0.5 rounded-full hidden sm:block">
+                {tag}
+              </span>
+            ))
+      }
+    </div>
+    <div class="flex items-center isolate">
+      <time
+        class="text-right tabular-nums text-xs group-hover:text-green-400 transition-colors duration-300"
+        datetime={date.toISOString()}
+        data-date={date.toISOString()}
+      >
+        {formatDate(date)}
+      </time>
+    </div>
   </a>
 </li>

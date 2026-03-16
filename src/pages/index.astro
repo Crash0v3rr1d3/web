@@ -2,22 +2,96 @@
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card/index.astro";
 import IntroCard from "@/components/IntroCard.astro";
-import ThreeDCard from "@/components/ThreeDCard.astro";
-import ThreeDCardVert from "@/components/ThreeDCardVert.astro";
-import MyTimeZoneCard from "@/components/MyTimeZoneCard.astro";
-import YourTimeZoneCard from "@/components/YourTimeZoneCard.astro";
+import FirewallLogsCard from "@/components/FirewallLogsCard.astro";
+import CVETickerCard from "@/components/CVETickerCard.astro";
+import PGPKeyCard from "@/components/PGPKeyCard.astro";
 import VisitorCounterCard from "@/components/VisitorCounterCard.astro";
 import Writeups from "@/components/Writeups.astro";
-import Now from "@/components/Now.astro";
-import Globe from "@/components/Globe";
+import RansomLiveCard from "@/components/RansomLiveCard.astro";
+import PoCCard from "@/components/PoCCard.astro";
+import CERTCard from "@/components/CERTCard.astro";
 import { getCollection } from "astro:content";
-import { formatDate } from "@/lib/helpers";
+import { formatDate, fetchJsonIPv4 } from "@/lib/helpers";
+import Parser from "rss-parser";
+import { NEWS_FEEDS, CVE_FEEDS } from "@/consts";
 
 const posts = (await getCollection("blog"))?.sort(
   (blogEntryA, blogEntryB) =>
     (blogEntryB.data.pubDate || new Date()).getTime() -
-    (blogEntryA.data.pubDate || new Date()).getTime(),
+    (blogEntryA.data.pubDate || new Date()).getTime()
 );
+
+const parser = new Parser();
+let newsFeed: any = [];
+let newsInLastHour = 0;
+
+try {
+  const feedPromises = NEWS_FEEDS.map((url) => parser.parseURL(url));
+  const results = await Promise.allSettled(feedPromises);
+
+  const allItems = results.reduce((acc: any[], result) => {
+    if (result.status === "fulfilled") {
+      return [...acc, ...result.value.items];
+    }
+    return acc;
+  }, []);
+
+  newsFeed = allItems
+    .sort(
+      (a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+    )
+    .slice(0, 4);
+
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+  newsInLastHour = allItems.filter(
+    (item) => new Date(item.pubDate) > oneHourAgo
+  ).length;
+} catch (error) {
+  console.error("Error fetching RSS feeds for index:", error);
+}
+
+let cveFeed: any = [];
+try {
+  const cvePromises = CVE_FEEDS.map((url) => parser.parseURL(url));
+  const cveResults = await Promise.allSettled(cvePromises);
+
+  const allCves = cveResults.reduce((acc: any[], result) => {
+    if (result.status === "fulfilled") {
+      return [...acc, ...result.value.items];
+    }
+    return acc;
+  }, []);
+
+  cveFeed = allCves
+    .sort((a, b) => {
+      const dateA = a.isoDate || a.pubDate || 0;
+      const dateB = b.isoDate || b.pubDate || 0;
+      return new Date(dateB).getTime() - new Date(dateA).getTime();
+    })
+    .slice(0, 10);
+} catch (error) {
+  console.error("Error fetching CVE feeds for index:", error);
+}
+
+import fs from 'node:fs';
+import path from 'node:path';
+
+function readJsonSafe(filePath: string, fallback: any[] = []) {
+  try {
+    const resolved = path.resolve(filePath);
+    if (fs.existsSync(resolved)) {
+      return JSON.parse(fs.readFileSync(resolved, 'utf8'));
+    }
+    console.warn(`${filePath} not found — run 'npm run sync:data' before building.`);
+  } catch (e) {
+    console.error(`Error reading ${filePath}:`, e);
+  }
+  return fallback;
+}
+
+const ransomFeed = readJsonSafe('./src/data/remote/recent_victims.json').slice(0, 5);
+const pocFeed = readJsonSafe('./src/data/remote/pocs.json').slice(0, 15);
+const certFeed = readJsonSafe('./src/data/remote/certs.json').slice(0, 15);
 ---
 
 <script>
@@ -42,74 +116,100 @@ const posts = (await getCollection("blog"))?.sort(
   timeline(sequence as TimelineDefinition);
 </script>
 
-<Layout
-  title="Crash0v3rr1d3's Blog"
-  description="Hacker"
->
+<Layout title="Crash0v3rr1d3's Blog" description="Hacker">
   <main
-    class="text-white m-auto grid gap-2 max-w-7xl relative w-full sm:gap-2 md:grid-cols-2 md:gap-3 lg:h-screen lg:grid-rows-8 lg:grid-cols-5 lg:gap-5 lg:max-h-[800px]"
+    class="text-white m-auto grid gap-2 max-w-7xl relative w-full sm:gap-2 md:grid-cols-2 md:gap-3 lg:auto-rows-[80px] lg:grid-cols-6 lg:gap-5 pb-8"
   >
     <IntroCard />
     <Writeups />
-    <ThreeDCardVert />
-    <ThreeDCard />
-    <YourTimeZoneCard />
-    <MyTimeZoneCard />
+    <FirewallLogsCard />
+    <PGPKeyCard />
+
     <Card
-      colSpan="md:col-span-2"
-      rowSpan="md:row-span-3 flex gap-4"
+      colSpan="md:col-span-1 lg:col-span-2"
+      rowSpan="md:row-span-3"
+      title="Recent News"
+      href="/news"
+    >
+      <div class="flex flex-col gap-2 mt-2">
+        <p class="text-xs text-neutral-400 font-mono mb-2">
+          &gt;_ {newsInLastHour} signals in last 60m
+        </p>
+        {
+          newsFeed.length > 0 ? (
+            newsFeed.map((entry: any) => (
+              <a
+                href={entry.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group text-xs text-neutral-300 hover:text-green-500 transition-all duration-300 border-b border-neutral-800 hover:border-green-500/50 pb-2 last:border-0 flex overflow-hidden"
+              >
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-1 text-green-500 font-bold">
+                  [
+                </span>
+                <span class="truncate group-hover:translate-x-1 transition-transform duration-300">
+                  {entry.title}
+                </span>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-1 text-green-500 font-bold">
+                  ]
+                </span>
+              </a>
+            ))
+          ) : (
+            <p class="text-xs text-red-500 font-mono">&gt;_ feed offline</p>
+          )
+        }
+      </div>
+    </Card>
+
+    <CVETickerCard cves={cveFeed} />
+
+    <Card
+      colSpan="md:col-span-2 lg:col-span-2"
+      rowSpan="md:row-span-3"
       title="Blog"
       href="/blog"
     >
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 h-full">
         {
           posts?.slice(0, 3).map((post) => (
-            // <a
-            //   class="text-sm md:text-base decoration-none flex justify-between"
-            //   href={`/blog/${post.id}`}
-            // >
-            <div class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0">
-              <p class="inline-block whitespace-nowrap text-sm">
-                {post.data.title}
-              </p>
+            <a
+              href={`/blog/${post.id}`}
+              class="group list-none w-full text-neutral-300 hover:text-green-500 ease-in-out transition-all duration-300 border-b border-dashed border-neutral-700 hover:border-green-500/50 my-0 py-2 flex justify-between items-center"
+            >
+              <div class="flex items-center overflow-hidden">
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-1 text-green-500 font-bold">
+                  [
+                </span>
+                <p class="inline-block whitespace-nowrap text-sm m-0 group-hover:translate-x-1 transition-transform duration-300 truncate">
+                  {post.data.title}
+                </p>
+                <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-1 text-green-500 font-bold">
+                  ]
+                </span>
+              </div>
               {post.data.pubDate && (
-                <time
-                  class="text-right tabular-nums text-xs"
-                  datetime={post.data.pubDate.toISOString()}
-                  data-date={post.data.pubDate.toISOString()}
-                >
-                  {formatDate(post.data.pubDate)}
-                </time>
+                <div class="flex items-center isolate">
+                  <time
+                    class="text-right tabular-nums text-xs group-hover:text-green-400 transition-colors duration-300"
+                    datetime={post.data.pubDate.toISOString()}
+                    data-date={post.data.pubDate.toISOString()}
+                  >
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                </div>
               )}
-            </div>
-            // </a>
+            </a>
           ))
         }
       </div>
     </Card>
-   
-    <Now />
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-1"
-      title="Countries I visited"
-      href="travel"
-      colorText="text-neutral-900"
-    >
-      <div class="h-full w-full absolute inset-0 -z-10">
-        <Globe client:load />
-      </div>
-    </Card>
 
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <p class="text-xs">
-        © 2024 · Crafted using <a
-          href="https://astro.build/"
-          target="_blank"
-          class="text-red-500">Astro</a
-        > by Crash0v3rr1d3.
-      </p>
-    </Card>
-    <VisitorCounterCard/>
+    <RansomLiveCard victims={ransomFeed} />
+
+    <PoCCard pocs={pocFeed} />
+
+    <CERTCard certs={certFeed} />
   </main>
+  <VisitorCounterCard />
 </Layout>

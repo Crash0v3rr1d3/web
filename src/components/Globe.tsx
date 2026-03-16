@@ -67,10 +67,13 @@ const GlobeComponent = () => {
       .style("stroke-width", 0.3)
       .style("opacity", 0.8);
 
-    d3.timer(() => {
+    let lastTime = 0;
+    d3.timer((elapsed: number) => {
+      if (elapsed - lastTime < 50) return; // throttle: only redraw every 50ms
+      lastTime = elapsed;
       const rotate = projection.rotate();
       const k = sensitivity / projection.scale();
-      projection.rotate([rotate[0] - 1 * k, rotate[1]]);
+      projection.rotate([rotate[0] - 0.5 * k, rotate[1]]);
       svg.selectAll("path").attr("d", (d: any) => pathGenerator(d as any));
     }, 200);
   });

@@ -11,7 +11,7 @@ import { Separator } from "@/components/react/ui/separator";
 import { badgeVariants } from "@/components/react/ui/badge";
 import PostNavigation from "@/components/PostNavigation.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
-import { Button } from '@/components/react/ui/button'
+import { Button } from "@/components/react/ui/button";
 import LayoutBlogPost from "@/layouts/LayoutBlogPost.astro";
 
 export const prerender = true;
@@ -20,7 +20,7 @@ export async function getStaticPaths() {
   return (await getCollection("blog", ({ data }) => !data.draft)).map(
     ({ id }) => ({
       params: { id: id as string },
-    }),
+    })
   );
 }
 
@@ -29,9 +29,7 @@ function getAdjacentPosts(currentId: string, postList: Posts[]) {
   return {
     prev: index > 0 ? postList[index - 1] : null,
     next:
-      index >= 0 && index < postList.length - 1
-        ? postList[index + 1]
-        : null,
+      index >= 0 && index < postList.length - 1 ? postList[index + 1] : null,
   };
 }
 
@@ -52,13 +50,13 @@ const isSubpost = !!entry.data.tableOfContents;
 const currentEntryId = Astro.params.id;
 
 // Get all subposts
-const visiblePosts = allPosts.filter((post) => !entry.data.draft);
+const visiblePosts = allPosts.filter((post) => !post.data.draft);
 const stripCodeBlocks = (text: string) => text.replace(/```[\s\S]*?```/g, "");
 const totalBody = [entry.body!].map(stripCodeBlocks).join("");
 const readTime = readingTime(totalBody);
 const { prev: prevPost, next: nextPost } = getAdjacentPosts(
   currentEntryId,
-  visiblePosts,
+  visiblePosts
 );
 const { Content, headings } = await render(entry);
 ---
@@ -96,6 +94,7 @@ const { Content, headings } = await render(entry);
             width={1200}
             height={630}
             class="rounded-xl object-cover"
+            loading="lazy"
           />
         )
       }
@@ -109,22 +108,19 @@ const { Content, headings } = await render(entry);
             </h1>
 
             <div class="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground">
-                  <div class="flex items-center gap-x-2">
-                      <div class="flex items-center gap-x-1.5">
-                        <Image
-                          src={"/static/heckintosh-avatar.webp"}
-                          alt="heckintosh"
-                          width={39}
-                          height={39}
-                          class="rounded-full"
-                        />
-                        <span class="text-foreground">{entry.data.author}</span>
-                      </div>
-                  </div>
-                <Separator
-                  orientation="vertical"
-                  className="h-4"
-                />
+              <div class="flex items-center gap-x-2">
+                <div class="flex items-center gap-x-1.5">
+                  <Image
+                    src={"/static/heckintosh-avatar.webp"}
+                    alt="heckintosh"
+                    width={39}
+                    height={39}
+                    class="rounded-full"
+                  />
+                  <span class="text-foreground">{entry.data.author}</span>
+                </div>
+              </div>
+              <Separator orientation="vertical" className="h-4" />
               <div class="flex items-center gap-2">
                 <span>{formatDate(entry.data.pubDate)}</span>
                 <Separator orientation="vertical" className="h-4" />
@@ -135,7 +131,7 @@ const { Content, headings } = await render(entry);
               {entry.data.tags?.length ? (
                 entry.data.tags.map((tag: string) => (
                   <a
-                    href={`/tags/${tag}`}
+                    href="#"
                     class={badgeVariants({ variant: "secondary" })}
                   >
                     <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
@@ -155,10 +151,11 @@ const { Content, headings } = await render(entry);
     </section>
 
     {headings.length > 0 && <TableOfContents headings={headings} />}
-    <article class="overflow-auto [&>:first-child>*]:mt-0 prose col-start-2 max-w-none">
+    <article
+      class="overflow-auto [&>:first-child>*]:mt-0 prose col-start-2 max-w-none"
+    >
       <Content />
     </article>
-   
 
     <PostNavigation prevPost={prevPost} nextPost={nextPost} />
   </section>
@@ -192,7 +189,7 @@ const { Content, headings } = await render(entry);
 
           scrollToTopButton.classList.toggle(
             "hidden",
-            window.scrollY <= 300 || isFooterVisible,
+            window.scrollY <= 300 || isFooterVisible
           );
         });
       }

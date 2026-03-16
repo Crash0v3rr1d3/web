@@ -1,0 +1,132 @@
+---
+import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    cves?: any[];
+}
+const { cves = [] } = Astro.props;
+
+// Process CVEs to clean up formatting
+const processedCves = cves.map((entry) => {
+    const match = entry.title.match(/(CVE-\d{4}-\d{4,7})/i);
+    const id = match ? match[1].toUpperCase() : "VULN";
+
+    let desc = entry.title;
+    if (match) {
+        desc = entry.title
+            .substring(match[0].length)
+            .replace(/^[^a-zA-Z0-9]+/, "");
+    }
+
+    // Attempt to extract standard CVSS if present, otherwise randomish severity color
+    let color = "text-orange-500";
+    if (entry.content && entry.content.includes("CRITICAL"))
+        color = "text-red-500";
+
+    return { id, desc, link: entry.link, color };
+});
+---
+
+<Card
+    colSpan="md:col-span-1 lg:col-span-2"
+    rowSpan="md:row-span-3"
+    title="0-Day Radar"
+    href="/cves"
+>
+    <div class="h-full w-full flex flex-col pt-2">
+        <div class="flex items-center gap-2 mb-2">
+            <Icon
+                name="ri:radar-line"
+                class="h-4 w-4 text-orange-500 animate-spin-slow"
+            />
+            <span class="text-xs text-orange-500 font-mono tracking-wider"
+                >Tracking CVEs</span
+            >
+        </div>
+
+        <div
+            id="cve-ticker"
+            class="flex-1 overflow-hidden font-mono text-[10px] space-y-2 relative"
+            data-cves={JSON.stringify(processedCves)}
+        >
+            <div class="text-neutral-500 mb-1 animate-pulse">
+                Scanning DB...
+            </div>
+        </div>
+    </div>
+</Card>
+
+<style>
+    .animate-spin-slow {
+        animation: spin 4s linear infinite;
+    }
+    @keyframes slide-up {
+        0% {
+            transform: translateY(10px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    .cve-item {
+        animation: slide-up 0.5s ease-out forwards;
+    }
+</style>
+
+<script>
+    const container = document.getElementById("cve-ticker");
+
+    if (container) {
+        const cvesRaw = container.getAttribute("data-cves");
+        let cvePool: any[] = [];
+
+        if (cvesRaw) {
+            try {
+                cvePool = JSON.parse(cvesRaw);
+            } catch (e) {}
+        }
+
+        let currentIndex = 0;
+
+        function renderCVE() {
+            if (!container || cvePool.length === 0) return;
+
+            const cve = cvePool[currentIndex];
+            currentIndex = (currentIndex + 1) % cvePool.length;
+
+            const div = document.createElement("div");
+            div.className =
+                "flex flex-col border-l-2 border-neutral-700 pl-2 cve-item";
+            div.innerHTML = `
+        <a href="${cve.link}" target="_blank" rel="noopener noreferrer" class="group flex flex-col hover:border-l-orange-500 transition-colors">
+          <div class="flex justify-between w-full">
+            <span class="font-bold text-white group-hover:text-orange-400 transition-colors" style="font-family: 'Iceland', cursive;">${cve.id}</span>
+          </div>
+          <span class="text-neutral-400 group-hover:text-neutral-300 whitespace-nowrap overflow-hidden text-ellipsis transition-colors">${cve.desc}</span>
+        </a>
+      `;
+
+            // Clear loading state if present
+            const loadingMessage = container.querySelector(".animate-pulse");
+            if (loadingMessage) loadingMessage.remove();
+
+            container.insertBefore(div, container.firstChild);
+
+            // Keep only top 3 visible
+            if (container.children.length > 3) {
+                container.lastChild?.remove();
+            }
+        }
+
+        // Initial Render
+        for (let i = 0; i < Math.min(3, cvePool.length); i++) {
+            setTimeout(renderCVE, i * 600);
+        }
+
+        // Rotate one out every 4 seconds
+        setInterval(renderCVE, 4000);
+    }
+</script>

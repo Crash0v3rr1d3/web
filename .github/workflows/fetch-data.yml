@@ -1,0 +1,34 @@
+name: Fetch Ransomware Data
+
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Every 30 minutes
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run fetch scripts
+        run: |
+          node scripts/fetch-ransomware-data.mjs
+          node scripts/fetch-poc-data.mjs
+        env:
+          RANSOMWARE_API_KEY: ${{ secrets.RANSOMWARE_API_KEY }}
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/data/remote/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "data: update cached ransomware profiles" && git push)

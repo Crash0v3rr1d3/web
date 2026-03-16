@@ -1,0 +1,133 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Parser from "rss-parser";
+import { formatDate } from "@/lib/helpers";
+import { CVE_FEEDS } from "@/consts";
+
+const parser = new Parser();
+let cveFeed: any = [];
+
+try {
+    // Fetch from all CVE feeds defined in consts.ts concurrently
+    const feedPromises = CVE_FEEDS.map((url) => parser.parseURL(url));
+    const results = await Promise.allSettled(feedPromises);
+
+    const allItems = results.reduce((acc: any[], result) => {
+        if (result.status === "fulfilled") {
+            return [...acc, ...result.value.items];
+        }
+        return acc;
+    }, []);
+
+    // Sort globally by date descending
+    cveFeed = allItems
+        .sort((a, b) => {
+            const dateA = a.isoDate || a.pubDate || 0;
+            const dateB = b.isoDate || b.pubDate || 0;
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
+        })
+        .slice(0, 30); // Top 30 aggregated CVEs
+} catch (error) {
+    console.error("Error fetching CVE feeds:", error);
+}
+---
+
+<script>
+    import { timeline, type TimelineDefinition } from "motion";
+    import { loaderAnimation } from "@/lib/constants";
+
+    const sequence = [loaderAnimation];
+
+    timeline(sequence as TimelineDefinition);
+</script>
+
+<Layout title="0-Day Radar" description="Latest Vulnerability Disclosures">
+    <main
+        class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 overflow-y-auto custom-scrollbar"
+    >
+        <a
+            href="/"
+            class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border border-solid border-neutral-600 rounded-lg transition-colors"
+            >Back</a
+        >
+
+        <div class="flex items-center gap-4 mb-4">
+            <h1 class="text-4xl font-bold text-neutral-100">0-Day Radar</h1>
+            <span
+                class="text-xs font-mono text-orange-500 bg-orange-500/10 border border-orange-500/30 px-2 py-1 rounded"
+                >LIVE_CVE</span
+            >
+        </div>
+
+        <p class="text-neutral-400 text-sm mb-8 font-mono">
+            &gt;_ Aggregated vulnerability disclosures. Auto-updated via RSS
+            build pipelines.
+        </p>
+
+        <ul class="w-full">
+            {
+                cveFeed.length > 0 ? (
+                    cveFeed.map((entry: any) => {
+                        // Attempt to extract CVE signature from feed title
+                        const match = entry.title.match(/(CVE-\d{4}-\d{4,7})/i);
+                        const cveId = match ? match[1].toUpperCase() : "VULN";
+
+                        // Clean up description if title contains both ID and description
+                        let descText = entry.title;
+                        if (match) {
+                            descText = entry.title
+                                .substring(match[0].length)
+                                .replace(/^[^a-zA-Z0-9]+/, ""); // Remove leading separators like " : " or " - "
+                        }
+
+                        return (
+                            <li class="group list-none w-full text-neutral-300 hover:text-orange-500 transition-all duration-300 ease-in-out border-b border-dashed border-neutral-700 hover:border-orange-500/50 my-2 py-2">
+                                <a
+                                    class="text-sm md:text-base text-inherit flex flex-col justify-between items-start w-full gap-2 md:flex-row md:items-center"
+                                    href={entry.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <div class="flex items-center gap-2 overflow-hidden w-full">
+                                        <div class="flex items-center">
+                                            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-2 text-orange-500 font-bold">
+                                                [
+                                            </span>
+                                            <div class="flex flex-col m-0 group-hover:translate-x-1 transition-transform duration-300">
+                                                <span class="font-bold text-white group-hover:text-orange-400">
+                                                    {cveId}
+                                                </span>
+                                                <span class="text-xs text-neutral-400 truncate w-full max-w-[200px] sm:max-w-xs md:max-w-md">
+                                                    {descText}
+                                                </span>
+                                            </div>
+                                            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2 text-orange-500 font-bold">
+                                                ]
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {entry.isoDate && (
+                                        <time
+                                            class="text-right tabular-nums text-xs group-hover:text-orange-400 transition-colors duration-300 shrink-0"
+                                            datetime={new Date(
+                                                entry.isoDate
+                                            ).toISOString()}
+                                        >
+                                            {formatDate(
+                                                new Date(entry.isoDate)
+                                            )}
+                                        </time>
+                                    )}
+                                </a>
+                            </li>
+                        );
+                    })
+                ) : (
+                    <p class="text-red-500 font-mono text-sm">
+                        &gt;_ Error: Connection to intel feed severed.
+                    </p>
+                )
+            }
+        </ul>
+    </main>
+</Layout>

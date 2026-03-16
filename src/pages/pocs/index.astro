@@ -1,0 +1,183 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import fs from 'node:fs';
+import path from 'node:path';
+
+let pocsData: any[] = [];
+try {
+  const p = path.resolve('./src/data/remote/pocs.json');
+  if (fs.existsSync(p)) pocsData = JSON.parse(fs.readFileSync(p, 'utf8'));
+  else console.warn("pocs.json not found — run 'npm run sync:data' before building.");
+} catch (e) { console.error("Error reading pocs.json:", e); }
+
+// Sort by stars descending as default
+const pocs = pocsData.sort((a, b) => (parseInt(b.stargazers_count) || 0) - (parseInt(a.stargazers_count) || 0));
+---
+
+<Layout 
+  title="Exploit Index - PoCs - Crash0v3rr1d3"
+  description="Searchable index of Proof-of-Concept exploits for CVEs and vulnerabilities."
+>
+  <main class="w-full max-w-6xl mx-auto px-4 py-12">
+    <div class="flex flex-col gap-8">
+      <!-- Header -->
+      <div class="flex flex-col gap-4 border-l-4 border-green-500 pl-6 py-2">
+        <h1 class="text-5xl font-extrabold text-white tracking-tighter font-['Iceland']">
+          EXPLOIT INDEX <span class="text-green-500">//</span> PoCs
+        </h1>
+        <p class="text-neutral-500 font-mono text-sm max-w-2xl uppercase tracking-widest">
+            Automated index of GitHub Proof-of-Concepts and Exploit research.
+        </p>
+
+        <!-- Safety Warning -->
+        <div class="bg-red-950/20 border-l-4 border-red-500 p-4 max-w-4xl">
+            <div class="flex items-center gap-2 mb-2 text-red-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                <span class="text-xs font-bold uppercase tracking-[0.2em]">Hazard Warning</span>
+            </div>
+            <p class="text-xs text-neutral-400 font-mono leading-relaxed">
+                <span class="text-red-400 font-bold">CRITICAL:</span> This index crawls public exploit repositories. These materials often contain live malware and high-risk payloads. This information is provided 
+                <span class="text-white underline decoration-red-500/50">strictly for educational and research purposes</span>. 
+                We assume no responsibility for how this data is utilized. Proceed with extreme caution.
+            </p>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-neutral-900/30 p-6 rounded-lg border border-neutral-800">
+        <div class="md:col-span-3">
+          <label for="poc-search" class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono">Search by CVE or Name</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="poc-search" 
+              placeholder="e.g. CVE-2024 or Windows privilege escalation..." 
+              class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-green-500/50 transition-all pl-10"
+            />
+            <svg class="absolute left-3 top-3.5 text-neutral-600" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
+        </div>
+        <div>
+          <label for="sort-filter" class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono">Order By</label>
+          <select id="sort-filter" class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-green-500/50 transition-all appearance-none cursor-pointer">
+            <option value="stars">Most Stars</option>
+            <option value="recent">Recently Updated</option>
+            <option value="name">Repos A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- PoC Table -->
+      <div class="overflow-x-auto border border-neutral-800 rounded-lg">
+        <table class="w-full text-left border-collapse" id="poc-table">
+          <thead>
+            <tr class="bg-neutral-900/80 text-neutral-500 text-[10px] uppercase tracking-widest font-mono border-b border-neutral-800">
+              <th class="px-6 py-4 font-semibold">Vulnerability</th>
+              <th class="px-6 py-4 font-semibold">Repository</th>
+              <th class="px-6 py-4 font-semibold">Description</th>
+              <th class="px-6 py-4 font-semibold">Popularity</th>
+              <th class="px-6 py-4 font-semibold text-right">Access</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-neutral-900">
+            {pocs.map((poc) => (
+              <tr class="poc-row group hover:bg-green-500/[0.02] transition-colors" data-cve={poc.cve_id} data-name={poc.full_name} data-desc={poc.description} data-stars={poc.stargazers_count} data-updated={poc.updated_at}>
+                <td class="px-6 py-5">
+                  <span class="text-green-500 font-mono text-sm font-bold bg-green-500/10 px-2 py-1 rounded border border-green-500/20">{poc.cve_id}</span>
+                </td>
+                <td class="px-6 py-5">
+                  <div class="flex flex-col">
+                    <span class="text-white font-semibold text-sm group-hover:text-green-400 transition-colors truncate max-w-[200px]">{poc.name}</span>
+                    <span class="text-[10px] text-neutral-600 font-mono lowercase">by {poc.owner}</span>
+                  </div>
+                </td>
+                <td class="px-6 py-5">
+                  <p class="text-neutral-400 text-xs line-clamp-2 max-w-md leading-relaxed">
+                    {poc.description || "No description provided."}
+                  </p>
+                </td>
+                <td class="px-6 py-5">
+                  <div class="flex items-center gap-1.5 text-xs text-neutral-400 font-mono">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500/50"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    {poc.stargazers_count} stars
+                  </div>
+                </td>
+                <td class="px-6 py-5 text-right">
+                  <a href={poc.html_url} target="_blank" class="inline-flex items-center justify-center p-2 rounded bg-neutral-900 border border-neutral-800 text-neutral-500 hover:text-white hover:border-green-500/50 hover:bg-green-500/10 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        
+        <div id="no-results" class="hidden py-20 text-center flex-col items-center gap-4">
+           <svg class="text-neutral-800" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+           <p class="text-neutral-600 font-mono uppercase tracking-widest text-xs">No matching exploits found in index</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const searchInput = document.getElementById('poc-search') as HTMLInputElement;
+  const sortFilter = document.getElementById('sort-filter') as HTMLSelectElement;
+  const rows = document.querySelectorAll('.poc-row') as NodeListOf<HTMLElement>;
+  const noResults = document.getElementById('no-results');
+  const tbody = document.querySelector('tbody');
+
+  function filterPocs() {
+    const query = searchInput.value.toLowerCase();
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const cve = (row.dataset.cve || '').toLowerCase();
+      const name = (row.dataset.name || '').toLowerCase();
+      const desc = (row.dataset.desc || '').toLowerCase();
+      
+      const matches = cve.includes(query) || name.includes(query) || desc.includes(query);
+      
+      if (matches) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    if (noResults) {
+      noResults.classList.toggle('hidden', visibleCount > 0);
+      noResults.classList.toggle('flex', visibleCount === 0);
+    }
+  }
+
+  function sortPocs() {
+    const val = sortFilter.value;
+    const items = Array.from(rows);
+
+    items.sort((a, b) => {
+      if (val === 'stars') {
+        return (parseInt(b.dataset.stars || '0')) - (parseInt(a.dataset.stars || '0'));
+      } else if (val === 'recent') {
+        return new Date(b.dataset.updated || 0).getTime() - new Date(a.dataset.updated || 0).getTime();
+      } else {
+        return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+      }
+    });
+
+    if (tbody) {
+      items.forEach(item => tbody.appendChild(item));
+    }
+  }
+
+  searchInput?.addEventListener('input', filterPocs);
+  sortFilter?.addEventListener('change', sortPocs);
+</script>
+
+<style>
+    .poc-row:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+</style>

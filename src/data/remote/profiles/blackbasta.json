@@ -1,0 +1,173 @@
+{
+  "btc_address": [
+    "1GnkF1JtPT6EJcgJRFjArKZHjQs873eUeE",
+    "13rhLTYUKo9ijrR8vinojZqoZTpTe1fm8c"
+  ],
+  "description": "\"Black Basta\" is a new ransomware strain discovered during April 2022 - looks in dev since at least early February 2022 - and due to their ability to quickly amass new victims and the style of their negotiations, this is likely not a new operation but rather a rebrand of a previous top-tier ransomware gang that brought along their affiliates.\n",
+  "locations": [
+    {
+      "available": false,
+      "enabled": false,
+      "fqdn": "stniiomyjliimcgkvdszvgen3eaaoz55hreqqx6o77yvmpwt7gklffqd.onion",
+      "lastscrape": "2025-06-01 21:18:21.372902",
+      "slug": "http://stniiomyjliimcgkvdszvgen3eaaoz55hreqqx6o77yvmpwt7gklffqd.onion/",
+      "title": "Black Basta Blog",
+      "type": "DLS",
+      "updated": "2025-01-29 13:21:37.516788"
+    },
+    {
+      "available": false,
+      "enabled": false,
+      "fqdn": "aazsbsgya565vlu2c6bzy6yfiebkcbtvvcytvolt33s77xypi7nypxyd.onion",
+      "lastscrape": "2025-06-01 21:19:21.402938",
+      "slug": "https://aazsbsgya565vlu2c6bzy6yfiebkcbtvvcytvolt33s77xypi7nypxyd.onion/",
+      "title": "Chat Black Basta",
+      "type": "DLS",
+      "updated": "2023-09-17 12:10:42.295392"
+    },
+    {
+      "available": false,
+      "enabled": false,
+      "fqdn": "bastad5huzwkepdixedg2gekg7jk22ato24zyllp6lnjx7wdtyctgvyd.onion",
+      "lastscrape": "2025-06-01 21:19:34.509745",
+      "slug": "https://bastad5huzwkepdixedg2gekg7jk22ato24zyllp6lnjx7wdtyctgvyd.onion/",
+      "title": "Chat Black Basta",
+      "type": "Chat",
+      "updated": "2025-02-20 17:01:34.950042"
+    }
+  ],
+  "meta": "Solve a scrapping issue on 2023-03-08",
+  "name": "blackbasta",
+  "parser": true,
+  "profile": [
+    "[CISA Alert aa24-131a](https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-131a)",
+    "https://cloud.google.com/blog/topics/threat-intelligence/unc4393-goes-gently-into-silentnight",
+    "https://www.trendmicro.com/en_ca/research/22/j/black-basta-infiltrates-networks-via-qakbot-brute-ratel-and-coba.html"
+  ],
+  "tools": [
+    {
+      "CredentialTheft": [
+        "Mimikatz"
+      ],
+      "DefenseEvasion": [
+        "Backstab (Process Explorer driver)"
+      ],
+      "DiscoveryEnum": [
+        "AdFind",
+        "Bloodhound",
+        "PowerView",
+        "PSNmap",
+        "SoftPerfect NetScan"
+      ],
+      "Exfiltration": [
+        "Qaz[.]im",
+        "RClone"
+      ],
+      "LOLBAS": [
+        "BITSAdmin",
+        "PsExec",
+        "Quick Assist"
+      ],
+      "Networking": [],
+      "Offsec": [
+        "Brute Ratel C4",
+        "Cobalt Strike",
+        "Metasploit",
+        "PowerSploit"
+      ],
+      "RMM-Tools": [
+        "AnyDesk",
+        "Atera",
+        "NetSupport",
+        "ScreenConnect",
+        "Splashtop",
+        "Supremo"
+      ]
+    }
+  ],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "Victims receive spear phishing emails with attached malicious zip files - typically password protected. That contains malicious doc including .doc, .pdf, .xls",
+          "technique_id": "T1566.001",
+          "technique_name": "Phishing: Spear phishing Attachment"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "Black Basta has installed and used PsExec to execute payloads on remote hosts.",
+          "technique_id": "T1569.002",
+          "technique_name": "System Services: Service Execution"
+        },
+        {
+          "technique_details": "Utilizes Invoke-TotalExec to push out the ransomware binary.",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        },
+        {
+          "technique_details": "Black Basta has encoded PowerShell scripts to download additional scripts.",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_details": "Black Basta threat actors created accounts with names such as temp, r, or admin.",
+          "technique_id": "T1136",
+          "technique_name": "Create Account"
+        },
+        {
+          "technique_details": "Added newly created accounts to the administrators' group to maintain elevated access.",
+          "technique_id": "T1098",
+          "technique_name": "Account Manipulation"
+        },
+        {
+          "technique_details": "Creates benign-looking services for the ransomware binary.",
+          "technique_id": "T1543.003",
+          "technique_name": "Create or Modify System Process: Windows Service"
+        },
+        {
+          "technique_details": "Black Basta used Qakbot, which has the ability to exploit Windows 7 Calculator to execute malicious payloads.",
+          "technique_id": "T1574.001",
+          "technique_name": "Hijack Execution Flow: DLL Search Order Hijacking"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_details": "Black Basta can modify group policy for privilege escalation and defense evasion.",
+          "technique_id": "T1484.001",
+          "technique_name": "Domain Policy Modification: Group Policy Modification"
+        },
+        {
+          "technique_details": "Black Basta used Qakbot, which has the ability to exploit Windows 7 Calculator to execute malicious payloads.",
+          "technique_id": "T1574.001",
+          "technique_name": "Hijack Execution Flow: DLL Search Order Hijacking"
+        },
+        {
+          "technique_details": "Creates benign-looking services for the ransomware binary.",
+          "technique_id": "T1543.003",
+          "technique_name": "Create or Modify System Process: Windows Service"
+        }
+      ]
+    }
+  ],
+  "type": {
+    "raas": true
+  },
+  "url": "https://www.ransomware.live/group/blackbasta"
+}
