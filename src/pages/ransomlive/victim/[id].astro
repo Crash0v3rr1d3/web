@@ -3,14 +3,14 @@ import Layout from "@/layouts/Layout.astro";
 import fs from 'node:fs';
 import path from 'node:path';
 
-let allVictims: any[] = [];
-try {
-  const p = path.resolve('./src/data/remote/all_victims.json');
-  if (fs.existsSync(p)) allVictims = JSON.parse(fs.readFileSync(p, 'utf8'));
-  else console.warn("all_victims.json not found — run 'npm run sync:data' before building.");
-} catch (e) { console.error("Error reading all_victims.json:", e); }
-
 export async function getStaticPaths() {
+  let allVictims: any[] = [];
+  try {
+    const p = path.resolve('./src/data/remote/all_victims.json');
+    if (fs.existsSync(p)) allVictims = JSON.parse(fs.readFileSync(p, 'utf8'));
+    else console.warn("all_victims.json not found — run 'npm run sync:data' before building.");
+  } catch (e) { console.error("Error reading all_victims.json:", e); }
+
   return allVictims.map((victim) => {
     return {
       params: { id: victim.victim },
