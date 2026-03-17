@@ -13,13 +13,13 @@ export type Link = {
 }
 
 export const SITE: Site = {
-  TITLE: 'crash0v3rr1d3.xyz',
+  TITLE: 'crash0v3rr1d3.com',
   DESCRIPTION:
     'sec researcher.',
   EMAIL: 'crash0v3rr1d3@icloud.com',
   NUM_POSTS_ON_HOMEPAGE: 2,
   POSTS_PER_PAGE: 4,
-  SITEURL: 'https://crash0v3rr1d3.xyz',
+  SITEURL: 'https://crash0v3rr1d3.com',
 }
 
 export const NAV_LINKS: Link[] = [
