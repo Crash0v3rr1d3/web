@@ -29,13 +29,13 @@ import { transformerDiffHighlight } from './src/lib/transformerDiffHighlight'
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://crash0v3rr1d3.xyz",
+  site: "https://crash0v3rr1d3.com",
   integrations: [
     sitemap(),
     robotsTxt({
       sitemap: [
-        "https://crash0v3rr1d3.xyz/sitemap-index.xml",
-        "https://crash0v3rr1d3.xyz/sitemap-0.xml",
+        "https://crash0v3rr1d3.com/sitemap-index.xml",
+        "https://crash0v3rr1d3.com/sitemap-0.xml",
       ],
     }),
     solidJs({
