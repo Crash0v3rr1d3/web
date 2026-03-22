@@ -17,7 +17,7 @@
       "fqdn": "0mega.cc",
       "http": {
         "error": null,
-        "fetched_at": "2026-03-22T08:31:10+00:00",
+        "fetched_at": "2026-03-22T10:01:11+00:00",
         "final_url": "http://0mega.cc",
         "fingerprint": {
           "cdn": null,
@@ -32,20 +32,20 @@
         "headers": {
           "connection": "close",
           "content-type": "text/html; charset=UTF-8",
-          "date": "Sun, 22 Mar 2026 08:31:12 GMT",
+          "date": "Sun, 22 Mar 2026 10:01:13 GMT",
           "server": "Apache",
-          "set-cookie": "__tad=1774168272.5134654; expires=Wed, 19 Mar 2036 08:31:12 GMT; Max-Age=315360000"
+          "set-cookie": "__tad=1774173673.5217848; expires=Wed, 19 Mar 2036 10:01:13 GMT; Max-Age=315360000"
         },
         "http_version": "HTTP/1.1",
         "redirect_chain": [],
         "start_url": "http://0mega.cc",
         "status": 200
       },
-      "lastscrape": "2026-03-22 08:31:10.655354",
+      "lastscrape": "2026-03-22 10:01:11.747605",
       "slug": "http://0mega.cc",
-      "title": "Redirecting...",
+      "title": "",
       "type": "DLS",
-      "updated": "2026-03-22 08:31:10.655354"
+      "updated": "2026-03-22 10:01:11.747605"
     }
   ],
   "meta": null,
@@ -53,6 +53,78 @@
   "parser": true,
   "profile": [],
   "tools": [],
-  "ttps": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "Access was obtained through the compromise of global Microsoft SaaS administrator accounts that were weakly protected.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_details": "After gaining initial access, the group created a new user in Active Directory (AD) named \"0mega\" with multiple administrator roles (e.g., Global Administrator, SharePoint Administrator) to maintain maximum control.",
+          "technique_id": "T1136",
+          "technique_name": "Create Account: Cloud Account"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_details": "The group systematically deleted over 220 corporate administrator accounts within a two-hour period, impairing the victim's ability to respond and recover.",
+          "technique_id": "T1531",
+          "technique_name": "Account Access Removal"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "The group collected sensitive data using the obtained permissions.",
+          "technique_id": "T1119",
+          "technique_name": "Automated Collection"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "Data was exfiltrated from environments such as the victim's SharePoint, consistent with a double extortion tactic.",
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "The attack used AES-256 or RSA encryption on critical files after network mapping, blocking legitimate access. In some cases, the focus was solely on exfiltration and extortion without encryption.",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "The ransomware searched for and disabled connected or online backups to prevent quick data recovery without paying the ransom.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        }
+      ]
+    }
+  ],
   "url": "https://www.ransomware.live/group/0mega"
 }
