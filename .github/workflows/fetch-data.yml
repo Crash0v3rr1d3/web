@@ -2,7 +2,7 @@ name: Fetch Ransomware Data
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Every 30 minutes
+    - cron: '0 */8 * * *' # Every 8 hours
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -31,4 +31,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add src/data/remote/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "data: update cached ransomware profiles" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "data: update cached ransomware profiles [skip netlify]" && git push)
