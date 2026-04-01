@@ -1,133 +1,756 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Parser from "rss-parser";
-import { formatDate } from "@/lib/helpers";
-import { CVE_FEEDS } from "@/consts";
+import fs from "node:fs";
+import path from "node:path";
 
-const parser = new Parser();
-let cveFeed: any = [];
-
+let cvesData: any[] = [];
 try {
-    // Fetch from all CVE feeds defined in consts.ts concurrently
-    const feedPromises = CVE_FEEDS.map((url) => parser.parseURL(url));
-    const results = await Promise.allSettled(feedPromises);
+    const p = path.resolve("./src/data/remote/cves.json");
+    if (fs.existsSync(p))
+        cvesData = JSON.parse(fs.readFileSync(p, "utf8"));
+    else
+        console.warn(
+            "cves.json not found — run 'npm run sync:data' before building."
+        );
+} catch (e) {
+    console.error("Error reading cves.json:", e);
+}
 
-    const allItems = results.reduce((acc: any[], result) => {
-        if (result.status === "fulfilled") {
-            return [...acc, ...result.value.items];
-        }
-        return acc;
-    }, []);
+// Sort by published date descending
+const cves = cvesData.sort(
+    (a, b) =>
+        new Date(b.publishedDate).getTime() -
+        new Date(a.publishedDate).getTime()
+);
 
-    // Sort globally by date descending
-    cveFeed = allItems
-        .sort((a, b) => {
-            const dateA = a.isoDate || a.pubDate || 0;
-            const dateB = b.isoDate || b.pubDate || 0;
-            return new Date(dateB).getTime() - new Date(dateA).getTime();
-        })
-        .slice(0, 30); // Top 30 aggregated CVEs
-} catch (error) {
-    console.error("Error fetching CVE feeds:", error);
+// Build unique filter options from data
+const allVendors = [
+    ...new Set(cves.flatMap((c: any) => c.vendors as string[])),
+].sort();
+const allProducts = [
+    ...new Set(cves.flatMap((c: any) => c.products as string[])),
+].sort();
+const severityLevels = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
+
+// Helper: severity → color classes
+function severityColor(sev: string) {
+    switch (sev?.toUpperCase()) {
+        case "CRITICAL":
+            return "bg-red-500 text-white";
+        case "HIGH":
+            return "bg-orange-500 text-white";
+        case "MEDIUM":
+            return "bg-yellow-500 text-black";
+        case "LOW":
+            return "bg-green-500 text-white";
+        default:
+            return "bg-neutral-600 text-white";
+    }
+}
+
+function scoreColor(score: number) {
+    if (score >= 9) return "border-red-500 text-red-400";
+    if (score >= 7) return "border-orange-500 text-orange-400";
+    if (score >= 4) return "border-yellow-500 text-yellow-400";
+    if (score > 0) return "border-green-500 text-green-400";
+    return "border-neutral-600 text-neutral-400";
 }
 ---
 
 <script>
     import { timeline, type TimelineDefinition } from "motion";
     import { loaderAnimation } from "@/lib/constants";
-
     const sequence = [loaderAnimation];
-
     timeline(sequence as TimelineDefinition);
 </script>
 
 <Layout title="0-Day Radar" description="Latest Vulnerability Disclosures">
-    <main
-        class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 overflow-y-auto custom-scrollbar"
-    >
-        <a
-            href="/"
-            class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border border-solid border-neutral-600 rounded-lg transition-colors"
-            >Back</a
-        >
-
-        <div class="flex items-center gap-4 mb-4">
-            <h1 class="text-4xl font-bold text-neutral-100">0-Day Radar</h1>
-            <span
-                class="text-xs font-mono text-orange-500 bg-orange-500/10 border border-orange-500/30 px-2 py-1 rounded"
-                >LIVE_CVE</span
+    <main class="w-full max-w-6xl mx-auto px-4 py-12">
+        <div class="flex flex-col gap-8">
+            <!-- Header -->
+            <div
+                class="flex flex-col gap-4 border-l-4 border-orange-500 pl-6 py-2"
             >
-        </div>
+                <div class="flex items-center gap-4">
+                    <h1
+                        class="text-5xl font-extrabold text-white tracking-tighter font-['Iceland']"
+                    >
+                        0-DAY RADAR <span class="text-orange-500">//</span> CVE INTEL
+                    </h1>
+                    <span
+                        class="text-xs font-mono text-orange-500 bg-orange-500/10 border border-orange-500/30 px-2 py-1 rounded"
+                        >LIVE_CVE</span
+                    >
+                </div>
+                <p
+                    class="text-neutral-500 font-mono text-sm max-w-2xl uppercase tracking-widest"
+                >
+                    Aggregated vulnerability disclosures with CVSS scoring data.
+                    Sources: cvefeed.io + NVD.
+                </p>
+            </div>
 
-        <p class="text-neutral-400 text-sm mb-8 font-mono">
-            &gt;_ Aggregated vulnerability disclosures. Auto-updated via RSS
-            build pipelines.
-        </p>
+            <!-- Filters -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-neutral-900/30 p-6 rounded-lg border border-neutral-800"
+                id="filter-panel"
+            >
+                <!-- Search CVE ID / Keyword -->
+                <div class="lg:col-span-2">
+                    <label
+                        for="cve-search"
+                        class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono"
+                        >Search CVE ID / Keyword</label
+                    >
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="cve-search"
+                            placeholder="CVE-2024-... or keyword"
+                            maxlength="100"
+                            autocomplete="off"
+                            spellcheck="false"
+                            pattern="[a-zA-Z0-9\s\-\.]*"
+                            class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-orange-500/50 transition-all pl-10"
+                        />
+                        <svg
+                            class="absolute left-3 top-3.5 text-neutral-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><circle cx="11" cy="11" r="8"></circle><path
+                                d="m21 21-4.3-4.3"></path></svg
+                        >
+                    </div>
+                </div>
 
-        <ul class="w-full">
-            {
-                cveFeed.length > 0 ? (
-                    cveFeed.map((entry: any) => {
-                        // Attempt to extract CVE signature from feed title
-                        const match = entry.title.match(/(CVE-\d{4}-\d{4,7})/i);
-                        const cveId = match ? match[1].toUpperCase() : "VULN";
-
-                        // Clean up description if title contains both ID and description
-                        let descText = entry.title;
-                        if (match) {
-                            descText = entry.title
-                                .substring(match[0].length)
-                                .replace(/^[^a-zA-Z0-9]+/, ""); // Remove leading separators like " : " or " - "
+                <!-- Severity -->
+                <div>
+                    <label
+                        for="severity-filter"
+                        class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono"
+                        >Severity</label
+                    >
+                    <select
+                        id="severity-filter"
+                        class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-orange-500/50 transition-all appearance-none cursor-pointer"
+                    >
+                        <option value="all">All Severities</option>
+                        {
+                            severityLevels.map((s) => (
+                                <option value={s}>{s}</option>
+                            ))
                         }
+                    </select>
+                </div>
 
-                        return (
-                            <li class="group list-none w-full text-neutral-300 hover:text-orange-500 transition-all duration-300 ease-in-out border-b border-dashed border-neutral-700 hover:border-orange-500/50 my-2 py-2">
-                                <a
-                                    class="text-sm md:text-base text-inherit flex flex-col justify-between items-start w-full gap-2 md:flex-row md:items-center"
-                                    href={entry.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                <!-- Vendor -->
+                <div>
+                    <label
+                        for="vendor-filter"
+                        class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono"
+                        >Vendor</label
+                    >
+                    <select
+                        id="vendor-filter"
+                        class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-orange-500/50 transition-all appearance-none cursor-pointer"
+                    >
+                        <option value="all">All Vendors</option>
+                        {
+                            allVendors.map((v) => (
+                                <option value={v}>{v}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Date From -->
+                <div>
+                    <label
+                        for="date-from"
+                        class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono"
+                        >From Date</label
+                    >
+                    <input
+                        type="date"
+                        id="date-from"
+                        class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-orange-500/50 transition-all cursor-pointer"
+                    />
+                </div>
+
+                <!-- Date To -->
+                <div>
+                    <label
+                        for="date-to"
+                        class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono"
+                        >To Date</label
+                    >
+                    <input
+                        type="date"
+                        id="date-to"
+                        class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-orange-500/50 transition-all cursor-pointer"
+                    />
+                </div>
+
+                <!-- Product -->
+                <div>
+                    <label
+                        for="product-filter"
+                        class="block text-[10px] uppercase tracking-widest text-neutral-600 mb-2 font-mono"
+                        >Product</label
+                    >
+                    <select
+                        id="product-filter"
+                        class="w-full bg-black border border-neutral-800 text-white px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-orange-500/50 transition-all appearance-none cursor-pointer"
+                    >
+                        <option value="all">All Products</option>
+                        {
+                            allProducts.map((p) => (
+                                <option value={p}>{p}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <!-- Reset -->
+                <div class="flex items-end">
+                    <button
+                        id="reset-filters"
+                        class="w-full bg-neutral-900 border border-neutral-700 text-neutral-400 hover:text-orange-500 hover:border-orange-500/50 px-4 py-3 rounded font-mono text-sm transition-all cursor-pointer"
+                    >
+                        Reset Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results count -->
+            <div class="flex items-center justify-between">
+                <p
+                    id="results-count"
+                    class="text-neutral-600 font-mono text-xs uppercase tracking-widest"
+                >
+                    Showing {cves.length} vulnerabilities
+                </p>
+                <a
+                    href="/"
+                    class="text-neutral-500 hover:text-orange-500 font-mono text-xs uppercase tracking-widest transition-colors"
+                >
+                    &larr; Back
+                </a>
+            </div>
+
+            <!-- CVE Cards -->
+            <div class="flex flex-col gap-4" id="cve-list">
+                {
+                    cves.length > 0 ? (
+                        cves.map((cve: any) => {
+                            const pubDate = cve.publishedDate
+                                ? new Date(
+                                      cve.publishedDate
+                                  ).toLocaleDateString("en-US", {
+                                      year: "numeric",
+                                      month: "short",
+                                      day: "numeric",
+                                  })
+                                : "N/A";
+                            const pubDateISO = cve.publishedDate
+                                ? new Date(cve.publishedDate)
+                                      .toISOString()
+                                      .split("T")[0]
+                                : "";
+
+                            // Get highest severity from CVSS scores
+                            const topSeverity =
+                                cve.cvssScores?.[0]?.severity || "";
+                            const topScore =
+                                cve.cvssScores?.[0]?.score ?? null;
+
+                            return (
+                                <div
+                                    class="cve-entry group bg-neutral-900/40 border border-neutral-800 rounded-lg hover:border-orange-500/30 transition-all"
+                                    data-id={cve.id.toLowerCase()}
+                                    data-desc={cve.description.toLowerCase()}
+                                    data-date={pubDateISO}
+                                    data-severity={topSeverity.toUpperCase()}
+                                    data-vendors={cve.vendors
+                                        .join(",")
+                                        .toLowerCase()}
+                                    data-products={cve.products
+                                        .join(",")
+                                        .toLowerCase()}
                                 >
-                                    <div class="flex items-center gap-2 overflow-hidden w-full">
-                                        <div class="flex items-center">
-                                            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-2 text-orange-500 font-bold">
-                                                [
-                                            </span>
-                                            <div class="flex flex-col m-0 group-hover:translate-x-1 transition-transform duration-300">
-                                                <span class="font-bold text-white group-hover:text-orange-400">
-                                                    {cveId}
-                                                </span>
-                                                <span class="text-xs text-neutral-400 truncate w-full max-w-[200px] sm:max-w-xs md:max-w-md">
-                                                    {descText}
-                                                </span>
+                                    {/* Main row */}
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 cursor-pointer cve-toggle">
+                                        <div class="flex items-center gap-4 min-w-0">
+                                            {/* Score badge */}
+                                            {topScore !== null ? (
+                                                <div
+                                                    class={`shrink-0 w-12 h-12 rounded-lg border-2 flex items-center justify-center font-bold text-lg ${scoreColor(topScore)}`}
+                                                >
+                                                    {topScore.toFixed(1)}
+                                                </div>
+                                            ) : (
+                                                <div class="shrink-0 w-12 h-12 rounded-lg border-2 border-neutral-700 flex items-center justify-center text-neutral-600 font-mono text-xs">
+                                                    N/A
+                                                </div>
+                                            )}
+                                            <div class="flex flex-col min-w-0">
+                                                <div class="flex items-center gap-2 flex-wrap">
+                                                    <span class="font-bold text-white group-hover:text-orange-400 transition-colors font-mono">
+                                                        {cve.id}
+                                                    </span>
+                                                    {topSeverity && (
+                                                        <span
+                                                            class={`text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider ${severityColor(topSeverity)}`}
+                                                        >
+                                                            {topSeverity}
+                                                        </span>
+                                                    )}
+                                                    {cve.vendors.length >
+                                                        0 && (
+                                                        <span class="text-[10px] font-mono text-neutral-500 bg-neutral-800 px-2 py-0.5 rounded">
+                                                            {cve.vendors.join(
+                                                                ", "
+                                                            )}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <p class="text-sm text-neutral-400 truncate max-w-xl mt-1">
+                                                    {cve.description}
+                                                </p>
                                             </div>
-                                            <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2 text-orange-500 font-bold">
-                                                ]
-                                            </span>
+                                        </div>
+
+                                        <div class="flex items-center gap-4 shrink-0">
+                                            <time class="text-xs font-mono text-neutral-500 tabular-nums">
+                                                {pubDate}
+                                            </time>
+                                            {/* Expand chevron */}
+                                            <svg
+                                                class="cve-chevron w-4 h-4 text-neutral-600 group-hover:text-orange-500 transition-all duration-300"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            >
+                                                <polyline points="6 9 12 15 18 9" />
+                                            </svg>
                                         </div>
                                     </div>
-                                    {entry.isoDate && (
-                                        <time
-                                            class="text-right tabular-nums text-xs group-hover:text-orange-400 transition-colors duration-300 shrink-0"
-                                            datetime={new Date(
-                                                entry.isoDate
-                                            ).toISOString()}
-                                        >
-                                            {formatDate(
-                                                new Date(entry.isoDate)
-                                            )}
-                                        </time>
-                                    )}
-                                </a>
-                            </li>
-                        );
-                    })
-                ) : (
-                    <p class="text-red-500 font-mono text-sm">
-                        &gt;_ Error: Connection to intel feed severed.
-                    </p>
-                )
-            }
-        </ul>
+
+                                    {/* Expandable CVSS detail panel */}
+                                    <div class="cve-detail hidden border-t border-neutral-800">
+                                        {/* Full description */}
+                                        <div class="px-5 py-4 border-b border-neutral-800/50">
+                                            <p class="text-sm text-neutral-300 leading-relaxed">
+                                                {cve.description}
+                                            </p>
+                                            <div class="flex flex-wrap gap-3 mt-3">
+                                                {cve.products.length > 0 && (
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="text-[10px] uppercase tracking-widest text-neutral-600 font-mono">
+                                                            Products:
+                                                        </span>
+                                                        {cve.products.map(
+                                                            (prod: string) => (
+                                                                <span class="text-[10px] font-mono text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded">
+                                                                    {prod}
+                                                                </span>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                )}
+                                                <a
+                                                    href={cve.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="text-[10px] font-mono text-orange-500 hover:text-orange-300 underline underline-offset-2 transition-colors"
+                                                >
+                                                    View on cvefeed.io &rarr;
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {/* CVSS Scores Table */}
+                                        {cve.cvssScores.length > 0 ? (
+                                            <div class="overflow-x-auto">
+                                                <table class="w-full text-left border-collapse">
+                                                    <thead>
+                                                        <tr class="text-[10px] uppercase tracking-widest text-neutral-600 font-mono">
+                                                            <th class="px-5 py-3 font-semibold">
+                                                                Score
+                                                            </th>
+                                                            <th class="px-5 py-3 font-semibold">
+                                                                Version
+                                                            </th>
+                                                            <th class="px-5 py-3 font-semibold">
+                                                                Severity
+                                                            </th>
+                                                            <th class="px-5 py-3 font-semibold">
+                                                                Vector
+                                                            </th>
+                                                            <th class="px-5 py-3 font-semibold text-center">
+                                                                Exploitability
+                                                            </th>
+                                                            <th class="px-5 py-3 font-semibold text-center">
+                                                                Impact
+                                                            </th>
+                                                            <th class="px-5 py-3 font-semibold text-right">
+                                                                Source
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-neutral-800/50">
+                                                        {cve.cvssScores.map(
+                                                            (cs: any) => (
+                                                                <tr class="hover:bg-orange-500/[0.03] transition-colors">
+                                                                    <td class="px-5 py-3">
+                                                                        <span
+                                                                            class={`inline-flex items-center justify-center w-10 h-10 rounded-md border-2 font-bold text-sm ${scoreColor(cs.score)}`}
+                                                                        >
+                                                                            {cs.score.toFixed(
+                                                                                1
+                                                                            )}
+                                                                        </span>
+                                                                    </td>
+                                                                    <td class="px-5 py-3 text-sm font-mono text-neutral-300">
+                                                                        {
+                                                                            cs.version
+                                                                        }
+                                                                    </td>
+                                                                    <td class="px-5 py-3">
+                                                                        <span
+                                                                            class={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${severityColor(cs.severity)}`}
+                                                                        >
+                                                                            {
+                                                                                cs.severity
+                                                                            }
+                                                                        </span>
+                                                                    </td>
+                                                                    <td class="px-5 py-3 max-w-[220px]">
+                                                                        <code class="text-[10px] font-mono text-neutral-400 bg-neutral-800/80 px-2 py-1 rounded block truncate" title={cs.vector}>
+                                                                            {
+                                                                                cs.vector
+                                                                            }
+                                                                        </code>
+                                                                    </td>
+                                                                    <td class="px-5 py-3 text-center">
+                                                                        {cs.exploitabilityScore !==
+                                                                        null ? (
+                                                                            <span
+                                                                                class={`inline-flex items-center justify-center w-10 h-10 rounded-md border ${scoreColor(cs.exploitabilityScore)} text-sm font-bold`}
+                                                                            >
+                                                                                {cs.exploitabilityScore.toFixed(
+                                                                                    1
+                                                                                )}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span class="text-neutral-600 text-xs font-mono">
+                                                                                —
+                                                                            </span>
+                                                                        )}
+                                                                    </td>
+                                                                    <td class="px-5 py-3 text-center">
+                                                                        {cs.impactScore !==
+                                                                        null ? (
+                                                                            <span
+                                                                                class={`inline-flex items-center justify-center w-10 h-10 rounded-md border ${scoreColor(cs.impactScore)} text-sm font-bold`}
+                                                                            >
+                                                                                {cs.impactScore.toFixed(
+                                                                                    1
+                                                                                )}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span class="text-neutral-600 text-xs font-mono">
+                                                                                —
+                                                                            </span>
+                                                                        )}
+                                                                    </td>
+                                                                    <td class="px-5 py-3 text-right">
+                                                                        <span class="text-[11px] font-mono text-neutral-500 break-all">
+                                                                            {
+                                                                                cs.source
+                                                                            }
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            )
+                                                        )}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        ) : (
+                                            <div class="px-5 py-6 text-center">
+                                                <p class="text-neutral-600 font-mono text-xs uppercase tracking-widest">
+                                                    No CVSS scoring data
+                                                    available yet
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <div class="py-20 text-center flex flex-col items-center gap-4">
+                            <p class="text-red-500 font-mono text-sm">
+                                &gt;_ Error: Connection to intel feed severed.
+                                Run `npm run sync:cves` to populate data.
+                            </p>
+                        </div>
+                    )
+                }
+            </div>
+
+            <!-- No results message -->
+            <div
+                id="no-results"
+                class="hidden py-20 text-center flex-col items-center gap-4"
+            >
+                <svg
+                    class="text-neutral-800"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    ><circle cx="11" cy="11" r="8"></circle><path
+                        d="m21 21-4.3-4.3"></path></svg
+                >
+                <p
+                    class="text-neutral-600 font-mono uppercase tracking-widest text-xs"
+                >
+                    No matching vulnerabilities found
+                </p>
+            </div>
+        </div>
     </main>
 </Layout>
+
+<script>
+    // ─────────────────────────────────────────────────────────────
+    // Security: Input Sanitisation & Guardrails
+    // OWASP: XSS prevention — no innerHTML, no eval, no DOM injection
+    //   • Whitelist: only alphanumeric, hyphens, dots, spaces allowed
+    //   • Max length enforced at JS level (belt-and-suspenders with HTML attr)
+    //   • Input is ONLY compared against pre-rendered dataset attributes
+    //   • Output uses .textContent (safe) — never .innerHTML
+    //   • Debounced to prevent performance abuse via rapid input
+    //   • Paste events are sanitised before processing
+    // ─────────────────────────────────────────────────────────────
+
+    const SEARCH_MAX_LENGTH = 100;
+    const ALLOWED_CHARS = /[^a-zA-Z0-9\s\-\.]/g; // whitelist pattern (inverted for stripping)
+    const DEBOUNCE_MS = 150;
+
+    /** Strip dangerous characters — whitelist approach (deny by default). */
+    function sanitiseInput(raw: string): string {
+        return raw
+            .replace(ALLOWED_CHARS, "")  // strip anything not whitelisted
+            .substring(0, SEARCH_MAX_LENGTH) // enforce max length
+            .trim();
+    }
+
+    /** Validate YYYY-MM-DD date format strictly. */
+    function isValidDateValue(val: string): boolean {
+        if (!val) return true; // empty is valid (no filter)
+        return /^\d{4}-\d{2}-\d{2}$/.test(val) && !isNaN(Date.parse(val));
+    }
+
+    /** Validate select value is one of the allowed options. */
+    function isValidSelectValue(select: HTMLSelectElement): boolean {
+        const options = Array.from(select.options).map((o) => o.value);
+        return options.includes(select.value);
+    }
+
+    /** Simple debounce to prevent rapid-fire filtering. */
+    function debounce(fn: (...args: any[]) => void, ms: number) {
+        let timer: ReturnType<typeof setTimeout>;
+        return (...args: any[]) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn(...args), ms);
+        };
+    }
+
+    // ── Toggle expand/collapse ──────────────────────────────────
+    document.querySelectorAll(".cve-toggle").forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+            const entry = toggle.closest(".cve-entry");
+            if (!entry) return;
+            const detail = entry.querySelector(".cve-detail");
+            const chevron = entry.querySelector(".cve-chevron");
+            if (detail) detail.classList.toggle("hidden");
+            if (chevron) chevron.classList.toggle("rotate-180");
+        });
+    });
+
+    // ── DOM references ──────────────────────────────────────────
+    const searchInput = document.getElementById(
+        "cve-search"
+    ) as HTMLInputElement;
+    const severityFilter = document.getElementById(
+        "severity-filter"
+    ) as HTMLSelectElement;
+    const vendorFilter = document.getElementById(
+        "vendor-filter"
+    ) as HTMLSelectElement;
+    const productFilter = document.getElementById(
+        "product-filter"
+    ) as HTMLSelectElement;
+    const dateFrom = document.getElementById("date-from") as HTMLInputElement;
+    const dateTo = document.getElementById("date-to") as HTMLInputElement;
+    const resetBtn = document.getElementById("reset-filters");
+    const entries = document.querySelectorAll(
+        ".cve-entry"
+    ) as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById("no-results");
+    const resultsCount = document.getElementById("results-count");
+
+    // ── Live sanitisation on keystroke ───────────────────────────
+    // Immediately strips disallowed chars as the user types so
+    // dangerous payloads never persist in the input field.
+    searchInput?.addEventListener("input", () => {
+        const cleaned = sanitiseInput(searchInput.value);
+        if (cleaned !== searchInput.value) {
+            searchInput.value = cleaned; // overwrite with sanitised value
+        }
+    });
+
+    // ── Sanitise paste events ───────────────────────────────────
+    // Intercept clipboard data before it reaches the input.
+    searchInput?.addEventListener("paste", (e: ClipboardEvent) => {
+        e.preventDefault();
+        const pasted = e.clipboardData?.getData("text/plain") || "";
+        const cleaned = sanitiseInput(pasted);
+        // Insert sanitised text at cursor via execCommand-free approach
+        const start = searchInput.selectionStart ?? searchInput.value.length;
+        const end = searchInput.selectionEnd ?? start;
+        const before = searchInput.value.substring(0, start);
+        const after = searchInput.value.substring(end);
+        searchInput.value = sanitiseInput(before + cleaned + after);
+        searchInput.dispatchEvent(new Event("input")); // trigger filter update
+    });
+
+    // ── Core filter logic ───────────────────────────────────────
+    function applyFilters() {
+        // Sanitise search query (defence-in-depth — already cleaned on input)
+        const query = sanitiseInput(searchInput.value).toLowerCase();
+
+        // Validate select dropdowns against their actual option values
+        const severity = isValidSelectValue(severityFilter)
+            ? severityFilter.value
+            : "all";
+        const vendor = isValidSelectValue(vendorFilter)
+            ? vendorFilter.value.toLowerCase()
+            : "all";
+        const product = isValidSelectValue(productFilter)
+            ? productFilter.value.toLowerCase()
+            : "all";
+
+        // Validate date inputs
+        const from = isValidDateValue(dateFrom.value) ? dateFrom.value : "";
+        const to = isValidDateValue(dateTo.value) ? dateTo.value : "";
+
+        let visible = 0;
+
+        entries.forEach((el) => {
+            // Read only from pre-rendered dataset attrs (server-controlled, safe)
+            const id = el.dataset.id || "";
+            const desc = el.dataset.desc || "";
+            const date = el.dataset.date || "";
+            const sev = el.dataset.severity || "";
+            const vendors = el.dataset.vendors || "";
+            const products = el.dataset.products || "";
+
+            // String comparison only — no regex from user input, no DOM mutation
+            const matchSearch =
+                !query || id.includes(query) || desc.includes(query);
+            const matchSeverity = severity === "all" || sev === severity;
+            const matchVendor = vendor === "all" || vendors.includes(vendor);
+            const matchProduct =
+                product === "all" || products.includes(product);
+            const matchFrom = !from || date >= from;
+            const matchTo = !to || date <= to;
+
+            if (
+                matchSearch &&
+                matchSeverity &&
+                matchVendor &&
+                matchProduct &&
+                matchFrom &&
+                matchTo
+            ) {
+                el.style.display = "";
+                visible++;
+            } else {
+                el.style.display = "none";
+            }
+        });
+
+        if (noResults) {
+            noResults.classList.toggle("hidden", visible > 0);
+            noResults.classList.toggle("flex", visible === 0);
+        }
+        // Safe: .textContent never interprets HTML/JS
+        if (resultsCount) {
+            resultsCount.textContent = `Showing ${visible} vulnerabilit${visible === 1 ? "y" : "ies"}`;
+        }
+    }
+
+    // ── Event listeners (search is debounced) ───────────────────
+    const debouncedFilter = debounce(applyFilters, DEBOUNCE_MS);
+    searchInput?.addEventListener("input", debouncedFilter);
+    severityFilter?.addEventListener("change", applyFilters);
+    vendorFilter?.addEventListener("change", applyFilters);
+    productFilter?.addEventListener("change", applyFilters);
+    dateFrom?.addEventListener("change", applyFilters);
+    dateTo?.addEventListener("change", applyFilters);
+
+    resetBtn?.addEventListener("click", () => {
+        searchInput.value = "";
+        severityFilter.value = "all";
+        vendorFilter.value = "all";
+        productFilter.value = "all";
+        dateFrom.value = "";
+        dateTo.value = "";
+        applyFilters();
+    });
+</script>
+
+<style>
+    .cve-chevron {
+        transition: transform 0.3s ease;
+    }
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+    /* Date input styling for dark theme */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(0.6);
+        cursor: pointer;
+    }
+    /* Scrollbar */
+    .overflow-x-auto::-webkit-scrollbar {
+        height: 4px;
+    }
+    .overflow-x-auto::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: rgba(249, 115, 22, 0.3);
+        border-radius: 2px;
+    }
+</style>
