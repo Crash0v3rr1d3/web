@@ -14,6 +14,18 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+async function fetchJsonWithRetry(url, timeoutMs = 60000, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await fetchJson(url, timeoutMs);
+    } catch (err) {
+      if (attempt === retries) throw err;
+      console.warn(`Attempt ${attempt}/${retries} failed for ${url}: ${err.message}. Retrying in ${attempt * 5}s...`);
+      await sleep(attempt * 5000);
+    }
+  }
+}
+
 function fetchJson(url, timeoutMs = 60000, redirectCount = 0) {
   if (redirectCount > 3) {
     return Promise.reject(new Error(`Too many redirects for ${url}`));
@@ -73,7 +85,7 @@ async function main() {
   try {
     // --- Groups Logic ---
     console.log('Fetching all groups...');
-    const groups = await fetchJson(`${API_BASE}/groups`);
+    const groups = await fetchJsonWithRetry(`${API_BASE}/groups`);
     fs.writeFileSync(path.join(DATA_DIR, 'groups.json'), JSON.stringify(groups, null, 2));
     console.log(`Saved ${groups.length} groups to groups.json`);
 
@@ -104,7 +116,7 @@ async function main() {
 
     // --- Victims Logic ---
     console.log('Fetching recent victims...');
-    const recentVictims = await fetchJson(`${API_BASE}/recentvictims`);
+    const recentVictims = await fetchJsonWithRetry(`${API_BASE}/recentvictims`);
     fs.writeFileSync(path.join(DATA_DIR, 'recent_victims.json'), JSON.stringify(recentVictims, null, 2));
     console.log(`Saved ${recentVictims.length} recent victims.`);
 
