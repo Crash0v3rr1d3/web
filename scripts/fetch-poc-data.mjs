@@ -59,8 +59,8 @@ async function main() {
 
     console.log('--- PoC Data Sync Complete ---');
   } catch (error) {
-    console.error('Fatal error during PoC sync:', error);
-    process.exit(1);
+    console.error('PoC data sync failed:', error.message);
+    console.log('Keeping existing cached data.');
   }
 }
 

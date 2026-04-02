@@ -1,9 +1,9 @@
-name: Fetch Ransomware Data
+name: Fetch Threat Intel Data
 
 on:
   schedule:
-    - cron: '0 * * * *' # Every 60 minutes
-  workflow_dispatch: # Allow manual trigger
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
 
 jobs:
   fetch-and-commit:
@@ -19,17 +19,23 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Run fetch scripts
-        run: |
-          node scripts/fetch-ransomware-data.mjs
-          node scripts/fetch-poc-data.mjs
-          node scripts/fetch-cve-data.mjs
+      - name: Fetch ransomware data
+        run: node scripts/fetch-ransomware-data.mjs
+        continue-on-error: true
         env:
           RANSOMWARE_API_KEY: ${{ secrets.RANSOMWARE_API_KEY }}
+
+      - name: Fetch PoC data
+        run: node scripts/fetch-poc-data.mjs
+        continue-on-error: true
+
+      - name: Fetch CVE data
+        run: node scripts/fetch-cve-data.mjs
+        continue-on-error: true
 
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add src/data/remote/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "data: update cached ransomware profiles [skip netlify]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "data: update cached threat intel data [skip netlify]" && git push)

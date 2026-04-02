@@ -180,8 +180,8 @@ async function main() {
 
     console.log('--- Data Sync Complete ---');
   } catch (error) {
-    console.error('Fatal error during sync:', error);
-    process.exit(1);
+    console.error('Ransomware data sync failed (upstream API may be down):', error.message);
+    console.log('Keeping existing cached data.');
   }
 }
 
