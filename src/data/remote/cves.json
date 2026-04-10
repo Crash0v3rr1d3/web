@@ -1,43 +1,289 @@
 [
   {
-    "id": "CVE-2026-33457",
-    "description": "Potential livestatus injection in prediction graph page",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33457",
-    "publishedDate": "Fri, 10 Apr 2026 08:31:35 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-5777",
+    "description": "This vulnerability exists in the Atom 3x Projector due to improper exposure of the Android Debug Bridge (ADB) service over the local network without authentication or access controls. An unauthenticated attacker on the same network can exploit this vulnerability to obtain root-level access, leading to complete compromise of the targeted device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5777",
+    "publishedDate": "2026-04-10T12:16:04.480",
+    "lastModifiedDate": "2026-04-10T12:16:04.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vdisclose@cert-in.org.in"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39304",
+    "description": "Denial of Service via Out of Memory vulnerability in Apache ActiveMQ Client, Apache ActiveMQ Broker, Apache ActiveMQ.\n\nActiveMQ NIO SSL transports do not correctly handle TLSv1.3 handshake KeyUpdates triggered by clients. This makes it possible for a client to rapidly trigger updates which causes the broker to exhaust all its memory in the SSL engine leading to DoS.\n\nNote: TLS versions before TLSv1.3 (such as TLSv1.2) are broken but are not vulnerable to OOM. Previous TLS versions require a full handshake renegotiation which causes a connection to hang but not OOM. This is fixed as well.\nThis issue affects Apache ActiveMQ Client: before 5.19.4, from 6.0.0 before 6.2.4; Apache ActiveMQ Broker: before 5.19.4, from 6.0.0 before 6.2.4; Apache ActiveMQ: before 5.19.4, from 6.0.0 before 6.2.4.\n\nUsers are recommended to upgrade to version 6.2.4 or 5.19.5, which fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39304",
+    "publishedDate": "2026-04-10T11:16:23.143",
+    "lastModifiedDate": "2026-04-10T12:16:03.570",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-33456",
-    "description": "Potential livestatus injection in notification test",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33456",
-    "publishedDate": "Fri, 10 Apr 2026 08:31:27 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-31412",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nusb: gadget: f_mass_storage: Fix potential integer overflow in check_command_size_in_blocks()\n\nThe `check_command_size_in_blocks()` function calculates the data size\nin bytes by left shifting `common->data_size_from_cmnd` by the block\nsize (`common->curlun->blkbits`). However, it does not validate whether\nthis shift operation will cause an integer overflow.\n\nInitially, the block size is set up in `fsg_lun_open()` , and the\n`common->data_size_from_cmnd` is set up in `do_scsi_command()`. During\ninitialization, there is no integer overflow check for the interaction\nbetween two variables.\n\nSo if a malicious USB host sends a SCSI READ or WRITE command\nrequesting a large amount of data (`common->data_size_from_cmnd`), the\nleft shift operation can wrap around. This results in a truncated data\nsize, which can bypass boundary checks and potentially lead to memory\ncorruption or out-of-bounds accesses.\n\nFix this by using the check_shl_overflow() macro to safely perform the\nshift and catch any overflows.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31412",
+    "publishedDate": "2026-04-10T11:16:22.967",
+    "lastModifiedDate": "2026-04-10T11:16:22.967",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-33455",
-    "description": "Livestatus injection in monitoring quicksearch",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33455",
-    "publishedDate": "Fri, 10 Apr 2026 08:30:20 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-6057",
+    "description": "FalkorDB Browser 1.9.3 contains an unauthenticated path traversal vulnerability in the file upload API that allows remote attackers to write arbitrary files and achieve remote code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6057",
+    "publishedDate": "2026-04-10T10:16:04.547",
+    "lastModifiedDate": "2026-04-10T10:16:04.547",
     "vendors": [],
     "products": [],
     "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-4162",
+    "description": "The Gravity SMTP plugin for WordPress is vulnerable to Missing Authorization in versions up to, and including, 2.1.4. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to uninstall and deactivate the plugin and delete plugin options. NOTE: This vulnerability is also exploitable via a Cross-Site Request Forgery vector.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4162",
+    "publishedDate": "2026-04-10T10:16:04.120",
+    "lastModifiedDate": "2026-04-10T10:16:04.120",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2021-47961",
+    "description": "A plaintext storage of a password vulnerability in Synology SSL VPN Client before 1.4.5-0684 allows remote attackers to access or influence the user's PIN code due to insecure storage. This may lead to unauthorized VPN configuration and potential interception of subsequent VPN traffic when combined with user interaction.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2021-47961",
+    "publishedDate": "2026-04-10T10:16:03.913",
+    "lastModifiedDate": "2026-04-10T10:16:03.913",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security@synology.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2021-47960",
+    "description": "A files or directories accessible to external parties vulnerability in Synology SSL VPN Client before 1.4.5-0684 allows remote attackers to access files within the installation directory via a local HTTP server bound to the loopback interface. By leveraging user interaction with a crafted web page, attackers may retrieve sensitive files such as configuration files, certificates, and logs, leading to information disclosure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2021-47960",
+    "publishedDate": "2026-04-10T10:16:02.853",
+    "lastModifiedDate": "2026-04-10T10:16:02.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@synology.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6042",
+    "description": "A security flaw has been discovered in musl libc up to 1.2.6. Affected is the function iconv of the file src/locale/iconv.c of the component GB18030 4-byte Decoder. Performing a manipulation results in inefficient algorithmic complexity. The attack must be initiated from a local position. To fix this issue, it is recommended to deploy a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6042",
+    "publishedDate": "2026-04-10T09:16:25.450",
+    "lastModifiedDate": "2026-04-10T10:16:04.277",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 4.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6038",
+    "description": "A vulnerability was identified in code-projects Vehicle Showroom Management System 1.0. This impacts an unknown function of the file /util/RegisterCustomerFunction.php. Such manipulation of the argument BRANCH_ID leads to sql injection. The attack may be performed from remote. The exploit is publicly available and might be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6038",
+    "publishedDate": "2026-04-10T09:16:25.220",
+    "lastModifiedDate": "2026-04-10T09:16:25.220",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-6037",
-    "description": "code-projects Vehicle Showroom Management System AddVehicleFunction.php sql injection",
+    "description": "A vulnerability was determined in code-projects Vehicle Showroom Management System 1.0. This affects an unknown function of the file /util/AddVehicleFunction.php. This manipulation of the argument BRANCH_ID causes sql injection. The attack is possible to be carried out remotely. The exploit has been publicly disclosed and may be utilized.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-6037",
-    "publishedDate": "Fri, 10 Apr 2026 08:30:10 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-10T09:16:25.000",
+    "lastModifiedDate": "2026-04-10T09:16:25.000",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6036",
+    "description": "A vulnerability was found in code-projects Vehicle Showroom Management System 1.0. The impacted element is an unknown function of the file /util/VehicleDetailsFunction.php. The manipulation of the argument VEHICLE_ID results in sql injection. The attack can be executed remotely. The exploit has been made public and could be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6036",
+    "publishedDate": "2026-04-10T09:16:24.787",
+    "lastModifiedDate": "2026-04-10T09:16:24.787",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33457",
+    "description": "Livestatus injection in the prediction graph page in Checkmk <2.5.0b4, <2.4.0p26, and <2.3.0p47 allows an authenticated user to inject arbitrary Livestatus commands via a crafted service name parameter due to insufficient sanitization of the service description value.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33457",
+    "publishedDate": "2026-04-10T09:16:24.630",
+    "lastModifiedDate": "2026-04-10T09:16:24.630",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@checkmk.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33456",
+    "description": "Livestatus injection in the notification test mode in Checkmk <2.5.0b4 and <2.4.0p26 allows an authenticated user with access to the notification test page to inject arbitrary Livestatus commands via a crafted service description.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33456",
+    "publishedDate": "2026-04-10T09:16:24.493",
+    "lastModifiedDate": "2026-04-10T09:16:24.493",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@checkmk.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33455",
+    "description": "Livestatus injection in the monitoring quicksearch in Checkmk <2.5.0b4 allows an authenticated attacker to inject livestatus commands via the search query due to insufficient input sanitization in search filter plugins.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33455",
+    "publishedDate": "2026-04-10T09:16:23.447",
+    "lastModifiedDate": "2026-04-10T09:16:23.447",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@checkmk.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-6035",
@@ -157,32 +403,13 @@
   },
   {
     "id": "CVE-2026-6031",
-    "description": "A vulnerability has been found in code-projects Simple IT Discussion Forum 1.0. This affects an unknown function of the file /add-category-function.php. Such manipulation of the argument Category leads to sql injection. The attack can be executed remotely. The exploit has been disclosed to the public and may be used.",
+    "description": "code-projects Simple IT Discussion Forum add-category-function.php sql injection",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-6031",
-    "publishedDate": "2026-04-10T08:16:26.253",
-    "lastModifiedDate": "2026-04-10T08:16:26.253",
+    "publishedDate": "Fri, 10 Apr 2026 08:16:26 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
     "id": "CVE-2026-5525",
@@ -243,16 +470,6 @@
         "source": "security@vmware.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-6036",
-    "description": "code-projects Vehicle Showroom Management System VehicleDetailsFunction.php sql injection",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6036",
-    "publishedDate": "Fri, 10 Apr 2026 08:15:12 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   },
   {
     "id": "CVE-2026-6030",
@@ -335,201 +552,6 @@
         "version": "CVSS 4.0",
         "severity": "HIGH",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6027",
-    "description": "A weakness has been identified in Totolink A7100RU 7.4cu.2313_b20191024. This issue affects the function setUrlFilterRules of the file /cgi-bin/cstecgi.cgi of the component CGI Handler. Executing a manipulation of the argument enable can lead to os command injection. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6027",
-    "publishedDate": "2026-04-10T07:16:21.583",
-    "lastModifiedDate": "2026-04-10T07:16:21.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6026",
-    "description": "A security flaw has been discovered in Totolink A7100RU 7.4cu.2313_b20191024. This vulnerability affects the function setPortalConfWeChat of the file /cgi-bin/cstecgi.cgi of the component CGI Handler. Performing a manipulation of the argument enable results in os command injection. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6026",
-    "publishedDate": "2026-04-10T07:16:21.350",
-    "lastModifiedDate": "2026-04-10T07:16:21.350",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-4432",
-    "description": "The YITH WooCommerce Wishlist WordPress plugin before 4.13.0 does not properly validate wishlist ownership in the save_title() AJAX handler before allowing wishlist renaming operations. The function only checks for a valid nonce, which is publicly exposed in the page source of the /wishlist/ page, making it possible for unauthenticated attackers to rename any wishlist belonging to any user on the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4432",
-    "publishedDate": "2026-04-10T07:16:21.237",
-    "lastModifiedDate": "2026-04-10T07:16:21.237",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-28704",
-    "description": "Emocheck insecurely loads Dynamic Link Libraries (DLLs). If a crafted DLL file is placed to the same directory, an arbitrary code may be executed with the privilege of the user invoking EmoCheck.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28704",
-    "publishedDate": "2026-04-10T07:16:21.023",
-    "lastModifiedDate": "2026-04-10T07:16:21.023",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vultures@jpcert.or.jp"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-1115",
-    "description": "A Stored Cross-Site Scripting (XSS) vulnerability was identified in the social feature of parisneo/lollms, affecting the latest version prior to 2.2.0. The vulnerability exists in the `create_post` function within `backend/routers/social/__init__.py`, where user-provided content is directly assigned to the `DBPost` model without sanitization. This allows attackers to inject and store malicious JavaScript, which is executed in the browsers of users viewing the Home Feed, including administrators. This can lead to account takeover, session hijacking, and wormable attacks. The issue is resolved in version 2.2.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1115",
-    "publishedDate": "2026-04-10T07:16:20.750",
-    "lastModifiedDate": "2026-04-10T07:16:20.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-14545",
-    "description": "The YML for Yandex Market WordPress plugin before 5.0.26 is vulnerable to Remote Code Execution via the feed generation process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-14545",
-    "publishedDate": "2026-04-10T07:16:19.607",
-    "lastModifiedDate": "2026-04-10T07:16:19.607",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6025",
-    "description": "A vulnerability was identified in Totolink A7100RU 7.4cu.2313_b20191024. This affects the function setSyslogCfg of the file /cgi-bin/cstecgi.cgi of the component CGI Handler. Such manipulation of the argument enable leads to os command injection. It is possible to launch the attack remotely. The exploit is publicly available and might be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6025",
-    "publishedDate": "2026-04-10T06:16:07.203",
-    "lastModifiedDate": "2026-04-10T06:16:07.203",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6024",
-    "description": "A vulnerability was determined in Tenda i6 1.0.0.7(2204). Affected by this issue is the function R7WebsSecurityHandlerfunction of the component HTTP Handler. This manipulation causes path traversal. It is possible to initiate the attack remotely. The exploit has been publicly disclosed and may be utilized.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6024",
-    "publishedDate": "2026-04-10T06:16:06.993",
-    "lastModifiedDate": "2026-04-10T06:16:06.993",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6016",
-    "description": "A vulnerability was found in Tenda AC9 15.03.02.13. The affected element is the function decodePwd of the file /goform/WizardHandle of the component POST Request Handler. Performing a manipulation of the argument WANS results in stack-based buffer overflow. The attack can be initiated remotely. The exploit has been made public and could be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6016",
-    "publishedDate": "2026-04-10T06:16:06.780",
-    "lastModifiedDate": "2026-04-10T06:16:06.780",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
