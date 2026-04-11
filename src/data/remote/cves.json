@@ -1,5 +1,45 @@
 [
   {
+    "id": "CVE-2026-5809",
+    "description": "The wpForo Forum plugin for WordPress is vulnerable to Arbitrary File Deletion in versions up to and including 3.0.2. This is due to a two-step logic flaw: the topic_add() and topic_edit() action handlers accept arbitrary user-supplied data[*] arrays from $_REQUEST and store them as postmeta without restricting which fields may contain array values. Because 'body' is included in the allowed topic fields list, an attacker can supply data[body][fileurl] with an arbitrary file path (e.g., wp-config.php or an absolute server path). This poisoned fileurl is persisted to the plugin's custom postmeta database table. Subsequently, when the attacker submits wpftcf_delete[]=body on a topic_edit request, the add_file() method retrieves the stored postmeta record, extracts the attacker-controlled fileurl, passes it through wpforo_fix_upload_dir() which only rewrites legitimate wpforo upload paths and returns all other paths unchanged, and then calls wp_delete_file() on the unvalidated path. This makes it possible for authenticated attackers, with subscriber-level access and above, to delete arbitrary files writable by the PHP process on the server, including critical files such as wp-config.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5809",
+    "publishedDate": "2026-04-11T08:16:05.503",
+    "lastModifiedDate": "2026-04-11T08:16:05.503",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-34621",
+    "description": "Acrobat Reader versions 24.001.30356, 26.001.21367 and earlier are affected by an Improperly Controlled Modification of Object Prototype Attributes ('Prototype Pollution') vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34621",
+    "publishedDate": "2026-04-11T07:16:03.633",
+    "lastModifiedDate": "2026-04-11T07:16:03.633",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-5226",
     "description": "The Optimole – Optimize Images in Real Time plugin for WordPress is vulnerable to Reflected Cross-Site Scripting via URL paths in versions up to, and including, 4.2.3 This is due to insufficient output escaping on user-supplied URL paths in the get_current_url() function, which are inserted into JavaScript code via str_replace() without proper JavaScript context escaping in the replace_content() function. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that execute if they can successfully trick a user into performing an action such as clicking on a link.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-5226",
@@ -315,26 +355,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-4154",
     "publishedDate": "2026-04-11T01:16:17.093",
     "lastModifiedDate": "2026-04-11T01:16:17.093",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-4153",
-    "description": "GIMP PSP File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of GIMP. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the parsing of PSP files. The issue results from the lack of proper validation of the length of user-supplied data prior to copying it to a heap-based buffer. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-28874.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4153",
-    "publishedDate": "2026-04-11T01:16:16.963",
-    "lastModifiedDate": "2026-04-11T01:16:16.963",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-4152",
-    "description": "GIMP JP2 File Parsing Heap-based Buffer Overflow Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of GIMP. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the parsing of JP2 files. The issue results from the lack of proper validation of the length of user-supplied data prior to copying it to a heap-based buffer. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-28863.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4152",
-    "publishedDate": "2026-04-11T01:16:16.830",
-    "lastModifiedDate": "2026-04-11T01:16:16.830",
     "vendors": [],
     "products": [],
     "cvssScores": []
