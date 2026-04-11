@@ -1,5 +1,35 @@
 [
   {
+    "id": "CVE-2026-32146",
+    "description": "Improper path validation vulnerability in the Gleam compiler's handling of git dependencies allows arbitrary file system modification during dependency download.\n\nDependency names from gleam.toml and manifest.toml are incorporated into filesystem paths without sufficient validation or confinement to the intended dependency directory, allowing attacker-controlled paths (via relative traversal such as ../ or absolute paths) to target filesystem locations outside that directory. When resolving git dependencies (e.g. via gleam deps download), the computed path is used for filesystem operations including directory deletion and creation.\n\nThis vulnerability occurs during the dependency resolution and download phase, which is generally expected to be limited to fetching and preparing dependencies within a confined directory. A malicious direct or transitive git dependency can exploit this issue to delete and overwrite arbitrary directories outside the intended dependency directory, including attacker-chosen absolute paths, potentially causing data loss. In some environments, this may be further leveraged to achieve code execution, for example by overwriting git hooks or shell configuration files.\n\nThis issue affects Gleam from 1.9.0-rc1 until 1.15.3 and 1.16.0-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-32146",
+    "publishedDate": "2026-04-11T14:16:03.640",
+    "lastModifiedDate": "2026-04-11T14:16:03.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-23900",
+    "description": "Various stored XSS vulnerabilities in the maps- and icon rendering logic in Phoca Maps component 5.0.0-6.0.2 have been discovered.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-23900",
+    "publishedDate": "2026-04-11T14:16:03.377",
+    "lastModifiedDate": "2026-04-11T14:16:03.377",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
     "id": "CVE-2026-5809",
     "description": "The wpForo Forum plugin for WordPress is vulnerable to Arbitrary File Deletion in versions up to and including 3.0.2. This is due to a two-step logic flaw: the topic_add() and topic_edit() action handlers accept arbitrary user-supplied data[*] arrays from $_REQUEST and store them as postmeta without restricting which fields may contain array values. Because 'body' is included in the allowed topic fields list, an attacker can supply data[body][fileurl] with an arbitrary file path (e.g., wp-config.php or an absolute server path). This poisoned fileurl is persisted to the plugin's custom postmeta database table. Subsequently, when the attacker submits wpftcf_delete[]=body on a topic_edit request, the add_file() method retrieves the stored postmeta record, extracts the attacker-controlled fileurl, passes it through wpforo_fix_upload_dir() which only rewrites legitimate wpforo upload paths and returns all other paths unchanged, and then calls wp_delete_file() on the unvalidated path. This makes it possible for authenticated attackers, with subscriber-level access and above, to delete arbitrary files writable by the PHP process on the server, including critical files such as wp-config.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-5809",
@@ -335,26 +365,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-4156",
     "publishedDate": "2026-04-11T01:16:17.360",
     "lastModifiedDate": "2026-04-11T01:16:17.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-4155",
-    "description": "ChargePoint Home Flex Inclusion of Sensitive Information in Source Code Information Disclosure Vulnerability. This vulnerability allows remote attackers to disclose sensitive information on affected installations of ChargePoint Home Flex charging stations. Authentication is not required to exploit this vulnerability.\n\nThe specific flaw exists within the genpw script. The issue results from the inclusion of a secret cryptographic seed value within the script. An attacker can leverage this vulnerability to disclose stored credentials, leading to further compromise. Was ZDI-CAN-26340.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4155",
-    "publishedDate": "2026-04-11T01:16:17.230",
-    "lastModifiedDate": "2026-04-11T01:16:17.230",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-4154",
-    "description": "GIMP XPM File Parsing Integer Overflow Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of GIMP. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the parsing of XPM files. The issue results from the lack of proper validation of user-supplied data, which can result in an integer overflow before allocating a buffer. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-28901.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4154",
-    "publishedDate": "2026-04-11T01:16:17.093",
-    "lastModifiedDate": "2026-04-11T01:16:17.093",
     "vendors": [],
     "products": [],
     "cvssScores": []
