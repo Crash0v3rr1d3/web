@@ -1,5 +1,114 @@
 [
   {
+    "id": "CVE-2026-6204",
+    "description": "LibreNMS versions before 26.3.0 are affected by an authenticated remote code execution vulnerability by abusing the Binary Locations config and the Netcommand feature. Successful exploitation requires administrative privileges. Exploitation could result in compromise of the underlying web server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6204",
+    "publishedDate": "2026-04-13T11:16:06.243",
+    "lastModifiedDate": "2026-04-13T11:16:06.243",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ab69c47f-b95e-4bf2-b2d9-4b1fd1b24b4a"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-2728",
+    "description": "LibreNMS versions before 26.3.0 are affected by an authenticated Cross-site Scripting vulnerability on the showconfig page. Successful exploitation requires administrative privileges. Exploitation could result in XSS attacks being performed against other users with access to the page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2728",
+    "publishedDate": "2026-04-13T11:16:05.407",
+    "lastModifiedDate": "2026-04-13T11:16:05.407",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:A/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ab69c47f-b95e-4bf2-b2d9-4b1fd1b24b4a"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-35565",
+    "description": "Stored Cross-Site Scripting (XSS) via Unsanitized Topology Metadata in Apache Storm UI\n\n\nVersions Affected: before 2.8.6\n\n\nDescription: The Storm UI visualization component interpolates topology metadata including component IDs, stream names, and grouping values directly into HTML via innerHTML in parseNode() and parseEdge() without sanitization at any layer. An authenticated user with topology submission rights could craft a topology containing malicious HTML/JavaScript in component identifiers (e.g., a bolt ID containing an onerror event handler). This payload flows through Nimbus → Thrift → the Visualization API → vis.js tooltip rendering, resulting in stored cross-site scripting. \n\nIn multi-tenant deployments where topology submission is available to less-trusted users but the UI is accessed by operators or administrators, this enables privilege escalation through script execution in an admin's browser session.\n\n\nMitigation: 2.x users should upgrade to 2.8.6. Users who cannot upgrade immediately should monkey-patch the parseNode() and parseEdge() functions in the visualization JavaScript file to HTML-escape all API-supplied values including nodeId, :capacity, :latency, :component, :stream, and :grouping before interpolation into tooltip HTML strings, and should additionally restrict topology submission to trusted users via Nimbus ACLs as a defense-in-depth measure. A guide on how to do this is available in the release notes of 2.8.6.\n\nCredit: This issue was discovered while investigating another report by K.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35565",
+    "publishedDate": "2026-04-13T10:16:11.770",
+    "lastModifiedDate": "2026-04-13T10:16:11.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-35337",
+    "description": "Deserialization of Untrusted Data vulnerability in Apache Storm.\n\nVersions Affected:\nbefore 2.8.6.\n\n\nDescription:\nWhen processing topology credentials submitted via the Nimbus Thrift API, Storm deserializes the base64-encoded TGT blob using ObjectInputStream.readObject() without any class filtering or validation. An authenticated user with topology submission rights could supply a crafted serialized object in the \"TGT\" credential field, leading to remote code execution in both the Nimbus and Worker JVMs.\n\n\nMitigation:\n2.x users should upgrade to 2.8.6.\n\n\nUsers who cannot upgrade immediately should monkey-patch an ObjectInputFilter allow-list to ClientAuthUtils.deserializeKerberosTicket() restricting deserialized classes to javax.security.auth.kerberos.KerberosTicket and its known dependencies. A guide on how to do this is available in the release notes of 2.8.6.\n\nCredit: This issue was discovered by K.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35337",
+    "publishedDate": "2026-04-13T10:16:11.610",
+    "lastModifiedDate": "2026-04-13T10:16:11.610",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2025-15632",
+    "description": "A vulnerability has been found in 1Panel-dev MaxKB up to 2.4.2. Impacted is an unknown function of the file ui/src/chat.ts of the component MdPreview. Such manipulation leads to cross site scripting. The attack can be executed remotely. The exploit has been disclosed to the public and may be used. Upgrading to version 2.5.0 is recommended to address this issue. The name of the patch is 7230daa5ec3e6574b6ede83dd48a4fbc0e70b8d8. It is advisable to upgrade the affected component. The vendor was contacted early, responded in a very professional manner and quickly released a fixed version of the affected product.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15632",
+    "publishedDate": "2026-04-13T10:16:10.160",
+    "lastModifiedDate": "2026-04-13T10:16:10.160",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4810",
+    "description": "A Code Injection and Missing Authentication vulnerability in Google Agent Development Kit (ADK) versions 1.7.0 (and 2.0.0a1) through 1.28.1 (and 2.0.0a2) on Python (OSS), Cloud Run, and GKE allows an unauthenticated remote attacker to execute arbitrary code on the server hosting the ADK instance.\n\nThis vulnerability was patched in versions 1.28.1 and 2.0.0a2.\n\n\nCustomers need to redeploy the upgraded ADK to their production environments. In addition, if they are running ADK Web locally, they also need to upgrade their local instance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4810",
+    "publishedDate": "2026-04-13T09:16:08.883",
+    "lastModifiedDate": "2026-04-13T09:16:08.883",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f45cbf4e-4146-4068-b7e1-655ffc2c548c"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-0234",
     "description": "An improper verification of cryptographic signature vulnerability exists in Cortex XSOAR and Cortex XSIAM platforms during integration of Microsoft Teams that enables an unauthenticated user to access and modify protected resources.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-0234",
@@ -201,10 +310,20 @@
     "description": "The Product Filter for WooCommerce by WBW WordPress plugin before 3.1.3 does not sanitize and escape a parameter before using it in a SQL statement, allowing unauthenticated users to perform SQL injection attacks",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-3830",
     "publishedDate": "2026-04-13T07:16:50.270",
-    "lastModifiedDate": "2026-04-13T07:16:50.270",
+    "lastModifiedDate": "2026-04-13T13:16:42.380",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
   },
   {
     "id": "CVE-2026-34866",
@@ -397,126 +516,6 @@
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
         "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-21012",
-    "description": "External control of file name in AODManager prior to SMR Apr-2026 Release 1 allows privileged local attacker to create file with system privilege.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21012",
-    "publishedDate": "2026-04-13T06:16:05.887",
-    "lastModifiedDate": "2026-04-13T06:16:05.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-21011",
-    "description": "Incorrect privilege assignment in Bluetooth in Maintenance mode prior to SMR Apr-2026 Release 1 allows physical attackers to bypass Extend Unlock.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21011",
-    "publishedDate": "2026-04-13T06:16:05.740",
-    "lastModifiedDate": "2026-04-13T06:16:05.740",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-21010",
-    "description": "Improper input validation in Retail Mode prior to SMR Apr-2026 Release 1 allows local attackers to trigger privileged functions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21010",
-    "publishedDate": "2026-04-13T06:16:05.613",
-    "lastModifiedDate": "2026-04-13T06:16:05.613",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.7,
-        "impactScore": 5.9,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-21009",
-    "description": "Improper check for exceptional conditions in Recents prior to SMR Apr-2026 Release 1 allows physical attacker to bypass App Pinning.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21009",
-    "publishedDate": "2026-04-13T06:16:05.483",
-    "lastModifiedDate": "2026-04-13T06:16:05.483",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-21008",
-    "description": "Exposure of sensitive information in S Share prior to SMR Apr-2026 Release 1 allows adjacent attacker to access sensitive information.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21008",
-    "publishedDate": "2026-04-13T06:16:05.360",
-    "lastModifiedDate": "2026-04-13T06:16:05.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-21007",
-    "description": "Improper check for exceptional conditions in Device Care prior to SMR Apr-2026 Release 1 allows physical attackers to bypass Knox Guard.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21007",
-    "publishedDate": "2026-04-13T06:16:05.190",
-    "lastModifiedDate": "2026-04-13T06:16:05.190",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "mobile.security@samsung.com"
