@@ -1,87 +1,37 @@
 [
   {
-    "id": "CVE-2026-6204",
-    "description": "LibreNMS versions before 26.3.0 are affected by an authenticated remote code execution vulnerability by abusing the Binary Locations config and the Netcommand feature. Successful exploitation requires administrative privileges. Exploitation could result in compromise of the underlying web server.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6204",
-    "publishedDate": "2026-04-13T11:16:06.243",
-    "lastModifiedDate": "2026-04-13T11:16:06.243",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ab69c47f-b95e-4bf2-b2d9-4b1fd1b24b4a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2728",
-    "description": "LibreNMS versions before 26.3.0 are affected by an authenticated Cross-site Scripting vulnerability on the showconfig page. Successful exploitation requires administrative privileges. Exploitation could result in XSS attacks being performed against other users with access to the page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2728",
-    "publishedDate": "2026-04-13T11:16:05.407",
-    "lastModifiedDate": "2026-04-13T11:16:05.407",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:A/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ab69c47f-b95e-4bf2-b2d9-4b1fd1b24b4a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-35565",
-    "description": "Stored Cross-Site Scripting (XSS) via Unsanitized Topology Metadata in Apache Storm UI\n\n\nVersions Affected: before 2.8.6\n\n\nDescription: The Storm UI visualization component interpolates topology metadata including component IDs, stream names, and grouping values directly into HTML via innerHTML in parseNode() and parseEdge() without sanitization at any layer. An authenticated user with topology submission rights could craft a topology containing malicious HTML/JavaScript in component identifiers (e.g., a bolt ID containing an onerror event handler). This payload flows through Nimbus → Thrift → the Visualization API → vis.js tooltip rendering, resulting in stored cross-site scripting. \n\nIn multi-tenant deployments where topology submission is available to less-trusted users but the UI is accessed by operators or administrators, this enables privilege escalation through script execution in an admin's browser session.\n\n\nMitigation: 2.x users should upgrade to 2.8.6. Users who cannot upgrade immediately should monkey-patch the parseNode() and parseEdge() functions in the visualization JavaScript file to HTML-escape all API-supplied values including nodeId, :capacity, :latency, :component, :stream, and :grouping before interpolation into tooltip HTML strings, and should additionally restrict topology submission to trusted users via Nimbus ACLs as a defense-in-depth measure. A guide on how to do this is available in the release notes of 2.8.6.\n\nCredit: This issue was discovered while investigating another report by K.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35565",
-    "publishedDate": "2026-04-13T10:16:11.770",
-    "lastModifiedDate": "2026-04-13T10:16:11.770",
+    "id": "CVE-2026-1462",
+    "description": "A vulnerability in the `TFSMLayer` class of the `keras` package, version 3.13.0, allows attacker-controlled TensorFlow SavedModels to be loaded during deserialization of `.keras` models, even when `safe_mode=True`. This bypasses the security guarantees of `safe_mode` and enables arbitrary attacker-controlled code execution during model inference under the victim's privileges. The issue arises due to the unconditional loading of external SavedModels, serialization of attacker-controlled file paths, and the lack of validation in the `from_config()` method.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1462",
+    "publishedDate": "2026-04-13T15:17:18.967",
+    "lastModifiedDate": "2026-04-13T15:17:18.967",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-35337",
-    "description": "Deserialization of Untrusted Data vulnerability in Apache Storm.\n\nVersions Affected:\nbefore 2.8.6.\n\n\nDescription:\nWhen processing topology credentials submitted via the Nimbus Thrift API, Storm deserializes the base64-encoded TGT blob using ObjectInputStream.readObject() without any class filtering or validation. An authenticated user with topology submission rights could supply a crafted serialized object in the \"TGT\" credential field, leading to remote code execution in both the Nimbus and Worker JVMs.\n\n\nMitigation:\n2.x users should upgrade to 2.8.6.\n\n\nUsers who cannot upgrade immediately should monkey-patch an ObjectInputFilter allow-list to ClientAuthUtils.deserializeKerberosTicket() restricting deserialized classes to javax.security.auth.kerberos.KerberosTicket and its known dependencies. A guide on how to do this is available in the release notes of 2.8.6.\n\nCredit: This issue was discovered by K.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35337",
-    "publishedDate": "2026-04-13T10:16:11.610",
-    "lastModifiedDate": "2026-04-13T10:16:11.610",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-15632",
-    "description": "A vulnerability has been found in 1Panel-dev MaxKB up to 2.4.2. Impacted is an unknown function of the file ui/src/chat.ts of the component MdPreview. Such manipulation leads to cross site scripting. The attack can be executed remotely. The exploit has been disclosed to the public and may be used. Upgrading to version 2.5.0 is recommended to address this issue. The name of the patch is 7230daa5ec3e6574b6ede83dd48a4fbc0e70b8d8. It is advisable to upgrade the affected component. The vendor was contacted early, responded in a very professional manner and quickly released a fixed version of the affected product.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15632",
-    "publishedDate": "2026-04-13T10:16:10.160",
-    "lastModifiedDate": "2026-04-13T10:16:10.160",
+    "id": "CVE-2026-6183",
+    "description": "A security flaw has been discovered in code-projects Simple Content Management System 1.0. Affected by this issue is some unknown functionality of the file /web/index.php. Performing a manipulation of the argument ID results in sql injection. Remote exploitation of the attack is possible. The exploit has been released to the public and may be used for attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6183",
+    "publishedDate": "2026-04-13T15:17:49.697",
+    "lastModifiedDate": "2026-04-13T15:17:49.697",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.5,
+        "score": 7.3,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 5.1,
+        "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -89,91 +39,11 @@
     ]
   },
   {
-    "id": "CVE-2026-4810",
-    "description": "A Code Injection and Missing Authentication vulnerability in Google Agent Development Kit (ADK) versions 1.7.0 (and 2.0.0a1) through 1.28.1 (and 2.0.0a2) on Python (OSS), Cloud Run, and GKE allows an unauthenticated remote attacker to execute arbitrary code on the server hosting the ADK instance.\n\nThis vulnerability was patched in versions 1.28.1 and 2.0.0a2.\n\n\nCustomers need to redeploy the upgraded ADK to their production environments. In addition, if they are running ADK Web locally, they also need to upgrade their local instance.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4810",
-    "publishedDate": "2026-04-13T09:16:08.883",
-    "lastModifiedDate": "2026-04-13T09:16:08.883",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f45cbf4e-4146-4068-b7e1-655ffc2c548c"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0234",
-    "description": "An improper verification of cryptographic signature vulnerability exists in Cortex XSOAR and Cortex XSIAM platforms during integration of Microsoft Teams that enables an unauthenticated user to access and modify protected resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0234",
-    "publishedDate": "2026-04-13T08:16:22.367",
-    "lastModifiedDate": "2026-04-13T08:16:22.367",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Red",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0233",
-    "description": "A certificate validation vulnerability in Palo Alto Networks Autonomous Digital Experience Manager on Windows allows an unauthenticated attacker with adjacent network access to execute arbitrary code with NT AUTHORITY\\SYSTEM  privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0233",
-    "publishedDate": "2026-04-13T08:16:22.150",
-    "lastModifiedDate": "2026-04-13T08:16:22.150",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Green",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0232",
-    "description": "A problem with a protection mechanism in the Palo Alto Networks Cortex XDR agent on Windows allows a local Windows administrator to disable the agent. This issue may be leveraged by malware to perform malicious activity without detection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0232",
-    "publishedDate": "2026-04-13T08:16:20.900",
-    "lastModifiedDate": "2026-04-13T08:16:20.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6168",
-    "description": "A flaw has been found in TOTOLINK A7000R up to 9.1.0u.6115. The affected element is the function setWiFiEasyGuestCfg of the file /cgi-bin/cstecgi.cgi. This manipulation of the argument ssid5g causes stack-based buffer overflow. Remote exploitation of the attack is possible. The exploit has been published and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6168",
-    "publishedDate": "2026-04-13T07:16:51.283",
-    "lastModifiedDate": "2026-04-13T07:16:51.283",
+    "id": "CVE-2026-33858",
+    "description": "Dag Authors, who normally should not be able to execute code in the webserver context could craft XCom payload causing the webserver to execute arbitrary code. Since Dag Authors are already highly trusted, severity of this issue is Low.\n\n\nUsers are recommended to upgrade to Apache Airflow 3.2.0, which resolves this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33858",
+    "publishedDate": "2026-04-13T15:17:33.343",
+    "lastModifiedDate": "2026-04-13T16:16:27.177",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -184,342 +54,247 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6167",
-    "description": "A vulnerability was detected in code-projects Faculty Management System 1.0. Impacted is an unknown function of the file /subject-print.php. The manipulation of the argument ID results in sql injection. The attack may be launched remotely. The exploit is now public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6167",
-    "publishedDate": "2026-04-13T07:16:51.077",
-    "lastModifiedDate": "2026-04-13T07:16:51.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6166",
-    "description": "A security vulnerability has been detected in code-projects Vehicle Showroom Management System 1.0. This issue affects some unknown processing of the file /util/UpdateVehicleFunction.php. The manipulation of the argument VEHICLE_ID leads to sql injection. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6166",
-    "publishedDate": "2026-04-13T07:16:50.860",
-    "lastModifiedDate": "2026-04-13T07:16:50.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5936",
-    "description": "An attacker can control a server-side HTTP request by supplying a crafted URL, causing the server to initiate requests to arbitrary destinations. This behavior may be exploited to probe internal network services, access otherwise unreachable endpoints (e.g., cloud metadata services), or bypass network access controls, potentially leading to sensitive information disclosure and further compromise of the internal environment.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5936",
-    "publishedDate": "2026-04-13T07:16:50.710",
-    "lastModifiedDate": "2026-04-13T07:16:50.710",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4.7,
-        "source": "14984358-7092-470d-8f34-ade47a7658a2"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5085",
-    "description": "Solstice::Session versions through 1440 for Perl generates session ids insecurely.\n\nThe _generateSessionID method returns an MD5 digest seeded by the epoch time, a random hash reference, a call to the built-in rand() function and the process id.\n\nThe same method is used in the _generateID method in Solstice::Subsession, which is part of the same distribution.\n\nThe epoch time may be guessed, if it is not leaked in the HTTP Date header. Stringified hash refences will contain predictable content. The built-in rand() function is seeded by 16-bits and is unsuitable for security purposes. The process id comes from a small set of numbers.\n\nPredictable session ids could allow an attacker to gain access to systems.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5085",
-    "publishedDate": "2026-04-13T07:16:50.543",
-    "lastModifiedDate": "2026-04-13T07:16:50.543",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-40436",
-    "description": "The ZTE ZXEDM iEMS product has a password reset vulnerability for any user.Because the management of the cloud EMS portal does not properly control access to the user list acquisition function, attackers can read all user list information through the user list interface. Attackers can reset the passwords of obtained user information, causing risks such as unauthorized operations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40436",
-    "publishedDate": "2026-04-13T07:16:50.393",
-    "lastModifiedDate": "2026-04-13T07:16:50.393",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.9,
-        "source": "psirt@zte.com.cn"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-3830",
-    "description": "The Product Filter for WooCommerce by WBW WordPress plugin before 3.1.3 does not sanitize and escape a parameter before using it in a SQL statement, allowing unauthenticated users to perform SQL injection attacks",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3830",
-    "publishedDate": "2026-04-13T07:16:50.270",
-    "lastModifiedDate": "2026-04-13T13:16:42.380",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4,
         "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   },
   {
-    "id": "CVE-2026-34866",
-    "description": "Out-of-bounds write vulnerability in the WEB module.Impact: Successful exploitation of this vulnerability will affect availability and confidentiality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34866",
-    "publishedDate": "2026-04-13T07:16:50.127",
-    "lastModifiedDate": "2026-04-13T07:16:50.127",
+    "id": "CVE-2026-6182",
+    "description": "A vulnerability was identified in code-projects Simple Content Management System 1.0. Affected by this vulnerability is an unknown functionality of the file /web/admin/login.php. Such manipulation of the argument User leads to sql injection. The attack may be launched remotely. The exploit is publicly available and might be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6182",
+    "publishedDate": "2026-04-13T15:17:49.487",
+    "lastModifiedDate": "2026-04-13T15:17:49.487",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.1,
+        "score": 7.3,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.5,
-        "impactScore": 2.5,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34865",
-    "description": "Out-of-bounds write vulnerability in the WEB module.Impact: Successful exploitation of this vulnerability will affect availability and confidentiality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34865",
-    "publishedDate": "2026-04-13T07:16:49.977",
-    "lastModifiedDate": "2026-04-13T07:16:49.977",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
       {
-        "score": 10,
+        "score": 6.9,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "psirt@huawei.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-15441",
-    "description": "The Form Maker by 10Web  WordPress plugin before 1.15.38 does not properly prepare SQL queries when the \"MySQL Mapping\" feature is in use, which could make SQL Injection attacks possible in certain contexts.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15441",
-    "publishedDate": "2026-04-13T07:16:07.213",
-    "lastModifiedDate": "2026-04-13T07:16:07.213",
+    "id": "CVE-2025-66236",
+    "description": "Before Airflow 3.2.0, it was unclear that secure Airflow deployments require the Deployment Manager to take appropriate actions and pay attention to security details and security model of Airflow. Some assumptions the Deployment Manager could make were not clear or explicit enough, even though Airflow's intentions and security model of Airflow did not suggest different assumptions. The overall security model [1], workload isolation [2], and JWT authentication details [3] are now described in more detail. Users concerned with role isolation and following the Airflow security model of Airflow are advised to upgrade to Airflow 3.2, where several security improvements have been implemented. They should also read and follow the relevant documents to make sure that their deployment is secure enough. It also clarifies that the Deployment Manager is ultimately responsible for securing your Airflow deployment. This had also been communicated via Airflow 3.2.0 Blog announcement [4].\n\n[1] Security Model:  https://airflow.apache.org/docs/apache-airflow/stable/security/jwt_token_authentication.html \n[2] Workload isolation:  https://airflow.apache.org/docs/apache-airflow/stable/security/workload.html \n[3] JWT Token authentication:  https://airflow.apache.org/docs/apache-airflow/stable/security/jwt_token_authentication.html \n[4] Airflow 3.2.0 Blog announcement:  https://airflow.apache.org/blog/airflow-3.2.0/ \n\n\n\nUsers are recommended to upgrade to version 3.2.0, which fixes this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-66236",
+    "publishedDate": "2026-04-13T15:17:05.953",
+    "lastModifiedDate": "2026-04-13T15:17:05.953",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-6165",
-    "description": "A weakness has been identified in code-projects Vehicle Showroom Management System 1.0. This vulnerability affects unknown code of the file /util/Login_check.php. Executing a manipulation of the argument ID can lead to sql injection. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6165",
-    "publishedDate": "2026-04-13T06:16:07.373",
-    "lastModifiedDate": "2026-04-13T06:16:07.373",
+    "id": "CVE-2026-36947",
+    "description": "Sourcecodester Computer and Mobile Repair Shop Management System v1.0 is vulnerable to SQL Injection in the file /rsms/admin/services/view_service.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36947",
+    "publishedDate": "2026-04-13T14:16:14.007",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-6164",
-    "description": "A security flaw has been discovered in code-projects Lost and Found Thing Management 1.0. This affects an unknown part of the file /addcat.php. Performing a manipulation of the argument cata results in sql injection. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6164",
-    "publishedDate": "2026-04-13T06:16:07.160",
-    "lastModifiedDate": "2026-04-13T06:16:07.160",
+    "id": "CVE-2026-36946",
+    "description": "Sourcecodester Computer and Mobile Repair Shop Management System v1.0 is vulnerable to SQL injection in the file /rsms/admin/inquiries/view_details.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36946",
+    "publishedDate": "2026-04-13T14:16:13.883",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-6163",
-    "description": "A vulnerability was identified in code-projects Lost and Found Thing Management 1.0. Affected by this issue is some unknown functionality of the file /catageory.php. Such manipulation of the argument cat leads to sql injection. It is possible to launch the attack remotely. The exploit is publicly available and might be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6163",
-    "publishedDate": "2026-04-13T06:16:06.927",
-    "lastModifiedDate": "2026-04-13T06:16:06.927",
+    "id": "CVE-2026-31428",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nfnetlink_log: fix uninitialized padding leak in NFULA_PAYLOAD\n\n__build_packet_message() manually constructs the NFULA_PAYLOAD netlink\nattribute using skb_put() and skb_copy_bits(), bypassing the standard\nnla_reserve()/nla_put() helpers. While nla_total_size(data_len) bytes\nare allocated (including NLA alignment padding), only data_len bytes\nof actual packet data are copied. The trailing nla_padlen(data_len)\nbytes (1-3 when data_len is not 4-byte aligned) are never initialized,\nleaking stale heap contents to userspace via the NFLOG netlink socket.\n\nReplace the manual attribute construction with nla_reserve(), which\nhandles the tailroom check, header setup, and padding zeroing via\n__nla_reserve(). The subsequent skb_copy_bits() fills in the payload\ndata on top of the properly initialized attribute.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31428",
+    "publishedDate": "2026-04-13T14:16:12.957",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-40447",
-    "description": "Integer overflow or wraparound vulnerability in Samsung Open Source Escargot allows undefined behavior.This issue affects Escargot: 97e8115ab1110bc502b4b5e4a0c689a71520d335.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40447",
-    "publishedDate": "2026-04-13T06:16:06.790",
-    "lastModifiedDate": "2026-04-13T06:16:06.790",
+    "id": "CVE-2026-31427",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nf_conntrack_sip: fix use of uninitialized rtp_addr in process_sdp\n\nprocess_sdp() declares union nf_inet_addr rtp_addr on the stack and\npasses it to the nf_nat_sip sdp_session hook after walking the SDP\nmedia descriptions. However rtp_addr is only initialized inside the\nmedia loop when a recognized media type with a non-zero port is found.\n\nIf the SDP body contains no m= lines, only inactive media sections\n(m=audio 0 ...) or only unrecognized media types, rtp_addr is never\nassigned. Despite that, the function still calls hooks->sdp_session()\nwith &rtp_addr, causing nf_nat_sdp_session() to format the stale stack\nvalue as an IP address and rewrite the SDP session owner and connection\nlines with it.\n\nWith CONFIG_INIT_STACK_ALL_ZERO (default on most distributions) this\nresults in the session-level o= and c= addresses being rewritten to\n0.0.0.0 for inactive SDP sessions. Without stack auto-init the\nrewritten address is whatever happened to be on the stack.\n\nFix this by pre-initializing rtp_addr from the session-level connection\naddress (caddr) when available, and tracking via a have_rtp_addr flag\nwhether any valid address was established. Skip the sdp_session hook\nentirely when no valid address exists.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31427",
+    "publishedDate": "2026-04-13T14:16:12.783",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.4,
-        "impactScore": 3.6,
-        "source": "PSIRT@samsung.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-21014",
-    "description": "Improper access control in Samsung Camera prior to version 16.5.00.28 allows local attacker to access location data. User interaction is required for triggering this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21014",
-    "publishedDate": "2026-04-13T06:16:06.140",
-    "lastModifiedDate": "2026-04-13T06:16:06.140",
+    "id": "CVE-2026-31426",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nACPI: EC: clean up handlers on probe failure in acpi_ec_setup()\n\nWhen ec_install_handlers() returns -EPROBE_DEFER on reduced-hardware\nplatforms, it has already started the EC and installed the address\nspace handler with the struct acpi_ec pointer as handler context.\nHowever, acpi_ec_setup() propagates the error without any cleanup.\n\nThe caller acpi_ec_add() then frees the struct acpi_ec for non-boot\ninstances, leaving a dangling handler context in ACPICA.\n\nAny subsequent AML evaluation that accesses an EC OpRegion field\ndispatches into acpi_ec_space_handler() with the freed pointer,\ncausing a use-after-free:\n\n BUG: KASAN: slab-use-after-free in mutex_lock (kernel/locking/mutex.c:289)\n Write of size 8 at addr ffff88800721de38 by task init/1\n Call Trace:\n  <TASK>\n  mutex_lock (kernel/locking/mutex.c:289)\n  acpi_ec_space_handler (drivers/acpi/ec.c:1362)\n  acpi_ev_address_space_dispatch (drivers/acpi/acpica/evregion.c:293)\n  acpi_ex_access_region (drivers/acpi/acpica/exfldio.c:246)\n  acpi_ex_field_datum_io (drivers/acpi/acpica/exfldio.c:509)\n  acpi_ex_extract_from_field (drivers/acpi/acpica/exfldio.c:700)\n  acpi_ex_read_data_from_field (drivers/acpi/acpica/exfield.c:327)\n  acpi_ex_resolve_node_to_value (drivers/acpi/acpica/exresolv.c:392)\n  </TASK>\n\n Allocated by task 1:\n  acpi_ec_alloc (drivers/acpi/ec.c:1424)\n  acpi_ec_add (drivers/acpi/ec.c:1692)\n\n Freed by task 1:\n  kfree (mm/slub.c:6876)\n  acpi_ec_add (drivers/acpi/ec.c:1751)\n\nThe bug triggers on reduced-hardware EC platforms (ec->gpe < 0)\nwhen the GPIO IRQ provider defers probing. Once the stale handler\nexists, any unprivileged sysfs read that causes AML to touch an\nEC OpRegion (battery, thermal, backlight) exercises the dangling\npointer.\n\nFix this by calling ec_remove_handlers() in the error path of\nacpi_ec_setup() before clearing first_ec. ec_remove_handlers()\nchecks each EC_FLAGS_* bit before acting, so it is safe to call\nregardless of how far ec_install_handlers() progressed:\n\n  -ENODEV  (handler not installed): only calls acpi_ec_stop()\n  -EPROBE_DEFER (handler installed): removes handler, stops EC",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31426",
+    "publishedDate": "2026-04-13T14:16:12.600",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-21013",
-    "description": "Incorrect default permission in Galaxy Wearable prior to version 2.2.68.26 allows local attackers to access sensitive information.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21013",
-    "publishedDate": "2026-04-13T06:16:06.010",
-    "lastModifiedDate": "2026-04-13T06:16:06.010",
+    "id": "CVE-2026-31425",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrds: ib: reject FRMR registration before IB connection is established\n\nrds_ib_get_mr() extracts the rds_ib_connection from conn->c_transport_data\nand passes it to rds_ib_reg_frmr() for FRWR memory registration. On a\nfresh outgoing connection, ic is allocated in rds_ib_conn_alloc() with\ni_cm_id = NULL because the connection worker has not yet called\nrds_ib_conn_path_connect() to create the rdma_cm_id. When sendmsg() with\nRDS_CMSG_RDMA_MAP is called on such a connection, the sendmsg path parses\nthe control message before any connection establishment, allowing\nrds_ib_post_reg_frmr() to dereference ic->i_cm_id->qp and crash the\nkernel.\n\nThe existing guard in rds_ib_reg_frmr() only checks for !ic (added in\ncommit 9e630bcb7701), which does not catch this case since ic is allocated\nearly and is always non-NULL once the connection object exists.\n\n KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]\n RIP: 0010:rds_ib_post_reg_frmr+0x50e/0x920\n Call Trace:\n  rds_ib_post_reg_frmr (net/rds/ib_frmr.c:167)\n  rds_ib_map_frmr (net/rds/ib_frmr.c:252)\n  rds_ib_reg_frmr (net/rds/ib_frmr.c:430)\n  rds_ib_get_mr (net/rds/ib_rdma.c:615)\n  __rds_rdma_map (net/rds/rdma.c:295)\n  rds_cmsg_rdma_map (net/rds/rdma.c:860)\n  rds_sendmsg (net/rds/send.c:1363)\n  ____sys_sendmsg\n  do_syscall_64\n\nAdd a check in rds_ib_get_mr() that verifies ic, i_cm_id, and qp are all\nnon-NULL before proceeding with FRMR registration, mirroring the guard\nalready present in rds_ib_post_inv(). Return -ENODEV when the connection\nis not ready, which the existing error handling in rds_cmsg_send() converts\nto -EAGAIN for userspace retry and triggers rds_conn_connect_if_down() to\nstart the connection worker.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31425",
+    "publishedDate": "2026-04-13T14:16:12.420",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mobile.security@samsung.com"
-      }
-    ]
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31424",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: x_tables: restrict xt_check_match/xt_check_target extensions for NFPROTO_ARP\n\nWeiming Shi says:\n\nxt_match and xt_target structs registered with NFPROTO_UNSPEC can be\nloaded by any protocol family through nft_compat. When such a\nmatch/target sets .hooks to restrict which hooks it may run on, the\nbitmask uses NF_INET_* constants. This is only correct for families\nwhose hook layout matches NF_INET_*: IPv4, IPv6, INET, and bridge\nall share the same five hooks (PRE_ROUTING ... POST_ROUTING).\n\nARP only has three hooks (IN=0, OUT=1, FORWARD=2) with different\nsemantics. Because NF_ARP_OUT == 1 == NF_INET_LOCAL_IN, the .hooks\nvalidation silently passes for the wrong reasons, allowing matches to\nrun on ARP chains where the hook assumptions (e.g. state->in being\nset on input hooks) do not hold. This leads to NULL pointer\ndereferences; xt_devgroup is one concrete example:\n\n Oops: general protection fault, probably for non-canonical address 0xdffffc0000000044: 0000 [#1] SMP KASAN NOPTI\n KASAN: null-ptr-deref in range [0x0000000000000220-0x0000000000000227]\n RIP: 0010:devgroup_mt+0xff/0x350\n Call Trace:\n  <TASK>\n  nft_match_eval (net/netfilter/nft_compat.c:407)\n  nft_do_chain (net/netfilter/nf_tables_core.c:285)\n  nft_do_chain_arp (net/netfilter/nft_chain_filter.c:61)\n  nf_hook_slow (net/netfilter/core.c:623)\n  arp_xmit (net/ipv4/arp.c:666)\n  </TASK>\n Kernel panic - not syncing: Fatal exception in interrupt\n\nFix it by restricting arptables to NFPROTO_ARP extensions only.\nNote that arptables-legacy only supports:\n\n- arpt_CLASSIFY\n- arpt_mangle\n- arpt_MARK\n\nthat provide explicit NFPROTO_ARP match/target declarations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31424",
+    "publishedDate": "2026-04-13T14:16:12.240",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31423",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: sch_hfsc: fix divide-by-zero in rtsc_min()\n\nm2sm() converts a u32 slope to a u64 scaled value.  For large inputs\n(e.g. m1=4000000000), the result can reach 2^32.  rtsc_min() stores\nthe difference of two such u64 values in a u32 variable `dsm` and\nuses it as a divisor.  When the difference is exactly 2^32 the\ntruncation yields zero, causing a divide-by-zero oops in the\nconcave-curve intersection path:\n\n  Oops: divide error: 0000\n  RIP: 0010:rtsc_min (net/sched/sch_hfsc.c:601)\n  Call Trace:\n   init_ed (net/sched/sch_hfsc.c:629)\n   hfsc_enqueue (net/sched/sch_hfsc.c:1569)\n   [...]\n\nWiden `dsm` to u64 and replace do_div() with div64_u64() so the full\ndifference is preserved.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31423",
+    "publishedDate": "2026-04-13T14:16:12.070",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31422",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: cls_flow: fix NULL pointer dereference on shared blocks\n\nflow_change() calls tcf_block_q() and dereferences q->handle to derive\na default baseclass.  Shared blocks leave block->q NULL, causing a NULL\nderef when a flow filter without a fully qualified baseclass is created\non a shared block.\n\nCheck tcf_block_shared() before accessing block->q and return -EINVAL\nfor shared blocks.  This avoids the null-deref shown below:\n\n=======================================================================\nKASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]\nRIP: 0010:flow_change (net/sched/cls_flow.c:508)\nCall Trace:\n tc_new_tfilter (net/sched/cls_api.c:2432)\n rtnetlink_rcv_msg (net/core/rtnetlink.c:6980)\n [...]\n=======================================================================",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31422",
+    "publishedDate": "2026-04-13T14:16:11.907",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31421",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: cls_fw: fix NULL pointer dereference on shared blocks\n\nThe old-method path in fw_classify() calls tcf_block_q() and\ndereferences q->handle.  Shared blocks leave block->q NULL, causing a\nNULL deref when an empty cls_fw filter is attached to a shared block\nand a packet with a nonzero major skb mark is classified.\n\nReject the configuration in fw_change() when the old method (no\nTCA_OPTIONS) is used on a shared block, since fw_classify()'s\nold-method path needs block->q which is NULL for shared blocks.\n\nThe fixed null-ptr-deref calling stack:\n KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]\n RIP: 0010:fw_classify (net/sched/cls_fw.c:81)\n Call Trace:\n  tcf_classify (./include/net/tc_wrapper.h:197 net/sched/cls_api.c:1764 net/sched/cls_api.c:1860)\n  tc_run (net/core/dev.c:4401)\n  __dev_queue_xmit (net/core/dev.c:4535 net/core/dev.c:4790)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31421",
+    "publishedDate": "2026-04-13T14:16:11.740",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31420",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbridge: mrp: reject zero test interval to avoid OOM panic\n\nbr_mrp_start_test() and br_mrp_start_in_test() accept the user-supplied\ninterval value from netlink without validation. When interval is 0,\nusecs_to_jiffies(0) yields 0, causing the delayed work\n(br_mrp_test_work_expired / br_mrp_in_test_work_expired) to reschedule\nitself with zero delay. This creates a tight loop on system_percpu_wq\nthat allocates and transmits MRP test frames at maximum rate, exhausting\nall system memory and causing a kernel panic via OOM deadlock.\n\nThe same zero-interval issue applies to br_mrp_start_in_test_parse()\nfor interconnect test frames.\n\nUse NLA_POLICY_MIN(NLA_U32, 1) in the nla_policy tables for both\nIFLA_BRIDGE_MRP_START_TEST_INTERVAL and\nIFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL, so zero is rejected at the\nnetlink attribute parsing layer before the value ever reaches the\nworkqueue scheduling code. This is consistent with how other bridge\nsubsystems (br_fdb, br_mst) enforce range constraints on netlink\nattributes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31420",
+    "publishedDate": "2026-04-13T14:16:11.617",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31419",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: bonding: fix use-after-free in bond_xmit_broadcast()\n\nbond_xmit_broadcast() reuses the original skb for the last slave\n(determined by bond_is_last_slave()) and clones it for others.\nConcurrent slave enslave/release can mutate the slave list during\nRCU-protected iteration, changing which slave is \"last\" mid-loop.\nThis causes the original skb to be double-consumed (double-freed).\n\nReplace the racy bond_is_last_slave() check with a simple index\ncomparison (i + 1 == slaves_count) against the pre-snapshot slave\ncount taken via READ_ONCE() before the loop.  This preserves the\nzero-copy optimization for the last slave while making the \"last\"\ndetermination stable against concurrent list mutations.\n\nThe UAF can trigger the following crash:\n\n==================================================================\nBUG: KASAN: slab-use-after-free in skb_clone\nRead of size 8 at addr ffff888100ef8d40 by task exploit/147\n\nCPU: 1 UID: 0 PID: 147 Comm: exploit Not tainted 7.0.0-rc3+ #4 PREEMPTLAZY\nCall Trace:\n <TASK>\n dump_stack_lvl (lib/dump_stack.c:123)\n print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)\n kasan_report (mm/kasan/report.c:597)\n skb_clone (include/linux/skbuff.h:1724 include/linux/skbuff.h:1792 include/linux/skbuff.h:3396 net/core/skbuff.c:2108)\n bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5334)\n bond_start_xmit (drivers/net/bonding/bond_main.c:5567 drivers/net/bonding/bond_main.c:5593)\n dev_hard_start_xmit (include/linux/netdevice.h:5325 include/linux/netdevice.h:5334 net/core/dev.c:3871 net/core/dev.c:3887)\n __dev_queue_xmit (include/linux/netdevice.h:3601 net/core/dev.c:4838)\n ip6_finish_output2 (include/net/neighbour.h:540 include/net/neighbour.h:554 net/ipv6/ip6_output.c:136)\n ip6_finish_output (net/ipv6/ip6_output.c:208 net/ipv6/ip6_output.c:219)\n ip6_output (net/ipv6/ip6_output.c:250)\n ip6_send_skb (net/ipv6/ip6_output.c:1985)\n udp_v6_send_skb (net/ipv6/udp.c:1442)\n udpv6_sendmsg (net/ipv6/udp.c:1733)\n __sys_sendto (net/socket.c:730 net/socket.c:742 net/socket.c:2206)\n __x64_sys_sendto (net/socket.c:2209)\n do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)\n entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)\n </TASK>\n\nAllocated by task 147:\n\nFreed by task 147:\n\nThe buggy address belongs to the object at ffff888100ef8c80\n which belongs to the cache skbuff_head_cache of size 224\nThe buggy address is located 192 bytes inside of\n freed 224-byte region [ffff888100ef8c80, ffff888100ef8d60)\n\nMemory state around the buggy address:\n ffff888100ef8c00: fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc fc\n ffff888100ef8c80: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb\n>ffff888100ef8d00: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc\n                                                    ^\n ffff888100ef8d80: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb\n ffff888100ef8e00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb\n==================================================================",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31419",
+    "publishedDate": "2026-04-13T14:16:11.447",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31418",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: ipset: drop logically empty buckets in mtype_del\n\nmtype_del() counts empty slots below n->pos in k, but it only drops the\nbucket when both n->pos and k are zero. This misses buckets whose live\nentries have all been removed while n->pos still points past deleted slots.\n\nTreat a bucket as empty when all positions below n->pos are unused and\nrelease it directly instead of shrinking it further.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31418",
+    "publishedDate": "2026-04-13T14:16:11.267",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31417",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/x25: Fix overflow when accumulating packets\n\nAdd a check to ensure that `x25_sock.fraglen` does not overflow.\n\nThe `fraglen` also needs to be resetted when purging `fragment_queue` in\n`x25_clear_queues()`.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31417",
+    "publishedDate": "2026-04-13T14:16:11.097",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31416",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nfnetlink_log: account for netlink header size\n\nThis is a followup to an old bug fix: NLMSG_DONE needs to account\nfor the netlink header size, not just the attribute size.\n\nThis can result in a WARN splat + drop of the netlink message,\nbut other than this there are no ill effects.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31416",
+    "publishedDate": "2026-04-13T14:16:10.907",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31415",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv6: avoid overflows in ip6_datagram_send_ctl()\n\nYiming Qian reported :\n<quote>\n I believe I found a locally triggerable kernel bug in the IPv6 sendmsg\n ancillary-data path that can panic the kernel via `skb_under_panic()`\n (local DoS).\n\n The core issue is a mismatch between:\n\n - a 16-bit length accumulator (`struct ipv6_txoptions::opt_flen`, type\n `__u16`) and\n - a pointer to the *last* provided destination-options header (`opt->dst1opt`)\n\n when multiple `IPV6_DSTOPTS` control messages (cmsgs) are provided.\n\n - `include/net/ipv6.h`:\n   - `struct ipv6_txoptions::opt_flen` is `__u16` (wrap possible).\n (lines 291-307, especially 298)\n - `net/ipv6/datagram.c:ip6_datagram_send_ctl()`:\n   - Accepts repeated `IPV6_DSTOPTS` and accumulates into `opt_flen`\n without rejecting duplicates. (lines 909-933)\n - `net/ipv6/ip6_output.c:__ip6_append_data()`:\n   - Uses `opt->opt_flen + opt->opt_nflen` to compute header\n sizes/headroom decisions. (lines 1448-1466, especially 1463-1465)\n - `net/ipv6/ip6_output.c:__ip6_make_skb()`:\n   - Calls `ipv6_push_frag_opts()` if `opt->opt_flen` is non-zero.\n (lines 1930-1934)\n - `net/ipv6/exthdrs.c:ipv6_push_frag_opts()` / `ipv6_push_exthdr()`:\n   - Push size comes from `ipv6_optlen(opt->dst1opt)` (based on the\n pointed-to header). (lines 1179-1185 and 1206-1211)\n\n 1. `opt_flen` is a 16-bit accumulator:\n\n - `include/net/ipv6.h:298` defines `__u16 opt_flen; /* after fragment hdr */`.\n\n 2. `ip6_datagram_send_ctl()` accepts *repeated* `IPV6_DSTOPTS` cmsgs\n and increments `opt_flen` each time:\n\n - In `net/ipv6/datagram.c:909-933`, for `IPV6_DSTOPTS`:\n   - It computes `len = ((hdr->hdrlen + 1) << 3);`\n   - It checks `CAP_NET_RAW` using `ns_capable(net->user_ns,\n CAP_NET_RAW)`. (line 922)\n   - Then it does:\n     - `opt->opt_flen += len;` (line 927)\n     - `opt->dst1opt = hdr;` (line 928)\n\n There is no duplicate rejection here (unlike the legacy\n `IPV6_2292DSTOPTS` path which rejects duplicates at\n `net/ipv6/datagram.c:901-904`).\n\n If enough large `IPV6_DSTOPTS` cmsgs are provided, `opt_flen` wraps\n while `dst1opt` still points to a large (2048-byte)\n destination-options header.\n\n In the attached PoC (`poc.c`):\n\n - 32 cmsgs with `hdrlen=255` => `len = (255+1)*8 = 2048`\n - 1 cmsg with `hdrlen=0` => `len = 8`\n - Total increment: `32*2048 + 8 = 65544`, so `(__u16)opt_flen == 8`\n - The last cmsg is 2048 bytes, so `dst1opt` points to a 2048-byte header.\n\n 3. The transmit path sizes headers using the wrapped `opt_flen`:\n\n- In `net/ipv6/ip6_output.c:1463-1465`:\n  - `headersize = sizeof(struct ipv6hdr) + (opt ? opt->opt_flen +\n opt->opt_nflen : 0) + ...;`\n\n With wrapped `opt_flen`, `headersize`/headroom decisions underestimate\n what will be pushed later.\n\n 4. When building the final skb, the actual push length comes from\n `dst1opt` and is not limited by wrapped `opt_flen`:\n\n - In `net/ipv6/ip6_output.c:1930-1934`:\n   - `if (opt->opt_flen) proto = ipv6_push_frag_opts(skb, opt, proto);`\n - In `net/ipv6/exthdrs.c:1206-1211`, `ipv6_push_frag_opts()` pushes\n `dst1opt` via `ipv6_push_exthdr()`.\n - In `net/ipv6/exthdrs.c:1179-1184`, `ipv6_push_exthdr()` does:\n   - `skb_push(skb, ipv6_optlen(opt));`\n   - `memcpy(h, opt, ipv6_optlen(opt));`\n\n With insufficient headroom, `skb_push()` underflows and triggers\n `skb_under_panic()` -> `BUG()`:\n\n - `net/core/skbuff.c:2669-2675` (`skb_push()` calls `skb_under_panic()`)\n - `net/core/skbuff.c:207-214` (`skb_panic()` ends in `BUG()`)\n\n - The `IPV6_DSTOPTS` cmsg path requires `CAP_NET_RAW` in the target\n netns user namespace (`ns_capable(net->user_ns, CAP_NET_RAW)`).\n - Root (or any task with `CAP_NET_RAW`) can trigger this without user\n namespaces.\n - An unprivileged `uid=1000` user can trigger this if unprivileged\n user namespaces are enabled and it can create a userns+netns to obtain\n namespaced `CAP_NET_RAW` (the attached PoC does this).\n\n - Local denial of service: kernel BUG/panic (system crash).\n -\n---truncated---",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31415",
+    "publishedDate": "2026-04-13T14:16:10.707",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31414",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nf_conntrack_expect: use expect->helper\n\nUse expect->helper in ctnetlink and /proc to dump the helper name.\nUsing nfct_help() without holding a reference to the master conntrack\nis unsafe.\n\nUse exp->master->helper in ctnetlink path if userspace does not provide\nan explicit helper when creating an expectation to retain the existing\nbehaviour. The ctnetlink expectation path holds the reference on the\nmaster conntrack and nf_conntrack_expect lock and the nfnetlink glue\npath refers to the master ct that is attached to the skb.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31414",
+    "publishedDate": "2026-04-13T14:16:10.537",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-36923",
+    "description": "Sourcecodester Cab Management System 1.0 is vulnerable to SQL Injection in the file /cms/admin/bookings/view_booking.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36923",
+    "publishedDate": "2026-04-13T13:16:42.107",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-36922",
+    "description": "Sourcecodester Cab Management System v1.0 is vulnerable to SQL injection in the file /cms/admin/categories/view_category.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36922",
+    "publishedDate": "2026-04-13T13:16:42.000",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-36920",
+    "description": "Sourcecodester Online Reviewer System v1.0 is vulnerable to SQL Injection in the file /system/system/admins/assessments/examproper/questions-view.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36920",
+    "publishedDate": "2026-04-13T13:16:41.897",
+    "lastModifiedDate": "2026-04-13T15:01:43.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
