@@ -1,143 +1,137 @@
 [
   {
-    "id": "CVE-2026-6200",
-    "description": "A vulnerability was determined in Tenda F456 1.0.0.5. The affected element is the function formwebtypelibrary of the file /goform/webtypelibrary. This manipulation of the argument menufacturer/Go causes stack-based buffer overflow. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6200",
-    "publishedDate": "2026-04-13T19:16:58.240",
-    "lastModifiedDate": "2026-04-13T19:16:58.240",
+    "id": "CVE-2026-33948",
+    "description": "jq is a command-line JSON processor. Commits before 6374ae0bcdfe33a18eb0ae6db28493b1f34a0a5b contain a vulnerability where CLI input parsing allows validation bypass via embedded NUL bytes. When reading JSON from files or stdin, jq uses strlen() to determine buffer length instead of the actual byte count from fgets(), causing it to truncate input at the first NUL byte and parse only the preceding prefix. This enables an attacker to craft input with a benign JSON prefix before a NUL byte followed by malicious trailing data, where jq validates only the prefix as valid JSON while silently discarding the suffix. Workflows relying on jq to validate untrusted JSON before forwarding it to downstream consumers are susceptible to parser differential attacks, as those consumers may process the full input including the malicious trailing bytes. This issue has been patched by commit 6374ae0bcdfe33a18eb0ae6db28493b1f34a0a5b.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33948",
+    "publishedDate": "2026-04-14T00:16:06.867",
+    "lastModifiedDate": "2026-04-14T00:16:06.867",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
+        "score": 2.9,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6199",
-    "description": "A vulnerability was found in Tenda F456 1.0.0.5. Impacted is the function fromqossetting of the file /goform/qossetting. The manipulation of the argument page results in stack-based buffer overflow. It is possible to launch the attack remotely. The exploit has been made public and could be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6199",
-    "publishedDate": "2026-04-13T19:16:58.033",
-    "lastModifiedDate": "2026-04-13T19:16:58.033",
+    "id": "CVE-2026-40164",
+    "description": "jq is a command-line JSON processor. Before commit 0c7d133c3c7e37c00b6d46b658a02244fdd3c784, jq used MurmurHash3 with a hardcoded, publicly visible seed (0x432A9843) for all JSON object hash table operations, which allowed an attacker to precompute key collisions offline. By supplying a crafted JSON object (~100 KB) where all keys hashed to the same bucket, hash table lookups degraded from O(1) to O(n), turning any jq expression into an O(n²) operation and causing significant CPU exhaustion. This affected common jq use cases such as CI/CD pipelines, web services, and data processing scripts, and was far more practical to exploit than existing heap overflow issues since it required only a small payload. This issue has been patched in commit 0c7d133c3c7e37c00b6d46b658a02244fdd3c784.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40164",
+    "publishedDate": "2026-04-14T00:16:07.360",
+    "lastModifiedDate": "2026-04-14T00:16:07.360",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6196",
-    "description": "A vulnerability was detected in Tenda F456 1.0.0.5. This affects the function fromexeCommand of the file /goform/exeCommand. Performing a manipulation of the argument cmdinput results in stack-based buffer overflow. The attack is possible to be carried out remotely. The exploit is now public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6196",
-    "publishedDate": "2026-04-13T18:16:32.560",
-    "lastModifiedDate": "2026-04-13T18:16:32.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6195",
-    "description": "A security vulnerability has been detected in Totolink A7100RU 7.4cu.2313_b20191024. Affected by this issue is the function setPasswordCfg of the file /cgi-bin/cstecgi.cgi of the component CGI Handler. Such manipulation of the argument admpass leads to os command injection. The attack can be executed remotely. The exploit has been disclosed publicly and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6195",
-    "publishedDate": "2026-04-13T18:16:32.353",
-    "lastModifiedDate": "2026-04-13T18:16:32.353",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6194",
-    "description": "A weakness has been identified in Totolink A3002MU B20211125.1046. Affected by this vulnerability is the function sub_410188 of the file /boafrm/formWlanSetup of the component HTTP Request Handler. This manipulation of the argument wan-url causes stack-based buffer overflow. Remote exploitation of the attack is possible. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6194",
-    "publishedDate": "2026-04-13T18:16:32.107",
-    "lastModifiedDate": "2026-04-13T18:16:32.107",
+    "id": "CVE-2026-6203",
+    "description": "The User Registration & Membership plugin for WordPress is vulnerable to Open Redirect in versions up to and including 5.1.4. This is due to insufficient validation of user-supplied URLs passed via the 'redirect_to_on_logout' GET parameter before redirecting users. The `redirect_to_on_logout` GET parameter is passed directly to WordPress's `wp_redirect()` function instead of the domain-restricted `wp_safe_redirect()`. While `esc_url_raw()` is applied to sanitize malformed URLs, it does not restrict the redirect destination to the local domain, allowing an attacker to craft a specially formed link that redirects users to potentially malicious external URLs after logout, which could be used to facilitate phishing attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6203",
+    "publishedDate": "2026-04-13T23:16:28.110",
+    "lastModifiedDate": "2026-04-13T23:16:28.110",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5086",
+    "description": "Crypt::SecretBuffer versions before 0.019 for Perl is suseceptible to timing attacks.\n\nFor example, if Crypt::SecretBuffer was used to store and compare plaintext passwords, then discrepencies in timing could be used to guess the secret password.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5086",
+    "publishedDate": "2026-04-13T23:16:27.990",
+    "lastModifiedDate": "2026-04-13T23:16:27.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39979",
+    "description": "jq is a command-line JSON processor. In commits before 2f09060afab23fe9390cce7cb860b10416e1bf5f, the jv_parse_sized() API in libjq accepts a counted buffer with an explicit length parameter, but its error-handling path formats the input buffer using %s in jv_string_fmt(), which reads until a NUL terminator is found rather than respecting the caller-supplied length. This means that when malformed JSON is passed in a non-NUL-terminated buffer, the error construction logic performs an out-of-bounds read past the end of the buffer. The vulnerability is reachable by any libjq consumer calling jv_parse_sized() with untrusted input, and depending on memory layout, can result in memory disclosure or process termination. The issue has been patched in commit 2f09060afab23fe9390cce7cb860b10416e1bf5f.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39979",
+    "publishedDate": "2026-04-13T23:16:27.823",
+    "lastModifiedDate": "2026-04-13T23:16:27.823",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39956",
+    "description": "jq is a command-line JSON processor. In commits after 69785bf77f86e2ea1b4a20ca86775916889e91c9, the _strindices builtin in jq's src/builtin.c passes its arguments directly to jv_string_indexes() without verifying they are strings, and jv_string_indexes() in src/jv.c relies solely on assert() checks that are stripped in release builds compiled with -DNDEBUG. This allows an attacker to crash jq trivially with input like _strindices(0), and by crafting a numeric value whose IEEE-754 bit pattern maps to a chosen pointer, achieve a controlled pointer dereference and limited memory read/probe primitive. Any deployment that evaluates untrusted jq filters against a release build is vulnerable. This issue has been patched in commit fdf8ef0f0810e3d365cdd5160de43db46f57ed03.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39956",
+    "publishedDate": "2026-04-13T23:16:27.653",
+    "lastModifiedDate": "2026-04-13T23:16:27.653",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6224",
+    "description": "A security flaw has been discovered in nocobase plugin-workflow-javascript up to 2.0.23. This issue affects the function createSafeConsole of the file packages/plugins/@nocobase/plugin-workflow-javascript/src/server/Vm.js. Performing a manipulation results in sandbox issue. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6224",
+    "publishedDate": "2026-04-13T22:16:30.757",
+    "lastModifiedDate": "2026-04-13T22:16:30.757",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 7.4,
+        "score": 6.9,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -145,19 +139,48 @@
     ]
   },
   {
-    "id": "CVE-2026-6100",
-    "description": "Use-after-free (UAF) was possible in the `lzma.LZMADecompressor`, `bz2.BZ2Decompressor`, and `gzip.GzipFile` when a memory allocation fails with a `MemoryError` and the decompression instance is re-used. This scenario can be triggered if the process is under memory pressure. The fix cleans up the dangling pointer in this specific error condition.\n\nThe vulnerability is only present if the program re-uses decompressor instances across multiple decompression calls even after a `MemoryError` is raised during decompression. Using the helper functions to one-shot decompress data such as `lzma.decompress()`, `bz2.decompress()`, `gzip.decompress()`, and `zlib.decompress()` are not affected as a new decompressor instance is used per call. If the decompressor instance is not re-used after an error condition, this usage is similarly not vulnerable.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6100",
-    "publishedDate": "2026-04-13T18:16:31.297",
-    "lastModifiedDate": "2026-04-13T20:16:45.950",
+    "id": "CVE-2026-6220",
+    "description": "A vulnerability was identified in HummerRisk up to 1.5.0. This vulnerability affects the function ServerService.addServer of the file ServerService.java of the component Video File Download URL Handler. Such manipulation of the argument streamIp leads to server-side request forgery. It is possible to launch the attack remotely. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6220",
+    "publishedDate": "2026-04-13T22:16:30.550",
+    "lastModifiedDate": "2026-04-13T22:16:30.550",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.1,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4786",
+    "description": "Mitgation of CVE-2026-4519 was incomplete. If the URL contained \"%action\" the mitigation could be bypassed for certain browser types the \"webbrowser.open()\" API could have commands injected into the underlying shell. See CVE-2026-4519 for details.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4786",
+    "publishedDate": "2026-04-13T22:16:30.413",
+    "lastModifiedDate": "2026-04-13T22:16:30.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@python.org"
@@ -165,508 +188,322 @@
     ]
   },
   {
-    "id": "CVE-2026-32316",
-    "description": "jq is a command-line JSON processor. An integer overflow vulnerability exists through version 1.8.1 within the jvp_string_append() and jvp_string_copy_replace_bad functions, where concatenating strings with a combined length exceeding 2^31 bytes causes a 32-bit unsigned integer overflow in the buffer allocation size calculation, resulting in a drastically undersized heap buffer. Subsequent memory copy operations then write the full string data into this undersized buffer, causing a heap buffer overflow classified as CWE-190 (Integer Overflow) leading to CWE-122 (Heap-based Buffer Overflow). Any system evaluating untrusted jq queries is affected, as an attacker can crash the process or potentially achieve further exploitation through heap corruption by crafting queries that produce extremely large strings. The root cause is the absence of string size bounds checking, unlike arrays and objects which already have size limits. The issue has been addressed in commit e47e56d226519635768e6aab2f38f0ab037c09e5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-32316",
-    "publishedDate": "2026-04-13T18:16:29.420",
-    "lastModifiedDate": "2026-04-13T18:16:29.420",
+    "id": "CVE-2026-40312",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below 7.1.2-19, an off by one error in the MSL decoder could result in a crash when a malicous MSL file is read. This issue has been fixed in version 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40312",
+    "publishedDate": "2026-04-13T22:16:30.113",
+    "lastModifiedDate": "2026-04-13T22:16:30.113",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.2,
+        "score": 6.2,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-28291",
-    "description": "simple-git enables running native Git commands from JavaScript. Versions up to and including 3.31.1 allow execution of arbitrary commands through Git option manipulation, bypassing safety checks meant to block dangerous options like -u and --upload-pack. The flaw stems from an incomplete fix for CVE-2022-25860, as Git's flexible option parsing allows numerous character combinations (e.g., -vu, -4u, -nu) to circumvent the regular-expression-based blocklist in the unsafe operations plugin. Due to the virtually infinite number of valid option variants that Git accepts, a complete blocklist-based mitigation may be infeasible without fully emulating Git's option parsing behavior. This issue has been fixed in version 3.32.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28291",
-    "publishedDate": "2026-04-13T18:16:28.760",
-    "lastModifiedDate": "2026-04-13T18:16:28.760",
+    "id": "CVE-2026-40311",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. Versions below 7.1.2-19 and 6.9.13-44 contain a heap use-after-free vulnerability that can cause a crash when reading and printing values from an invalid XMP profile. This issue has been fixed in versions 6.9.13-44 and 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40311",
+    "publishedDate": "2026-04-13T22:16:29.950",
+    "lastModifiedDate": "2026-04-13T22:16:29.950",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
+        "score": 5.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-3756",
-    "description": "A vulnerability exists in the command handling of the IEC 61850 communication stack included in the product revisions listed as affected in this CVE. An attacker with access to IEC 61850 networks could exploit the vulnera bility by using a specially crafted 61850 packet, forcing the communication interfaces of the PM 877, CI850 and CI868 modules into fault mode or causing unavailability of the S+ Operations 61850 connectivity, resulting in a denial-of-service situation. \n\n\n\n\nThe System 800xA IEC61850 Connect is not affected. Note: This vulnerability does not impact on the overall availability and functionality of the S+ Operations node, only the 61850 communication function.\n\n   \n\n\n\nThis issue affects AC800M (System 800xA): from 6.0.0x through 6.0.0303.0, from 6.1.0x through 6.1.0031.0, from 6.1.1x through 6.1.1004.0, from 6.1.1x through 6.1.1202.0, from 6.2.0x through 6.2.0006.0; Symphony Plus SD Series: A_0, A_1, A_2.003, A_3.005, A_4.001, B_0.005; Symphony Plus MR (Melody Rack): from 3.10 through 3.52; S+ Operations: 2.1, 2.2, 2.3, 3.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-3756",
-    "publishedDate": "2026-04-13T18:16:27.887",
-    "lastModifiedDate": "2026-04-13T18:16:27.887",
+    "id": "CVE-2026-40310",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. Versions below both 7.1.2-19 and 6.9.13-44, contain a heap out-of-bounds write in the JP2 encoder with when a user specifies an invalid sampling index. This issue has been fixed in versions 6.9.13-44 and 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40310",
+    "publishedDate": "2026-04-13T22:16:29.790",
+    "lastModifiedDate": "2026-04-13T22:16:29.790",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 5.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
         "impactScore": 3.6,
-        "source": "cybersecurity@ch.abb.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cybersecurity@ch.abb.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6198",
-    "description": "A vulnerability has been found in Tenda F456 1.0.0.5. This issue affects the function fromNatStaticSetting of the file /goform/NatStaticSetting. The manipulation of the argument page leads to stack-based buffer overflow. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6198",
-    "publishedDate": "2026-04-13T19:16:57.817",
-    "lastModifiedDate": "2026-04-13T19:16:57.817",
+    "id": "CVE-2026-40183",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below 7.1.2-19, the JXL encoder has an heap write overflow when a user specifies that the image should be encoded as 16 bit floats. This issue has been fixed in version 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40183",
+    "publishedDate": "2026-04-13T22:16:29.643",
+    "lastModifiedDate": "2026-04-13T22:16:29.643",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40044",
-    "description": "Pachno 1.0.6 contains a deserialization vulnerability that allows unauthenticated attackers to execute arbitrary code by injecting malicious serialized objects into cache files. Attackers can write PHP object payloads to world-writable cache files with predictable names in the cache directory, which are unserialized during framework bootstrap before authentication checks occur.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40044",
-    "publishedDate": "2026-04-13T19:16:52.290",
-    "lastModifiedDate": "2026-04-13T19:16:52.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40043",
-    "description": "Pachno 1.0.6 contains an authentication bypass vulnerability in the runSwitchUser() action that allows authenticated low-privilege users to escalate privileges by manipulating the original_username cookie. Attackers can set the client-controlled original_username cookie to any value and request a switch to user ID 1 to obtain session tokens or password hashes belonging to administrator accounts.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40043",
-    "publishedDate": "2026-04-13T19:16:52.140",
-    "lastModifiedDate": "2026-04-13T19:16:52.140",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
+        "score": 5.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40042",
-    "description": "Pachno 1.0.6 contains an XML external entity injection vulnerability that allows unauthenticated attackers to read arbitrary files by exploiting unsafe XML parsing in the TextParser helper. Attackers can inject malicious XML entities through wiki table syntax and inline tags in issue descriptions, comments, and wiki articles to trigger entity resolution via simplexml_load_string() without LIBXML_NONET restrictions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40042",
-    "publishedDate": "2026-04-13T19:16:51.960",
-    "lastModifiedDate": "2026-04-13T19:16:51.960",
+    "id": "CVE-2026-40169",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below 7.1.2-19, a crafted image could result in an out of bounds heap write when writing a yaml or json output, resulting in a crash. This issue has been fixed in version 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40169",
+    "publishedDate": "2026-04-13T22:16:29.477",
+    "lastModifiedDate": "2026-04-13T22:16:29.477",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40041",
-    "description": "Pachno 1.0.6 contains a cross-site request forgery vulnerability that allows attackers to perform arbitrary actions in authenticated user context by exploiting missing CSRF protections on state-changing endpoints. Attackers can craft malicious requests targeting login, registration, file upload, milestone editing, and administrative functions to force logout, create accounts, modify roles, inject comments, or upload files when authenticated users visit attacker-controlled websites.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40041",
-    "publishedDate": "2026-04-13T19:16:51.787",
-    "lastModifiedDate": "2026-04-13T19:16:51.787",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
+        "score": 6.2,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40040",
-    "description": "Pachno 1.0.6 contains an unrestricted file upload vulnerability that allows authenticated users to upload arbitrary file types by bypassing ineffective extension filtering to the /uploadfile endpoint. Attackers can upload executable files .php5 scripts to web-accessible directories and execute them to achieve remote code execution on the server.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40040",
-    "publishedDate": "2026-04-13T19:16:51.617",
-    "lastModifiedDate": "2026-04-13T19:16:51.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40039",
-    "description": "Pachno 1.0.6 contains an open redirection vulnerability that allows attackers to redirect users to arbitrary external websites by manipulating the return_to parameter. Attackers can craft malicious login URLs with unvalidated return_to values to conduct phishing attacks and steal user credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40039",
-    "publishedDate": "2026-04-13T19:16:51.447",
-    "lastModifiedDate": "2026-04-13T19:16:51.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.5,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40038",
-    "description": "Pachno 1.0.6 contains a stored cross-site scripting vulnerability that allows attackers to execute arbitrary HTML and script code by injecting malicious payloads into POST parameters. Attackers can inject scripts through the value, comment_body, article_content, description, and message parameters across multiple controllers, which are stored in the database and executed in users' browser sessions due to improper sanitization via Request::getRawParameter() or Request::getParameter() calls.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40038",
-    "publishedDate": "2026-04-13T19:16:51.263",
-    "lastModifiedDate": "2026-04-13T19:16:51.263",
+    "id": "CVE-2026-34238",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below both 7.1.2-19 and 6.9.13-44, an integer overflow in the despeckle operation causes a heap buffer overflow on 32-bit builds that will result in an out of bounds write. This issue has been fixed in versions 6.9.13-44 and 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34238",
+    "publishedDate": "2026-04-13T22:16:29.310",
+    "lastModifiedDate": "2026-04-13T22:16:29.310",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
       {
         "score": 5.1,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.4,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6197",
-    "description": "A flaw has been found in Tenda F456 1.0.0.5. This vulnerability affects the function formWrlsafeset of the file /goform/AdvSetWrlsafeset. Executing a manipulation of the argument mit_ssid can lead to stack-based buffer overflow. The attack may be performed from remote. The exploit has been published and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6197",
-    "publishedDate": "2026-04-13T19:16:57.610",
-    "lastModifiedDate": "2026-04-13T19:16:57.610",
+    "id": "CVE-2026-33947",
+    "description": "jq is a command-line JSON processor. In versions 1.8.1 and below, functions jv_setpath(), jv_getpath(), and delpaths_sorted() in jq's src/jv_aux.c use unbounded recursion whose depth is controlled by the length of a caller-supplied path array, with no depth limit enforced. An attacker can supply a JSON document containing a flat array of ~65,000 integers (~200 KB) that, when used as a path argument by a trusted jq filter, exhausts the C call stack and crashes the process with a segmentation fault (SIGSEGV). This bypass works because the existing MAX_PARSING_DEPTH (10,000) limit only protects the JSON parser, not runtime path operations where arrays can be programmatically constructed to arbitrary lengths. The impact is denial of service (unrecoverable crash) affecting any application or service that processes untrusted JSON input through jq's setpath, getpath, or delpaths builtins. This issue has been addressed in commit fb59f1491058d58bdc3e8dd28f1773d1ac690a1f.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33947",
+    "publishedDate": "2026-04-13T22:16:29.157",
+    "lastModifiedDate": "2026-04-13T22:16:29.157",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 6.2,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6193",
-    "description": "A security flaw has been discovered in PHPGurukul Daily Expense Tracking System 1.1. Affected is an unknown function of the file /register.php. The manipulation of the argument email results in sql injection. The attack may be launched remotely. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6193",
-    "publishedDate": "2026-04-13T17:16:32.557",
-    "lastModifiedDate": "2026-04-13T17:16:32.557",
+    "id": "CVE-2026-33908",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below both 7.1.2-19 and 6.9.13-44, Magick frees the memory of the XML tree via the `DestroyXMLTree()` function; however, this process is executed recursively with no depth limit imposed. When Magick processes an XML file with deeply nested structures, it will exhaust the stack memory, resulting in a Denial of Service (DoS) attack. This issue has been fixed in versions 6.9.13-44 and 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33908",
+    "publishedDate": "2026-04-13T22:16:28.997",
+    "lastModifiedDate": "2026-04-13T22:16:28.997",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6192",
-    "description": "A vulnerability was identified in uclouvain openjpeg up to 2.5.4. This impacts the function opj_pi_initialise_encode in the library src/lib/openjp2/pi.c. The manipulation leads to integer overflow. The attack must be carried out locally. The exploit is publicly available and might be used. The identifier of the patch is 839936aa33eb8899bbbd80fda02796bb65068951. It is suggested to install a patch to address this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6192",
-    "publishedDate": "2026-04-13T17:16:32.333",
-    "lastModifiedDate": "2026-04-13T17:16:32.333",
+    "id": "CVE-2026-33905",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below both 7.1.2-19 and 6.9.13-44, the -sample operation has an out of bounds read when an specific offset is set through the `sample:offset` define that could lead to an out of bounds read. This issue has been fixed in versions 6.9.13-44 and 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33905",
+    "publishedDate": "2026-04-13T22:16:28.837",
+    "lastModifiedDate": "2026-04-13T22:16:28.837",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.3,
+        "score": 5.5,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 1.8,
-        "impactScore": 1.4,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33902",
+    "description": "ImageMagick is free and open-source software used for editing and manipulating digital images. In versions below both 7.1.2-19 and 6.9.13-44, a stack overflow vulnerability in ImageMagick's FX expression parser allows an attacker to crash the process by providing a deeply nested expression. This issue has been fixed in versions 6.9.13-44 and 7.1.2-19.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33902",
+    "publishedDate": "2026-04-13T22:16:28.680",
+    "lastModifiedDate": "2026-04-13T22:16:28.680",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22566",
+    "description": "An Improper Access Control vulnerability could allow a malicious actor with access to the UniFi Play network to obtain UniFi Play WiFi credentials.  \n\nAffected Products:\nUniFi Play PowerAmp (Version 1.0.35 and earlier) \nUniFi Play Audio Port  (Version 1.0.24 and earlier)  \n\nMitigation:\nUpdate UniFi Play PowerAmp to Version 1.0.38 or later \nUpdate UniFi Play Audio Port  to Version 1.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22566",
+    "publishedDate": "2026-04-13T22:16:28.437",
+    "lastModifiedDate": "2026-04-13T22:16:28.437",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "support@hackerone.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22565",
+    "description": "An Improper Input Validation vulnerability could allow a malicious actor with access to the UniFi Play network to cause the device to stop responding.  \n\nAffected Products:\nUniFi Play PowerAmp (Version 1.0.35 and earlier) \nUniFi Play Audio Port  (Version 1.0.24 and earlier)  \n\nMitigation:\nUpdate UniFi Play PowerAmp to Version 1.0.38 or later \nUpdate UniFi Play Audio Port  to Version 1.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22565",
+    "publishedDate": "2026-04-13T22:16:28.313",
+    "lastModifiedDate": "2026-04-13T22:16:28.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-22564",
+    "description": "An Improper Access Control vulnerability could allow a malicious actor with access to the UniFi Play network to enable SSH to make unauthorized changes to the system.  \n\nAffected Products:\nUniFi Play PowerAmp (Version 1.0.35 and earlier) \nUniFi Play Audio Port  (Version 1.0.24 and earlier)  \n\nMitigation:\nUpdate UniFi Play PowerAmp to Version 1.0.38 or later \nUpdate UniFi Play Audio Port  to Version 1.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22564",
+    "publishedDate": "2026-04-13T22:16:28.187",
+    "lastModifiedDate": "2026-04-13T22:16:28.187",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "support@hackerone.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22563",
+    "description": "A series of Improper Input Validation vulnerabilities could allow a Command Injection by a malicious actor with access to the UniFi Play network.\n \nAffected Products:\nUniFi Play PowerAmp (Version 1.0.35 and earlier) \nUniFi Play Audio Port  (Version 1.0.24 and earlier)  \n\nMitigation:\nUpdate UniFi Play PowerAmp to Version 1.0.38 or later \nUpdate UniFi Play Audio Port  to Version 1.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22563",
+    "publishedDate": "2026-04-13T22:16:28.050",
+    "lastModifiedDate": "2026-04-13T22:16:28.050",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "support@hackerone.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22562",
+    "description": "A malicious actor with access to the UniFi Play network could exploit a Path Traversal vulnerability found in the device firmware to write files on the system that could be used for a remote code execution (RCE).\n \nAffected Products:\nUniFi Play PowerAmp (Version 1.0.35 and earlier) UniFi Play Audio Port  (Version 1.0.24 and earlier)  \nMitigation:\nUpdate UniFi Play PowerAmp to Version 1.0.38 or later Update UniFi Play Audio Port  to Version 1.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22562",
+    "publishedDate": "2026-04-13T22:16:27.870",
+    "lastModifiedDate": "2026-04-13T22:16:27.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "support@hackerone.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6219",
+    "description": "A vulnerability was determined in aandrew-me ytDownloader up to 3.20.2. This affects the function child_process.exec of the file src/compressor.js of the component Compressor Feature. This manipulation causes command injection. The attack can only be executed locally. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6219",
+    "publishedDate": "2026-04-13T21:16:32.410",
+    "lastModifiedDate": "2026-04-13T21:16:32.410",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
         "score": 4.8,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-6191",
-    "description": "A vulnerability was determined in itsourcecode Construction Management System 1.0. This affects an unknown function of the file /equipments.php. Executing a manipulation of the argument Name can lead to sql injection. The attack can be launched remotely. The exploit has been publicly disclosed and may be utilized.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6191",
-    "publishedDate": "2026-04-13T17:16:32.137",
-    "lastModifiedDate": "2026-04-13T17:16:32.137",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6190",
-    "description": "A vulnerability was found in itsourcecode Construction Management System 1.0. The impacted element is an unknown function of the file /employees.php. Performing a manipulation of the argument Name results in sql injection. The attack can be initiated remotely. The exploit has been made public and could be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6190",
-    "publishedDate": "2026-04-13T17:16:31.903",
-    "lastModifiedDate": "2026-04-13T17:16:31.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6189",
-    "description": "A vulnerability has been found in SourceCodester Pharmacy Sales and Inventory System 1.0. The affected element is an unknown function of the file /ajax.php?action=login. Such manipulation of the argument Username leads to sql injection. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6189",
-    "publishedDate": "2026-04-13T17:16:31.693",
-    "lastModifiedDate": "2026-04-13T17:16:31.693",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-39940",
-    "description": "ChurchCRM is an open-source church management system. Prior to 7.0.0, it was possible in many places across the ChurchCRM application to create a link that, when visited by an authenticated user, would redirect them to any URL chosen by an attacker if they clicked 'Cancel' button on the page. For this write-up the DonatedItemEditor.php will be used as an example, however wherever all instances of 'linkBack' should be assessed. This vulnerability is fixed in 7.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39940",
-    "publishedDate": "2026-04-13T17:16:30.450",
-    "lastModifiedDate": "2026-04-13T17:16:30.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-36952",
-    "description": "Sourcecodester Online Thesis Archiving System v1.0 is vulnerable to SQL injection in the file /otas/admin/curriculum/manage_curriculum.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36952",
-    "publishedDate": "2026-04-13T17:16:29.230",
-    "lastModifiedDate": "2026-04-13T17:16:29.230",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
