@@ -1,50 +1,150 @@
 [
   {
-    "id": "CVE-2026-39857",
-    "description": "ApostropheCMS is an open-source Node.js content management system. Versions 4.28.0 and prior contain an authorization bypass vulnerability in the choices and counts query parameters of the REST API, where these query builders execute MongoDB distinct() operations that bypass the publicApiProjection restrictions intended to limit which fields are exposed publicly. The choices and counts parameters are processed via applyBuildersSafely before the projection is applied, and MongoDB's distinct operation does not respect projections, returning all distinct values directly. The results are returned in the API response without any filtering against publicApiProjection or removeForbiddenFields. An unauthenticated attacker can extract all distinct field values for any schema field type that has a registered query builder, including string, integer, float, select, boolean, date, slug, and relationship fields. Fields protected with viewPermission are similarly exposed, and the counts variant additionally reveals how many documents have each distinct value. Both the piece-type and page REST APIs are affected. This issue has been fixed in version 4.29.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39857",
-    "publishedDate": "2026-04-15T20:16:36.567",
-    "lastModifiedDate": "2026-04-15T20:16:36.567",
+    "id": "CVE-2026-5363",
+    "description": "Inadequate Encryption Strength vulnerability in TP-Link Archer C7 v5 and v5.8 (uhttpd modules) allows Password Recovery Exploitation. The web interface encrypts the admin password client-side using RSA-1024 before sending it to the router during login. \nAn adjacent attacker with the ability to intercept network traffic could potentially perform a brute-force or factorization attack against the 1024-bit RSA key to recover the plaintext administrator password, leading to unauthorized access and compromise of the device configuration.  This issue affects Archer C7: through Build 20220715.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5363",
+    "publishedDate": "2026-04-16T00:16:29.547",
+    "lastModifiedDate": "2026-04-16T00:16:29.547",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 3.1",
+        "score": 5.4,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4880",
+    "description": "The Barcode Scanner (+Mobile App) – Inventory manager, Order fulfillment system, POS (Point of Sale) plugin for WordPress is vulnerable to privilege escalation via insecure token-based authentication in all versions up to, and including, 1.11.0. This is due to the plugin trusting a user-supplied Base64-encoded user ID in the token parameter to identify users, leaking valid authentication tokens through the 'barcodeScannerConfigs' action, and lacking meta-key restrictions on the 'setUserMeta' action. This makes it possible for unauthenticated attackers to escalate their privileges to that of an administrator by first spoofing the admin user ID to leak their authentication token, then using that token to update any user's 'wp_capabilities' meta to gain full administrative access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4880",
+    "publishedDate": "2026-04-16T00:16:29.393",
+    "lastModifiedDate": "2026-04-16T00:16:29.393",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40245",
+    "description": "Free5GC is an open-source Linux Foundation project for 5th generation (5G) mobile core networks. Versions 4.2.1 and below contain an information disclosure vulnerability in the UDR (Unified Data Repository) service. The handler for GET /nudr-dr/v2/application-data/influenceData/subs-to-notify sends an HTTP 400 error response when required query parameters are missing but does not return afterward. Execution continues into the processor function, which queries the data repository and appends the full list of Traffic Influence Subscriptions, including SUPI/IMSI values, to the response body. An unauthenticated attacker with network access to the 5G Service Based Interface can retrieve stored subscriber identifiers with a single parameterless HTTP GET request. The SUPI is the most sensitive subscriber identifier in 5G networks, and its exposure undermines the privacy guarantees of the 3GPP SUCI concealment mechanism at the core network level. A similar bypass exists when sending a malformed snssai parameter due to the same missing return pattern.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40245",
+    "publishedDate": "2026-04-16T00:16:29.060",
+    "lastModifiedDate": "2026-04-16T00:16:29.060",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-35569",
-    "description": "ApostropheCMS is an open-source Node.js content management system. Versions 4.28.0 and prior contain a stored cross-site scripting vulnerability in SEO-related fields (SEO Title and Meta Description), where user-controlled input is rendered without proper output encoding into HTML contexts including <title> tags, <meta> attributes, and JSON-LD structured data. An attacker can inject a payload such as \"></title><script>alert(1)</script> to break out of the intended HTML context and execute arbitrary JavaScript in the browser of any authenticated user who views the affected page. This can be leveraged to perform authenticated API requests, access sensitive data such as usernames, email addresses, and roles via internal APIs, and exfiltrate it to an attacker-controlled server. This issue has been fixed in version 4.29.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35569",
-    "publishedDate": "2026-04-15T20:16:36.353",
-    "lastModifiedDate": "2026-04-15T20:16:36.353",
+    "id": "CVE-2026-4949",
+    "description": "The Paid Membership Plugin, Ecommerce, User Registration Form, Login Form, User Profile & Restrict Content – ProfilePress plugin for WordPress is vulnerable to Missing Authorization in all versions up to, and including, 4.16.12. This is due to the 'process_checkout' function not properly enforcing the plan active status check when a 'change_plan_sub_id' parameter is provided. This makes it possible for authenticated attackers, with Subscriber-level access and above, to subscribe to inactive membership plans by supplying an arbitrary 'change_plan_sub_id' value in the checkout request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4949",
+    "publishedDate": "2026-04-15T23:16:10.383",
+    "lastModifiedDate": "2026-04-15T23:16:10.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40316",
+    "description": "OWASP BLT is a QA testing and vulnerability disclosure platform that encompasses websites, apps, git repositories, and more. Versions prior to 2.1.1 contain an RCE vulnerability in the .github/workflows/regenerate-migrations.yml workflow. The workflow uses the pull_request_target trigger to run with full GITHUB_TOKEN write permissions, copies attacker-controlled files from untrusted pull requests into the trusted runner workspace via git show, and then executes python manage.py makemigrations, which imports Django model modules including attacker-controlled website/models.py at runtime. Any module-level Python code in the attacker's models.py is executed during import, enabling arbitrary code execution in the privileged CI environment with access to GITHUB_TOKEN and repository secrets. The attack is triggerable by any external contributor who can open a pull request, provided a maintainer applies the regenerate-migrations label, potentially leading to secret exfiltration, repository compromise, and supply chain attacks. A patch for this issue is expected to be released in version 2.1.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40316",
+    "publishedDate": "2026-04-15T23:16:10.220",
+    "lastModifiedDate": "2026-04-15T23:16:10.220",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40192",
+    "description": "Pillow is a Python imaging library. Versions 10.3.0 through 12.1.1 did not limit the amount of GZIP-compressed data read when decoding a FITS image, making them vulnerable to decompression bomb attacks. A specially crafted FITS file could cause unbounded memory consumption, leading to denial of service (OOM crash or severe performance degradation). If users are unable to immediately upgrade, they should only open specific image formats, excluding FITS, as a workaround.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40192",
+    "publishedDate": "2026-04-15T23:16:10.053",
+    "lastModifiedDate": "2026-04-15T23:16:10.053",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 8.7,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.8,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-33889",
-    "description": "ApostropheCMS is an open-source Node.js content management system. Versions 4.28.0 and prior contain a stored cross-site scripting vulnerability in the @apostrophecms/color-field module, where color values prefixed with -- bypass TinyColor validation intended for CSS custom properties, and the launder.string() call performs only type coercion without stripping HTML metacharacters. These unsanitized values are then concatenated directly into <style> tags both in per-widget style elements rendered for all visitors and in the global stylesheet rendered for editors, with the output marked as safe HTML. An editor can inject a value which closes the style tag and executes arbitrary JavaScript in the browser of every visitor to any page containing the affected widget. This enables mass session hijacking, cookie theft, and privilege escalation to administrative control if an admin views draft content. This issue has been fixed in version 4.29.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33889",
-    "publishedDate": "2026-04-15T20:16:35.850",
-    "lastModifiedDate": "2026-04-15T20:16:35.850",
+    "id": "CVE-2026-40179",
+    "description": "Prometheus is an open-source monitoring system and time series database. Versions 3.0 through 3.5.1 and 3.6.0 through 3.11.1 have stored cross-site scripting vulnerabilities in multiple components of the Prometheus web UI where metric names and label values are injected into innerHTML without escaping. In both the Mantine UI and old React UI, chart tooltips on the Graph page render metric names containing HTML/JavaScript without sanitization. In the old React UI, the Metric Explorer fuzzy search results use dangerouslySetInnerHTML without escaping, and heatmap cell tooltips interpolate le label values without sanitization. With Prometheus v3.x defaulting to UTF-8 metric and label name validation, characters like <, >, and \" are now valid in metric names and labels. An attacker who can inject metrics via a compromised scrape target, remote write, or OTLP receiver endpoint can execute arbitrary JavaScript in the browser of any Prometheus user who views the metric in the Graph UI, potentially enabling configuration exfiltration, data deletion, or Prometheus shutdown depending on enabled flags. This issue has been fixed in versions 3.5.2 and 3.11.2. If developers are unable to immediately update, the following workarounds are recommended: ensure that the remote write receiver (--web.enable-remote-write-receiver) and the OTLP receiver (--web.enable-otlp-receiver) are not exposed to untrusted sources; verify that all scrape targets are trusted and not under attacker control; avoid enabling admin or mutating API endpoints (e.g., --web.enable-admin-api or --web.enable-lifecycle) in environments where untrusted data may be ingested; and refrain from clicking untrusted links, particularly those containing functions such as label_replace, as they may generate poisoned label names and values.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40179",
+    "publishedDate": "2026-04-15T23:16:09.870",
+    "lastModifiedDate": "2026-04-15T23:16:09.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39350",
+    "description": "Istio is an open platform to connect, manage, and secure microservices. In versions 1.25.0 through 1.27.8, 1.28.0 through 1.28.5, 1.29.0, and 1.29.1, the serviceAccounts and notServiceAccounts fields in AuthorizationPolicy incorrectly interpret dots (.) as a regular expression matcher. Because . is a valid character in a service account name, an AuthorizationPolicy ALLOW rule targeting a service account such as cert-manager.io also matches cert-manager-io, cert-managerXio, etc. A DENY rule targeting the same name fails to block those variants. Fixes are available in versions 1.29.2, 1.28.6, and 1.27.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39350",
+    "publishedDate": "2026-04-15T23:16:09.477",
+    "lastModifiedDate": "2026-04-15T23:16:09.477",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -52,50 +152,258 @@
         "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40193",
+    "description": "maddy is a composable, all-in-one mail server. Versions prior to 0.9.3 contain an LDAP injection vulnerability in the auth.ldap module where user-supplied usernames are interpolated into LDAP search filters and DN strings via strings.ReplaceAll() without any LDAP filter escaping, despite the go-ldap/ldap/v3 library's ldap.EscapeFilter() function being available in the same import. This affects three code paths: the Lookup() filter, the AuthPlain() DN template, and the AuthPlain() filter. An attacker with network access to the SMTP submission or IMAP interface can inject arbitrary LDAP filter expressions through the username field in AUTH PLAIN or LOGIN commands. This enables identity spoofing by manipulating filter results to authenticate as another user, LDAP directory enumeration via wildcard filters, and blind extraction of LDAP attribute values using authentication responses as a boolean oracle or via timing side-channels between the two distinct failure paths. This issue has been fixed in version 0.9.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40193",
+    "publishedDate": "2026-04-16T00:16:28.163",
+    "lastModifiedDate": "2026-04-16T00:16:28.163",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40947",
+    "description": "Yubico libfido2 before 1.17.0, python-fido2 before 2.2.0, and yubikey-manager before 5.9.1 have an unintended DLL search path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40947",
+    "publishedDate": "2026-04-16T00:16:29.223",
+    "lastModifiedDate": "2026-04-16T00:16:29.223",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.9,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 1.4,
+        "impactScore": 1.4,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6388",
+    "description": "A flaw was found in ArgoCD Image Updater. This vulnerability allows an attacker, with permissions to create or modify an ImageUpdater resource in a multi-tenant environment, to bypass namespace boundaries. By exploiting insufficient validation, the attacker can trigger unauthorized image updates on applications managed by other tenants. This leads to cross-namespace privilege escalation, impacting application integrity through unauthorized application updates.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6388",
+    "publishedDate": "2026-04-15T22:17:22.583",
+    "lastModifiedDate": "2026-04-15T22:17:22.583",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:H/A:L",
+        "exploitabilityScore": 3.1,
+        "impactScore": 5.3,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40500",
+    "description": "ProcessWire CMS version 3.0.255 and prior contain a server-side request forgery vulnerability in the admin panel's 'Add Module From URL' feature that allows authenticated administrators to supply arbitrary URLs to the module download parameter, causing the server to issue outbound HTTP requests to attacker-controlled internal or external hosts. Attackers can exploit differentiable error messages returned by the server to perform reliable internal network port scanning, host enumeration across RFC-1918 ranges, and potential access to cloud instance metadata endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40500",
+    "publishedDate": "2026-04-15T22:17:22.377",
+    "lastModifiedDate": "2026-04-15T22:17:22.377",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:N",
         "exploitabilityScore": 2.3,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-1711",
+    "description": "Pega Platform versions 8.1.0 through 25.1.1 are affected by a Stored Cross-Site Scripting vulnerability in a user interface component. Requires a high privileged user with a developer role.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1711",
+    "publishedDate": "2026-04-15T22:16:51.880",
+    "lastModifiedDate": "2026-04-15T22:16:51.880",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@pega.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-1564",
+    "description": "Pega Platform versions 8.1.0 through 25.1.1 are affected by an HTML Injection vulnerability in a user interface component. Requires a high privileged user with a developer role.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1564",
+    "publishedDate": "2026-04-15T22:16:51.250",
+    "lastModifiedDate": "2026-04-15T22:16:51.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@pega.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6398",
+    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. Reason: This candidate was issued in error. Notes: All references and descriptions in this candidate have been removed to prevent accidental usage.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6398",
+    "publishedDate": "2026-04-15T21:17:28.370",
+    "lastModifiedDate": "2026-04-15T21:17:28.370",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-40261",
+    "description": "Composer is a dependency manager for PHP. Versions 1.0 through 2.2.26 and 2.3 through 2.9.5 contain a command injection vulnerability in the Perforce::syncCodeBase() method, which appends the $sourceReference parameter to a shell command without proper escaping, and additionally in the Perforce::generateP4Command() method as in GHSA-wg36-wvj6-r67p / CVE-2026-40176, which interpolates user-supplied Perforce connection parameters (port, user, client) from the source url field without proper escaping. An attacker can inject arbitrary commands through crafted source reference or source url values containing shell metacharacters, even if Perforce is not installed. Unlike CVE-2026-40176, the source reference and url are provided as part of package metadata, meaning any compromised or malicious Composer repository can serve package metadata declaring perforce as a source type with malicious values. This vulnerability is exploitable when installing or updating dependencies from source, including the default behavior when installing dev-prefixed versions. This issue has been fixed in Composer 2.2.27 (2.2 LTS) and 2.9.6 (mainline). If developers are unable to immediately update, they can avoid installing dependencies from source by using --prefer-dist or the preferred-install: dist config setting, and only use trusted Composer repositories as a workaround.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40261",
+    "publishedDate": "2026-04-15T21:17:27.693",
+    "lastModifiedDate": "2026-04-15T21:17:27.693",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40186",
+    "description": "ApostropheCMS is an open-source Node.js content management system. A regression introduced in commit 49d0bb7, included in versions 2.17.1 of the ApostropheCMS-maintained sanitize-html package bypasses allowedTags enforcement for text inside nonTextTagsArray elements (textarea and option). ApostropheCMS version 4.28.0 is affected through its dependency on the vulnerable sanitize-html version. The code at packages/sanitize-html/index.js:569-573 incorrectly assumes that htmlparser2 does not decode entities inside these elements and skips escaping, but htmlparser2 10.x does decode entities before passing text to the ontext callback. As a result, entity-encoded HTML is decoded by the parser and then written directly to the output as literal HTML characters, completely bypassing the allowedTags filter. An attacker can inject arbitrary tags including XSS payloads through any allowed option or textarea element using entity encoding. This affects non-default configurations where option or textarea are included in allowedTags, which is common in form builders and CMS platforms. This issue has been fixed in version 2.17.2 of sanitize-html and 4.29.0 of ApostropheCMS.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40186",
+    "publishedDate": "2026-04-15T21:17:27.523",
+    "lastModifiedDate": "2026-04-15T21:17:27.523",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 2.7,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-33888",
-    "description": "ApostropheCMS is an open-source Node.js content management system. Versions 4.28.0 and prior contain an authorization bypass vulnerability in the getRestQuery method of the @apostrophecms/piece-type module, where the method checks whether a MongoDB projection has already been set before applying the admin-configured publicApiProjection. An unauthenticated attacker can supply a project query parameter in the REST API request, which is processed by applyBuildersSafely before the permission check, pre-populating the projection state and causing the publicApiProjection to be skipped entirely. This allows disclosure of any field on publicly queryable documents that the administrator explicitly restricted from the public API, such as internal notes, draft content, or metadata. Exploitation is trivial, requiring only appending query parameters to a public URL with no authentication. This issue has been fixed in version 4.29.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33888",
-    "publishedDate": "2026-04-15T20:16:35.677",
-    "lastModifiedDate": "2026-04-15T20:16:35.677",
+    "id": "CVE-2026-40176",
+    "description": "Composer is a dependency manager for PHP. Versions 1.0 through 2.2.26 and 2.3 through 2.9.5 contain a command injection vulnerability in the Perforce::generateP4Command() method, which constructs shell commands by interpolating user-supplied Perforce connection parameters (port, user, client) without proper escaping. An attacker can inject arbitrary commands through these values in a malicious composer.json declaring a Perforce VCS repository, leading to command execution in the context of the user running Composer, even if Perforce is not installed. VCS repositories are only loaded from the root composer.json or the composer config directory, so this cannot be exploited through composer.json files of packages installed as dependencies. Users are at risk if they run Composer commands on untrusted projects with attacker-supplied composer.json files. This issue has been fixed in Composer 2.2.27 (2.2 LTS) and 2.9.6 (mainline).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40176",
+    "publishedDate": "2026-04-15T21:17:27.357",
+    "lastModifiedDate": "2026-04-15T21:17:27.357",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 7.8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-21726",
-    "description": "The CVE-2021-36156 fix validates the namespace parameter for path traversal sequences after a single URL decode, by double encoding, an attacker can read files at the Ruler API endpoint /loki/api/v1/rules/{namespace}\n\nThanks to Prasanth Sundararajan for reporting this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21726",
-    "publishedDate": "2026-04-15T20:16:34.177",
-    "lastModifiedDate": "2026-04-15T20:16:34.177",
+    "id": "CVE-2026-40173",
+    "description": "Dgraph is an open source distributed GraphQL database. Versions 25.3.1 and prior contain an unauthenticated credential disclosure vulnerability where the /debug/pprof/cmdline endpoint is registered on the default mux and reachable without authentication, exposing the full process command line including the admin token configured via the --security \"token=...\" startup flag. An attacker can retrieve the leaked token and reuse it in the X-Dgraph-AuthToken header to gain unauthorized access to admin-only endpoints such as /admin/config/cache_mb, bypassing the adminAuthHandler token validation. This enables unauthorized privileged administrative access including configuration changes and operational control actions in any deployment where the Alpha HTTP port is reachable by untrusted parties. This issue has been fixed in version 25.3.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40173",
+    "publishedDate": "2026-04-15T21:17:27.197",
+    "lastModifiedDate": "2026-04-15T21:17:27.197",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 9.4,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@grafana.com"
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22676",
+    "description": "Barracuda RMM versions prior to 2025.2.2 contain a privilege escalation vulnerability that allows local attackers to gain SYSTEM-level privileges by exploiting overly permissive filesystem ACLs on the C:\\Windows\\Automation directory. Attackers can modify existing automation content or place attacker-controlled files in this directory, which are then executed under the NT AUTHORITY\\SYSTEM account during routine automation cycles, typically succeeding within the next execution cycle.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22676",
+    "publishedDate": "2026-04-15T21:17:04.447",
+    "lastModifiedDate": "2026-04-15T21:17:04.447",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
@@ -116,326 +424,6 @@
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
         "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6383",
-    "description": "A flaw was found in KubeVirt's Role-Based Access Control (RBAC) evaluation logic. The authorization mechanism improperly truncates subresource names, leading to incorrect permission evaluations. This allows authenticated users with specific custom roles to gain unauthorized access to subresources, potentially disclosing sensitive information or performing actions they are not permitted to do. Additionally, legitimate users may be denied access to resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6383",
-    "publishedDate": "2026-04-15T19:16:38.520",
-    "lastModifiedDate": "2026-04-15T19:16:38.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6245",
-    "description": "A flaw was found in the System Security Services Daemon (SSSD). The pam_passkey_child_read_data() function within the PAM passkey responder fails to properly handle raw bytes received from a pipe. Because the data is treated as a NUL-terminated C string without explicit termination, it results in an out-of-bounds read when processed by functions like snprintf(). A local attacker could potentially trigger this vulnerability by initiating a crafted passkey authentication request, causing the SSSD PAM responder to crash, resulting in a local Denial of Service (DoS).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6245",
-    "publishedDate": "2026-04-15T19:16:38.250",
-    "lastModifiedDate": "2026-04-15T19:16:38.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5189",
-    "description": "CWE-798: Use of Hard-coded Credentials in Sonatype Nexus Repository Manager versions 3.0.0 through 3.70.5 allows an unauthenticated attacker with network access to gain unauthorized read/write access to the internal database and execute arbitrary OS commands as the Nexus process user. Exploitation requires the non-default nexus.orient.binaryListenerEnabled=true configuration to be enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5189",
-    "publishedDate": "2026-04-15T19:16:37.990",
-    "lastModifiedDate": "2026-04-15T19:16:37.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.2,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "103e4ec9-0a87-450b-af77-479448ddef11"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-4857",
-    "description": "IdentityIQ 8.5, all\nIdentityIQ 8.5 patch levels prior to 8.5p2, IdentityIQ 8.4, and all IdentityIQ\n8.4 patch levels prior to 8.4p4 allow authenticated users assigned the Debug\nPages Read Only capability or any custom capability with the ViewAccessDebugPage\nSPRight to incorrectly create new IdentityIQ objects.  Until a remediating security fix or patches\ncontaining this security fix are installed, the Debug Pages Read Only\ncapability and any custom capabilities that contain the ViewAccessDebugPage\nSPRight should be unassigned from all identities and workgroups.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4857",
-    "publishedDate": "2026-04-15T19:16:37.730",
-    "lastModifiedDate": "2026-04-15T19:16:37.730",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.7,
-        "impactScore": 6,
-        "source": "psirt@sailpoint.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40256",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, repository-boundary validation relies on string prefix checks on resolved absolute paths. In multiple code paths, the check uses startswith against the repository root path. This is not path-segment aware and can be bypassed when the external path shares the same string prefix as the repository path (for example, repo and repo_outside). This issue has been fixed in version 5.17.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40256",
-    "publishedDate": "2026-04-15T19:16:37.470",
-    "lastModifiedDate": "2026-04-15T19:16:37.470",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-39845",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, the webhook add-on did not utilize existing SSRF protections. This issue has been fixed in version 5.17. If developers are unable to update immediately, they can disable the webhook add-on as a workaround.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39845",
-    "publishedDate": "2026-04-15T19:16:36.373",
-    "lastModifiedDate": "2026-04-15T19:16:36.373",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34632",
-    "description": "Adobe Photoshop Installer was affected by an Uncontrolled Search Path Element vulnerability that could have resulted in arbitrary code execution in the context of the current user. A low-privileged local attacker could have exploited this vulnerability by manipulating the search path used by the application to locate critical resources, potentially causing unauthorized code execution. Exploitation of this issue required user interaction in that a user had to be running the installer.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34632",
-    "publishedDate": "2026-04-15T19:16:36.223",
-    "lastModifiedDate": "2026-04-15T19:16:36.223",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.5,
-        "impactScore": 6,
-        "source": "psirt@adobe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34393",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, the user patching API endpoint didn't properly limit the scope of edits. This issue has been fixed in version 5.17.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34393",
-    "publishedDate": "2026-04-15T19:16:36.070",
-    "lastModifiedDate": "2026-04-15T19:16:36.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34244",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, a user with the project.edit permission (granted by the per-project \"Administration\" role) can configure machine translation service URLs pointing to arbitrary internal network addresses. During configuration validation, Weblate makes an HTTP request to the attacker-controlled URL and reflects up to 200 characters of the response body back to the user in an error message. This constitutes a Server-Side Request Forgery (SSRF) with partial response read. This issue has been fixed in version 5.17. If developers are unable to immediately upgrade, they can limit available machinery services via WEBLATE_MACHINERY setting.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34244",
-    "publishedDate": "2026-04-15T19:16:35.903",
-    "lastModifiedDate": "2026-04-15T19:16:35.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34242",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, the ZIP download feature didn't verify downloaded files, potentially  following symlinks outside the repository. This issue has been fixed in version 5.17.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34242",
-    "publishedDate": "2026-04-15T19:16:35.753",
-    "lastModifiedDate": "2026-04-15T19:16:35.753",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33667",
-    "description": "OpenProject is an open-source project management application. In versions prior to 17.3.0, 2FA OTP verification in the confirm_otp action of the two_factor_authentication module has no rate limiting, lockout mechanism, or failed-attempt tracking. The existing brute_force_block_after_failed_logins setting only counts password login failures and does not apply to the 2FA verification stage, and neither the fail_login nor stage_failure methods increment any counter, lock the account, or add any delay. With the default TOTP drift window of ±60 seconds allowing approximately 5 valid codes at any time, an attacker who knows a user's password can brute-force the 6-digit TOTP code at roughly 5-10 attempts per second with an expected completion time of approximately 11 hours. The same vulnerability applies to backup code verification. This effectively allows complete 2FA bypass for any account where the password is known. This issue has been fixed in version 17.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33667",
-    "publishedDate": "2026-04-15T19:16:35.603",
-    "lastModifiedDate": "2026-04-15T19:16:35.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33440",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, the ALLOWED_ASSET_DOMAINS setting applied only to the first issued requests and didn't restrict possible redirects. This issue has been fixed in version 5.17.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33440",
-    "publishedDate": "2026-04-15T19:16:35.447",
-    "lastModifiedDate": "2026-04-15T19:16:35.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33435",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, the project backup didn't filter Git and Mercurial configuration files which could lead to remote code execution under certain circumstances. This issue has been fixed in version 5.17. If developers are unable to update immediately, they can limit the scope of the vulnerability by restricting access to the project backup, as it is only accessible to users who can create projects.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33435",
-    "publishedDate": "2026-04-15T19:16:35.277",
-    "lastModifiedDate": "2026-04-15T19:16:35.277",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33220",
-    "description": "Weblate is a web based localization tool. In versions prior to 5.17, the translation memory API exposed unintended endpoints, which in turn didn't perform proper access control. This issue has been fixed in version 5.17. If developers are unable to update immediately, they can disable this feature as the CDN add-on is not enabled by default.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33220",
-    "publishedDate": "2026-04-15T19:16:35.130",
-    "lastModifiedDate": "2026-04-15T19:16:35.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-41118",
-    "description": "Pyroscope is an open-source continuous profiling database. The database supports various storage backends, including Tencent Cloud Object Storage (COS).\n\nIf the database is configured to use Tencent COS as the storage backend, an attacker could extract the secret_key configuration value from the Pyroscope API.\n\nTo exploit this vulnerability, an attacker needs direct access to the Pyroscope API. We highly recommend limiting the public internet exposure of all our databases, such that they are only accessible by trusted users or internal systems.\n\nThis vulnerability is fixed in versions:\n\n1.15.x: 1.15.2 and above.\n1.16.x: 1.16.1 and above.\n1.17.x: 1.17.0 and above (i.e. all versions).\n\nThanks to Théo Cusnir for reporting this vulnerability to us via our bug bounty program.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-41118",
-    "publishedDate": "2026-04-15T20:16:32.933",
-    "lastModifiedDate": "2026-04-15T20:16:32.933",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security@grafana.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33877",
-    "description": "ApostropheCMS is an open-source Node.js content management system. Versions 4.28.0 and prior contain a timing side-channel vulnerability in the password reset endpoint (/api/v1/@apostrophecms/login/reset-request) that allows unauthenticated username and email enumeration. When a user is not found, the handler returns after a fixed 2-second artificial delay, but when a valid user is found, it performs a MongoDB update and SMTP email send with no equivalent delay normalization, producing measurably different response times. The endpoint also accepts both username and email via an $or query, and has no rate limiting as the existing checkLoginAttempts throttle only applies to the login flow. This enables automated enumeration of valid accounts for use in credential stuffing or targeted phishing. Only instances that have explicitly enabled the passwordReset option are affected, as it defaults to false. This issue has been fixed in version 4.29.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33877",
-    "publishedDate": "2026-04-15T20:16:35.517",
-    "lastModifiedDate": "2026-04-15T20:16:35.517",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
       }
     ]
   },
@@ -470,11 +458,31 @@
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-6319",
-    "description": "Use after free in Payments in Google Chrome on Android prior to 147.0.7727.101 allowed a remote attacker who convinced a user to engage in specific UI gestures to execute arbitrary code via a crafted HTML page. (Chromium security severity: Medium)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6319",
-    "publishedDate": "2026-04-15T20:16:42.203",
-    "lastModifiedDate": "2026-04-15T20:16:42.203",
+    "id": "CVE-2026-6363",
+    "description": "Type Confusion in V8 in Google Chrome prior to 147.0.7727.101 allowed a remote attacker to potentially perform out of bounds memory access via a crafted HTML page. (Chromium security severity: Medium)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6363",
+    "publishedDate": "2026-04-15T20:16:43.690",
+    "lastModifiedDate": "2026-04-15T20:16:43.690",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6362",
+    "description": "Use after free in Codecs in Google Chrome prior to 147.0.7727.101 allowed a remote attacker to potentially perform out of bounds memory access via a crafted video file. (Chromium security severity: High)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6362",
+    "publishedDate": "2026-04-15T20:16:43.557",
+    "lastModifiedDate": "2026-04-15T20:16:43.557",
     "vendors": [],
     "products": [],
     "cvssScores": []
