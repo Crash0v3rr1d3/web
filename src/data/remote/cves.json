@@ -1,5 +1,425 @@
 [
   {
+    "id": "CVE-2026-40899",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a JDBC parameter blocklist bypass vulnerability in the MySQL datasource configuration. The Mysql class uses Lombok's @Data annotation, which auto-generates a public setter for the illegalParameters field that contains the JDBC security blocklist. When a datasource configuration is submitted as JSON, Jackson deserialization calls setIllegalParameters with an attacker-supplied empty list, replacing the blocklist before getJdbc() validation runs. This allows an authenticated attacker to include dangerous JDBC parameters such as allowLoadLocalInfile=true, and by pointing the datasource at a rogue MySQL server, exploit the LOAD DATA LOCAL INFILE protocol feature to read arbitrary files from the DataEase server filesystem, including sensitive environment variables and database credentials. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40899",
+    "publishedDate": "2026-04-16T20:16:38.957",
+    "lastModifiedDate": "2026-04-16T20:16:38.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33207",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the /datasource/getTableField endpoint. The getTableFiledSql method in CalciteProvider.java incorporates the tableName parameter directly into SQL query strings using String.format without parameterization or sanitization. Although DatasourceServer.java validates that the table name exists in the datasource, an attacker can bypass this by first registering an API datasource with a malicious deTableName, which is then returned by getTables and passes the validation check. An authenticated attacker can execute arbitrary SQL commands, enabling error-based extraction of sensitive database information. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33207",
+    "publishedDate": "2026-04-16T20:16:38.797",
+    "lastModifiedDate": "2026-04-16T20:16:38.797",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33122",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the API datasource update process. When a new table definition is added during a datasource update via /de2api/datasource/update, the deTableName field from the user-submitted configuration is passed to DatasourceSyncManage.createEngineTable, where it is substituted into a CREATE TABLE statement template without any sanitization or identifier escaping. An authenticated attacker can inject arbitrary SQL commands by crafting a deTableName that breaks out of identifier quoting, enabling error-based SQL injection that can extract database information. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33122",
+    "publishedDate": "2026-04-16T20:16:38.640",
+    "lastModifiedDate": "2026-04-16T20:16:38.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-54502",
+    "description": "Incorrect use of boot service in the AMD Platform Configuration Blob (APCB) SMM driver could allow a privileged attacker with local access (Ring 0) to achieve privilege escalation potentially resulting in arbitrary code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-54502",
+    "publishedDate": "2026-04-16T20:16:37.393",
+    "lastModifiedDate": "2026-04-16T20:16:37.393",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@amd.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6442",
+    "description": "Improper validation of bash commands in Snowflake Cortex Code CLI versions prior to 1.0.25 allowed subsequent commands to execute outside the sandbox. An attacker could exploit this by embedding specially crafted commands in untrusted content, such as a malicious repository, causing the CLI agent to execute arbitrary code on the local device without user consent. Exploitation is non-deterministic and model-dependent. The fix is automatically applied upon relaunch with no user action required.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6442",
+    "publishedDate": "2026-04-16T19:16:35.560",
+    "lastModifiedDate": "2026-04-16T19:16:35.560",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 6,
+        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33121",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the API datasource saving process. The deTableName field from the Base64-encoded datasource configuration is used to construct a DDL statement via simple string replacement without any sanitization or escaping of the table name. An authenticated attacker can inject arbitrary SQL commands by crafting a deTableName that breaks out of identifier quoting, enabling error-based SQL injection that can extract database information such as the MySQL version. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33121",
+    "publishedDate": "2026-04-16T19:16:33.657",
+    "lastModifiedDate": "2026-04-16T19:16:33.657",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33084",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the sort parameter of the /de2api/datasetData/enumValueObj endpoint. The DatasetDataManage service layer directly transfers the user-supplied sort value to the sorting metadata DTO, which is passed to Order2SQLObj where it is incorporated into the SQL ORDER BY clause without any whitelist validation, and then executed via CalciteProvider. An authenticated attacker can inject arbitrary SQL commands through the sort parameter, enabling time-based blind SQL injection. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33084",
+    "publishedDate": "2026-04-16T19:16:33.520",
+    "lastModifiedDate": "2026-04-16T19:16:33.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-54510",
+    "description": "A missing lock verification in AMD Secure Processor (ASP) firmware may permit a locally authenticated attacker with administrative privileges to alter MMIO routing on some Zen 5-based products, potentially compromising guest system integrity.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-54510",
+    "publishedDate": "2026-04-16T19:16:32.897",
+    "lastModifiedDate": "2026-04-16T20:16:37.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@amd.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-43937",
+    "description": "Dell PowerScale OneFS, versions prior to 9.12.0.0, contains an insertion of sensitive information into log file vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to the disclosure of certain user credentials. The attacker may be able to use the exposed credentials to access the vulnerable application with privileges of the compromised account.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-43937",
+    "publishedDate": "2026-04-16T19:16:32.750",
+    "lastModifiedDate": "2026-04-16T19:16:32.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:H",
+        "exploitabilityScore": 1.3,
+        "impactScore": 5.2,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-43935",
+    "description": "Dell PowerScale OneFS, versions prior to 9.12.0.0, contains an improper resource shutdown or release vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-43935",
+    "publishedDate": "2026-04-16T19:16:32.610",
+    "lastModifiedDate": "2026-04-16T19:16:32.610",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 0.8,
+        "impactScore": 3.6,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2023-20585",
+    "description": "Insufficient checks of the RMP on host buffer access in IOMMU may allow an attacker with privileges and a compromised hypervisor to trigger an out of bounds condition without RMP checks, resulting in a potential loss of confidential guest integrity.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2023-20585",
+    "publishedDate": "2026-04-16T19:16:31.430",
+    "lastModifiedDate": "2026-04-16T20:16:34.290",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@amd.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41082",
+    "description": "In OCaml opam before 2.5.1, a .install field containing a destination filepath can use ../ to reach a parent directory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41082",
+    "publishedDate": "2026-04-16T18:16:45.980",
+    "lastModifiedDate": "2026-04-16T18:16:45.980",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 2.5,
+        "impactScore": 4.7,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33083",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the orderDirection parameter used in dataset-related endpoints including /de2api/datasetData/enumValueDs and /de2api/datasetTree/exportDataset. The Order2SQLObj class directly assigns the raw user-supplied orderDirection value into the SQL query without any validation or whitelist enforcement, and the value is rendered into the ORDER BY clause via StringTemplate before being executed against the database. An authenticated attacker can inject arbitrary SQL commands through the sorting direction field, enabling time-based blind data extraction and denial of service. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33083",
+    "publishedDate": "2026-04-16T18:16:45.433",
+    "lastModifiedDate": "2026-04-16T20:16:38.497",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33082",
+    "description": "DataEase is an open source data visualization analysis tool. Versions 2.10.20 and below contain a SQL injection vulnerability in the dataset export functionality. The expressionTree parameter in POST /de2api/datasetTree/exportDataset is deserialized into a filtering object and passed to WhereTree2Str.transFilterTrees for SQL translation, where user-controlled values in \"like\" filter terms are directly concatenated into SQL fragments without sanitization. An attacker can inject arbitrary SQL commands by escaping the string literal in the filter value, enabling blind SQL injection through techniques such as time-based extraction of database information. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33082",
+    "publishedDate": "2026-04-16T18:16:45.283",
+    "lastModifiedDate": "2026-04-16T18:16:45.283",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-2336",
+    "description": "A privilege escalation vulnerability in Microchip IStaX allows an authenticated low-privileged user to recover a shared per-device cookie secret from their own webstax_auth session cookie and forge a new cookie with administrative privileges.This issue affects IStaX before 2026.03.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2336",
+    "publishedDate": "2026-04-16T18:16:44.927",
+    "lastModifiedDate": "2026-04-16T18:16:44.927",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "dc3f6da9-85b5-4a73-84a2-2ec90b40fca5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-27820",
+    "description": "zlib is a Ruby interface for the zlib compression/decompression library. Versions 3.0.0 and below, 3.1.0, 3.1.1, 3.2.0 and 3.2.1 contain a buffer overflow vulnerability in the Zlib::GzipReader. The zstream_buffer_ungets function prepends caller-provided bytes ahead of previously produced output but fails to guarantee the backing Ruby string has enough capacity before the memmove shifts the existing data. This can lead to memory corruption when the buffer length exceeds capacity. This issue has been fixed in versions 3.0.1, 3.1.2 and 3.2.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-27820",
+    "publishedDate": "2026-04-16T18:16:44.770",
+    "lastModifiedDate": "2026-04-16T18:16:44.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 1.7,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-24749",
+    "description": "The Silverstripe Assets Module is a required component of Silverstripe Framework. In versions prior to 2.4.5 and 3.0.0-rc1 through 3.1.2, images rendered in templates or otherwise accessed via DBFile::getURL() or DBFile::getSourceURL() incorrectly add an access grant to the current session, which bypasses file permissions. This usually happens when creating an image variant, for example using a manipulation method like ScaleWidth() or Convert(). Note that if developers use DBFile directly in the $db configuration for a DataObject class that doesn't subclass File, and if they were setting the visibility of those files to \"protected\", those files will now need an explicit access grant to be accessed. If developers do not want to explicitly provide access grants for these files in their apps (i.e. they want these files to be accessible by default), they should use the \"public\" visibility. This issue has been fixed in versions 2.4.5 and 3.1.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24749",
+    "publishedDate": "2026-04-16T18:16:44.610",
+    "lastModifiedDate": "2026-04-16T18:16:44.610",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-43883",
+    "description": "Dell PowerScale OneFS, versions prior to 9.12.0.0, contains an improper check for unusual or exceptional conditions vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-43883",
+    "publishedDate": "2026-04-16T18:16:43.667",
+    "lastModifiedDate": "2026-04-16T18:16:43.667",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 0.5,
+        "impactScore": 3.6,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41080",
+    "description": "libexpat before 2.7.6 uses insufficient entropy, and thus hash flooding can occur via a crafted XML document.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41080",
+    "publishedDate": "2026-04-16T17:16:54.917",
+    "lastModifiedDate": "2026-04-16T17:16:54.917",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.9,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.4,
+        "impactScore": 1.4,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-36579",
+    "description": "Dell Client Platform BIOS contains a Weak Password Recovery Mechanism vulnerability. An unauthenticated attacker with physical access to the system could potentially exploit this vulnerability, leading to unauthorized access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-36579",
+    "publishedDate": "2026-04-16T17:16:54.073",
+    "lastModifiedDate": "2026-04-16T17:16:54.073",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 0.9,
+        "impactScore": 3.7,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5426",
+    "description": "Hard-coded ASP.NET/IIS machineKey value in Digital Knowledge KnowledgeDeliver deployments prior to February 24, 2026 allows adversaries to circumvent ViewState validation mechanisms and achieve remote code execution via malicious ViewState deserialization attacks",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5426",
+    "publishedDate": "2026-04-16T16:16:17.693",
+    "lastModifiedDate": "2026-04-16T16:16:17.693",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-37100",
+    "description": "An issue in the Bluetooth Low Energy (BLE) control interface of the Yamaha SR-B30A sound bar firmware 2.40 (Mobile App: Sound Bar Remote / version: 2.40) allows remote attackers within BLE radio range to connect without authentication via the Sound Bar Remote protocol",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37100",
+    "publishedDate": "2026-04-16T16:16:16.910",
+    "lastModifiedDate": "2026-04-16T16:16:16.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
     "id": "CVE-2026-6409",
     "description": "A Denial of Service (DoS) vulnerability exists in the Protobuf PHP library during the parsing of untrusted input. Maliciously structured messages—specifically those containing negative varints or deep recursion—can be used to crash the application, impacting service availability.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-6409",
@@ -21,13 +441,23 @@
   },
   {
     "id": "CVE-2026-3324",
-    "description": "Authentication Bypass",
+    "description": "Zohocorp ManageEngine Log360 versions 13000 through 13013 are vulnerable to authentication bypass on certain actions due to improper filter configuration.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-3324",
-    "publishedDate": "Thu, 16 Apr 2026 15:17:38 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-16T15:17:38.010",
+    "lastModifiedDate": "2026-04-16T15:17:38.010",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "0fc0942c-577d-436f-ae8e-945763c79b02"
+      }
+    ]
   },
   {
     "id": "CVE-2026-37347",
@@ -48,315 +478,5 @@
         "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-37346",
-    "description": "SourceCodester Payroll Management and Information System v1.0 is vulnerable to SQL Injection in the file /payroll/view_account.php?emp_id=.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37346",
-    "publishedDate": "2026-04-16T15:17:37.560",
-    "lastModifiedDate": "2026-04-16T16:16:17.277",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.4,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-37345",
-    "description": "SourceCodester Vehicle Parking Area Management System SQL Injection",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37345",
-    "publishedDate": "Thu, 16 Apr 2026 15:17:37 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37344",
-    "description": "SourceCodester Vehicle Parking Area Management System v1.0 is vulnerable to SQL Injection in the file /parking/manage_location.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37344",
-    "publishedDate": "2026-04-16T15:17:37.340",
-    "lastModifiedDate": "2026-04-16T15:17:37.340",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37343",
-    "description": "SourceCodester Vehicle Parking Area Management System v1.0 is vulnerable to SQL Injection in the file /parking/manage_user.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37343",
-    "publishedDate": "2026-04-16T15:17:37.230",
-    "lastModifiedDate": "2026-04-16T15:17:37.230",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37342",
-    "description": "SourceCodester Vehicle Parking Area Management System v1.0 is vulnerable to SQL Injection in the file /parking/view_parked_details.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37342",
-    "publishedDate": "2026-04-16T15:17:37.120",
-    "lastModifiedDate": "2026-04-16T15:17:37.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37341",
-    "description": "SourceCodester Vehicle Parking Area Management System SQL Injection",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37341",
-    "publishedDate": "Thu, 16 Apr 2026 15:17:37 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37340",
-    "description": "SourceCodester Simple Music Cloud Community System v1.0 is vulnerable to SQL Injection in the file /music/edit_music.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37340",
-    "publishedDate": "2026-04-16T15:17:36.900",
-    "lastModifiedDate": "2026-04-16T15:17:36.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37339",
-    "description": "SourceCodester Simple Music Cloud Community System v1.0 is vulnerable to SQL Injection in the file /music/view_genre.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37339",
-    "publishedDate": "2026-04-16T15:17:36.790",
-    "lastModifiedDate": "2026-04-16T15:17:36.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37338",
-    "description": "SourceCodester Simple Music Cloud Community System v1.0 is vulnerable to SQL Injection in the file /music/view_user.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37338",
-    "publishedDate": "2026-04-16T15:17:36.680",
-    "lastModifiedDate": "2026-04-16T15:17:36.680",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37337",
-    "description": "SourceCodester Simple Music Cloud Community System v1.0 is vulnerable to SQL Injection in the file /music/view_playlist.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37337",
-    "publishedDate": "2026-04-16T15:17:36.573",
-    "lastModifiedDate": "2026-04-16T15:17:36.573",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37336",
-    "description": "SourceCodester Simple Music Cloud Community System v1.0 is vulnerable to SQL Injection in the file /music/view_music.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37336",
-    "publishedDate": "2026-04-16T15:17:36.460",
-    "lastModifiedDate": "2026-04-16T15:17:36.460",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-33804",
-    "description": "@fastify/middie versions 9.3.1 and earlier are vulnerable to middleware bypass when the deprecated Fastify ignoreDuplicateSlashes option is enabled. The middleware path matching logic does not account for duplicate slash normalization performed by Fastify's router, allowing requests with duplicate slashes to bypass middleware authentication and authorization checks. This only affects applications using the deprecated ignoreDuplicateSlashes option. Upgrade to @fastify/middie 9.3.2 to fix this issue. There are no workarounds other than disabling the ignoreDuplicateSlashes option.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33804",
-    "publishedDate": "2026-04-16T15:17:34.633",
-    "lastModifiedDate": "2026-04-16T15:17:34.633",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-30656",
-    "description": "A NULL pointer dereference vulnerability exists in fio (Flexible I/O Tester) v3.41 when parsing job files containing the fdp_pli option. The callback function str_fdp_pli_cb() does not validate the input pointer and calls strdup() on a NULL value when the option is specified without an argument. This results in a segmentation fault and process crash.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-30656",
-    "publishedDate": "2026-04-16T15:17:17.873",
-    "lastModifiedDate": "2026-04-16T15:17:17.873",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-30459",
-    "description": "An issue in the Forgot Password feature of Daylight Studio FuelCMS v1.5.2 allows unauthenticated attackers to obtain the password reset token of a victim user via a crafted link placed in a valid e-mail message.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-30459",
-    "publishedDate": "2026-04-16T15:17:17.370",
-    "lastModifiedDate": "2026-04-16T16:16:15.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2840",
-    "description": "The Email Encoder – Protect Email Addresses and Phone Numbers plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'eeb_mailto' shortcode in all versions up to, and including, 2.4.4 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2840",
-    "publishedDate": "2026-04-16T15:17:17.190",
-    "lastModifiedDate": "2026-04-16T15:17:17.190",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6410",
-    "description": "@fastify/static versions 8.0.0 through 9.1.0 allow path traversal when directory listing is enabled via the list option. The dirList.path() function resolves directories outside the configured static root using path.join() without a containment check. A remote unauthenticated attacker can obtain directory listings for arbitrary directories accessible to the Node.js process, disclosing directory and file names. File contents are not disclosed. Upgrade to @fastify/static 9.1.1 to fix this issue. As a workaround, disable directory listing by removing the list option from the plugin configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6410",
-    "publishedDate": "2026-04-16T14:16:20.173",
-    "lastModifiedDate": "2026-04-16T14:16:20.173",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6270",
-    "description": "@fastify/middie versions 9.3.1 and earlier do not register inherited middleware directly on child plugin engine instances. When a Fastify application registers authentication middleware in a parent scope and then registers child plugins with @fastify/middie, the child scope does not inherit the parent middleware. This allows unauthenticated requests to reach routes defined in child plugin scopes, bypassing authentication and authorization checks. Upgrade to @fastify/middie 9.3.2 to fix this issue. There are no workarounds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6270",
-    "publishedDate": "2026-04-16T14:16:19.433",
-    "lastModifiedDate": "2026-04-16T14:16:19.433",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5785",
-    "description": "Zohocorp ManageEngine PAM360 versions before 8531 and ManageEngine Password Manager Pro versions from 8600 to 13230 are vulnerable to Authenticated SQL injection in the query report module.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5785",
-    "publishedDate": "2026-04-16T14:16:18.430",
-    "lastModifiedDate": "2026-04-16T14:16:18.430",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "0fc0942c-577d-436f-ae8e-945763c79b02"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-4160",
-    "description": "The Fluent Forms – Customizable Contact Forms, Survey, Quiz, & Conversational Form Builder plugin for WordPress is vulnerable to Insecure Direct Object Reference via the 'submission_id' parameter in versions up to, and including, 6.1.21. This is due to missing authorization and ownership validation on a user controlled key in the Stripe SCA confirmation AJAX endpoint. This makes it possible for unauthenticated attackers to modify payment status of targeted pending submissions (for example, setting the status to \"failed\").",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4160",
-    "publishedDate": "2026-04-16T14:16:18.167",
-    "lastModifiedDate": "2026-04-16T14:16:18.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-31987",
-    "description": "JWT Tokens used by tasks were exposed in logs. This could allow UI users to act as Dag Authors. \nUsers are advised to upgrade to Airflow version that contains fix.\n\nUsers are recommended to upgrade to version 3.2.0, which fixes this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31987",
-    "publishedDate": "2026-04-16T14:16:13.490",
-    "lastModifiedDate": "2026-04-16T14:16:13.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6414",
-    "description": "@fastify/static versions 8.0.0 through 9.1.0 decode percent-encoded path separators (%2F) before filesystem resolution, while Fastify's router treats them as literal characters. This mismatch allows attackers to bypass route-based middleware or guards that protect files served by @fastify/static. For example, a route guard on a protected path can be circumvented by encoding the path separator in the URL. Upgrade to @fastify/static 9.1.1 to fix this issue. There are no workarounds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6414",
-    "publishedDate": "2026-04-16T13:16:52.243",
-    "lastModifiedDate": "2026-04-16T13:16:52.243",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5968",
-    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. Reason: This candidate was issued in error. Notes: All references and descriptions in this candidate have been removed to prevent accidental usage.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5968",
-    "publishedDate": "2026-04-16T13:16:51.603",
-    "lastModifiedDate": "2026-04-16T13:16:51.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
