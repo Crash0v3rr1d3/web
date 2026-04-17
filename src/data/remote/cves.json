@@ -1,5 +1,325 @@
 [
   {
+    "id": "CVE-2026-5052",
+    "description": "Vault’s PKI engine’s ACME validation did not reject local targets when issuing http-01 and tls-alpn-01 challenges. This may lead to these requests being sent to local network targets, potentially leading to information disclosure. Fixed in Vault Community Edition 2.0.0 and Vault Enterprise 2.0.0, 1.21.5, 1.20.10, and 1.19.16.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5052",
+    "publishedDate": "2026-04-17T04:16:12.567",
+    "lastModifiedDate": "2026-04-17T04:16:12.567",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@hashicorp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4666",
+    "description": "The wpForo Forum plugin for WordPress is vulnerable to unauthorized modification of data due to the use of `extract($args, EXTR_OVERWRITE)` on user-controlled input in the `edit()` method of `classes/Posts.php` in all versions up to, and including, 2.4.16. The `post_edit` action handler in `Actions.php` passes `$_REQUEST['post']` directly to `Posts::edit()`, which calls `extract($args, EXTR_OVERWRITE)`. An attacker can inject `post[guestposting]=1` to overwrite the local `$guestposting` variable, causing the entire permission check block to be skipped. The nonce check uses a hardcoded `wpforo_verify_form` action shared across all 8 forum templates, so any user who can view any forum page obtains a valid nonce. This makes it possible for authenticated attackers, with Subscriber-level access and above, to edit the title, body, name, and email fields of any forum post, including posts in private forums, admin posts, and moderator posts. Content passes through `wpforo_kses()` which strips JavaScript but allows rich HTML.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4666",
+    "publishedDate": "2026-04-17T04:16:11.023",
+    "lastModifiedDate": "2026-04-17T04:16:11.023",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4525",
+    "description": "If a Vault auth mount is configured to pass through the \"Authorization\" header, and the \"Authorization\" header is used to authenticate to Vault, Vault forwarded the Vault token to the auth plugin backend. Fixed in 2.0.0, 1.21.5, 1.20.10, and 1.19.16.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4525",
+    "publishedDate": "2026-04-17T04:16:09.997",
+    "lastModifiedDate": "2026-04-17T04:16:09.997",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "security@hashicorp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3605",
+    "description": "An authenticated user with access to a kvv2 path through a policy containing a glob may be able to delete secrets they were not authorized to read or write, resulting in denial-of-service. This vulnerability did not allow a malicious user to delete secrets across namespaces, nor read any secret data. Fxed in Vault Community Edition 2.0.0 and Vault Enterprise 2.0.0, 1.21.5, 1.20.10, and 1.19.16.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3605",
+    "publishedDate": "2026-04-17T04:16:03.263",
+    "lastModifiedDate": "2026-04-17T04:16:03.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security@hashicorp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5502",
+    "description": "The Tutor LMS – eLearning and online course solution plugin for WordPress is vulnerable to unauthorized course content manipulation in versions up to and including 3.9.8. This is due to a missing authorization check in the tutor_update_course_content_order() function. The function only validates the nonce (CSRF protection) but does not verify whether the user has permission to manage course content. The can_user_manage() authorization check only executes when the 'content_parent' parameter is present in the request. When this parameter is omitted, the function proceeds directly to save_course_content_order() which manipulates the wp_posts table without any authorization validation. This makes it possible for authenticated attackers with subscriber-level access and above to detach all lessons from any topic, move lessons between topics, and modify the menu_order of course content, effectively allowing them to disrupt the structure of any course on the site.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5502",
+    "publishedDate": "2026-04-17T05:16:19.117",
+    "lastModifiedDate": "2026-04-17T05:16:19.117",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5427",
+    "description": "The Kubio plugin for WordPress is vulnerable to Arbitrary File Upload in versions up to and including 2.7.2. This is due to insufficient capability checks in the kubio_rest_pre_insert_import_assets() function, which is hooked to the rest_pre_insert_{post_type} filter for posts, pages, templates, and template parts. When a post is created or updated via the REST API, Kubio parses block attributes looking for URLs in the 'kubio' attribute namespace and automatically imports them via importRemoteFile() without verifying the user has the upload_files capability. This makes it possible for authenticated attackers with Contributor-level access and above to bypass WordPress's normal media upload restrictions and upload files fetched from external URLs to the media library, creating attachment posts in the database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5427",
+    "publishedDate": "2026-04-17T05:16:18.973",
+    "lastModifiedDate": "2026-04-17T05:16:18.973",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5234",
+    "description": "The LatePoint plugin for WordPress is vulnerable to Insecure Direct Object Reference in all versions up to, and including, 5.3.2. The vulnerability exists because the OsStripeConnectController::create_payment_intent_for_transaction action is registered as a public action (no authentication required) and loads invoices by sequential integer invoice_id without any access_key or ownership verification. This is in contrast to other invoice-related actions (view_by_key, payment_form, summary_before_payment) in OsInvoicesController which properly require a cryptographic UUID access_key. This makes it possible for unauthenticated attackers to enumerate valid invoice IDs via an error message oracle, create unauthorized transaction intent records in the database containing sensitive financial data (invoice_id, order_id, customer_id, charge_amount), and on sites with Stripe Connect configured, the response also leaks Stripe payment_intent_client_secret tokens, transaction_intent_key values, and payment amounts for any invoice.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5234",
+    "publishedDate": "2026-04-17T05:16:18.830",
+    "lastModifiedDate": "2026-04-17T05:16:18.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6080",
+    "description": "The Tutor LMS plugin for WordPress is vulnerable to SQL Injection in versions up to and including 3.9.8. This is due to insufficient escaping on the 'date' parameter combined with direct interpolation into a SQL fragment before being passed to $wpdb->prepare(). This makes it possible for authenticated attackers with Admin-level access and above to append additional SQL queries and extract sensitive information from the database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6080",
+    "publishedDate": "2026-04-17T05:16:19.430",
+    "lastModifiedDate": "2026-04-17T05:16:19.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3330",
+    "description": "The Form Maker by 10Web plugin for WordPress is vulnerable to SQL Injection via the 'ip_search', 'startdate', 'enddate', 'username_search', and 'useremail_search' parameters in all versions up to, and including, 1.15.40. This is due to the `WDW_FM_Library::validate_data()` method calling `stripslashes()` on user input (removing WordPress's `wp_magic_quotes()` protection) and the `FMModelSubmissions_fm::get_labels_parameters()` function directly concatenating user-supplied values into SQL queries without using `$wpdb->prepare()`. This makes it possible for authenticated attackers, with Administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. Additionally, the Submissions controller skips nonce verification for the `display` task, which means this vulnerability can be triggered via CSRF by tricking an administrator into clicking a crafted link.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3330",
+    "publishedDate": "2026-04-17T05:16:18.080",
+    "lastModifiedDate": "2026-04-17T05:16:18.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4853",
+    "description": "The JetBackup – Backup, Restore & Migrate plugin for WordPress is vulnerable to Path Traversal leading to Arbitrary Directory Deletion in versions up to and including 3.1.19.8. This is due to insufficient input validation on the fileName parameter in the file upload handler. The plugin sanitizes the fileName parameter using sanitize_text_field(), which removes HTML tags but does not prevent path traversal sequences like '../'. The unsanitized filename is then directly concatenated in Upload::getFileLocation() without using basename() or validating the resolved path stays within the intended directory. When an invalid file is uploaded, the cleanup logic  calls dirname() on the traversed path and passes it to Util::rm(), which recursively deletes the entire resolved directory. This makes it possible for authenticated attackers with administrator-level access to traverse outside the intended upload directory and trigger deletion of critical WordPress directories such as wp-content/plugins, effectively disabling all installed plugins and causing severe site disruption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4853",
+    "publishedDate": "2026-04-17T05:16:18.680",
+    "lastModifiedDate": "2026-04-17T05:16:18.680",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5807",
+    "description": "Vault is vulnerable to a denial-of-service condition where an unauthenticated attacker can repeatedly initiate or cancel root token generation or rekey operations, occupying the single in-progress operation slot. This prevents legitimate operators from completing these workflows. This vulnerability, CVE-2026-5807, is fixed in Vault Community Edition 2.0.0 and Vault Enterprise 2.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5807",
+    "publishedDate": "2026-04-17T05:16:19.303",
+    "lastModifiedDate": "2026-04-17T05:16:19.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security@hashicorp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5231",
+    "description": "The WP Statistics plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'utm_source' parameter in all versions up to, and including, 14.16.4. This is due to insufficient input sanitization and output escaping. The plugin's referral parser copies the raw utm_source value into the source_name field when a wildcard channel domain matches, and the chart renderer later inserts this value into legend markup via innerHTML without escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in admin pages that will execute whenever an administrator accesses the Referrals Overview or Social Media analytics pages.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5231",
+    "publishedDate": "2026-04-17T02:16:06.227",
+    "lastModifiedDate": "2026-04-17T02:16:06.227",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5162",
+    "description": "The Royal Addons for Elementor plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the Instagram Feed widget's 'instagram_follow_text' setting in all versions up to, and including, 1.7.1056 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5162",
+    "publishedDate": "2026-04-17T02:16:06.073",
+    "lastModifiedDate": "2026-04-17T02:16:06.073",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4817",
+    "description": "The MasterStudy LMS WordPress Plugin for Online Courses and Education plugin for WordPress is vulnerable to Time-based Blind SQL Injection via the 'order' and 'orderby' parameters in the /lms/stm-lms/order/items REST API endpoint in versions up to and including 3.7.25. This is due to insufficient input sanitization combined with a design flaw in the custom Query builder class that allows unquoted SQL injection in ORDER BY clauses. When the Query builder detects parentheses in the sort_by parameter, it treats the value as a SQL function and directly concatenates it into the ORDER BY clause without any quoting. While esc_sql() is applied to escape quotes and backslashes, this cannot prevent ORDER BY injection when the values themselves are not wrapped in quotes in the resulting SQL statement. This makes it possible for authenticated attackers, with subscriber-level access and above, to append arbitrary SQL queries via the ORDER BY clause to extract sensitive information from the database including user credentials, session tokens, and other confidential data through time-based blind SQL injection techniques.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4817",
+    "publishedDate": "2026-04-17T02:16:05.883",
+    "lastModifiedDate": "2026-04-17T02:16:05.883",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3488",
+    "description": "The WP Statistics plugin for WordPress is vulnerable to Missing Authorization in all versions up to, and including, 14.16.4. This is due to missing capability checks on multiple AJAX handlers including `wp_statistics_get_filters`, `wp_statistics_getPrivacyStatus`, `wp_statistics_updatePrivacyStatus`, and `wp_statistics_dismiss_notices`. These endpoints only verify a `wp_rest` nonce via `check_ajax_referer()` but do not enforce any capability checks such as `current_user_can()` or the plugin's own `User::Access()` method. Since the `wp_rest` nonce is available to all authenticated WordPress users, this makes it possible for authenticated attackers, with Subscriber-level access and above, to access sensitive analytics data (user IDs, usernames, emails, visitor tracking data), retrieve and modify privacy audit compliance status, and dismiss administrative notices.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3488",
+    "publishedDate": "2026-04-17T02:16:05.707",
+    "lastModifiedDate": "2026-04-17T02:16:05.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40922",
+    "description": "SiYuan is an open-source personal knowledge management system. In versions 3.6.1 through 3.6.3, a prior fix for XSS in bazaar README rendering (incomplete fix for CVE-2026-33066) enabled the Lute HTML sanitizer, but the sanitizer does not block iframe tags, and its URL-prefix blocklist does not effectively filter srcdoc attributes which contain raw HTML rather than URLs. A malicious bazaar package author can include an iframe with a srcdoc attribute containing embedded scripts in their README. When other users view the package in SiYuan's marketplace UI, the payload executes in the Electron context with full application privileges, enabling arbitrary code execution on the user's machine. This issue has been fixed in version 3.6.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40922",
+    "publishedDate": "2026-04-17T01:17:40.447",
+    "lastModifiedDate": "2026-04-17T01:17:40.447",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-40265",
     "description": "Note Mark is an open-source note-taking application. In versions 0.19.1 and prior, the asset download endpoint at /api/notes/{noteID}/assets/{assetID} is registered without authentication middleware, and the backend query does not verify ownership or book visibility. An unauthenticated user who knows a valid note ID and asset ID can retrieve the full contents of private note assets without authentication, regardless of whether the associated book is public or private. This issue has been fixed in version 0.19.2.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-40265",
@@ -60,26 +380,6 @@
     ]
   },
   {
-    "id": "CVE-2026-22734",
-    "description": "Cloud Foundry UUA is vulnerable to a bypass that allows an attacker to obtain a token for any user and gain access to UAA-protected systems. This vulnerability exists when SAML 2.0 bearer assertions are enabled for a client, as the UAA accepts SAML 2.0 bearer assertions that are neither signed nor encrypted. This issue affects UUA from v77.30.0 to v78.7.0 (inclusive) and it affects CF Deployment from v48.7.0 to v54.14.0 (inclusive).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22734",
-    "publishedDate": "2026-04-17T01:17:37.107",
-    "lastModifiedDate": "2026-04-17T01:17:37.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
     "id": "CVE-2026-40260",
     "description": "pypdf is a free and open-source pure-python PDF library. In versions prior to 6.10.0, manipulated XMP metadata entity declarations can exhaust RAM. An attacker who exploits this vulnerability can craft a PDF which leads to large memory usage. This requires parsing the XMP metadata. This issue has been fixed in version 6.10.0.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-40260",
@@ -96,6 +396,26 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22734",
+    "description": "Cloud Foundry UUA is vulnerable to a bypass that allows an attacker to obtain a token for any user and gain access to UAA-protected systems. This vulnerability exists when SAML 2.0 bearer assertions are enabled for a client, as the UAA accepts SAML 2.0 bearer assertions that are neither signed nor encrypted. This issue affects UUA from v77.30.0 to v78.7.0 (inclusive) and it affects CF Deployment from v48.7.0 to v54.14.0 (inclusive).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22734",
+    "publishedDate": "2026-04-17T01:17:37.107",
+    "lastModifiedDate": "2026-04-17T01:17:37.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4,
+        "source": "security@vmware.com"
       }
     ]
   },
@@ -175,326 +495,6 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40253",
-    "description": "openCryptoki is a PKCS#11 library and provides tooling for Linux and AIX. In versions 3.26.0 and below, the BER/DER decoding functions in the shared common library (asn1.c) accept a raw pointer but no buffer length parameter, and trust attacker-controlled BER length fields without validating them against actual buffer boundaries. All primitive decoders are affected: ber_decode_INTEGER, ber_decode_SEQUENCE, ber_decode_OCTET_STRING, ber_decode_BIT_STRING, and ber_decode_CHOICE. Additionally, ber_decode_INTEGER can produce integer underflows when the encoded length is zero. An attacker supplying a malformed BER-encoded cryptographic object through PKCS#11 operations such as C_CreateObject or C_UnwrapKey, token loading from disk, or remote backend communication can trigger out-of-bounds reads. This affects all token backends (Soft, ICA, CCA, TPM, EP11, ICSF) since the vulnerable code is in the shared common library. A patch is available thorugh commit ed378f463ef73364c89feb0fc923f4dc867332a3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40253",
-    "publishedDate": "2026-04-16T23:16:33.107",
-    "lastModifiedDate": "2026-04-16T23:16:33.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 2.5,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2024-58343",
-    "description": "Vision Helpdesk before 5.7.0 (patched in 5.6.10) allows attackers to read user profiles via modified serialized cookie data to vis_client_id.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2024-58343",
-    "publishedDate": "2026-04-16T23:16:32.663",
-    "lastModifiedDate": "2026-04-16T23:16:32.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40922",
-    "description": "SiYuan is an open-source personal knowledge management system. In versions 3.6.1 through 3.6.3, a prior fix for XSS in bazaar README rendering (incomplete fix for CVE-2026-33066) enabled the Lute HTML sanitizer, but the sanitizer does not block iframe tags, and its URL-prefix blocklist does not effectively filter srcdoc attributes which contain raw HTML rather than URLs. A malicious bazaar package author can include an iframe with a srcdoc attribute containing embedded scripts in their README. When other users view the package in SiYuan's marketplace UI, the payload executes in the Electron context with full application privileges, enabling arbitrary code execution on the user's machine. This issue has been fixed in version 3.6.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40922",
-    "publishedDate": "2026-04-17T01:17:40.447",
-    "lastModifiedDate": "2026-04-17T01:17:40.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41113",
-    "description": "sagredo qmail before 2026.04.07 allows tls_quit remote code execution because of popen in notlshosts_auto in qmail-remote.c.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41113",
-    "publishedDate": "2026-04-16T22:16:39.103",
-    "lastModifiedDate": "2026-04-16T22:16:39.103",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40308",
-    "description": "My Calendar is a WordPress plugin for managing calendar events. In versions 3.7.6 and below, the mc_ajax_mcjs_action AJAX endpoint, registered for unauthenticated users, passes user-supplied arguments through parse_str() without validation, allowing injection of arbitrary parameters including a site value. On WordPress Multisite installations, this enables an unauthenticated attacker to call switch_to_blog() with an arbitrary site ID and extract calendar events from any sub-site on the network, including private or hidden events. On standard Single Site installations, switch_to_blog() does not exist, causing an uncaught PHP fatal error and crashing the worker thread, creating an unauthenticated denial of service vector. This issue has been fixed in version 3.7.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40308",
-    "publishedDate": "2026-04-16T22:16:38.940",
-    "lastModifiedDate": "2026-04-16T22:16:38.940",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40249",
-    "description": "free5GC is an open-source implementation of the 5G core network. In versions 4.2.1 and below of the UDR service, the PUT handler for updating Policy Data notification subscriptions at /nudr-dr/v2/policy-data/subs-to-notify/{subsId} does not return after request body retrieval or deserialization errors. Although HTTP 500 or 400 error responses are sent, execution continues and the processor is invoked with a potentially uninitialized or partially initialized PolicyDataSubscription object. This fail-open behavior may allow unintended modification of existing Policy Data notification subscriptions with invalid or empty input, depending on downstream processor and storage behavior. A patched version was not available at the time of publication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40249",
-    "publishedDate": "2026-04-16T22:16:38.793",
-    "lastModifiedDate": "2026-04-16T22:16:38.793",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40248",
-    "description": "free5GC is an open-source implementation of the 5G core network. In versions 4.2.1 and below of the UDR service, the handler for creating or updating Traffic Influence Subscriptions checks whether the influenceId path segment equals subs-to-notify, but does not return after sending the HTTP 404 response when validation fails. Execution continues and the subscription is created or overwritten regardless. An unauthenticated attacker with access to the 5G Service Based Interface can create or overwrite arbitrary Traffic Influence Subscriptions, including injecting attacker-controlled notificationUri values and arbitrary SUPIs, by supplying any value for the influenceId path segment. A patched version was not available at the time of publication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40248",
-    "publishedDate": "2026-04-16T22:16:38.657",
-    "lastModifiedDate": "2026-04-16T22:16:38.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40247",
-    "description": "free5GC is an open-source implementation of the 5G core network. In versions 4.2.1 and below of the UDR service, the handler for reading Traffic Influence Subscriptions checks whether the influenceId path segment equals subs-to-notify, but does not return after sending the HTTP 404 response when validation fails. Execution continues and the subscription data is returned alongside the 404 response. An unauthenticated attacker with access to the 5G Service Based Interface can read arbitrary Traffic Influence Subscriptions, including SUPIs/IMSIs, DNNs, S-NSSAIs, and callback URIs, by supplying any value for the influenceId path segment. A patched version was not available at the time of publication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40247",
-    "publishedDate": "2026-04-16T22:16:38.510",
-    "lastModifiedDate": "2026-04-16T22:16:38.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40246",
-    "description": "free5GC is an open-source implementation of the 5G core network. In versions 1.4.2 and below of the UDR service, the handler for deleting Traffic Influence Subscriptions checks whether the influenceId path segment equals subs-to-notify, but does not return after sending the HTTP 404 response when validation fails. Execution continues and the subscription is deleted regardless. An unauthenticated attacker with access to the 5G Service Based Interface can delete arbitrary Traffic Influence Subscriptions by supplying any value for the influenceId path segment, while the API misleadingly returns a 404 Not Found response. A patched version was not available at the time of publication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40246",
-    "publishedDate": "2026-04-16T22:16:38.370",
-    "lastModifiedDate": "2026-04-16T22:16:38.370",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40170",
-    "description": "ngtcp2 is a C implementation of the IETF QUIC protocol. In versions prior to 1.22.1, ngtcp2_qlog_parameters_set_transport_params() serializes peer transport parameters into a fixed 1024-byte stack buffer without bounds checking. When qlog is enabled, a remote peer can send sufficiently large transport parameters during the QUIC handshake to cause writes beyond the buffer boundary, resulting in a stack buffer overflow. This affects deployments that enable the qlog callback and process untrusted peer transport parameters. This issue has been fixed in version 1.22.1. If developers are unable to immediately upgrade, they can disable the qlog on client.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40170",
-    "publishedDate": "2026-04-16T22:16:38.220",
-    "lastModifiedDate": "2026-04-16T22:16:38.220",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-39313",
-    "description": "mcp-framework is a framework for building Model Context Protocol (MCP) servers. In versions 0.2.21 and below, the readRequestBody() function in the HTTP transport concatenates request body chunks into a string with no size limit. Although a maxMessageSize configuration value exists, it is never enforced in readRequestBody(). A remote unauthenticated attacker can crash any mcp-framework HTTP server by sending a single large POST request to /mcp, causing memory exhaustion and denial of service. This issue has been fixed in version 0.2.22.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39313",
-    "publishedDate": "2026-04-16T22:16:38.073",
-    "lastModifiedDate": "2026-04-16T22:16:38.073",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-35469",
-    "description": "spdystream is a Go library for multiplexing streams over SPDY connections. In versions 0.5.0 and below, the SPDY/3 frame parser does not validate attacker-controlled counts and lengths before allocating memory. Three allocation paths are affected: the SETTINGS frame entry count, the header count in parseHeaderValueBlock, and individual header field sizes — all read as 32-bit integers and used directly as allocation sizes with no bounds checking. Because SPDY header blocks are zlib-compressed, a small on-the-wire payload can decompress into large attacker-controlled values. A remote peer that can send SPDY frames to a service using spdystream can exhaust process memory and cause an out-of-memory crash with a single crafted control frame. This issue has been fixed in version 0.5.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35469",
-    "publishedDate": "2026-04-16T22:16:37.920",
-    "lastModifiedDate": "2026-04-16T22:16:37.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34164",
-    "description": "Valtimo is an open-source business process automation platform. In versions 13.0.0 through 13.21.0, the InboxHandlingService logs the full content of every incoming inbox message at INFO level. Inbox messages can contain highly sensitive information including personal data (PII), citizen identifiers (BSN), and case details. This data is exposed to anyone with access to application logs or any Valtimo user with the admin role through the Admin UI logging module. This issue has been fixed in version 13.22.0. If developers are unable to upgrade immediately, they can restrict access to application logs and adjust the log level for com.ritense.inbox to WARN or higher in their application configuration as a workaround.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34164",
-    "publishedDate": "2026-04-16T22:16:37.757",
-    "lastModifiedDate": "2026-04-16T22:16:37.757",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33472",
-    "description": "Cryptomator is an open-source client-side encryption application for cloud storage. Version 1.19.1 contains a logic flaw in CheckHostTrustController.getAuthority() that allows an attacker to bypass the security fix for CVE-2026-32303. The method hardcodes the URI scheme based on port number, causing HTTPS URLs with port 80 to produce the same authority string as HTTP URLs, which defeats both the consistency check and the HTTP block validation. An attacker with write access to a cloud-synced vault.cryptomator file can craft a Hub configuration where apiBaseUrl and authEndpoint use HTTPS with port 80 to pass auto-trust validation, while tokenEndpoint uses plaintext HTTP. The vault is auto-trusted without user prompt, and a network-positioned attacker can intercept the OAuth token exchange to access the Cryptomator Hub API as the victim. This issue has been fixed in version 1.19.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33472",
-    "publishedDate": "2026-04-16T22:16:37.583",
-    "lastModifiedDate": "2026-04-16T22:16:37.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40901",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below ship the legacy velocity-1.7.jar, which pulls in commons-collections-3.2.1.jar containing the InvokerTransformer deserialization gadget chain. Quartz 2.3.2, also bundled in the application, deserializes job data BLOBs from the qrtz_job_details table using ObjectInputStream with no deserialization filter or class allowlist. An authenticated attacker who can write to the Quartz job table, such as through the previously described SQL injection in previewSql, can replace a scheduled job's JOB_DATA with a malicious CommonsCollections6 gadget chain payload. When the Quartz cron trigger fires, the payload is deserialized and executes arbitrary commands as root inside the container, achieving full remote code execution. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40901",
-    "publishedDate": "2026-04-16T21:16:24.270",
-    "lastModifiedDate": "2026-04-16T21:16:24.270",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40900",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the /de2api/datasetData/previewSql endpoint. The user-supplied SQL is wrapped in a subquery without validation that the input is a single SELECT statement. Combined with the JDBC blocklist bypass that allows enabling allowMultiQueries=true, an attacker can break out of the subquery and execute arbitrary stacked SQL statements, including UPDATE and other write operations, against the connected database. An authenticated attacker with access to valid datasource credentials can achieve full read and write access to the underlying database. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40900",
-    "publishedDate": "2026-04-16T21:16:24.113",
-    "lastModifiedDate": "2026-04-16T21:16:24.113",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
