@@ -1,481 +1,501 @@
 [
   {
-    "id": "CVE-2026-40899",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a JDBC parameter blocklist bypass vulnerability in the MySQL datasource configuration. The Mysql class uses Lombok's @Data annotation, which auto-generates a public setter for the illegalParameters field that contains the JDBC security blocklist. When a datasource configuration is submitted as JSON, Jackson deserialization calls setIllegalParameters with an attacker-supplied empty list, replacing the blocklist before getJdbc() validation runs. This allows an authenticated attacker to include dangerous JDBC parameters such as allowLoadLocalInfile=true, and by pointing the datasource at a rogue MySQL server, exploit the LOAD DATA LOCAL INFILE protocol feature to read arbitrary files from the DataEase server filesystem, including sensitive environment variables and database credentials. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40899",
-    "publishedDate": "2026-04-16T20:16:38.957",
-    "lastModifiedDate": "2026-04-16T20:16:38.957",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33207",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the /datasource/getTableField endpoint. The getTableFiledSql method in CalciteProvider.java incorporates the tableName parameter directly into SQL query strings using String.format without parameterization or sanitization. Although DatasourceServer.java validates that the table name exists in the datasource, an attacker can bypass this by first registering an API datasource with a malicious deTableName, which is then returned by getTables and passes the validation check. An authenticated attacker can execute arbitrary SQL commands, enabling error-based extraction of sensitive database information. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33207",
-    "publishedDate": "2026-04-16T20:16:38.797",
-    "lastModifiedDate": "2026-04-16T20:16:38.797",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33122",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the API datasource update process. When a new table definition is added during a datasource update via /de2api/datasource/update, the deTableName field from the user-submitted configuration is passed to DatasourceSyncManage.createEngineTable, where it is substituted into a CREATE TABLE statement template without any sanitization or identifier escaping. An authenticated attacker can inject arbitrary SQL commands by crafting a deTableName that breaks out of identifier quoting, enabling error-based SQL injection that can extract database information. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33122",
-    "publishedDate": "2026-04-16T20:16:38.640",
-    "lastModifiedDate": "2026-04-16T20:16:38.640",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-54502",
-    "description": "Incorrect use of boot service in the AMD Platform Configuration Blob (APCB) SMM driver could allow a privileged attacker with local access (Ring 0) to achieve privilege escalation potentially resulting in arbitrary code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-54502",
-    "publishedDate": "2026-04-16T20:16:37.393",
-    "lastModifiedDate": "2026-04-16T20:16:37.393",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@amd.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6442",
-    "description": "Improper validation of bash commands in Snowflake Cortex Code CLI versions prior to 1.0.25 allowed subsequent commands to execute outside the sandbox. An attacker could exploit this by embedding specially crafted commands in untrusted content, such as a malicious repository, causing the CLI agent to execute arbitrary code on the local device without user consent. Exploitation is non-deterministic and model-dependent. The fix is automatically applied upon relaunch with no user action required.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6442",
-    "publishedDate": "2026-04-16T19:16:35.560",
-    "lastModifiedDate": "2026-04-16T19:16:35.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 6,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33121",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the API datasource saving process. The deTableName field from the Base64-encoded datasource configuration is used to construct a DDL statement via simple string replacement without any sanitization or escaping of the table name. An authenticated attacker can inject arbitrary SQL commands by crafting a deTableName that breaks out of identifier quoting, enabling error-based SQL injection that can extract database information such as the MySQL version. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33121",
-    "publishedDate": "2026-04-16T19:16:33.657",
-    "lastModifiedDate": "2026-04-16T19:16:33.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33084",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the sort parameter of the /de2api/datasetData/enumValueObj endpoint. The DatasetDataManage service layer directly transfers the user-supplied sort value to the sorting metadata DTO, which is passed to Order2SQLObj where it is incorporated into the SQL ORDER BY clause without any whitelist validation, and then executed via CalciteProvider. An authenticated attacker can inject arbitrary SQL commands through the sort parameter, enabling time-based blind SQL injection. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33084",
-    "publishedDate": "2026-04-16T19:16:33.520",
-    "lastModifiedDate": "2026-04-16T19:16:33.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-54510",
-    "description": "A missing lock verification in AMD Secure Processor (ASP) firmware may permit a locally authenticated attacker with administrative privileges to alter MMIO routing on some Zen 5-based products, potentially compromising guest system integrity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-54510",
-    "publishedDate": "2026-04-16T19:16:32.897",
-    "lastModifiedDate": "2026-04-16T20:16:37.840",
+    "id": "CVE-2026-40265",
+    "description": "Note Mark is an open-source note-taking application. In versions 0.19.1 and prior, the asset download endpoint at /api/notes/{noteID}/assets/{assetID} is registered without authentication middleware, and the backend query does not verify ownership or book visibility. An unauthenticated user who knows a valid note ID and asset ID can retrieve the full contents of private note assets without authentication, regardless of whether the associated book is public or private. This issue has been fixed in version 0.19.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40265",
+    "publishedDate": "2026-04-17T01:17:40.293",
+    "lastModifiedDate": "2026-04-17T01:17:40.293",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@amd.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-43937",
-    "description": "Dell PowerScale OneFS, versions prior to 9.12.0.0, contains an insertion of sensitive information into log file vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to the disclosure of certain user credentials. The attacker may be able to use the exposed credentials to access the vulnerable application with privileges of the compromised account.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-43937",
-    "publishedDate": "2026-04-16T19:16:32.750",
-    "lastModifiedDate": "2026-04-16T19:16:32.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 5.2,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-43935",
-    "description": "Dell PowerScale OneFS, versions prior to 9.12.0.0, contains an improper resource shutdown or release vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-43935",
-    "publishedDate": "2026-04-16T19:16:32.610",
-    "lastModifiedDate": "2026-04-16T19:16:32.610",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 0.8,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
         "impactScore": 3.6,
-        "source": "security_alert@emc.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2023-20585",
-    "description": "Insufficient checks of the RMP on host buffer access in IOMMU may allow an attacker with privileges and a compromised hypervisor to trigger an out of bounds condition without RMP checks, resulting in a potential loss of confidential guest integrity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-20585",
-    "publishedDate": "2026-04-16T19:16:31.430",
-    "lastModifiedDate": "2026-04-16T20:16:34.290",
+    "id": "CVE-2026-40263",
+    "description": "Note Mark is an open-source note-taking application. In versions 0.19.1 and prior, the login endpoint performs bcrypt password verification only when the supplied username exists, returning immediately for nonexistent usernames. This timing discrepancy allows unauthenticated attackers to enumerate valid usernames by measuring response times, enabling targeted credential attacks. This issue has been fixed in version 0.19.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40263",
+    "publishedDate": "2026-04-17T01:17:40.137",
+    "lastModifiedDate": "2026-04-17T01:17:40.137",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@amd.com"
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41082",
-    "description": "In OCaml opam before 2.5.1, a .install field containing a destination filepath can use ../ to reach a parent directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41082",
-    "publishedDate": "2026-04-16T18:16:45.980",
-    "lastModifiedDate": "2026-04-16T18:16:45.980",
+    "id": "CVE-2026-40262",
+    "description": "Note Mark is an open-source note-taking application. In versions 0.19.1 and prior, the asset delivery handler serves uploaded files inline and relies on magic-byte detection for content type, which does not identify text-based formats such as HTML, SVG, or XHTML. These files are served with an empty Content-Type, no X-Content-Type-Options: nosniff header, and inline disposition, allowing browsers to sniff and render active content. An authenticated user can upload an HTML or SVG file containing JavaScript as a note asset, and when a victim navigates to the asset URL, the script executes under the application's origin with access to the victim's authenticated session and API actions. This issue has been fixed in version 0.19.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40262",
+    "publishedDate": "2026-04-17T01:17:39.950",
+    "lastModifiedDate": "2026-04-17T01:17:39.950",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
+        "score": 8.7,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 2.5,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 5.8,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22734",
+    "description": "Cloud Foundry UUA is vulnerable to a bypass that allows an attacker to obtain a token for any user and gain access to UAA-protected systems. This vulnerability exists when SAML 2.0 bearer assertions are enabled for a client, as the UAA accepts SAML 2.0 bearer assertions that are neither signed nor encrypted. This issue affects UUA from v77.30.0 to v78.7.0 (inclusive) and it affects CF Deployment from v48.7.0 to v54.14.0 (inclusive).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22734",
+    "publishedDate": "2026-04-17T01:17:37.107",
+    "lastModifiedDate": "2026-04-17T01:17:37.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40260",
+    "description": "pypdf is a free and open-source pure-python PDF library. In versions prior to 6.10.0, manipulated XMP metadata entity declarations can exhaust RAM. An attacker who exploits this vulnerability can craft a PDF which leads to large memory usage. This requires parsing the XMP metadata. This issue has been fixed in version 6.10.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40260",
+    "publishedDate": "2026-04-17T01:17:39.733",
+    "lastModifiedDate": "2026-04-17T01:17:39.733",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40322",
+    "description": "SiYuan is an open-source personal knowledge management system. In versions 3.6.3 and below, Mermaid diagrams are rendered with securityLevel set to \"loose\", and the resulting SVG is injected into the DOM via innerHTML. This allows attacker-controlled javascript: URLs in Mermaid code blocks to survive into the rendered output. On desktop builds using Electron, windows are created with nodeIntegration enabled and contextIsolation disabled, escalating the stored XSS to arbitrary code execution when a victim opens a note containing a malicious Mermaid block and clicks the rendered diagram node. This issue has been fixed in version 3.6.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40322",
+    "publishedDate": "2026-04-16T23:16:33.733",
+    "lastModifiedDate": "2026-04-16T23:16:33.733",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40318",
+    "description": "SiYuan is an open-source personal knowledge management system. In versions 3.6.3 and prior, the /api/av/removeUnusedAttributeView endpoint constructs a filesystem path using the user-controlled id parameter without validation or path boundary enforcement. An attacker can inject path traversal sequences such as ../ into the id value to escape the intended directory and delete arbitrary .json files on the server, including global configuration files and workspace metadata. This issue has been fixed in version 3.6.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40318",
+    "publishedDate": "2026-04-16T23:16:33.590",
+    "lastModifiedDate": "2026-04-16T23:16:33.590",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:H",
+        "exploitabilityScore": 3.1,
         "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40259",
+    "description": "SiYuan is an open-source personal knowledge management system. In versions 3.6.3 and below, the /api/av/removeUnusedAttributeView endpoint is protected only by generic authentication that accepts publish-service RoleReader tokens. The handler passes a caller-controlled id directly to a model function that unconditionally deletes the corresponding attribute view file from the workspace without verifying that the caller has write privileges or that the target attribute view is actually unused. An authenticated publish-service reader can permanently delete arbitrary attribute view definitions by extracting publicly exposed data-av-id values from published content, causing breakage of database views and workspace rendering until manually restored. This issue has been fixed in version 3.6.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40259",
+    "publishedDate": "2026-04-16T23:16:33.430",
+    "lastModifiedDate": "2026-04-16T23:16:33.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40255",
+    "description": "AdonisJS HTTP Server is a package for handling HTTP requests in the AdonisJS framework. In @adonisjs/http-server versions prior to 7.8.1 and 8.0.0-next.0 through 8.1.3, and @adonisjs/core versions prior to 7.4.0, the response.redirect().back() method reads the Referer header from the incoming HTTP request and redirects to that URL without validating the host.An attacker who can influence the Referer header can cause the application to redirect users to a malicious external site. This affects all AdonisJS applications that use response.redirect().back() or response.redirect('back'). This issue has been fixed in versions 7.8.1 and 8.2.0 and 7.4.0 of @adonisjs/core.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40255",
+    "publishedDate": "2026-04-16T23:16:33.267",
+    "lastModifiedDate": "2026-04-16T23:16:33.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40253",
+    "description": "openCryptoki is a PKCS#11 library and provides tooling for Linux and AIX. In versions 3.26.0 and below, the BER/DER decoding functions in the shared common library (asn1.c) accept a raw pointer but no buffer length parameter, and trust attacker-controlled BER length fields without validating them against actual buffer boundaries. All primitive decoders are affected: ber_decode_INTEGER, ber_decode_SEQUENCE, ber_decode_OCTET_STRING, ber_decode_BIT_STRING, and ber_decode_CHOICE. Additionally, ber_decode_INTEGER can produce integer underflows when the encoded length is zero. An attacker supplying a malformed BER-encoded cryptographic object through PKCS#11 operations such as C_CreateObject or C_UnwrapKey, token loading from disk, or remote backend communication can trigger out-of-bounds reads. This affects all token backends (Soft, ICA, CCA, TPM, EP11, ICSF) since the vulnerable code is in the shared common library. A patch is available thorugh commit ed378f463ef73364c89feb0fc923f4dc867332a3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40253",
+    "publishedDate": "2026-04-16T23:16:33.107",
+    "lastModifiedDate": "2026-04-16T23:16:33.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 2.5,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2024-58343",
+    "description": "Vision Helpdesk before 5.7.0 (patched in 5.6.10) allows attackers to read user profiles via modified serialized cookie data to vis_client_id.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-58343",
+    "publishedDate": "2026-04-16T23:16:32.663",
+    "lastModifiedDate": "2026-04-16T23:16:32.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
         "source": "cve@mitre.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-33083",
-    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the orderDirection parameter used in dataset-related endpoints including /de2api/datasetData/enumValueDs and /de2api/datasetTree/exportDataset. The Order2SQLObj class directly assigns the raw user-supplied orderDirection value into the SQL query without any validation or whitelist enforcement, and the value is rendered into the ORDER BY clause via StringTemplate before being executed against the database. An authenticated attacker can inject arbitrary SQL commands through the sorting direction field, enabling time-based blind data extraction and denial of service. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33083",
-    "publishedDate": "2026-04-16T18:16:45.433",
-    "lastModifiedDate": "2026-04-16T20:16:38.497",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33082",
-    "description": "DataEase is an open source data visualization analysis tool. Versions 2.10.20 and below contain a SQL injection vulnerability in the dataset export functionality. The expressionTree parameter in POST /de2api/datasetTree/exportDataset is deserialized into a filtering object and passed to WhereTree2Str.transFilterTrees for SQL translation, where user-controlled values in \"like\" filter terms are directly concatenated into SQL fragments without sanitization. An attacker can inject arbitrary SQL commands by escaping the string literal in the filter value, enabling blind SQL injection through techniques such as time-based extraction of database information. This issue has been fixed in version 2.10.21.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33082",
-    "publishedDate": "2026-04-16T18:16:45.283",
-    "lastModifiedDate": "2026-04-16T18:16:45.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2336",
-    "description": "A privilege escalation vulnerability in Microchip IStaX allows an authenticated low-privileged user to recover a shared per-device cookie secret from their own webstax_auth session cookie and forge a new cookie with administrative privileges.This issue affects IStaX before 2026.03.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2336",
-    "publishedDate": "2026-04-16T18:16:44.927",
-    "lastModifiedDate": "2026-04-16T18:16:44.927",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "dc3f6da9-85b5-4a73-84a2-2ec90b40fca5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-27820",
-    "description": "zlib is a Ruby interface for the zlib compression/decompression library. Versions 3.0.0 and below, 3.1.0, 3.1.1, 3.2.0 and 3.2.1 contain a buffer overflow vulnerability in the Zlib::GzipReader. The zstream_buffer_ungets function prepends caller-provided bytes ahead of previously produced output but fails to guarantee the backing Ruby string has enough capacity before the memmove shifts the existing data. This can lead to memory corruption when the buffer length exceeds capacity. This issue has been fixed in versions 3.0.1, 3.1.2 and 3.2.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-27820",
-    "publishedDate": "2026-04-16T18:16:44.770",
-    "lastModifiedDate": "2026-04-16T18:16:44.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.7,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24749",
-    "description": "The Silverstripe Assets Module is a required component of Silverstripe Framework. In versions prior to 2.4.5 and 3.0.0-rc1 through 3.1.2, images rendered in templates or otherwise accessed via DBFile::getURL() or DBFile::getSourceURL() incorrectly add an access grant to the current session, which bypasses file permissions. This usually happens when creating an image variant, for example using a manipulation method like ScaleWidth() or Convert(). Note that if developers use DBFile directly in the $db configuration for a DataObject class that doesn't subclass File, and if they were setting the visibility of those files to \"protected\", those files will now need an explicit access grant to be accessed. If developers do not want to explicitly provide access grants for these files in their apps (i.e. they want these files to be accessible by default), they should use the \"public\" visibility. This issue has been fixed in versions 2.4.5 and 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24749",
-    "publishedDate": "2026-04-16T18:16:44.610",
-    "lastModifiedDate": "2026-04-16T18:16:44.610",
+    "id": "CVE-2026-40922",
+    "description": "SiYuan is an open-source personal knowledge management system. In versions 3.6.1 through 3.6.3, a prior fix for XSS in bazaar README rendering (incomplete fix for CVE-2026-33066) enabled the Lute HTML sanitizer, but the sanitizer does not block iframe tags, and its URL-prefix blocklist does not effectively filter srcdoc attributes which contain raw HTML rather than URLs. A malicious bazaar package author can include an iframe with a srcdoc attribute containing embedded scripts in their README. When other users view the package in SiYuan's marketplace UI, the payload executes in the Electron context with full application privileges, enabling arbitrary code execution on the user's machine. This issue has been fixed in version 3.6.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40922",
+    "publishedDate": "2026-04-17T01:17:40.447",
+    "lastModifiedDate": "2026-04-17T01:17:40.447",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-43883",
-    "description": "Dell PowerScale OneFS, versions prior to 9.12.0.0, contains an improper check for unusual or exceptional conditions vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-43883",
-    "publishedDate": "2026-04-16T18:16:43.667",
-    "lastModifiedDate": "2026-04-16T18:16:43.667",
+    "id": "CVE-2026-41113",
+    "description": "sagredo qmail before 2026.04.07 allows tls_quit remote code execution because of popen in notlshosts_auto in qmail-remote.c.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41113",
+    "publishedDate": "2026-04-16T22:16:39.103",
+    "lastModifiedDate": "2026-04-16T22:16:39.103",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.1,
+        "score": 8.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 0.5,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41080",
-    "description": "libexpat before 2.7.6 uses insufficient entropy, and thus hash flooding can occur via a crafted XML document.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41080",
-    "publishedDate": "2026-04-16T17:16:54.917",
-    "lastModifiedDate": "2026-04-16T17:16:54.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.9,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 1.4,
-        "impactScore": 1.4,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
         "source": "cve@mitre.org"
       }
     ]
   },
   {
-    "id": "CVE-2025-36579",
-    "description": "Dell Client Platform BIOS contains a Weak Password Recovery Mechanism vulnerability. An unauthenticated attacker with physical access to the system could potentially exploit this vulnerability, leading to unauthorized access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-36579",
-    "publishedDate": "2026-04-16T17:16:54.073",
-    "lastModifiedDate": "2026-04-16T17:16:54.073",
+    "id": "CVE-2026-40308",
+    "description": "My Calendar is a WordPress plugin for managing calendar events. In versions 3.7.6 and below, the mc_ajax_mcjs_action AJAX endpoint, registered for unauthenticated users, passes user-supplied arguments through parse_str() without validation, allowing injection of arbitrary parameters including a site value. On WordPress Multisite installations, this enables an unauthenticated attacker to call switch_to_blog() with an arbitrary site ID and extract calendar events from any sub-site on the network, including private or hidden events. On standard Single Site installations, switch_to_blog() does not exist, causing an uncaught PHP fatal error and crashing the worker thread, creating an unauthenticated denial of service vector. This issue has been fixed in version 3.7.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40308",
+    "publishedDate": "2026-04-16T22:16:38.940",
+    "lastModifiedDate": "2026-04-16T22:16:38.940",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 0.9,
-        "impactScore": 3.7,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5426",
-    "description": "Hard-coded ASP.NET/IIS machineKey value in Digital Knowledge KnowledgeDeliver deployments prior to February 24, 2026 allows adversaries to circumvent ViewState validation mechanisms and achieve remote code execution via malicious ViewState deserialization attacks",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5426",
-    "publishedDate": "2026-04-16T16:16:17.693",
-    "lastModifiedDate": "2026-04-16T16:16:17.693",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37100",
-    "description": "An issue in the Bluetooth Low Energy (BLE) control interface of the Yamaha SR-B30A sound bar firmware 2.40 (Mobile App: Sound Bar Remote / version: 2.40) allows remote attackers within BLE radio range to connect without authentication via the Sound Bar Remote protocol",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37100",
-    "publishedDate": "2026-04-16T16:16:16.910",
-    "lastModifiedDate": "2026-04-16T16:16:16.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6409",
-    "description": "A Denial of Service (DoS) vulnerability exists in the Protobuf PHP library during the parsing of untrusted input. Maliciously structured messages—specifically those containing negative varints or deep recursion—can be used to crash the application, impacting service availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6409",
-    "publishedDate": "2026-04-16T15:17:41.910",
-    "lastModifiedDate": "2026-04-16T15:17:41.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
+        "score": 8.8,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cve-coordination@google.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-3324",
-    "description": "Zohocorp ManageEngine Log360 versions 13000 through 13013 are vulnerable to authentication bypass on certain actions due to improper filter configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3324",
-    "publishedDate": "2026-04-16T15:17:38.010",
-    "lastModifiedDate": "2026-04-16T15:17:38.010",
+    "id": "CVE-2026-40249",
+    "description": "free5GC is an open-source implementation of the 5G core network. In versions 4.2.1 and below of the UDR service, the PUT handler for updating Policy Data notification subscriptions at /nudr-dr/v2/policy-data/subs-to-notify/{subsId} does not return after request body retrieval or deserialization errors. Although HTTP 500 or 400 error responses are sent, execution continues and the processor is invoked with a potentially uninitialized or partially initialized PolicyDataSubscription object. This fail-open behavior may allow unintended modification of existing Policy Data notification subscriptions with invalid or empty input, depending on downstream processor and storage behavior. A patched version was not available at the time of publication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40249",
+    "publishedDate": "2026-04-16T22:16:38.793",
+    "lastModifiedDate": "2026-04-16T22:16:38.793",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.2,
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40248",
+    "description": "free5GC is an open-source implementation of the 5G core network. In versions 4.2.1 and below of the UDR service, the handler for creating or updating Traffic Influence Subscriptions checks whether the influenceId path segment equals subs-to-notify, but does not return after sending the HTTP 404 response when validation fails. Execution continues and the subscription is created or overwritten regardless. An unauthenticated attacker with access to the 5G Service Based Interface can create or overwrite arbitrary Traffic Influence Subscriptions, including injecting attacker-controlled notificationUri values and arbitrary SUPIs, by supplying any value for the influenceId path segment. A patched version was not available at the time of publication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40248",
+    "publishedDate": "2026-04-16T22:16:38.657",
+    "lastModifiedDate": "2026-04-16T22:16:38.657",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40247",
+    "description": "free5GC is an open-source implementation of the 5G core network. In versions 4.2.1 and below of the UDR service, the handler for reading Traffic Influence Subscriptions checks whether the influenceId path segment equals subs-to-notify, but does not return after sending the HTTP 404 response when validation fails. Execution continues and the subscription data is returned alongside the 404 response. An unauthenticated attacker with access to the 5G Service Based Interface can read arbitrary Traffic Influence Subscriptions, including SUPIs/IMSIs, DNNs, S-NSSAIs, and callback URIs, by supplying any value for the influenceId path segment. A patched version was not available at the time of publication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40247",
+    "publishedDate": "2026-04-16T22:16:38.510",
+    "lastModifiedDate": "2026-04-16T22:16:38.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40246",
+    "description": "free5GC is an open-source implementation of the 5G core network. In versions 1.4.2 and below of the UDR service, the handler for deleting Traffic Influence Subscriptions checks whether the influenceId path segment equals subs-to-notify, but does not return after sending the HTTP 404 response when validation fails. Execution continues and the subscription is deleted regardless. An unauthenticated attacker with access to the 5G Service Based Interface can delete arbitrary Traffic Influence Subscriptions by supplying any value for the influenceId path segment, while the API misleadingly returns a 404 Not Found response. A patched version was not available at the time of publication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40246",
+    "publishedDate": "2026-04-16T22:16:38.370",
+    "lastModifiedDate": "2026-04-16T22:16:38.370",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40170",
+    "description": "ngtcp2 is a C implementation of the IETF QUIC protocol. In versions prior to 1.22.1, ngtcp2_qlog_parameters_set_transport_params() serializes peer transport parameters into a fixed 1024-byte stack buffer without bounds checking. When qlog is enabled, a remote peer can send sufficiently large transport parameters during the QUIC handshake to cause writes beyond the buffer boundary, resulting in a stack buffer overflow. This affects deployments that enable the qlog callback and process untrusted peer transport parameters. This issue has been fixed in version 1.22.1. If developers are unable to immediately upgrade, they can disable the qlog on client.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40170",
+    "publishedDate": "2026-04-16T22:16:38.220",
+    "lastModifiedDate": "2026-04-16T22:16:38.220",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "0fc0942c-577d-436f-ae8e-945763c79b02"
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-37347",
-    "description": "SourceCodester Payroll Management and Information System v1.0 is vulnerable to SQL Injection in the file /payroll/view_employee.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37347",
-    "publishedDate": "2026-04-16T15:17:37.670",
-    "lastModifiedDate": "2026-04-16T16:16:17.457",
+    "id": "CVE-2026-39313",
+    "description": "mcp-framework is a framework for building Model Context Protocol (MCP) servers. In versions 0.2.21 and below, the readRequestBody() function in the HTTP transport concatenates request body chunks into a string with no size limit. Although a maxMessageSize configuration value exists, it is never enforced in readRequestBody(). A remote unauthenticated attacker can crash any mcp-framework HTTP server by sending a single large POST request to /mcp, causing memory exhaustion and denial of service. This issue has been fixed in version 0.2.22.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39313",
+    "publishedDate": "2026-04-16T22:16:38.073",
+    "lastModifiedDate": "2026-04-16T22:16:38.073",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-35469",
+    "description": "spdystream is a Go library for multiplexing streams over SPDY connections. In versions 0.5.0 and below, the SPDY/3 frame parser does not validate attacker-controlled counts and lengths before allocating memory. Three allocation paths are affected: the SETTINGS frame entry count, the header count in parseHeaderValueBlock, and individual header field sizes — all read as 32-bit integers and used directly as allocation sizes with no bounds checking. Because SPDY header blocks are zlib-compressed, a small on-the-wire payload can decompress into large attacker-controlled values. A remote peer that can send SPDY frames to a service using spdystream can exhaust process memory and cause an out-of-memory crash with a single crafted control frame. This issue has been fixed in version 0.5.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35469",
+    "publishedDate": "2026-04-16T22:16:37.920",
+    "lastModifiedDate": "2026-04-16T22:16:37.920",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-34164",
+    "description": "Valtimo is an open-source business process automation platform. In versions 13.0.0 through 13.21.0, the InboxHandlingService logs the full content of every incoming inbox message at INFO level. Inbox messages can contain highly sensitive information including personal data (PII), citizen identifiers (BSN), and case details. This data is exposed to anyone with access to application logs or any Valtimo user with the admin role through the Admin UI logging module. This issue has been fixed in version 13.22.0. If developers are unable to upgrade immediately, they can restrict access to application logs and adjust the log level for com.ritense.inbox to WARN or higher in their application configuration as a workaround.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34164",
+    "publishedDate": "2026-04-16T22:16:37.757",
+    "lastModifiedDate": "2026-04-16T22:16:37.757",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-33472",
+    "description": "Cryptomator is an open-source client-side encryption application for cloud storage. Version 1.19.1 contains a logic flaw in CheckHostTrustController.getAuthority() that allows an attacker to bypass the security fix for CVE-2026-32303. The method hardcodes the URI scheme based on port number, causing HTTPS URLs with port 80 to produce the same authority string as HTTP URLs, which defeats both the consistency check and the HTTP block validation. An attacker with write access to a cloud-synced vault.cryptomator file can craft a Hub configuration where apiBaseUrl and authEndpoint use HTTPS with port 80 to pass auto-trust validation, while tokenEndpoint uses plaintext HTTP. The vault is auto-trusted without user prompt, and a network-positioned attacker can intercept the OAuth token exchange to access the Cryptomator Hub API as the victim. This issue has been fixed in version 1.19.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33472",
+    "publishedDate": "2026-04-16T22:16:37.583",
+    "lastModifiedDate": "2026-04-16T22:16:37.583",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40901",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below ship the legacy velocity-1.7.jar, which pulls in commons-collections-3.2.1.jar containing the InvokerTransformer deserialization gadget chain. Quartz 2.3.2, also bundled in the application, deserializes job data BLOBs from the qrtz_job_details table using ObjectInputStream with no deserialization filter or class allowlist. An authenticated attacker who can write to the Quartz job table, such as through the previously described SQL injection in previewSql, can replace a scheduled job's JOB_DATA with a malicious CommonsCollections6 gadget chain payload. When the Quartz cron trigger fires, the payload is deserialized and executes arbitrary commands as root inside the container, achieving full remote code execution. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40901",
+    "publishedDate": "2026-04-16T21:16:24.270",
+    "lastModifiedDate": "2026-04-16T21:16:24.270",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40900",
+    "description": "DataEase is an open-source data visualization and analytics platform. Versions 2.10.20 and below contain a SQL injection vulnerability in the /de2api/datasetData/previewSql endpoint. The user-supplied SQL is wrapped in a subquery without validation that the input is a single SELECT statement. Combined with the JDBC blocklist bypass that allows enabling allowMultiQueries=true, an attacker can break out of the subquery and execute arbitrary stacked SQL statements, including UPDATE and other write operations, against the connected database. An authenticated attacker with access to valid datasource credentials can achieve full read and write access to the underlying database. This issue has been fixed in version 2.10.21.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40900",
+    "publishedDate": "2026-04-16T21:16:24.113",
+    "lastModifiedDate": "2026-04-16T21:16:24.113",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   }
