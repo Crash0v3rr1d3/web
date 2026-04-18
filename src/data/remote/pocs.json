@@ -1,5 +1,20 @@
 [
   {
+    "id": "1214562295",
+    "cve_id": "CVE-2026-25232",
+    "name": "CVE-2026-25232-PoC",
+    "owner": "H1sok444",
+    "full_name": "H1sok444/CVE-2026-25232-PoC",
+    "html_url": "https://github.com/H1sok444/CVE-2026-25232-PoC",
+    "description": "Proof of concept for the recent CVE-2026-25232 which is a priv esc vulnerability present in Gogs. ",
+    "stargazers_count": "0",
+    "vuln_description": "Gogs is an open source self-hosted Git service. Versions 0.13.4 and below have an access control bypass vulnerability which allows any repository collaborator with Write permissions to delete protected branches (including the default branch) by sending a direct POST request, completely bypassing the branch protection mechanism. This vulnerability in the DeleteBranchPost function eenables privilege escalation from Write to Admin level, allowing low-privilege users to perform dangerous operations that should be restricted to administrators only. Although Git Hook layer correctly prevents protected branch deletion via SSH push, the web interface deletion operation does not trigger Git Hooks, resulting in complete bypass of protection mechanisms. In oder to exploit this vulnerability, attackers must have write permissions to the target repository, protected branches configured to the target repository and access to the Gogs web interface. This issue has been fixed in version 0.14.1.",
+    "created_at": "2026-04-19 03:40:54",
+    "updated_at": "2026-04-19 03:41:18",
+    "pushed_at": "2026-04-19 03:41:14",
+    "inserted_at": "2026-04-19 04:36:21"
+  },
+  {
     "id": "1214305978",
     "cve_id": "CVE-2026-33032",
     "name": "CVE-2026-33032",
@@ -2982,21 +2997,6 @@
     "created_at": "2026-04-10 04:19:50",
     "updated_at": "2026-04-10 04:20:03",
     "pushed_at": "2026-04-10 04:19:58",
-    "inserted_at": "2026-04-10 10:36:23"
-  },
-  {
-    "id": "1206290660",
-    "cve_id": "CVE-2026-31402",
-    "name": "CVE-2026-31402",
-    "owner": "0xBlackash",
-    "full_name": "0xBlackash/CVE-2026-31402",
-    "html_url": "https://github.com/0xBlackash/CVE-2026-31402",
-    "description": "CVE-2026-31402",
-    "stargazers_count": "0",
-    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnfsd: fix heap overflow in NFSv4.0 LOCK replay cache\n\nThe NFSv4.0 replay cache uses a fixed 112-byte inline buffer\n(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.\nThis size was calculated based on OPEN responses and does not account\nfor LOCK denied responses, which include the conflicting lock owner as\na variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).\n\nWhen a LOCK operation is denied due to a conflict with an existing lock\nthat has a large owner, nfsd4_encode_operation() copies the full encoded\nresponse into the undersized replay buffer via read_bytes_from_xdr_buf()\nwith no bounds check. This results in a slab-out-of-bounds write of up\nto 944 bytes past the end of the buffer, corrupting adjacent heap memory.\n\nThis can be triggered remotely by an unauthenticated attacker with two\ncooperating NFSv4.0 clients: one sets a lock with a large owner string,\nthen the other requests a conflicting lock to provoke the den",
-    "created_at": "2026-04-10 04:10:44",
-    "updated_at": "2026-04-10 04:31:45",
-    "pushed_at": "2026-04-10 04:31:39",
     "inserted_at": "2026-04-10 10:36:23"
   }
 ]
