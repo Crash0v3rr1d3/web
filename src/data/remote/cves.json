@@ -1,63 +1,203 @@
 [
   {
+    "id": "CVE-2026-40494",
+    "description": "SAIL is a cross-platform library for loading and saving images with support for animation, metadata, and ICC profiles. Prior to commit 45d48d1f2e8e0d73e80bc1fd5310cb57f4547302, the TGA codec's RLE decoder in `tga.c` has an asymmetric bounds check vulnerability. The run-packet path (line 297) correctly clamps the repeat count to the remaining buffer space, but the raw-packet path (line 305-311) has no equivalent bounds check. This allows writing up to 496 bytes of attacker-controlled data past the end of a heap buffer. Commit 45d48d1f2e8e0d73e80bc1fd5310cb57f4547302 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40494",
+    "publishedDate": "2026-04-18T03:16:13.590",
+    "lastModifiedDate": "2026-04-18T03:16:13.590",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40493",
+    "description": "SAIL is a cross-platform library for loading and saving images with support for animation, metadata, and ICC profiles. Prior to commit c930284445ea3ff94451ccd7a57c999eca3bc979, the PSD codec computes bytes-per-pixel (`bpp`) from raw header fields `channels * depth`, but the pixel buffer is allocated based on the resolved pixel format. For LAB mode with `channels=3, depth=16`, `bpp = (3*16+7)/8 = 6`, but the format `BPP40_CIE_LAB` allocates only 5 bytes per pixel. Every pixel write overshoots, causing a deterministic heap buffer overflow on every row. Commit c930284445ea3ff94451ccd7a57c999eca3bc979 contains a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40493",
+    "publishedDate": "2026-04-18T03:16:13.440",
+    "lastModifiedDate": "2026-04-18T03:16:13.440",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40492",
+    "description": "SAIL is a cross-platform library for loading and saving images with support for animation, metadata, and ICC profiles. Prior to commit 36aa5c7ec8a2bb35f6fb867a1177a6f141156b02, the XWD codec resolves pixel format based on `pixmap_depth` but the byte-swap code uses `bits_per_pixel` independently. When `pixmap_depth=8` (BPP8_INDEXED, 1 byte/pixel buffer) but `bits_per_pixel=32`, the byte-swap loop accesses memory as `uint32_t*`, reading/writing 4x the allocated buffer size. This is a different vulnerability from the previously reported GHSA-3g38-x2pj-mv55 (CVE-2026-27168), which addressed `bytes_per_line` validation. Commit 36aa5c7ec8a2bb35f6fb867a1177a6f141156b02 contains a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40492",
+    "publishedDate": "2026-04-18T03:16:13.300",
+    "lastModifiedDate": "2026-04-18T03:16:13.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40491",
+    "description": "gdown is a Google Drive public file/folder downloader. Versions prior to 5.2.2 are vulnerable to a Path Traversal attack within the extractall functionality. When extracting a maliciously crafted ZIP or TAR archive, the library fails to sanitize or validate the filenames of the archive members. This allow files to be written outside the intended destination directory, potentially leading to arbitrary file overwrite and Remote Code Execution (RCE). Version 5.2.2 contains a fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40491",
+    "publishedDate": "2026-04-18T03:16:13.157",
+    "lastModifiedDate": "2026-04-18T03:16:13.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-40490",
-    "description": "AsyncHttpClient leaks authorization credentials to untrusted domains on cross-origin redirects",
+    "description": "The AsyncHttpClient (AHC) library allows Java applications to easily execute HTTP requests and asynchronously process HTTP responses. When redirect following is enabled (followRedirect(true)), versions of AsyncHttpClient prior to 3.0.9 and 2.14.5 forward Authorization and Proxy-Authorization headers along with Realm credentials to arbitrary redirect targets regardless of domain, scheme, or port changes. This leaks credentials on cross-domain redirects and HTTPS-to-HTTP downgrades. Additionally, even when stripAuthorizationOnRedirect is set to true, the Realm object containing plaintext credentials is still propagated to the redirect request, causing credential re-generation for Basic and Digest authentication schemes via NettyRequestFactory. An attacker who controls a redirect target (via open redirect, DNS rebinding, or MITM on HTTP) can capture Bearer tokens, Basic auth credentials, or any other Authorization header value. The fix in versions 3.0.9 and 2.14.5 automatically strips Authorization and Proxy-Authorization headers and clears Realm credentials whenever a redirect crosses origin boundaries (different scheme, host, or port) or downgrades from HTTPS to HTTP. For users unable to upgrade, set `(stripAuthorizationOnRedirect(true))` in the client config and avoid using Realm-based authentication with redirect following enabled. Note that `(stripAuthorizationOnRedirect(true))` alone is insufficient on versions prior to 3.0.9 and 2.14.5 because the Realm bypass still re-generates credentials. Alternatively, disable redirect following (`followRedirect(false)`) and handle redirects manually with origin validation.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-40490",
-    "publishedDate": "Sat, 18 Apr 2026 01:31:13 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-18T02:16:11.977",
+    "lastModifiedDate": "2026-04-18T02:16:11.977",
     "vendors": [],
     "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-1559",
-    "description": "Youzify &lt;= 1.3.6 - Authenticated (Subscriber+) Stored Cross-Site Scripting via 'checkin_place_id' Parameter",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1559",
-    "publishedDate": "Sat, 18 Apr 2026 01:26:05 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-1838",
-    "description": "Hostel &lt;= 1.1.6 - Reflected Cross-Site Scripting via 'shortcode_id' Parameter",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1838",
-    "publishedDate": "Sat, 18 Apr 2026 01:26:04 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-40489",
-    "description": "editorconfig-core-c has incomplete fix for CVE-2023-0341",
+    "description": "editorconfig-core-c  is an EditorConfig core library for use by plugins supporting EditorConfig parsing. Versions up to and including 0.12.10 have a stack-based buffer overflow in ec_glob() that allows an attacker to crash any application using libeditorconfig by providing a specially crafted directory structure and .editorconfig file. This is an incomplete fix for CVE-2023-0341. The pcre_str buffer was protected in 0.12.6 but the adjacent l_pattern[8194] stack buffer received no equivalent protection. On Ubuntu 24.04, FORTIFY_SOURCE converts the overflow to SIGABRT (DoS). Version 0.12.11 contains an updated fix.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-40489",
-    "publishedDate": "Sat, 18 Apr 2026 01:24:57 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-18T02:16:11.827",
+    "lastModifiedDate": "2026-04-18T02:16:11.827",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-40487",
-    "description": "Postiz Has Unrestricted File Upload via MIME Type Spoofing that Leads to Stored XSS",
+    "description": "Postiz is an AI social media scheduling tool. Prior to version 2.21.6, a file upload validation bypass allows any authenticated user to upload arbitrary HTML, SVG, or other executable file types to the server by spoofing the `Content-Type` header. The uploaded files are then served by nginx with a Content-Type derived from their original extension (`text/html`, `image/svg+xml`), enabling Stored Cross-Site Scripting (XSS) in the context of the application's origin. This can lead to session riding, account takeover, and full compromise of other users' accounts. Version 2.21.6 contains a fix.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-40487",
-    "publishedDate": "Sat, 18 Apr 2026 01:19:06 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-18T02:16:11.670",
+    "lastModifiedDate": "2026-04-18T02:16:11.670",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.9,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-35582",
-    "description": "Emissary has an OS Command Injection via Unvalidated IN_FILE_ENDING / OUT_FILE_ENDING in Executrix",
+    "description": "Emissary is a P2P based data-driven workflow engine. In versions 8.42.0 and below, Executrix.getCommand() is vulnerable to OS command injection  because it interpolates temporary file paths into a /bin/sh -c shell command string without any escaping or input validation. The IN_FILE_ENDING and OUT_FILE_ENDING configuration keys flow directly into these paths, allowing a place author who can write or modify a .cfg file to inject arbitrary shell metacharacters that execute OS commands in the JVM process's security context. The framework already sanitizes placeName via an allowlist before embedding it in the same shell string, but applies no equivalent sanitization to file ending values. No runtime privileges beyond place configuration authorship, and no API or network access, are required to exploit this vulnerability. This is a framework-level defect with no safe mitigation available to downstream implementors, as Executrix provides neither escaping nor documented preconditions against metacharacters in file ending inputs. This issue has been fixed in version 8.43.0.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-35582",
-    "publishedDate": "Sat, 18 Apr 2026 01:16:27 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-18T02:16:11.510",
+    "lastModifiedDate": "2026-04-18T02:16:11.510",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-1838",
+    "description": "The Hostel plugin for WordPress is vulnerable to Reflected Cross-Site Scripting via the 'shortcode_id' parameter in all versions up to, and including, 1.1.6 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that execute if they can successfully trick a user into performing an action such as clicking on a link.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1838",
+    "publishedDate": "2026-04-18T02:16:11.337",
+    "lastModifiedDate": "2026-04-18T02:16:11.337",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-1559",
+    "description": "The Youzify plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'checkin_place_id' parameter in all versions up to, and including, 1.3.6 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1559",
+    "publishedDate": "2026-04-18T02:16:11.187",
+    "lastModifiedDate": "2026-04-18T02:16:11.187",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-40572",
@@ -355,86 +495,6 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40346",
-    "description": "NocoBase is an AI-powered no-code/low-code platform for building business applications and enterprise solutions. Prior to version 2.0.37, NocoBase's workflow HTTP request plugin and custom request action plugin make server-side HTTP requests to user-provided URLs without any SSRF protection. An authenticated user can access internal network services, cloud metadata endpoints, and localhost. Version 2.0.37 contains a patch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40346",
-    "publishedDate": "2026-04-18T00:16:38.360",
-    "lastModifiedDate": "2026-04-18T00:16:38.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40341",
-    "description": "libgphoto2 is a camera access and control library. In versions up to and including 2.5.33, an out of bound read in ptp_unpack_EOS_FocusInfoEx could be used to crash libgphoto2 when processing input from untrusted USB devices. Commit c385b34af260595dfbb5f9329526be5158985987 contains a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40341",
-    "publishedDate": "2026-04-18T00:16:38.220",
-    "lastModifiedDate": "2026-04-18T00:16:38.220",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 0.9,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40340",
-    "description": "libgphoto2 is a camera access and control library. Versions up to and including 2.5.33 have an out-of-bounds read vulnerability in `ptp_unpack_OI()` in `camlibs/ptp2/ptp-pack.c` (lines 530–563). The function validates `len < PTP_oi_SequenceNumber` (i.e., len < 48) but subsequently accesses offsets 48–56, up to 9 bytes beyond the validated boundary, via the Samsung Galaxy 64-bit objectsize detection heuristic. Commit 7c7f515bc88c3d0c4098ac965d313518e0ccbe33 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40340",
-    "publishedDate": "2026-04-18T00:16:38.087",
-    "lastModifiedDate": "2026-04-18T00:16:38.087",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40339",
-    "description": "libgphoto2 is a camera access and control library. Versions up to and including 2.5.33 have an out-of-bounds read in `ptp_unpack_Sony_DPD()` in `camlibs/ptp2/ptp-pack.c` (line 842). The function reads the FormFlag byte via `dtoh8o(data, *poffset)` without a prior bounds check. The standard `ptp_unpack_DPD()` at lines 686–687 correctly validates `*offset + sizeof(uint8_t) > dpdlen` before this same read, but the Sony variant omits this check entirely. Commit 09f8a940b1e418b5693f5c11e3016a1ad2cea62d fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40339",
-    "publishedDate": "2026-04-18T00:16:37.947",
-    "lastModifiedDate": "2026-04-18T00:16:37.947",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:L",
-        "exploitabilityScore": 0.9,
-        "impactScore": 4.2,
         "source": "security-advisories@github.com"
       }
     ]
