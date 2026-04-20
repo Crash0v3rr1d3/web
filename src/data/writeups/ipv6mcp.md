@@ -1,11 +1,10 @@
-
-toc	true
-title	IPv6 MCP Spanish Countil
-description	A tool set for IPv6 Spanish Users
-pubDate	2026-04-20
-titleImage	/public/image/hackmac2023/cover.webp
-author	Crash0v3rr1d3
-
+---
+toc: true
+title: IPv6 MCP Spanish Countil
+description: A tool set for IPv6 Spanish Users
+pubDate: 2026-04-20
+author: Crash0v3rr1d3
+---
 
 # Un kit de herramientas IPv6 para España: el MCP Server del Consejo IPv6 crece
 
