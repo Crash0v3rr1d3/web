@@ -4,10 +4,28 @@ import Layout from "@/layouts/Layout.astro";
 import WriteupRow from "@/components/Writeups/WriteupRow.astro";
 
 const writeups = (await getCollection("writeups"))?.sort(
-  (blogEntryA, blogEntryB) =>
-    (blogEntryB.data.pubDate || new Date()).getTime() -
-    (blogEntryA.data.pubDate || new Date()).getTime()
+  (a, b) =>
+    (b.data.pubDate || new Date()).getTime() -
+    (a.data.pubDate || new Date()).getTime()
+) ?? [];
+
+const currentYear = new Date().getFullYear();
+
+const latest = writeups.filter(
+  (w) => (w.data.pubDate ?? new Date()).getFullYear() === currentYear
 );
+
+const archive = writeups
+  .filter((w) => (w.data.pubDate ?? new Date()).getFullYear() !== currentYear)
+  .reduce<Record<number, typeof writeups>>((acc, w) => {
+    const y = (w.data.pubDate ?? new Date()).getFullYear();
+    (acc[y] ||= []).push(w);
+    return acc;
+  }, {});
+
+const archiveYears = Object.keys(archive)
+  .map(Number)
+  .sort((a, b) => b - a);
 ---
 
 <script>
@@ -24,7 +42,7 @@ const writeups = (await getCollection("writeups"))?.sort(
   description="Hacker"
 >
   <main
-    class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8"
+    class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 overflow-y-auto"
   >
     <a
       href="/"
@@ -32,16 +50,60 @@ const writeups = (await getCollection("writeups"))?.sort(
       >Back</a
     >
     <h1 class="text-4xl font-bold mb-4 text-neutral-100">Writeups</h1>
-    <ul class="w-full">
+
+    <section class="w-full mb-10">
+      <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-3">
+        {currentYear}
+      </h2>
       {
-        writeups?.map((writeup) => (
-          <WriteupRow
-            title={writeup.data.title || "No title"}
-            date={writeup.data.pubDate || new Date()}
-            id={writeup.id}
-          />
-        ))
+        latest.length > 0 ? (
+          <ul class="w-full">
+            {latest.map((writeup) => (
+              <WriteupRow
+                title={writeup.data.title || "No title"}
+                date={writeup.data.pubDate || new Date()}
+                id={writeup.id}
+              />
+            ))}
+          </ul>
+        ) : (
+          <p class="text-sm text-neutral-500 font-mono italic">
+            &gt;_ No writeups yet this year.
+          </p>
+        )
       }
-    </ul>
+    </section>
+
+    {
+      archiveYears.length > 0 && (
+        <section class="w-full">
+          <h2 class="text-xs font-mono uppercase tracking-widest text-neutral-500 mb-3">
+            Archive
+          </h2>
+          {archiveYears.map((year) => (
+            <details class="w-full mb-2 group">
+              <summary class="cursor-pointer list-none flex items-center gap-2 text-neutral-300 hover:text-neutral-100 py-2 border-b border-dashed border-neutral-700 transition-colors">
+                <span class="text-green-500 font-mono text-xs group-open:rotate-90 transition-transform inline-block">
+                  ▶
+                </span>
+                <span class="font-mono">{year}</span>
+                <span class="text-neutral-600 text-xs ml-auto">
+                  [{archive[year].length}]
+                </span>
+              </summary>
+              <ul class="w-full pl-5 mt-2 mb-4">
+                {archive[year].map((writeup) => (
+                  <WriteupRow
+                    title={writeup.data.title || "No title"}
+                    date={writeup.data.pubDate || new Date()}
+                    id={writeup.id}
+                  />
+                ))}
+              </ul>
+            </details>
+          ))}
+        </section>
+      )
+    }
   </main>
 </Layout>
