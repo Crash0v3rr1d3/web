@@ -1,50 +1,10 @@
 [
   {
-    "id": "CVE-2026-40909",
-    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and prior, the locale save endpoint (`locale/save.php`) constructs a file path by directly concatenating `$_POST['flag']` into the path at line 30 without any sanitization. The `$_POST['code']` parameter is then written verbatim to that path via `fwrite()` at line 40. An admin attacker (or any user who can CSRF an admin, since no CSRF token is checked and cookies use `SameSite=None`) can traverse out of the `locale/` directory and write arbitrary `.php` files to any writable location on the filesystem, achieving Remote Code Execution. Commit 57f89ffbc27d37c9d9dd727212334846e78ac21a fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40909",
-    "publishedDate": "2026-04-21T20:17:03.347",
-    "lastModifiedDate": "2026-04-21T20:17:03.347",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.8,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40908",
-    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and prior, the file `git.json.php` at the web root executes `git log -1` and returns the full output as JSON to any unauthenticated user. This exposes the exact deployed commit hash (enabling version fingerprinting against known CVEs), developer names and email addresses (PII), and commit messages which may contain references to internal systems or security fixes. As of time of publication, no known patched versions are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40908",
-    "publishedDate": "2026-04-21T20:17:03.220",
-    "lastModifiedDate": "2026-04-21T20:17:03.220",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40890",
-    "description": "The package `github.com/gomarkdown/markdown` is a Go library for parsing Markdown text and rendering as HTML. Processing a malformed input containing a < character that is not followed by a > character anywhere in the remaining text with a SmartypantsRenderer will lead to Out of Bounds read or a panic. This vulnerability is fixed with commit 759bbc3e32073c3bc4e25969c132fc520eda2778.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40890",
-    "publishedDate": "2026-04-21T20:17:02.810",
-    "lastModifiedDate": "2026-04-21T20:17:02.810",
+    "id": "CVE-2026-41135",
+    "description": "free5GC UDR is the Policy Control Function (PCF) for free5GC, an an open-source project for 5th generation (5G) mobile core networks. A memory leak vulnerability in versions prior to 1.4.3 allows any unauthenticated attacker with network access to the PCF SBI interface to cause uncontrolled memory growth by sending repeated HTTP requests to the OAM endpoint. The root cause is a `router.Use()` call inside an HTTP handler that registers a new CORS middleware on every incoming request, permanently growing the Gin router's handler chain. This leads to progressive memory exhaustion and eventual Denial of Service of the PCF, preventing all UEs from obtaining AM and SM policies and blocking 5G session establishment. Version 1.4.3 contains a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41135",
+    "publishedDate": "2026-04-22T00:16:29.287",
+    "lastModifiedDate": "2026-04-22T00:16:29.287",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -60,51 +20,31 @@
     ]
   },
   {
-    "id": "CVE-2026-40907",
-    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and prior, the endpoint `plugin/Live/view/Live_restreams/list.json.php` contains an Insecure Direct Object Reference (IDOR) vulnerability that allows any authenticated user with streaming permission to retrieve other users' live restream configurations, including third-party platform stream keys and OAuth tokens (access_token, refresh_token) for services like YouTube Live, Facebook Live, and Twitch. Commit d5992fff2811df4adad1d9fc7d0a5837b882aed7 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40907",
-    "publishedDate": "2026-04-21T20:17:03.080",
-    "lastModifiedDate": "2026-04-21T20:17:03.080",
+    "id": "CVE-2026-40343",
+    "description": "free5GC UDR is the user data repository (UDR) for free5GC, an an open-source project for 5th generation (5G) mobile core networks. In versions up to and including 1.4.2, a fail-open request handling flaw in the UDR service causes the `/nudr-dr/v2/policy-data/subs-to-notify` POST handler to continue processing requests even after request body retrieval or deserialization errors. This may allow unintended creation of Policy Data notification subscriptions with invalid, empty, or partially processed input, depending on downstream processor behavior. As of time of publication, a patched version is not available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40343",
+    "publishedDate": "2026-04-22T00:16:27.670",
+    "lastModifiedDate": "2026-04-22T00:16:27.670",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
+        "score": 6.9,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40903",
-    "description": "goshs is a SimpleHTTPServer written in Go. Prior to 2.0.0-beta.6, goshs has an ArtiPACKED vulnerability. ArtiPACKED can lead to leakage of the GITHUB_TOKEN through workflow artifacts, even though the token is not present in the repository source code. This vulnerability is fixed in 2.0.0-beta.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40903",
-    "publishedDate": "2026-04-21T20:17:02.947",
-    "lastModifiedDate": "2026-04-21T20:17:02.947",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6819",
-    "description": "HKUDS OpenHarness prior to PR #156 remediation exposes plugin lifecycle commands including /plugin install, /plugin enable, /plugin disable, and /reload-plugins to remote senders by default. Attackers who gain access through the channel layer can remotely manage plugin trust and activation state, enabling unauthorized plugin installation and activation on the system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6819",
-    "publishedDate": "2026-04-21T20:17:05.780",
-    "lastModifiedDate": "2026-04-21T20:17:05.780",
+    "id": "CVE-2026-41133",
+    "description": "pyLoad is a free and open-source download manager written in Python. Versions up to and including 0.5.0b3.dev97 cache `role` and `permission` in the session at login and continues to authorize requests using these cached values, even after an admin changes the user's role/permissions in the database. As a result, an already logged-in user can keep old (revoked) privileges until logout/session expiry, enabling continued privileged actions. This is a core authorization/session-consistency issue and is not resolved by toggling an optional security feature. Commit e95804fb0d06cbb07d2ba380fc494d9ff89b68c1 contains a fix for the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41133",
+    "publishedDate": "2026-04-22T00:16:29.153",
+    "lastModifiedDate": "2026-04-22T00:16:29.153",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -112,76 +52,47 @@
         "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40885",
-    "description": "goshs is a SimpleHTTPServer written in Go. From 2.0.0-beta.4 to 2.0.0-beta.5, goshs leaks file-based ACL credentials through its public collaborator feed when the server is deployed without global basic auth. Requests to .goshs-protected folders are logged before authorization is enforced, and the collaborator websocket broadcasts raw request headers, including Authorization. An unauthenticated observer can capture a victim's folder-specific basic-auth header and replay it to read, upload, overwrite, and delete files inside the protected subtree. This vulnerability is fixed in 2.0.0-beta.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40885",
-    "publishedDate": "2026-04-21T20:17:02.257",
-    "lastModifiedDate": "2026-04-21T20:17:02.257",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40884",
-    "description": "goshs is a SimpleHTTPServer written in Go. Prior to 2.0.0-beta.6, goshs contains an SFTP authentication bypass when the documented empty-username basic-auth syntax is used. If the server is started with -b ':pass' together with -sftp, goshs accepts that configuration but does not install any SFTP password handler. As a result, an unauthenticated network attacker can connect to the SFTP service and access files without a password. This vulnerability is fixed in 2.0.0-beta.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40884",
-    "publishedDate": "2026-04-21T20:17:02.107",
-    "lastModifiedDate": "2026-04-21T20:17:02.107",
+    "id": "CVE-2026-41131",
+    "description": "OpenFGA is an authorization/permission engine built for developers. Prior to version 1.14.1, in specific scenarios, models using conditions with caching enabled can result in two different check requests producing the same cache key. This could result in OpenFGA reusing an earlier cached result for a subsequent request. The preconditions for vulnerability are the model having relations which rely on condition evaluation and the user having caching enabled. OpenFGA v1.14.1 contains a fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41131",
+    "publishedDate": "2026-04-22T00:16:29.013",
+    "lastModifiedDate": "2026-04-22T00:16:29.013",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
+        "score": 5,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.4,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40883",
-    "description": "goshs is a SimpleHTTPServer written in Go. From 2.0.0-beta.4 to 2.0.0-beta.5, goshs contains a cross-site request forgery issue in its state-changing HTTP GET routes. An external attacker can cause an already authenticated browser to trigger destructive actions such as ?delete and ?mkdir because goshs relies on HTTP basic auth alone and performs no CSRF, Origin, or Referer validation for those routes. This vulnerability is fixed in 2.0.0-beta.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40883",
-    "publishedDate": "2026-04-21T20:17:01.983",
-    "lastModifiedDate": "2026-04-21T20:17:01.983",
+    "id": "CVE-2026-41130",
+    "description": "Craft CMS is a content management system (CMS). In versions on the 4.x branch through 4.17.8 and the 5.x branch through 5.9.14, the `resource-js` endpoint in Craft CMS allows unauthenticated requests to proxy remote JavaScript resources. \nWhen `trustedHosts` is not explicitly restricted (default configuration), the application trusts the client-supplied Host header. This allows an attacker to control the derived `baseUrl`, which is used in prefix validation inside `actionResourceJs()`. By supplying a malicious Host header, the attacker can make the server issue arbitrary HTTP requests, leading to Server-Side Request Forgery (SSRF). Versions 4.17.9 and 5.9.15 patch the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41130",
+    "publishedDate": "2026-04-22T00:16:28.880",
+    "lastModifiedDate": "2026-04-22T00:16:28.880",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 5.5,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -189,19 +100,19 @@
     ]
   },
   {
-    "id": "CVE-2026-40876",
-    "description": "goshs is a SimpleHTTPServer written in Go. Prior to 2.0.0-beta.6, goshs contains an SFTP root escape caused by prefix-based path validation. An authenticated SFTP user can read from and write to filesystem paths outside the configured SFTP root, which breaks the intended jail boundary and can expose or modify unrelated server files. The SFTP subsystem routes requests through sftpserver/sftpserver.go into DefaultHandler.GetHandler() in sftpserver/handler.go, which forwards file operations into readFile, writeFile, listFile, and cmdFile. All of those sinks rely on sanitizePath() in sftpserver/helper.go. helper.go uses a raw string-prefix comparison, not a directory-boundary check. Because of that, if the configured root is /tmp/goshsroot, then a sibling path such as /tmp/goshsroot_evil/secret.txt incorrectly passes validation since it starts with the same byte prefix. This vulnerability is fixed in 2.0.0-beta.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40876",
-    "publishedDate": "2026-04-21T20:17:01.263",
-    "lastModifiedDate": "2026-04-21T20:17:01.263",
+    "id": "CVE-2026-41129",
+    "description": "Craft CMS is a content management system (CMS). Versions on the 4.x branch through 4.17.8 and the 5.x branch through 5.9.14 are vulnerable to Server-Side Request Forgery. The exploitation requires a few permissions to be enabled in the used GraphQL schema: \"Edit assets in the <VolumeName> volume\" and \"Create assets in the <VolumeName> volume.\" Versions 4.17.9 and 5.9.15 patch the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41129",
+    "publishedDate": "2026-04-22T00:16:28.733",
+    "lastModifiedDate": "2026-04-22T00:16:28.733",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.7,
+        "score": 5.5,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -209,11 +120,31 @@
     ]
   },
   {
-    "id": "CVE-2026-41320",
-    "description": "Frappe HR is an open-source human resources management solution (HRMS). Prior to versions 15.54.0 and 14.38.1, a specially crafted request made to a certain endpoint could result in SQL injection, allowing an attacker to extract information they wouldn't otherwise be able to. Versions 15.54.0 and 14.38.1 contain a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41320",
-    "publishedDate": "2026-04-21T20:17:03.797",
-    "lastModifiedDate": "2026-04-21T20:17:03.797",
+    "id": "CVE-2026-41128",
+    "description": "Craft CMS is a content management system (CMS). In versions 5.6.0 through 5.9.14, the `actionSavePermissions()` endpoint allows a user with only `viewUsers` permission to remove arbitrary users from all user groups. While `_saveUserGroups()` enforces per-group authorization for additions, it performs no equivalent authorization check for removals, so submitting an empty `groups` value removes all existing group memberships. Version 5.9.15 contains a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41128",
+    "publishedDate": "2026-04-22T00:16:28.593",
+    "lastModifiedDate": "2026-04-22T00:16:28.593",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41127",
+    "description": "BigBlueButton is an open-source virtual classroom. Versions prior to 3.0.24 have a missing authorization that allows viewers to inject/overwrite captions Version 3.0.24 tightened the permissions on who is able to submit captions. No known workarounds are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41127",
+    "publishedDate": "2026-04-22T00:16:28.463",
+    "lastModifiedDate": "2026-04-22T00:16:28.463",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -221,7 +152,7 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
         "source": "security-advisories@github.com"
@@ -229,121 +160,31 @@
     ]
   },
   {
-    "id": "CVE-2026-40889",
-    "description": "Frappe HR is an open-source human resources management solution (HRMS). Prior to versions 15.58.2 and 16.4.2, authenticated users can access unauthorized files by exploiting certain api endpoint. Versions 15.58.2 and 16.4.2 contain a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40889",
-    "publishedDate": "2026-04-21T20:17:02.680",
-    "lastModifiedDate": "2026-04-21T20:17:02.680",
+    "id": "CVE-2026-41126",
+    "description": "BigBlueButton is an open-source virtual classroom. Versions prior to 3.0.24 have an Open Redirect through bigbluebutton/api/join via get-parameter \"logoutURL.\" Version 3.0.24 has adjusted the handling of requests with incorrect checksum so that the default logoutURL is used. No known workarounds are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41126",
+    "publishedDate": "2026-04-22T00:16:28.327",
+    "lastModifiedDate": "2026-04-22T00:16:28.327",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
+        "impactScore": 1.4,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40888",
-    "description": "Frappe HR is an open-source human resources management solution (HRMS). Prior to versions 15.58.1 and 16.4.1, an authenticated user with default role can access unauthorized information by exploiting certain api endpoint. Versions 15.58.1 and 16.4.1 contain a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40888",
-    "publishedDate": "2026-04-21T20:17:02.537",
-    "lastModifiedDate": "2026-04-21T20:17:02.537",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-40887",
-    "description": "Vendure is an open-source headless commerce platform. Starting in version 1.7.4 and prior to versions 2.3.4, 3.5.7, and 3.6.2, an unauthenticated SQL injection vulnerability exists in the Vendure Shop API. A user-controlled query string parameter is interpolated directly into a raw SQL expression without parameterization or validation, allowing an attacker to execute arbitrary SQL against the database. This affects all supported database backends (PostgreSQL, MySQL/MariaDB, SQLite). The Admin API is also affected, though exploitation there requires authentication. Versions 2.3.4, 3.5.7, and 3.6.2 contain a patch. For those who are unable to upgrade immediately, Vendure has made a hotfix available that uses `RequestContextService.getLanguageCode` to validate the `languageCode` input at the boundary. This blocks injection payloads before they can reach any query. The hotfix replaces the existing `getLanguageCode` method in `packages/core/src/service/helpers/request-context/request-context.service.ts`. Invalid values are silently dropped and the channel's default language is used instead. The patched versions additionally convert the vulnerable SQL interpolation to a parameterized query as defense in depth.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40887",
-    "publishedDate": "2026-04-21T20:17:02.397",
-    "lastModifiedDate": "2026-04-21T20:17:02.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40878",
-    "description": "mailcow: dockerized is an open source groupware/email suite based on docker. In versions prior to 2026-03b, the mailcow web interface passes the raw `$_SERVER['REQUEST_URI']` to Twig as a global template variable and renders it inside a JavaScript string literal in the `setLang()` helper of `base.twig`, relying on Twig's default HTML auto-escaping instead of the context-appropriate `js` escaping strategy. In addition, the `query_string()` Twig helper merges all current `$_GET` parameters into the language-switching links on the login page, so attacker-supplied parameters are reflected and preserved across navigation. Version 2026-03b fixes the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40878",
-    "publishedDate": "2026-04-21T20:17:01.403",
-    "lastModifiedDate": "2026-04-21T20:17:01.403",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33812",
-    "description": "Parsing a malicious font file can cause excessive memory allocation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33812",
-    "publishedDate": "2026-04-21T20:16:56.290",
-    "lastModifiedDate": "2026-04-21T20:16:56.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-33813",
-    "description": "Parsing a WEBP image with an invalid, large size panics on 32-bit platforms.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33813",
-    "publishedDate": "2026-04-21T20:16:56.387",
-    "lastModifiedDate": "2026-04-21T20:16:56.387",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-40881",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to zebrad version 4.3.0 and zebra-network version 5.0.1, when deserializing addr or addrv2 messages, which contain vectors of addresses, Zebra would fully deserialize them up to a maximum length (over 233,000) that was derived from the 2 MiB message size limit. This is much larger than the actual limit of 1,000 messages from the specification. Zebra would eventually check that limit but, at that point, the memory for the larger vector was already allocated. An attacker could cause out-of-memory aborts in Zebra by sending multiple such messages over different connections. This vulnerability is fixed in zebrad version 4.3.0 and zebra-network version 5.0.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40881",
-    "publishedDate": "2026-04-21T20:17:01.850",
-    "lastModifiedDate": "2026-04-21T20:17:01.850",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40372",
-    "description": "Improper verification of cryptographic signature in ASP.NET Core allows an unauthorized attacker to elevate privileges over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40372",
-    "publishedDate": "2026-04-21T20:16:59.133",
-    "lastModifiedDate": "2026-04-21T20:16:59.133",
+    "id": "CVE-2026-40575",
+    "description": "OAuth2 Proxy is a reverse proxy that provides authentication using OAuth2 providers. Versions 7.5.0 through 7.15.1 may trust a client-supplied `X-Forwarded-Uri` header when `--reverse-proxy` is enabled and `--skip-auth-regex` or `--skip-auth-route` is configured. An attacker can spoof this header so OAuth2 Proxy evaluates authentication and skip-auth rules against a different path than the one actually sent to the upstream application. This can result in an unauthenticated remote attacker bypassing authentication and accessing protected routes without a valid session. Impacted users are deployments that run oauth2-proxy with `--reverse-proxy` enabled and configure at least one `--skip-auth-regex` or `--skip-auth-route` rule. This issue is patched in `v7.15.2`. Some workarounds are available for those who cannot upgrade immediately. Strip any client-provided `X-Forwarded-Uri` header at the reverse proxy or load balancer level; explicitly overwrite `X-Forwarded-Uri` with the actual request URI before forwarding requests to OAuth2 Proxy; restrict direct client access to OAuth2 Proxy so it can only be reached through a trusted reverse proxy; and/or remove or narrow `--skip-auth-regex` / `--skip-auth-route` rules where possible. For nginx-based deployments, ensure `X-Forwarded-Uri` is set by nginx and not passed through from the client.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40575",
+    "publishedDate": "2026-04-22T00:16:27.817",
+    "lastModifiedDate": "2026-04-22T00:16:27.817",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -354,36 +195,56 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 5.2,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40875",
-    "description": "mailcow: dockerized is an open source groupware/email suite based on docker. In versions prior to 2026-03b, the user dashboard's \"Seen successful connections\" (login history) renders the client IP from login logs without HTML escaping. Because the server trusts the X-Real-IP header as the source IP for logging, an attacker can inject HTML/JS into this field. This Self-XSS can be exploited by a Login CSRF to force the victim into the attacker's account, and then read emails in a previous browser tab. Version 2026-03b fixes the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40875",
-    "publishedDate": "2026-04-21T20:17:01.120",
-    "lastModifiedDate": "2026-04-21T20:17:01.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:P/VC:H/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40880",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to zebrad version 4.3.1 and zebra-consensus version 5.0.2, a logic error in Zebra's transaction verification cache could allow a malicious miner to induce a consensus split. By carefully submitting a transaction that is valid for height H+1 but invalid for H+2 and then mining that transaction in a block at height H+2, a miner could cause vulnerable Zebra nodes to accept an invalid block, leading to a consensus split from the rest of the Zcash network. This vulnerability is fixed in zebrad version 4.3.1 and zebra-consensus version 5.0.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40880",
-    "publishedDate": "2026-04-21T20:17:01.687",
-    "lastModifiedDate": "2026-04-21T20:17:01.687",
+    "id": "CVE-2026-41059",
+    "description": "OAuth2 Proxy is a reverse proxy that provides authentication using OAuth2 providers. Versions 7.5.0 through 7.15.1 have a configuration-dependent authentication bypass. Deployments are affected when all of the following are true: Use of `skip_auth_routes` or the legacy `skip_auth_regex`; use of patterns that can be widened by attacker-controlled suffixes, such as `^/foo/.*/bar$` causing potential exposure of `/foo/secret`; and protected upstream applications that interpret `#` as a fragment delimiter or otherwise route the request to the protected base path. In deployments that rely on these settings, an unauthenticated attacker can send a crafted request containing a number sign in the path, including the browser-safe encoded form `%23`, so that OAuth2 Proxy matches a public allowlist rule while the backend serves a protected resource. Deployments that do not use these skip-auth options, or that only allow exact public paths with tightly scoped method and path rules, are not affected. A fix has been implemented in version 7.15.2 to normalize request paths more conservatively before skip-auth matching so fragment content does not influence allowlist decisions. Users who cannot upgrade immediately can reduce exposure by tightening or removing `skip_auth_routes` and `skip_auth_regex` rules, especially patterns that use broad wildcards across path segments. Recommended mitigations include replacing broad rules with exact, anchored public paths and explicit HTTP methods; rejecting requests whose path contains `%23` or `#` at the ingress, load balancer, or WAF level; and/or avoiding placing sensitive application paths behind broad `skip_auth_routes` rules.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41059",
+    "publishedDate": "2026-04-22T00:16:27.957",
+    "lastModifiedDate": "2026-04-22T00:16:27.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5921",
+    "description": "A server-side request forgery (SSRF) vulnerability was identified in GitHub Enterprise Server that allowed an attacker to extract sensitive environment variables from the instance through a timing side-channel attack against the notebook rendering service. When private mode was disabled, the notebook viewer followed HTTP redirects without revalidating the destination host, enabling an unauthenticated SSRF to internal services. By chaining this with regex filter queries against an internal API and measuring response time differences, an attacker could infer secret values character by character. Exploitation required that private mode be disabled and that the attacker be able to chain the instance's open redirect endpoint through an external redirect to reach internal services. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.21 and was fixed in versions 3.14.26, 3.15.21, 3.16.17, 3.17.14, 3.18.8, 3.19.5, and 3.20.1. This vulnerability was reported via the GitHub Bug Bounty program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5921",
+    "publishedDate": "2026-04-21T23:16:22.667",
+    "lastModifiedDate": "2026-04-21T23:16:22.667",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.9,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "product-cna@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5845",
+    "description": "An improper authorization vulnerability in scoped user-to-server (ghu_) token authorization in GitHub Enterprise Server allows an authenticated attacker to access private repositories outside the intended installation scope, which can include write operations, via an authorization fallback that treated a revoked/deleted installation as a global installation context, which could be chained with token revocation timing and SSH push attribution to obtain and reuse a victim-scoped token. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.21 and was fixed in versions 3.20.1, 3.19.5, 3.18.8, 3.17.14, 3.16.17, 3.15.21, and 3.14.26. This vulnerability was reported via the GitHub Bug Bounty program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5845",
+    "publishedDate": "2026-04-21T23:16:22.473",
+    "lastModifiedDate": "2026-04-21T23:16:22.473",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -391,108 +252,240 @@
         "score": 7.2,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "product-cna@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40874",
-    "description": "mailcow: dockerized is an open source groupware/email suite based on docker. In versions prior to 2026-03b, no administrator verification takes place when deleting Forwarding Hosts with `/api/v1/delete/fwdhost`. Any authenticated user can call this API. Checks are only applied for edit/add actions, but deletion can still significantly disrupt the mail service. Version 2026-03b fixes the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40874",
-    "publishedDate": "2026-04-21T20:17:00.977",
-    "lastModifiedDate": "2026-04-21T20:17:00.977",
+    "id": "CVE-2026-5512",
+    "description": "An improper authorization vulnerability was identified in GitHub Enterprise Server that allowed an authenticated attacker to determine the names of private repositories by their numeric ID. The mobile upload policy API endpoint did not perform an early authorization check, and validation error messages included the full repository name for repositories the caller did not have access to. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.21 and was fixed in versions 3.20.1, 3.19.5, 3.18.8, 3.17.14, 3.16.17, 3.15.21, and 3.14.26. This vulnerability was reported via the GitHub Bug Bounty program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5512",
+    "publishedDate": "2026-04-21T23:16:22.297",
+    "lastModifiedDate": "2026-04-21T23:16:22.297",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6745",
-    "description": "A vulnerability was determined in Bagisto up to 2.3.15. Affected by this vulnerability is an unknown functionality of the component Custom Scripts Handler. This manipulation causes cross site scripting. Remote exploitation of the attack is possible. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure and explains: \"We already replied on the github advisories. All the security issues are addressed through security advisory. We will fix this in our upcomming releases.\"",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6745",
-    "publishedDate": "2026-04-21T19:16:18.917",
-    "lastModifiedDate": "2026-04-21T19:16:18.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6744",
-    "description": "A vulnerability was found in Bagisto up to 2.3.15. Affected is the function copy of the component Downloadable Link Handler. The manipulation results in server-side request forgery. The attack may be launched remotely. The exploit has been made public and could be used. The vendor was contacted early about this disclosure and explains: \"We already replied on the github advisories. All the security issues are addressed through security advisory. We will fix this in our upcomming releases.\"",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6744",
-    "publishedDate": "2026-04-21T19:16:18.727",
-    "lastModifiedDate": "2026-04-21T19:16:18.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
       {
         "score": 5.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "product-cna@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41456",
-    "description": "Bludit CMS prior to commit 6732dde contains a reflected cross-site scripting vulnerability in the search plugin that allows unauthenticated attackers to inject arbitrary JavaScript by crafting a malicious search query. Attackers can execute malicious scripts in the browsers of users who visit crafted URLs containing the payload, potentially stealing session cookies or performing actions on behalf of affected users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41456",
-    "publishedDate": "2026-04-21T19:16:18.557",
-    "lastModifiedDate": "2026-04-21T19:16:18.557",
+    "id": "CVE-2026-4872",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4872",
+    "publishedDate": "2026-04-21T23:16:22.230",
+    "lastModifiedDate": "2026-04-21T23:16:22.230",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-4821",
+    "description": "An improper neutralization of special elements vulnerability was identified in GitHub Enterprise Server that allowed an authenticated Management Console administrator to execute arbitrary OS commands via shell metacharacter injection in proxy configuration fields such as http_proxy. Exploitation of this vulnerability required access to the GitHub Enterprise Server instance and administrator privileges to the Management Console. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.21 and was fixed in versions 3.20.1, 3.19.5, 3.18.8, 3.17.14, 3.16.17, 3.15.21, 3.14.26. This vulnerability was reported via the GitHub Bug Bounty program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4821",
+    "publishedDate": "2026-04-21T23:16:22.037",
+    "lastModifiedDate": "2026-04-21T23:16:22.037",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.1,
+        "score": 8.1,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "product-cna@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4296",
+    "description": "An incorrect regular expression vulnerability was identified in GitHub Enterprise Server that allowed an attacker to bypass OAuth redirect URI validation. An attacker with knowledge of a first-party OAuth application's registered callback URL could craft a malicious authorization link that, when clicked by a victim, would redirect the OAuth authorization code to an attacker-controlled domain. This could allow the attacker to gain unauthorized access to the victim's account with the scopes granted to the OAuth application. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.21 and was fixed in versions 3.20.1, 3.19.5, 3.18.8, 3.17.14, 3.16.17, 3.15.21, 3.14.26. This vulnerability was reported via the GitHub Bug Bounty program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4296",
+    "publishedDate": "2026-04-21T23:16:21.807",
+    "lastModifiedDate": "2026-04-21T23:16:21.807",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "product-cna@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41063",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, an incomplete XSS fix in AVideo's `ParsedownSafeWithLinks` class overrides `inlineMarkup` for raw HTML but does not override `inlineLink()` or `inlineUrlTag()`, allowing `javascript:` URLs in markdown link syntax to bypass sanitization. Commit cae8f0dadbdd962c89b91d0095c76edb8aadcacf contains an updated fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41063",
+    "publishedDate": "2026-04-21T23:16:21.663",
+    "lastModifiedDate": "2026-04-22T00:16:28.097",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41062",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, the directory traversal fix introduced in commit 2375eb5e0 for `objects/aVideoEncoderReceiveImage.json.php` only checks the URL path component (via `parse_url($url, PHP_URL_PATH)`) for `..` sequences. However, the downstream function `try_get_contents_from_local()` in `objects/functionsFile.php` uses `explode('/videos/', $url)` on the **full URL string** including the query string. An attacker can place the `/videos/../../` traversal payload in the query string to bypass the security check and read arbitrary files from the server filesystem. Commit bd11c16ec894698e54e2cdae25026c61ad1ed441 contains an updated fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41062",
+    "publishedDate": "2026-04-21T23:16:21.520",
+    "lastModifiedDate": "2026-04-21T23:16:21.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41061",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, the `isValidDuration()` regex at `objects/video.php:918` uses `/^[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/` without a `$` end anchor, allowing arbitrary HTML/JavaScript to be appended after a valid duration prefix. The crafted duration is stored in the database and rendered without HTML escaping via `echo Video::getCleanDuration()` on trending pages, playlist pages, and video gallery thumbnails, resulting in stored cross-site scripting. Commit bcba324644df8b4ed1f891462455f1cd26822a45 contains a fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41061",
+    "publishedDate": "2026-04-21T23:16:21.387",
+    "lastModifiedDate": "2026-04-21T23:16:21.387",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41060",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, the `isSSRFSafeURL()` function in `objects/functions.php` contains a same-domain shortcircuit (lines 4290-4296) that allows any URL whose hostname matches `webSiteRootURL` to bypass all SSRF protections. Because the check compares only the hostname and ignores the port, an attacker can reach arbitrary ports on the AVideo server by using the site's public hostname with a non-standard port. The response body is saved to a web-accessible path, enabling full exfiltration. Commit a0156a6398362086390d949190f9d52a823000ba fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41060",
+    "publishedDate": "2026-04-21T23:16:21.250",
+    "lastModifiedDate": "2026-04-21T23:16:21.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41058",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, the incomplete fix for AVideo's CloneSite `deleteDump` parameter does not apply path traversal filtering, allowing `unlink()` of arbitrary files via `../../` sequences in the GET parameter. Commit 3c729717c26f160014a5c86b0b6accdbd613e7b2 contains an updated fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41058",
+    "publishedDate": "2026-04-21T23:16:21.117",
+    "lastModifiedDate": "2026-04-21T23:16:21.117",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41057",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, the CORS origin validation fix in commit `986e64aad` is incomplete. Two separate code paths still reflect arbitrary `Origin` headers with credentials allowed for all `/api/*` endpoints: (1) `plugin/API/router.php` lines 4-8 unconditionally reflect any origin before application code runs, and (2) `allowOrigin(true)` called by `get.json.php` and `set.json.php` reflects any origin with `Access-Control-Allow-Credentials: true`. An attacker can make cross-origin credentialed requests to any API endpoint and read authenticated responses containing user PII, email, admin status, and session-sensitive data. Commit 5e2b897ccac61eb6daca2dee4a6be3c4c2d93e13 contains a fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41057",
+    "publishedDate": "2026-04-21T23:16:20.987",
+    "lastModifiedDate": "2026-04-21T23:16:20.987",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41056",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, the `allowOrigin($allowAll=true)` function in `objects/functions.php` reflects any arbitrary `Origin` header back in `Access-Control-Allow-Origin` along with `Access-Control-Allow-Credentials: true`. This function is called by both `plugin/API/get.json.php` and `plugin/API/set.json.php` — the primary API endpoints that handle user data retrieval, authentication, livestream credentials, and state-changing operations. Combined with the application's `SameSite=None` session cookie policy, any website can make credentialed cross-origin requests and read authenticated API responses, enabling theft of user PII, livestream keys, and performing state changes on behalf of the victim. Commit caf705f38eae0ccfac4c3af1587781355d24495e contains a fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41056",
+    "publishedDate": "2026-04-21T23:16:20.850",
+    "lastModifiedDate": "2026-04-21T23:16:20.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41055",
+    "description": "WWBN AVideo is an open source video platform. In versions 29.0 and below, an incomplete SSRF fix in AVideo's LiveLinks proxy adds `isSSRFSafeURL()` validation but leaves DNS TOCTOU vulnerabilities where DNS rebinding between validation and the actual HTTP request redirects traffic to internal endpoints. Commit 8d8fc0cadb425835b4861036d589abcea4d78ee8 contains an updated fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41055",
+    "publishedDate": "2026-04-21T23:16:20.707",
+    "lastModifiedDate": "2026-04-21T23:16:20.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
       }
     ]
   }
