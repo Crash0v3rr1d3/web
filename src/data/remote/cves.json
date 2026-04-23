@@ -1,5 +1,85 @@
 [
   {
+    "id": "CVE-2026-41564",
+    "description": "CryptX versions before 0.088 for Perl do not reseed the Crypt::PK PRNG state after forking.\n\nThe Crypt::PK::RSA, Crypt::PK::DSA, Crypt::PK::DH, Crypt::PK::ECC, Crypt::PK::Ed25519 and Crypt::PK::X25519 modules seed a per-object PRNG state in their constructors and reuse it without fork detection. A Crypt::PK::* object created before `fork()` shares byte-identical PRNG state with every child process, and any randomized operation they perform can produce identical output, including key generation. Two ECDSA or DSA signatures from different processes are enough to recover the signing private key through nonce-reuse key recovery.\n\nThis affects preforking services such as the Starman web server, where a Crypt::PK::* object loaded at startup is inherited by every worker process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41564",
+    "publishedDate": "2026-04-23T08:16:01.243",
+    "lastModifiedDate": "2026-04-23T08:16:01.243",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-4512",
+    "description": "The reCaptcha by WebDesignBy WordPress plugin before 2.0 does not sanitize or escape the Site Key setting before outputting it in a JavaScript string context via the grecaptcha_js() function. This allows administrators on multisite installations (who do not have the unfiltered_html capability) to inject arbitrary JavaScript that executes for all visitors to the WordPress login page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4512",
+    "publishedDate": "2026-04-23T07:16:41.933",
+    "lastModifiedDate": "2026-04-23T07:16:41.933",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-4106",
+    "description": "The HT Mega Addons for Elementor  WordPress plugin before 3.0.7 contains an unauthenticated AJAX action returning some PII (such as full name, city, state and country) of customers who placed orders in the last 7 days",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4106",
+    "publishedDate": "2026-04-23T07:16:41.210",
+    "lastModifiedDate": "2026-04-23T07:16:41.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-41040",
+    "description": "GROWI provided by GROWI, Inc. is vulnerable to a regular expression denial of service (ReDoS) via a crafted input string.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41040",
+    "publishedDate": "2026-04-23T07:16:41.070",
+    "lastModifiedDate": "2026-04-23T07:16:41.070",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vultures@jpcert.or.jp"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-34488",
+    "description": "IP Setting Software contains an issue with the DLL search path, which may lead to insecurely loading Dynamic Link Libraries. As a result, arbitrary code may be executed with administrative privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34488",
+    "publishedDate": "2026-04-23T07:16:40.813",
+    "lastModifiedDate": "2026-04-23T07:16:40.813",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vultures@jpcert.or.jp"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-10549",
+    "description": "EfficientLab Controlio before v1.3.95 contains a DLL hijacking vulnerability caused by weak folder permissions in the installation directory. A local attacker can place a specially crafted DLL in this directory and achieve arbitrary code execution with highest privileges, because the affected service runs as NT AUTHORITY\\SYSTEM.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-10549",
+    "publishedDate": "2026-04-23T07:16:39.720",
+    "lastModifiedDate": "2026-04-23T07:16:39.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
     "id": "CVE-2026-41990",
     "description": "Libgcrypt before 1.12.2 mishandles Dilithium signing. Writes to a static array lack a bounds check but do not use attacker-controlled data.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41990",
@@ -376,126 +456,6 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41200",
-    "description": "STIG Manager is an API and web client for managing  Security Technical Implementation Guides (STIG) assessments of Information Systems. Versions 1.5.10 through 1.6.7 have a reflected Cross-Site Scripting (XSS) vulnerability in the OIDC authentication error handling code in `src/init.js` and `public/reauth.html`. During the OIDC redirect flow, the `error` and `error_description` query parameters returned by the OIDC provider are written directly to the DOM via `innerHTML` without HTML escaping. An attacker who can craft a malicious redirect URL and convince a user to follow it can execute arbitrary JavaScript in the application's origin context. The vulnerability is most severe when the targeted user has an active STIG Manager session running in another browser tab — injected code executes in the same origin and can communicate with the SharedWorker managing the active access token, enabling authenticated API requests on behalf of the victim including reading and modifying collection data. The vulnerability is patched in version 1.6.8. There is no workaround short of upgrading. Deployments behind a web application firewall that filters reflected XSS payloads in query parameters may have partial mitigation, but this is not a substitute for patching.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41200",
-    "publishedDate": "2026-04-23T02:16:18.333",
-    "lastModifiedDate": "2026-04-23T02:16:18.333",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41197",
-    "description": "Noir is a Domain Specific Language for SNARK proving systems that is designed to use any ACIR compatible proving system, and Brillig is the bytecode ACIR uses for non-determinism. Noir programs can invoke external functions through foreign calls. When compiling to Brillig bytecode, the SSA instructions are processed block-by-block in `BrilligBlock::compile_block()`. When the compiler encounters an `Instruction::Call` with a `Value::ForeignFunction` target, it invokes `codegen_call()` in `brillig_call/code_gen_call.rs`, which dispatches to `convert_ssa_foreign_call()`. Before emitting the foreign call opcode, the compiler must pre-allocate memory for any array results the call will return. This happens through `allocate_external_call_results()`, which iterates over the result types. For `Type::Array` results, it delegates to `allocate_foreign_call_result_array()` to recursively allocate memory on the heap for nested arrays. The `BrilligArray` struct is the internal representation of a Noir array in Brillig IR. Its `size` field represents the semi-flattened size, the total number of memory slots the array occupies, accounting for the fact that composite types like tuples consume multiple slots per element. This size is computed by `compute_array_length()` in `brillig_block_variables.rs`. For the outer array, `allocate_external_call_results()` correctly uses `define_variable()`, which internally calls `allocate_value_with_type()`. This function applies the formula above, producing the correct semi-flattened size. However, for nested arrays, `allocate_foreign_call_result_array()` contains a bug. The pattern `Type::Array(_, nested_size)` discards the inner types with `_` and uses only `nested_size`, the semantic length of the nested array (the number of logical elements), not the semi-flattened size. For simple element types this works correctly, but for composite element types it under-allocates. Foreign calls returning nested arrays of tuples or other composite types corrupt the Brillig VM heap. Version 1.0.0-beta.19 fixes this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41197",
-    "publishedDate": "2026-04-23T02:16:18.127",
-    "lastModifiedDate": "2026-04-23T02:16:18.127",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41196",
-    "description": "Luanti (formerly Minetest) is an open source voxel game-creation platform. Starting in version 5.0.0 and prior to version 5.15.2, a malicious mod can trivially escape the sandboxed Lua environment to execute arbitrary code and gain full filesystem access on the user's device. This applies to the server-side mod, async and mapgen as well as the client-side (CSM) environments. This vulnerability is only exploitable when using LuaJIT. Version 5.15.2 contains a patch. On release versions, one can also patch this issue without recompiling by editing `builtin/init.lua` and adding the line `getfenv = nil` at the end. Note that this will break mods relying on this function (which is not inherently unsafe).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41196",
-    "publishedDate": "2026-04-23T02:16:17.900",
-    "lastModifiedDate": "2026-04-23T02:16:17.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41182",
-    "description": "LangSmith Client SDKs provide SDK's for interacting with the LangSmith platform. Prior to version 0.5.19 of the JavaScript SDK and version 0.7.31 of the Python SDK, the LangSmith SDK's output redaction controls (hideOutputs in JS, hide_outputs in Python) do not apply to streaming token events. When an LLM run produces streaming output, each chunk is recorded as a new_token event containing the raw token value. These events bypass the redaction pipeline entirely — prepareRunCreateOrUpdateInputs (JS) and _hide_run_outputs (Python) only process the inputs and outputs fields on a run, never the events array. As a result, applications relying on output redaction to prevent sensitive LLM output from being stored in LangSmith will still leak the full streamed content via run events. Version 0.5.19 of the JavaScript SDK and version 0.7.31 of the Python SDK fix the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41182",
-    "publishedDate": "2026-04-23T02:16:16.123",
-    "lastModifiedDate": "2026-04-23T02:16:16.123",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41180",
-    "description": "PsiTransfer is an open source, self-hosted file sharing solution. Prior to version 2.4.3, the upload PATCH flow under `/files/:uploadId` validates the mounted request path using the still-encoded `req.path`, but the downstream tus handler later writes using the decoded `req.params.uploadId`. In deployments that use a supported custom `PSITRANSFER_UPLOAD_DIR` whose basename prefixes a startup-loaded JavaScript path, such as `conf`, an unauthenticated attacker can create `config.<NODE_ENV>.js` in the application root. The attacker-controlled file is then executed on the next process restart. Version 2.4.3 contains a patch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41180",
-    "publishedDate": "2026-04-23T02:16:15.977",
-    "lastModifiedDate": "2026-04-23T02:16:15.977",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-1923",
-    "description": "The Social Rocket – Social Sharing Plugin plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the ‘id’ parameter in all versions up to, and including, 1.3.4.2 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1923",
-    "publishedDate": "2026-04-23T02:16:15.737",
-    "lastModifiedDate": "2026-04-23T02:16:15.737",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
       }
     ]
   }
