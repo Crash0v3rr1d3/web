@@ -1,10 +1,256 @@
 [
   {
+    "id": "CVE-2026-31532",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncan: raw: fix ro->uniq use-after-free in raw_rcv()\n\nraw_release() unregisters raw CAN receive filters via can_rx_unregister(),\nbut receiver deletion is deferred with call_rcu(). This leaves a window\nwhere raw_rcv() may still be running in an RCU read-side critical section\nafter raw_release() frees ro->uniq, leading to a use-after-free of the\npercpu uniq storage.\n\nMove free_percpu(ro->uniq) out of raw_release() and into a raw-specific\nsocket destructor. can_rx_unregister() takes an extra reference to the\nsocket and only drops it from the RCU callback, so freeing uniq from\nsk_destruct ensures the percpu area is not released until the relevant\ncallbacks have drained.\n\n[mkl: applied manually]",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31532",
+    "publishedDate": "2026-04-23T12:17:01.927",
+    "lastModifiedDate": "2026-04-23T12:17:01.927",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31531",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv4: nexthop: allocate skb dynamically in rtm_get_nexthop()\n\nWhen querying a nexthop object via RTM_GETNEXTHOP, the kernel currently\nallocates a fixed-size skb using NLMSG_GOODSIZE. While sufficient for\nsingle nexthops and small Equal-Cost Multi-Path groups, this fixed\nallocation fails for large nexthop groups like 512 nexthops.\n\nThis results in the following warning splat:\n\n WARNING: net/ipv4/nexthop.c:3395 at rtm_get_nexthop+0x176/0x1c0, CPU#20: rep/4608\n [...]\n RIP: 0010:rtm_get_nexthop (net/ipv4/nexthop.c:3395)\n [...]\n Call Trace:\n  <TASK>\n  rtnetlink_rcv_msg (net/core/rtnetlink.c:6989)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)\n  netlink_sendmsg (net/netlink/af_netlink.c:1894)\n  ____sys_sendmsg (net/socket.c:721 net/socket.c:736 net/socket.c:2585)\n  ___sys_sendmsg (net/socket.c:2641)\n  __sys_sendmsg (net/socket.c:2671)\n  do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)\n  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)\n  </TASK>\n\nFix this by allocating the size dynamically using nh_nlmsg_size() and\nusing nlmsg_new(), this is consistent with nexthop_notify() behavior. In\naddition, adjust nh_nlmsg_size_grp() so it calculates the size needed\nbased on flags passed. While at it, also add the size of NHA_FDB for\nnexthop group size calculation as it was missing too.\n\nThis cannot be reproduced via iproute2 as the group size is currently\nlimited and the command fails as follows:\n\naddattr_l ERROR: message exceeded bound of 1048",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31531",
+    "publishedDate": "2026-04-23T12:17:01.820",
+    "lastModifiedDate": "2026-04-23T12:17:01.820",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2025-62110",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Rescue Themes Rescue Shortcodes allows Stored XSS.This issue affects Rescue Shortcodes: from n/a through 3.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-62110",
+    "publishedDate": "2026-04-23T12:17:01.363",
+    "lastModifiedDate": "2026-04-23T12:17:01.363",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-62104",
+    "description": "Missing Authorization vulnerability in Navneil Naicker ACF Galerie 4 allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects ACF Galerie 4: from n/a through 1.4.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-62104",
+    "publishedDate": "2026-04-23T12:17:01.220",
+    "lastModifiedDate": "2026-04-23T12:17:01.220",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-28040",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Magepeople inc. Taxi Booking Manager for WooCommerce allows Stored XSS.This issue affects Taxi Booking Manager for WooCommerce: from n/a through 2.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28040",
+    "publishedDate": "2026-04-23T12:17:01.680",
+    "lastModifiedDate": "2026-04-23T12:17:01.680",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6903",
+    "description": "The LabOne Web Server, backing the LabOne User Interface, contains insufficient input validation in its file access functionality. An unauthenticated attacker could exploit this vulnerability to read arbitrary files on the host system that are accessible to the operating system user running the LabOne software.\n\nAdditionally, the Web Server does not sufficiently restrict cross-origin requests, which could allow a remote attacker to trigger file access from a victim's browser by directing the victim to a malicious website.\n\nThe vulnerability is only exploitable when the LabOne Web Server is running. Installations using only the LabOne APIs without starting the Web Server are not exposed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6903",
+    "publishedDate": "2026-04-23T10:16:18.680",
+    "lastModifiedDate": "2026-04-23T10:16:18.680",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "vulnerability@ncsc.ch"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6887",
+    "description": "Borg SPM 2007 (Sales Ended in 2008) developed by BorG Technology Corporation has a SQL Injection vulnerability, allowing unauthenticated remote attackers to inject arbitrary SQL commands to read, modify, and delete database contents.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6887",
+    "publishedDate": "2026-04-23T10:16:18.527",
+    "lastModifiedDate": "2026-04-23T10:16:18.527",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "twcert@cert.org.tw"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "twcert@cert.org.tw"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6886",
+    "description": "Borg SPM 2007 (Sales Ended in 2008) developed by BorG Technology Corporation has a Authentication Bypass vulnerability, allowing unauthenticated remote attackers to log into the system as any user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6886",
+    "publishedDate": "2026-04-23T10:16:18.390",
+    "lastModifiedDate": "2026-04-23T10:16:18.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "twcert@cert.org.tw"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "twcert@cert.org.tw"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6885",
+    "description": "Borg SPM 2007 (Sales Ended in 2008) developed by BorG Technology Corporation has an Arbitrary File Upload vulnerability, allowing unauthenticated remote attackers to upload and execute web shell backdoors, thereby enabling arbitrary code execution on the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6885",
+    "publishedDate": "2026-04-23T10:16:18.240",
+    "lastModifiedDate": "2026-04-23T10:16:18.240",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "twcert@cert.org.tw"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "twcert@cert.org.tw"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5464",
+    "description": "The ExactMetrics – Google Analytics Dashboard for WordPress (Website Stats Plugin) plugin for WordPress is vulnerable to unauthorized arbitrary plugin installation and activation in all versions up to, and including, 9.1.2. This is due to the reports page exposing the 'onboarding_key' transient to any user with the 'exactmetrics_view_dashboard' capability. This key is the sole authorization gate for the '/wp-json/exactmetrics/v1/onboarding/connect-url' REST endpoint, which returns a one-time hash (OTH) token. This OTH token is then the only credential checked by the 'exactmetrics_connect_process' AJAX endpoint — which has no capability check, no nonce verification, and accepts an arbitrary plugin ZIP URL via the file parameter for installation and activation. This makes it possible for authenticated attackers, with Editor-level access and above granted the report viewing permission, to install and activate arbitrary plugins from attacker-controlled URLs, leading to Remote Code Execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5464",
+    "publishedDate": "2026-04-23T10:16:18.077",
+    "lastModifiedDate": "2026-04-23T10:16:18.077",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3960",
+    "description": "A critical remote code execution vulnerability exists in the unauthenticated REST API endpoint /99/ImportSQLTable in H2O-3 version 3.46.0.9 and prior. The vulnerability arises due to insufficient security controls in the parameter blacklist mechanism, which only targets MySQL JDBC driver-specific dangerous parameters. An attacker can bypass these controls by switching the JDBC URL protocol to jdbc:postgresql: and exploiting PostgreSQL JDBC driver-specific parameters such as socketFactory and socketFactoryArg. This allows unauthenticated attackers to execute arbitrary code on the H2O-3 server with the privileges of the H2O-3 process. The issue is resolved in version 3.46.0.10.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3960",
+    "publishedDate": "2026-04-23T10:16:17.813",
+    "lastModifiedDate": "2026-04-23T10:16:17.813",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-3259",
+    "description": "A Generation of Error Message Containing Sensitive Information vulnerability in the Materialized View Refresh mechanism in Google BigQuery on Google Cloud Platform allows an authenticated user to potentially disclose sensitive data using a crafted materialized view that triggers a runtime error during the refresh process.\n\nThis vulnerability was patched on 29 January 2026, and no customer action is needed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3259",
+    "publishedDate": "2026-04-23T10:16:16.610",
+    "lastModifiedDate": "2026-04-23T10:16:16.610",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Clear",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f45cbf4e-4146-4068-b7e1-655ffc2c548c"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-41564",
     "description": "CryptX versions before 0.088 for Perl do not reseed the Crypt::PK PRNG state after forking.\n\nThe Crypt::PK::RSA, Crypt::PK::DSA, Crypt::PK::DH, Crypt::PK::ECC, Crypt::PK::Ed25519 and Crypt::PK::X25519 modules seed a per-object PRNG state in their constructors and reuse it without fork detection. A Crypt::PK::* object created before `fork()` shares byte-identical PRNG state with every child process, and any randomized operation they perform can produce identical output, including key generation. Two ECDSA or DSA signatures from different processes are enough to recover the signing private key through nonce-reuse key recovery.\n\nThis affects preforking services such as the Starman web server, where a Crypt::PK::* object loaded at startup is inherited by every worker process.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41564",
     "publishedDate": "2026-04-23T08:16:01.243",
-    "lastModifiedDate": "2026-04-23T08:16:01.243",
+    "lastModifiedDate": "2026-04-23T10:16:17.953",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -14,10 +260,20 @@
     "description": "The reCaptcha by WebDesignBy WordPress plugin before 2.0 does not sanitize or escape the Site Key setting before outputting it in a JavaScript string context via the grecaptcha_js() function. This allows administrators on multisite installations (who do not have the unfiltered_html capability) to inject arbitrary JavaScript that executes for all visitors to the WordPress login page.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-4512",
     "publishedDate": "2026-04-23T07:16:41.933",
-    "lastModifiedDate": "2026-04-23T07:16:41.933",
+    "lastModifiedDate": "2026-04-23T13:16:13.147",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 0.9,
+        "impactScore": 2.5,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
   },
   {
     "id": "CVE-2026-4106",
@@ -144,7 +400,7 @@
     "description": "Froxlor is open source server administration software. Prior to version 2.3.6, in `Domains.add()`, the `adminid` parameter is accepted from user input and used without validation when the calling reseller does not have the `customers_see_all` permission. This allows a reseller to attribute newly created domains to any other admin, bypassing their own domain quota (since the wrong admin's `domains_used` counter is incremented) and potentially exhausting another admin's quota. Version 2.3.6 fixes the issue.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41233",
     "publishedDate": "2026-04-23T05:16:05.477",
-    "lastModifiedDate": "2026-04-23T05:16:05.477",
+    "lastModifiedDate": "2026-04-23T13:16:12.973",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -215,246 +471,6 @@
         "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 1.6,
         "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41230",
-    "description": "Froxlor is open source server administration software. Prior to version 2.3.6, `DomainZones::add()` accepts arbitrary DNS record types without a whitelist and does not sanitize newline characters in the `content` field. When a DNS type not covered by the if/elseif validation chain is submitted (e.g., `NAPTR`, `PTR`, `HINFO`), content validation is entirely bypassed. Embedded newline characters in the content survive `trim()` processing, are stored in the database, and are written directly into BIND zone files via `DnsEntry::__toString()`. An authenticated customer can inject arbitrary DNS records and BIND directives (`$INCLUDE`, `$ORIGIN`, `$GENERATE`) into their domain's zone file. Version 2.3.6 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41230",
-    "publishedDate": "2026-04-23T04:16:19.783",
-    "lastModifiedDate": "2026-04-23T04:16:19.783",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:L",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41229",
-    "description": "Froxlor is open source server administration software. Prior to version 2.3.6, `PhpHelper::parseArrayToString()` writes string values into single-quoted PHP string literals without escaping single quotes. When an admin with `change_serversettings` permission adds or updates a MySQL server via the API, the `privileged_user` parameter (which has no input validation) is written unescaped into `lib/userdata.inc.php`. Since this file is `require`d on every request via `Database::getDB()`, an attacker can inject arbitrary PHP code that executes as the web server user on every subsequent page load. Version 2.3.6 contains a patch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41229",
-    "publishedDate": "2026-04-23T04:16:19.563",
-    "lastModifiedDate": "2026-04-23T04:16:19.563",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41228",
-    "description": "Froxlor is open source server administration software. Prior to version 2.3.6, the Froxlor API endpoint `Customers.update` (and `Admins.update`) does not validate the `def_language` parameter against the list of available language files. An authenticated customer can set `def_language` to a path traversal payload (e.g., `../../../../../var/customers/webs/customer1/evil`), which is stored in the database. On subsequent requests, `Language::loadLanguage()` constructs a file path using this value and executes it via `require`, achieving arbitrary PHP code execution as the web server user. Version 2.3.6 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41228",
-    "publishedDate": "2026-04-23T04:16:19.193",
-    "lastModifiedDate": "2026-04-23T04:16:19.193",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-3361",
-    "description": "The WP Store Locator plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'wpsl_address' post meta value in versions up to, and including, 2.2.261 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page and opens an injected map marker info window.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3361",
-    "publishedDate": "2026-04-23T04:16:18.807",
-    "lastModifiedDate": "2026-04-23T04:16:18.807",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-3007",
-    "description": "Successful exploitation of the stored cross-site scripting (XSS) vulnerability could allow an attacker to execute arbitrary JavaScript on any user account that has access to Koollab LMS’ courselet feature.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3007",
-    "publishedDate": "2026-04-23T04:16:07.980",
-    "lastModifiedDate": "2026-04-23T04:16:07.980",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "5f57b9bf-260d-4433-bf07-b6a79e9bb7d4"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-3844",
-    "description": "The Breeze Cache plugin for WordPress is vulnerable to arbitrary file uploads due to missing file type validation in the 'fetch_gravatar_from_remote' function in all versions up to, and including, 2.4.4. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible. The vulnerability can only be exploited if \"Host Files Locally - Gravatars\" is enabled, which is disabled by default.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3844",
-    "publishedDate": "2026-04-23T03:16:17.527",
-    "lastModifiedDate": "2026-04-23T03:16:17.527",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2951",
-    "description": "The Gutentor – Gutenberg Blocks – Page Builder for Gutenberg Editor plugin for WordPress is vulnerable to Stored Cross-Site Scripting in versions up to, and including, 3.5.5 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2951",
-    "publishedDate": "2026-04-23T03:16:16.360",
-    "lastModifiedDate": "2026-04-23T03:16:16.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41679",
-    "description": "Paperclip is a Node.js server and React UI that orchestrates a team of AI agents to run a business. Prior to version 2026.416.0, an unauthenticated attacker can achieve full remote code execution on any network-accessible Paperclip instance running in `authenticated` mode with default configuration. No user interaction, no credentials, just the target's address. The chain consists of six API calls. The attack is fully automated, requires no user interaction, and works against the default deployment configuration. Version 2026.416.0 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41679",
-    "publishedDate": "2026-04-23T02:16:19.180",
-    "lastModifiedDate": "2026-04-23T02:16:19.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41243",
-    "description": "OpenLearn is open-source educational forum software. Prior to commit 844b2a40a69d0c4911580fe501923f0b391313ab, when `safeMode` is enabled, unapproved forum posts are hidden from the public list, but the direct post-read procedure still returns the full post to anyone with the post UUID. Commit 844b2a40a69d0c4911580fe501923f0b391313ab fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41243",
-    "publishedDate": "2026-04-23T02:16:19.040",
-    "lastModifiedDate": "2026-04-23T02:16:19.040",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41211",
-    "description": "Vite+ is a unified toolchain and entry point for web development. Prior to version 0.1.17, `downloadPackageManager()` accepts an untrusted `version` string and uses it directly in filesystem paths. A caller can supply `../` segments or an absolute path to escape the `VP_HOME/package_manager/<pm>/` cache root and make Vite+ delete, replace, and populate directories outside the intended cache location. Version 0.1.17 contains a patch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41211",
-    "publishedDate": "2026-04-23T02:16:18.860",
-    "lastModifiedDate": "2026-04-23T02:16:18.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41208",
-    "description": "Paperclip is a Node.js server and React UI that orchestrates a team of AI agents to run a business. Versions of @paperclipai/server prior to 2026.416.0 contain a privilege escalation vulnerability that allows an attacker with an Agent API key to execute arbitrary OS commands on the Paperclip server host. An attacker with an agent credential can escalate privileges from the agent runtime to the Paperclip server host. The vulnerability occurs because agents are allowed to update their own adapterConfig via the /agents/:id API endpoint. The configuration field adapterConfig.workspaceStrategy.provisionCommand is later executed by the server runtime. As a result, an attacker controlling an agent credential can inject arbitrary shell commands which are executed by the Paperclip server during workspace provisioning. This breaks the intended trust boundary between agent runtime configuration and server host execution, allowing a compromised or malicious agent to escalate privileges and run commands on the host system. This vulnerability allows remote code execution on the server host. @paperclipai/server version 2026.416.0 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41208",
-    "publishedDate": "2026-04-23T02:16:18.670",
-    "lastModifiedDate": "2026-04-23T02:16:18.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41206",
-    "description": "PySpector is a static analysis security testing (SAST) Framework engineered for modern Python development workflows. The plugin security validator in PySpector uses AST-based static analysis to prevent dangerous code from being loaded as plugins. Prior to version 0.1.8, the blocklist implemented in `PluginSecurity.validate_plugin_code` is incomplete and can be bypassed using several Python constructs that are not checked. An attacker who can supply a plugin file can achieve arbitrary code execution within the PySpector process when that plugin is installed and executed. Version 0.1.8 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41206",
-    "publishedDate": "2026-04-23T02:16:18.533",
-    "lastModifiedDate": "2026-04-23T02:16:18.533",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
