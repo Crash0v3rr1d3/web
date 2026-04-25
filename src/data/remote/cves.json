@@ -1,10 +1,169 @@
 [
   {
+    "id": "CVE-2026-6977",
+    "description": "A security vulnerability has been detected in vanna-ai vanna up to 2.0.2. The affected element is an unknown function of the component Legacy Flask API. The manipulation leads to improper authorization. It is possible to initiate the attack remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6977",
+    "publishedDate": "2026-04-25T11:16:19.103",
+    "lastModifiedDate": "2026-04-25T11:16:19.103",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-31685",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: ip6t_eui64: reject invalid MAC header for all packets\n\n`eui64_mt6()` derives a modified EUI-64 from the Ethernet source address\nand compares it with the low 64 bits of the IPv6 source address.\n\nThe existing guard only rejects an invalid MAC header when\n`par->fragoff != 0`. For packets with `par->fragoff == 0`, `eui64_mt6()`\ncan still reach `eth_hdr(skb)` even when the MAC header is not valid.\n\nFix this by removing the `par->fragoff != 0` condition so that packets\nwith an invalid MAC header are rejected before accessing `eth_hdr(skb)`.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31685",
+    "publishedDate": "2026-04-25T09:16:02.273",
+    "lastModifiedDate": "2026-04-25T09:16:02.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31684",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: sched: act_csum: validate nested VLAN headers\n\ntcf_csum_act() walks nested VLAN headers directly from skb->data when an\nskb still carries in-payload VLAN tags. The current code reads\nvlan->h_vlan_encapsulated_proto and then pulls VLAN_HLEN bytes without\nfirst ensuring that the full VLAN header is present in the linear area.\n\nIf only part of an inner VLAN header is linearized, accessing\nh_vlan_encapsulated_proto reads past the linear area, and the following\nskb_pull(VLAN_HLEN) may violate skb invariants.\n\nFix this by requiring pskb_may_pull(skb, VLAN_HLEN) before accessing and\npulling each nested VLAN header. If the header still is not fully\navailable, drop the packet through the existing error path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31684",
+    "publishedDate": "2026-04-25T09:16:02.163",
+    "lastModifiedDate": "2026-04-25T09:16:02.163",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31683",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbatman-adv: avoid OGM aggregation when skb tailroom is insufficient\n\nWhen OGM aggregation state is toggled at runtime, an existing forwarded\npacket may have been allocated with only packet_len bytes, while a later\npacket can still be selected for aggregation. Appending in this case can\nhit skb_put overflow conditions.\n\nReject aggregation when the target skb tailroom cannot accommodate the new\npacket. The caller then falls back to creating a new forward packet\ninstead of appending.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31683",
+    "publishedDate": "2026-04-25T09:16:02.037",
+    "lastModifiedDate": "2026-04-25T09:16:02.037",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31682",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbridge: br_nd_send: linearize skb before parsing ND options\n\nbr_nd_send() parses neighbour discovery options from ns->opt[] and\nassumes that these options are in the linear part of request.\n\nIts callers only guarantee that the ICMPv6 header and target address\nare available, so the option area can still be non-linear. Parsing\nns->opt[] in that case can access data past the linear buffer.\n\nLinearize request before option parsing and derive ns from the linear\nnetwork header.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31682",
+    "publishedDate": "2026-04-25T09:16:01.913",
+    "lastModifiedDate": "2026-04-25T09:16:01.913",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31681",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: xt_multiport: validate range encoding in checkentry\n\nports_match_v1() treats any non-zero pflags entry as the start of a\nport range and unconditionally consumes the next ports[] element as\nthe range end.\n\nThe checkentry path currently validates protocol, flags and count, but\nit does not validate the range encoding itself. As a result, malformed\nrules can mark the last slot as a range start or place two range starts\nback to back, leaving ports_match_v1() to step past the last valid\nports[] element while interpreting the rule.\n\nReject malformed multiport v1 rules in checkentry by validating that\neach range start has a following element and that the following element\nis not itself marked as another range start.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31681",
+    "publishedDate": "2026-04-25T09:16:01.800",
+    "lastModifiedDate": "2026-04-25T09:16:01.800",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31680",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: ipv6: flowlabel: defer exclusive option free until RCU teardown\n\n`ip6fl_seq_show()` walks the global flowlabel hash under the seq-file\nRCU read-side lock and prints `fl->opt->opt_nflen` when an option block\nis present.\n\nExclusive flowlabels currently free `fl->opt` as soon as `fl->users`\ndrops to zero in `fl_release()`. However, the surrounding\n`struct ip6_flowlabel` remains visible in the global hash table until\nlater garbage collection removes it and `fl_free_rcu()` finally tears it\ndown.\n\nA concurrent `/proc/net/ip6_flowlabel` reader can therefore race that\nearly `kfree()` and dereference freed option state, triggering a crash\nin `ip6fl_seq_show()`.\n\nFix this by keeping `fl->opt` alive until `fl_free_rcu()`. That matches\nthe lifetime already required for the enclosing flowlabel while readers\ncan still reach it under RCU.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31680",
+    "publishedDate": "2026-04-25T09:16:01.673",
+    "lastModifiedDate": "2026-04-25T09:16:01.673",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31679",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nopenvswitch: validate MPLS set/set_masked payload length\n\nvalidate_set() accepted OVS_KEY_ATTR_MPLS as variable-sized payload for\nSET/SET_MASKED actions. In action handling, OVS expects fixed-size\nMPLS key data (struct ovs_key_mpls).\n\nUse the already normalized key_len (masked case included) and reject\nnon-matching MPLS action key sizes.\n\nReject invalid MPLS action payload lengths early.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31679",
+    "publishedDate": "2026-04-25T09:16:01.550",
+    "lastModifiedDate": "2026-04-25T09:16:01.550",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31678",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nopenvswitch: defer tunnel netdev_put to RCU release\n\novs_netdev_tunnel_destroy() may run after NETDEV_UNREGISTER already\ndetached the device. Dropping the netdev reference in destroy can race\nwith concurrent readers that still observe vport->dev.\n\nDo not release vport->dev in ovs_netdev_tunnel_destroy(). Instead, let\nvport_netdev_free() drop the reference from the RCU callback, matching\nthe non-tunnel destroy path and avoiding additional synchronization\nunder RTNL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31678",
+    "publishedDate": "2026-04-25T09:16:01.437",
+    "lastModifiedDate": "2026-04-25T09:16:01.437",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31677",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: af_alg - limit RX SG extraction by receive buffer budget\n\nMake af_alg_get_rsgl() limit each RX scatterlist extraction to the\nremaining receive buffer budget.\n\naf_alg_get_rsgl() currently uses af_alg_readable() only as a gate\nbefore extracting data into the RX scatterlist. Limit each extraction\nto the remaining af_alg_rcvbuf(sk) budget so that receive-side\naccounting matches the amount of data attached to the request.\n\nIf skcipher cannot obtain enough RX space for at least one chunk while\nmore data remains to be processed, reject the recvmsg call instead of\nrounding the request length down to zero.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31677",
+    "publishedDate": "2026-04-25T09:16:01.330",
+    "lastModifiedDate": "2026-04-25T09:16:01.330",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31676",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrxrpc: only handle RESPONSE during service challenge\n\nOnly process RESPONSE packets while the service connection is still in\nRXRPC_CONN_SERVICE_CHALLENGING. Check that state under state_lock before\nrunning response verification and security initialization, then use a local\nsecured flag to decide whether to queue the secured-connection work after\nthe state transition. This keeps duplicate or late RESPONSE packets from\nre-running the setup path and removes the unlocked post-transition state\ntest.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31676",
+    "publishedDate": "2026-04-25T09:16:01.210",
+    "lastModifiedDate": "2026-04-25T09:16:01.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31675",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: sch_netem: fix out-of-bounds access in packet corruption\n\nIn netem_enqueue(), the packet corruption logic uses\nget_random_u32_below(skb_headlen(skb)) to select an index for\nmodifying skb->data. When an AF_PACKET TX_RING sends fully non-linear\npackets over an IPIP tunnel, skb_headlen(skb) evaluates to 0.\n\nPassing 0 to get_random_u32_below() takes the variable-ceil slow path\nwhich returns an unconstrained 32-bit random integer. Using this\nunconstrained value as an offset into skb->data results in an\nout-of-bounds memory access.\n\nFix this by verifying skb_headlen(skb) is non-zero before attempting\nto corrupt the linear data area. Fully non-linear packets will silently\nbypass the corruption logic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31675",
+    "publishedDate": "2026-04-25T09:16:01.100",
+    "lastModifiedDate": "2026-04-25T09:16:01.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31674",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: ip6t_rt: reject oversized addrnr in rt_mt6_check()\n\nReject rt match rules whose addrnr exceeds IP6T_RT_HOPS.\n\nrt_mt6() expects addrnr to stay within the bounds of rtinfo->addrs[].\nValidate addrnr during rule installation so malformed rules are rejected\nbefore the match logic can use an out-of-range value.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31674",
+    "publishedDate": "2026-04-25T09:16:00.963",
+    "lastModifiedDate": "2026-04-25T09:16:00.963",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31673",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\naf_unix: read UNIX_DIAG_VFS data under unix_state_lock\n\nExact UNIX diag lookups hold a reference to the socket, but not to\nu->path. Meanwhile, unix_release_sock() clears u->path under\nunix_state_lock() and drops the path reference after unlocking.\n\nRead the inode and device numbers for UNIX_DIAG_VFS while holding\nunix_state_lock(), then emit the netlink attribute after dropping the\nlock.\n\nThis keeps the VFS data stable while the reply is being built.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31673",
+    "publishedDate": "2026-04-25T09:16:00.423",
+    "lastModifiedDate": "2026-04-25T09:16:00.423",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
     "id": "CVE-2026-6951",
     "description": "Versions of the package simple-git before 3.36.0 are vulnerable to Remote Code Execution (RCE) due to an incomplete fix for [CVE-2022-25912](https://security.snyk.io/vuln/SNYK-JS-SIMPLEGIT-3112221) that blocks the -c option but not the equivalent --config form. If untrusted input can reach the options argument passed to simple-git, an attacker may still achieve remote code execution by enabling protocol.ext.allow=always and using an ext:: clone source.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-6951",
     "publishedDate": "2026-04-25T06:16:16.453",
-    "lastModifiedDate": "2026-04-25T06:16:16.453",
+    "lastModifiedDate": "2026-04-25T11:16:17.670",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -233,295 +392,6 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6966",
-    "description": "Improper verification of cryptographic signature uniqueness in delegated role validation in awslabs/tough before tough-v0.22.0 allows remote authenticated users to bypass the TUF signature threshold requirement by duplicating a valid signature, causing the client to accept forged delegated role metadata.\n\nWe recommend you upgrade to tough-v0.22.0 / tuftool-v0.15.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6966",
-    "publishedDate": "2026-04-24T20:16:28.883",
-    "lastModifiedDate": "2026-04-24T21:16:19.783",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41503",
-    "description": "BACnet Stack is a BACnet open source protocol stack C library for embedded systems. Prior to 1.4.3, an out-of-bounds read vulnerability in bacnet-stack's ReadPropertyMultiple service property decoder allows unauthenticated remote attackers to read past allocated buffer boundaries by sending an RPM request with a truncated property list. The vulnerability stems from rpm_decode_object_property() calling the deprecated decode_tag_number_and_value() function at src/bacnet/rpm.c:344, which accepts no buffer length parameter and reads blindly from whatever pointer it receives. A crafted BACnet/IP packet with a 1-byte property payload containing an extended tag marker (0xF9) causes the decoder to read 1 byte past the end of the buffer, leading to crashes on embedded BACnet devices. The vulnerability exists in src/bacnet/rpm.c and affects any deployment that enables the ReadPropertyMultiple confirmed service handler (enabled by default in the reference server). This vulnerability is fixed in 1.4.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41503",
-    "publishedDate": "2026-04-24T20:16:28.697",
-    "lastModifiedDate": "2026-04-24T20:16:28.697",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41502",
-    "description": "BACnet Stack is a BACnet open source protocol stack C library for embedded systems. Prior to 1.4.3, an off-by-one out-of-bounds read vulnerability in bacnet-stack's ReadPropertyMultiple service decoder allows unauthenticated remote attackers to read one byte past an allocated buffer boundary by sending a crafted RPM request with a truncated object identifier. The vulnerability is in rpm_decode_object_id(), which checks apdu_len < 5 but then accesses all 6 byte positions (indices 0-5) — consuming 1 byte for the context tag, 4 bytes for the object ID, then reading apdu[5] for the opening tag check. A 5-byte input passes the length check but causes a 1-byte OOB read, leading to crashes on embedded BACnet devices. The vulnerability exists in src/bacnet/rpm.c and affects any deployment that enables the ReadPropertyMultiple confirmed service handler (enabled by default in the reference server). This vulnerability is fixed in 1.4.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41502",
-    "publishedDate": "2026-04-24T20:16:28.563",
-    "lastModifiedDate": "2026-04-25T03:16:05.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41477",
-    "description": "Deskflow is a keyboard and mouse sharing app.  In 1.20.0, 1.26.0.134, and earlier, Deskflow daemon runs as SYSTEM and exposes an IPC named pipe with WorldAccessOption enabled. The daemon processes privileged commands without authentication, allowing any local unprivileged user to execute arbitrary commands as SYSTEM. Affects both stable v1.20.0 + and Continuous v1.26.0.134 prerelease.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41477",
-    "publishedDate": "2026-04-24T20:16:28.340",
-    "lastModifiedDate": "2026-04-24T20:16:28.340",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41476",
-    "description": "Deskflow is a keyboard and mouse sharing app.  Prior to 1.26.0.138, a remote memory-safety vulnerability in Deskflow's clipboard deserialization allows a connected peer to trigger an out-of-bounds read by sending a malformed clipboard update. The issue is in the implementation of src/lib/deskflow/IClipboard.cpp. This is reachable because ClipboardChunk::assemble() in src/lib/deskflow/ClipboardChunk.cpp validates only the outer clipboard transfer size. It does not validate the internal structure of the serialized clipboard blob, so malformed inner lengths reach IClipboard::unmarshall() unchanged. This vulnerability is fixed in 1.26.0.138.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41476",
-    "publishedDate": "2026-04-24T20:16:28.207",
-    "lastModifiedDate": "2026-04-24T21:16:19.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41475",
-    "description": "BACnet Stack is a BACnet open source protocol stack C library for embedded systems. Prior to 1.4.3, an out-of-bounds read vulnerability in bacnet-stack's WritePropertyMultiple service decoder allows unauthenticated remote attackers to read past allocated buffer boundaries by sending a truncated WPM request. The vulnerability stems from wpm_decode_object_property() calling the deprecated decode_tag_number_and_value() function, which performs no bounds checking on the input buffer. A crafted BACnet/IP packet with a truncated property payload causes the decoder to read 1-7 bytes past the end of the buffer, leading to crashes or information disclosure on embedded BACnet devices. This vulnerability is fixed in 1.4.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41475",
-    "publishedDate": "2026-04-24T20:16:28.063",
-    "lastModifiedDate": "2026-04-24T20:16:28.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41433",
-    "description": "OpenTelemetry eBPF Instrumentation provides eBPF instrumentation based on the OpenTelemetry standard. From 0.4.0 to before 0.8.0, a flaw in the Java agent injection path allows a local attacker controlling a Java workload to overwrite arbitrary host files when Java injection is enabled and OBI is running with elevated privileges. The injector trusted TMPDIR from the target process and used unsafe file creation semantics, enabling both filesystem boundary escape and symlink-based file clobbering. This vulnerability is fixed in 0.8.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41433",
-    "publishedDate": "2026-04-24T20:16:27.803",
-    "lastModifiedDate": "2026-04-25T03:16:04.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
-        "exploitabilityScore": 2,
-        "impactScore": 5.8,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41429",
-    "description": "arduino-esp32 is an Arduino core for the ESP32, ESP32-S2, ESP32-S3, ESP32-C3, ESP32-C6 and ESP32-H2 microcontrollers. Prior to 3.3.8, there is a remotely reachable memory corruption issue in the NBNS packet handling path. When NetBIOS is enabled by calling NBNS.begin(...), the device listens on UDP port 137 and processes untrusted NBNS requests from the local network.\nThe request parser trusts the attacker-controlled name_len field without enforcing a bound consistent with the fixed-size destination buffers used later in the flow. This vulnerability is fixed in 3.3.8.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41429",
-    "publishedDate": "2026-04-24T20:16:27.663",
-    "lastModifiedDate": "2026-04-24T20:16:27.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41428",
-    "description": "Budibase is an open-source low-code platform. Prior to 3.35.4, the authenticated middleware uses unanchored regular expressions to match public (no-auth) endpoint patterns against ctx.request.url. Since ctx.request.url in Koa includes the query string, an attacker can access any protected endpoint by appending a public endpoint path as a query parameter. For example, POST /api/global/users/search?x=/api/system/status bypasses all authentication because the regex /api/system/status/ matches in the query string portion of the URL. This vulnerability is fixed in 3.35.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41428",
-    "publishedDate": "2026-04-24T20:16:27.523",
-    "lastModifiedDate": "2026-04-24T21:16:18.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41427",
-    "description": "Better Auth is an authentication and authorization library for TypeScript. Prior to 1.6.5, the clientPrivileges option documents a create action, but the OAuth client creation endpoints did not invoke the hook before persisting new clients. Deployments that configured clientPrivileges to restrict client registration were not actually restricted — any authenticated user could reach the create endpoints and register an OAuth client with attacker-chosen redirect URIs and metadata. This vulnerability is fixed in 1.6.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41427",
-    "publishedDate": "2026-04-24T20:16:27.390",
-    "lastModifiedDate": "2026-04-24T20:16:27.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41426",
-    "description": "pretalx is a conference planning tool. Prior to 2026.1.0, an unauthenticated attacker can send arbitrary HTML-rendered emails from a pretalx instance's configured sender address by embedding malformed HTML or markdown link syntax in a user-controlled template placeholder such as the account display name. The most direct vector is the password-reset flow: the attacker registers an account with a malicious name, enters the victim's email address, and triggers a password reset. The resulting email is delivered from the event's legitimate sender address and passes SPF/DKIM/DMARC validation, making it a ready-made phishing vector. This vulnerability is fixed in 2026.1.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41426",
-    "publishedDate": "2026-04-24T20:16:27.247",
-    "lastModifiedDate": "2026-04-24T20:16:27.247",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41425",
-    "description": "Authlib is a Python library which builds OAuth and OpenID Connect servers. Prior to 1.6.11, there is no CSRF protection on the cache feature in authlib.integrations.starlette_client.OAuth.  This vulnerability is fixed in 1.6.11.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41425",
-    "publishedDate": "2026-04-24T20:16:27.107",
-    "lastModifiedDate": "2026-04-24T20:16:27.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41244",
-    "description": "Mojic is a CLI tool to transform readable C code into an unrecognizable chaotic stream of emojis. Prior to 2.1.4, the CipherEngine uses a standard equality operator (!==) to verify the HMAC-SHA256 integrity seal during the decryption phase. This creates an Observable Timing Discrepancy (CWE-208), allowing a potential attacker to bypass the file integrity check via a timing attack. This vulnerability is fixed in 2.1.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41244",
-    "publishedDate": "2026-04-24T20:16:26.957",
-    "lastModifiedDate": "2026-04-24T21:16:18.400",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41907",
-    "description": "uuid is for the creation of RFC9562 (formerly RFC4122) UUIDs. Prior to 14.0.0, v3, v5, and v6 accept external output buffers but do not reject out-of-range writes (small buf or large offset). This allows silent partial writes into caller-provided buffers. This vulnerability is fixed in 14.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41907",
-    "publishedDate": "2026-04-24T19:17:14.490",
-    "lastModifiedDate": "2026-04-24T19:17:14.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
       }
     ]
   }
