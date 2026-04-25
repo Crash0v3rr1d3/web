@@ -31,33 +31,63 @@
   },
   {
     "id": "CVE-2026-41488",
-    "description": "angchain-openai: Image token counting SSRF protection can be bypassed via DNS rebinding",
+    "description": "LangChain is a framework for building agents and LLM-powered applications. Prior to 1.1.14, langchain-openai's _url_to_size() helper (used by get_num_tokens_from_messages for image token counting) validated URLs for SSRF protection and then fetched them in a separate network operation with independent DNS resolution. This left a TOCTOU / DNS rebinding window: an attacker-controlled hostname could resolve to a public IP during validation and then to a private/localhost IP during the actual fetch.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41488",
-    "publishedDate": "Fri, 24 Apr 2026 21:16:19 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-24T21:16:19.637",
+    "lastModifiedDate": "2026-04-24T21:16:19.637",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-41481",
-    "description": "LangChain: HTMLHeaderTextSplitter.split_text_from_url SSRF Redirect Bypass",
+    "description": "LangChain is a framework for building agents and LLM-powered applications. Prior to langchain-text-splitters\n 1.1.2, HTMLHeaderTextSplitter.split_text_from_url() validated the initial URL using validate_safe_url() but then performed the fetch with requests.get() with redirects enabled (the default). Because redirect targets were not revalidated, a URL pointing to an attacker-controlled server could redirect to internal, localhost, or cloud metadata endpoints, bypassing SSRF protections. The response body is parsed and returned as Document objects to the calling application code. Whether this constitutes a data exfiltration path depends on the application: if it exposes Document contents (or derivatives) back to the requester who supplied the URL, sensitive data from internal endpoints could be leaked. Applications that store or process Documents internally without returning raw content to the requester are not directly exposed to data exfiltration through this issue. This vulnerability is fixed in 1.1.2.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41481",
-    "publishedDate": "Fri, 24 Apr 2026 21:16:19 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-24T21:16:19.490",
+    "lastModifiedDate": "2026-04-24T21:16:19.490",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-41478",
-    "description": "Saltcorn: SQL Injection via Unparameterized Sync Endpoints (maxLoadedId)",
+    "description": "Saltcorn is an extensible, open source, no-code database application builder. Prior to 1.4.6, 1.5.6, and 1.6.0-beta.5, a SQL injection vulnerability in Saltcorn’s mobile-sync routes allows any authenticated low-privilege user with read access to at least one table to inject arbitrary SQL through sync parameters. This can lead to full database exfiltration, including admin password hashes and configuration secrets, and may also enable database modification or destruction depending on the backend. This vulnerability is fixed in 1.4.6, 1.5.6, and 1.6.0-beta.5.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41478",
-    "publishedDate": "Fri, 24 Apr 2026 21:16:19 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-04-24T21:16:19.353",
+    "lastModifiedDate": "2026-04-24T21:16:19.353",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-41473",
@@ -231,7 +261,7 @@
     "description": "BACnet Stack is a BACnet open source protocol stack C library for embedded systems. Prior to 1.4.3, an off-by-one out-of-bounds read vulnerability in bacnet-stack's ReadPropertyMultiple service decoder allows unauthenticated remote attackers to read one byte past an allocated buffer boundary by sending a crafted RPM request with a truncated object identifier. The vulnerability is in rpm_decode_object_id(), which checks apdu_len < 5 but then accesses all 6 byte positions (indices 0-5) — consuming 1 byte for the context tag, 4 bytes for the object ID, then reading apdu[5] for the opening tag check. A 5-byte input passes the length check but causes a 1-byte OOB read, leading to crashes on embedded BACnet devices. The vulnerability exists in src/bacnet/rpm.c and affects any deployment that enables the ReadPropertyMultiple confirmed service handler (enabled by default in the reference server). This vulnerability is fixed in 1.4.3.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41502",
     "publishedDate": "2026-04-24T20:16:28.563",
-    "lastModifiedDate": "2026-04-24T20:16:28.563",
+    "lastModifiedDate": "2026-04-25T03:16:05.130",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -311,7 +341,7 @@
     "description": "OpenTelemetry eBPF Instrumentation provides eBPF instrumentation based on the OpenTelemetry standard. From 0.4.0 to before 0.8.0, a flaw in the Java agent injection path allows a local attacker controlling a Java workload to overwrite arbitrary host files when Java injection is enabled and OBI is running with elevated privileges. The injector trusted TMPDIR from the target process and used unsafe file creation semantics, enabling both filesystem boundary escape and symlink-based file clobbering. This vulnerability is fixed in 0.8.0.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41433",
     "publishedDate": "2026-04-24T20:16:27.803",
-    "lastModifiedDate": "2026-04-24T20:16:27.803",
+    "lastModifiedDate": "2026-04-25T03:16:04.950",
     "vendors": [],
     "products": [],
     "cvssScores": [
