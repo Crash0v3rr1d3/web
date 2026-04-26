@@ -10,6 +10,7 @@ import { Icon } from "astro-icon/components";
 import { Separator } from "@/components/react/ui/separator";
 import { badgeVariants } from "@/components/react/ui/badge";
 import PostNavigation from "@/components/PostNavigation.astro";
+import ShareBar from "@/components/ShareBar.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import { Button } from "@/components/react/ui/button";
 import LayoutBlogPost from "@/layouts/LayoutBlogPost.astro";
@@ -59,6 +60,8 @@ const { prev: prevPost, next: nextPost } = getAdjacentPosts(
   visiblePosts
 );
 const { Content, headings } = await render(entry);
+
+const shareUrl = new URL(`/blog/${entry.id}`, Astro.site).toString();
 ---
 
 <LayoutBlogPost
@@ -144,6 +147,7 @@ const { Content, headings } = await render(entry);
                 </span>
               )}
             </div>
+            <ShareBar title={entry.data.title} url={shareUrl} />
           </div>
         )
       }
@@ -156,6 +160,10 @@ const { Content, headings } = await render(entry);
     >
       <Content />
     </article>
+
+    <div class="col-start-2">
+      <ShareBar title={entry.data.title} url={shareUrl} />
+    </div>
 
     <PostNavigation prevPost={prevPost} nextPost={nextPost} />
   </section>

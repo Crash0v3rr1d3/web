@@ -1,0 +1,82 @@
+---
+interface Props {
+  title: string;
+  url: string; // absolute URL
+}
+
+const { title, url } = Astro.props;
+const enc = (s: string) => encodeURIComponent(s);
+
+const networks = [
+  {
+    label: "X",
+    href: `https://x.com/intent/post?text=${enc(title)}&url=${enc(url)}`,
+  },
+  {
+    label: "LinkedIn",
+    href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`,
+  },
+  {
+    label: "Reddit",
+    href: `https://www.reddit.com/submit?url=${enc(url)}&title=${enc(title)}`,
+  },
+  {
+    label: "HN",
+    href: `https://news.ycombinator.com/submitlink?u=${enc(url)}&t=${enc(title)}`,
+  },
+  {
+    label: "Bluesky",
+    href: `https://bsky.app/intent/compose?text=${enc(`${title} ${url}`)}`,
+  },
+  {
+    label: "Email",
+    href: `mailto:?subject=${enc(title)}&body=${enc(url)}`,
+  },
+];
+---
+
+<div
+  class="flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-neutral-500 my-2"
+>
+  <span class="uppercase tracking-widest">&gt;_ share:</span>
+  {
+    networks.map((n) => (
+      <a
+        href={n.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="border border-neutral-800 px-2 py-1 rounded hover:text-green-400 hover:border-green-500/50 transition-colors no-underline"
+      >
+        [ {n.label} ]
+      </a>
+    ))
+  }
+  <button
+    type="button"
+    data-share-copy
+    data-share-url={url}
+    class="border border-neutral-800 px-2 py-1 rounded hover:text-green-400 hover:border-green-500/50 transition-colors cursor-pointer bg-transparent text-neutral-500 font-mono"
+  >
+    [ Copy link ]
+  </button>
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-share-copy]")
+    .forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const u = btn.getAttribute("data-share-url") ?? location.href;
+        try {
+          await navigator.clipboard.writeText(u);
+          const orig = btn.textContent;
+          btn.textContent = "[ Copied! ]";
+          setTimeout(() => {
+            btn.textContent = orig;
+          }, 1500);
+        } catch {
+          /* clipboard blocked */
+        }
+      });
+    });
+</script>

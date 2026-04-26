@@ -11,6 +11,7 @@ import { Icon } from "astro-icon/components";
 import { Separator } from "@/components/react/ui/separator";
 import { badgeVariants } from "@/components/react/ui/badge";
 import PostNavigation from "@/components/PostNavigation.astro";
+import ShareBar from "@/components/ShareBar.astro";
 import TableOfContents from "@/components/TableOfContents.astro";
 import { Button } from '@/components/react/ui/button'
 
@@ -62,6 +63,8 @@ const { prev: prevPost, next: nextPost } = getAdjacentWriteups(
   visibleWriteups,
 );
 const { Content, headings } = await render(entry);
+
+const shareUrl = new URL(`/writeups/${entry.id}`, Astro.site).toString();
 ---
 
 <LayoutWriteupsPost
@@ -149,6 +152,7 @@ const { Content, headings } = await render(entry);
                 </span>
               )}
             </div>
+            <ShareBar title={entry.data.title} url={shareUrl} />
           </div>
         )
       }
@@ -159,7 +163,10 @@ const { Content, headings } = await render(entry);
     <article class="overflow-auto [&>:first-child>*]:mt-0 prose col-start-2 max-w-none">
       <Content />
     </article>
-   
+
+    <div class="col-start-2">
+      <ShareBar title={entry.data.title} url={shareUrl} />
+    </div>
 
     <PostNavigation prevPost={prevPost} nextPost={nextPost} basePath="/writeups" />
   </section>
