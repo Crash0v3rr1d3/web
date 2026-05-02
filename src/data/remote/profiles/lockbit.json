@@ -1,7 +1,7 @@
 {
   "added_date": null,
   "altname": null,
-  "description": "",
+  "description": "LockBit is one of the most prolific ransomware groups in history, operating as a full RaaS platform that at its peak accounted for an estimated 44% of all ransomware incidents globally in 2023, targeting virtually every sector worldwide through an affiliate model where developers maintain infrastructure and affiliates conduct intrusions.",
   "locations": [
     {
       "available": false,
@@ -14,6 +14,198 @@
   ],
   "name": "lockbit",
   "tools": [],
-  "ttps": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "LockBit actors exploit vulnerabilities in public-facing applications including Citrix Bleed (CVE-2023-4966), Fortinet, and other perimeter devices to gain initial access.",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application"
+        },
+        {
+          "technique_details": "Use of compromised credentials purchased from initial access brokers or obtained through phishing to authenticate to victim environments via RDP or VPN.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        },
+        {
+          "technique_details": "Spear-phishing emails with malicious attachments or links used to deliver initial stagers.",
+          "technique_id": "T1566",
+          "technique_name": "Phishing"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "WMI used for remote execution of payloads across compromised hosts.",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        },
+        {
+          "technique_details": "PowerShell scripts used to deploy ransomware payloads and execute post-exploitation modules.",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        },
+        {
+          "technique_details": "Scheduled tasks created for persistent execution of the LockBit payload and post-compromise tooling.",
+          "technique_id": "T1053.005",
+          "technique_name": "Scheduled Task/Job: Scheduled Task"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_details": "Registry Run keys modified to ensure ransomware payload executes on system reboot.",
+          "technique_id": "T1547.001",
+          "technique_name": "Boot or Logon Autostart Execution: Registry Run Keys"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_details": "Windows Defender and other AV/EDR tools disabled via PowerShell commands and Group Policy modifications prior to ransomware deployment.",
+          "technique_id": "T1562.001",
+          "technique_name": "Disable or Modify Tools"
+        },
+        {
+          "technique_details": "LockBit payloads are packed and obfuscated; LockBit 3.0 (Black) uses code from BlackMatter ransomware with added anti-analysis techniques.",
+          "technique_id": "T1027",
+          "technique_name": "Obfuscated Files or Information"
+        },
+        {
+          "technique_details": "Event logs cleared to remove forensic evidence of the intrusion prior to or after ransomware deployment.",
+          "technique_id": "T1070.001",
+          "technique_name": "Indicator Removal: Clear Windows Event Logs"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_details": "Mimikatz and custom tools used to dump LSASS memory for credential harvesting to facilitate lateral movement.",
+          "technique_id": "T1003.001",
+          "technique_name": "OS Credential Dumping: LSASS Memory"
+        },
+        {
+          "technique_details": "Brute force attacks against RDP and other remote services to obtain valid credentials.",
+          "technique_id": "T1110",
+          "technique_name": "Brute Force"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_details": "Network scanning tools (Advanced IP Scanner, nmap) used to enumerate hosts, open ports, and services within the victim environment.",
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery"
+        },
+        {
+          "technique_details": "Active Directory enumeration to map domain trusts and identify targets for lateral movement and domain compromise.",
+          "technique_id": "T1482",
+          "technique_name": "Domain Trust Discovery"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_details": "RDP used extensively for lateral movement across the victim network using stolen credentials.",
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "PsExec and SMB admin shares leveraged to propagate the ransomware payload laterally.",
+          "technique_id": "T1021.002",
+          "technique_name": "Remote Services: SMB/Windows Admin Shares"
+        },
+        {
+          "technique_details": "Exploitation of unpatched internal services to move laterally within the network.",
+          "technique_id": "T1210",
+          "technique_name": "Exploitation of Remote Services"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "7-Zip and WinRAR used to compress stolen data prior to exfiltration as part of double extortion operations.",
+          "technique_id": "T1560.001",
+          "technique_name": "Archive Collected Data: Archive via Utility"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "Rclone and MEGASync used to exfiltrate victim data to cloud storage services ahead of encryption as part of the double extortion model.",
+          "technique_id": "T1567.002",
+          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
+        },
+        {
+          "technique_details": "SFTP and FTP used to transmit stolen data to actor-controlled infrastructure.",
+          "technique_id": "T1048",
+          "technique_name": "Exfiltration Over Alternative Protocol"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "AnyDesk and other legitimate remote access tools deployed as backdoors for persistent C2 access.",
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software"
+        },
+        {
+          "technique_details": "Tor and other anonymization networks used to obfuscate C2 infrastructure.",
+          "technique_id": "T1090.003",
+          "technique_name": "Proxy: Multi-hop Proxy"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "LockBit uses AES-256 for file encryption with RSA-2048 for key protection. LockBit 3.0 uses Salsa20; files are appended with a victim-specific extension. Operates as RaaS with affiliate program.",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "Shadow copies and backups deleted using vssadmin and wmic commands to prevent recovery without paying the ransom.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        },
+        {
+          "technique_details": "Database, backup, and security services terminated before encryption to maximize file access and encryption coverage.",
+          "technique_id": "T1489",
+          "technique_name": "Service Stop"
+        }
+      ]
+    }
+  ],
   "url": "https://www.ransomware.live/group/lockbit"
 }

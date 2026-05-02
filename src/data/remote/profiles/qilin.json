@@ -82,6 +82,168 @@
       ]
     }
   ],
-  "ttps": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "Qilin affiliates spear-phished MSP administrators via ScreenConnect to gain access to downstream customers. Phishing campaigns using credential-harvesting pages targeting VPN and SSO portals.",
+          "technique_id": "T1566.003",
+          "technique_name": "Phishing: Spearphishing via Service"
+        },
+        {
+          "technique_details": "Exploitation of vulnerabilities in VPN appliances and remote management tools to gain initial access.",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application"
+        },
+        {
+          "technique_details": "Compromised credentials used to authenticate via VPN and RDP. Qilin notably steals credentials from Chrome browsers on compromised endpoints before encryption.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "PowerShell scripts used for payload execution, lateral movement, and post-exploitation tasks.",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        },
+        {
+          "technique_details": "Shell scripts used to execute the Linux/ESXi variant of the Qilin ransomware payload.",
+          "technique_id": "T1059.004",
+          "technique_name": "Command and Scripting Interpreter: Unix Shell"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_details": "Scheduled tasks created to maintain persistence and execute post-exploitation scripts.",
+          "technique_id": "T1053.005",
+          "technique_name": "Scheduled Task/Job: Scheduled Task"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_details": "Security tools and EDR solutions disabled via batch scripts and Group Policy modifications.",
+          "technique_id": "T1562.001",
+          "technique_name": "Disable or Modify Tools"
+        },
+        {
+          "technique_details": "Qilin.B variant (October 2024) introduced enhanced obfuscation and anti-analysis techniques compared to earlier versions.",
+          "technique_id": "T1027",
+          "technique_name": "Obfuscated Files or Information"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_details": "Qilin notably deployed a custom script to steal credentials stored in Google Chrome browsers on all domain-joined machines via Group Policy — a distinctive TTP first observed in the Synnovis NHS attack (June 2024).",
+          "technique_id": "T1555.003",
+          "technique_name": "Credentials from Web Browsers"
+        },
+        {
+          "technique_details": "LSASS memory dumped to harvest credentials for lateral movement and privilege escalation.",
+          "technique_id": "T1003.001",
+          "technique_name": "OS Credential Dumping: LSASS Memory"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_details": "Network scanning used to enumerate hosts and services within the victim environment.",
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery"
+        },
+        {
+          "technique_details": "System information collected to tailor the attack and identify high-value targets.",
+          "technique_id": "T1082",
+          "technique_name": "System Information Discovery"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_details": "RDP used for lateral movement across victim networks.",
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "SMB used to propagate payloads and move laterally within the network.",
+          "technique_id": "T1021.002",
+          "technique_name": "Remote Services: SMB/Windows Admin Shares"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "Data compressed and archived prior to exfiltration.",
+          "technique_id": "T1560.001",
+          "technique_name": "Archive Collected Data: Archive via Utility"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "Data exfiltrated to cloud storage and actor-controlled servers for double extortion via the Qilin leak site.",
+          "technique_id": "T1567.002",
+          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "C2 communication over HTTPS; Tor used for victim portals.",
+          "technique_id": "T1071.001",
+          "technique_name": "Application Layer Protocol: Web Protocols"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "Qilin (formerly Agenda) uses ChaCha20 for file encryption with RSA-4096 for key protection. Originally written in Go, later rewritten in Rust (Qilin.B). Targets Windows, Linux, and VMware ESXi. Notable attack: Synnovis NHS pathology services (June 2024) causing 10,000+ NHS appointment cancellations. Active RaaS with high affiliate revenue share.",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "Shadow copies deleted; ESXi snapshots removed to prevent VM recovery.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        }
+      ]
+    }
+  ],
   "url": "https://www.ransomware.live/group/qilin"
 }

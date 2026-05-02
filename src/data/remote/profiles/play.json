@@ -12,7 +12,7 @@
       "type": "DLS"
     },
     {
-      "available": false,
+      "available": true,
       "enabled": true,
       "fqdn": "j75o7xvvsm4lpsjhkjvb4wl2q6ajegvabe6oswthuaubbykk4xkzgpid.onion",
       "slug": "http://j75o7xvvsm4lpsjhkjvb4wl2q6ajegvabe6oswthuaubbykk4xkzgpid.onion",
@@ -20,7 +20,7 @@
       "type": "DLS"
     },
     {
-      "available": false,
+      "available": true,
       "enabled": true,
       "fqdn": "k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion",
       "slug": "http://k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion/",
@@ -64,6 +64,162 @@
       "RMM-Tools": []
     }
   ],
-  "ttps": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "Play exploits vulnerabilities in Microsoft Exchange (ProxyNotShell CVE-2022-41040/CVE-2022-41082), FortiOS SSL VPN (CVE-2018-13379), and RDP to gain initial access.",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application"
+        },
+        {
+          "technique_details": "Compromised VPN credentials used to authenticate directly to victim networks.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "PowerShell scripts used for payload execution and post-exploitation tooling deployment.",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        },
+        {
+          "technique_details": "Scheduled tasks used for payload persistence and execution across compromised hosts.",
+          "technique_id": "T1053.005",
+          "technique_name": "Scheduled Task/Job: Scheduled Task"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_details": "Security tools including Windows Defender and AV products disabled prior to encryption.",
+          "technique_id": "T1562.001",
+          "technique_name": "Disable or Modify Tools"
+        },
+        {
+          "technique_details": "Windows event logs wiped to remove forensic evidence using wevtutil.",
+          "technique_id": "T1070.001",
+          "technique_name": "Indicator Removal: Clear Windows Event Logs"
+        },
+        {
+          "technique_details": "Play ransomware payloads are split into multiple parts to bypass AV scanning; parts reassembled on target systems.",
+          "technique_id": "T1027",
+          "technique_name": "Obfuscated Files or Information"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_details": "Mimikatz and similar tools used for LSASS memory dumping to harvest credentials.",
+          "technique_id": "T1003.001",
+          "technique_name": "OS Credential Dumping: LSASS Memory"
+        },
+        {
+          "technique_details": "NTDS.dit extracted from domain controllers to obtain all domain account hashes.",
+          "technique_id": "T1003.003",
+          "technique_name": "OS Credential Dumping: NTDS"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_details": "Network scanning tools used to enumerate hosts, services, and potential lateral movement targets.",
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery"
+        },
+        {
+          "technique_details": "Active Directory enumeration to identify privileged accounts and high-value targets.",
+          "technique_id": "T1087.002",
+          "technique_name": "Account Discovery: Domain Account"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_details": "RDP used for lateral movement across victim networks.",
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "PsExec and SMB used to propagate payloads laterally.",
+          "technique_id": "T1021.002",
+          "technique_name": "Remote Services: SMB/Windows Admin Shares"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "WinRAR used to compress and archive stolen data prior to exfiltration.",
+          "technique_id": "T1560.001",
+          "technique_name": "Archive Collected Data: Archive via Utility"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "WinSCP and Rclone used to exfiltrate data to actor-controlled infrastructure and cloud storage ahead of encryption.",
+          "technique_id": "T1048",
+          "technique_name": "Exfiltration Over Alternative Protocol"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "Cobalt Strike, SystemBC, and AnyDesk used as C2 frameworks for persistent access.",
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "Play ransomware uses AES-RSA hybrid encryption. Files appended with .play extension. Targets Windows and Linux/ESXi environments. Double extortion model with data published on Play leak site. Notable for NOT including ransom note in individual encrypted files — single note left at root of C: drive.",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "Shadow copies deleted and Windows recovery disabled to prevent victim restoration of files.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        },
+        {
+          "technique_details": "Database, mail, backup, and security services terminated before encryption to ensure maximum file access.",
+          "technique_id": "T1489",
+          "technique_name": "Service Stop"
+        }
+      ]
+    }
+  ],
   "url": "https://www.ransomware.live/group/play"
 }

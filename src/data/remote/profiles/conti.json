@@ -80,6 +80,194 @@
       ]
     }
   ],
-  "ttps": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "Conti extensively uses BazarLoader and TrickBot delivered via spear-phishing emails with malicious Office document attachments containing macros.",
+          "technique_id": "T1566.001",
+          "technique_name": "Phishing: Spearphishing Attachment"
+        },
+        {
+          "technique_details": "Exploitation of Log4Shell (CVE-2021-44228), ProxyShell, and Fortinet vulnerabilities to gain initial access to victim networks.",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application"
+        },
+        {
+          "technique_details": "Use of credentials purchased via Initial Access Brokers or harvested through prior compromises.",
+          "technique_id": "T1078.002",
+          "technique_name": "Valid Accounts: Domain Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "PowerShell used extensively for payload deployment, Cobalt Strike beacon staging, and post-exploitation activity.",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        },
+        {
+          "technique_details": "WMI leveraged for remote command execution across victim infrastructure.",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_details": "New domain accounts created for persistent access and to facilitate lateral movement with elevated privileges.",
+          "technique_id": "T1136.002",
+          "technique_name": "Create Account: Domain Account"
+        },
+        {
+          "technique_details": "Registry Run keys used to maintain persistence of backdoor tools across reboots.",
+          "technique_id": "T1547.001",
+          "technique_name": "Boot or Logon Autostart Execution: Registry Run Keys"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_details": "Exploitation of PrintNightmare (CVE-2021-34527) and ZeroLogon (CVE-2020-1472) to escalate to SYSTEM or Domain Admin.",
+          "technique_id": "T1068",
+          "technique_name": "Exploitation for Privilege Escalation"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Defense Evasion",
+      "techniques": [
+        {
+          "technique_details": "Windows Defender, AV products, and EDR tools disabled via PowerShell, registry modification, or Group Policy Objects.",
+          "technique_id": "T1562.001",
+          "technique_name": "Disable or Modify Tools"
+        },
+        {
+          "technique_details": "Rundll32 used to execute malicious DLLs and evade application control.",
+          "technique_id": "T1218.011",
+          "technique_name": "Signed Binary Proxy Execution: Rundll32"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_details": "Mimikatz used to dump LSASS memory for credential harvesting across compromised hosts.",
+          "technique_id": "T1003.001",
+          "technique_name": "OS Credential Dumping: LSASS Memory"
+        },
+        {
+          "technique_details": "Active Directory NTDS.dit extracted to obtain all domain account password hashes.",
+          "technique_id": "T1003.003",
+          "technique_name": "OS Credential Dumping: NTDS"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_details": "Network scanning using Nmap, SoftPerfect Network Scanner, and custom scripts to enumerate the internal network.",
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery"
+        },
+        {
+          "technique_details": "BloodHound used to enumerate Active Directory and identify attack paths to high-value targets.",
+          "technique_id": "T1482",
+          "technique_name": "Domain Trust Discovery"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_details": "RDP used for lateral movement using harvested credentials across the victim network.",
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "PsExec used to deploy Cobalt Strike beacons and the ransomware payload across the network.",
+          "technique_id": "T1021.002",
+          "technique_name": "Remote Services: SMB/Windows Admin Shares"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "Sensitive documents, financial records, and PII collected from compromised hosts prior to encryption.",
+          "technique_id": "T1005",
+          "technique_name": "Data from Local System"
+        },
+        {
+          "technique_details": "7-Zip used to compress and archive stolen data for exfiltration.",
+          "technique_id": "T1560.001",
+          "technique_name": "Archive Collected Data: Archive via Utility"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "Rclone used to exfiltrate stolen data to MEGA and other cloud storage providers as part of the double extortion model.",
+          "technique_id": "T1567.002",
+          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "Cobalt Strike beacons communicate via HTTPS to actor-controlled team servers for C2 operations.",
+          "technique_id": "T1071.001",
+          "technique_name": "Application Layer Protocol: Web Protocols"
+        },
+        {
+          "technique_details": "AnyDesk and Atera agent installed as persistent backdoors for remote access.",
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Software"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "Conti ransomware uses ChaCha20 for file encryption with RSA-4096 for key protection. Multi-threaded encryption leverages up to 32 simultaneous threads for rapid encryption. Operates as RaaS.",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "Volume Shadow Copies deleted via vssadmin and wmic; Windows Backup Catalog deleted; recovery mode disabled via bcdedit.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        }
+      ]
+    }
+  ],
   "url": "https://www.ransomware.live/group/conti"
 }
