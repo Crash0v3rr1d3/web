@@ -6,18 +6,18 @@
     {
       "available": true,
       "enabled": true,
-      "fqdn": "akiralkzxzq2dsrzsrvbr2xgbbu2wgsmxryd4csgfameg52n7efvr2id.onion",
-      "slug": "https://akiralkzxzq2dsrzsrvbr2xgbbu2wgsmxryd4csgfameg52n7efvr2id.onion",
-      "title": "/",
-      "type": "Chat"
-    },
-    {
-      "available": true,
-      "enabled": true,
       "fqdn": "akiral2iz6a7qgd3ayp3l6yub7xx2uep76idk3u2kollpj5z3z636bad.onion",
       "slug": "https://akiral2iz6a7qgd3ayp3l6yub7xx2uep76idk3u2kollpj5z3z636bad.onion",
       "title": "",
       "type": "DLS"
+    },
+    {
+      "available": true,
+      "enabled": true,
+      "fqdn": "akiralkzxzq2dsrzsrvbr2xgbbu2wgsmxryd4csgfameg52n7efvr2id.onion",
+      "slug": "https://akiralkzxzq2dsrzsrvbr2xgbbu2wgsmxryd4csgfameg52n7efvr2id.onion",
+      "title": "/",
+      "type": "Chat"
     }
   ],
   "name": "akira",
@@ -111,18 +111,49 @@
       ]
     },
     {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "Actors may use WMI to continue the attack.",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        },
+        {
+          "technique_details": "Accepts parameters for its routines such as \"-n 10\" (for encryption percentage) or \"-s (filename)\" (for shared folder encryption).",
+          "technique_id": "T1059",
+          "technique_name": "Command and Scripting Interpreter"
+        },
+        {
+          "technique_details": "Operators use PowerShell to launch commands to continue operations.",
+          "technique_id": "T1059.001",
+          "technique_name": "Command and Scripting Interpreter: PowerShell"
+        },
+        {
+          "technique_details": "Akira ransomware uses service execution for persistence.",
+          "technique_id": "T1059.002",
+          "technique_name": "System Services: Service Execution"
+        },
+        {
+          "technique_details": "Operators use CMD to launch commands to continue operations.",
+          "technique_id": "T1059.003",
+          "technique_name": "Command and Scripting Interpreter: Windows Command Shell"
+        }
+      ]
+    },
+    {
       "tactic_id": "TA0003",
       "tactic_name": "Persistence",
       "techniques": [
         {
-          "technique_details": "Upon initial access, Akira operators create a domain account on the compromised system.",
-          "technique_id": "T1136.002",
-          "technique_name": "Create Account: Domain Account"
-        },
-        {
           "technique_details": "Upon initial access, Akira operators create a local account on the compromised system.",
           "technique_id": "T1136.001",
           "technique_name": "Create Account: Local Account"
+        },
+        {
+          "technique_details": "Upon initial access, Akira operators create a domain account on the compromised system.",
+          "technique_id": "T1136.002",
+          "technique_name": "Create Account: Domain Account"
         }
       ]
     },
@@ -143,49 +174,18 @@
       ]
     },
     {
-      "tactic_id": "TA0002",
-      "tactic_name": "Execution",
-      "techniques": [
-        {
-          "technique_details": "Accepts parameters for its routines such as \"-n 10\" (for encryption percentage) or \"-s (filename)\" (for shared folder encryption).",
-          "technique_id": "T1059",
-          "technique_name": "Command and Scripting Interpreter"
-        },
-        {
-          "technique_details": "Operators use PowerShell to launch commands to continue operations.",
-          "technique_id": "T1059.001",
-          "technique_name": "Command and Scripting Interpreter: PowerShell"
-        },
-        {
-          "technique_details": "Akira ransomware uses service execution for persistence.",
-          "technique_id": "T1059.002",
-          "technique_name": "System Services: Service Execution"
-        },
-        {
-          "technique_details": "Operators use CMD to launch commands to continue operations.",
-          "technique_id": "T1059.003",
-          "technique_name": "Command and Scripting Interpreter: Windows Command Shell"
-        },
-        {
-          "technique_details": "Actors may use WMI to continue the attack.",
-          "technique_id": "T1047",
-          "technique_name": "Windows Management Instrumentation"
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0005",
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_details": "Usage of PowerTool or a KillAV tool abusing the Zemana AntiMalware driver to terminate AV-related processes was observed.",
-          "technique_id": "T1562.001",
-          "technique_name": "Impair Defenses: Disable or Modify Tools"
-        },
-        {
           "technique_details": "Uses commands in its operation to modify registries.",
           "technique_id": "T1112",
           "technique_name": "Modify Registry"
+        },
+        {
+          "technique_details": "Usage of PowerTool or a KillAV tool abusing the Zemana AntiMalware driver to terminate AV-related processes was observed.",
+          "technique_id": "T1562.001",
+          "technique_name": "Impair Defenses: Disable or Modify Tools"
         }
       ]
     },
@@ -205,6 +205,11 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
+          "technique_details": "Uses Advanced IP Scanner and MASSCAN to discover remote systems.",
+          "technique_id": "T1018",
+          "technique_name": "Remote System Discovery"
+        },
+        {
           "technique_details": "Uses PCHunter and SharpHound to collect system information.",
           "technique_id": "T1082",
           "technique_name": "System Information Discovery"
@@ -213,22 +218,6 @@
           "technique_details": "Uses AdFind, Windows net command, and nltest to collect domain information.",
           "technique_id": "TA0007",
           "technique_name": "Discovery"
-        },
-        {
-          "technique_details": "Uses Advanced IP Scanner and MASSCAN to discover remote systems.",
-          "technique_id": "T1018",
-          "technique_name": "Remote System Discovery"
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0011",
-      "tactic_name": "Command and Control",
-      "techniques": [
-        {
-          "technique_details": "Utilizes AnyDesk, Radmin, Cloudflare Tunnel, MobaXterm, RustDesk, or Ngrok to gain remote access on targeted systems.",
-          "technique_id": "T1229",
-          "technique_name": "Remote Access Software"
         }
       ]
     },
@@ -237,14 +226,14 @@
       "tactic_name": "Lateral Movement",
       "techniques": [
         {
-          "technique_details": "Uses RDP to move laterally within the victim's network.",
-          "technique_id": "T1570",
-          "technique_name": "Lateral Tool Transfer"
-        },
-        {
           "technique_details": "Utilizes remote services for accessing accounts and machines through remote services.",
           "technique_id": "T1021.001",
           "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "Uses RDP to move laterally within the victim's network.",
+          "technique_id": "T1570",
+          "technique_name": "Lateral Tool Transfer"
         }
       ]
     },
@@ -264,14 +253,25 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
-          "technique_details": "Uses RClone to exfiltrate stolen information via a web service.",
-          "technique_id": "T1567.002",
-          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
-        },
-        {
           "technique_details": "Utilizes FileZilla or WinSCP to exfiltrate stolen information via FTP.",
           "technique_id": "T1048.003",
           "technique_name": "Exfiltration Over Alternative Protocol: Exfiltration Over Unencrypted Non-C2 Protocol"
+        },
+        {
+          "technique_details": "Uses RClone to exfiltrate stolen information via a web service.",
+          "technique_id": "T1567.002",
+          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "Utilizes AnyDesk, Radmin, Cloudflare Tunnel, MobaXterm, RustDesk, or Ngrok to gain remote access on targeted systems.",
+          "technique_id": "T1229",
+          "technique_name": "Remote Access Software"
         }
       ]
     },
@@ -280,14 +280,14 @@
       "tactic_name": "Impact",
       "techniques": [
         {
-          "technique_details": "Deletes shadow copies to inhibit recovery.",
-          "technique_id": "T1490",
-          "technique_name": "Inhibit System Recovery"
-        },
-        {
           "technique_details": "Akira ransomware is used to encrypt files.",
           "technique_id": "T1486",
           "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "Deletes shadow copies to inhibit recovery.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
         }
       ]
     }

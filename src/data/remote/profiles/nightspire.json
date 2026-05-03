@@ -72,25 +72,9 @@
   ],
   "ttps": [
     {
-      "tactic_id": "TA0042",
-      "tactic_name": "Resource Development",
-      "techniques": [
-        {
-          "technique_details": "Custom Go-based ransomware development with modular architecture.",
-          "technique_id": "T1587",
-          "technique_name": "Develop Capabilities"
-        }
-      ]
-    },
-    {
       "tactic_id": "TA0001",
       "tactic_name": "Initial Access",
       "techniques": [
-        {
-          "technique_details": "Exploitation of CVE-2024-55591 — FortiOS/FortiProxy authentication bypass; unauthenticated attackers gain super-admin privileges via crafted POST requests to /api/v2/cmdb/.",
-          "technique_id": "T1190",
-          "technique_name": "Exploit Public-Facing Application"
-        },
         {
           "technique_details": "Compromised RDP credentials used for initial access.",
           "technique_id": "T1078",
@@ -100,6 +84,11 @@
           "technique_details": "Brute-forcing remote login credentials (RDP) and MFA fatigue attacks.",
           "technique_id": "T1110",
           "technique_name": "Brute Force"
+        },
+        {
+          "technique_details": "Exploitation of CVE-2024-55591 — FortiOS/FortiProxy authentication bypass; unauthenticated attackers gain super-admin privileges via crafted POST requests to /api/v2/cmdb/.",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application"
         },
         {
           "technique_details": "Malicious attachments and drive-by downloads.",
@@ -129,6 +118,11 @@
       "tactic_name": "Persistence",
       "techniques": [
         {
+          "technique_details": "Persistence via Windows Task Scheduler; service creation and modification.",
+          "technique_id": "T1053",
+          "technique_name": "Scheduled Task/Job"
+        },
+        {
           "technique_details": "Administrative account creation post-exploitation on FortiGate devices.",
           "technique_id": "T1136",
           "technique_name": "Create Account"
@@ -142,11 +136,6 @@
           "technique_details": "Persistence via HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run and RunOnce.",
           "technique_id": "T1547.001",
           "technique_name": "Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder"
-        },
-        {
-          "technique_details": "Persistence via Windows Task Scheduler; service creation and modification.",
-          "technique_id": "T1053",
-          "technique_name": "Scheduled Task/Job"
         }
       ]
     },
@@ -166,24 +155,24 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_details": "Renamed processes and use of legitimate tools (WinSCP, MEGACmd, 7-Zip, PsExec) blending into normal operations.",
-          "technique_id": "T1036",
-          "technique_name": "Masquerading"
-        },
-        {
-          "technique_details": "Execution via legitimate system binaries (LOLBins) to evade detection.",
-          "technique_id": "T1218",
-          "technique_name": "System Binary Proxy Execution"
-        },
-        {
           "technique_details": "Obfuscation techniques to evade analysis.",
           "technique_id": "T1027",
           "technique_name": "Obfuscated Files or Information"
         },
         {
+          "technique_details": "Renamed processes and use of legitimate tools (WinSCP, MEGACmd, 7-Zip, PsExec) blending into normal operations.",
+          "technique_id": "T1036",
+          "technique_name": "Masquerading"
+        },
+        {
           "technique_details": "Removal of forensic indicators from compromised systems.",
           "technique_id": "T1070",
           "technique_name": "Indicator Removal"
+        },
+        {
+          "technique_details": "Execution via legitimate system binaries (LOLBins) to evade detection.",
+          "technique_id": "T1218",
+          "technique_name": "System Binary Proxy Execution"
         }
       ]
     },
@@ -281,6 +270,11 @@
       "tactic_name": "Exfiltration",
       "techniques": [
         {
+          "technique_details": "Data exfiltration over C2 channel.",
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel"
+        },
+        {
           "technique_details": "Data exfiltration via WinSCP (v6.3.7) and Rclone over encrypted channels.",
           "technique_id": "T1048",
           "technique_name": "Exfiltration Over Alternative Protocol"
@@ -289,11 +283,6 @@
           "technique_details": "MEGACmd used to upload stolen data to MEGA cloud storage. Documented exfiltration of 1.5TB from a single healthcare victim.",
           "technique_id": "T1567.002",
           "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
-        },
-        {
-          "technique_details": "Data exfiltration over C2 channel.",
-          "technique_id": "T1041",
-          "technique_name": "Exfiltration Over C2 Channel"
         }
       ]
     },
@@ -321,6 +310,17 @@
           "technique_details": "Hybrid AES-256 (file content) + RSA-2048 (key protection) encryption; appends .nspire extension; processes files in 1MB block chunks. Double extortion model — data theft + encryption.",
           "technique_id": "T1486",
           "technique_name": "Data Encrypted for Impact"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_details": "Custom Go-based ransomware development with modular architecture.",
+          "technique_id": "T1587",
+          "technique_name": "Develop Capabilities"
         }
       ]
     }

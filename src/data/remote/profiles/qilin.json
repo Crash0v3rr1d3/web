@@ -4,12 +4,12 @@
   "description": "Qilin ransomware was first observed in July of 2022. Qilin Ransomware is written in Golang and supports multiple encryption modes; all of which are controlled by the operator. Qilin actors practice double extortion – demanding payment for a decryptor, as well as for the non-release of stolen data.",
   "locations": [
     {
-      "available": false,
-      "enabled": false,
-      "fqdn": "ji57fr53anp7wb44tbbnp72qcgbhqywy4jmbncawdcrejj5amuvh3zqd.onion",
-      "slug": "http://ji57fr53anp7wb44tbbnp72qcgbhqywy4jmbncawdcrejj5amuvh3zqd.onion/site/login",
-      "title": "Sign In",
-      "type": "Admin"
+      "available": true,
+      "enabled": true,
+      "fqdn": "ijzn3sicrcy7guixkzjkib4ukbiilwc3xhnmby4mcbccnsd7j2rekvqd.onion",
+      "slug": "http://ijzn3sicrcy7guixkzjkib4ukbiilwc3xhnmby4mcbccnsd7j2rekvqd.onion",
+      "title": "Qilin blog",
+      "type": "DLS"
     },
     {
       "available": false,
@@ -20,12 +20,12 @@
       "type": "DLS"
     },
     {
-      "available": true,
-      "enabled": true,
-      "fqdn": "ijzn3sicrcy7guixkzjkib4ukbiilwc3xhnmby4mcbccnsd7j2rekvqd.onion",
-      "slug": "http://ijzn3sicrcy7guixkzjkib4ukbiilwc3xhnmby4mcbccnsd7j2rekvqd.onion",
-      "title": "Qilin blog",
-      "type": "DLS"
+      "available": false,
+      "enabled": false,
+      "fqdn": "ji57fr53anp7wb44tbbnp72qcgbhqywy4jmbncawdcrejj5amuvh3zqd.onion",
+      "slug": "http://ji57fr53anp7wb44tbbnp72qcgbhqywy4jmbncawdcrejj5amuvh3zqd.onion/site/login",
+      "title": "Sign In",
+      "type": "Admin"
     },
     {
       "available": false,
@@ -88,9 +88,9 @@
       "tactic_name": "Initial Access",
       "techniques": [
         {
-          "technique_details": "Qilin affiliates spear-phished MSP administrators via ScreenConnect to gain access to downstream customers. Phishing campaigns using credential-harvesting pages targeting VPN and SSO portals.",
-          "technique_id": "T1566.003",
-          "technique_name": "Phishing: Spearphishing via Service"
+          "technique_details": "Compromised credentials used to authenticate via VPN and RDP. Qilin notably steals credentials from Chrome browsers on compromised endpoints before encryption.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
         },
         {
           "technique_details": "Exploitation of vulnerabilities in VPN appliances and remote management tools to gain initial access.",
@@ -98,9 +98,9 @@
           "technique_name": "Exploit Public-Facing Application"
         },
         {
-          "technique_details": "Compromised credentials used to authenticate via VPN and RDP. Qilin notably steals credentials from Chrome browsers on compromised endpoints before encryption.",
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts"
+          "technique_details": "Qilin affiliates spear-phished MSP administrators via ScreenConnect to gain access to downstream customers. Phishing campaigns using credential-harvesting pages targeting VPN and SSO portals.",
+          "technique_id": "T1566.003",
+          "technique_name": "Phishing: Spearphishing via Service"
         }
       ]
     },
@@ -136,14 +136,14 @@
       "tactic_name": "Defense Evasion",
       "techniques": [
         {
-          "technique_details": "Security tools and EDR solutions disabled via batch scripts and Group Policy modifications.",
-          "technique_id": "T1562.001",
-          "technique_name": "Disable or Modify Tools"
-        },
-        {
           "technique_details": "Qilin.B variant (October 2024) introduced enhanced obfuscation and anti-analysis techniques compared to earlier versions.",
           "technique_id": "T1027",
           "technique_name": "Obfuscated Files or Information"
+        },
+        {
+          "technique_details": "Security tools and EDR solutions disabled via batch scripts and Group Policy modifications.",
+          "technique_id": "T1562.001",
+          "technique_name": "Disable or Modify Tools"
         }
       ]
     },
@@ -152,14 +152,14 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_details": "Qilin notably deployed a custom script to steal credentials stored in Google Chrome browsers on all domain-joined machines via Group Policy — a distinctive TTP first observed in the Synnovis NHS attack (June 2024).",
-          "technique_id": "T1555.003",
-          "technique_name": "Credentials from Web Browsers"
-        },
-        {
           "technique_details": "LSASS memory dumped to harvest credentials for lateral movement and privilege escalation.",
           "technique_id": "T1003.001",
           "technique_name": "OS Credential Dumping: LSASS Memory"
+        },
+        {
+          "technique_details": "Qilin notably deployed a custom script to steal credentials stored in Google Chrome browsers on all domain-joined machines via Group Policy — a distinctive TTP first observed in the Synnovis NHS attack (June 2024).",
+          "technique_id": "T1555.003",
+          "technique_name": "Credentials from Web Browsers"
         }
       ]
     },

@@ -65,19 +65,9 @@
       "tactic_name": "Execution",
       "techniques": [
         {
-          "technique_details": "BlackCat uses native API.",
-          "technique_id": "T1106",
-          "technique_name": "Native API"
-        },
-        {
           "technique_details": "When deploying ransomware on the victim's network infrastructure, BlackCat affiliates may leverage group policies, resulting in the creation of a scheduled task (on each host) initiating the ransomware.",
           "technique_id": "T1053",
           "technique_name": "Scheduled Task/Job"
-        },
-        {
-          "technique_details": "LockBit affiliates use batch scripts to execute malicious commands.",
-          "technique_id": "T1059.003",
-          "technique_name": "Command and Scripting Interpreter: Windows Command Shell"
         },
         {
           "technique_details": "To disrupt IIS, delete volume shadow copies, disable recovery, clear Windows event logs, etc., BlackCat ransomware utilizes command shell to execute appropriate commands.",
@@ -85,14 +75,24 @@
           "technique_name": "Command and Scripting Interpreter: PowerShell"
         },
         {
-          "technique_details": "BlackCat Ransomware for Windows can self-propagate on the local network using legitimate PsExec utility (contained within its body), which creates a temporary system service.",
-          "technique_id": "T1569.002",
-          "technique_name": "System Services: Service Execution"
+          "technique_details": "LockBit affiliates use batch scripts to execute malicious commands.",
+          "technique_id": "T1059.003",
+          "technique_name": "Command and Scripting Interpreter: Windows Command Shell"
         },
         {
           "technique_details": "Adversaries may use wmic to gather information and execute various commands, including deleting volume shadow copies. They may also use Impacket's wmiexec module to execute commands and move laterally across the network.",
           "technique_id": "T1072",
           "technique_name": "Windows Management Instrumentation"
+        },
+        {
+          "technique_details": "BlackCat uses native API.",
+          "technique_id": "T1106",
+          "technique_name": "Native API"
+        },
+        {
+          "technique_details": "BlackCat Ransomware for Windows can self-propagate on the local network using legitimate PsExec utility (contained within its body), which creates a temporary system service.",
+          "technique_id": "T1569.002",
+          "technique_name": "System Services: Service Execution"
         }
       ]
     },
@@ -117,6 +117,11 @@
       "tactic_name": "Privilege Escalation",
       "techniques": [
         {
+          "technique_details": "To escalate privileges, BlackCat may use stolen legitimate accounts specified in configuration data.",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        },
+        {
           "technique_details": "To escalate privileges, BlackCat ransomware may initiate its process using stolen authentication data and the CreateProcessWithLogonW function.",
           "technique_id": "T1134.002",
           "technique_name": "Access Token Manipulation: Create Process with Token"
@@ -125,11 +130,6 @@
           "technique_details": "To bypass UAC, BlackCat ransomware may elevate privileges using the ICMLuaUtil COM interface, as well as utilize the Masquerade PEB method.",
           "technique_id": "T1548.002",
           "technique_name": "Abuse Elevation Control Mechanism: Bypass User Account Control"
-        },
-        {
-          "technique_details": "To escalate privileges, BlackCat may use stolen legitimate accounts specified in configuration data.",
-          "technique_id": "T1078",
-          "technique_name": "Valid Accounts"
         }
       ]
     },
@@ -143,14 +143,19 @@
           "technique_name": "Obfuscated Files or Information"
         },
         {
-          "technique_details": "To avoid detection, adversaries terminate processes and services related to security software and antivirus.",
-          "technique_id": "T1562.001",
-          "technique_name": "Impair Defenses: Disable or Modify Tools"
+          "technique_details": "Adversaries use a renamed SoftPerfect Network Scanner executable to svchost.exe.",
+          "technique_id": "T1036",
+          "technique_name": "Masquerading"
         },
         {
           "technique_details": "Using wevtutil, BlackCat can clear all Windows event logs on a compromised host.",
           "technique_id": "T1070.001",
           "technique_name": "Indicator Removal: Clear Windows Event Logs"
+        },
+        {
+          "technique_details": "To propagate, BlackCat uses PsExec to modify the MaxMpxCt system registry parameter to increase the number of failed network requests for each client.",
+          "technique_id": "T1112",
+          "technique_name": "Modify Registry"
         },
         {
           "technique_details": "BlackCat decrypts configuration data, as well as decrypts and unpacks legitimate PsExec utility and an additional BAT file contained within the ransomware body.",
@@ -163,14 +168,9 @@
           "technique_name": "Virtualization/Sandbox Evasion"
         },
         {
-          "technique_details": "Adversaries use a renamed SoftPerfect Network Scanner executable to svchost.exe.",
-          "technique_id": "T1036",
-          "technique_name": "Masquerading"
-        },
-        {
-          "technique_details": "To propagate, BlackCat uses PsExec to modify the MaxMpxCt system registry parameter to increase the number of failed network requests for each client.",
-          "technique_id": "T1112",
-          "technique_name": "Modify Registry"
+          "technique_details": "To avoid detection, adversaries terminate processes and services related to security software and antivirus.",
+          "technique_id": "T1562.001",
+          "technique_name": "Impair Defenses: Disable or Modify Tools"
         }
       ]
     },
@@ -179,9 +179,9 @@
       "tactic_name": "Credential Access",
       "techniques": [
         {
-          "technique_details": "Adversaries may use NirSoft utilities to extract authentication data from web browsers and other storage spaces.",
-          "technique_id": "T1555",
-          "technique_name": "Credentials from Password Stores"
+          "technique_details": "Adversaries may dump the LSASS process to obtain authentication data using legitimate tools (procdump, comsvcs.dll).",
+          "technique_id": "T1003.001",
+          "technique_name": "OS Credential Dumping: LSASS Memory"
         },
         {
           "technique_details": "Adversaries may use NirSoft utilities to obtain authentication data from registry and file.",
@@ -189,9 +189,40 @@
           "technique_name": "Unsecured Credentials"
         },
         {
-          "technique_details": "Adversaries may dump the LSASS process to obtain authentication data using legitimate tools (procdump, comsvcs.dll).",
-          "technique_id": "T1003.001",
-          "technique_name": "OS Credential Dumping: LSASS Memory"
+          "technique_details": "Adversaries may use NirSoft utilities to extract authentication data from web browsers and other storage spaces.",
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "After access is obtained, files from target hosts are automatically uploaded to the legitimate cloud storage service MEGA using the Rclone utility.",
+          "technique_id": "T1020",
+          "technique_name": "Automated Exfiltration"
+        },
+        {
+          "technique_details": "To avoid exceeding data size limits and triggering security controls, stolen data may be sent in fixed-size blocks.",
+          "technique_id": "T1030",
+          "technique_name": "Data Transfer Size Limits"
+        },
+        {
+          "technique_details": "When using Cobalt Strike, attackers can send collected information through the Cobalt Strike server communication channels.",
+          "technique_id": "T1041",
+          "technique_name": "Exfiltration Over C2 Channel"
+        },
+        {
+          "technique_details": "Attackers may use the ExMatter exfiltration tool, which sends stolen data to specified SFTP and WebDav resources in the ExMatter configuration.",
+          "technique_id": "T1048.002",
+          "technique_name": "Exfiltration Over Alternative Protocol: Exfiltration Over Asymmetric Encrypted Non-C2 Protocol"
+        },
+        {
+          "technique_details": "Attackers use the Rclone sync utility to upload stolen data to the legitimate cloud storage service MEGA.",
+          "technique_id": "T1567.002",
+          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
         }
       ]
     },
@@ -223,37 +254,6 @@
           "technique_details": "If the victim refuses to pay the ransom, BlackCat may conduct DDoS attacks against the victim's infrastructure.",
           "technique_id": "T1498",
           "technique_name": "Network Denial of Service"
-        }
-      ]
-    },
-    {
-      "tactic_id": "TA0010",
-      "tactic_name": "Exfiltration",
-      "techniques": [
-        {
-          "technique_details": "When using Cobalt Strike, attackers can send collected information through the Cobalt Strike server communication channels.",
-          "technique_id": "T1041",
-          "technique_name": "Exfiltration Over C2 Channel"
-        },
-        {
-          "technique_details": "After access is obtained, files from target hosts are automatically uploaded to the legitimate cloud storage service MEGA using the Rclone utility.",
-          "technique_id": "T1020",
-          "technique_name": "Automated Exfiltration"
-        },
-        {
-          "technique_details": "To avoid exceeding data size limits and triggering security controls, stolen data may be sent in fixed-size blocks.",
-          "technique_id": "T1030",
-          "technique_name": "Data Transfer Size Limits"
-        },
-        {
-          "technique_details": "Attackers may use the ExMatter exfiltration tool, which sends stolen data to specified SFTP and WebDav resources in the ExMatter configuration.",
-          "technique_id": "T1048.002",
-          "technique_name": "Exfiltration Over Alternative Protocol: Exfiltration Over Asymmetric Encrypted Non-C2 Protocol"
-        },
-        {
-          "technique_details": "Attackers use the Rclone sync utility to upload stolen data to the legitimate cloud storage service MEGA.",
-          "technique_id": "T1567.002",
-          "technique_name": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
         }
       ]
     }
