@@ -1,10 +1,326 @@
 [
   {
-    "id": "CVE-2026-5786",
-    "description": "An Improper Access Control vulnerability in Ivanti EPMM before versions 12.6.1.1, 12.7.0.1, and 12.8.0.1 allows a remote authenticated attacker to gain administrative access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5786",
-    "publishedDate": "2026-05-07T16:16:22.483",
-    "lastModifiedDate": "2026-05-07T16:16:22.483",
+    "id": "CVE-2026-8142",
+    "description": "VINCE versions 3.0.38 and earlier do not properly verify the From address authenticity due to encoding confusion and use the from address for automated actions such as Ticket creation or Ticket updates.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8142",
+    "publishedDate": "2026-05-07T20:16:45.670",
+    "lastModifiedDate": "2026-05-07T20:32:47.823",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39820",
+    "description": "Well-crafted inputs reaching ParseAddress, ParseAddressList, and ParseDate were able to trigger excessive CPU exhaustion and memory allocations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39820",
+    "publishedDate": "2026-05-07T20:16:43.187",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-42501",
+    "description": "A malicious module proxy can exploit a flaw in the go command's validation of module checksums to bypass checksum database validation. This vulnerability affects any user using an untrusted module proxy (GOMODPROXY) or checksum database (GOSUMDB). A malicious module proxy can serve altered versions of the Go toolchain. When selecting a different version of the Go toolchain than the currently installed toolchain (due to the GOTOOLCHAIN environment variable, or a go.work or go.mod with a toolchain line), the go command will download and execute a toolchain provided by the module proxy. A malicious module proxy can bypass checksum database validation for this downloaded toolchain. Since this vulnerability affects the security of toolchain downloads, setting GOTOOLCHAIN to a fixed version is not sufficient. You must upgrade your base Go toolchain. The go tool always validates the hash of a toolchain before executing it, so fixed versions will refuse to execute any cached, altered versions of the toolchain. The go tool trusts go.sum files to contain accurate hashes of the current module's dependencies. A malicious proxy exploiting this vulnerability to serve an altered module will have caused an incorrect hash to be recorded in the go.sum. Users who have configured a non-trusted GOPROXY can determine if they have been affected by running \"rm go.sum ; go mod tidy ; go mod verify\", which will revalidate all dependencies of the current module. The specific flaw in more detail: The go command consults the checksum database to validate downloaded modules, when a module is not listed in the go.sum file. It verifies that the module hash reported by the checksum database matches the hash of the downloaded module. If, however, the checksum database returns a successful response that contains no entry for the module, the go command incorrectly permitted validation to succeed. A module proxy may mirror or proxy the checksum database, in which case the go command will not connect to the checksum database directly. Checksums reported by the checksum database are cryptographically signed, so a malicious proxy cannot alter the reported checksum for a module. However, a proxy which returns an empty checksum response, or a checksum response for an unrelated module, could cause the go command to proceed as if a downloaded module has been validated.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42501",
+    "publishedDate": "2026-05-07T20:16:44.643",
+    "lastModifiedDate": "2026-05-07T20:33:39.270",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39823",
+    "description": "CVE-2026-27142 fixed a vulnerability in which URLs were not correctly escaped inside of a <meta> tag's <content> attribute. If the URL content were to insert ASCII whitespaces around the '=' rune inside of the <content> attribute, the escaper would fail to similarly escape it, leading to XSS.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39823",
+    "publishedDate": "2026-05-07T20:16:43.290",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-33811",
+    "description": "When using LookupCNAME with the cgo DNS resolver, a very long CNAME response can trigger a double-free of C memory and a crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33811",
+    "publishedDate": "2026-05-07T20:16:42.770",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39826",
+    "description": "If a trusted template author were to write a <script> tag containing an empty 'type' attribute or a 'type' attribute with an ASCII whitespace, the execution of the template would incorrectly escape any data passed into the <script> block.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39826",
+    "publishedDate": "2026-05-07T20:16:43.490",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39817",
+    "description": "The \"go tool pack\" subcommand (usually used only by the compiler as an internal tool with known-good inputs) does not sanitize output filenames. Extracting a malicious archive file with the \"pack\" subcommand can write files to arbitrary locations on the filesystem.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39817",
+    "publishedDate": "2026-05-07T20:16:42.983",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39819",
+    "description": "The \"go bug\" command writes to two files with predictable names in the system temporary directory (for example, \"/tmp\"). An attacker with access to the temporary directory can create a symlink in one of these names, causing \"go bug\" to overwrite the target of the symlink.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39819",
+    "publishedDate": "2026-05-07T20:16:43.083",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-42499",
+    "description": "Pathological inputs could cause DoS through consumePhrase when parsing an email address according to RFC 5322.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42499",
+    "publishedDate": "2026-05-07T20:16:44.540",
+    "lastModifiedDate": "2026-05-07T20:33:39.270",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39825",
+    "description": "ReverseProxy can forward queries containing parameters not visible to Rewrite functions. When used with a Rewrite function, or a Director function which parses query parameters, ReverseProxy sanitizes the forwarded request to remove query parameters which are not parsed by url.ParseQuery. ReverseProxy does not take ParseQuery's limit on the total number of query parameters (controlled by GODEBUG=urlmaxqueryparams=N) into account. This can permit ReverseProxy to forward a request containing a query parameter that is not visible to the Rewrite function. For example, the query \"a1=x&a2=x&...&a10000=x&hidden=y\" can forward the parameter \"hidden=y\" while hiding it from the proxy's Rewrite function.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39825",
+    "publishedDate": "2026-05-07T20:16:43.390",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39836",
+    "description": "The Dial and LookupPort functions panic on Windows when provided with an input containing a NUL (0).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39836",
+    "publishedDate": "2026-05-07T20:16:43.593",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-33814",
+    "description": "When processing HTTP/2 SETTINGS frames, transport will enter an infinite loop of writing CONTINUATION frames if it receives a SETTINGS_MAX_FRAME_SIZE with a value of 0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33814",
+    "publishedDate": "2026-05-07T20:16:42.880",
+    "lastModifiedDate": "2026-05-07T20:38:04.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-8088",
+    "description": "A weakness has been identified in OSGeo gdal up to 3.13.0dev-4. The affected element is the function GDfieldinfo of the file frmts/hdf4/hdf-eos/GDapi.c. Executing a manipulation can lead to out-of-bounds read. The attack needs to be launched locally. The exploit has been made available to the public and could be used for attacks. Upgrading to version 3.13.0RC1 is sufficient to fix this issue. This patch is called a791f70f8eaec540974ec989ca6fb00266b7646c. The affected component should be upgraded.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8088",
+    "publishedDate": "2026-05-07T20:16:45.510",
+    "lastModifiedDate": "2026-05-07T20:32:03.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8086",
+    "description": "A vulnerability was identified in OSGeo gdal up to 3.13.0dev-4. This issue affects the function SWnentries of the file frmts/hdf4/hdf-eos/SWapi.c. Such manipulation of the argument DimensionName leads to heap-based buffer overflow. The attack must be carried out locally. The exploit is publicly available and might be used. Upgrading to version 3.12.4RC1 is capable of addressing this issue. The name of the patch is 9491e794f1757f08063ea2f7a274ad2994afa636. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8086",
+    "publishedDate": "2026-05-07T19:16:03.110",
+    "lastModifiedDate": "2026-05-07T20:16:45.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8084",
+    "description": "A vulnerability was determined in OSGeo gdal up to 3.13.0dev-4. This vulnerability affects the function memmove of the file frmts/hdf4/hdf-eos/SWapi.c of the component HDF-EOS Grid File Handler. This manipulation causes out-of-bounds read. The attack is restricted to local execution. The exploit has been publicly disclosed and may be utilized. Upgrading to version 3.13.0RC1 is able to resolve this issue. Patch name: a791f70f8eaec540974ec989ca6fb00266b7646c. Upgrading the affected component is advised.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8084",
+    "publishedDate": "2026-05-07T19:16:02.950",
+    "lastModifiedDate": "2026-05-07T19:48:50.543",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8083",
+    "description": "A vulnerability was found in SourceCodester Pharmacy Sales and Inventory System 1.0. This affects an unknown part of the file /ajax.php?action=save_user. The manipulation of the argument ID results in sql injection. The attack can be executed remotely. The exploit has been made public and could be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8083",
+    "publishedDate": "2026-05-07T19:16:02.787",
+    "lastModifiedDate": "2026-05-07T19:48:55.360",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44742",
+    "description": "Postorius through 1.3.13 does not escape HTML in the message subject when rendering it in the Held messages pop-up, as exploited in the wild in May 2026.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44742",
+    "publishedDate": "2026-05-07T19:16:02.500",
+    "lastModifiedDate": "2026-05-07T19:53:21.760",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44244",
+    "description": "GitPython is a python library used to interact with Git repositories. Prior to version 3.1.49, GitConfigParser.set_value() passes values to Python's configparser without validating for newlines. GitPython's own _write() converts embedded newlines into indented continuation lines (e.g. \\n becomes \\n\\t), but Git still accepts an indented [core] stanza as a section header — so the injected core.hooksPath becomes effective configuration. Any Git operation that invokes hooks (commit, merge, checkout) will then execute scripts from the attacker-controlled path. This issue has been patched in version 3.1.49.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44244",
+    "publishedDate": "2026-05-07T19:16:02.357",
+    "lastModifiedDate": "2026-05-07T19:49:21.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44243",
+    "description": "GitPython is a python library used to interact with Git repositories. Prior to version 3.1.48, a vulnerability in GitPython allows attackers who can supply a crafted reference path to an application using GitPython to write, overwrite, move, or delete files outside the repository’s .git directory via insufficient validation of reference paths in reference creation, rename, and delete operations. This issue has been patched in version 3.1.48.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44243",
+    "publishedDate": "2026-05-07T19:16:02.227",
+    "lastModifiedDate": "2026-05-07T20:16:44.917",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42284",
+    "description": "GitPython is a python library used to interact with Git repositories. Prior to version 3.1.47, _clone() validates multi_options as the original list, then executes shlex.split(\" \".join(multi_options)). A string like \"--branch main --config core.hooksPath=/x\" passes validation (starts with --branch), but after split becomes [\"--branch\", \"main\", \"--config\", \"core.hooksPath=/x\"]. Git applies the config and executes attacker hooks during clone. This issue has been patched in version 3.1.47.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42284",
+    "publishedDate": "2026-05-07T19:16:01.783",
+    "lastModifiedDate": "2026-05-07T19:49:21.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42215",
+    "description": "GitPython is a python library used to interact with Git repositories. From version 3.1.30 to before version 3.1.47, GitPython blocks dangerous Git options such as --upload-pack and --receive-pack by default, but the equivalent Python kwargs upload_pack and receive_pack bypass that check. If an application passes attacker-controlled kwargs into Repo.clone_from(), Remote.fetch(), Remote.pull(), or Remote.push(), this leads to arbitrary command execution even when allow_unsafe_options is left at its default value of False. This issue has been patched in version 3.1.47.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42215",
+    "publishedDate": "2026-05-07T19:16:01.640",
+    "lastModifiedDate": "2026-05-07T19:49:21.197",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -15,116 +331,56 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "3c1d8aa1-5a33-4ea4-8992-aadd6440af75"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-44349",
-    "description": "Daptin is a GraphQL/JSON-API headless CMS. Prior to version 0.11.5, processFuzzySearch in server/resource/resource_findallpaginated.go:1484 splits the user-supplied column parameter by comma and interpolates each segment directly into goqu.L(fmt.Sprintf(\"LOWER(%s) LIKE ?\", prefix+col)) raw SQL with no column whitelist check. The entry point is GET /api/<entity> with operator=fuzzy (or fuzzy_any, fuzzy_all). Any authenticated user — including one who self-registered with no admin involvement — can read the entire database. This issue has been patched in version 0.11.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44349",
-    "publishedDate": "2026-05-07T15:16:10.903",
-    "lastModifiedDate": "2026-05-07T15:47:46.853",
+    "id": "CVE-2026-42214",
+    "description": "Notepad Next is a cross-platform, reimplementation of Notepad++. Prior to version 0.14, NotepadNext's detectLanguageFromExtension() function interpolates a file's extension directly into a Lua script without sanitization. An attacker can craft a filename whose extension contains Lua code, which executes automatically when the victim opens the file in NotepadNext. Because luaL_openlibs() is called unconditionally, the full os, io, and package libraries are available to the injected code, enabling arbitrary command execution. This issue has been patched in version 0.14.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42214",
+    "publishedDate": "2026-05-07T19:16:01.497",
+    "lastModifiedDate": "2026-05-07T20:16:43.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41906",
+    "description": "FreeScout is a free help desk and shared inbox built with PHP's Laravel framework. Prior to version 1.8.214, the Change Customer modal correctly hides out-of-scope customers through the mailbox-filtered search endpoint, but the backend conversation_change_customer action accepts any supplied customer_email. A low-privileged agent can forge a request and bind a visible conversation to a hidden customer in another mailbox. This issue has been patched in version 1.8.214.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41906",
+    "publishedDate": "2026-05-07T19:16:01.357",
+    "lastModifiedDate": "2026-05-07T19:51:36.220",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44264",
-    "description": "Weblate is a web based localization tool. Prior to version 5.17.1, the Markdown renderer used in user comments and other user-provided content didn't properly sanitize some attributes. This issue has been patched in version 5.17.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44264",
-    "publishedDate": "2026-05-07T15:16:10.760",
-    "lastModifiedDate": "2026-05-07T15:46:27.607",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44263",
-    "description": "Weblate is a web based localization tool. Prior to version 5.17.1, the screenshots, tasks, and component link API allowed for the enumeration of translations in a project inaccessible to the user. This issue has been patched in version 5.17.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44263",
-    "publishedDate": "2026-05-07T15:16:10.613",
-    "lastModifiedDate": "2026-05-07T15:46:27.607",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42011",
-    "description": "A flaw was found in gnutls. This vulnerability occurs because permitted name constraints were incorrectly ignored when previous Certificate Authorities (CAs) only had excluded name constraints. A remote attacker could exploit this to bypass critical name constraint checks during certificate validation. This bypass could lead to the acceptance of invalid certificates, potentially enabling spoofing or man-in-the-middle attacks against affected systems.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42011",
-    "publishedDate": "2026-05-07T15:16:09.760",
-    "lastModifiedDate": "2026-05-07T15:48:55.550",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41689",
-    "description": "Wallos is an open-source, self-hostable personal subscription tracker. In versions 4.8.4 and prior, the webhook notification feature reuses an administrator-configured local-target allowlist for every logged-in user. Any normal user can fully control a webhook URL, headers, and body, then use Wallos to send server-side requests to allowlisted internal automation services. When such a target exposes deployment or execution APIs, this can further enable adjacent-service RCE, but that downstream result is conditional on the target service. At time of publication, there are no publicly available patches.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41689",
-    "publishedDate": "2026-05-07T15:16:09.387",
-    "lastModifiedDate": "2026-05-07T16:16:20.623",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.7,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41688",
-    "description": "Wallos is an open-source, self-hostable personal subscription tracker. In versions 4.8.4 and prior, the incomplete SSRF fix in Wallos validates webhook URLs via gethostbyname() but passes the original hostname to cURL without CURLOPT_RESOLVE pinning on 10 of 11 outbound HTTP endpoints, leaving a DNS rebinding TOCTOU window. At time of publication, there are no publicly available patches.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41688",
-    "publishedDate": "2026-05-07T15:16:09.253",
-    "lastModifiedDate": "2026-05-07T15:45:05.947",
+    "id": "CVE-2026-41905",
+    "description": "FreeScout is a free help desk and shared inbox built with PHP's Laravel framework. Prior to version 1.8.217, Helper::sanitizeRemoteUrl() in app/Misc/Helper.php follows HTTP redirects via curlGetLastRedirectedUrl() but then re-validates the original URL instead of the final redirect destination. An attacker who can supply any URL that passes the initial host check can redirect FreeScout to internal HTTP services (cloud metadata, internal APIs, RFC1918 ranges) that would normally be blocked. This issue has been patched in version 1.8.217.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41905",
+    "publishedDate": "2026-05-07T19:16:01.220",
+    "lastModifiedDate": "2026-05-07T19:51:36.220",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -140,321 +396,21 @@
     ]
   },
   {
-    "id": "CVE-2026-41687",
-    "description": "Wallos is an open-source, self-hostable personal subscription tracker. Prior to version 4.8.1, the SSRF protection in endpoints/subscription/add.php (line 42) and endpoints/payments/add.php (line 40) uses an inline IP validation check (FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) that does not block CGNAT addresses (100.64.0.0/10, RFC 6598). The includes/ssrf_helper.php file explicitly defines is_cgnat_ip() to cover this gap (used by notification endpoints), but the logo/icon URL fetching in subscription and payment endpoints performs its own inline validation that misses this range. This allows authenticated users to perform Blind SSRF to internal services in Tailscale, Carrier-Grade NAT, and other environments using 100.64.0.0/10 addresses. This issue has been patched in version 4.8.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41687",
-    "publishedDate": "2026-05-07T15:16:09.107",
-    "lastModifiedDate": "2026-05-07T16:16:20.470",
+    "id": "CVE-2026-41904",
+    "description": "FreeScout is a free help desk and shared inbox built with PHP's Laravel framework. Prior to version 1.8.217, a user with updateAutoReply permission can store an XSS payload in the mailbox auto-reply message. The payload is rendered unescaped in the auto-reply email sent to every customer who contacts the mailbox. Email clients do not enforce CSP, so the payload executes in the customer's webmail / mail-client context. This issue has been patched in version 1.8.217.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41904",
+    "publishedDate": "2026-05-07T19:16:01.087",
+    "lastModifiedDate": "2026-05-07T20:16:43.753",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41654",
-    "description": "Weblate is a web based localization tool. Prior to version 5.17.1, an authenticated user with project.add permission (default on hosted Weblate SaaS and for any user holding an active billing/trial plan) can import a crafted project backup ZIP whose components/<name>.json contains an attacker-chosen repo URL pointing at a private address (e.g. http://127.0.0.1:9999/) or using a non-allow-listed scheme (e.g. file://, git://). Weblate persists the component via Component.objects.bulk_create([component])[0], which bypasses Django's full_clean() and therefore never runs the validate_repo_url validator. The URL is subsequently written verbatim into .git/config by configure_repo(pull=False). This issue has been patched in version 5.17.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41654",
-    "publishedDate": "2026-05-07T15:16:07.907",
-    "lastModifiedDate": "2026-05-07T15:46:27.607",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41650",
-    "description": "fast-xml-parser allows users to process XML from JS object without C/C++ based libraries or callbacks. Prior to version 5.7.0, XMLBuilder does not escape the \"-->\" sequence in comment content or the \"]]>\" sequence in CDATA sections when building XML from JavaScript objects. This allows XML injection when user-controlled data flows into comments or CDATA elements, leading to XSS, SOAP injection, or data manipulation. This issue has been patched in version 5.7.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41650",
-    "publishedDate": "2026-05-07T15:16:07.767",
-    "lastModifiedDate": "2026-05-07T16:16:20.080",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41519",
-    "description": "Weblate is a web based localization tool. Prior to version 5.17.1, when a user changes their password, browser sessions are correctly invalidated via \"cycle_session_keys()\", but DRF API tokens (\"wlu_*\" prefix) stored in \"authtoken_token\" are not revoked. This issue has been patched in version 5.17.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41519",
-    "publishedDate": "2026-05-07T15:16:07.160",
-    "lastModifiedDate": "2026-05-07T15:46:27.607",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41505",
-    "description": "RELATE is a web-based courseware package. Prior to commit 2f68e16, RELATE is vulnerable to predictable token generation in auth.py's make_sign_in_key() function and exam.py's gen_ticket_code() function. This issue has been patched via commit 2f68e16.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41505",
-    "publishedDate": "2026-05-07T15:16:07.010",
-    "lastModifiedDate": "2026-05-07T15:53:49.717",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
+        "score": 7.6,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.8,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41422",
-    "description": "Daptin is a GraphQL/JSON-API headless CMS. Prior to version 0.11.4, the /aggregate/:typename endpoint accepted column and group query parameters that were passed verbatim to goqu.L() — a raw SQL literal expression builder — without any validation. This bypassed all parameterization and allowed authenticated users with any valid session to inject arbitrary SQL expressions. This issue has been patched in version 0.11.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41422",
-    "publishedDate": "2026-05-07T15:16:06.813",
-    "lastModifiedDate": "2026-05-07T15:47:46.853",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-36458",
-    "description": "ChestnutCMS v1.5.10 has a SQL injection vulnerability. The content parameter of the cms_content tag can be manipulated in the admin backend and injected into a SQL query when the template is rendered.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36458",
-    "publishedDate": "2026-05-07T15:16:05.523",
-    "lastModifiedDate": "2026-05-07T15:53:01.027",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-32686",
-    "description": "Uncontrolled Resource Consumption vulnerability in ericmj decimal allows unauthenticated remote Denial of Service.\n\nThe decimal library does not bound the exponent on parsed input. Storing a decimal with a very large exponent (e.g. Decimal.new(\"1e1000000000\")) is accepted without error. Subsequent calls to arithmetic functions (Decimal.add/2, Decimal.sub/2, Decimal.div/2), Decimal.to_string/2 with :normal or :xsd format, Decimal.to_integer/1, Decimal.round/3, or Decimal.compare/3 with a threshold allocate memory proportional to the exponent value, which can exhaust available memory and crash the BEAM VM.\n\nAny application that accepts user-supplied decimal input and subsequently performs arithmetic, rounding, conversion to integer, or string formatting on it is exposed. A single malicious request is sufficient to cause an out-of-memory crash.\n\nThis issue affects decimal: from 0.1.0 before 3.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-32686",
-    "publishedDate": "2026-05-07T15:16:05.370",
-    "lastModifiedDate": "2026-05-07T15:49:13.797",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-67202",
-    "description": "Sidekiq-cron thru 2.3.1, an open-source scheduling add-on for Sidekiq, is vulnerable to a cross-site scripting (xss) vulnerability via crafted URL being rended from cron.erb.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-67202",
-    "publishedDate": "2026-05-07T15:16:04.947",
-    "lastModifiedDate": "2026-05-07T15:53:49.717",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-63706",
-    "description": "NPM package next-npm-version1.0.1 is vulnerable to Command injection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-63706",
-    "publishedDate": "2026-05-07T15:16:04.820",
-    "lastModifiedDate": "2026-05-07T15:51:01.053",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-63705",
-    "description": "NPM package node-ts-ocr 1.0.15 is vulnerable to OS Command Injection via the invokeImageOcr function in src/index.js.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-63705",
-    "publishedDate": "2026-05-07T15:16:04.213",
-    "lastModifiedDate": "2026-05-07T15:51:19.043",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-4397",
-    "description": "Medtronic MyCareLink Patient Monitor uses per-product credentials that are stored in a recoverable format. An attacker can use these credentials to modify encrypted drive data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-4397",
-    "publishedDate": "2026-05-07T16:16:17.410",
-    "lastModifiedDate": "2026-05-07T16:16:17.410",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.9,
-        "source": "security@medtronic.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-4386",
-    "description": "Medtronic MyCareLink Patient Monitor has an internal serial interface, which allows an attacker with physical access to access a login prompt via a UART terminal.​",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-4386",
-    "publishedDate": "2026-05-07T16:16:17.287",
-    "lastModifiedDate": "2026-05-07T16:16:17.287",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.9,
-        "source": "security@medtronic.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6795",
-    "description": "URL redirection to untrusted site ('open redirect') vulnerability in DivvyDrive Information Technologies Inc. DivvyDrive allows Parameter Injection.\n\nThis issue affects DivvyDrive: from 4.8.2.9 before 4.8.3.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6795",
-    "publishedDate": "2026-05-07T14:16:04.280",
-    "lastModifiedDate": "2026-05-07T14:42:40.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 6,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41685",
-    "description": "Incus is a system container and virtual machine manager. Prior to version 7.0.0, uploads of large amount of data by authenticated users can run the Incus server out of disk space, potentially taking down the host system. The impact here is limited for anyone using storage.images_volume and storage.backups_volume as those users will have large uploads be stored on those volumes rather than directly on the host filesystem. This is the default behavior on IncusOS. This issue has been patched in version 7.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41685",
-    "publishedDate": "2026-05-07T14:16:03.500",
-    "lastModifiedDate": "2026-05-07T15:16:08.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41684",
-    "description": "Incus is a system container and virtual machine manager. Prior to version 7.0.0, backup.GetInfo() trusts the inline backup/index.yaml config when present and only falls back to parsing the legacy backup/container/backup.yaml file if result.Config == nil. As a result, an archive can carry a valid inline config that passes the initial import preflight while also carrying a malformed legacy backup/container/backup.yaml file that is reparsed later from the restored file system. ParseConfigYamlFile() accepts YAML documents with no container section, and multiple downstream consumers then dereference. Container without checking for nil. Confirmed examples in the instance restore and import flow include backup.UpdateInstanceConfig() and internalImportFromBackup(). An authenticated user with permission to import instance backups may be able to crash the Incus daemon with a crafted backup archive whose inline backup/index.yaml is valid but whose extracted legacy backup.yaml omits container. The crash occurs in the restore path after archive extraction has begun. This issue has been patched in version 7.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41684",
-    "publishedDate": "2026-05-07T14:16:03.350",
-    "lastModifiedDate": "2026-05-07T14:59:38.387",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41648",
-    "description": "Incus is a system container and virtual machine manager. Prior to version 7.0.0, user provided image and backup tarballs would be unpacked and YAML files parsed without any size restrictions. This was making it easy for an authenticated user to provide a crafted image or backup tarball that when parsed by Incus would lead to a very large YAML document being loaded into memory, potentially causing the entire server to run out of memory. This issue has been patched in version 7.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41648",
-    "publishedDate": "2026-05-07T14:16:03.200",
-    "lastModifiedDate": "2026-05-07T16:16:19.930",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41647",
-    "description": "Incus is a system container and virtual machine manager. Prior to version 7.0.0, a missing error handling could lead an authenticated Incus user to cause a daemon crash through the import of a truncated storage bucket backup file. This issue has been patched in version 7.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41647",
-    "publishedDate": "2026-05-07T14:16:03.020",
-    "lastModifiedDate": "2026-05-07T14:59:38.387",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 4.7,
         "source": "security-advisories@github.com"
       }
     ]
