@@ -13,7 +13,58 @@
     }
   ],
   "name": "thegentlemen",
-  "tools": [],
+  "tools": [
+    {
+      "CredentialTheft": [
+        "DumpBrowserSecrets",
+        "Hydra",
+        "KslDump",
+        "KslKatz",
+        "XenAllPasswordPro"
+      ],
+      "DefenseEvasion": [
+        "EDRStartupHinder",
+        "GFreeze",
+        "GLinker"
+      ],
+      "DiscoveryEnum": [
+        "ADFind",
+        "BloodHound",
+        "Censys",
+        "CertiHound",
+        "MANSPIDER",
+        "PowerZure",
+        "Shodan",
+        "gogo scanner",
+        "ldapdomaindump"
+      ],
+      "Exfiltration": [
+        "rclone"
+      ],
+      "Networking": [
+        "Chisel-ng",
+        "ProxyChains",
+        "Tor / Onion C2",
+        "openconnect"
+      ],
+      "Offsec": [
+        "Custom Go Locker (Windows/Linux/NAS)",
+        "NetExec (nxc)",
+        "PetitPotam",
+        "PrivHound",
+        "RegPwn",
+        "RelayKing",
+        "Responder",
+        "TrustedSec Titanis",
+        "Velociraptor",
+        "ZeroPulse",
+        "ntlmrelayx"
+      ],
+      "RMM-Tools": [
+        "AnyDesk"
+      ]
+    }
+  ],
   "ttps": [
     {
       "tactic_id": "TA0001",
@@ -30,9 +81,19 @@
           "technique_name": "Valid Accounts: Domain Accounts"
         },
         {
+          "technique_details": "openconnect used to authenticate to FortiGate SSL VPN (--protocol=fortinet). Actors connect post-credential-acquisition to enumerate internal network routes.",
+          "technique_id": "T1133",
+          "technique_name": "External Remote Services"
+        },
+        {
           "technique_details": "Exploitation of public-facing applications for initial access.",
           "technique_id": "T1190",
           "technique_name": "Exploit Public-Facing Application"
+        },
+        {
+          "technique_details": "Spear-phishing via compromised corporate OWA mailboxes. ZIP payloads containing LNK files disguised as PDF/DOC/XLS or malicious Office documents sent from legitimate company email accounts to bypass spam filters.",
+          "technique_id": "T1566",
+          "technique_name": "Phishing"
         }
       ]
     },
@@ -40,6 +101,11 @@
       "tactic_id": "TA0002",
       "tactic_name": "Execution",
       "techniques": [
+        {
+          "technique_details": "NetExec (nxc) with -X/-x flags for remote PowerShell/CMD execution over WMI/SMB. TrustedSec Titanis used for WMI-based remote execution via NTLM hashes.",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        },
         {
           "technique_details": "Use of command and scripting interpreters for execution.",
           "technique_id": "T1059",
@@ -54,6 +120,11 @@
           "technique_details": "Use of Windows Command Shell for execution.",
           "technique_id": "T1059.003",
           "technique_name": "Command and Scripting Interpreter: Windows Command Shell"
+        },
+        {
+          "technique_details": "Ransomware locker and EDR killers deployed domain-wide via GPO (deploy_gpo.ps1). GPO configured to run binaries at startup on all domain-joined machines.",
+          "technique_id": "T1072",
+          "technique_name": "Software Deployment Tools"
         }
       ]
     },
@@ -65,6 +136,11 @@
           "technique_details": "Creation of accounts for persistence.",
           "technique_id": "T1136",
           "technique_name": "Create Account"
+        },
+        {
+          "technique_details": "Velociraptor deployed as a SYSTEM-level Windows service via MSI (Server.Utils.CreateMSI artifact) for persistent beacon access.",
+          "technique_id": "T1543",
+          "technique_name": "Create or Modify System Process"
         },
         {
           "technique_details": "Boot or logon autostart execution for persistence.",
@@ -81,6 +157,16 @@
           "technique_details": "Exploitation of vulnerabilities for privilege escalation.",
           "technique_id": "T1068",
           "technique_name": "Exploitation for Privilege Escalation"
+        },
+        {
+          "technique_details": "PetitPotam coercion via NXC coerce_plus module to trigger NTLM authentication from domain hosts toward attacker-controlled relay listener.",
+          "technique_id": "T1187",
+          "technique_name": "Forced Authentication"
+        },
+        {
+          "technique_details": "Responder (SMB/HTTP disabled) combined with ntlmrelayx targeting LDAP for machine account creation. RelayKing used to scan SMB/LDAP/MSSQL/HTTP/RPC/WinRM relay opportunities.",
+          "technique_id": "T1557",
+          "technique_name": "Adversary-in-the-Middle"
         }
       ]
     },
@@ -92,6 +178,16 @@
           "technique_details": "Obfuscation of files or information to evade detection.",
           "technique_id": "T1027",
           "technique_name": "Obfuscated Files or Information"
+        },
+        {
+          "technique_details": "Automated post-compromise script clears all Windows Event Logs via wevtutil, removes RDP MRU registry keys, deletes .rdp files, empties Recycle Bin, and clears RDP/SMB/WinRM logs.",
+          "technique_id": "T1070",
+          "technique_name": "Indicator Removal"
+        },
+        {
+          "technique_details": "ProxyChains (Windows/Linux), SSH dynamic port forwarding (-NfD 1080), ProxyJump multi-hop pivoting. Self-hosted double-VPN with WireGuard/OpenVPN and Amnezia VPN for operator anonymity.",
+          "technique_id": "T1090",
+          "technique_name": "Proxy"
         },
         {
           "technique_details": "Modifying the registry for defense evasion.",
@@ -107,6 +203,37 @@
           "technique_details": "Impairing defenses to avoid detection.",
           "technique_id": "T1562",
           "technique_name": "Impair Defenses"
+        },
+        {
+          "technique_details": "BYOVD drivers ($3500-$5000 darknet), EDRStartupHinder, GFreeze/GLinker against CrowdStrike, IFEO registry redirecting EDR processes to calc.exe, WMI GlobalLogger/WPR symlink attacks to overwrite EDR binaries on boot.",
+          "technique_id": "T1562.001",
+          "technique_name": "Impair Defenses: Disable or Modify Tools"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0006",
+      "tactic_name": "Credential Access",
+      "techniques": [
+        {
+          "technique_details": "XenAllPasswordPro deployed via SMB for mass browser credential harvesting across all hosts. KslDump/KslKatz for LSASS dumping. Velociraptor for full memory dumps without AV detection. Pass-the-Hash via xfreerdp.",
+          "technique_id": "T1003",
+          "technique_name": "OS Credential Dumping"
+        },
+        {
+          "technique_details": "Custom FortiGate panel bruter on dedicated hardware (dual Xeon, 120GB RAM) targeting non-standard ports. Credential spraying with known default passwords. Hydra for email spraying. Hash cracking via crackmd5.ru and chamd5.org.",
+          "technique_id": "T1110",
+          "technique_name": "Brute Force"
+        },
+        {
+          "technique_details": "FortiGate configuration files exfiltrated containing plaintext LDAP credentials, local VPN user passwords, and IPSec pre-shared keys. MANSPIDER used to search SMB shares for credential files.",
+          "technique_id": "T1552",
+          "technique_name": "Unsecured Credentials"
+        },
+        {
+          "technique_details": "DumpBrowserSecrets used for browser credential and session cookie theft. Cookies imported via Cookie-Editor extension to hijack authenticated M365/CRM/email sessions.",
+          "technique_id": "T1555",
+          "technique_name": "Credentials from Password Stores"
         }
       ]
     },
@@ -115,9 +242,19 @@
       "tactic_name": "Discovery",
       "techniques": [
         {
+          "technique_details": "gogo internal port scanner across /24 subnets (ports 22,53,80,88,389,443,445,636,3389,1433,5985) with 100 threads and ICMP ping. NetExec for SMB/WinRM/LDAP host enumeration.",
+          "technique_id": "T1018",
+          "technique_name": "Remote System Discovery"
+        },
+        {
           "technique_details": "Discovery of network services.",
           "technique_id": "T1046",
           "technique_name": "Network Service Discovery"
+        },
+        {
+          "technique_details": "BloodHound/CertiHound for AD and AD CS (ESC1-ESC17) enumeration. ADFind and ldapdomaindump for group/permission mapping. PrivHound for LPE vector identification within AD.",
+          "technique_id": "T1069",
+          "technique_name": "Permission Groups Discovery"
         },
         {
           "technique_details": "Discovery of accounts within the environment.",
@@ -133,6 +270,11 @@
           "technique_details": "Discovery of domain trust relationships.",
           "technique_id": "T1482",
           "technique_name": "Domain Trust Discovery"
+        },
+        {
+          "technique_details": "AWS S3 buckets and EKS clusters enumerated post-access. Censys, Shodan, ZoomInfo, and c99.nl API used for external recon of VPN endpoints and subdomains.",
+          "technique_id": "T1526",
+          "technique_name": "Cloud Service Discovery"
         }
       ]
     },
@@ -159,6 +301,11 @@
           "technique_details": "Use of SSH for lateral movement.",
           "technique_id": "T1021.004",
           "technique_name": "Remote Services: SSH"
+        },
+        {
+          "technique_details": "Browser session cookies stolen via DumpBrowserSecrets and replayed via Cookie-Editor to hijack authenticated web application sessions (email, M365, CRM portals).",
+          "technique_id": "T1563",
+          "technique_name": "Remote Service Session Hijacking"
         }
       ]
     },
@@ -166,6 +313,11 @@
       "tactic_id": "TA0009",
       "tactic_name": "Collection",
       "techniques": [
+        {
+          "technique_details": "XenAllPasswordPro HTML credential reports collected per host. SQL database full dumps via phpMyAdmin exported to SFTP. File system enumeration targeting CRM code, backups, and financial data.",
+          "technique_id": "T1005",
+          "technique_name": "Data from Local System"
+        },
         {
           "technique_details": "Collection of data from network shared drives.",
           "technique_id": "T1039",
@@ -180,6 +332,11 @@
           "technique_details": "Local staging of collected data prior to exfiltration.",
           "technique_id": "T1074.001",
           "technique_name": "Data Staged: Local Data Staging"
+        },
+        {
+          "technique_details": "Corporate OWA mailboxes accessed via purchased stealer logs (snusbase.com) to harvest internal communications, credentials, and sensitive documents.",
+          "technique_id": "T1114",
+          "technique_name": "Email Collection"
         }
       ]
     },
@@ -196,6 +353,11 @@
           "technique_details": "Exfiltration over symmetric encrypted non-C2 channels.",
           "technique_id": "T1048.001",
           "technique_name": "Exfiltration Over Alternative Protocol: Exfiltration Over Symmetric Encrypted Non-C2 Protocol"
+        },
+        {
+          "technique_details": "rclone to actor-controlled SFTP servers with high-parallelism (--transfers 16 --multi-thread-streams 8 --buffer-size 256M). Observed volumes: 13GB NAS, 3+TB Docker/Nexus, 100+GB Confluence/JIRA.",
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account"
         }
       ]
     },
@@ -217,6 +379,16 @@
           "technique_details": "Use of remote access software for C2.",
           "technique_id": "T1219",
           "technique_name": "Remote Access Software"
+        },
+        {
+          "technique_details": "SSH dynamic SOCKS proxies (ssh -NfD 1080) for network pivoting. ProxyChains (Windows/Linux) tunneling attack tools through SOCKS5 proxies acquired from spam/malware affiliates.",
+          "technique_id": "T1572",
+          "technique_name": "Protocol Tunneling"
+        },
+        {
+          "technique_details": "Cloudflare Tunnels blend C2 with legitimate HTTPS traffic. Chisel-ng (Rust, SSH-over-WebSocket-over-TLS) for reverse tunnels. Velociraptor C2 over TLS with signed MSI beacons.",
+          "technique_id": "T1573",
+          "technique_name": "Encrypted Channel"
         }
       ]
     },
@@ -235,9 +407,14 @@
           "technique_name": "Service Stop"
         },
         {
-          "technique_details": "Leveraging unsecured credentials found in the environment.",
-          "technique_id": "T1552",
-          "technique_name": "Unsecured Credentials"
+          "technique_details": "Veeam backup jobs stopped and tape media long-erased (Erase-VBRTapeMedium -Long). Docker and QEMU VMs killed pre-encryption. vCenter used to reset ESXi root passwords. Database services (MySQL, PostgreSQL, MongoDB, Redis, MSSQL) stopped before encryption.",
+          "technique_id": "T1490",
+          "technique_name": "Inhibit System Recovery"
+        },
+        {
+          "technique_details": "Data deleted from CRM web panels and databases. chmod -R 777 applied to NAS filesystems to facilitate locker access and destroy access controls.",
+          "technique_id": "T1491",
+          "technique_name": "Defacement"
         }
       ]
     }
