@@ -1,10 +1,10 @@
 [
   {
-    "id": "CVE-2026-8288",
-    "description": "A vulnerability was determined in Open5GS up to 2.7.7. This affects the function gsm_handle_pdu_session_modification_qos_flow_descriptions of the file src/smf/gsm-handler.c of the component SMF. Executing a manipulation of the argument n1SmMsg can lead to denial of service. The attack may be launched remotely. The exploit has been publicly disclosed and may be utilized. The pull request to fix this issue awaits acceptance.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8288",
-    "publishedDate": "2026-05-11T13:16:12.073",
-    "lastModifiedDate": "2026-05-11T13:16:12.073",
+    "id": "CVE-2026-8290",
+    "description": "A security flaw has been discovered in Open5GS up to 2.7.7. This issue affects the function smf_nsmf_handle_update_data_in_vsmf of the file /src/smf/nsmf-handler.c of the component SMF. The manipulation results in denial of service. The attack can be executed remotely. The exploit has been released to the public and may be used for attacks. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8290",
+    "publishedDate": "2026-05-11T14:16:34.483",
+    "lastModifiedDate": "2026-05-11T16:17:43.263",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -29,11 +29,11 @@
     ]
   },
   {
-    "id": "CVE-2026-8290",
-    "description": "A security flaw has been discovered in Open5GS up to 2.7.7. This issue affects the function smf_nsmf_handle_update_data_in_vsmf of the file /src/smf/nsmf-handler.c of the component SMF. The manipulation results in denial of service. The attack can be executed remotely. The exploit has been released to the public and may be used for attacks. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8290",
-    "publishedDate": "2026-05-11T14:16:34.483",
-    "lastModifiedDate": "2026-05-11T14:16:34.483",
+    "id": "CVE-2026-8289",
+    "description": "A vulnerability was identified in Open5GS up to 2.7.7. This vulnerability affects the function smf_nsmf_handle_update_data_in_vsmf of the file /src/smf/nsmf-handler.c of the component SMF. The manipulation of the argument qosFlowProfile leads to denial of service. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8289",
+    "publishedDate": "2026-05-11T14:16:34.207",
+    "lastModifiedDate": "2026-05-11T15:10:16.663",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -78,11 +78,11 @@
     ]
   },
   {
-    "id": "CVE-2026-8289",
-    "description": "A vulnerability was identified in Open5GS up to 2.7.7. This vulnerability affects the function smf_nsmf_handle_update_data_in_vsmf of the file /src/smf/nsmf-handler.c of the component SMF. The manipulation of the argument qosFlowProfile leads to denial of service. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8289",
-    "publishedDate": "2026-05-11T14:16:34.207",
-    "lastModifiedDate": "2026-05-11T14:16:34.207",
+    "id": "CVE-2026-8288",
+    "description": "A vulnerability was determined in Open5GS up to 2.7.7. This affects the function gsm_handle_pdu_session_modification_qos_flow_descriptions of the file src/smf/gsm-handler.c of the component SMF. Executing a manipulation of the argument n1SmMsg can lead to denial of service. The attack may be launched remotely. The exploit has been publicly disclosed and may be utilized. The pull request to fix this issue awaits acceptance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8288",
+    "publishedDate": "2026-05-11T13:16:12.073",
+    "lastModifiedDate": "2026-05-11T15:10:16.663",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -111,7 +111,7 @@
     "description": "Due to not validating the organization context when executing adaptive authentication flows, the WSO2 Identity Server allows adaptive authentication logic to be triggered on unintended organizations. A malicious actor with privileges to configure adaptive authentication within one organization can leverage this functionality to execute authentication logic on other organizations and sub-organizations.\n\nThis flaw allows bypassing authorization boundaries between organizations, leading to unauthorized access to critical operations and user accounts in other organizations. When adaptive authentication is enabled in a multi-organization deployment, a malicious actor with privileges to configure adaptive authentication in one organization could exploit this feature to perform critical operations in other organizations without authorization. This may result in privilege escalation, unauthorized access to resources, and potential account takeover across organizations.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2025-9973",
     "publishedDate": "2026-05-11T12:16:11.050",
-    "lastModifiedDate": "2026-05-11T12:16:11.050",
+    "lastModifiedDate": "2026-05-11T16:17:29.377",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -431,7 +431,7 @@
     "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrxrpc: Also unshare DATA/RESPONSE packets when paged frags are present\n\nThe DATA-packet handler in rxrpc_input_call_event() and the RESPONSE\nhandler in rxrpc_verify_response() copy the skb to a linear one before\ncalling into the security ops only when skb_cloned() is true.  An skb\nthat is not cloned but still carries externally-owned paged fragments\n(e.g. SKBFL_SHARED_FRAG set by splice() into a UDP socket via\n__ip_append_data, or a chained skb_has_frag_list()) falls through to\nthe in-place decryption path, which binds the frag pages directly into\nthe AEAD/skcipher SGL via skb_to_sgvec().\n\nExtend the gate to also unshare when skb_has_frag_list() or\nskb_has_shared_frag() is true.  This catches the splice-loopback vector\nand other externally-shared frag sources while preserving the\nzero-copy fast path for skbs whose frags are kernel-private (e.g. NIC\npage_pool RX, GRO).  The OOM/trace handling already in place is reused.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-43500",
     "publishedDate": "2026-05-11T08:16:16.077",
-    "lastModifiedDate": "2026-05-11T12:17:27.930",
+    "lastModifiedDate": "2026-05-11T17:16:34.290",
     "vendors": [
       "linux"
     ],
@@ -447,6 +447,15 @@
         "exploitabilityScore": 1.8,
         "impactScore": 5.9,
         "source": "nvd@nist.gov"
+      },
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   },
