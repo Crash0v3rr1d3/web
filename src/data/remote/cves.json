@@ -1,5 +1,165 @@
 [
   {
+    "id": "CVE-2026-5486",
+    "description": "The Unlimited Elements for Elementor plugin for WordPress is vulnerable to SQL Injection via the 'data[filter_search]' parameter in the get_cat_addons AJAX action in versions up to and including 2.0.7. This is due to insufficient input sanitization and the use of deprecated escaping functions combined with direct string concatenation in SQL query construction. The vulnerability is exacerbated because the normalizeAjaxInputData() function calls stripslashes() on all user input, removing the protection provided by WordPress's wp_magic_quotes() function. Subsequently, the filter_search parameter is escaped using the deprecated wpdb->_escape() function and then directly concatenated into a LIKE clause without using prepared statements. This makes it possible for authenticated attackers, with Contributor-level access and above (who can obtain a valid nonce through the Elementor editor), to inject arbitrary SQL commands and extract sensitive information from the database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5486",
+    "publishedDate": "2026-05-14T04:17:03.773",
+    "lastModifiedDate": "2026-05-14T04:17:03.773",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46446",
+    "description": "SOGo before 5.12.7, when PostgreSQL or MariaDB is used, and cleartext passwords are stored, allows SQL injection. This is related to c_password = '%@' in changePasswordForLogin.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46446",
+    "publishedDate": "2026-05-14T04:17:03.547",
+    "lastModifiedDate": "2026-05-14T04:17:03.547",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.5,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46445",
+    "description": "SOGo before 5.12.7, when PostgreSQL is used, allows SQL injection.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46445",
+    "publishedDate": "2026-05-14T04:17:03.193",
+    "lastModifiedDate": "2026-05-14T04:17:03.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.5,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5361",
+    "description": "The Envira Gallery Lite plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the REST API in versions up to and including 1.12.4. This is due to insufficient input sanitization in the update_gallery_data() function and improper output escaping in the gallery_init() function. The sanitize_config_values() function only sanitizes the justified_gallery_theme and justified_row_height parameters, but does not sanitize the arrows parameter. When the arrows value is output in the inline JavaScript configuration, it uses esc_attr() which is designed for HTML attribute contexts, not JavaScript contexts, allowing JavaScript expression injection. This makes it possible for authenticated attackers, with Author-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5361",
+    "publishedDate": "2026-05-14T05:16:44.933",
+    "lastModifiedDate": "2026-05-14T05:16:44.933",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7648",
+    "description": "The LearnPress – WordPress LMS Plugin for Create and Sell Online Courses plugin for WordPress is vulnerable to payment bypass through user-controlled key in all versions up to, and including, 4.3.5. This is due to improper handling of user-supplied request parameters in the REST API endpoint, which passes the unsanitized parameter array to the add_to_cart() function where array_merge() allows attacker-controlled values to overwrite hardcoded defaults. This makes it possible for authenticated attackers, with subscriber-level access and above, to enroll in any paid course entirely free of charge by supplying a quantity value of zero, which causes the order total to calculate as $0 and bypasses all payment gateway requirements.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7648",
+    "publishedDate": "2026-05-14T05:16:46.080",
+    "lastModifiedDate": "2026-05-14T05:16:46.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7525",
+    "description": "The My Calendar – Accessible Event Manager plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 3.7.9. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with custom-level access and above, to bypass the moderation and approval workflow by tampering with the POST body to publish events or set other unauthorized statuses such as cancelled or private, in ways their role does not permit. While the UI correctly restricts low-privilege users to a draft-only submit button, this restriction is enforced only client-side, making it trivially bypassable by directly manipulating the POST request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7525",
+    "publishedDate": "2026-05-14T05:16:45.947",
+    "lastModifiedDate": "2026-05-14T05:16:45.947",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46419",
+    "description": "Yubico webauthn-server-core (aka java-webauthn-server) 2.8.0 before 2.8.2 incorrectly checks a function's return value in the second factor flow, leading to impersonation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46419",
+    "publishedDate": "2026-05-14T02:17:21.917",
+    "lastModifiedDate": "2026-05-14T04:17:02.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44919",
+    "description": "In OpenStack Ironic through 35.x before a3f6d73, during image handling, an infinite loop in checksum calculations can occur via the file:///dev/zero URL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44919",
+    "publishedDate": "2026-05-14T02:17:21.773",
+    "lastModifiedDate": "2026-05-14T02:17:21.773",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-41281",
     "description": "Android App \"あんしんフィルター for au\" provided by KDDI CORPORATION contains Cleartext Transmission of Sensitive Information (CWE-319) vulnerability. A man-in-the-middle attacker may access and modify communications transmitted in plaintext, potentially resulting in information disclosure or data tampering.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-41281",
@@ -325,166 +485,6 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44425",
-    "description": "ShellHub is a centralized SSH gateway. Prior to 0.24.2, the device list endpoint accepts user-controlled identifiers in the the name field of each filter property in the base64-encoded filter query parameter and the sort_by query parameter, which are then passed directly as BSON/SQL keys in the database layer without validation. Any authenticated user can craft payloads that cause the aggregation / query to fail and the API to return HTTP 500 with no body, with no rate limiting applied. This vulnerability is fixed in 0.24.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44425",
-    "publishedDate": "2026-05-13T22:16:44.400",
-    "lastModifiedDate": "2026-05-13T22:16:44.400",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44424",
-    "description": "ShellHub is a centralized SSH gateway. Prior to 0.24.2, GET /api/devices/:uid returns the full device object whenever the caller is authenticated, without verifying that the device belongs to the caller's namespace (tenant). Any authenticated user (JWT or API Key) who knows or can guess a device UID can read device metadata from any other namespace. This vulnerability is fixed in 0.24.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44424",
-    "publishedDate": "2026-05-13T22:16:44.257",
-    "lastModifiedDate": "2026-05-13T22:16:44.257",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44423",
-    "description": "ShellHub is a centralized SSH gateway. Prior to 0.24.2, GET /api/sessions/:uid returns the full session object for any authenticated caller, without scoping by the caller's tenant. An authenticated user can read session records (SSH username, device UID, remote IP, terminal type, authenticated flag, timestamps) belonging to any other namespace. This vulnerability is fixed in 0.24.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44423",
-    "publishedDate": "2026-05-13T22:16:44.103",
-    "lastModifiedDate": "2026-05-13T22:16:44.103",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44369",
-    "description": "CVAT is an open source interactive video and image annotation tool for computer vision. From 2.5.0 to 2.63.0, an attacker who is able to create or edit an annotation guide on a task is able to add malicious JavaScript code, which will then run in the browser of anyone who opens this annotation guide. This code will be able to make arbitrary requests to CVAT with the victim user's privileges. This vulnerability is fixed in 2.64.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44369",
-    "publishedDate": "2026-05-13T22:16:43.963",
-    "lastModifiedDate": "2026-05-13T22:16:43.963",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44195",
-    "description": "OPNsense is a FreeBSD based firewall and routing platform. Prior to 26.1.7, a logic flaw in the OPNsense lockout_handler allows an unauthenticated attacker to continuously reset the authentication failure counter for their IP address. By interjecting a crafted username containing a success keyword (\"Accepted\" or \"Successful login\") between normal brute-force attempts, an attacker can prevent the failure counter from ever reaching the lockout threshold. This vulnerability is fixed in 26.1.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44195",
-    "publishedDate": "2026-05-13T22:16:43.820",
-    "lastModifiedDate": "2026-05-13T22:16:43.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44194",
-    "description": "OPNsense is a FreeBSD based firewall and routing platform. Prior to 26.1.8, an authenticated Remote Code Execution (RCE) vulnerability in the OPNsense core allows a user with user-management privileges to execute arbitrary system commands as root. An attacker can bypass input validation by formatting their malicious payload as a compliant email address, allowing shell commands to reach the underlying operating system. The flaw exists in the local user synchronization flow, within core/src/opnsense/scripts/auth/sync_user.php. This vulnerability is fixed in 26.1.8.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44194",
-    "publishedDate": "2026-05-13T22:16:43.673",
-    "lastModifiedDate": "2026-05-13T22:16:43.673",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44193",
-    "description": "OPNsense is a FreeBSD based firewall and routing platform. Prior to 26.1.7, the XMLRPC method opnsense.restore_config_section fails to sanitize user supplied input leading to Remote Code Execution. This vulnerability is fixed in 26.1.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44193",
-    "publishedDate": "2026-05-13T22:16:43.533",
-    "lastModifiedDate": "2026-05-13T22:16:43.533",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42463",
-    "description": "SQLBot is an intelligent Text-to-SQL system based on large language models and RAG. Prior to 1.8.0, SQLBot contains a Cross-Workspace IDOR (Insecure Direct Object Reference) and Authorization Bypass vulnerability in the /api/v1/datasource/exportDsSchema and /api/v1/datasource/uploadDsSchema endpoints. An attacker can access and modify database schemas and data sources belonging to other tenants/workspaces. This vulnerability is fixed in 1.8.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42463",
-    "publishedDate": "2026-05-13T22:16:43.397",
-    "lastModifiedDate": "2026-05-13T22:16:43.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
