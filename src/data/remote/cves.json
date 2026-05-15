@@ -1,10 +1,180 @@
 [
   {
-    "id": "CVE-2026-41553",
-    "description": "PDF Export Module used in DHTMLX's products Gantt and Scheduler is vulnerable to Remote Code Execution due to lack of \"data\" parameter sanitization. An unauthenticated attacker can inject the malicious JavaScript code to the parameter whose value is processed by Node.js and subsequently executed. This can lead to server compromise.\n\nThis issue was fixed in PDF Export Module version 0.7.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41553",
-    "publishedDate": "2026-05-15T13:16:19.130",
-    "lastModifiedDate": "2026-05-15T13:16:19.130",
+    "id": "CVE-2026-44774",
+    "description": "Traefik is an HTTP reverse proxy and load balancer. Prior to 2.11.46, 3.6.17, and 3.7.1, Traefik's Kubernetes Gateway API provider allows a tenant with HTTPRoute creation permissions to expose the REST provider handler, bypassing the providers.rest.insecure=false setting. The Gateway provider accepts any TraefikService backend reference whose name ends with @internal, making it possible to route traffic to rest@internal in addition to the intended api@internal. In shared Gateway deployments where the REST provider is enabled, this allows a low-privileged actor to gain live dynamic configuration write access to Traefik, enabling unauthorized reconfiguration of routers and services. This vulnerability is fixed in 2.11.46, 3.6.17, and 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44774",
+    "publishedDate": "2026-05-15T17:16:48.210",
+    "lastModifiedDate": "2026-05-15T17:16:48.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41181",
+    "description": "Traefik is an HTTP reverse proxy and load balancer. Prior to 2.11.44, 3.6.15, and 3.7.0-rc.3, there is an information disclosure vulnerability in Traefik's errors (custom error pages) middleware. When the backend returns a response matching the configured status range, the middleware forwards the original request's complete header set, including Authorization, Cookie, and other authentication material, to the separate error page service rather than only the minimal context needed to render the error page. This behavior is undocumented: the documentation states only that Host is forwarded by default, so operators are not warned that sensitive credentials are shared across service boundaries. Deployments using the errors middleware with a distinct error page service may inadvertently expose end-user credentials to infrastructure that was not intended to receive them. This vulnerability is fixed in 2.11.44, 3.6.15, and 3.7.0-rc.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41181",
+    "publishedDate": "2026-05-15T17:16:46.320",
+    "lastModifiedDate": "2026-05-15T17:16:46.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44309",
+    "description": "Gitsign is a keyless Sigstore to signing tool for Git commits with your a GitHub / OIDC identity. Prior to 0.16.0, gitsign verify and gitsign verify-tag re-encode commit/tag objects through go-git's EncodeWithoutSignature before checking the signature, instead of verifying against the raw git object bytes. For malformed objects with duplicate tree headers, git-core and go-git parse different trees: git-core uses the first, go-git uses the second. A signature crafted over the go-git-normalized form (second tree) passes gitsign verify while git-core resolves the commit to a completely different tree. This breaks the invariant that a verified signature, the commit semantics git-core presents to users, and the object hash logged in Rekor all refer to the same content. This vulnerability is fixed in 0.16.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44309",
+    "publishedDate": "2026-05-15T17:16:47.297",
+    "lastModifiedDate": "2026-05-15T17:16:47.297",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44310",
+    "description": "Gitsign is a keyless Sigstore to signing tool for Git commits with your a GitHub / OIDC identity. From 0.4.0 to before 0.15.0, CertVerifier.Verify() in pkg/git/verifier.go unconditionally dereferences certs[0] after sd.GetCertificates() without checking the slice length. A CMS/PKCS7 signed message with an empty certificate set is a structurally valid DER payload; GetCertificates() returns an empty slice with no error, causing an immediate index-out-of-range panic. On the gitsign --verify code path (the GPG-compatible mode invoked by git verify-commit), the panic is silently recovered by internal/io/streams.go's Wrap() function, which returns nil instead of an error. main.go then exits with code 0, causing exit-code-only verification callers to interpret the failed verification as success. This vulnerability is fixed in 0.15.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44310",
+    "publishedDate": "2026-05-15T17:16:47.430",
+    "lastModifiedDate": "2026-05-15T17:16:47.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46508",
+    "description": "Turborepo is a high-performance build system for JavaScript and TypeScript codebases. Prior to 2.9.14000, the Turborepo LSP VS Code extension could execute shell commands derived from workspace-controlled values. The extension used string-based command execution for Turborepo daemon commands and task runs. A malicious workspace could provide crafted values through workspace settings or task names in the repository's source code that were interpolated into shell commands. When the extension activated or when a user ran a task through the extension, those values could be interpreted by the user's shell, allowing arbitrary command execution with the privileges of the local VS Code process. This vulnerability is fixed in 2.9.14000.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46508",
+    "publishedDate": "2026-05-15T16:16:15.420",
+    "lastModifiedDate": "2026-05-15T16:16:15.420",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45803",
+    "description": "`gh` is GitHub’s official command line tool. From 1.6.0 to before 2.92.0, a security vulnerability has been identified in GitHub CLI that could allow terminal escape sequence injection when users view GitHub Actions workflow logs using gh run view --log or gh run view --log-failed. The vulnerability stems from the way GitHub CLI handles raw Actions log output. The gh run view --log and gh run view --log-failed commands stream workflow log lines to stdout or the configured pager without sanitizing terminal control sequences. An attacker who can influence GitHub Actions log content, for example via a PR triggered workflow, can embed escape sequences that are replayed in the user's terminal when they inspect the run. Depending on the victim's terminal emulator, injected sequences could change the window title, manipulate on screen content, or in some terminal emulators (such as screen) potentially execute arbitrary commands. This vulnerability is fixed in 2.92.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45803",
+    "publishedDate": "2026-05-15T16:16:15.280",
+    "lastModifiedDate": "2026-05-15T16:16:15.280",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45773",
+    "description": "Turborepo is a high-performance build system for JavaScript and TypeScript codebases. Prior to 2.9.14, Turborepo's self-hosted login and SSO browser flows did not validate a CSRF state value on the localhost callback. While the CLI was waiting for authentication, a malicious web page could send a request to the local callback server with an attacker-controlled token. If accepted before the legitimate callback, the CLI could complete login with the wrong credentials. This affects users authenticating the turbo CLI against self-hosted remote cache/auth endpoints. Vercel-hosted login flows using device authorization are not affected. This vulnerability is fixed in 2.9.14.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45773",
+    "publishedDate": "2026-05-15T16:16:15.137",
+    "lastModifiedDate": "2026-05-15T16:16:15.137",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:N/SC:L/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45772",
+    "description": "Turborepo is a high-performance build system for JavaScript and TypeScript codebases. From 1.1.0 to before 2.9.14, Turborepo can be vulnerable to arbitrary code execution when run in untrusted repositories that contain malicious Yarn configuration. In affected versions, package manager detection executed yarn --version from the project directory, which could cause Yarn to load and execute a project-controlled yarnPath from .yarnrc.yml. An attacker who controls repository contents could cause code execution when a user or CI system runs affected turbo, @turbo/codemod, or @turbo/workspace conversion commands. This vulnerability is fixed in 2.9.14.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45772",
+    "publishedDate": "2026-05-15T16:16:14.987",
+    "lastModifiedDate": "2026-05-15T16:16:14.987",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 0,
+        "version": "CVSS 4.0",
+        "severity": "NONE",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-35194",
+    "description": "Code injection in SQL code generation in Apache Flink 1.15.0 through 1.20.x and 2.0.0 through 2.x allows authenticated users with query submission privileges to execute arbitrary code on TaskManagers via maliciously crafted SQL queries. The vulnerability affects JSON functions (1.15.0+) and LIKE expressions with ESCAPE clauses (1.17.0+). User-controlled strings are interpolated into generated Java code without proper escaping, allowing attackers to break out of string literals and inject arbitrary expressions.\n\nUsers are recommended to upgrade to either version 1.20.4, 2.0.2, 2.1.2 or 2.2.1, which fixes this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35194",
+    "publishedDate": "2026-05-15T16:16:14.340",
+    "lastModifiedDate": "2026-05-15T16:16:14.340",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-2031",
+    "description": "An Improper Access Control vulnerability in several internal API endpoints for Google Cloud Application Integration prior to 2026-01-23 allows a remote, unauthenticated attacker to disclose sensitive internal information and execute arbitrary code using specially crafted HTTP requests to inadvertently exposed internal API endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2031",
+    "publishedDate": "2026-05-15T16:16:14.027",
+    "lastModifiedDate": "2026-05-15T16:16:14.027",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -12,79 +182,59 @@
         "score": 10,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Clear",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cvd@cert.pl"
+        "source": "f45cbf4e-4146-4068-b7e1-655ffc2c548c"
       }
     ]
   },
   {
-    "id": "CVE-2026-41552",
-    "description": "PDF Export Module used in DHTMLX's products Gantt and Scheduler is vulnerable to Path Traversal due to lack of HTML sanitization. An unauthenticated user could craft the html payload which could include\n local files from the server and display them in the generated PDF.  \n\nThis issue was fixed in PDF Export Module version 0.7.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41552",
-    "publishedDate": "2026-05-15T13:16:18.990",
-    "lastModifiedDate": "2026-05-15T13:16:18.990",
+    "id": "CVE-2026-41258",
+    "description": "OpenMRS is an open source electronic medical record system platform. From 2.7.0 to before 2.7.9 and 2.8.6, the ConceptReferenceRangeUtility.evaluateCriteria() method in OpenMRS Core evaluates database-stored criteria strings as Apache Velocity templates without any sandbox configuration. The VelocityEngine is initialized with only logging properties and noSecureUberspector, leaving the default UberspectImpl in place, which allows unrestricted Java reflection through template expressions. A user with the Manage Concepts privilege can store a malicious Velocity template expression in a concept's reference range criteria field. This payload is then executed automatically whenever a user or API call validates an observation against the affected concept. The Velocity context exposes $patient (the Person / Patient object), $obs (the Obs object), and $fn (the ConceptReferenceRangeUtility instance with access to the full OpenMRS service layer). This vulnerability is fixed in 2.7.9 and 2.8.6.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41258",
+    "publishedDate": "2026-05-15T17:16:46.463",
+    "lastModifiedDate": "2026-05-15T17:16:46.463",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.2,
-        "version": "CVSS 4.0",
+        "score": 9.1,
+        "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-7182",
-    "description": "Diagram's export module is vulnerable to Path Traversal in src attribute due to lack of HTML sanitization. An unauthenticated user could craft the html payload which could include\n local files from the server and display them in the generated pdf.  \n\nThis issue was fixed in version 1.1.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7182",
-    "publishedDate": "2026-05-15T13:16:19.250",
-    "lastModifiedDate": "2026-05-15T13:16:19.250",
+    "id": "CVE-2026-44699",
+    "description": "LibJWT is a C JSON Web Token Library. From 3.0.0 to 3.3.2, libjwt accepts an RSA JWK that does not contain an alg parameter as the verification key for an HS256/HS384/HS512 token. In the OpenSSL backend, this causes HMAC verification to run with a zero-length key, so an attacker can forge a valid JWT without knowing any secret or RSA private key. This is an algorithm-confusion authentication bypass. It affects applications that load RSA keys from JWKS where alg is omitted, which is valid JWK syntax and common in real deployments, and then choose the verification algorithm from the JWT header, for example in a kid lookup callback. This vulnerability is fixed in 3.3.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44699",
+    "publishedDate": "2026-05-15T17:16:47.783",
+    "lastModifiedDate": "2026-05-15T17:16:47.783",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.2,
+        "score": 9.1,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cvd@cert.pl"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-8503",
-    "description": "Apache::Session::Generate::SHA256 versions before 1.3.19 for Perl create insecure session ids.\n\nApache::Session::Generate::SHA256 generated session ids insecurely. The default session id generator returns a SHA-256 hash of the built-in rand() function, the epoch time, and the PID, that is hashed again. These are predictable, low-entropy sources. Predicable session ids could allow an attacker to gain access to systems.\n\nNote that version 1.3.19 has a fallback without warning to use insecure session generation method if the call to Crypt::URandom::urandom fails. However, this is unlikely as Crypt::URandom is a hardcoded requirement of the module.\n\nThis issue is similar to CVE-2025-40931 for Apache::Session::Generate::MD5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8503",
-    "publishedDate": "2026-05-15T12:17:09.557",
-    "lastModifiedDate": "2026-05-15T12:17:09.557",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8454",
-    "description": "Imager::File::GIF versions through 1.002 for Perl allow a heap out of bounds (OOB) write on crafted multi-frame GIF files.\n\nImager::File::GIF's i_readgif_multi_low allocates a single per-row buffer GifRow sized for the GIF's global screen width 'SWidth' and reuses it across every image in the file.\n\nThe page-match branch validates Image.Width + Image.Left > SWidth before each DGifGetLine write, but the parallel skip-image branch at imgif.c:790-805 calls DGifGetLine(GifFile, GifRow, Width) with no such check.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8454",
-    "publishedDate": "2026-05-15T12:17:09.330",
-    "lastModifiedDate": "2026-05-15T12:17:09.330",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-41971",
-    "description": "Permission control vulnerability in the security control module. Impact: Successful exploitation of this vulnerability may affect service confidentiality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41971",
-    "publishedDate": "2026-05-15T10:16:35.840",
-    "lastModifiedDate": "2026-05-15T10:16:35.840",
+    "id": "CVE-2026-46383",
+    "description": "Microsoft APM is an open-source, community-driven dependency manager for AI agents. Prior to 0.13.0, Microsoft APM contains a Windows-specific archive extraction boundary failure in the legacy-bundle probe used by apm install <bundle> on supported Python 3.10 and 3.11 runtimes. When apm install is given a local .tar.gz that is not recognized as a plugin-format bundle, APM probes whether it is a legacy --format apm bundle. On Python versions earlier than 3.12, that probe extracts untrusted tar members with raw tar.extractall() without rejecting Windows absolute member names such as D:/.... This vulnerability is fixed in 0.13.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46383",
+    "publishedDate": "2026-05-15T17:16:49.090",
+    "lastModifiedDate": "2026-05-15T17:16:49.090",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -92,179 +242,79 @@
         "score": 5.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
         "exploitabilityScore": 1.8,
         "impactScore": 3.6,
-        "source": "psirt@huawei.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41970",
-    "description": "Out-of-bounds write vulnerability in the distributed file system module. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41970",
-    "publishedDate": "2026-05-15T10:16:35.737",
-    "lastModifiedDate": "2026-05-15T10:16:35.737",
+    "id": "CVE-2026-45539",
+    "description": "Microsoft APM is an open-source, community-driven dependency manager for AI agents. From 0.5.4 to 0.12.4, two primitive integrators in apm-cli enumerate package files with bare Path.glob() / Path.rglob() calls and read each match with Path.read_text(), transparently following symbolic links. A symlink committed inside a remote APM dependency under .apm/prompts/<x>.prompt.md or .apm/agents/<x>.agent.md is preserved verbatim into apm_modules/ on clone and then dereferenced during integration, with the resolved content written as a regular file into the project's deploy directories. The package content_hash, the pre-deploy SecurityGate scan, and apm audit do not flag this. The deploy roots are not added to the auto-generated .gitignore, so the resulting files are staged by git add by default. This vulnerability is fixed in 0.13.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45539",
+    "publishedDate": "2026-05-15T17:16:48.887",
+    "lastModifiedDate": "2026-05-15T17:16:48.887",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 2.1,
-        "impactScore": 4.7,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41969",
-    "description": "Permission control vulnerability in the projection module. Impact: Successful exploitation of this vulnerability may affect service confidentiality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41969",
-    "publishedDate": "2026-05-15T10:16:35.627",
-    "lastModifiedDate": "2026-05-15T10:16:35.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 0.7,
-        "impactScore": 5.5,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41968",
-    "description": "Permission control vulnerability in the manufacturability design module. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41968",
-    "publishedDate": "2026-05-15T10:16:35.523",
-    "lastModifiedDate": "2026-05-15T10:16:35.523",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.5,
-        "impactScore": 3.4,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41967",
-    "description": "Permission control vulnerability in the manufacturability design module. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41967",
-    "publishedDate": "2026-05-15T10:16:35.420",
-    "lastModifiedDate": "2026-05-15T10:16:35.420",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.5,
-        "impactScore": 3.4,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41966",
-    "description": "Permission control vulnerability in the smart sensing service. Impact: Successful exploitation of this vulnerability may affect service confidentiality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41966",
-    "publishedDate": "2026-05-15T10:16:35.313",
-    "lastModifiedDate": "2026-05-15T10:16:35.313",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41965",
-    "description": "Use-After-Free (UAF) vulnerability in the web. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41965",
-    "publishedDate": "2026-05-15T10:16:35.207",
-    "lastModifiedDate": "2026-05-15T10:16:35.207",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41964",
-    "description": "Permission control vulnerability in the web. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41964",
-    "publishedDate": "2026-05-15T10:16:35.100",
-    "lastModifiedDate": "2026-05-15T10:16:35.100",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
+        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.5,
-        "impactScore": 5.9,
-        "source": "psirt@huawei.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41963",
-    "description": "Stack overflow vulnerability in the media platform. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41963",
-    "publishedDate": "2026-05-15T10:16:34.987",
-    "lastModifiedDate": "2026-05-15T10:16:34.987",
+    "id": "CVE-2026-44641",
+    "description": "Microsoft APM is an open-source, community-driven dependency manager for AI agents. Prior to 0.8.12, Microsoft APM normalizes marketplace plugins by copying plugin components referenced in plugin.json into .apm/. The manifest fields agents, skills, commands, and hooks are attacker-controlled, but the implementation does not enforce that those paths remain inside the plugin directory. A malicious plugin can therefore use absolute paths or ../ traversal paths to copy arbitrary readable host files or directories from the installer's machine during apm install. This vulnerability is fixed in 0.8.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44641",
+    "publishedDate": "2026-05-15T17:16:47.633",
+    "lastModifiedDate": "2026-05-15T17:16:47.633",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2.8,
+        "score": 7.1,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 1.3,
-        "impactScore": 1.4,
-        "source": "psirt@huawei.com"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41962",
-    "description": "Permission control vulnerability in the app management and control module. Impact: Successful exploitation of this vulnerability may affect service confidentiality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41962",
-    "publishedDate": "2026-05-15T10:16:34.880",
-    "lastModifiedDate": "2026-05-15T10:16:34.880",
+    "id": "CVE-2026-8669",
+    "description": "Imager versions through 1.030 for Perl allow a heap out of bounds (OOB) write on crafted multi-frame GIF files.\n\nImager::File::GIF's i_readgif_multi_low allocates a single per-row buffer GifRow sized for the GIF's global screen width 'SWidth' and reuses it across every image in the file.\n\nThe page-match branch validates Image.Width + Image.Left > SWidth before each DGifGetLine write, but the parallel skip-image branch at imgif.c:790-805 calls DGifGetLine(GifFile, GifRow, Width) with no such check.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8669",
+    "publishedDate": "2026-05-15T15:16:57.043",
+    "lastModifiedDate": "2026-05-15T16:16:16.163",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46483",
+    "description": "Vim is an open source, command line text editor. Prior to 9.2.0479, a command injection vulnerability exists in tar#Vimuntar() in\nruntime/autoload/tar.vim when decompressing .tgz archives on Unix-like systems. The function builds :!gunzip and :!gzip -d commands using shellescape(tartail) without the {special} flag, allowing a crafted archive filename to trigger Vim cmdline-special expansion and execute shell commands in the user's context. This vulnerability is fixed in 9.2.0479.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46483",
+    "publishedDate": "2026-05-15T15:16:54.237",
+    "lastModifiedDate": "2026-05-15T15:16:54.237",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -272,168 +322,89 @@
         "score": 3.6,
         "version": "CVSS 3.1",
         "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 1.4,
-        "source": "psirt@huawei.com"
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41961",
-    "description": "Permission control vulnerability in contacts. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41961",
-    "publishedDate": "2026-05-15T10:16:34.780",
-    "lastModifiedDate": "2026-05-15T10:16:34.780",
+    "id": "CVE-2026-45736",
+    "description": "ws is an open source WebSocket client and server for Node.js. Prior to 8.20.1, the websocket.close() implementation is vulnerable to uninitialized memory disclosure when a TypedArray is passed as the reason argument. This vulnerability is fixed in 8.20.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45736",
+    "publishedDate": "2026-05-15T15:16:54.103",
+    "lastModifiedDate": "2026-05-15T15:16:54.103",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
+        "score": 4.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.5,
-        "impactScore": 3.4,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41960",
-    "description": "Permission control vulnerability in calls. Impact: Successful exploitation of this vulnerability may affect availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41960",
-    "publishedDate": "2026-05-15T10:16:33.550",
-    "lastModifiedDate": "2026-05-15T10:16:33.550",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.7,
-        "source": "psirt@huawei.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8425",
-    "description": "The Notify Odoo plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 1.0.1. This is due to missing or incorrect nonce validation on the _updateSettings function. This makes it possible for unauthenticated attackers to change the Notify Odoo URL to an attacker-controlled URL and modify notification, tracking image, and allowed IP address settings via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8425",
-    "publishedDate": "2026-05-15T09:16:17.807",
-    "lastModifiedDate": "2026-05-15T09:16:17.807",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8398",
-    "description": "A supply chain attack compromised the official installation packages of DAEMON Tools Lite (Windows versions 12.5.0.2421 through 12.5.0.2434), distributed from the legitimate website daemon-tools.cc between approximately April 8, 2026, and May 5, 2026. Attackers gained unauthorized access to the vendor's (AVB Disc Soft) build or distribution infrastructure and trojanized three binaries: DTHelper.exe, DiscSoftBusServiceLite.exe, and DTShellHlp.exe. These files were digitally signed with the legitimate AVB Disc Soft code-signing certificate, allowing the malicious installers to appear trustworthy and bypass signature-based detection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8398",
-    "publishedDate": "2026-05-15T09:16:17.653",
-    "lastModifiedDate": "2026-05-15T09:16:17.653",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "vulnerability@kaspersky.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@kaspersky.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7563",
-    "description": "The Classified Listing – AI-Powered Classified ads & Business Directory Plugin plugin for WordPress is vulnerable to unauthorized access in all versions up to, and including, 5.3.10. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to add arbitrary notes to any order and trigger unsolicited notification and moderation emails to listing owners without administrative authorization.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7563",
-    "publishedDate": "2026-05-15T09:16:17.510",
-    "lastModifiedDate": "2026-05-15T09:16:17.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7046",
-    "description": "The NEX-Forms – Ultimate Forms Plugin for WordPress plugin for WordPress is vulnerable to time-based blind SQL Injection via the 'table' parameter in all versions up to, and including, 9.1.12 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7046",
-    "publishedDate": "2026-05-15T09:16:17.250",
-    "lastModifiedDate": "2026-05-15T09:16:17.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 0.7,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6415",
-    "description": "The Advanced Custom Fields: Font Awesome plugin for WordPress is vulnerable to Stored Cross-Site Scripting in versions up to and including 5.0.2. This is due to insufficient input validation of JSON field values and unsafe client-side HTML construction in the update_preview() JavaScript function. This makes it possible for authenticated attackers, with Subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6415",
-    "publishedDate": "2026-05-15T09:16:17.117",
-    "lastModifiedDate": "2026-05-15T09:16:17.117",
+    "id": "CVE-2026-39054",
+    "description": "Oinone Pamirs 7.0.0 contains a command injection vulnerability in CommandHelper.executeCommands. The method starts a shell process and writes attacker-controlled command strings directly to the process standard input without sanitization. In affected deployments, this can result in arbitrary operating system command execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39054",
+    "publishedDate": "2026-05-15T15:16:51.753",
+    "lastModifiedDate": "2026-05-15T16:16:14.763",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.4,
+        "score": 7.3,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   },
   {
-    "id": "CVE-2026-6403",
-    "description": "The Quick Playground plugin for WordPress is vulnerable to Path Traversal in versions up to and including 1.3.3. This is due to insufficient path validation in the qckply_zip_theme() function, which appends a user-controlled 'stylesheet' parameter directly to the theme root directory path without sanitizing directory traversal sequences. This makes it possible for unauthenticated attackers to trigger the creation of a ZIP archive containing arbitrary files from the server's filesystem — including wp-config.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6403",
-    "publishedDate": "2026-05-15T09:16:16.973",
-    "lastModifiedDate": "2026-05-15T09:16:16.973",
+    "id": "CVE-2026-39053",
+    "description": "Oinone Pamirs 7.0.0 contains an XML External Entity (XXE) issue in its XStream-based XML parsing logic. When attacker-controlled XML is passed to framework parsing entry points such as PamirsXmlUtils.fromXML(...) or ViewXmlUtils.fromXML(...), unsafe XML processing can lead to file disclosure or SSRF.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39053",
+    "publishedDate": "2026-05-15T15:16:51.613",
+    "lastModifiedDate": "2026-05-15T15:16:51.613",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-39052",
+    "description": "Oinone Pamirs 7.0.0 contains a code execution vulnerability via ScriptRunner. The method ScriptRunner.run(String expression, String type, Map<String, Object> context) evaluates attacker-controlled script expressions through the underlying script engine without sandboxing or allowlist restrictions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39052",
+    "publishedDate": "2026-05-15T15:16:51.490",
+    "lastModifiedDate": "2026-05-15T16:16:14.617",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-38728",
+    "description": "An issue in Nodemailer smtp_server before v.3.18.3 allows a remote attacker to cause a denial of service via the SMTPStream._write, lib/smtp-stream.js components",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38728",
+    "publishedDate": "2026-05-15T15:16:51.197",
+    "lastModifiedDate": "2026-05-15T16:16:14.463",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -441,50 +412,60 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   },
   {
-    "id": "CVE-2026-6228",
-    "description": "The Frontend Admin by DynamiApps plugin for WordPress is vulnerable to Privilege Escalation in versions up to and including 3.28.36. This is due to insufficient authorization checks in the role field update mechanism combined with overly permissive capabilities for the admin_form post type. The admin_form custom post type uses 'capability_type' => 'page', which grants editors the ability to create and edit forms. When an editor creates an edit_user form, they can manipulate the form configuration to include 'administrator' in the role_options array by directly submitting POST data to wp-admin/post.php, bypassing the UI restrictions in feadmin_get_user_roles(). When the form is subsequently submitted, the pre_update_value() function in class-role.php only validates that the submitted role exists in the form's role_options array (lines 107-110), but fails to verify that the current user has permission to assign that specific role. This makes it possible for unauthenticated attackers to first register as editors (via a public new_user form), then create an edit_user form with administrator in the allowed roles, and finally use that form to escalate their own privileges to administrator.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6228",
-    "publishedDate": "2026-05-15T09:16:16.833",
-    "lastModifiedDate": "2026-05-15T09:16:16.833",
+    "id": "CVE-2026-34253",
+    "description": "A buffer underflow vulnerability has been identified in the ogg123 utility from the vorbis-tools 1.4.3 package in function remotethread in remote.c. This vulnerability occurs in the remote control functionality when processing malformed input, leading to a stack buffer underflow that can cause application crashes and potentially allow code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34253",
+    "publishedDate": "2026-05-15T15:16:51.073",
+    "lastModifiedDate": "2026-05-15T16:16:14.190",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 8.2,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   },
   {
-    "id": "CVE-2026-5229",
-    "description": "The Form Notify plugin for WordPress is vulnerable to Authentication Bypass in versions up to and including 1.1.10. This is due to the plugin trusting user-controlled cookie data to determine which WordPress account to authenticate after a LINE OAuth login. When LINE doesn't provide an email address (which is common), the plugin falls back to reading the 'form_notify_line_email' cookie value without verifying that the LINE account is associated with that email address. This makes it possible for unauthenticated attackers to gain access to any user account on the site, including administrator accounts, by completing a LINE OAuth flow with their own LINE account while injecting a malicious cookie containing the target victim's email address.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5229",
-    "publishedDate": "2026-05-15T09:16:16.690",
-    "lastModifiedDate": "2026-05-15T09:16:16.690",
+    "id": "CVE-2025-67437",
+    "description": "Medical Management System a81df1ce700a9662cb136b27af47f4cbde64156b is vulnerable to Insecure Permissions, which allows arbitrary user password reset.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-67437",
+    "publishedDate": "2026-05-15T15:16:49.883",
+    "lastModifiedDate": "2026-05-15T15:16:49.883",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2025-14972",
+    "description": "*  Countermeasures for DPA within SYMCRYPTO\nengine on SixG301xxx devices are not sufficiently random and will\neventually repeat.\n  *  KSU keys using SYMCRYPTO will be\nimpacted by this vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-14972",
+    "publishedDate": "2026-05-15T15:16:49.193",
+    "lastModifiedDate": "2026-05-15T15:16:49.193",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "score": 4.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:P/AC:H/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "product-security@silabs.com"
       }
     ]
   }
