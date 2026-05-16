@@ -697,7 +697,7 @@
         "type": "DLS"
       },
       {
-        "available": false,
+        "available": true,
         "enabled": true,
         "fqdn": "cmdnkiqjije2tllr3biee2sjgj3i4robg2cbtilbnytdhh2wy3syrlyd.onion",
         "slug": "http://cmdnkiqjije2tllr3biee2sjgj3i4robg2cbtilbnytdhh2wy3syrlyd.onion",
@@ -5478,7 +5478,7 @@
         "type": "DLS"
       },
       {
-        "available": true,
+        "available": false,
         "enabled": true,
         "fqdn": "darklmmmfuonklpy6s3tmvk5mrcdi7iapaw6eka45esmoryiiuug6aid.onion",
         "slug": "http://darklmmmfuonklpy6s3tmvk5mrcdi7iapaw6eka45esmoryiiuug6aid.onion",
@@ -6745,7 +6745,123 @@
         ]
       }
     ],
-    "ttps": [],
+    "ttps": [
+      {
+        "tactic_id": "TA0005",
+        "tactic_name": "Stealth",
+        "techniques": [
+          {
+            "technique_details": "Binary protected with ConfuserEx: rename obfuscation, constants encryption, integer confusion, and modified module .cctor.",
+            "technique_id": "T1027",
+            "technique_name": "Obfuscated Files or Information"
+          },
+          {
+            "technique_details": "All non-corlib native API calls resolved at runtime via LoadLibrary / GetProcAddress rather than static imports.",
+            "technique_id": "T1027.007",
+            "technique_name": "Obfuscated Files or Information: Dynamic API Resolution"
+          },
+          {
+            "technique_details": "Implicit current-user impersonation used for net use \\\\<unc> connections to discovered network shares without explicit credential passing.",
+            "technique_id": "T1078.003",
+            "technique_name": "Valid Accounts: Local Accounts"
+          },
+          {
+            "technique_details": "Multiple HKCU/HKLM registry writes: LongPathsEnabled, LocalAccountTokenFilterPolicy, EnableLinkedConnections (share access), WallPaper (ransom note), AppName\\PublicKey (encryption key storage).",
+            "technique_id": "T1112",
+            "technique_name": "Modify Registry"
+          },
+          {
+            "technique_details": "Runtime decryption of UserStrings via <Module>.m using GZip decompression followed by Base64 decoding.",
+            "technique_id": "T1140",
+            "technique_name": "Deobfuscate/Decode Files or Information"
+          },
+          {
+            "technique_details": "Global <GUID> mutex enforces single-instance execution; CIS culture/LCID geo-fence prevents execution on CIS-locale systems.",
+            "technique_id": "T1480",
+            "technique_name": "Execution Guardrails"
+          },
+          {
+            "technique_details": "Process self-DACL set to deny-Everyone via KZsyzkgZlDQw.UB, preventing other processes from inspecting or terminating the ransomware process.",
+            "technique_id": "T1564",
+            "technique_name": "Hide Artifacts"
+          },
+          {
+            "technique_details": "Memory-pig killer heuristic: processes consuming more than 250 MB are terminated, targeting sandbox environments and active debuggers.",
+            "technique_id": "T1622",
+            "technique_name": "Debugger Evasion"
+          }
+        ]
+      },
+      {
+        "tactic_id": "TA0007",
+        "tactic_name": "Discovery",
+        "techniques": [
+          {
+            "technique_details": "ARP table parsed via arp -a; ARP-driven Wake-On-LAN packets sent to discovered hosts to bring them online before encryption.",
+            "technique_id": "T1018",
+            "technique_name": "Remote System Discovery"
+          },
+          {
+            "technique_details": "Network shares enumerated via net view, NetDfsEnum, WNetEnumResource*, Win32_Share WMI class, and Win32_NetworkConnection.",
+            "technique_id": "T1135",
+            "technique_name": "Network Share Discovery"
+          },
+          {
+            "technique_details": "Anti-analysis kill list matched against ProcessName and MainWindowTitle to identify and terminate security/analysis tools.",
+            "technique_id": "T1518.001",
+            "technique_name": "Software Discovery: Security Software Discovery"
+          },
+          {
+            "technique_details": "CIS culture/LCID check used as exclusion geo-fence; execution aborts if system locale matches CIS-region languages.",
+            "technique_id": "T1614.001",
+            "technique_name": "System Location Discovery: System Language Discovery"
+          }
+        ]
+      },
+      {
+        "tactic_id": "TA0008",
+        "tactic_name": "Lateral Movement",
+        "techniques": [
+          {
+            "technique_details": "net.exe use \\\\<unc> executed over discovered SMB shares to access and encrypt remote file systems.",
+            "technique_id": "T1021.002",
+            "technique_name": "Remote Services: SMB/Windows Admin Shares"
+          }
+        ]
+      },
+      {
+        "tactic_id": "TA0011",
+        "tactic_name": "Command and Control",
+        "techniques": [
+          {
+            "technique_details": "WebClient.DownloadData referenced in Helpers.DownloadUrl — present in code but not reachable at runtime (inert code path).",
+            "technique_id": "T1071.001",
+            "technique_name": "Application Layer Protocol: Web Protocols"
+          }
+        ]
+      },
+      {
+        "tactic_id": "TA0040",
+        "tactic_name": "Impact",
+        "techniques": [
+          {
+            "technique_details": "AES-128-CBC PKCS#7 / NoPadding (large files) encryption of all eligible files on local drives, mounted unlettered volumes, and LAN shares.",
+            "technique_id": "T1486",
+            "technique_name": "Data Encrypted for Impact"
+          },
+          {
+            "technique_details": "ServiceController.Stop called against ~100 services (AV, backup, MSSQL, Exchange, MBAM, Veeam, Acronis, etc.) combined with sc config <svc> start=disabled to prevent restart.",
+            "technique_id": "T1489",
+            "technique_name": "Service Stop"
+          },
+          {
+            "technique_details": "VSS deletion via PowerShell or vssadmin, SRRemoveRestorePoint, backup file deletion (del /s /q), Recycle Bin removal (rd /s /q), Restart Manager used to force-shutdown apps locking target files.",
+            "technique_id": "T1490",
+            "technique_name": "Inhibit System Recovery"
+          }
+        ]
+      }
+    ],
     "url": "https://www.ransomware.live/group/everest"
   },
   {
@@ -7004,7 +7120,7 @@
         "type": "DLS"
       },
       {
-        "available": true,
+        "available": false,
         "enabled": true,
         "fqdn": "funknqn44slwmgwgnewne6bintbooauwkaupik4yrlgtycew3ergraid.onion",
         "slug": "http://funknqn44slwmgwgnewne6bintbooauwkaupik4yrlgtycew3ergraid.onion",
@@ -8071,7 +8187,7 @@
         "enabled": true,
         "fqdn": "karaleaks.com",
         "slug": "https://karaleaks.com",
-        "title": "Google",
+        "title": "",
         "type": "DLS"
       }
     ],
@@ -8868,6 +8984,38 @@
       {
         "available": false,
         "enabled": false,
+        "fqdn": "lockbitsupdwon76nzykzblcplixwts4n4zoecugz2bxabtapqvmzqqd.onion",
+        "slug": "http://lockbitsupdwon76nzykzblcplixwts4n4zoecugz2bxabtapqvmzqqd.onion",
+        "title": "LockBit LOGIN",
+        "type": "Chat"
+      },
+      {
+        "available": false,
+        "enabled": false,
+        "fqdn": "lockbitsupo7vv5vcl3jxpsdviopwvasljqcstym6efhh6oze7c6xjad.onion",
+        "slug": "http://lockbitsupo7vv5vcl3jxpsdviopwvasljqcstym6efhh6oze7c6xjad.onion",
+        "title": "LockBit LOGIN",
+        "type": "Chat"
+      },
+      {
+        "available": false,
+        "enabled": false,
+        "fqdn": "lockbitsupqfyacidr6upt6nhhyipujvaablubuevxj6xy3frthvr3yd.onion",
+        "slug": "http://lockbitsupqfyacidr6upt6nhhyipujvaablubuevxj6xy3frthvr3yd.onion",
+        "title": "LockBit LOGIN",
+        "type": "Chat"
+      },
+      {
+        "available": false,
+        "enabled": false,
+        "fqdn": "lockbitsupxcjntihbmat4rrh7ktowips2qzywh6zer5r3xafhviyhqd.onion",
+        "slug": "http://lockbitsupxcjntihbmat4rrh7ktowips2qzywh6zer5r3xafhviyhqd.onion/form",
+        "title": "LockBit LOGIN",
+        "type": "DLS"
+      },
+      {
+        "available": false,
+        "enabled": false,
         "fqdn": "lockbitsupq3g62dni2f36snrdb4n5qzqvovbtkt5xffw3draxk6gwqd.onion",
         "slug": "http://lockbitsupq3g62dni2f36snrdb4n5qzqvovbtkt5xffw3draxk6gwqd.onion/form",
         "title": "LockBit LOGIN",
@@ -8912,38 +9060,6 @@
         "slug": "http://lockbitsupa7e3b4pkn4mgkgojrl5iqgx24clbzc4xm7i6jeetsia3qd.onion",
         "title": "LockBit LOGIN",
         "type": "Chat"
-      },
-      {
-        "available": false,
-        "enabled": false,
-        "fqdn": "lockbitsupdwon76nzykzblcplixwts4n4zoecugz2bxabtapqvmzqqd.onion",
-        "slug": "http://lockbitsupdwon76nzykzblcplixwts4n4zoecugz2bxabtapqvmzqqd.onion",
-        "title": "LockBit LOGIN",
-        "type": "Chat"
-      },
-      {
-        "available": false,
-        "enabled": false,
-        "fqdn": "lockbitsupo7vv5vcl3jxpsdviopwvasljqcstym6efhh6oze7c6xjad.onion",
-        "slug": "http://lockbitsupo7vv5vcl3jxpsdviopwvasljqcstym6efhh6oze7c6xjad.onion",
-        "title": "LockBit LOGIN",
-        "type": "Chat"
-      },
-      {
-        "available": false,
-        "enabled": false,
-        "fqdn": "lockbitsupqfyacidr6upt6nhhyipujvaablubuevxj6xy3frthvr3yd.onion",
-        "slug": "http://lockbitsupqfyacidr6upt6nhhyipujvaablubuevxj6xy3frthvr3yd.onion",
-        "title": "LockBit LOGIN",
-        "type": "Chat"
-      },
-      {
-        "available": false,
-        "enabled": false,
-        "fqdn": "lockbitsupxcjntihbmat4rrh7ktowips2qzywh6zer5r3xafhviyhqd.onion",
-        "slug": "http://lockbitsupxcjntihbmat4rrh7ktowips2qzywh6zer5r3xafhviyhqd.onion/form",
-        "title": "LockBit LOGIN",
-        "type": "DLS"
       },
       {
         "available": false,
@@ -9155,6 +9271,14 @@
     "description": "LockBit 3.0 (\"LockBit Black\"), active since June 2022, is the third iteration of the LockBit RaaS platform incorporating code from BlackMatter ransomware, featuring modular encrypted payloads that evade analysis and targeting Windows and VMware ESXi environments across all sectors globally.",
     "locations": [
       {
+        "available": false,
+        "enabled": false,
+        "fqdn": "lockbit7z2mmiz3ryxafn5kapbvbbiywsxwovasfkgf5dqqp5kxlajad.onion",
+        "slug": "http://lockbit7z2mmiz3ryxafn5kapbvbbiywsxwovasfkgf5dqqp5kxlajad.onion",
+        "title": "LockBit - Leaked",
+        "type": "Files"
+      },
+      {
         "available": true,
         "enabled": false,
         "fqdn": "lockbit7z5ltrhzv46lsg447o3cx2637dloc3qt4ugd3gr2xdkkkeayd.onion",
@@ -9167,14 +9291,6 @@
         "enabled": false,
         "fqdn": "lockbit7z4bsm63m3dagp5xglyacr4z4bwytkvkkwtn6enmuo5fi5iyd.onion",
         "slug": "http://lockbit7z4bsm63m3dagp5xglyacr4z4bwytkvkkwtn6enmuo5fi5iyd.onion",
-        "title": "LockBit - Leaked",
-        "type": "Files"
-      },
-      {
-        "available": false,
-        "enabled": false,
-        "fqdn": "lockbit7z2mmiz3ryxafn5kapbvbbiywsxwovasfkgf5dqqp5kxlajad.onion",
-        "slug": "http://lockbit7z2mmiz3ryxafn5kapbvbbiywsxwovasfkgf5dqqp5kxlajad.onion",
         "title": "LockBit - Leaked",
         "type": "Files"
       },
@@ -9376,16 +9492,24 @@
       {
         "available": true,
         "enabled": true,
-        "fqdn": "lockbitynxdcxtuvma5deq5pxtnqoacftuigkk37xjq3whefozdpcuad.onion",
-        "slug": "http://lockbitynxdcxtuvma5deq5pxtnqoacftuigkk37xjq3whefozdpcuad.onion",
+        "fqdn": "lockbityq64mwtobqqcr3iwxs5q4o7iliuv72gbx4vflggj4m4wqekad.onion",
+        "slug": "http://lockbityq64mwtobqqcr3iwxs5q4o7iliuv72gbx4vflggj4m4wqekad.onion",
         "title": "LockBit - Leaked",
         "type": "DLS"
       },
       {
         "available": true,
         "enabled": true,
-        "fqdn": "lockbityq64mwtobqqcr3iwxs5q4o7iliuv72gbx4vflggj4m4wqekad.onion",
-        "slug": "http://lockbityq64mwtobqqcr3iwxs5q4o7iliuv72gbx4vflggj4m4wqekad.onion",
+        "fqdn": "lockbit7tnu7whmaqnnlmvnoxzejssvr6vkcoovg35encvnp24pikvyd.onion",
+        "slug": "http://lockbit7tnu7whmaqnnlmvnoxzejssvr6vkcoovg35encvnp24pikvyd.onion",
+        "title": "LockBit - Leaked",
+        "type": "DLS"
+      },
+      {
+        "available": true,
+        "enabled": true,
+        "fqdn": "lockbity44loulvujiaoels7knti2tfsnglclnse22syaa6x3vpqp7yd.onion",
+        "slug": "http://lockbity44loulvujiaoels7knti2tfsnglclnse22syaa6x3vpqp7yd.onion",
         "title": "LockBit - Leaked",
         "type": "DLS"
       },
@@ -9408,6 +9532,14 @@
       {
         "available": true,
         "enabled": true,
+        "fqdn": "lockbitynxdcxtuvma5deq5pxtnqoacftuigkk37xjq3whefozdpcuad.onion",
+        "slug": "http://lockbitynxdcxtuvma5deq5pxtnqoacftuigkk37xjq3whefozdpcuad.onion",
+        "title": "LockBit - Leaked",
+        "type": "DLS"
+      },
+      {
+        "available": true,
+        "enabled": true,
         "fqdn": "lockbitkybiqhyv64vdaamz7uf2ymjoafyalx3e6spmmsz5xyk5nbcad.onion",
         "slug": "http://lockbitkybiqhyv64vdaamz7uf2ymjoafyalx3e6spmmsz5xyk5nbcad.onion",
         "title": "LockBit - Leaked",
@@ -9426,22 +9558,6 @@
         "enabled": true,
         "fqdn": "lockbitnpobu6luzzlxb7br5uyqnmeruwimpjuw2kv442nvxd6sufsad.onion",
         "slug": "http://lockbitnpobu6luzzlxb7br5uyqnmeruwimpjuw2kv442nvxd6sufsad.onion",
-        "title": "LockBit - Leaked",
-        "type": "DLS"
-      },
-      {
-        "available": true,
-        "enabled": true,
-        "fqdn": "lockbity44loulvujiaoels7knti2tfsnglclnse22syaa6x3vpqp7yd.onion",
-        "slug": "http://lockbity44loulvujiaoels7knti2tfsnglclnse22syaa6x3vpqp7yd.onion",
-        "title": "LockBit - Leaked",
-        "type": "DLS"
-      },
-      {
-        "available": true,
-        "enabled": true,
-        "fqdn": "lockbit7tnu7whmaqnnlmvnoxzejssvr6vkcoovg35encvnp24pikvyd.onion",
-        "slug": "http://lockbit7tnu7whmaqnnlmvnoxzejssvr6vkcoovg35encvnp24pikvyd.onion",
         "title": "LockBit - Leaked",
         "type": "DLS"
       },
@@ -11744,7 +11860,7 @@
         "type": "DLS"
       },
       {
-        "available": true,
+        "available": false,
         "enabled": true,
         "fqdn": "novavdivko2zvtrvtllnq45lxhba2rfzp76qigb4nrliklem5au7czqd.onion",
         "slug": "http://novavdivko2zvtrvtllnq45lxhba2rfzp76qigb4nrliklem5au7czqd.onion/",
@@ -14905,7 +15021,7 @@
         "enabled": true,
         "fqdn": "shnyhntww34phqoa6dcgnvps2yu7dlwzmy5lkvejwjdo6z7bmgshzayd.onion",
         "slug": "http://shnyhntww34phqoa6dcgnvps2yu7dlwzmy5lkvejwjdo6z7bmgshzayd.onion",
-        "title": "SH",
+        "title": "DDOS Protection",
         "type": "DLS"
       },
       {
@@ -14913,7 +15029,7 @@
         "enabled": true,
         "fqdn": "shinypogk4jjniry5qi7247tznop6mxdrdte2k6pdu5cyo43vdzmrwid.onion",
         "slug": "http://shinypogk4jjniry5qi7247tznop6mxdrdte2k6pdu5cyo43vdzmrwid.onion",
-        "title": "SH",
+        "title": "",
         "type": "DLS"
       }
     ],
@@ -16963,7 +17079,7 @@
         "enabled": true,
         "fqdn": "weerwolven.biz",
         "slug": "https://weerwolven.biz",
-        "title": "",
+        "title": "weerwolven.biz",
         "type": "DLS"
       }
     ],
