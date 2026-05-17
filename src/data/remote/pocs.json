@@ -1,5 +1,35 @@
 [
   {
+    "id": "1241259405",
+    "cve_id": "CVE-2026-46333",
+    "name": "public-passwd",
+    "owner": "Aurillium",
+    "full_name": "Aurillium/public-passwd",
+    "html_url": "https://github.com/Aurillium/public-passwd",
+    "description": "Use CVE-2026-46333 and CVE-2026-31431 to change any user's password.",
+    "stargazers_count": "0",
+    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\nptrace: slightly saner 'get_dumpable()' logic\n\nThe 'dumpability' of a task is fundamentally about the memory image of\nthe task - the concept comes from whether it can core dump or not - and\nmakes no sense when you don't have an associated mm.\n\nAnd almost all users do in fact use it only for the case where the task\nhas a mm pointer.\n\nBut we have one odd special case: ptrace_may_access() uses 'dumpable' to\ncheck various other things entirely independently of the MM (typically\nexplicitly using flags like PTRACE_MODE_READ_FSCREDS).  Including for\nthreads that no longer have a VM (and maybe never did, like most kernel\nthreads).\n\nIt's not what this flag was designed for, but it is what it is.\n\nThe ptrace code does check that the uid/gid matches, so you do have to\nbe uid-0 to see kernel thread details, but this means that the\ntraditional \"drop capabilities\" model doesn't make any difference for\nthis all.\n\nMake it all make a *bit* more sense by sayi",
+    "created_at": "2026-05-17 15:44:40",
+    "updated_at": "2026-05-17 15:44:44",
+    "pushed_at": "2026-05-17 15:44:41",
+    "inserted_at": "2026-05-17 16:36:32"
+  },
+  {
+    "id": "1241120335",
+    "cve_id": "CVE-2026-0265",
+    "name": "palo-alto-cve-2026-0265-checker",
+    "owner": "tstephens1080",
+    "full_name": "tstephens1080/palo-alto-cve-2026-0265-checker",
+    "html_url": "https://github.com/tstephens1080/palo-alto-cve-2026-0265-checker",
+    "description": "Python script to sweep a fleet of Palo Alto firewalls and Panoramas via SSH, check PAN-OS version against CVE-2026-0265 (Authentication Bypass via Cloud Authentication Service), detect whether CAS is actually configured, and report exploitability in a color-coded summary table.",
+    "stargazers_count": "0",
+    "vuln_description": "An authentication bypass vulnerability in Palo Alto Networks PAN-OS® software enables an unauthenticated attacker with network access to bypass authentication controls when Cloud Authentication Service (CAS) is enabled.\n\n\n\nThe risk is higher if CAS is enabled on the management interface and lower when any other login interfaces are used.\n\nThe risk of this issue is greatly reduced if you secure access to the management web interface by restricting access to only trusted internal IP addresses according to our recommended  best practice deployment guidelines https://live.paloaltonetworks.com/t5/community-blogs/tips-amp-tricks-how-to-secure-the-management-access-of-your-palo/ba-p/464431 .\n\nThis issue is applicable to PAN-OS software on PA-Series and VM-Series firewalls and on Panorama (virtual and M-Series).\n\nCloud NGFW and Prisma Access® are not impacted by this vulnerability.",
+    "created_at": "2026-05-17 10:31:24",
+    "updated_at": "2026-05-17 10:38:37",
+    "pushed_at": "2026-05-17 10:38:33",
+    "inserted_at": "2026-05-17 16:36:32"
+  },
+  {
     "id": "1241054980",
     "cve_id": "CVE-2020-3452",
     "name": "CVE-2020-3452-Cisco-Python-Scanner",
@@ -2967,36 +2997,6 @@
     "created_at": "2026-05-09 02:08:50",
     "updated_at": "2026-05-09 02:09:37",
     "pushed_at": "2026-05-09 02:09:33",
-    "inserted_at": "2026-05-09 04:36:30"
-  },
-  {
-    "id": "1233172686",
-    "cve_id": "CVE-2026-43284",
-    "name": "CVE-2026-43284",
-    "owner": "0xBlackash",
-    "full_name": "0xBlackash/CVE-2026-43284",
-    "html_url": "https://github.com/0xBlackash/CVE-2026-43284",
-    "description": "CVE-2026-43284",
-    "stargazers_count": "0",
-    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxfrm: esp: avoid in-place decrypt on shared skb frags\n\nMSG_SPLICE_PAGES can attach pages from a pipe directly to an skb. TCP\nmarks such skbs with SKBFL_SHARED_FRAG after skb_splice_from_iter(),\nso later paths that may modify packet data can first make a private\ncopy. The IPv4/IPv6 datagram append paths did not set this flag when\nsplicing pages into UDP skbs.\n\nThat leaves an ESP-in-UDP packet made from shared pipe pages looking\nlike an ordinary uncloned nonlinear skb. ESP input then takes the no-COW\nfast path for uncloned skbs without a frag_list and decrypts in place\nover data that is not owned privately by the skb.\n\nMark IPv4/IPv6 datagram splice frags with SKBFL_SHARED_FRAG, matching\nTCP. Also make ESP input fall back to skb_cow_data() when the flag is\npresent, so ESP does not decrypt externally backed frags in place.\nPrivate nonlinear skb frags still use the existing fast path.\n\nThis intentionally does not change ESP output. In esp_output",
-    "created_at": "2026-05-09 02:07:20",
-    "updated_at": "2026-05-09 02:25:39",
-    "pushed_at": "2026-05-09 02:25:35",
-    "inserted_at": "2026-05-09 04:36:30"
-  },
-  {
-    "id": "1233130669",
-    "cve_id": "CVE-2026-31431",
-    "name": "CVE-2026-31431-Verificador-Exploit",
-    "owner": "hori0729",
-    "full_name": "hori0729/CVE-2026-31431-Verificador-Exploit",
-    "html_url": "https://github.com/hori0729/CVE-2026-31431-Verificador-Exploit",
-    "description": "Linux Kernel Local Privilege Escalation",
-    "stargazers_count": "0",
-    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: algif_aead - Revert to operating out-of-place\n\nThis mostly reverts commit 72548b093ee3 except for the copying of\nthe associated data.\n\nThere is no benefit in operating in-place in algif_aead since the\nsource and destination come from different mappings.  Get rid of\nall the complexity added for in-place operation and just copy the\nAD directly.",
-    "created_at": "2026-05-09 01:14:49",
-    "updated_at": "2026-05-09 01:31:26",
-    "pushed_at": "2026-05-09 01:31:05",
     "inserted_at": "2026-05-09 04:36:30"
   }
 ]
