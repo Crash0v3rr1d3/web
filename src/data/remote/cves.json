@@ -1,5 +1,64 @@
 [
   {
+    "id": "CVE-2026-8723",
+    "description": "### Summary\n\n\n\n`qs.stringify` throws `TypeError` when called with `arrayFormat: 'comma'` and `encodeValuesOnly: true` on an array containing `null` or `undefined`. The throw is synchronous and not handled by any of qs's null-related options (`skipNulls`, `strictNullHandling`).\n\n\n\n### Details\n\n\n\nIn the comma + `encodeValuesOnly` branch, `lib/stringify.js:145` mapped the array through the raw encoder before joining:\n\n\n\n```js\n\n\n\nobj = utils.maybeMap(obj, encoder);\n\n\n\n```\n\n\n\n`utils.encode` (`lib/utils.js:195`) reads `str.length` with no null guard, so a `null` or `undefined` element throws `TypeError`. `skipNulls` and `strictNullHandling` are both checked in the per-element loop below this line and never get a chance to run.\n\n\n\nSame class of bug as the filter-array path fixed in 0c180a4. The vulnerable shape of the comma + `encodeValuesOnly` branch was introduced in 4c4b23d (\"encode comma values more consistently\", PR #463, 2023-01-19), first released in v6.11.1.\n\n\n\n#### PoC\n\n\n\n```js\n\n\n\nconst qs = require('qs');\n\n\n\nqs.stringify({ a: [null, 'b'] },      { arrayFormat: 'comma', encodeValuesOnly: true });\n\n\n\nqs.stringify({ a: [undefined, 'b'] }, { arrayFormat: 'comma', encodeValuesOnly: true });\n\n\n\nqs.stringify({ a: [null] },           { arrayFormat: 'comma', encodeValuesOnly: true });\n\n\n\n// TypeError: Cannot read properties of null (reading 'length')\n\n\n\n//     at encode (lib/utils.js:195:13)\n\n\n\n//     at Object.maybeMap (lib/utils.js:322:37)\n\n\n\n//     at stringify (lib/stringify.js:145:25)\n\n\n\n```\n\n\n\n#### Fix\n\n\n\n`lib/stringify.js:145`, applied in 21f80b3 on `main` and released as v6.15.2:\n\n\n\n```diff\n\n\n\n- obj = utils.maybeMap(obj, encoder);\n\n\n\n+ obj = utils.maybeMap(obj, function (v) {\n\n\n\n+     return v == null ? v : encoder(v);\n\n\n\n+ });\n\n\n\n```\n\n\n\n`null` and `undefined` now pass through `maybeMap` unchanged and reach the `join(',')` step as-is. For `{ a: [null, 'b'] }` this produces `a=,b`, matching the non-`encodeValuesOnly` comma path (which already joins before encoding and produces `a=%2Cb` for the same input). Single-element `[null]` arrays still collapse via the existing `obj.join(',') || null` and remain subject to `skipNulls` / `strictNullHandling` in the main loop.\n\n\n\n### Affected versions\n\n\n\n`>=6.11.1 <6.15.2` — fixed in v6.15.2.\n\n\n\nThe vulnerable code shape was introduced in 4c4b23d and first shipped in v6.11.1. Earlier versions — including all of 6.7.x, 6.8.x, 6.9.x, 6.10.x, and 6.11.0 — implemented the comma + `encodeValuesOnly` path differently (joining before encoding) and are not affected. Empirically verified across released versions.\n\n\n\n### Impact\n\n\n\nApplication code that calls `qs.stringify` with both `arrayFormat: 'comma'` and `encodeValuesOnly: true` (both non-default) on input that may contain a `null` or `undefined` array element will throw synchronously instead of producing a query string. In a typical Node.js HTTP framework (Express, Fastify, Koa, hapi) the sync throw is caught by the framework's error boundary and the affected request returns a 500; the worker process does not exit and subsequent requests are unaffected. The \"kills the worker process\" framing applies only to call sites outside a request-handler error boundary (background jobs, startup paths, stream pipelines) or to deployments with framework error handling explicitly disabled.\n\n\n\nThe vulnerable input is a `null` or `undefined` entry inside an array; this is reachable from JSON request bodies or from application code constructing arrays from user input, but not from standard HTML form submissions (which produce strings or omitted fields, not literal `null`).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8723",
+    "publishedDate": "2026-05-17T00:16:21.233",
+    "lastModifiedDate": "2026-05-17T00:16:21.233",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "7ffcee3d-2c14-4c3e-b844-86c6a321a158"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "7ffcee3d-2c14-4c3e-b844-86c6a321a158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6050",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6050",
+    "publishedDate": "2026-05-16T23:16:50.577",
+    "lastModifiedDate": "2026-05-16T23:16:50.577",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46728",
+    "description": "Das U-Boot before 2026.04 allows FIT (Flat Image Tree) signature verification bypass because hashed-nodes is omitted from a hash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46728",
+    "publishedDate": "2026-05-16T22:16:13.317",
+    "lastModifiedDate": "2026-05-16T22:16:13.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 1.5,
+        "impactScore": 6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
     "id": "CVE-2021-47981",
     "description": "Quick.CMS 6.7 contains a cross-site scripting vulnerability in the sliders form that allows authenticated attackers to inject malicious scripts by submitting XSS payloads through the sDescription parameter. Attackers can craft CSRF forms targeting the admin.php?p=sliders-form endpoint to execute arbitrary JavaScript in victim browsers when the form is submitted.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2021-47981",
@@ -631,93 +690,6 @@
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
         "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2020-37245",
-    "description": "Supsystic Digital Publications 1.6.9 contains a path traversal vulnerability in the Folder input field that allows attackers to access files outside the web root by injecting directory traversal sequences. Additionally, the plugin fails to sanitize input fields in publication settings, allowing stored cross-site scripting attacks through script injection in parameters like Area Width and Publication Width that execute when publications are viewed or edited.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37245",
-    "publishedDate": "2026-05-16T16:16:20.867",
-    "lastModifiedDate": "2026-05-16T16:16:20.867",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2020-37244",
-    "description": "Supsystic Membership 1.4.7 contains an SQL injection vulnerability that allows unauthenticated attackers to execute arbitrary SQL queries by injecting malicious code through the 'search' and 'sidx' parameters. Attackers can send GET requests to the badges module with crafted payloads to extract sensitive database information using time-based blind or UNION-based SQL injection techniques.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37244",
-    "publishedDate": "2026-05-16T16:16:20.750",
-    "lastModifiedDate": "2026-05-16T16:16:20.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2020-37243",
-    "description": "Supsystic Pricing Table 1.8.7 contains an SQL injection vulnerability in the 'sidx' GET parameter that allows unauthenticated attackers to execute arbitrary SQL queries through the getListForTbl action. The plugin also contains stored cross-site scripting vulnerabilities in the 'Edit name' and 'Edit HTML' fields that execute malicious scripts when viewing pricing tables.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37243",
-    "publishedDate": "2026-05-16T16:16:20.620",
-    "lastModifiedDate": "2026-05-16T16:16:20.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
