@@ -1,10 +1,30 @@
 [
   {
-    "id": "CVE-2026-8912",
-    "description": "The Contest Gallery plugin for WordPress is vulnerable to SQL Injection via the 'form_input' parameter in versions up to, and including, 28.1.6. This is due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query inside the unauthenticated 'post_cg_gallery_form_upload' AJAX action (specifically the 'cb' branch of the included users-upload-check.php, where $f_input_id is concatenated unquoted into 'SELECT Field_Content FROM ... WHERE id = $f_input_id'). The endpoint is gated only by a public frontend nonce ('cg1l_action' / 'cg_nonce') that is exposed in the page source of any public gallery page. This makes it possible for unauthenticated attackers to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8912",
-    "publishedDate": "2026-05-19T13:16:20.127",
-    "lastModifiedDate": "2026-05-19T14:38:39.660",
+    "id": "CVE-2026-5511",
+    "description": "In the web management interface of Archer AX72 (SG) v1, the network diagnostic feature improperly handles invalid user input, resulting in limited exposure of diagnostic command usage information. \n\n\nAn authenticated attacker with administrative privileges could exploit this issue to confirm the presence of the diagnostic utility and view its valid command-line syntax and options.  The exposed information is limited in scope and does not include sensitive system data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5511",
+    "publishedDate": "2026-05-19T17:16:23.493",
+    "lastModifiedDate": "2026-05-19T17:59:12.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47358",
+    "description": "Terrascan v1.18.3 and prior are vulnerable to Server-Side Request Forgery (SSRF) via external URL resolution in uploaded IaC templates when running in server mode. When Terrascan parses uploaded ARM templates or CloudFormation templates, it resolves external URLs referenced within those templates via hashicorp/go-getter with all default detectors enabled, including FileDetector. An unauthenticated remote attacker can upload an ARM template containing a templateLink.uri or parametersLink.uri field, or a CloudFormation template containing an AWS::CloudFormation::Stack TemplateURL field, pointing to an attacker-controlled URL. Terrascan will fetch the attacker-controlled URL server-side. Unlike SSRF via the remote scan endpoint, file:// URLs are directly usable without requiring an X-Terraform-Get redirect, enabling local file read. This affects deployments running terrascan in server mode (terrascan server), which binds to 0.0.0.0 with no authentication. Note: Terrascan was archived in August 2023 and no patch will be released.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47358",
+    "publishedDate": "2026-05-19T17:16:23.023",
+    "lastModifiedDate": "2026-05-19T17:59:12.383",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -15,16 +35,319 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "source": "vulnreport@tenable.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnreport@tenable.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-4883",
-    "description": "The Piotnet Forms plugin for WordPress is vulnerable to arbitrary file upload due to missing file type validation in the 'piotnetforms_ajax_form_builder' function in all versions up to, and including, 2.1.40. The plugin uses an incomplete extension blacklist that only blocks php, phpt, php5, php7, and exe extensions, while allowing dangerous extensions such as .phar or .phtml to be uploaded. This makes it possible for unauthenticated attackers to upload arbitrary files on the affected site's server which may make remote code execution possible. Note: The exploit can only be exploited if a file field is added to the form.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4883",
-    "publishedDate": "2026-05-19T13:16:19.340",
-    "lastModifiedDate": "2026-05-19T14:38:39.660",
+    "id": "CVE-2026-47357",
+    "description": "Terrascan v1.18.3 and prior are vulnerable to Server-Side Request Forgery (SSRF) via the remote_url parameter in the remote directory scan endpoint (POST /v1/{iac}/{iacVersion}/{cloud}/remote/dir/scan) when running in server mode. An unauthenticated remote attacker can supply an attacker-controlled HTTP URL as remote_url with remote_type set to \"http\". The URL is passed directly to hashicorp/go-getter (v1.7.5) without validation. Go-getter's HttpGetter supports the X-Terraform-Get response header, allowing the attacker's server to redirect the download to a file:// URL, enabling local file read. Additionally, HttpGetter has Netrc set to true, causing it to read ~/.netrc and send stored credentials to attacker-controlled hostnames. This affects deployments running terrascan in server mode (terrascan server), which binds to 0.0.0.0 with no authentication. Note: Terrascan was archived in August 2023 and no patch will be released.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47357",
+    "publishedDate": "2026-05-19T17:16:22.863",
+    "lastModifiedDate": "2026-05-19T17:59:12.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "vulnreport@tenable.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnreport@tenable.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47356",
+    "description": "Terrascan v1.18.3 and prior are vulnerable to Server-Side Request Forgery (SSRF) via the webhook_url parameter in the file scan endpoint (POST /v1/{iac}/{iacVersion}/{cloud}/local/file/scan) when running in server mode. An unauthenticated remote attacker can supply an arbitrary URL as the webhook_url multipart form parameter. After scanning the uploaded file, Terrascan sends an HTTP POST request to the attacker-controlled URL containing the full scan results as a JSON body, with the attacker-supplied webhook_token forwarded as a Bearer token in the Authorization header. The retryable HTTP client retries up to 10 times on failure. This affects deployments running terrascan in server mode (terrascan server), which binds to 0.0.0.0 with no authentication. Note: Terrascan was archived in August 2023 and no patch will be released.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47356",
+    "publishedDate": "2026-05-19T17:16:22.680",
+    "lastModifiedDate": "2026-05-19T17:59:12.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "vulnreport@tenable.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnreport@tenable.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-36829",
+    "description": "An authentication bypass vulnerability exists in the embedded HTTP server of Panabit PAP-XM320 up to and including v7.7. The server validates session cookies using a filesystem existence check based on a user-controlled cookie value without proper sanitization, allowing directory traversal and bypass of authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36829",
+    "publishedDate": "2026-05-19T17:16:22.210",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-36828",
+    "description": "A command injection vulnerability exists in the /cgi-bin/tools/ajax_cmd endpoint of Panabit PAP-XM320 up to and including v7.7. The CGI component allows authenticated users to execute arbitrary shell commands with root privileges via the action=runcmd parameter.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36828",
+    "publishedDate": "2026-05-19T17:16:22.080",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-36827",
+    "description": "A command injection vulnerability exists in Panabit PAP-XM320 up to and including V7.7. The web management interface invokes the backend helper /usr/sbin/pappiw and passes user-controlled parameters to it. The helper performs unsafe argument processing using eval, which allows command injection when attacker-controlled input is included in the arguments. As a result, an authenticated remote attacker with access to the management interface may execute arbitrary shell commands.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36827",
+    "publishedDate": "2026-05-19T17:16:21.937",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-8706",
+    "description": "Firefox for iOS hosted Reader mode on an unauthenticated local web server, allowing another application on the same device to request arbitrary URLs and receive the response rendered with the signed-in user's cookies. This vulnerability was fixed in Firefox for iOS 151.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8706",
+    "publishedDate": "2026-05-19T16:16:22.580",
+    "lastModifiedDate": "2026-05-19T17:59:12.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5804",
+    "description": "An improper authentication vulnerability was discovered in the Motorola Factory Test component (com.motorola.motocit). The application contained a reference to a writable file descriptor in external storage which could be used by third party apps running on the device to open a TCP server, exposing sensitive permissions and data. This could allow a local attacker to bypass permission checks and access protected device settings.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5804",
+    "publishedDate": "2026-05-19T16:16:22.413",
+    "lastModifiedDate": "2026-05-19T17:57:25.143",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 2,
+        "impactScore": 5.8,
+        "source": "psirt@lenovo.com"
+      },
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@lenovo.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-37281",
+    "description": "An OS command injection vulnerability in the /stream-to-vlc Express route in hitarth-gg Zenshin before 2.7.0 allows remote attackers to execute arbitrary commands via the url parameter.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37281",
+    "publishedDate": "2026-05-19T16:16:21.420",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31072",
+    "description": "The JSONSerializer and CBORSerializer in APScheduler (all versions including 3.10.x and 4.0.0a5) are vulnerable to Remote Code Execution (RCE) via Insecure Deserialization. The unmarshal_object function allows for arbitrary class instantiation and state injection by dynamically importing modules and calling __setstate__ on any class available in the Python environment. An attacker can exploit this by submitting a specially crafted JSON or CBOR payload to an application using these serializers",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31072",
+    "publishedDate": "2026-05-19T16:16:20.610",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31071",
+    "description": "API endpoints in LalanaChami Pharmacy Management System (commit 5c3d028) lack authentication middleware. Unauthenticated remote attackers can exploit this to dump all user records (including bcrypt password hashes) via /api/user/getUserData, modify drug inventory, and access private medical prescription data via /api/doctorOder.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31071",
+    "publishedDate": "2026-05-19T16:16:20.490",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31070",
+    "description": "The LalanaChami Pharmacy Management System (commit 5c3d028) allows unauthenticated remote attackers to escalate privileges by self-assigning an administrative role during registration. The /api/user/signup endpoint fails to validate the role parameter in the request body",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31070",
+    "publishedDate": "2026-05-19T16:16:20.363",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-31069",
+    "description": "BillaBear (all versions prior to Jan 2026) contains a SQL Injection vulnerability in the EventRepository. User-controlled input from metric filter names and aggregation properties is directly interpolated into SQL queries using sprintf() without proper sanitization or identifier quoting. Although filter values are parameterized, the filter identifiers (keys) are not. An authenticated attacker with ROLE_ACCOUNT_MANAGER permissions can exploit this to execute arbitrary SQL commands.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-31069",
+    "publishedDate": "2026-05-19T16:16:20.230",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-30118",
+    "description": "scalar/astro v0.1.13 was discovered to contain a Server-Side Request Forgery (SSRF) in the scalar_url query parameter of the Scalar Proxy endpoint. This vulnerability allows unauthenticated attackers to force the backend server to send HTTP requests to attacker-controlled URLs, leading to authentication cookies and headers exposure and possible privilege escalation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-30118",
+    "publishedDate": "2026-05-19T16:16:20.103",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-30117",
+    "description": "scalar/astro v0.1.13 was discovered to contain an arbitrary file upload vulnerability in the the scalar_url query parameter of the Scalar Proxy endpoint. This vulnerability allows attackers to execute arbitrary code via uploading a crafted SVG file.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-30117",
+    "publishedDate": "2026-05-19T16:16:19.980",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-8711",
+    "description": "NGINX JavaScript has a vulnerability when the js_fetch_proxy directive is configured with at least one client-controlled NGINX variable (for example, $http_*, $arg_*, $cookie_*) and a location invoking the ngx.fetch() operation from NGINX JavaScript. An unauthenticated attacker can exploit this vulnerability by sending crafted HTTP requests. This may cause a heap buffer overflow in the NGINX worker process leading to a restart. Additionally, for systems with Address Space Layout Randomization (ASLR) disabled, code execution is possible. \n\n\nNote: Software versions which have reached End of Technical Support (EoTS) are not evaluated.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8711",
+    "publishedDate": "2026-05-19T15:16:33.017",
+    "lastModifiedDate": "2026-05-19T17:57:25.143",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "f5sirt@f5.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f5sirt@f5.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47100",
+    "description": "Funnel Builder for WooCommerce Checkout prior to 3.15.0.3 contains a missing authorization vulnerability in the public checkout endpoint that allows unauthenticated attackers to invoke internal methods and write arbitrary data to the plugin's External Scripts global setting. Attackers can inject malicious JavaScript through the External Scripts setting that executes in the browsers of all checkout page visitors.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47100",
+    "publishedDate": "2026-05-19T15:16:32.117",
+    "lastModifiedDate": "2026-05-19T17:57:58.497",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45557",
+    "description": "Technitium DNS Server aggressively tries to fetch missing RRSIG records or mismatched DNSKEY records. An attacker in control of a domain can cause a vulnerable system to generate excessive network traffic. Fixed in 15.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45557",
+    "publishedDate": "2026-05-19T15:16:31.640",
+    "lastModifiedDate": "2026-05-19T17:57:25.143",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44159",
+    "description": "Tyler Identity Local (TID-L) uses documented, default administrative credentials. Users are not required to change the credentials before deployment. TID-L has not been distributed since December 2020, and has not been supported since 2021.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44159",
+    "publishedDate": "2026-05-19T15:16:31.180",
+    "lastModifiedDate": "2026-05-19T17:57:25.143",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -35,428 +358,126 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7860",
-    "description": "A possible information disclosure vulnerability exists in the Vaadin Maven plugin and Vaadin Gradle plugin that exposes the full set of environment variables in build logs whenever the frontend build process exits with a non-zero status. Because the build environment may contain credentials supplied as secrets, any failed frontend build can expose those secrets in clear text in CI logs and archived build artifacts.\n\n\nUsers of affected versions should apply the following mitigation or upgrade. Releases that have fixed this issue include:\n\nProduct version\nVaadin 23.0.0 - 23.6.9\nVaadin 24.0.0 - 24.10.3\nVaadin 25.0.0 - 25.1.4\n\nMitigation\nUpgrade to 23.6.10\nUpgrade to 24.10.4 or newer\nUpgrade to 25.1.5 or newer\n\nPlease note that Vaadin versions 10-13 and 15-22 are no longer supported and you should update either to the latest 23, 24, or 25 version.\n\nArtifactsMaven coordinatesVulnerable versionsFixed versioncom.vaadin:flow-plugin-base23.0.0 - 23.6.10≥23.6.11com.vaadin:flow-plugin-base24.0.0 - 24.10.3≥24.10.4com.vaadin:flow-plugin-base25.0.0 - 25.1.4≥25.1.5com.vaadin:flow-maven-plugin23.0.0 - 23.6.10≥23.6.11com.vaadin:flow-maven-plugin24.0.0 - 24.10.3≥24.10.4com.vaadin:flow-maven-plugin25.0.0 - 25.1.4≥25.1.5com.vaadin:flow-gradle-plugin24.0.0 - 24.10.3≥24.10.4com.vaadin:flow-gradle-plugin25.0.0 - 25.1.4≥25.1.5",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7860",
-    "publishedDate": "2026-05-19T12:16:19.960",
-    "lastModifiedDate": "2026-05-19T14:50:19.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
+      },
       {
-        "score": 1.6,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:L/UI:P/VC:H/VI:N/VA:N/SC:H/SI:H/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:N/R:A/V:C/RE:L/U:Green",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@vaadin.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7571",
-    "description": "A flaw was found in Keycloak. A low-privilege user, with knowledge of user credentials and client ID, can bypass a security control intended to disable the implicit flow in OpenID Connect (OIDC) clients. By manipulating client data during a session restart, an attacker can obtain an access token that should not be available. This vulnerability can also lead to the exposure of these access tokens in server logs, proxy logs, and HTTP Referrer headers, resulting in sensitive information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7571",
-    "publishedDate": "2026-05-19T12:16:19.820",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7507",
-    "description": "A session fixation vulnerability was found in Keycloak's login-actions endpoints. An unauthenticated attacker could exploit this flaw by pre-creating an authentication session and tricking a victim into visiting a maliciously crafted link. By leveraging the /login-actions/restart endpoint—which processes session handles without adequate CSRF protection or cookie ownership validation—an attacker can reset the authentication flow state. This causes Single Sign-On (SSO) to authenticate the victim transparently upon clicking the link, allowing the attacker to hijack the required-action form without needing the victim's credentials. A successful exploit could lead to complete account takeover, including highly privileged administrative accounts.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7507",
-    "publishedDate": "2026-05-19T12:16:19.687",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7504",
-    "description": "A flaw was found in Keycloak's URL validation logic during redirect operations. By crafting a malicious request, an attacker could bypass validation to redirect users to unauthorized URLs, potentially leading to the exposure of sensitive information within the domain or facilitating further attacks. This vulnerability specifically affects Keycloak clients configured with a wildcard (*) in the \"Valid Redirect URIs\" field and requires user interaction to be successfully exploited.\n\nThe issue stems from a discrepancy in how Keycloak and the underlying Java URI implementation handle the user-info component of a URL. If a malicious redirect URL is constructed using multiple @ characters in the user-info section, Java's URI parser fails to extract the user-info, leaving only the raw authority field. Consequently, Keycloak's validation check fails to detect the malformed user-info, falls back to a wildcard comparison, and incorrectly permits the malicious redirect.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7504",
-    "publishedDate": "2026-05-19T12:16:19.553",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7307",
-    "description": "A flaw was found in Keycloak. A remote, unauthenticated attacker can send a specially crafted XML input to the Security Assertion Markup Language (SAML) endpoint. This malicious input can cause high CPU usage and worker thread starvation, leading to a Denial of Service (DoS) where the server becomes unavailable.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7307",
-    "publishedDate": "2026-05-19T12:16:19.423",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-4630",
-    "description": "A flaw was found in Keycloak. An authenticated client could exploit an Insecure Direct Object Reference (IDOR) vulnerability in the Authorization Services Protection API endpoint. By knowing or obtaining a resource's unique identifier (UUID) belonging to another Resource Server within the same realm, the client could bypass authorization checks. This allows the client to perform unauthorized GET, PUT, and DELETE operations on resources, leading to information disclosure and potential unauthorized modification or deletion of data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4630",
-    "publishedDate": "2026-05-19T12:16:19.290",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-45442",
-    "description": "Missing Authorization vulnerability in Brainstorm Force Presto Player allows Exploiting Incorrectly Configured Access Control Security Levels.\n\nThis issue affects Presto Player: from n/a through 4.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45442",
-    "publishedDate": "2026-05-19T12:16:19.130",
-    "lastModifiedDate": "2026-05-19T14:50:07.413",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43493",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: pcrypt - Fix handling of MAY_BACKLOG requests\n\nMAY_BACKLOG requests can return EBUSY.  Handle them by checking\nfor that value and filtering out EINPROGRESS notifications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43493",
-    "publishedDate": "2026-05-19T12:16:19.020",
-    "lastModifiedDate": "2026-05-19T12:16:19.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-43492",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nlib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()\n\nYiming reports an integer underflow in mpi_read_raw_from_sgl() when\nsubtracting \"lzeros\" from the unsigned \"nbytes\".\n\nFor this to happen, the scatterlist \"sgl\" needs to occupy more bytes\nthan the \"nbytes\" parameter and the first \"nbytes + 1\" bytes of the\nscatterlist must be zero.  Under these conditions, the while loop\niterating over the scatterlist will count more zeroes than \"nbytes\",\nsubtract the number of zeroes from \"nbytes\" and cause the underflow.\n\nWhen commit 2d4d1eea540b (\"lib/mpi: Add mpi sgl helpers\") originally\nintroduced the bug, it couldn't be triggered because all callers of\nmpi_read_raw_from_sgl() passed a scatterlist whose length was equal to\n\"nbytes\".\n\nHowever since commit 63ba4d67594a (\"KEYS: asymmetric: Use new crypto\ninterface without scatterlists\"), the underflow can now actually be\ntriggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a\nlarger \"out_len\" than \"in_len\" and filling the \"in\" buffer with zeroes,\ncrypto_akcipher_sync_prep() will create an all-zero scatterlist used for\nboth the \"src\" and \"dst\" member of struct akcipher_request and thereby\nfulfil the conditions to trigger the bug:\n\n  sys_keyctl()\n    keyctl_pkey_e_d_s()\n      asymmetric_key_eds_op()\n        software_key_eds_op()\n          crypto_akcipher_sync_encrypt()\n            crypto_akcipher_sync_prep()\n              crypto_akcipher_encrypt()\n                rsa_enc()\n                  mpi_read_raw_from_sgl()\n\nTo the user this will be visible as a DoS as the kernel spins forever,\ncausing soft lockup splats as a side effect.\n\nFix it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43492",
-    "publishedDate": "2026-05-19T12:16:18.880",
-    "lastModifiedDate": "2026-05-19T12:16:18.880",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-43491",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: qrtr: ns: Limit the maximum server registration per node\n\nCurrent code does no bound checking on the number of servers added per\nnode. A malicious client can flood NEW_SERVER messages and exhaust memory.\n\nFix this issue by limiting the maximum number of server registrations to\n256 per node. If the NEW_SERVER message is received for an old port, then\ndon't restrict it as it will get replaced. While at it, also rate limit\nthe error messages in the failure path of qrtr_ns_worker().\n\nNote that the limit of 256 is chosen based on the current platform\nrequirements. If requirement changes in the future, this limit can be\nincreased.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43491",
-    "publishedDate": "2026-05-19T12:16:18.747",
-    "lastModifiedDate": "2026-05-19T12:16:18.747",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-37982",
-    "description": "A flaw was found in Keycloak. This authentication vulnerability allows a remote attacker to replay `ExecuteActionsActionToken` tokens within Keycloak's WebAuthn (Web Authentication) flow. By intercepting an execute-actions email link, an attacker can register their own authenticator to a victim's account. This leads to unauthorized enrollment of a hardware-backed credential, enabling persistent account takeover.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37982",
-    "publishedDate": "2026-05-19T12:16:18.610",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-37981",
-    "description": "A flaw was found in Keycloak. A broken access control vulnerability in the Account Resources user lookup endpoint allows a remote authenticated user, who owns at least one User-Managed Access (UMA) resource, to enumerate and harvest personally identifiable information (PII) for all realm users. By sending crafted requests with arbitrary usernames or email values, the endpoint returns full profile objects for unrelated users. This leads to broad profile-level information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37981",
-    "publishedDate": "2026-05-19T12:16:18.463",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-37979",
-    "description": "A flaw was found in Keycloak. This access control vulnerability in Keycloak's OpenID Connect (OIDC) token introspection endpoint allows a confidential client to bypass audience restrictions. An attacker-controlled client with valid credentials can retrieve sensitive token claims intended for other resource servers, compromising the confidentiality of lightweight access tokens. This issue can be exploited remotely by any confidential client in the realm with valid credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37979",
-    "publishedDate": "2026-05-19T12:16:18.330",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-37978",
-    "description": "A flaw was found in Keycloak. A low-privilege administrator with the 'view-clients' role can exploit this by invoking the 'evaluate-scopes' Admin API endpoints with an arbitrary user ID (userId) parameter. This vulnerability allows for cross-role personally identifiable information (PII) leakage, enabling unauthorized visibility into user identities and authorizations across the realm. Exploitation is possible remotely via network access to the Admin API.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-37978",
-    "publishedDate": "2026-05-19T12:16:17.540",
-    "lastModifiedDate": "2026-05-19T14:25:40.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8827",
-    "description": "The AddressRepository::getSqlQuery() method constructs a database query without properly sanitizing user input, leading to SQL Injection. The method is not invoked anywhere within the extension itself and therefore poses no direct risk in a default installation. However, custom extensions that call this method with untrusted input would expose the site to SQL injection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8827",
-    "publishedDate": "2026-05-19T10:16:25.887",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8727",
-    "description": "The Crawler extension passes the X-T3Crawler-Meta response header from crawled URLs directly to PHP's unserialize(). An attacker controlling a crawled endpoint can inject arbitrary serialized PHP objects, leading to Remote Code Execution on the TYPO3 server. Exploitation requires administrative privileges to configure a crawler-enabled page and trigger the crawl via a Scheduler task.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8727",
-    "publishedDate": "2026-05-19T10:16:25.747",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:H/UI:A/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8726",
-    "description": "The extension fails to properly sanitize user input before using it in a database query. As a result, an unauthenticated attacker can inject arbitrary SQL through a URL parameter on pages using the \"Date Menu of news articles\" plugin. Exploitation requires the \"Date Menu of news articles\" plugin to be in use and the TypoScript/Plugin setting disableOverrideDemand not to be enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8726",
-    "publishedDate": "2026-05-19T10:16:25.603",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46725",
-    "description": "The extension passes an attacker-controlled cookie directly to PHP's unserialize() without safely processing the input. A remote, unauthenticated attacker can supply a crafted serialized payload to trigger PHP Object Injection, leading to Remote Code Execution on the TYPO3 server. Exploitation requires the content element to be configured with \"Persistent Mode: Static\" in the plugin settings.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46725",
-    "publishedDate": "2026-05-19T10:16:25.457",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.2,
+        "score": 9.3,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
       }
     ]
   },
   {
-    "id": "CVE-2026-46724",
-    "description": "The file indexer does not normalize the configured directory path. A backend user with permission to edit indexer configurations can index documents from arbitrary locations on the server file system through path traversal sequences.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46724",
-    "publishedDate": "2026-05-19T10:16:25.320",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
+    "id": "CVE-2026-43634",
+    "description": "HestiaCP versions 1.2.0 through 1.9.4 contain an IP spoofing vulnerability that allows unauthenticated remote attackers to bypass authentication security controls by supplying an arbitrary IP address in the CF-Connecting-IP HTTP header without verifying the request originated from Cloudflare's network. Attackers can exploit this to circumvent fail2ban brute-force protection, bypass per-user IP allowlists, and poison authentication audit logs by spoofing trusted IP addresses on each request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43634",
+    "publishedDate": "2026-05-19T15:16:31.023",
+    "lastModifiedDate": "2026-05-19T17:57:58.497",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-46723",
-    "description": "The additional_tables configuration of the page and tt_content indexers accepts arbitrary table and field names. A backend user with permission to edit indexer configurations can copy sensitive data from internal TYPO3 tables into the search index.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46723",
-    "publishedDate": "2026-05-19T10:16:25.187",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
+    "id": "CVE-2026-34883",
+    "description": "An issue was discovered in the Portrait Dell Color Management application before 3.7.0 for Dell monitors. On Windows, a symbolic link vulnerability allows a local low-privileged user to escalate privileges to Administrator. During installation, the software writes the file CCFLFamily_07Feb11.edr to C:\\ProgramData\\Portrait Displays\\CW\\data\\i1D3\\ while running with elevated privileges. Because the installer does not properly validate symbolic links or reparse points at the destination path, an attacker can create a malicious link that redirects the write operation to an arbitrary system location, enabling arbitrary file creation or overwrite with elevated privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34883",
+    "publishedDate": "2026-05-19T15:16:30.150",
+    "lastModifiedDate": "2026-05-19T18:04:41.423",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
-        "version": "CVSS 4.0",
+        "score": 5.3,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   },
   {
-    "id": "CVE-2026-46722",
-    "description": "The OOXML parsing of the file indexer does not disable external entity resolution. A crafted xlsx or pptx document placed in an indexed directory can cause local files to be read or outbound HTTP requests to be performed, with the retrieved content being written to the search index.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46722",
-    "publishedDate": "2026-05-19T10:16:25.027",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
+    "id": "CVE-2026-2587",
+    "description": "A critical Remote Code Execution (RCE) vulnerability was identified in the server-side template rendering mechanism used by the Glassfish gadget handler. The application processes .xml files and evaluates user-supplied values within a context where Expression Language (EL) “expressions” are processed without proper sanitization or escaping. By injecting expressions such as #{7*7}, the server returns 49, confirming server-side EL evaluation. This issue allows a remote attacker to fully compromise the underlying host, enabling capabilities as reading/modifying data, executing arbitrary commands, persistence, and lateral movement.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2587",
+    "publishedDate": "2026-05-19T15:16:28.577",
+    "lastModifiedDate": "2026-05-19T17:57:25.143",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "emo@eclipse.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-46721",
-    "description": "The create and edit flows do not restrict which user properties may be submitted and do not enforce access control on the frontend user group assignment. As a result, an attacker can assign an arbitrary frontend user group to a newly registered or edited account, gaining unauthorized access to content and functionality restricted to privileged frontend user groups.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46721",
-    "publishedDate": "2026-05-19T10:16:24.853",
-    "lastModifiedDate": "2026-05-19T14:47:13.200",
+    "id": "CVE-2026-2586",
+    "description": "An authenticated Remote Code Execution (RCE) vulnerability was identified in GlassFish's Administration Console. A user with access to the panel can send crafted requests that allow the execution of arbitrary operating system commands with the privileges of the application service user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2586",
+    "publishedDate": "2026-05-19T15:16:28.413",
+    "lastModifiedDate": "2026-05-19T17:57:25.143",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "emo@eclipse.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-46586",
-    "description": "Improper Control of Generation of Code ('Code Injection'), Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection') vulnerability in Apache OFBiz.\n\nThis issue affects Apache OFBiz: before 24.09.06.\n\nUsers are recommended to upgrade to version 24.09.06, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46586",
-    "publishedDate": "2026-05-19T10:16:24.733",
-    "lastModifiedDate": "2026-05-19T14:24:12.140",
+    "id": "CVE-2025-70950",
+    "description": "An issue in gohttp commit 34ea51 allows attackers to execute a directory traversal via supplying a crafted request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-70950",
+    "publishedDate": "2026-05-19T15:16:27.180",
+    "lastModifiedDate": "2026-05-19T18:04:29.373",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
   }
 ]
