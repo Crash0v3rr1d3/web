@@ -1,479 +1,10 @@
 [
   {
-    "id": "CVE-2026-9065",
-    "description": "SureCart version prior to 4.2.1 are vulnerable to authenticated SQL injection via multiple parameters ('model_name', 'model_id', 'integration_id', 'provider') on the REST API endpoint '/surecart/v1/integrations/{id}'.\n\nThe root cause is a flawed escaping bypass in the query builder ('wp-query-builder'). Values passed to the 'where()' method are only sanitized via '$wpdb->prepare()' when they do **not** contain a dot ('.') or the WordPress table prefix ('wp_'). By including a dot anywhere in the payload, an attacker completely bypasses the escaping logic and injects arbitrary SQL into the 'WHERE' clause, allowing full UNION-based extraction of the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9065",
-    "publishedDate": "2026-05-20T09:16:27.217",
-    "lastModifiedDate": "2026-05-20T09:16:27.217",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnreport@tenable.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9059",
-    "description": "NextGEN Gallery version prior to 4.2.1 are vulnerable to authenticated SQL injection via the 'orderby' parameter on the REST API endpoints '/imagely/v1/galleries' and '/imagely/v1/albums'.\n\n\n\nThe root cause is an insufficient sanitization function ('_clean_column()') in the data mapper layer that uses a character blacklist instead of a whitelist approach. This allows an authenticated attacker with the 'NextGEN Gallery overview' capability (assigned to the Administrator role by default) to inject arbitrary SQL into the 'ORDER BY' clause.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9059",
-    "publishedDate": "2026-05-20T09:16:27.020",
-    "lastModifiedDate": "2026-05-20T09:16:27.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnreport@tenable.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6405",
-    "description": "The Anomify AI – Anomaly Detection and Alerting plugin for WordPress is vulnerable to Cross-Site Request Forgery (CSRF) leading to Stored Cross-Site Scripting (XSS) in versions up to and including 0.3.6. This is due to missing nonce verification on the settings page handler and insufficient output escaping in the admin_options.php template. The settings form includes no wp_nonce_field() and the handler performs no check_admin_referer() check, meaning any cross-origin POST can modify plugin settings. The API key field is sanitized only with sanitize_text_field(), which strips HTML tags but does not encode double-quote characters; the value is then rendered into an HTML attribute via bare echo without esc_attr(), allowing a double-quote attribute-escape payload to survive both sanitization and storage. This makes it possible for unauthenticated attackers to inject arbitrary web scripts by tricking a logged-in administrator into visiting a malicious page that submits a forged request, storing the payload in the database and causing it to execute in the administrator's browser whenever the plugin settings page is visited.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6405",
-    "publishedDate": "2026-05-20T08:16:23.027",
-    "lastModifiedDate": "2026-05-20T08:16:23.027",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5200",
-    "description": "The AcyMailing – An Ultimate Newsletter Plugin and Marketing Automation Solution for WordPress plugin for WordPress is vulnerable to Missing Authorization in versions up to, and including, 10.8.2. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to modify privileged AcyMailing configuration, export subscriber secret keys, and chain these actions into administrator account takeover when a target administrator email address is known.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5200",
-    "publishedDate": "2026-05-20T08:16:22.860",
-    "lastModifiedDate": "2026-05-20T08:16:22.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7385",
-    "description": "The Decent Comments WordPress plugin before 3.0.2 does not restrict access to comment author email addresses and post author email addresses via its REST API endpoint, allowing unauthenticated attackers to enumerate registered user email addresses.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7385",
-    "publishedDate": "2026-05-20T07:16:16.353",
-    "lastModifiedDate": "2026-05-20T07:16:16.353",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6566",
-    "description": "The Photo Gallery, Sliders, Proofing and Themes – NextGEN Gallery plugin for WordPress is vulnerable to Insecure Direct Object Reference in versions up to and including 4.2.0. This is due to insufficient object-level authorization in the image deletion REST flow where the permission callback for DELETE /imagely/v1/images/{id} only checks 'NextGEN Manage gallery' permissions and does not enforce gallery ownership or 'NextGEN Manage others gallery' permissions. This makes it possible for authenticated attackers, with Subscriber-level privileges and 'NextGEN Manage gallery' capability, to delete gallery images belonging to other users as well as their associated image files from disk when deleteImg is enabled (default).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6566",
-    "publishedDate": "2026-05-20T07:16:16.030",
-    "lastModifiedDate": "2026-05-20T07:16:16.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5776",
-    "description": "The Email Encoder  WordPress plugin before 2.4.7 does not escape email addresses retrieved via user input, allowing unauthenticated attackers to perform Stored XSS attacks",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5776",
-    "publishedDate": "2026-05-20T07:16:15.903",
-    "lastModifiedDate": "2026-05-20T07:16:15.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-47784",
-    "description": "In memcached before 1.6.42, password data for SASL password database authentication has a timing side channel because memcmp is used by sasl_server_userdb_checkpass.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47784",
-    "publishedDate": "2026-05-20T07:16:15.733",
-    "lastModifiedDate": "2026-05-20T07:16:15.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47783",
-    "description": "In memcached before 1.6.42, username data for SASL password database authentication has a timing side channel because a loop exits as soon as a valid username is found by sasl_server_userdb_checkpass.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47783",
-    "publishedDate": "2026-05-20T07:16:15.533",
-    "lastModifiedDate": "2026-05-20T07:16:15.533",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44392",
-    "description": "Missing authorization vulnerability exists in Movable Type. Under certain conditions, when a user without administrator privileges signs in to the product, unintended update processing may be executed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44392",
-    "publishedDate": "2026-05-20T07:16:15.317",
-    "lastModifiedDate": "2026-05-20T07:16:15.317",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vultures@jpcert.or.jp"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2955",
-    "description": "The AI Chatbot & Workflow Automation by AIWU plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'X-Forwarded-For' header in versions up to, and including, 1.4.14 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. NOTE: Practical exploitation is constrained due to a 20-character storage limit.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2955",
-    "publishedDate": "2026-05-20T07:16:13.820",
-    "lastModifiedDate": "2026-05-20T07:16:13.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9057",
-    "description": "A broken access control issue has been identified in the Talend Administration Center, that allows a user with “View” permission to modify the Talend Studio update URL. This issue was resolved in a patch, which is already available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9057",
-    "publishedDate": "2026-05-20T05:16:23.467",
-    "lastModifiedDate": "2026-05-20T05:16:23.467",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.8,
-        "source": "4ac701fe-44e9-4bcd-9585-dd6449257611"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9056",
-    "description": "A stored cross-site scripting vulnerability has been found in the Talend Administration Center. An attacker with permission to manage servers can store a XSS payload that can be triggered by a different user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9056",
-    "publishedDate": "2026-05-20T05:16:23.350",
-    "lastModifiedDate": "2026-05-20T05:16:23.350",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "4ac701fe-44e9-4bcd-9585-dd6449257611"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7522",
-    "description": "The Advanced Database Cleaner – Premium plugin for WordPress is vulnerable to Local File Inclusion in versions up to, and including, 4.1.0 via the 'template' parameter. This makes it possible for authenticated attackers, with Subscriber-level access and above, to include and execute arbitrary .php files on the server, allowing the execution of any PHP code in those files. This can be used to bypass access controls, obtain sensitive data, or achieve code execution in cases where .php file types can be uploaded and included.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7522",
-    "publishedDate": "2026-05-20T05:16:22.327",
-    "lastModifiedDate": "2026-05-20T05:16:22.327",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5075",
-    "description": "The All in One SEO plugin for WordPress is vulnerable to Sensitive Information Exposure via 'internalOptions' localized script data in versions up to, and including, 4.9.7 due to sensitive internal option data being passed to wp_localize_script() in post editor contexts without effective masking for low-privilege users. This makes it possible for authenticated attackers, with contributor-level access and above, to view configured API/OAuth tokens and license-related values from page source.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5075",
-    "publishedDate": "2026-05-20T05:16:22.120",
-    "lastModifiedDate": "2026-05-20T05:16:22.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9010",
-    "description": "The Boost plugin for WordPress is vulnerable to time-based SQL Injection via the 'current_url' and 'user_name' parameters in versions up to, and including, 2.0.3 due to insufficient escaping on the user supplied parameters and lack of sufficient preparation on the existing SQL queries. This makes it possible for unauthenticated attackers to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9010",
-    "publishedDate": "2026-05-20T04:16:59.703",
-    "lastModifiedDate": "2026-05-20T04:16:59.703",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9003",
-    "description": "E-LAN Hybrid Recording System developed by TONNET has a SQL Injection vulnerability, allowing unauthenticated remote attackers to inject arbitrary SQL commands to read database contents.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9003",
-    "publishedDate": "2026-05-20T04:16:59.217",
-    "lastModifiedDate": "2026-05-20T04:16:59.217",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "twcert@cert.org.tw"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "twcert@cert.org.tw"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7637",
-    "description": "The Boost plugin for WordPress is vulnerable to PHP Object Injection in versions up to, and including, 2.0.3 via deserialization of untrusted input in the STYXKEY-BOOST_USER_LOCATION cookie. This makes it possible for unauthenticated attackers to inject a PHP Object. No known POP chain is present in the vulnerable software, which means this vulnerability has no impact unless another plugin or theme containing a POP chain is installed on the site. If a POP chain is present via an additional plugin or theme installed on the target system, it may allow the attacker to perform actions like delete arbitrary files, retrieve sensitive data, or execute code depending on the POP chain present.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7637",
-    "publishedDate": "2026-05-20T04:16:56.747",
-    "lastModifiedDate": "2026-05-20T04:16:56.747",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7460",
-    "description": "mailcow-dockerized contains a stored cross-site scripting vulnerability in the administrator Queue Manager. The Queue Manager fetches mail queue entries from /api/v1/get/mailq/all, copies server-controlled Postfix queue fields into DataTables rows, and renders several of those fields as HTML without adequate output encoding.\n\n\n\nThis issue affects mailcow-dockerized: 2026-03b.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7460",
-    "publishedDate": "2026-05-20T04:16:56.270",
-    "lastModifiedDate": "2026-05-20T04:16:56.270",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "help@fluidattacks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24215",
-    "description": "NVIDIA Triton Inference Server contains a vulnerability in the DALI backend, where an attacker could cause uncontrolled resource consumption. A successful exploit of this vulnerability might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24215",
-    "publishedDate": "2026-05-20T04:16:47.373",
-    "lastModifiedDate": "2026-05-20T04:16:47.373",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.1,
-        "impactScore": 3.6,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24214",
-    "description": "NVIDIA Triton Inference Server contains a vulnerability in the DALI backend where an attacker could cause an integer overflow. A successful exploit of this vulnerability might lead to code execution, data tampering, or denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24214",
-    "publishedDate": "2026-05-20T04:16:47.173",
-    "lastModifiedDate": "2026-05-20T04:16:47.173",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.1,
-        "impactScore": 5.9,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24213",
-    "description": "NVIDIA Triton Inference Server contains a vulnerability in the DALI backend where an attacker could cause an out-of-bounds read. A successful exploit of this vulnerability might lead to code execution, data tampering, denial of service, or information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24213",
-    "publishedDate": "2026-05-20T04:16:46.913",
-    "lastModifiedDate": "2026-05-20T04:16:46.913",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.1,
-        "impactScore": 5.9,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24210",
-    "description": "NVIDIA Triton Inference Server contains a vulnerability where an attacker could cause an integer overflow. A successful exploit of this vulnerability might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24210",
-    "publishedDate": "2026-05-20T04:16:46.690",
-    "lastModifiedDate": "2026-05-20T04:16:46.690",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24209",
-    "description": "NVIDIA Triton Inference Server contains a vulnerability where an attacker could cause a path traversal issue. A successful exploit of this vulnerability might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24209",
-    "publishedDate": "2026-05-20T04:16:46.463",
-    "lastModifiedDate": "2026-05-20T04:16:46.463",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24208",
-    "description": "NVIDIA Triton Inference Server contains a vulnerability where an attacker could cause a path traversal issue. A successful exploit of this vulnerability might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24208",
-    "publishedDate": "2026-05-20T04:16:46.177",
-    "lastModifiedDate": "2026-05-20T04:16:46.177",
+    "id": "CVE-2026-5950",
+    "description": "An unbounded resend loop vulnerability exists in the BIND 9 resolver state machine during bad-server handling, enabling a remote unauthenticated attacker to cause severe resource exhaustion by sending queries that trigger specific retry conditions.\nThis issue affects BIND 9 versions 9.18.36 through 9.18.48, 9.20.8 through 9.20.22, 9.21.7 through 9.21.21, 9.18.36-S1 through 9.18.48-S1, and 9.20.9-S1 through 9.20.22-S1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5950",
+    "publishedDate": "2026-05-20T13:16:40.450",
+    "lastModifiedDate": "2026-05-20T14:04:57.320",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -484,7 +15,496 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "psirt@nvidia.com"
+        "source": "security-officer@isc.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5947",
+    "description": "Undefined behavior may result due to a race condition leading to a use-after-free violation.  If BIND receives an incoming DNS message signed with SIG(0), it begins work to validate that signature.  If, during that validation, the \"recursive-clients\" limit is reached (as would occur during a query flood), and that same DNS message is discarded per the limit, there is a brief window of time while the SIG(0) validation may attempt to read the now-discarded DNS message.\nThis issue affects BIND 9 versions 9.20.0 through 9.20.22, 9.21.0 through 9.21.21, and 9.20.9-S1 through 9.20.22-S1.\nBIND 9 versions 9.18.28 through 9.18.49 and 9.18.28-S1 through 9.18.49-S1 are NOT affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5947",
+    "publishedDate": "2026-05-20T13:16:40.303",
+    "lastModifiedDate": "2026-05-20T14:04:57.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-officer@isc.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5946",
+    "description": "Multiple flaws have been identified in `named` related to the handling of DNS messages whose CLASS is not Internet (`IN`) — for example, `CHAOS` or `HESIOD`, or DNS messages that specify meta-classes (`ANY` or `NONE`) in the question section. Specially crafted requests reaching the affected code paths — recursion, dynamic updates (`UPDATE`), zone change notifications (`NOTIFY`), or processing of `IN`-specific record types in non-`IN` data — can cause assertion failures in `named`.\nThis issue affects BIND 9 versions 9.11.0 through 9.16.50, 9.18.0 through 9.18.48, 9.20.0 through 9.20.22, 9.21.0 through 9.21.21, 9.11.3-S1 through 9.16.50-S1, 9.18.11-S1 through 9.18.48-S1, and 9.20.9-S1 through 9.20.22-S1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5946",
+    "publishedDate": "2026-05-20T13:16:40.157",
+    "lastModifiedDate": "2026-05-20T14:04:57.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-officer@isc.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45584",
+    "description": "Heap-based buffer overflow in Microsoft Defender allows an unauthorized attacker to execute code over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45584",
+    "publishedDate": "2026-05-20T13:16:37.333",
+    "lastModifiedDate": "2026-05-20T13:57:15.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45498",
+    "description": "Microsoft Defender Denial of Service Vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45498",
+    "publishedDate": "2026-05-20T13:16:36.780",
+    "lastModifiedDate": "2026-05-20T13:57:15.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.5,
+        "impactScore": 1.4,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45443",
+    "description": "Missing Authorization vulnerability in ADD-ONS.ORG PDF for Elementor Forms + Drag And Drop Template Builder allows Exploiting Incorrectly Configured Access Control Security Levels.\n\nThis issue affects PDF for Elementor Forms + Drag And Drop Template Builder: from n/a through 5.5.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45443",
+    "publishedDate": "2026-05-20T13:16:36.267",
+    "lastModifiedDate": "2026-05-20T13:54:54.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42834",
+    "description": "Improper link resolution before file access ('link following') in Azure Portal Windows Admin Center allows an authorized attacker to elevate privileges locally.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42834",
+    "publishedDate": "2026-05-20T13:16:34.500",
+    "lastModifiedDate": "2026-05-20T13:57:15.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42383",
+    "description": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in YITH YITH WooCommerce Product Add-Ons allows Blind SQL Injection.\n\nThis issue affects YITH WooCommerce Product Add-Ons: from n/a through 4.29.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42383",
+    "publishedDate": "2026-05-20T13:16:32.333",
+    "lastModifiedDate": "2026-05-20T13:54:54.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 4.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41091",
+    "description": "Improper link resolution before file access ('link following') in Microsoft Defender allows an authorized attacker to elevate privileges locally.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41091",
+    "publishedDate": "2026-05-20T13:16:29.173",
+    "lastModifiedDate": "2026-05-20T13:57:15.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3593",
+    "description": "A use-after-free vulnerability exists within the DNS-over-HTTPS implementation.\nThis issue affects BIND 9 versions 9.20.0 through 9.20.22, 9.21.0 through 9.21.21, and 9.20.9-S1 through 9.20.22-S1.\nBIND 9 versions 9.18.0 through 9.18.48 and 9.18.11-S1 through 9.18.48-S1 are NOT affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3593",
+    "publishedDate": "2026-05-20T13:16:23.923",
+    "lastModifiedDate": "2026-05-20T14:04:57.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "security-officer@isc.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3592",
+    "description": "BIND resolvers are vulnerable to an amplified resource consumption/exhaustion attack.  If a victim resolver makes a query to a specially crafted zone, the resolver will consume disproportionate resources.\nThis issue affects BIND 9 versions 9.11.0 through 9.16.50, 9.18.0 through 9.18.48, 9.20.0 through 9.20.22, 9.21.0 through 9.21.21, 9.11.3-S1 through 9.16.50-S1, 9.18.11-S1 through 9.18.48-S1, and 9.20.9-S1 through 9.20.22-S1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3592",
+    "publishedDate": "2026-05-20T13:16:23.790",
+    "lastModifiedDate": "2026-05-20T14:04:57.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-officer@isc.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-3039",
+    "description": "BIND servers that are configured to use TKEY-based authentication via GSS-API tokens are vulnerable to excessive memory consumption when receiving and processing maliciously-constructed packets.  Typically these servers will be found in Active Directory integrated DNS deployments and/or Kerberos-secured DNS environments.\nThis issue affects BIND 9 versions 9.0.0 through 9.16.50, 9.18.0 through 9.18.48, 9.20.0 through 9.20.22, 9.21.0 through 9.21.21, 9.9.3-S1 through 9.16.50-S1, 9.18.11-S1 through 9.18.48-S1, and 9.20.9-S1 through 9.20.22-S1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3039",
+    "publishedDate": "2026-05-20T13:16:23.647",
+    "lastModifiedDate": "2026-05-20T14:04:57.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-officer@isc.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-29518",
+    "description": "Rsync versions before 3.4.3 contain a time-of-check to time-of-use (TOCTOU) race condition in daemon file handling that allows attackers to redirect file writes outside intended directories by replacing parent directory components with symbolic links. Attackers with write access to a module path can exploit this race condition to create or overwrite arbitrary files, potentially modifying sensitive system files and achieving privilege escalation when the daemon runs with elevated privileges. This vulnerability can only be triggered if the chroot setting is false.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-29518",
+    "publishedDate": "2026-05-20T13:16:17.040",
+    "lastModifiedDate": "2026-05-20T13:58:07.923",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-27424",
+    "description": "Missing Authorization vulnerability in WP Chill Image Photo Gallery Final Tiles Grid allows Exploiting Incorrectly Configured Access Control Security Levels.\n\nThis issue affects Image Photo Gallery Final Tiles Grid: from n/a through 3.6.11.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-27424",
+    "publishedDate": "2026-05-20T13:16:16.897",
+    "lastModifiedDate": "2026-05-20T13:54:54.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-27405",
+    "description": "Missing Authorization vulnerability in Magepeople inc. WpBookingly allows Exploiting Incorrectly Configured Access Control Security Levels.\n\nThis issue affects WpBookingly: from n/a through 1.2.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-27405",
+    "publishedDate": "2026-05-20T13:16:16.750",
+    "lastModifiedDate": "2026-05-20T13:54:54.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-24573",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Themeisle Visualizer allows Stored XSS.\n\nThis issue affects Visualizer: from n/a before 4.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24573",
+    "publishedDate": "2026-05-20T13:16:16.253",
+    "lastModifiedDate": "2026-05-20T13:54:54.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-11954",
+    "description": "Cross-Site request forgery (CSRF) vulnerability in Sitemio Information Technologies Trade Ltd. Co. WISECP allows Cross Site Request Forgery.\n\nThis issue affects WISECP: through 20022026. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-11954",
+    "publishedDate": "2026-05-20T13:16:14.153",
+    "lastModifiedDate": "2026-05-20T14:04:18.950",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-31985",
+    "description": "HCL BigFix Service Management (SM) is affected by a security misconfiguration due to a missing or insecure “X-Content-Type-Options” header.  This could allow browsers to perform MIME-type sniffing, potentially causing malicious content to be interpreted and executed incorrectly.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-31985",
+    "publishedDate": "2026-05-20T12:16:20.660",
+    "lastModifiedDate": "2026-05-20T14:23:44.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 2.5,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-31973",
+    "description": "HCL BigFix Service Management (SM) is susceptible to  a Configuration – 'Insecure Use of Base Image Version'. Using outdated or insecure base images may introduce known vulnerabilities, potentially increasing the risk of exploitation in the application environment.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-31973",
+    "publishedDate": "2026-05-20T12:16:20.527",
+    "lastModifiedDate": "2026-05-20T14:23:44.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 0.6,
+        "impactScore": 3.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-25602",
+    "description": "Insufficient Verification of Data Authenticity vulnerability in Mesalvo Meona Client Launcher Component, Mesalvo Meona Server Component makes it possible to send messages to any email address. This issue affects Meona Client Launcher Component: through 19.06.2020 15:11:49; Meona Server Component: through 2025.04 5+323020.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25602",
+    "publishedDate": "2026-05-20T11:16:26.313",
+    "lastModifiedDate": "2026-05-20T14:03:10.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 2.5,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22315",
+    "description": "Incorrect Privilege Assignment vulnerability in Mesalvo Meona Client Launcher Component, Mesalvo Meona Server Component enables the export  of user data, including cleartext passwords, via the SQL editor. This issue affects Meona Client Launcher Component: through 19.06.2020 15:11:49; Meona Server Component: through 2025.04 5+323020.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22315",
+    "publishedDate": "2026-05-20T11:16:26.187",
+    "lastModifiedDate": "2026-05-20T14:03:10.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.9,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22314",
+    "description": "Improper Control of Generation of Code ('Code Injection') vulnerability in Mesalvo Meona Client Launcher Component, Mesalvo Meona Server Component enables code execution on other users' systems. This issue affects Meona Client Launcher Component: through 19.06.2020 15:11:49; Meona Server Component: through 2025.04 5+323020.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22314",
+    "publishedDate": "2026-05-20T11:16:26.057",
+    "lastModifiedDate": "2026-05-20T14:03:10.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0857",
+    "description": "Cleartext Storage of Sensitive Information in Memory vulnerability in Mesalvo Meona Client Launcher Component, Mesalvo Meona Server Component.\n\nThis issue affects Meona Client Launcher Component: through 19.06.2020 15:11:49; Meona Server Component: through 2025.04 5+323020.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0857",
+    "publishedDate": "2026-05-20T11:16:25.923",
+    "lastModifiedDate": "2026-05-20T14:03:10.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 1.5,
+        "impactScore": 4,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0856",
+    "description": "Improper Access Control vulnerability in Mesalvo Meona Client Launcher Component, Mesalvo Meona Server Component enables a normal user gaining access to the admin panel. This issue affects Meona Client Launcher Component: through 19.06.2020 15:11:49; Meona Server Component: through 2025.04 5+323020.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0856",
+    "publishedDate": "2026-05-20T11:16:25.780",
+    "lastModifiedDate": "2026-05-20T14:03:10.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9064",
+    "description": "A flaw was found in 389-ds-base. The get_ldapmessage_controls_ext() function in the LDAP server does not enforce an upper bound on the number of controls per LDAP message. A remote, unauthenticated attacker can send a specially crafted LDAP request containing hundreds of thousands of minimal controls within the default maximum BER message size (2 MB), causing excessive CPU consumption and heap allocation on the server. Under concurrent exploitation, this leads to significant latency degradation, worker thread starvation, or out-of-memory termination, resulting in a denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9064",
+    "publishedDate": "2026-05-20T10:16:28.940",
+    "lastModifiedDate": "2026-05-20T14:02:12.280",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
       }
     ]
   }
