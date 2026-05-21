@@ -1,5 +1,75 @@
 [
   {
+    "id": "CVE-2026-6279",
+    "description": "The Avada Builder (fusion-builder) plugin for WordPress is vulnerable to Unauthenticated Remote Code Execution via PHP Function Injection in versions up to and including 3.15.2. This is due to the `wp_conditional_tags` case in `Fusion_Builder_Conditional_Render_Helper::get_value()` passing attacker-controlled values from a base64-decoded JSON blob directly to `call_user_func()` without any allowlist validation. This is exploitable by unauthenticated attackers through the `fusion_get_widget_markup` AJAX endpoint, which is registered for non-privileged (unauthenticated) users via `wp_ajax_nopriv_fusion_get_widget_markup`. The endpoint is protected only by a nonce (`fusion_load_nonce`), but this nonce is generated for user ID 0 and is deterministically exposed in the JavaScript output of any public-facing page containing a Post Cards (`[fusion_post_cards]`) or Table of Contents (`[fusion_table_of_contents]`) element. This makes it possible for unauthenticated attackers to execute arbitrary code on affected sites.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6279",
+    "publishedDate": "2026-05-21T05:16:23.770",
+    "lastModifiedDate": "2026-05-21T05:16:23.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-2734",
+    "description": "In mlflow/mlflow versions up to 3.9.0, the `SearchModelVersions` REST API endpoint and the `mlflowSearchModelVersions` GraphQL query lack proper per-model authorization checks when basic authentication is enabled. This allows any authenticated user to enumerate all model versions across all registered models, regardless of their permission level. The issue arises due to the absence of `SearchModelVersions` in the `BEFORE_REQUEST_VALIDATORS` and `AFTER_REQUEST_HANDLERS` for the REST API, and its omission from `GraphQLAuthorizationMiddleware.PROTECTED_FIELDS` for GraphQL. This vulnerability can expose sensitive information such as model names, version descriptions, source URIs, tags, and other metadata, potentially revealing proprietary or confidential details in multi-tenant environments. The issue is resolved in version 3.10.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2734",
+    "publishedDate": "2026-05-21T05:16:22.723",
+    "lastModifiedDate": "2026-05-21T05:16:22.723",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-1543",
+    "description": "The Avada (Fusion) Builder plugin for WordPress is vulnerable to Stored Cross-Site Scripting via multiple shortcodes in all versions up to, and including, 3.15.2 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user (typically an administrator) accesses a page displaying dynamic user data (such as via the Dynamic Data feature pulling user biographical information).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1543",
+    "publishedDate": "2026-05-21T05:16:22.257",
+    "lastModifiedDate": "2026-05-21T05:16:22.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4811",
+    "description": "The WPB Floating Menu & Categories for WordPress – Sticky Side Menu with Icons plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'Icon CSS Class' category field in all versions up to, and including, 1.0.8 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Editor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4811",
+    "publishedDate": "2026-05-21T04:16:31.133",
+    "lastModifiedDate": "2026-05-21T04:16:31.133",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-9152",
     "description": "A missing authentication vulnerability exists in the Altium 365 SearchService. A legacy SOAP endpoint exposes search index operations without requiring authentication, session tokens, or any form of identity verification. An unauthenticated network attacker who can reference a target workspace's identifier can interact with that workspace's search index, crossing tenant boundaries.\n\n\n\n\nSuccessful exploitation allows reading a workspace's indexed contents (such as component data, project and folder names, and user metadata) and injecting, modifying, or deleting search index entries. These operations affect the search index only, not the underlying vault data, but they can disclose sensitive workspace information and compromise the integrity and availability of search results. Altium 365 cloud deployments are affected; on-premise Altium Enterprise Server is not affected.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-9152",
@@ -36,6 +106,26 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-1881",
+    "description": "The Broadstreet plugin for WordPress is vulnerable to Insecure Direct Object Reference in all versions up to, and including, 1.52.2 via the get_sponsored_meta AJAX action due to missing validation on a user controlled key. This makes it possible for authenticated attackers, with Subscriber-level access and above, to disclose any private post metadata.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1881",
+    "publishedDate": "2026-05-21T02:16:32.437",
+    "lastModifiedDate": "2026-05-21T02:16:32.437",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
       }
     ]
   },
@@ -393,115 +483,6 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9133",
-    "description": "Active debug code exists in the ARN resolver of amazon-mq rabbitmq-aws before version 0.2.1. A debug ARN scheme (arn:aws-debug:file) accepted by the PUT /api/aws/arn/validate validation endpoint might allow remote authenticated users to perform arbitrary file reads on any file accessible to the RabbitMQ process. \n\n\n\nTo remediate this issue, customers should upgrade to version 0.2.1 of rabbitmq-aws. If RabbitMQ is configured to use TLS for connections, we also recommend rotating any associated private certificate keys.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9133",
-    "publishedDate": "2026-05-20T20:16:45.860",
-    "lastModifiedDate": "2026-05-20T20:16:45.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9129",
-    "description": "A path traversal vulnerability exists in the Altium Enterprise Server Viewer StorageController due to improper handling of file path route parameters. On on-premise deployments that use local filesystem storage, a regular authenticated user can supply a URL-encoded absolute path (such as an encoded drive letter) in a Viewer storage API request, causing the configured storage root to be discarded and allowing arbitrary files to be read from the server filesystem.\n\n\n\n\n\n\n\n\nBecause the readable files include the server's master configuration, which stores database credentials, signing key locations, certificate passwords, and OAuth secrets, exploitation can lead to disclosure of all server secrets and full compromise of the server and its data. Cloud deployments are not affected, as they use object storage and do not enable this component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9129",
-    "publishedDate": "2026-05-20T20:16:45.717",
-    "lastModifiedDate": "2026-05-20T20:16:45.717",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.4,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "4760f414-e1ae-4ff1-bdad-c7a9c3538b79"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9126",
-    "description": "Use after free in DOM in Google Chrome on prior to 148.0.7778.179 allowed a remote attacker to execute arbitrary code inside a sandbox via a crafted HTML page. (Chromium security severity: Medium)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9126",
-    "publishedDate": "2026-05-20T20:16:45.540",
-    "lastModifiedDate": "2026-05-20T20:16:45.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9124",
-    "description": "Insufficient validation of untrusted input in Input in Google Chrome on prior to 148.0.7778.179 allowed a remote attacker who had compromised the renderer process to leak cross-origin data via a crafted HTML page. (Chromium security severity: Medium)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9124",
-    "publishedDate": "2026-05-20T20:16:45.360",
-    "lastModifiedDate": "2026-05-20T20:16:45.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9123",
-    "description": "Heap buffer overflow in Chromecast in Google Chrome on Android, Linux, ChromeOS prior to 148.0.7778.179 allowed a local attacker to execute arbitrary code inside a sandbox via malicious network traffic. (Chromium security severity: Medium)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9123",
-    "publishedDate": "2026-05-20T20:16:45.170",
-    "lastModifiedDate": "2026-05-20T20:16:45.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
       }
     ]
   }
