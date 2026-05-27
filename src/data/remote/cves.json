@@ -1,10 +1,190 @@
 [
   {
-    "id": "CVE-2026-9200",
-    "description": "The Query Shortcode plugin for WordPress is vulnerable to Local File Inclusion in all versions up to, and including, 0.2.1 via the shortcode function. This makes it possible for authenticated attackers, with contributor-level access and above, to include and execute arbitrary .php files on the server, allowing the execution of any PHP code in those files. This can be used to bypass access controls, obtain sensitive data, or achieve code execution in cases where .php file types can be uploaded and included.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9200",
-    "publishedDate": "2026-05-27T07:16:19.157",
-    "lastModifiedDate": "2026-05-27T07:16:19.157",
+    "id": "CVE-2026-9689",
+    "description": "A flaw was found in Keycloak, an open-source identity and access management solution. When a client application is configured to accept broad redirect Uniform Resource Identifiers (URIs), a remote attacker can manipulate the authentication process by crafting a special web address. If a user clicks this link, the client application might incorrectly prioritize attacker-controlled information over legitimate data. This vulnerability, known as HTTP parameter pollution, could allow an attacker to bypass security measures or gain unauthorized access to resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9689",
+    "publishedDate": "2026-05-27T12:17:15.513",
+    "lastModifiedDate": "2026-05-27T14:54:20.160",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48906",
+    "description": "The vulnerability in the Tassos Framework Plugin allows users to delete arbitrary files on the affected sites.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48906",
+    "publishedDate": "2026-05-27T11:16:24.713",
+    "lastModifiedDate": "2026-05-27T11:16:24.713",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45846",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()\n\nbareudp_fill_metadata_dst() passes bareudp->sock to\nudp_tunnel6_dst_lookup() in the IPv6 path without a NULL check.\nThe socket is only created in bareudp_open() and NULLed in\nbareudp_stop(), so calling this function while the device is down\ntriggers a NULL dereference via sock->sk.\n\n BUG: kernel NULL pointer dereference, address: 0000000000000018\n RIP: 0010:udp_tunnel6_dst_lookup (net/ipv6/ip6_udp_tunnel.c:160)\n Call Trace:\n  <TASK>\n  bareudp_fill_metadata_dst (drivers/net/bareudp.c:532)\n  do_execute_actions (net/openvswitch/actions.c:901)\n  ovs_execute_actions (net/openvswitch/actions.c:1589)\n  ovs_packet_cmd_execute (net/openvswitch/datapath.c:700)\n  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1114)\n  genl_rcv_msg (net/netlink/genetlink.c:1209)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  </TASK>\n\nAdd a NULL check returning -ESHUTDOWN, consistent with the xmit paths\nin the same driver.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45846",
+    "publishedDate": "2026-05-27T11:16:24.083",
+    "lastModifiedDate": "2026-05-27T14:48:31.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45845",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: taprio: fix NULL pointer dereference in class dump\n\nWhen a TAPRIO child qdisc is deleted via RTM_DELQDISC, taprio_graft()\nis called with new == NULL and stores NULL into q->qdiscs[cl - 1].\nSubsequent RTM_GETTCLASS dump operations walk all classes via\ntaprio_walk() and call taprio_dump_class(), which calls taprio_leaf()\nreturning the NULL pointer, then dereferences it to read child->handle,\ncausing a kernel NULL pointer dereference.\n\nThe bug is reachable with namespace-scoped CAP_NET_ADMIN on any kernel\nwith CONFIG_NET_SCH_TAPRIO enabled. On systems with unprivileged user\nnamespaces enabled, an unprivileged local user can trigger a kernel\npanic by creating a taprio qdisc inside a new network namespace,\ngrafting an explicit child qdisc, deleting it, and requesting a class\ndump. The RTM_GETTCLASS dump itself requires no capability.\n\n Oops: general protection fault, probably for non-canonical address 0xdffffc0000000007: 0000 [#1] SMP KASAN NOPTI\n KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]\n RIP: 0010:taprio_dump_class (net/sched/sch_taprio.c:2478)\n Call Trace:\n  <TASK>\n  tc_fill_tclass (net/sched/sch_api.c:1966)\n  qdisc_class_dump (net/sched/sch_api.c:2326)\n  taprio_walk (net/sched/sch_taprio.c:2514)\n  tc_dump_tclass_qdisc (net/sched/sch_api.c:2352)\n  tc_dump_tclass_root (net/sched/sch_api.c:2370)\n  tc_dump_tclass (net/sched/sch_api.c:2431)\n  rtnl_dumpit (net/core/rtnetlink.c:6864)\n  netlink_dump (net/netlink/af_netlink.c:2325)\n  rtnetlink_rcv_msg (net/core/rtnetlink.c:6959)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  </TASK>\n\nFix this by substituting &noop_qdisc when new is NULL in\ntaprio_graft(), a common pattern used by other qdiscs (e.g.,\nmultiq_graft()) to ensure the q->qdiscs[] slots are never NULL.\nThis makes control-plane dump paths safe without requiring individual\nNULL checks.\n\nSince the data-plane paths (taprio_enqueue and taprio_dequeue_from_txq)\npreviously had explicit NULL guards that would drop/skip the packet\ncleanly, update those checks to test for &noop_qdisc instead. Without\nthis, packets would reach taprio_enqueue_one() which increments the root\nqdisc's qlen and backlog before calling the child's enqueue; noop_qdisc\ndrops the packet but those counters are never rolled back, permanently\ninflating the root qdisc's statistics.\n\nAfter this change *old can be a valid qdisc, NULL, or &noop_qdisc.\nOnly call qdisc_put(*old) in the first case to avoid decreasing\nnoop_qdisc's refcount, which was never increased.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45845",
+    "publishedDate": "2026-05-27T11:16:23.960",
+    "lastModifiedDate": "2026-05-27T14:48:31.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45844",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: arp_tables: fix IEEE1394 ARP payload parsing\n\nWeiming Shi says:\n\n\"arp_packet_match() unconditionally parses the ARP payload assuming two\nhardware addresses are present (source and target). However,\nIPv4-over-IEEE1394 ARP (RFC 2734) omits the target hardware address\nfield, and arp_hdr_len() already accounts for this by returning a\nshorter length for ARPHRD_IEEE1394 devices.\n\nAs a result, on IEEE1394 interfaces arp_packet_match() advances past a\nnonexistent target hardware address and reads the wrong bytes for both\nthe target device address comparison and the target IP address. This\ncauses arptables rules to match against garbage data, leading to\nincorrect filtering decisions: packets that should be accepted may be\ndropped and vice versa.\n\nThe ARP stack in net/ipv4/arp.c (arp_create and arp_process) already\nhandles this correctly by skipping the target hardware address for\nARPHRD_IEEE1394. Apply the same pattern to arp_packet_match().\"\n\nMangle the original patch to always return 0 (no match) in case user\nmatches on the target hardware address which is never present in\nIEEE1394.\n\nNote that this returns 0 (no match) for either normal and inverse match\nbecause matching in the target hardware address in ARPHRD_IEEE1394 has\nnever been supported by arptables. This is intentional, matching on the\ntarget hardware address should never evaluate true for ARPHRD_IEEE1394.\n\nMoreover, adjust arpt_mangle to drop the packet too as AI suggests:\n\nIn arpt_mangle, the logic assumes a standard ARP layout. Because\nIEEE1394 (FireWire) omits the target hardware address, the linear\npointer arithmetic miscalculates the offset for the target IP address.\nThis causes mangling operations to write to the wrong location, leading\nto packet corruption. To ensure safety, this patch drops packets\n(NF_DROP) when mangling is requested for these fields on IEEE1394\ndevices, as the current implementation cannot correctly map the FireWire\nARP payload.\n\nThis omits both mangling target hardware and IP address. Even if IP\naddress mangling should be possible in IEEE1394, this would require\nto adjust arpt_mangle offset calculation, which has never been\nsupported.\n\nBased on patch from Weiming Shi <bestswngs@gmail.com>.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45844",
+    "publishedDate": "2026-05-27T11:16:23.847",
+    "lastModifiedDate": "2026-05-27T14:48:31.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45843",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nslip: bound decode() reads against the compressed packet length\n\nslhc_uncompress() parses a VJ-compressed TCP header by advancing a\npointer through the packet via decode() and pull16(). Neither helper\nbounds-checks against isize, and decode() masks its return with\n& 0xffff so it can never return the -1 that callers test for -- those\nerror paths are dead code.\n\nA short compressed frame whose change byte requests optional fields\nlets decode() read past the end of the packet. The over-read bytes\nare folded into the cached cstate and reflected into subsequent\nreconstructed packets.\n\nMake decode() and pull16() take the packet end pointer and return -1\nwhen exhausted. Add a bounds check before the TCP-checksum read.\nThe existing == -1 tests now do what they were always meant to.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45843",
+    "publishedDate": "2026-05-27T11:16:23.743",
+    "lastModifiedDate": "2026-05-27T14:48:31.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45842",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nslip: reject VJ receive packets on instances with no rstate array\n\nslhc_init() accepts rslots == 0 as a valid configuration, with the\ndocumented meaning of 'no receive compression'. In that case the\nallocation loop in slhc_init() is skipped, so comp->rstate stays\nNULL and comp->rslot_limit stays 0 (from the kzalloc of struct\nslcompress).\n\nThe receive helpers do not defend against that configuration.\nslhc_uncompress() dereferences comp->rstate[x] when the VJ header\ncarries an explicit connection ID, and slhc_remember() later assigns\ncs = &comp->rstate[...] after only comparing the packet's slot number\nto comp->rslot_limit. Because rslot_limit is 0, slot 0 passes the\nrange check, and the code dereferences a NULL rstate.\n\nThe configuration is reachable in-tree through PPP. PPPIOCSMAXCID\nstores its argument in a signed int, and (val >> 16) uses arithmetic\nshift. Passing 0xffff0000 therefore sign-extends to -1, so val2 + 1\nis 0 and ppp_generic.c ends up calling slhc_init(0, 1). Because\n/dev/ppp open is gated by ns_capable(CAP_NET_ADMIN), the whole path\nis reachable from an unprivileged user namespace. Once the malformed\nVJ state is installed, any inbound VJ-compressed or VJ-uncompressed\nframe that selects slot 0 crashes the kernel in softirq context:\n\n Oops: general protection fault, probably for non-canonical\n       address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI\n KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]\n RIP: 0010:slhc_uncompress (drivers/net/slip/slhc.c:519)\n Call Trace:\n  <TASK>\n  ppp_receive_nonmp_frame (drivers/net/ppp/ppp_generic.c:2466)\n  ppp_input (drivers/net/ppp/ppp_generic.c:2359)\n  ppp_async_process (drivers/net/ppp/ppp_async.c:492)\n  tasklet_action_common (kernel/softirq.c:926)\n  handle_softirqs (kernel/softirq.c:623)\n  run_ksoftirqd (kernel/softirq.c:1055)\n  smpboot_thread_fn (kernel/smpboot.c:160)\n  kthread (kernel/kthread.c:436)\n  ret_from_fork (arch/x86/kernel/process.c:164)\n  </TASK>\n\nReject the receive side on such instances instead of touching rstate.\nslhc_uncompress() falls through to its existing 'bad' label, which\nbumps sls_i_error and enters the toss state. slhc_remember() mirrors\nthat with an explicit sls_i_error increment followed by slhc_toss();\nthe sls_i_runt counter is not used here because a missing rstate is\nan internal configuration state, not a runt packet.\n\nThe transmit path is unaffected: the only in-tree caller that picks\nrslots from userspace (ppp_generic.c) still supplies tslots >= 1, and\nslip.c always calls slhc_init(16, 16), so comp->tstate remains valid\nand slhc_compress() continues to work.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45842",
+    "publishedDate": "2026-05-27T11:16:23.600",
+    "lastModifiedDate": "2026-05-27T14:48:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45841",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO\n\nnf_osf_match_one() computes ctx->window % f->wss.val in the\nOSF_WSS_MODULO branch with no guard for f->wss.val == 0. A\nCAP_NET_ADMIN user can add such a fingerprint via nfnetlink; a\nsubsequent matching TCP SYN divides by zero and panics the kernel.\n\nReject the bogus fingerprint in nfnl_osf_add_callback() above the\nper-option for-loop. f->wss is per-fingerprint, not per-option, so\nthe check must run regardless of f->opt_num (including 0). Also\nreject wss.wc >= OSF_WSS_MAX; nf_osf_match_one() already treats that\nas \"should not happen\".\n\nCrash:\n Oops: divide error: 0000 [#1] SMP KASAN NOPTI\n RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)\n Call Trace:\n <IRQ>\n  nf_osf_match (net/netfilter/nfnetlink_osf.c:220)\n  xt_osf_match_packet (net/netfilter/xt_osf.c:32)\n  ipt_do_table (net/ipv4/netfilter/ip_tables.c:348)\n  nf_hook_slow (net/netfilter/core.c:622)\n  ip_local_deliver (net/ipv4/ip_input.c:265)\n  ip_rcv (include/linux/skbuff.h:1162)\n  __netif_receive_skb_one_core (net/core/dev.c:6181)\n  process_backlog (net/core/dev.c:6642)\n  __napi_poll (net/core/dev.c:7710)\n  net_rx_action (net/core/dev.c:7945)\n  handle_softirqs (kernel/softirq.c:622)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45841",
+    "publishedDate": "2026-05-27T11:16:23.493",
+    "lastModifiedDate": "2026-05-27T14:48:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45840",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nopenvswitch: cap upcall PID array size and pre-size vport replies\n\nThe vport netlink reply helpers allocate a fixed-size skb with\nnlmsg_new(NLMSG_DEFAULT_SIZE, ...) but serialize the full upcall PID\narray via ovs_vport_get_upcall_portids().  Since\novs_vport_set_upcall_portids() accepts any non-zero multiple of\nsizeof(u32) with no upper bound, a CAP_NET_ADMIN user can install a PID\narray large enough to overflow the reply buffer, causing nla_put() to\nfail with -EMSGSIZE and hitting BUG_ON(err < 0).  On systems with\nunprivileged user namespaces enabled (e.g., Ubuntu default), this is\nreachable via unshare -Urn since OVS vport mutation operations use\nGENL_UNS_ADMIN_PERM.\n\n kernel BUG at net/openvswitch/datapath.c:2414!\n Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI\n CPU: 1 UID: 0 PID: 65 Comm: poc Not tainted 7.0.0-rc7-00195-geb216e422044 #1\n RIP: 0010:ovs_vport_cmd_set+0x34c/0x400\n Call Trace:\n  <TASK>\n  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1116)\n  genl_rcv_msg (net/netlink/genetlink.c:1194)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  genl_rcv (net/netlink/genetlink.c:1219)\n  netlink_unicast (net/netlink/af_netlink.c:1344)\n  netlink_sendmsg (net/netlink/af_netlink.c:1894)\n  __sys_sendto (net/socket.c:2206)\n  __x64_sys_sendto (net/socket.c:2209)\n  do_syscall_64 (arch/x86/entry/syscall_64.c:63)\n  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)\n  </TASK>\n Kernel panic - not syncing: Fatal exception\n\nReject attempts to set more PIDs than nr_cpu_ids in\novs_vport_set_upcall_portids(), and pre-compute the worst-case reply\nsize in ovs_vport_cmd_msg_size() based on that bound, similar to the\nexisting ovs_dp_cmd_msg_size().  nr_cpu_ids matches the cap already\nused by the per-CPU dispatch configuration on the datapath side\n(ovs_dp_cmd_fill_info() serialises at most nr_cpu_ids PIDs), so the\ntwo sides stay consistent.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45840",
+    "publishedDate": "2026-05-27T11:16:23.363",
+    "lastModifiedDate": "2026-05-27T14:48:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45839",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()\n\nCO-RE accessor strings are colon-separated indices that describe a path\nfrom a root BTF type to a target field, e.g. \"0:1:2\" walks through\nnested struct members. bpf_core_parse_spec() parses each component with\nsscanf(\"%d\"), so negative values like -1 are silently accepted.  The\nsubsequent bounds checks (access_idx >= btf_vlen(t)) only guard the\nupper bound and always pass for negative values because C integer\npromotion converts the __u16 btf_vlen result to int, making the\ncomparison (int)(-1) >= (int)(N) false for any positive N.\n\nWhen -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,\nproducing an out-of-bounds read far past the members array.  A crafted\nBPF program with a negative CO-RE accessor on any struct that exists in\nvmlinux BTF (e.g. task_struct) crashes the kernel deterministically\nduring BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y\n(default on major distributions).  The bug is reachable with CAP_BPF:\n\n BUG: unable to handle page fault for address: ffffed11818b6626\n #PF: supervisor read access in kernel mode\n #PF: error_code(0x0000) - not-present page\n Oops: Oops: 0000 [#1] SMP KASAN NOPTI\n CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)\n RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)\n RAX: 00000000ffffffff\n Call Trace:\n  <TASK>\n  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)\n  bpf_core_apply (kernel/bpf/btf.c:9507)\n  check_core_relo (kernel/bpf/verifier.c:19475)\n  bpf_check (kernel/bpf/verifier.c:26031)\n  bpf_prog_load (kernel/bpf/syscall.c:3089)\n  __sys_bpf (kernel/bpf/syscall.c:6228)\n  </TASK>\n\nCO-RE accessor indices are inherently non-negative (struct member index,\narray element index, or enumerator index), so reject them immediately\nafter parsing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45839",
+    "publishedDate": "2026-05-27T11:16:23.247",
+    "lastModifiedDate": "2026-05-27T14:48:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45838",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: fix end-of-list detection in cgroup_storage_get_next_key()\n\nlist_next_entry() never returns NULL -- when the current element is the\nlast entry it wraps to the list head via container_of(). The subsequent\nNULL check is therefore dead code and get_next_key() never returns\n-ENOENT for the last element, instead reading storage->key from a bogus\npointer that aliases internal map fields and copying the result to\nuserspace.\n\nReplace it with list_entry_is_head() so the function correctly returns\n-ENOENT when there are no more entries.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45838",
+    "publishedDate": "2026-05-27T11:16:23.130",
+    "lastModifiedDate": "2026-05-27T14:48:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45837",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Fix use-after-free in arena_vm_close on fork\n\narena_vm_open() only bumps vml->mmap_count but never registers the\nchild VMA in arena->vma_list. The vml->vma always points at the\nparent VMA, so after parent munmap the pointer dangles. If the child\nthen calls bpf_arena_free_pages(), zap_pages() reads the stale\nvml->vma triggering use-after-free.\n\nFix this by preventing the arena VMA from being inherited across\nfork with VM_DONTCOPY, and preventing VMA splits via the may_split\ncallback.\n\nAlso reject mremap with a .mremap callback returning -EINVAL. A\nsame-size mremap(MREMAP_FIXED) on the full arena VMA reaches\ncopy_vma() through the following path:\n\n  check_prep_vma()       - returns 0 early: new_len == old_len\n                           skips VM_DONTEXPAND check\n  prep_move_vma()        - vm_start == old_addr and\n                           vm_end == old_addr + old_len\n                           so may_split is never called\n  move_vma()\n    copy_vma_and_data()\n      copy_vma()\n        vm_area_dup()    - copies vm_private_data (vml pointer)\n        vm_ops->open()   - bumps vml->mmap_count\n      vm_ops->mremap()   - returns -EINVAL, rollback unmaps new VMA\n\nThe refcount ensures the rollback's arena_vm_close does not free\nthe vml shared with the original VMA.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45837",
+    "publishedDate": "2026-05-27T11:16:23.020",
+    "lastModifiedDate": "2026-05-27T14:48:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-42762",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in e4jvikwp VikBooking Hotel Booking Engine & PMS vikbooking allows DOM-Based XSS.This issue affects VikBooking Hotel Booking Engine & PMS: from n/a through <= 1.8.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42762",
+    "publishedDate": "2026-05-27T11:16:22.897",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42761",
+    "description": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in RealMag777 Active Products Tables for WooCommerce profit-products-tables-for-woocommerce allows Blind SQL Injection.This issue affects Active Products Tables for WooCommerce: from n/a through <= 1.0.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42761",
+    "publishedDate": "2026-05-27T11:16:22.763",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42760",
+    "description": "Authentication Bypass Using an Alternate Path or Channel vulnerability in revmakx Backup and Staging by WP Time Capsule wp-time-capsule allows Password Recovery Exploitation.This issue affects Backup and Staging by WP Time Capsule: from n/a through <= 1.22.25.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42760",
+    "publishedDate": "2026-05-27T11:16:22.650",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -12,490 +192,210 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9014",
-    "description": "The WP Promoter plugin for WordPress is vulnerable to unauthorized modification of data due to a missing capability check on the reset_stats() function in versions up to, and including, 1.3. The function is hooked to both the wp_ajax_wpp-reset_stats and wp_ajax_nopriv_wpp-reset_stats actions and contains no authentication, authorization, or nonce validation. This makes it possible for unauthenticated attackers to reset the plugin's bar and popup statistics by deleting the wpp_bar and wpp_popup options.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9014",
-    "publishedDate": "2026-05-27T07:16:19.033",
-    "lastModifiedDate": "2026-05-27T07:16:19.033",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "impactScore": 3.6,
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-8994",
-    "description": "The Login with NEAR plugin for WordPress is vulnerable to Authentication Bypass in all versions up to, and including, 0.3.3. The `ajaxLoginWithNear()` function — registered as a `wp_ajax_nopriv` action and therefore reachable by unauthenticated users — accepts an attacker-supplied `account` POST parameter and issues a valid WordPress authentication cookie based solely on a substring check for `.near`, with no nonce verification, cryptographic signature validation, challenge-response exchange, or any proof that the requester controls the corresponding NEAR wallet. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including administrators, whose email address matches the deterministic `<account>@near.org` pattern derived from the supplied `account` value. If no matching user exists, the handler automatically creates and authenticates a new WordPress account for the attacker-controlled identifier, providing a further avenue for unauthorized account creation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8994",
-    "publishedDate": "2026-05-27T07:16:18.917",
-    "lastModifiedDate": "2026-05-27T07:16:18.917",
+    "id": "CVE-2026-42759",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Timo Affiliate Super Assistent amazonsimpleadmin allows Stored XSS.This issue affects Affiliate Super Assistent: from n/a through <= 1.10.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42759",
+    "publishedDate": "2026-05-27T11:16:22.500",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
+        "score": 7.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42758",
+    "description": "Incorrect Privilege Assignment vulnerability in Saleswonder Team: Tobias WebinarIgnition webinar-ignition allows Privilege Escalation.This issue affects WebinarIgnition: from n/a through < 4.08.253.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42758",
+    "publishedDate": "2026-05-27T11:16:22.330",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-8943",
-    "description": "The GoStats for WordPress plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 1.4. This is due to missing or incorrect nonce validation on the gostats_manage() function. This makes it possible for unauthenticated attackers to update the plugin's settings (gostats_siteid and gostats_server options) via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8943",
-    "publishedDate": "2026-05-27T07:16:18.803",
-    "lastModifiedDate": "2026-05-27T07:16:18.803",
+    "id": "CVE-2026-42757",
+    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Saleswonder Team: Tobias WebinarIgnition webinar-ignition allows Path Traversal.This issue affects WebinarIgnition: from n/a through < 4.08.253.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42757",
+    "publishedDate": "2026-05-27T11:16:22.217",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 9.9,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42756",
+    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Ludwig You QuickWebP &#8211; Compress / Optimize Images &amp; Convert WebP | SEO Friendly quickwebp allows Path Traversal.This issue affects QuickWebP &#8211; Compress / Optimize Images &amp; Convert WebP | SEO Friendly: from n/a through <= 3.2.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42756",
+    "publishedDate": "2026-05-27T11:16:22.100",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42755",
+    "description": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in RealMag777 TableOn posts-table-filterable allows Blind SQL Injection.This issue affects TableOn: from n/a through <= 1.0.5.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42755",
+    "publishedDate": "2026-05-27T11:16:21.990",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42754",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in phbernard Favicon favicon-by-realfavicongenerator allows Reflected XSS.This issue affects Favicon: from n/a through <= 1.3.46.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42754",
+    "publishedDate": "2026-05-27T11:16:21.873",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-8941",
-    "description": "The CDN Linker lite plugin for WordPress is vulnerable to Cross-Site Request Forgery in versions up to, and including, 1.3.1. This is due to missing or incorrect nonce validation on the ossdl_off_options() function. This makes it possible for unauthenticated attackers to update the plugin's settings — including the CDN URL used to rewrite all static asset references on the site — via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8941",
-    "publishedDate": "2026-05-27T07:16:18.687",
-    "lastModifiedDate": "2026-05-27T07:16:18.687",
+    "id": "CVE-2026-42753",
+    "description": "Missing Authorization vulnerability in WC Lovers WCFM Membership wc-multivendor-membership allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WCFM Membership: from n/a through <= 2.11.10.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42753",
+    "publishedDate": "2026-05-27T11:16:21.760",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42751",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in wpdevelop Booking Manager booking-manager allows Stored XSS.This issue affects Booking Manager: from n/a through <= 2.1.18.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42751",
+    "publishedDate": "2026-05-27T11:16:21.643",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42750",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Nexcess WPComplete wpcomplete allows Stored XSS.This issue affects WPComplete: from n/a through <= 2.9.5.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42750",
+    "publishedDate": "2026-05-27T11:16:21.530",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42749",
+    "description": "Authentication Bypass Using an Alternate Path or Channel vulnerability in Themeisle Disable Comments for Any Post Types (Remove comments) comments-plus allows Password Recovery Exploitation.This issue affects Disable Comments for Any Post Types (Remove comments): from n/a through <= 1.3.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42749",
+    "publishedDate": "2026-05-27T11:16:21.413",
+    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8939",
-    "description": "The Search Simple Fields plugin for WordPress is vulnerable to Cross-Site Request Forgery in versions up to, and including, 0.2. This is due to missing or incorrect nonce validation on the search_simple_fields_options() function in functions_admin.php. This makes it possible for unauthenticated attackers to modify the plugin's settings — including post types to search in, custom fields, media fields and the custom media function name — via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8939",
-    "publishedDate": "2026-05-27T07:16:18.570",
-    "lastModifiedDate": "2026-05-27T07:16:18.570",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8938",
-    "description": "The auto making JSON-LD plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 4.5.3. This is due to missing or incorrect nonce validation on the amJL_certification function. This makes it possible for unauthenticated attackers to update the plugin's license key option, and subsequently trigger license validation and pro feature installation on the victim site without the administrator's consent via a forged request granted they can trick a site administrator into performing an action such as clicking on a link. Successful exploitation can trigger downstream calls to amJL_is_license_valid() and amJL_download_and_install_pro_features(), meaning the impact extends beyond a simple settings change to unauthorized installation of plugin components.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8938",
-    "publishedDate": "2026-05-27T07:16:18.453",
-    "lastModifiedDate": "2026-05-27T07:16:18.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8911",
-    "description": "The WP AutoBuzz plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 1.1.1. This is due to missing or incorrect nonce validation on a function. This makes it possible for unauthenticated attackers to update settings and inject malicious web scripts via a forged request granted they can trick a site administrator into performing an action such as clicking on a link. This vulnerability bypasses WordPress's DISALLOW_UNFILTERED_HTML protection because the unsanitized value is written directly via update_option at the plugin level, entirely outside of WordPress post content handling.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8911",
-    "publishedDate": "2026-05-27T07:16:18.330",
-    "lastModifiedDate": "2026-05-27T07:16:18.330",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8903",
-    "description": "The Two-factor authentication (formerly IP Vault) plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 2.1. This is due to missing or incorrect nonce validation on the ipv_save_changes function. This makes it possible for unauthenticated attackers to modify the plugin's firewall and two-factor authentication settings — including the operating mode, request include/exclude rules, authentication slug, and log retention period — potentially disabling protection entirely via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8903",
-    "publishedDate": "2026-05-27T07:16:18.210",
-    "lastModifiedDate": "2026-05-27T07:16:18.210",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8899",
-    "description": "The Auto Thumbnail plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'thumbnails' shortcode in all versions up to, and including, 1.0. This is due to insufficient input sanitization and output escaping on the shortcode's 'width' and 'height' attributes in the athn_thumbnails() function, which are concatenated directly into an HTML <img> tag. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8899",
-    "publishedDate": "2026-05-27T07:16:18.083",
-    "lastModifiedDate": "2026-05-27T07:16:18.083",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8898",
-    "description": "The Events In City plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'org-events' shortcode in versions up to, and including, 3.0. This is due to insufficient input sanitization and output escaping on user supplied attributes (such as 'organizer_id', 'width', 'height', 'transparency', 'header', 'border', and 'layout') in the org_event_scode() function. The attribute values are concatenated directly into HTML attributes without esc_attr(). This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8898",
-    "publishedDate": "2026-05-27T07:16:17.963",
-    "lastModifiedDate": "2026-05-27T07:16:17.963",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8897",
-    "description": "The Shortcode Buddy plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Shortcode Attributes in all versions up to, and including, 0.1.9.5 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8897",
-    "publishedDate": "2026-05-27T07:16:17.847",
-    "lastModifiedDate": "2026-05-27T07:16:17.847",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8894",
-    "description": "The iWR Tooltip plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the plugin's `iwrtooltip` shortcode in versions up to, and including, 1.0. This is due to insufficient input sanitization and output escaping on user supplied attributes in the iwr_tooltip() shortcode handler — the `title` attribute is concatenated directly into an HTML attribute without esc_attr() or any other escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8894",
-    "publishedDate": "2026-05-27T07:16:17.727",
-    "lastModifiedDate": "2026-05-27T07:16:17.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8891",
-    "description": "The BitForm plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the plugin's 'bitform' shortcode in versions up to, and including, 1.1.0. This is due to insufficient input sanitization and output escaping on user-supplied shortcode attributes ('width' and 'height') in the Shortcode::shortcode() function, which are interpolated directly into the 'style' attribute of an <iframe> element. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8891",
-    "publishedDate": "2026-05-27T07:16:17.603",
-    "lastModifiedDate": "2026-05-27T07:16:17.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8887",
-    "description": "The Listen Shortcode plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'listen' shortcode in versions up to, and including, 1.0. This is due to insufficient input sanitization and output escaping on user supplied attributes (src, start, end) in the listenEmbedJS() function, which are echoed inside a single-quoted HTML attribute without escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8887",
-    "publishedDate": "2026-05-27T07:16:17.487",
-    "lastModifiedDate": "2026-05-27T07:16:17.487",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8886",
-    "description": "The hk_shortcode plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'title-plane' shortcode in versions up to, and including, 1.0. This is due to insufficient input sanitization and output escaping on user-supplied shortcode attributes in the huankong_post_short_title_plane() function, where the 'title' attribute is concatenated directly into HTML output without any escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8886",
-    "publishedDate": "2026-05-27T07:16:17.363",
-    "lastModifiedDate": "2026-05-27T07:16:17.363",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8884",
-    "description": "The Instant-Quote.co Quotation Page plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Shortcode Attributes in all versions up to, and including, 1.3.4 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. A Contributor-level user can trigger execution against higher-privileged users by embedding the malicious shortcode in a post submitted for review, causing the injected scripts to execute when an administrator previews or views the post.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8884",
-    "publishedDate": "2026-05-27T07:16:17.250",
-    "lastModifiedDate": "2026-05-27T07:16:17.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8877",
-    "description": "The Responsive Video Embedder plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'rem_video' shortcode in versions up to, and including, 0.1. This is due to insufficient input sanitization and output escaping on user supplied attributes (notably 'id' and 'list') in the video_shortcode() function, which are concatenated directly into an HTML iframe's src attribute without escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8877",
-    "publishedDate": "2026-05-27T07:16:17.130",
-    "lastModifiedDate": "2026-05-27T07:16:17.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8875",
-    "description": "The Easy Prism Syntax Highlighter plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the plugin's 'code' (and 'c') shortcode in versions up to, and including, 1.0.2. This is due to insufficient input sanitization and output escaping on user supplied shortcode attributes in the shortcode() function, which concatenates the first positional attribute directly into the class attribute of the generated <pre>/<code> HTML without calling esc_attr() or any other escaping function. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8875",
-    "publishedDate": "2026-05-27T07:16:17.010",
-    "lastModifiedDate": "2026-05-27T07:16:17.010",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8873",
-    "description": "The Content Slideshow plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Shortcode Attributes in all versions up to, and including, 2.4.1 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8873",
-    "publishedDate": "2026-05-27T07:16:16.890",
-    "lastModifiedDate": "2026-05-27T07:16:16.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8872",
-    "description": "The Animate Your Content plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the plugin's 'animation-set' shortcode in versions up to, and including, 1.0.0. This is due to insufficient input sanitization and output escaping on user supplied attributes in the shortcode_args_to_html_attrs() function, which concatenates shortcode attribute values directly into double-quoted HTML attributes without calling esc_attr(). This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8872",
-    "publishedDate": "2026-05-27T07:16:16.743",
-    "lastModifiedDate": "2026-05-27T07:16:16.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8871",
-    "description": "The Formidable Kinetic plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'kinetic_link' shortcode in versions up to, and including, 1.1.01. This is due to insufficient input sanitization and output escaping on user-supplied shortcode attributes (notably 'window', 'class', and 'label') in the FrmKinetic::link() function, which are concatenated directly into HTML attributes of an anchor tag. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8871",
-    "publishedDate": "2026-05-27T07:16:16.623",
-    "lastModifiedDate": "2026-05-27T07:16:16.623",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8870",
-    "description": "The Team Master – A Modern WordPress Team Showcase plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Shortcode Attributes in all versions up to, and including, 1.1.2 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8870",
-    "publishedDate": "2026-05-27T07:16:16.500",
-    "lastModifiedDate": "2026-05-27T07:16:16.500",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8869",
-    "description": "The Mutual Funds Data plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'title' shortcode attribute in versions up to, and including, 1.2.1. This is due to insufficient input sanitization and output escaping on the user supplied 'title' attribute in the mfd_shortcode() function, which is concatenated directly into the HTML output within a <caption> element. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8869",
-    "publishedDate": "2026-05-27T07:16:16.347",
-    "lastModifiedDate": "2026-05-27T07:16:16.347",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8868",
-    "description": "The Single Mailchimp plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'single-mailchimp' shortcode in all versions up to, and including, 1.4. This is due to insufficient input sanitization and output escaping on user-supplied shortcode attributes (autocomplete, label, placeholder, btn_text, success_msg, error_msg) which are concatenated directly into HTML output by the single_mailchimp() function in shortcodes.php. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8868",
-    "publishedDate": "2026-05-27T07:16:16.220",
-    "lastModifiedDate": "2026-05-27T07:16:16.220",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "impactScore": 4.2,
+        "source": "audit@patchstack.com"
       }
     ]
   }
