@@ -1,190 +1,110 @@
 [
   {
-    "id": "CVE-2026-9689",
-    "description": "A flaw was found in Keycloak, an open-source identity and access management solution. When a client application is configured to accept broad redirect Uniform Resource Identifiers (URIs), a remote attacker can manipulate the authentication process by crafting a special web address. If a user clicks this link, the client application might incorrectly prioritize attacker-controlled information over legitimate data. This vulnerability, known as HTTP parameter pollution, could allow an attacker to bypass security measures or gain unauthorized access to resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9689",
-    "publishedDate": "2026-05-27T12:17:15.513",
-    "lastModifiedDate": "2026-05-27T14:54:20.160",
+    "id": "CVE-2026-42081",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, the AMF in Free5GC does not verify the UE Security Capabilities received in NGAP PathSwitchRequest messages against its locally stored values, as mandated by 3GPP TS 33.501 §6.7.3.1. A malicious gNB can overwrite the AMF's stored UE security capabilities with arbitrary values, which are then propagated in PathSwitchRequest Acknowledge messages and subsequent Handover Request messages. This leads to persistent handover denial-of-service for affected UEs. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42081",
+    "publishedDate": "2026-05-27T17:16:34.967",
+    "lastModifiedDate": "2026-05-27T17:16:34.967",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.2,
+        "score": 6.1,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 1.6,
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42082",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, the AMF in Free5GC does not enforce the concurrent security procedure rules defined in 3GPP TS 33.501 §6.9.5.1. The AMF does not check for ongoing N2 handover procedures before initiating a NAS Security Mode Command, and vice versa. This can lead to mismatches between NAS and AS security contexts in the network and the UE. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42082",
+    "publishedDate": "2026-05-27T17:16:35.180",
+    "lastModifiedDate": "2026-05-27T17:16:35.180",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1.2,
         "impactScore": 2.5,
-        "source": "secalert@redhat.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-48906",
-    "description": "The vulnerability in the Tassos Framework Plugin allows users to delete arbitrary files on the affected sites.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48906",
-    "publishedDate": "2026-05-27T11:16:24.713",
-    "lastModifiedDate": "2026-05-27T11:16:24.713",
+    "id": "CVE-2026-42083",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, PCF Npcf_SMPolicyControl missing authentication middleware allows unauthenticated access to SM policy handlers and disclosure of subscriber SUPI. In NewServer(), the smPolicyGroup route group is created and routes are applied without attaching the router authorization middleware. In contrast, other PCF service groups such as Npcf_PolicyAuthorization do attach RouterAuthorizationCheck before route registration. Because the middleware is missing, requests to the  /npcf-smpolicycontrol/v1/sm-policies, /npcf-smpolicycontrol/v1/sm-policies/{smPolicyId}, /npcf-smpolicycontrol/v1/sm-policies/{smPolicyId}/update, and /npcf-smpolicycontrol/v1/sm-policies/{smPolicyId}/delete endpoints can reach business logic even when no valid OAuth token is provided. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42083",
+    "publishedDate": "2026-05-27T17:16:35.327",
+    "lastModifiedDate": "2026-05-27T17:16:35.327",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-45846",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbareudp: fix NULL pointer dereference in bareudp_fill_metadata_dst()\n\nbareudp_fill_metadata_dst() passes bareudp->sock to\nudp_tunnel6_dst_lookup() in the IPv6 path without a NULL check.\nThe socket is only created in bareudp_open() and NULLed in\nbareudp_stop(), so calling this function while the device is down\ntriggers a NULL dereference via sock->sk.\n\n BUG: kernel NULL pointer dereference, address: 0000000000000018\n RIP: 0010:udp_tunnel6_dst_lookup (net/ipv6/ip6_udp_tunnel.c:160)\n Call Trace:\n  <TASK>\n  bareudp_fill_metadata_dst (drivers/net/bareudp.c:532)\n  do_execute_actions (net/openvswitch/actions.c:901)\n  ovs_execute_actions (net/openvswitch/actions.c:1589)\n  ovs_packet_cmd_execute (net/openvswitch/datapath.c:700)\n  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1114)\n  genl_rcv_msg (net/netlink/genetlink.c:1209)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  </TASK>\n\nAdd a NULL check returning -ESHUTDOWN, consistent with the xmit paths\nin the same driver.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45846",
-    "publishedDate": "2026-05-27T11:16:24.083",
-    "lastModifiedDate": "2026-05-27T14:48:31.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45845",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: taprio: fix NULL pointer dereference in class dump\n\nWhen a TAPRIO child qdisc is deleted via RTM_DELQDISC, taprio_graft()\nis called with new == NULL and stores NULL into q->qdiscs[cl - 1].\nSubsequent RTM_GETTCLASS dump operations walk all classes via\ntaprio_walk() and call taprio_dump_class(), which calls taprio_leaf()\nreturning the NULL pointer, then dereferences it to read child->handle,\ncausing a kernel NULL pointer dereference.\n\nThe bug is reachable with namespace-scoped CAP_NET_ADMIN on any kernel\nwith CONFIG_NET_SCH_TAPRIO enabled. On systems with unprivileged user\nnamespaces enabled, an unprivileged local user can trigger a kernel\npanic by creating a taprio qdisc inside a new network namespace,\ngrafting an explicit child qdisc, deleting it, and requesting a class\ndump. The RTM_GETTCLASS dump itself requires no capability.\n\n Oops: general protection fault, probably for non-canonical address 0xdffffc0000000007: 0000 [#1] SMP KASAN NOPTI\n KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]\n RIP: 0010:taprio_dump_class (net/sched/sch_taprio.c:2478)\n Call Trace:\n  <TASK>\n  tc_fill_tclass (net/sched/sch_api.c:1966)\n  qdisc_class_dump (net/sched/sch_api.c:2326)\n  taprio_walk (net/sched/sch_taprio.c:2514)\n  tc_dump_tclass_qdisc (net/sched/sch_api.c:2352)\n  tc_dump_tclass_root (net/sched/sch_api.c:2370)\n  tc_dump_tclass (net/sched/sch_api.c:2431)\n  rtnl_dumpit (net/core/rtnetlink.c:6864)\n  netlink_dump (net/netlink/af_netlink.c:2325)\n  rtnetlink_rcv_msg (net/core/rtnetlink.c:6959)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  </TASK>\n\nFix this by substituting &noop_qdisc when new is NULL in\ntaprio_graft(), a common pattern used by other qdiscs (e.g.,\nmultiq_graft()) to ensure the q->qdiscs[] slots are never NULL.\nThis makes control-plane dump paths safe without requiring individual\nNULL checks.\n\nSince the data-plane paths (taprio_enqueue and taprio_dequeue_from_txq)\npreviously had explicit NULL guards that would drop/skip the packet\ncleanly, update those checks to test for &noop_qdisc instead. Without\nthis, packets would reach taprio_enqueue_one() which increments the root\nqdisc's qlen and backlog before calling the child's enqueue; noop_qdisc\ndrops the packet but those counters are never rolled back, permanently\ninflating the root qdisc's statistics.\n\nAfter this change *old can be a valid qdisc, NULL, or &noop_qdisc.\nOnly call qdisc_put(*old) in the first case to avoid decreasing\nnoop_qdisc's refcount, which was never increased.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45845",
-    "publishedDate": "2026-05-27T11:16:23.960",
-    "lastModifiedDate": "2026-05-27T14:48:31.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45844",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: arp_tables: fix IEEE1394 ARP payload parsing\n\nWeiming Shi says:\n\n\"arp_packet_match() unconditionally parses the ARP payload assuming two\nhardware addresses are present (source and target). However,\nIPv4-over-IEEE1394 ARP (RFC 2734) omits the target hardware address\nfield, and arp_hdr_len() already accounts for this by returning a\nshorter length for ARPHRD_IEEE1394 devices.\n\nAs a result, on IEEE1394 interfaces arp_packet_match() advances past a\nnonexistent target hardware address and reads the wrong bytes for both\nthe target device address comparison and the target IP address. This\ncauses arptables rules to match against garbage data, leading to\nincorrect filtering decisions: packets that should be accepted may be\ndropped and vice versa.\n\nThe ARP stack in net/ipv4/arp.c (arp_create and arp_process) already\nhandles this correctly by skipping the target hardware address for\nARPHRD_IEEE1394. Apply the same pattern to arp_packet_match().\"\n\nMangle the original patch to always return 0 (no match) in case user\nmatches on the target hardware address which is never present in\nIEEE1394.\n\nNote that this returns 0 (no match) for either normal and inverse match\nbecause matching in the target hardware address in ARPHRD_IEEE1394 has\nnever been supported by arptables. This is intentional, matching on the\ntarget hardware address should never evaluate true for ARPHRD_IEEE1394.\n\nMoreover, adjust arpt_mangle to drop the packet too as AI suggests:\n\nIn arpt_mangle, the logic assumes a standard ARP layout. Because\nIEEE1394 (FireWire) omits the target hardware address, the linear\npointer arithmetic miscalculates the offset for the target IP address.\nThis causes mangling operations to write to the wrong location, leading\nto packet corruption. To ensure safety, this patch drops packets\n(NF_DROP) when mangling is requested for these fields on IEEE1394\ndevices, as the current implementation cannot correctly map the FireWire\nARP payload.\n\nThis omits both mangling target hardware and IP address. Even if IP\naddress mangling should be possible in IEEE1394, this would require\nto adjust arpt_mangle offset calculation, which has never been\nsupported.\n\nBased on patch from Weiming Shi <bestswngs@gmail.com>.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45844",
-    "publishedDate": "2026-05-27T11:16:23.847",
-    "lastModifiedDate": "2026-05-27T14:48:31.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45843",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nslip: bound decode() reads against the compressed packet length\n\nslhc_uncompress() parses a VJ-compressed TCP header by advancing a\npointer through the packet via decode() and pull16(). Neither helper\nbounds-checks against isize, and decode() masks its return with\n& 0xffff so it can never return the -1 that callers test for -- those\nerror paths are dead code.\n\nA short compressed frame whose change byte requests optional fields\nlets decode() read past the end of the packet. The over-read bytes\nare folded into the cached cstate and reflected into subsequent\nreconstructed packets.\n\nMake decode() and pull16() take the packet end pointer and return -1\nwhen exhausted. Add a bounds check before the TCP-checksum read.\nThe existing == -1 tests now do what they were always meant to.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45843",
-    "publishedDate": "2026-05-27T11:16:23.743",
-    "lastModifiedDate": "2026-05-27T14:48:31.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45842",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nslip: reject VJ receive packets on instances with no rstate array\n\nslhc_init() accepts rslots == 0 as a valid configuration, with the\ndocumented meaning of 'no receive compression'. In that case the\nallocation loop in slhc_init() is skipped, so comp->rstate stays\nNULL and comp->rslot_limit stays 0 (from the kzalloc of struct\nslcompress).\n\nThe receive helpers do not defend against that configuration.\nslhc_uncompress() dereferences comp->rstate[x] when the VJ header\ncarries an explicit connection ID, and slhc_remember() later assigns\ncs = &comp->rstate[...] after only comparing the packet's slot number\nto comp->rslot_limit. Because rslot_limit is 0, slot 0 passes the\nrange check, and the code dereferences a NULL rstate.\n\nThe configuration is reachable in-tree through PPP. PPPIOCSMAXCID\nstores its argument in a signed int, and (val >> 16) uses arithmetic\nshift. Passing 0xffff0000 therefore sign-extends to -1, so val2 + 1\nis 0 and ppp_generic.c ends up calling slhc_init(0, 1). Because\n/dev/ppp open is gated by ns_capable(CAP_NET_ADMIN), the whole path\nis reachable from an unprivileged user namespace. Once the malformed\nVJ state is installed, any inbound VJ-compressed or VJ-uncompressed\nframe that selects slot 0 crashes the kernel in softirq context:\n\n Oops: general protection fault, probably for non-canonical\n       address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI\n KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]\n RIP: 0010:slhc_uncompress (drivers/net/slip/slhc.c:519)\n Call Trace:\n  <TASK>\n  ppp_receive_nonmp_frame (drivers/net/ppp/ppp_generic.c:2466)\n  ppp_input (drivers/net/ppp/ppp_generic.c:2359)\n  ppp_async_process (drivers/net/ppp/ppp_async.c:492)\n  tasklet_action_common (kernel/softirq.c:926)\n  handle_softirqs (kernel/softirq.c:623)\n  run_ksoftirqd (kernel/softirq.c:1055)\n  smpboot_thread_fn (kernel/smpboot.c:160)\n  kthread (kernel/kthread.c:436)\n  ret_from_fork (arch/x86/kernel/process.c:164)\n  </TASK>\n\nReject the receive side on such instances instead of touching rstate.\nslhc_uncompress() falls through to its existing 'bad' label, which\nbumps sls_i_error and enters the toss state. slhc_remember() mirrors\nthat with an explicit sls_i_error increment followed by slhc_toss();\nthe sls_i_runt counter is not used here because a missing rstate is\nan internal configuration state, not a runt packet.\n\nThe transmit path is unaffected: the only in-tree caller that picks\nrslots from userspace (ppp_generic.c) still supplies tslots >= 1, and\nslip.c always calls slhc_init(16, 16), so comp->tstate remains valid\nand slhc_compress() continues to work.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45842",
-    "publishedDate": "2026-05-27T11:16:23.600",
-    "lastModifiedDate": "2026-05-27T14:48:03.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45841",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO\n\nnf_osf_match_one() computes ctx->window % f->wss.val in the\nOSF_WSS_MODULO branch with no guard for f->wss.val == 0. A\nCAP_NET_ADMIN user can add such a fingerprint via nfnetlink; a\nsubsequent matching TCP SYN divides by zero and panics the kernel.\n\nReject the bogus fingerprint in nfnl_osf_add_callback() above the\nper-option for-loop. f->wss is per-fingerprint, not per-option, so\nthe check must run regardless of f->opt_num (including 0). Also\nreject wss.wc >= OSF_WSS_MAX; nf_osf_match_one() already treats that\nas \"should not happen\".\n\nCrash:\n Oops: divide error: 0000 [#1] SMP KASAN NOPTI\n RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)\n Call Trace:\n <IRQ>\n  nf_osf_match (net/netfilter/nfnetlink_osf.c:220)\n  xt_osf_match_packet (net/netfilter/xt_osf.c:32)\n  ipt_do_table (net/ipv4/netfilter/ip_tables.c:348)\n  nf_hook_slow (net/netfilter/core.c:622)\n  ip_local_deliver (net/ipv4/ip_input.c:265)\n  ip_rcv (include/linux/skbuff.h:1162)\n  __netif_receive_skb_one_core (net/core/dev.c:6181)\n  process_backlog (net/core/dev.c:6642)\n  __napi_poll (net/core/dev.c:7710)\n  net_rx_action (net/core/dev.c:7945)\n  handle_softirqs (kernel/softirq.c:622)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45841",
-    "publishedDate": "2026-05-27T11:16:23.493",
-    "lastModifiedDate": "2026-05-27T14:48:03.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45840",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nopenvswitch: cap upcall PID array size and pre-size vport replies\n\nThe vport netlink reply helpers allocate a fixed-size skb with\nnlmsg_new(NLMSG_DEFAULT_SIZE, ...) but serialize the full upcall PID\narray via ovs_vport_get_upcall_portids().  Since\novs_vport_set_upcall_portids() accepts any non-zero multiple of\nsizeof(u32) with no upper bound, a CAP_NET_ADMIN user can install a PID\narray large enough to overflow the reply buffer, causing nla_put() to\nfail with -EMSGSIZE and hitting BUG_ON(err < 0).  On systems with\nunprivileged user namespaces enabled (e.g., Ubuntu default), this is\nreachable via unshare -Urn since OVS vport mutation operations use\nGENL_UNS_ADMIN_PERM.\n\n kernel BUG at net/openvswitch/datapath.c:2414!\n Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI\n CPU: 1 UID: 0 PID: 65 Comm: poc Not tainted 7.0.0-rc7-00195-geb216e422044 #1\n RIP: 0010:ovs_vport_cmd_set+0x34c/0x400\n Call Trace:\n  <TASK>\n  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1116)\n  genl_rcv_msg (net/netlink/genetlink.c:1194)\n  netlink_rcv_skb (net/netlink/af_netlink.c:2550)\n  genl_rcv (net/netlink/genetlink.c:1219)\n  netlink_unicast (net/netlink/af_netlink.c:1344)\n  netlink_sendmsg (net/netlink/af_netlink.c:1894)\n  __sys_sendto (net/socket.c:2206)\n  __x64_sys_sendto (net/socket.c:2209)\n  do_syscall_64 (arch/x86/entry/syscall_64.c:63)\n  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)\n  </TASK>\n Kernel panic - not syncing: Fatal exception\n\nReject attempts to set more PIDs than nr_cpu_ids in\novs_vport_set_upcall_portids(), and pre-compute the worst-case reply\nsize in ovs_vport_cmd_msg_size() based on that bound, similar to the\nexisting ovs_dp_cmd_msg_size().  nr_cpu_ids matches the cap already\nused by the per-CPU dispatch configuration on the datapath side\n(ovs_dp_cmd_fill_info() serialises at most nr_cpu_ids PIDs), so the\ntwo sides stay consistent.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45840",
-    "publishedDate": "2026-05-27T11:16:23.363",
-    "lastModifiedDate": "2026-05-27T14:48:03.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45839",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()\n\nCO-RE accessor strings are colon-separated indices that describe a path\nfrom a root BTF type to a target field, e.g. \"0:1:2\" walks through\nnested struct members. bpf_core_parse_spec() parses each component with\nsscanf(\"%d\"), so negative values like -1 are silently accepted.  The\nsubsequent bounds checks (access_idx >= btf_vlen(t)) only guard the\nupper bound and always pass for negative values because C integer\npromotion converts the __u16 btf_vlen result to int, making the\ncomparison (int)(-1) >= (int)(N) false for any positive N.\n\nWhen -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,\nproducing an out-of-bounds read far past the members array.  A crafted\nBPF program with a negative CO-RE accessor on any struct that exists in\nvmlinux BTF (e.g. task_struct) crashes the kernel deterministically\nduring BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y\n(default on major distributions).  The bug is reachable with CAP_BPF:\n\n BUG: unable to handle page fault for address: ffffed11818b6626\n #PF: supervisor read access in kernel mode\n #PF: error_code(0x0000) - not-present page\n Oops: Oops: 0000 [#1] SMP KASAN NOPTI\n CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)\n RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)\n RAX: 00000000ffffffff\n Call Trace:\n  <TASK>\n  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)\n  bpf_core_apply (kernel/bpf/btf.c:9507)\n  check_core_relo (kernel/bpf/verifier.c:19475)\n  bpf_check (kernel/bpf/verifier.c:26031)\n  bpf_prog_load (kernel/bpf/syscall.c:3089)\n  __sys_bpf (kernel/bpf/syscall.c:6228)\n  </TASK>\n\nCO-RE accessor indices are inherently non-negative (struct member index,\narray element index, or enumerator index), so reject them immediately\nafter parsing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45839",
-    "publishedDate": "2026-05-27T11:16:23.247",
-    "lastModifiedDate": "2026-05-27T14:48:03.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45838",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: fix end-of-list detection in cgroup_storage_get_next_key()\n\nlist_next_entry() never returns NULL -- when the current element is the\nlast entry it wraps to the list head via container_of(). The subsequent\nNULL check is therefore dead code and get_next_key() never returns\n-ENOENT for the last element, instead reading storage->key from a bogus\npointer that aliases internal map fields and copying the result to\nuserspace.\n\nReplace it with list_entry_is_head() so the function correctly returns\n-ENOENT when there are no more entries.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45838",
-    "publishedDate": "2026-05-27T11:16:23.130",
-    "lastModifiedDate": "2026-05-27T14:48:03.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45837",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Fix use-after-free in arena_vm_close on fork\n\narena_vm_open() only bumps vml->mmap_count but never registers the\nchild VMA in arena->vma_list. The vml->vma always points at the\nparent VMA, so after parent munmap the pointer dangles. If the child\nthen calls bpf_arena_free_pages(), zap_pages() reads the stale\nvml->vma triggering use-after-free.\n\nFix this by preventing the arena VMA from being inherited across\nfork with VM_DONTCOPY, and preventing VMA splits via the may_split\ncallback.\n\nAlso reject mremap with a .mremap callback returning -EINVAL. A\nsame-size mremap(MREMAP_FIXED) on the full arena VMA reaches\ncopy_vma() through the following path:\n\n  check_prep_vma()       - returns 0 early: new_len == old_len\n                           skips VM_DONTEXPAND check\n  prep_move_vma()        - vm_start == old_addr and\n                           vm_end == old_addr + old_len\n                           so may_split is never called\n  move_vma()\n    copy_vma_and_data()\n      copy_vma()\n        vm_area_dup()    - copies vm_private_data (vml pointer)\n        vm_ops->open()   - bumps vml->mmap_count\n      vm_ops->mremap()   - returns -EINVAL, rollback unmaps new VMA\n\nThe refcount ensures the rollback's arena_vm_close does not free\nthe vml shared with the original VMA.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45837",
-    "publishedDate": "2026-05-27T11:16:23.020",
-    "lastModifiedDate": "2026-05-27T14:48:03.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-42762",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in e4jvikwp VikBooking Hotel Booking Engine & PMS vikbooking allows DOM-Based XSS.This issue affects VikBooking Hotel Booking Engine & PMS: from n/a through <= 1.8.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42762",
-    "publishedDate": "2026-05-27T11:16:22.897",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
+        "score": 8.2,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42761",
-    "description": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in RealMag777 Active Products Tables for WooCommerce profit-products-tables-for-woocommerce allows Blind SQL Injection.This issue affects Active Products Tables for WooCommerce: from n/a through <= 1.0.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42761",
-    "publishedDate": "2026-05-27T11:16:22.763",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-42459",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, the free5GC UDM component fails to validate the supi path parameter in six GET handlers of the nudm-sdm (Subscriber Data Management) service. An unauthenticated attacker can inject control characters into the SUPI parameter, causing UDM to forward a malformed request to UDR and return a 500 Internal Server Error response that exposes internal infrastructure details. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42459",
+    "publishedDate": "2026-05-27T17:16:35.593",
+    "lastModifiedDate": "2026-05-27T17:16:35.593",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.3,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "audit@patchstack.com"
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42760",
-    "description": "Authentication Bypass Using an Alternate Path or Channel vulnerability in revmakx Backup and Staging by WP Time Capsule wp-time-capsule allows Password Recovery Exploitation.This issue affects Backup and Staging by WP Time Capsule: from n/a through <= 1.22.25.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42760",
-    "publishedDate": "2026-05-27T11:16:22.650",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-44315",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF mounts the 3gpp-pfd-management API without inbound OAuth2/bearer-token authorization. A network attacker who can reach NEF on the SBI can create, read, and delete PFD-management transaction state with a forged or arbitrary bearer token (e.g. Authorization: Bearer not-a-real-token). The route group is also reachable even when the running config's ServiceList does not declare it, so operators who think they disabled the service via config are still exposed. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44315",
+    "publishedDate": "2026-05-27T17:16:36.430",
+    "lastModifiedDate": "2026-05-27T18:16:22.997",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44316",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's PCF POST /npcf-smpolicycontrol/v1/sm-policies handler (HandleCreateSmPolicyRequest) panics with a nil-pointer dereference when a downstream OpenAPI consumer call (UDR lookup) returns 404 Not Found and the consumer wrapper returns err != nil together with a nil response struct. The handler logs the OpenAPI error and continues executing instead of returning, then dereferences the nil response struct on a subsequent line and panics. Gin recovery converts the panic into HTTP 500, so a single attacker-shaped POST returns 500 instead of a clean 4xx whenever the downstream lookup fails. The PCF process keeps running. The trigger is a single POST containing input that causes the downstream UDR lookup to fail (e.g. an unknown DNN). In 4.2.1 this endpoint is also reachable WITHOUT an Authorization header because the PCF Npcf_SMPolicyControl route group is mounted without inbound auth middleware. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44316",
+    "publishedDate": "2026-05-27T17:16:36.570",
+    "lastModifiedDate": "2026-05-27T17:16:36.570",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -192,139 +112,79 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "audit@patchstack.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42759",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Timo Affiliate Super Assistent amazonsimpleadmin allows Stored XSS.This issue affects Affiliate Super Assistent: from n/a through <= 1.10.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42759",
-    "publishedDate": "2026-05-27T11:16:22.500",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-44317",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's PCF POST /npcf-policyauthorization/v1/app-sessions handler panics on a single authenticated request whose ascReqData.suppFeat == \"1\" (enabling traffic-routing feature negotiation) and whose medComponents entries supply an afAppId but NO AfRoutReq. The create path then calls provisioningOfTrafficRoutingInfo(smPolicy, appID, routeReq, ...) with routeReq == nil and dereferences routeReq.RouteToLocs (and other fields) without a nil check, causing runtime error: invalid memory address or nil pointer dereference. Gin recovery converts the panic into HTTP 500. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44317",
+    "publishedDate": "2026-05-27T17:16:36.723",
+    "lastModifiedDate": "2026-05-27T17:16:36.723",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42758",
-    "description": "Incorrect Privilege Assignment vulnerability in Saleswonder Team: Tobias WebinarIgnition webinar-ignition allows Privilege Escalation.This issue affects WebinarIgnition: from n/a through < 4.08.253.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42758",
-    "publishedDate": "2026-05-27T11:16:22.330",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42757",
-    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Saleswonder Team: Tobias WebinarIgnition webinar-ignition allows Path Traversal.This issue affects WebinarIgnition: from n/a through < 4.08.253.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42757",
-    "publishedDate": "2026-05-27T11:16:22.217",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42756",
-    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Ludwig You QuickWebP &#8211; Compress / Optimize Images &amp; Convert WebP | SEO Friendly quickwebp allows Path Traversal.This issue affects QuickWebP &#8211; Compress / Optimize Images &amp; Convert WebP | SEO Friendly: from n/a through <= 3.2.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42756",
-    "publishedDate": "2026-05-27T11:16:22.100",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42755",
-    "description": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in RealMag777 TableOn posts-table-filterable allows Blind SQL Injection.This issue affects TableOn: from n/a through <= 1.0.5.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42755",
-    "publishedDate": "2026-05-27T11:16:21.990",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-48027",
+    "description": "Nx Console is the user interface for Nx & Lerna. On 19 May 2026, a malicious version of Nx Console, 18.95.0, was published at 12:30 PM UTC and removed soon after at 12:48 PM UTC, leaving it available for ~18 minutes in Visual Studio Marketplace. For OpenVSX, the problem was detected later, and the compromised version was available from 12:33 UTC to 13:09 UTC (~36 minutes). Version 18.100.0 of Nx Console is not compromised and users may remediate by upgrading to that version.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48027",
+    "publishedDate": "2026-05-27T17:16:41.787",
+    "lastModifiedDate": "2026-05-27T17:16:41.787",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 9.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "audit@patchstack.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42754",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in phbernard Favicon favicon-by-realfavicongenerator allows Reflected XSS.This issue affects Favicon: from n/a through <= 1.3.46.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42754",
-    "publishedDate": "2026-05-27T11:16:21.873",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-44319",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF terminates the entire process when a stored PFD-subscription notifyUri cannot be reached. In PfdChangeNotifier.FlushNotifications(), the notifier calls NnefPFDmanagementNotify(...) and on any delivery error invokes logger.PFDManageLog.Fatal(err), which is os.Exit(1)-equivalent in Go. An attacker who can create a PFD subscription with an attacker-chosen notifyUri and then trigger a PFD change can deterministically kill NEF on the asynchronous delivery attempt -- the process exits with status 1, dropping NEF's entire SBI surface until restart. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44319",
+    "publishedDate": "2026-05-27T17:16:37.033",
+    "lastModifiedDate": "2026-05-27T17:16:37.033",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42753",
-    "description": "Missing Authorization vulnerability in WC Lovers WCFM Membership wc-multivendor-membership allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WCFM Membership: from n/a through <= 2.11.10.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42753",
-    "publishedDate": "2026-05-27T11:16:21.760",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-44320",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF mounts the nnef-callback route group without inbound OAuth2/bearer-token authorization. A forged or arbitrary bearer token (e.g. Authorization: Bearer not-a-real-token) is enough to reach the SMF-callback handler -- the callback body is parsed and dispatched into NEF business logic instead of being rejected at the auth boundary. Same root cause as the other NEF SBI findings: the route group is mounted without any inbound auth middleware. NEF does not authenticate the producer NF identity before processing callback content; if an attacker can guess or obtain a valid NotifId, this missing auth boundary lets forged callbacks act on real subscription state. The route group is also reachable even when the runtime ServiceList does not declare it (it lists only nnef-pfdmanagement and nnef-oam). This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44320",
+    "publishedDate": "2026-05-27T17:16:37.177",
+    "lastModifiedDate": "2026-05-27T17:16:37.177",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -335,67 +195,307 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 3.9,
         "impactScore": 3.4,
-        "source": "audit@patchstack.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42751",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in wpdevelop Booking Manager booking-manager allows Stored XSS.This issue affects Booking Manager: from n/a through <= 2.1.18.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42751",
-    "publishedDate": "2026-05-27T11:16:21.643",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
+    "id": "CVE-2026-44321",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's SMF mounts the UPI management route group without inbound OAuth2 middleware. The POST /upi/v1/upNodesLinks create-or-update handler accepts attacker-controlled JSON and passes it directly into UpNodesFromConfiguration(), which calls logger.InitLog.Fatalf(...) on several validation failures. One confirmed path is the UE-IP-pool overlap check: a single unauthenticated POST that adds a new UPF whose pool overlaps an existing UPF terminates the entire SMF process (docker ps shows Exited (1)), not just the goroutine. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44321",
+    "publishedDate": "2026-05-27T17:16:37.330",
+    "lastModifiedDate": "2026-05-27T17:16:37.330",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42750",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Nexcess WPComplete wpcomplete allows Stored XSS.This issue affects WPComplete: from n/a through <= 2.9.5.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42750",
-    "publishedDate": "2026-05-27T11:16:21.530",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42749",
-    "description": "Authentication Bypass Using an Alternate Path or Channel vulnerability in Themeisle Disable Comments for Any Post Types (Remove comments) comments-plus allows Password Recovery Exploitation.This issue affects Disable Comments for Any Post Types (Remove comments): from n/a through <= 1.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42749",
-    "publishedDate": "2026-05-27T11:16:21.413",
-    "lastModifiedDate": "2026-05-27T14:50:47.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44322",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF PATCH /3gpp-pfd-management/v1/{afId}/transactions/{transId}/applications/{appId} handler panics with a nil-pointer dereference when the upstream UDR call fails AND the consumer wrapper returns err != nil together with a nil *ProblemDetails. The handler's errPfdData != nil branch builds its own problemDetailsErr correctly, but immediately after it reads problemDetails.Cause (the OTHER value, which is nil in this branch) and panics. Gin recovery converts the panic into HTTP 500, so a single PATCH against this endpoint returns 500 instead of the intended controlled error response whenever UDR access is failing. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44322",
+    "publishedDate": "2026-05-27T17:16:37.480",
+    "lastModifiedDate": "2026-05-27T17:16:37.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44323",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's UDR nudr-dr DELETE /subscription-data/{ueId}/{servingPlmnId}/ee-subscriptions/{subsId}/amf-subscriptions handler contains a nil-pointer dereference reachable from a single authenticated request, after one preparatory authenticated EE-subscription create. The handler checks _, ok = UESubsData.EeSubscriptionCollection[subsId] and sets a 404 problem-details on the miss path, but then continues to UESubsData.EeSubscriptionCollection[subsId].AmfSubscriptionInfos -- dereferencing the same missing entry instead of returning. Gin recovery converts the panic into HTTP 500, but the endpoint remains repeatedly panicable. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44323",
+    "publishedDate": "2026-05-27T17:16:37.627",
+    "lastModifiedDate": "2026-05-27T17:16:37.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44324",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's UDR nudr-dr DELETE /subscription-data/{ueId}/{servingPlmnId}/ee-subscriptions/{subsId}/amf-subscriptions handler panics on a single authenticated request against a fresh UDR instance when the supplied ueId does not exist in UESubsCollection. The processor checks value, ok := udrSelf.UESubsCollection.Load(ueId) and sets a 404 USER_NOT_FOUND problem-details on the miss path, but execution continues and immediately runs value.(*udr_context.UESubsData) -- a Go type assertion on a nil interface, which panics with interface conversion: interface {} is nil, not *context.UESubsData. Gin recovery converts the panic into HTTP 500, but the endpoint remains repeatedly panicable. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44324",
+    "publishedDate": "2026-05-27T17:16:37.767",
+    "lastModifiedDate": "2026-05-27T17:16:37.767",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44325",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NRF root SBI endpoint POST /oauth2/token contains a parser-level type-confusion bug family. The handler in NFs/nrf/internal/sbi/api_accesstoken.go reflects over models.NrfAccessTokenAccessTokenReq, special-cases only plain string and NrfNfManagementNfType fields, and treats every other field as if it were a single models.PlmnId. The parsed *models.PlmnId is then assigned with reflect.Value.Set() to whichever field name the attacker put in the form body, which panics whenever the destination field's real type is incompatible (slice, different struct, primitive). Gin recovery converts each panic into HTTP 500, but the endpoint remains remotely panicable from a single unauthenticated form-encoded request and is repeatedly triggerable. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44325",
+    "publishedDate": "2026-05-27T17:16:37.910",
+    "lastModifiedDate": "2026-05-27T17:16:37.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44326",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF mounts the 3gpp-traffic-influence API without inbound OAuth2/bearer-token authorization. A network attacker who can reach NEF on the SBI can create, read, patch, and delete traffic-influence subscriptions either with no Authorization header at all, or with a forged bearer token (e.g. Authorization: Bearer not-a-real-token). This includes creating AnyUeInd=true subscriptions intended to affect group / any-UE traffic steering. The route group is also reachable even when the running config's ServiceList does not declare it, so operators who think they disabled the service via config are still exposed. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44326",
+    "publishedDate": "2026-05-27T17:16:38.053",
+    "lastModifiedDate": "2026-05-27T17:16:38.053",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44327",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF mounts the nnef-oam route group without inbound OAuth2/bearer-token authorization. A network attacker who can reach NEF on the SBI can hit the OAM route with no Authorization header at all and the handler returns 200 OK. The current OAM handler is a stub that returns null, but the structural defect is route-group-scoped: the entire OAM route group has no inbound auth middleware, so every future OAM operation added to this group inherits the missing auth boundary by default. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44327",
+    "publishedDate": "2026-05-27T17:16:38.203",
+    "lastModifiedDate": "2026-05-27T17:16:38.203",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44328",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's SMF mounts the UPI management route group without inbound OAuth2 middleware. On top of that, the DELETE /upi/v1/upNodesLinks/{upNodeRef} handler unconditionally dereferences upNode.UPF after the type-guarded async release, even though AN-typed nodes are constructed without a UPF object. As a result, a single unauthenticated DELETE /upi/v1/upNodesLinks/gNB1 request crashes the handler with a nil-pointer panic AND mutates the in-memory user-plane topology before panicking (the UpNodeDelete(upNodeRef) line runs first). This is an unauthenticated, state-mutating panic-DoS sink that an off-path network attacker can trigger by name against any AN entry. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44328",
+    "publishedDate": "2026-05-27T17:16:38.347",
+    "lastModifiedDate": "2026-05-27T17:16:38.347",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 3.9,
         "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44329",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's SMF mounts the UPI management route group without OAuth2/bearer-token authorization middleware. A network attacker who can reach SMF on the SBI can hit UPI endpoints with no Authorization header at all, and the requests reach the SMF business handlers. In the running Docker lab this was directly demonstrated for read (GET /upi/v1/upNodesLinks), write (POST /upi/v1/upNodesLinks with attacker-controlled UP-node and link payload), and delete (DELETE /upi/v1/upNodesLinks/{nodeID}) operations. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44329",
+    "publishedDate": "2026-05-27T17:16:38.490",
+    "lastModifiedDate": "2026-05-27T17:16:38.490",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44330",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's NEF mounts the nnef-pfdmanagement route group without inbound OAuth2/bearer-token authorization. A network attacker who can reach NEF on the SBI can use a forged or arbitrary bearer token (e.g. Authorization: Bearer not-a-real-token) to read PFD application data via GET /applications and GET /applications/{appID}, and to create or delete PFD change-notification subscriptions via POST /subscriptions and DELETE /subscriptions/{subID}. Same root cause as the other NEF SBI findings: the route group is mounted without any inbound auth middleware. Unlike the OAM and traffic-influence groups, nnef-pfdmanagement IS declared in the runtime ServiceList, so this is the production-intended path that operators expect to be protected by OAuth2 setting receive from NRF: true -- and it is not. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44330",
+    "publishedDate": "2026-05-27T17:16:38.713",
+    "lastModifiedDate": "2026-05-27T17:16:38.713",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44318",
+    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 4.2.2, free5GC's BSF PUT /nbsf-management/v1/subscriptions/{subId} handler has an unsynchronized write on the global Subscriptions map. The handler first reads the map under RLock() via BSFContext.GetSubscription(subId), but if the subscription does not exist, ReplaceIndividualSubcription() writes back to the same map directly without taking the mutex (bsfContext.BsfSelf.Subscriptions[subId] = subscription). Under concurrent authenticated PUT load, one goroutine can read while another writes the map, which causes the Go runtime to abort the process with fatal error: concurrent map read and map write (Go runtime panics that come from concurrent map access bypass recover() and terminate the process). The BSF container exits with code 2 -- the entire BSF SBI surface goes down until restart. This vulnerability is fixed in 4.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44318",
+    "publishedDate": "2026-05-27T17:16:36.887",
+    "lastModifiedDate": "2026-05-27T18:16:23.097",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2022-41656",
+    "description": "Missing Authorization vulnerability in Bizswoop Account Manager for WooCommerce allows Exploiting Incorrectly Configured Access Control Security Levels.\n\nThis issue affects Account Manager for WooCommerce: from n/a through 2.1.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2022-41656",
+    "publishedDate": "2026-05-27T17:16:27.567",
+    "lastModifiedDate": "2026-05-27T17:16:27.567",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
         "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45335",
+    "description": "WeGIA is a web manager for charitable institutions. Prior to 3.7.3, an Open Redirect vulnerability was identified in the /WeGIA/controle/control.php endpoint of the WeGIA application, specifically through the nextPage parameter when combined with metodo=listarTodos and nomeClasse=InternoControle. The application fails to validate or restrict the nextPage parameter, allowing attackers to redirect users to arbitrary external websites. This can be abused for phishing attacks, credential theft, malware distribution, and social engineering using the trusted WeGIA domain. This vulnerability is fixed in 3.7.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45335",
+    "publishedDate": "2026-05-27T17:16:40.373",
+    "lastModifiedDate": "2026-05-27T17:16:40.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45027",
+    "description": "WeGIA is a web manager for charitable institutions. In versions prior to 3.7.3, when a user logs in, html/login.php hashes the submitted password using PHP's hash() function with the SHA-256 algorithm and no salt before comparing it to the stored value. The password change flow in controle/FuncionarioControle.php follows the same pattern. SHA-256 is a general-purpose cryptographic hash built for speed, not password storage. Without a salt, identical passwords produce identical digests, making the entire hash database vulnerable to a single precomputed rainbow table lookup. This vulnerability is fixed in 3.7.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45027",
+    "publishedDate": "2026-05-27T17:16:40.227",
+    "lastModifiedDate": "2026-05-27T17:16:40.227",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44483",
+    "description": "RVF (formerly Remix Validated Form) provides easy form validation and state management for React. From 6.0.0 to before 6.0.4 and 7.0.2, setPath in @rvf/set-get (used by @rvf/core to flatten incoming form data into a nested object) does not block the keys __proto__, constructor, or prototype when walking a path. Because field names in submitted form data are passed directly to setPath via preprocessFormData (and through parseFormData / validate), an attacker who can submit a form to a Remix / React Router app using the library can set arbitrary properties on Object.prototype of the running server process. This is a default-reachable prototype pollution primitive: no special configuration is required. Any endpoint that accepts a form via parseFormData or runs a validator created with createValidator is affected. This vulnerability is fixed in 6.0.4 and 7.0.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44483",
+    "publishedDate": "2026-05-27T17:16:39.510",
+    "lastModifiedDate": "2026-05-27T17:16:39.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
       }
     ]
   }
