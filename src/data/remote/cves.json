@@ -1,30 +1,79 @@
 [
   {
-    "id": "CVE-2026-9189",
-    "description": "The Contact Form 7 – PayPal & Stripe Add-on plugin for WordPress is vulnerable to Payment Bypass via Insufficient Verification of Data Authenticity in all versions up to, and including, 2.4.9. Although `cf7pp_paypal_ipn_handler()` correctly validates IPN authenticity by posting back to PayPal with `cmd=_notify-validate`, it fails to compare the IPN payload's `mc_gross` (payment amount), `mc_currency`, or `receiver_email` fields against the corresponding stored order values before passing the attacker-controlled `invoice` field directly to `cf7pp_complete_payment()`, which marks the order completed after only an integer cast with no amount verification. This makes it possible for unauthenticated attackers to mark arbitrary high-value pending orders as fully paid by making a minimal real PayPal payment and crafting an IPN whose `invoice` parameter references the targeted order, effectively completing purchases without tendering the required payment amount.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9189",
-    "publishedDate": "2026-05-29T09:16:18.560",
-    "lastModifiedDate": "2026-05-29T09:16:18.560",
+    "id": "CVE-2026-46510",
+    "description": "form-data-objectizer converts FormData to object. Prior to 1.0.1, form-data-objectizer walks bracket-notation form keys (e.g. name[sub]) into nested objects without filtering __proto__, constructor, or prototype. A single HTTP form field whose name starts with __proto__[...] causes the library to mutate Object.prototype, which is a prototype pollution primitive of the entire Node.js process. This vulnerability is fixed in 1.0.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46510",
+    "publishedDate": "2026-05-29T14:16:31.807",
+    "lastModifiedDate": "2026-05-29T14:16:31.807",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 8.2,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6075",
-    "description": "The Media Library Assistant plugin for WordPress is vulnerable to Cross-Site Request Forgery in versions up to, and including, 3.35 This is due to missing nonce verification on the bulk action handlers in the settings tab handlers. This makes it possible for unauthenticated attackers to trick an administrator into performing bulk delete, edit, or purge operations on plugin settings and attachment metadata via a forged request.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6075",
-    "publishedDate": "2026-05-29T09:16:18.400",
-    "lastModifiedDate": "2026-05-29T09:16:18.400",
+    "id": "CVE-2026-40528",
+    "description": "OpenSC before 0.27.0, fixed in commit 0358817, contains a stack and heap buffer overrun vulnerability in the do_key_value() function in src/pkcs15init/profile.c that allows attackers to corrupt memory by supplying a crafted profile configuration file. During pkcs15-init invocation, a key value entry beginning with '=' followed by more than sizeof(keybuf) characters is copied into keybuf via memcpy without a length check, causing both stack and heap buffer overruns.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40528",
+    "publishedDate": "2026-05-29T14:16:26.730",
+    "lastModifiedDate": "2026-05-29T14:16:26.730",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.8,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:P/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 0.4,
+        "impactScore": 3.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:P/AC:H/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45582",
+    "description": "n8n-MCP is an MCP server that provides AI assistants access to n8n node documentation, properties, and operations. Prior to 2.51.3, the workflow telemetry sanitizer could retain partial fragments of URL-shaped node parameters before sending workflow data to the project's anonymous telemetry backend. Values placed in HTTP-Request-style node parameters — such as customer or tenant identifiers, short secrets embedded in query strings, and signed request parameters — could therefore appear in stored telemetry, contrary to the collection boundary documented in PRIVACY.md. This vulnerability is fixed in 2.51.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45582",
+    "publishedDate": "2026-05-29T14:16:30.563",
+    "lastModifiedDate": "2026-05-29T14:16:30.563",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45707",
+    "description": "n8n-MCP is an MCP server that provides AI assistants access to n8n node documentation, properties, and operations. Prior to 2.51.2, when ENABLE_MULTI_TENANT=true, the HTTP transport documents that the target n8n instance is selected per-request from x-n8n-url / x-n8n-key headers. Requests that omitted those headers — or supplied only one of them — silently fell back to the process-level N8N_API_URL / N8N_API_KEY credentials configured for the operator's own n8n instance. As a result, an authenticated MCP tenant could cause n8n management calls to execute against the operator's instance instead of its own. This affects HTTP-mode deployments of n8n-mcp that are run as a shared multi-tenant service. Single-tenant deployments (ENABLE_MULTI_TENANT unset or false) are not affected. This vulnerability is fixed in 2.51.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45707",
+    "publishedDate": "2026-05-29T14:16:31.240",
+    "lastModifiedDate": "2026-05-29T14:16:31.240",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -32,119 +81,146 @@
         "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 5.2,
-        "source": "security@wordfence.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-49200",
-    "description": "The acer_cgi.log file in the device firmware is accessible without authentication via the web interface. This file contains cleartext login credentials (for web and Telnet), leading to unauthorized system access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49200",
-    "publishedDate": "2026-05-29T09:16:18.270",
-    "lastModifiedDate": "2026-05-29T09:16:18.270",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49199",
-    "description": "Crafted MQTT messages can trigger command injection, resulting in root-level code execution on the target device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49199",
-    "publishedDate": "2026-05-29T09:16:18.143",
-    "lastModifiedDate": "2026-05-29T09:16:18.143",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49198",
-    "description": "Improper access control in the MQTT broker allows wildcard topic subscriptions, exposing all MQTT traffic to unauthorized actors.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49198",
-    "publishedDate": "2026-05-29T09:16:18.007",
-    "lastModifiedDate": "2026-05-29T09:16:18.007",
+    "id": "CVE-2026-44698",
+    "description": "Home Assistant is open source home automation software that puts local control and privacy first. Prior to 2026.4.1 for iOS and 2026.4.4 for Android, he Home Assistant Companion apps for Android and iOS expose a JavaScript bridge to the in-app WebView window.externalApp on Android and webkit.messageHandlers.getExternalAuth (alongside revokeExternalAuth and externalBus) on iOS. Two flaws expose the bridge to all frames (including cross-origin iframes) and unsanitized interpolation of the JavaScript callback identifier allows a cross-origin iframe rendered inside the Companion app to execute arbitrary JavaScript in the Home Assistant frontend's main-frame origin and exfiltrate the signed-in user's access token. This vulnerability is fixed in 2026.4.1 for iOS and 2026.4.4 for Android.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44698",
+    "publishedDate": "2026-05-29T14:16:28.823",
+    "lastModifiedDate": "2026-05-29T14:16:28.823",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 8.3,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-49197",
-    "description": "Web endpoints intended for the Acer Connect app improperly validate the HTTP Authorization header, failing to block requests when Base64 decoding fails.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49197",
-    "publishedDate": "2026-05-29T09:16:17.877",
-    "lastModifiedDate": "2026-05-29T09:16:17.877",
+    "id": "CVE-2026-10061",
+    "description": "A vulnerability was found in TRENDnet TEW-432BRP 3.10B20. Affected is the function formWPS of the file /goform/formWPS. The manipulation of the argument peerPin results in command injection. The attack can be executed remotely. The exploit has been made public and could be used. The vendor explains: \"This product has been EOL for 15 years (since 2009). As the item has been EOL for such a long time, we are not able to replicate or fix any vulnerabilities.\" This vulnerability only affects products that are no longer supported by the maintainer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10061",
+    "publishedDate": "2026-05-29T14:16:25.563",
+    "lastModifiedDate": "2026-05-29T14:16:25.563",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 10,
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-49196",
-    "description": "The Wi-Fi device blocking feature fails to sanitize MAC address input, allowing injection and execution of arbitrary shell commands.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49196",
-    "publishedDate": "2026-05-29T09:16:17.743",
-    "lastModifiedDate": "2026-05-29T09:16:17.743",
+    "id": "CVE-2026-40510",
+    "description": "OpenSC before 0.27.0-rc1, fixed in commit 3f24f0b, contains a stack buffer overflow vulnerability in piv_process_history() in src/libopensc/card-piv.c that allows physically present attackers to trigger memory corruption by presenting a crafted PIV smart card or USB device returning a URL field longer than 118 bytes in the Key History Object ASN.1 response.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40510",
+    "publishedDate": "2026-05-29T14:16:26.540",
+    "lastModifiedDate": "2026-05-29T14:16:26.540",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.6,
+        "score": 3.8,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:P/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 0.4,
+        "impactScore": 3.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 1,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:P/AC:H/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-49195",
-    "description": "Unauthenticated Debug Service. The /sbin/mtk_dut binary is exposed on TCP port 9000 without authentication, allowing any LAN-based attacker to execute arbitrary UCC commands.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49195",
-    "publishedDate": "2026-05-29T09:16:17.610",
-    "lastModifiedDate": "2026-05-29T09:16:17.610",
+    "id": "CVE-2026-45615",
+    "description": "mouse07410/asn1c is an ASN.1 compiler. In 1.4 and earlier, a memory safety vulnerability was identified in the OER decoding skeleton files generated by asn1c (specifically INTEGER_oer.c). When parsing a maliciously crafted, zero-length OER payload for a variable-length, non-negative INTEGER type, the decoder fails to validate the required bytes before extracting the Most Significant Bit (MSB). This forces a precise 1-byte Heap Out-of-Bounds (OOB) Read. Because asn1c generated code is primarily deployed to parse untrusted network inputs (such as V2X network protocols, 5G telecom headers, or X.509 certificates), when the decoder processes untrusted network-originated input, a remote attacker can exploit this to cause a Denial of Service (DoS) or trigger incorrect integer interpretation in downstream applications (e.g., protocol state poisoning or logic bypass).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45615",
+    "publishedDate": "2026-05-29T14:16:30.847",
+    "lastModifiedDate": "2026-05-29T14:16:30.847",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-49318",
+    "description": "Incorrect behavior order in the Infotainment / Digital Round display of the Indian Motorcycle Scout Bobber + Tech 2025 model year allows an adjacent-network attacker to bypass the PIN entry screen. The Infotainment uses presence of Wireless Control Module (WCM) traffic during its boot window as a proxy for whether an immobilizer is fitted; if no WCM messages are observed, it skips the PIN entry screen and shows the normal user interface. An attacker who silences the WCM during the boot window — for example via a separately tracked CAN bus-off technique — can present a fully unlocked Infotainment despite the PIN never being entered. Specific timing and protocol details have been withheld pending vendor remediation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49318",
+    "publishedDate": "2026-05-29T14:16:32.780",
+    "lastModifiedDate": "2026-05-29T14:16:32.780",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.4,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 0.9,
+        "impactScore": 1.4,
+        "source": "cve@asrg.io"
+      },
+      {
+        "score": 1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cve@asrg.io"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9509",
+    "description": "An unhandled exception in Suprema BioStar 2 (Server), versions 2.9.8, 2.9.10, and 2.9.11, that allows an unauthenticated remote attacker to cause a denial of service (DoS) by sending HTTP POST requests to the ‘/api/migration’ endpoint. This request triggers a failure that halts critical processes, leaving the system offline until the services or server are manually restarted. As a result, access control readers cease to function, and potential failures may occur in third-party integrations. Since the exploit requires no privileges or user interaction and is trivial to automate, the impact on availability is high, and the effect extends to interconnected systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9509",
+    "publishedDate": "2026-05-29T13:16:24.120",
+    "lastModifiedDate": "2026-05-29T13:16:24.120",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -152,177 +228,88 @@
         "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
+        "source": "cve-coordination@incibe.es"
       }
     ]
   },
   {
-    "id": "CVE-2026-10058",
-    "description": "ITS Intelligent SCADA System developed by ITP Technology has a Stored Cross-Site Scripting vulnerability, allowing privileged remote attackers to inject persistent JavaScript codes that are executed in users' browsers upon page load.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10058",
-    "publishedDate": "2026-05-29T09:16:17.460",
-    "lastModifiedDate": "2026-05-29T09:16:17.460",
+    "id": "CVE-2026-9508",
+    "description": "Incorrect permission settings on a critical resource in Suprema BioStar 2 (versions 2.9.3 through 2.9.11) that allow backup files to be publicly exposed when the administrator configures their path within the NGINX webroot. This vulnerability allows an attacker with network access to directly download backup ZIP files via ‘http(s)://[server]/download/…’ without requiring authentication. This exposes highly sensitive information that can lead to server impersonation, unauthorized access to databases, and lateral movement.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9508",
+    "publishedDate": "2026-05-29T13:16:23.967",
+    "lastModifiedDate": "2026-05-29T13:16:23.967",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1.7,
-        "impactScore": 2.7,
-        "source": "twcert@cert.org.tw"
-      },
-      {
-        "score": 4.8,
+        "score": 10,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "twcert@cert.org.tw"
+        "source": "cve-coordination@incibe.es"
       }
     ]
   },
   {
-    "id": "CVE-2026-10057",
-    "description": "ITS Intelligent SCADA System developed by ITP Technology has a Stored Cross-Site Scripting vulnerability, allowing privileged remote attackers to inject persistent JavaScript codes that are executed in users' browsers upon page load.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10057",
-    "publishedDate": "2026-05-29T09:16:17.310",
-    "lastModifiedDate": "2026-05-29T09:16:17.310",
+    "id": "CVE-2026-8326",
+    "description": "Path traversal vulnerability in Remote Spark (https://www.Remotespark.Com/) SparkView allows reading and writing arbitrary files in all directories as root. This leads to RCE. The affected component is the RDP drive redirection.  Depending on implementation, the vulnerability can be exploited by an unauthenticated attacker.\n\nThis issue affects SparkView: before build 1127.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8326",
+    "publishedDate": "2026-05-29T13:16:23.770",
+    "lastModifiedDate": "2026-05-29T13:16:23.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1.7,
-        "impactScore": 2.7,
-        "source": "twcert@cert.org.tw"
-      },
-      {
-        "score": 4.8,
+        "score": 10,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "twcert@cert.org.tw"
+        "source": "vulnerability@ncsc.ch"
       }
     ]
   },
   {
-    "id": "CVE-2026-10056",
-    "description": "CORS misconfiguration in the REST API of Network Optix Nx Witness VMS before version 6.1.2, when running in the default Standard security mode, on Linux and Windows allows an unauthenticated remote attacker to steal the session token of an authenticated user and perform Administrator Account Takeover via a malicious cross-origin web page visited by the victim. The High security mode is not affected.Workaround:\n\nFor existing installations running in Standard security mode, set Access-Control-Allow-Credentials to false via the REST API: PATCH /rest/v2/system/settings with body {\"supportedOrigins\": \"null\"}. Alternatively, select High security level during initial setup.\n\nSolution:\n\nUpdate to Nx Witness VMS version 6.1.2 or later, in which Access-Control-Allow-Credentials is set to false in the default Standard security configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10056",
-    "publishedDate": "2026-05-29T09:16:17.147",
-    "lastModifiedDate": "2026-05-29T09:16:17.147",
+    "id": "CVE-2026-49324",
+    "description": "Uncontrolled resource consumption in the Wireless Control Module (WCM) of the Indian Motorcycle Scout Bobber + Tech 2025 model year allows an adjacent-network attacker with write access to the in-vehicle network to permanently immobilize the motorcycle. The WCM enforces a brute-force lockout on the immobilizer authentication algorithm, but the lockout counter is reachable by any unauthenticated message, has no session binding, and does not reset on power cycle. An attacker can deliberately trip the lockout with a small number of crafted frames, leaving the bike un-startable until dealer service. Specific thresholds have been withheld pending vendor remediation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49324",
+    "publishedDate": "2026-05-29T13:16:23.557",
+    "lastModifiedDate": "2026-05-29T13:16:23.557",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 4.6,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "96d4e157-0bf0-48b3-8efd-382c68caf4e0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10052",
-    "description": "A flaw was found in the Quay config-tool's LDAP and SMTP validation functions. An attacker with config editor access can exploit these functions, which make outbound connections to user-supplied endpoints without proper IP or host filtering. This allows the attacker to perform internal network reconnaissance from the Quay pod's network position, potentially mapping the internal network infrastructure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10052",
-    "publishedDate": "2026-05-29T09:16:17.003",
-    "lastModifiedDate": "2026-05-29T09:16:17.003",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 0.9,
+        "impactScore": 3.6,
+        "source": "cve@asrg.io"
+      },
       {
         "score": 4.1,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 1.4,
-        "source": "secalert@redhat.com"
+        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cve@asrg.io"
       }
     ]
   },
   {
-    "id": "CVE-2026-10039",
-    "description": "The Frontend Admin by DynamiApps plugin for WordPress is vulnerable to generic SQL Injection via the 'order' parameter in all versions up to, and including, 3.28.28 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. Exploitation requires that the attacker also supply a valid 'orderby' parameter in the same request, as this is necessary to reach the vulnerable code path that processes and concatenates the 'order' value into the SQL query.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10039",
-    "publishedDate": "2026-05-29T09:16:16.833",
-    "lastModifiedDate": "2026-05-29T09:16:16.833",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9243",
-    "description": "The Plus Addons for Elementor plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'carousel_direction' parameter of the Carousel Anything widget in versions up to, and including, 6.4.15 This is due to insufficient output escaping in the render() function, where the carousel_direction value is placed into an unquoted HTML attribute (dir=) allowing attribute injection despite the use of esc_attr(). This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9243",
-    "publishedDate": "2026-05-29T08:16:19.627",
-    "lastModifiedDate": "2026-05-29T08:16:19.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-4776",
-    "description": "An SQL injection vulnerability exists in Mautic's API contact filtering mechanism. Due to insufficient recursive sanitization of nested query parameters, an authenticated API user can bypass input filtering and inject arbitrary SQL commands.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4776",
-    "publishedDate": "2026-05-29T08:16:19.260",
-    "lastModifiedDate": "2026-05-29T08:16:19.260",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security@mautic.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49322",
-    "description": "Weak authentication in the Wireless Control Module (WCM) of the Indian Motorcycle Scout Bobber + Tech 2025 model year allows an adjacent-network attacker with read access to the in-vehicle network to recover the user-set unlock PIN by passively observing a single PIN authentication exchange. The Infotainment Digital Round display computes its response using a non-cryptographic operation rather than a cryptographic challenge-response, so the PIN is mathematically derivable from one captured exchange, defeating the motorcycle's primary user-authentication control. Specific protocol details have been withheld pending vendor remediation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49322",
-    "publishedDate": "2026-05-29T08:16:19.060",
-    "lastModifiedDate": "2026-05-29T08:16:19.060",
+    "id": "CVE-2026-49323",
+    "description": "Weak authentication between the Wireless Control Module (WCM) and the Engine Control Module (ECM) of the Indian Motorcycle Scout Bobber + Tech 2025 model year allows an adjacent-network attacker with read access to the in-vehicle network to recover the per-vehicle ECM immobilizer secret by passively observing a single seed/key exchange. The WCM derives its response using a reversible, non-cryptographic operation rather than a cryptographic challenge-response, so the persistent immobilizer secret can be reconstructed from one captured exchange. With this secret the attacker can authenticate to the ECM independently of the WCM and start the engine, defeating the immobilizer. Specific protocol details have been withheld pending vendor remediation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49323",
+    "publishedDate": "2026-05-29T13:16:23.407",
+    "lastModifiedDate": "2026-05-29T13:16:23.407",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -347,11 +334,101 @@
     ]
   },
   {
-    "id": "CVE-2026-3655",
-    "description": "The OTP Login With Phone Number, OTP Verification plugin for WordPress is vulnerable to authentication bypass in versions 1.8.50 through 1.8.60. This is due to the Firebase verification flow in the `lwp_ajax_register` AJAX handler not binding the Firebase session to the phone number supplied in the request. The `idehweb_lwp_activate_through_firebase()` function validates that a Firebase OTP session is legitimate, but the `phoneNumber` returned by Firebase is never compared against the victim's stored phone number. This makes it possible for unauthenticated attackers to authenticate as any user who has a phone number stored in user meta, including administrators, by verifying their own Firebase session and supplying the victim's phone number in the same request.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3655",
-    "publishedDate": "2026-05-29T08:16:18.920",
-    "lastModifiedDate": "2026-05-29T08:16:18.920",
+    "id": "CVE-2026-48527",
+    "description": "HAX CMS helps manage microsite universe with PHP or NodeJs backends. Versions up to and including 26.0.0 are affected by a stored cross-site scripting (XSS) vulnerability in the `/system/api/saveNode` endpoint. An authenticated user with a permission to edit pages can bypass the HTML sanitizer by injecting an event handler attribute without whitespace before the attribute name. @haxtheweb/haxcms-nodejs 26.0.1 and haxcms-php 26.0.2 patch the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48527",
+    "publishedDate": "2026-05-29T13:16:23.133",
+    "lastModifiedDate": "2026-05-29T14:16:32.253",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 5.8,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45611",
+    "description": "Rejected reason: Further research determined the issue is not a vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45611",
+    "publishedDate": "2026-05-29T13:16:23.057",
+    "lastModifiedDate": "2026-05-29T13:16:23.057",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45551",
+    "description": "Group-Office is an enterprise customer relationship management and groupware tool. Prior to 26.0.25, 25.0.100, and 6.8.165, GroupOffice allows authenticated users to persist arbitrary legacy settings for any user_id via index.php?r=core/saveSetting. A separate client-side sink in the email module injects the email_font_size setting directly into JavaScript without escaping. By combining these two issues, any low-privileged authenticated user can overwrite an administrator's email_font_size setting with a JavaScript payload and trigger stored XSS in the administrator's browser when the GroupOffice web client loads views/Extjs3/modulescripts.php. This vulnerability is fixed in 26.0.25, 25.0.100, and 6.8.165.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45551",
+    "publishedDate": "2026-05-29T13:16:22.917",
+    "lastModifiedDate": "2026-05-29T14:16:30.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45312",
+    "description": "RAGFlow is an open-source RAG (Retrieval-Augmented Generation) engine. In 0.24.0 and earlier, a Jinja2 template injection in the prompt generator (rag/prompts/generator.py) allows any authenticated user to execute arbitrary OS commands on the server. Any normal user can register, create a Canvas workflow with a DuckDuckGo + LLM component chain, and trigger the SSTI.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45312",
+    "publishedDate": "2026-05-29T13:16:22.770",
+    "lastModifiedDate": "2026-05-29T13:16:22.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45043",
+    "description": "RustFS is a distributed object storage system built in Rust. Prior to 1.0.0-beta.2, improper validation in the PUT /rustfs/admin/v3/import-iam endpoint allows a user with ImportIAMAction to create service accounts under arbitrary parent identities, including the root user (minioadmin). The endpoint accepts attacker-controlled parent, claims, accessKey, and secretKey values without enforcing privilege boundaries or sanitization. This enables privilege escalation to full administrative access using a persistent, attacker-defined credential. This vulnerability is fixed in 1.0.0-beta.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45043",
+    "publishedDate": "2026-05-29T13:16:22.630",
+    "lastModifiedDate": "2026-05-29T13:16:22.630",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10071",
+    "description": "DreamMaker developed by Interinfo has an Arbitrary File Upload vulnerability, allowing unauthenticated remote attackers to upload and execute web shell backdoors, thereby enabling arbitrary code execution on the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10071",
+    "publishedDate": "2026-05-29T13:16:22.480",
+    "lastModifiedDate": "2026-05-29T13:16:22.480",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -362,73 +439,13 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-11262",
-    "description": "The Link Whisper Free plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the user_id parameter in all versions up to, and including, 0.9.0 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-11262",
-    "publishedDate": "2026-05-29T08:16:17.497",
-    "lastModifiedDate": "2026-05-29T08:16:17.497",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9714",
-    "description": "The Simple Divi Shortcode plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'id' parameter of the [showmodule] shortcode in versions up to, and including, 1.2 This is due to insufficient input sanitization and output escaping in the showmodule_shortcode() function, which concatenates the 'id' shortcode attribute directly into a dynamically constructed shortcode string without applying esc_attr() or any escaping, allowing an attacker to break out of the attribute context and inject arbitrary HTML. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9714",
-    "publishedDate": "2026-05-29T07:16:14.780",
-    "lastModifiedDate": "2026-05-29T07:16:14.780",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9493",
-    "description": "Service Center developed by BankPro E-Service Technology has an Insecure Direct Object Reference vulnerability, allowing authenticated remote attackers to modify the parameter of a specific query function to access other users' EC order details.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9493",
-    "publishedDate": "2026-05-29T07:16:14.620",
-    "lastModifiedDate": "2026-05-29T07:16:14.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
         "source": "twcert@cert.org.tw"
       },
       {
-        "score": 7.1,
+        "score": 9.3,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "twcert@cert.org.tw"
@@ -436,91 +453,60 @@
     ]
   },
   {
-    "id": "CVE-2026-8732",
-    "description": "The WP Maps Pro plugin for WordPress is vulnerable to Privilege Escalation via Administrator Account Creation in all versions up to, and including, 6.1.0. This is due to the wpgmp_temp_access_ajax AJAX action being registered with wp_ajax_nopriv_ and protected only by a nonce check using the fc-call-nonce nonce, which is publicly embedded into every frontend page via wp_localize_script as the nonce field of the wpgmp_local JavaScript object, rendering the check ineffective as an access control mechanism. This makes it possible for unauthenticated attackers to invoke the wpgmp_temp_access_support handler with check_temp=false, which unconditionally creates a new WordPress user with the hardcoded role of administrator via wp_insert_user() and returns a magic login URL that, when visited, calls wp_set_auth_cookie() to fully authenticate the attacker as the newly created administrator, resulting in complete site takeover.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8732",
-    "publishedDate": "2026-05-29T07:16:14.487",
-    "lastModifiedDate": "2026-05-29T07:16:14.487",
+    "id": "CVE-2026-10060",
+    "description": "A vulnerability has been found in TRENDnet TEW-432BRP 3.10B20. This impacts the function formSetRoute of the file /goform/formSetRoute. The manipulation of the argument ip/mask/gateway leads to command injection. Remote exploitation of the attack is possible. The exploit has been disclosed to the public and may be used. The vendor explains: \"This product has been EOL for 15 years (since 2009). As the item has been EOL for such a long time, we are not able to replicate or fix any vulnerabilities.\" This vulnerability only affects products that are no longer supported by the maintainer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10060",
+    "publishedDate": "2026-05-29T14:16:25.340",
+    "lastModifiedDate": "2026-05-29T14:16:25.340",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
+        "score": 6.3,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6324",
-    "description": "A flaw was found in libsoup. A remote attacker could exploit an unsigned to signed conversion error in the `soup_body_input_stream_read_chunked()` function by sending a malicious HTTP request. This vulnerability occurs when libsoup operates behind a non-libsoup proxy server or as a proxy in front of a non-libsoup backend server. Successful exploitation can allow an attacker to bypass security controls, poison web caches, or gain unauthorized access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6324",
-    "publishedDate": "2026-05-29T07:16:14.327",
-    "lastModifiedDate": "2026-05-29T07:16:14.327",
+    "id": "CVE-2026-45580",
+    "description": "WWBN AVideo is an open source video platform. In 29.0 and earlier, there is a stored cross-site scripting vulnerability. The Live plugin's \"YouTube-style\" view renders the live transmission's stream key into an HTML class attribute by raw echo, without htmlspecialchars(). A canStream user can persist a key containing \" plus an event handler via plugin/Live/saveLive.php, and any visitor (logged in or anonymous) opening the stream's live page executes attacker JavaScript in the platform origin.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45580",
+    "publishedDate": "2026-05-29T14:16:30.413",
+    "lastModifiedDate": "2026-05-29T14:16:30.413",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.8,
+        "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6275",
-    "description": "The StatCounter – Free Real Time Visitor Stats plugin for WordPress is vulnerable to Stored Cross-Site Scripting in versions up to, and including, 2.1.1 This is due to insufficient output escaping on the post author's nickname in the statcounter_addToTags() function. The function is hooked to wp_head and fires on every single post page. It retrieves the post author's nickname via the_author_meta() and echoes it directly into a JavaScript double-quoted string context inside a <script> block without applying esc_js() or any equivalent JavaScript-context escaping. This makes it possible for authenticated attackers with Author-level access and above to inject arbitrary web scripts into pages that will execute whenever any user (including unauthenticated visitors) accesses a post authored by the attacker.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6275",
-    "publishedDate": "2026-05-29T07:16:14.197",
-    "lastModifiedDate": "2026-05-29T07:16:14.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
         "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-14042",
-    "description": "The Automotive Car Dealership Business WordPress Theme for WordPress is vulnerable to Stored Cross-Site Scripting via the 'Project Details' custom field in Portfolio Items in all versions up to, and including, 13.4.1. This is due to insufficient input sanitization and output escaping on user-supplied attributes in the 'project_details' custom field. This makes it possible for authenticated attackers, with contributor-level permissions and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-14042",
-    "publishedDate": "2026-05-29T07:16:14.023",
-    "lastModifiedDate": "2026-05-29T07:16:14.023",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-11993",
-    "description": "The WooCommerce Infinite Scroll and Ajax Pagination plugin for WordPress is vulnerable to PHP Object Injection in all versions up to, and including, 1.8 via the 'settings' parameter in the 'import_settings' function. This is due to deserialization of untrusted data supplied via the import configuration feature without capability checks. This makes it possible for authenticated attackers, with Subscriber-level access and above, to inject a PHP Object. No POP chain is present within the vulnerable plugin itself, but if a POP chain is present via an additional plugin or theme installed on the target system, it could allow an attacker to delete arbitrary files, retrieve sensitive data, or execute code.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-11993",
-    "publishedDate": "2026-05-29T07:16:13.730",
-    "lastModifiedDate": "2026-05-29T07:16:13.730",
+    "id": "CVE-2026-45578",
+    "description": "WWBN AVideo is an open source video platform. In 29.0 and earlier, there is a classic shell-metacharacter injection. The YPTSocket notification branch in plugin/Live/on_publish.php builds an execAsync() command line by string concatenation, single-quoting each argument but never calling escapeshellarg(). A ' in any of the three interpolated values ($users_id, $m3u8, $obj->liveTransmitionHistory_id) closes the quoted token and lets the attacker append arbitrary commands.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45578",
+    "publishedDate": "2026-05-29T14:16:30.253",
+    "lastModifiedDate": "2026-05-29T14:16:30.253",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -531,7 +517,47 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45610",
+    "description": "WWBN AVideo is an open source video platform. In 29.0 and earlier, there is a cross-site request forgery vulnerability on the 2FA toggle. plugin/LoginControl/set.json.php accepts POST type=set2FA value=false, calls LoginControl::setUser2FA(User::getId(), false) on the session-authenticated user, and returns. There is no forbidIfIsUntrustedRequest() call, no isTokenValid() check, no X-CSRF-Token/SameSite enforcement, and no re-authentication step. A cross-origin page that the victim visits while logged into the AVideo dashboard issues the POST via a hidden form (or fetch without credentials:\"omit\") and disables the victim's 2FA in one request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45610",
+    "publishedDate": "2026-05-29T14:16:30.713",
+    "lastModifiedDate": "2026-05-29T14:16:30.713",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45619",
+    "description": "WWBN AVideo is an open source video platform. In 29.0 and earlier, EpgParser.php, plugin/AI/receiveAsync.json.php, and other locations do not use the $resolvedIP out-param of isSSRFSafeURL() for DNS pinning via CURLOPT_RESOLVE, opening DNS-rebinding TOCTOU.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45619",
+    "publishedDate": "2026-05-29T14:16:30.980",
+    "lastModifiedDate": "2026-05-29T14:16:30.980",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
       }
     ]
   }
