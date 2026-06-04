@@ -1,5 +1,387 @@
 [
   {
+    "id": "CVE-2026-41011",
+    "description": "PackagePersister.validate_tgz builds \"tar -tf #{tgz} 2>&1\" where tgz = File.join(release_dir, 'packages', \"#{name}.tgz\") and name = package_meta['name'] comes directly from release.MF inside the uploaded tarball. The string is passed to Bosh::Common::Exec.sh, which executes via %x{} — i.e., /bin/sh -c. No Shellwords.escape is applied. The Models::Package Sequel validation (VALID_ID = /^[-0-9A-Za-z_+.]+$/i) would reject the name, but in create_package (lines 74–79) the shell-out in save_package_source_blob runs before package.save, so validation fires too late.\n\nAffected versions:\n- BOSH: all versions prior to v282.1.12 (inclusive); fixed in v282.1.12 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41011",
+    "publishedDate": "2026-06-04T03:16:19.633",
+    "lastModifiedDate": "2026-06-04T03:16:19.633",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 1.5,
+        "impactScore": 6,
+        "source": "security@vmware.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10597",
+    "description": "OMICARD EDM developed by ITPison has a Insecure Direct Object Reference vulnerability, allowing unauthenticated remote attackers to modify a specific parameter to obtain user's email address.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10597",
+    "publishedDate": "2026-06-04T03:16:19.443",
+    "lastModifiedDate": "2026-06-04T03:16:19.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "twcert@cert.org.tw"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "twcert@cert.org.tw"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8653",
+    "description": "The MasterStudy LMS Pro Plus plugin for WordPress is vulnerable to generic SQL Injection via the 'columns' parameter in all versions up to, and including, 4.8.20 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with instructor-level access or above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8653",
+    "publishedDate": "2026-06-04T02:16:17.840",
+    "lastModifiedDate": "2026-06-04T02:16:17.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7764",
+    "description": "An out-of-bounds read vulnerability in the morse.ko HaLow Wi-Fi kernel driver in Morse Micro HaLowLink 2 software versions prior to 2.11.12 allows an unauthenticated attacker within radio range to disclose a small amount of kernel heap memory or cause a Denial of Service (kernel oops/panic) via a crafted 802.11ah beacon or probe response frame containing a malformed Vendor Information Element. The function morse_vendor_find_vendor_ie() does not validate the IE length against the expected structure size before its result is passed to morse_vendor_rx_caps_ops_ie() and morse_vendor_fill_sta_vendor_info(), which read at fixed offsets into the IE data. Because the length check only requires the IE to be longer than 3 bytes, an attacker can supply an undersized IE, causing a heap out-of-bounds read of up to 9 bytes. No authentication, association, or user interaction is required.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7764",
+    "publishedDate": "2026-06-04T02:16:17.700",
+    "lastModifiedDate": "2026-06-04T02:16:17.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-10737",
+    "description": "The SP Project & Document Manager plugin for WordPress is vulnerable to unauthorized access due to a missing capability check on the view_file function in all versions up to, and including, 4.71. This makes it possible for unauthenticated attackers to read file metadata and obtain download links for arbitrary files stored inside project folders on the server, which can contain sensitive information. The authorization gate uses a negated nonce check OR-chained with permission checks, meaning a missing or invalid nonce causes the entire condition to evaluate to true and bypass all preceding capability and ownership checks. The secondary fallback check only denies access for root-level files (pid == 0), leaving all files stored inside project folders fully exposed to unauthenticated users who supply only a valid file ID in a POST request to admin-ajax.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10737",
+    "publishedDate": "2026-06-04T02:16:17.503",
+    "lastModifiedDate": "2026-06-04T02:16:17.503",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41858",
+    "description": "Weak Randomness / Insecure Cryptographic Primitive (CWE-338) in Get-RandomPassword in BOSH-Ecosystem / windows-utilities-release allows a network attacker to estimate VM boot time and reconstruct a small candidate list to recover the Administrator password. The randomize_password job exists solely to lock the local Administrator account behind an unguessable password as a hardening control. Because the password is derived from a predictable, clock-seeded PRNG, a network attacker who can estimate VM boot time can reconstruct a small candidate list and recover the Administrator password, defeating the hardening control.\n\nAffected versions:\n- windows-utilities-release: all versions prior to v0.23.0 (inclusive); fixed in v0.23.0 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41858",
+    "publishedDate": "2026-06-04T03:16:19.790",
+    "lastModifiedDate": "2026-06-04T03:16:19.790",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8829",
+    "description": "HTML::Entities versions before 3.84 for Perl read freed heap memory in _decode_entities.\n\nThe XS routine backing HTML::Entities::_decode_entities cached a pointer (repl) into the entity-value SV returned by hv_fetch on the entity2char hash. When the input SV was identical to a value SV in that hash, and that value contained its own key as an entity reference, a later call to grow_gap() reallocated the SV's PV buffer and freed the backing allocation that repl still pointed into. The subsequent copy loop read repl_len bytes from the freed allocation.\n\nThe read may disclose adjacent heap contents into the destination SV.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8829",
+    "publishedDate": "2026-06-04T03:16:20.260",
+    "lastModifiedDate": "2026-06-04T03:16:20.260",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-41859",
+    "description": "A network man-in-the-middle between nats-sync and the BOSH director can steal the director credentials (Basic auth header or UAA client secret) and can tamper with the VM list that is written into the NATS authorization file. Stolen credentials grant administrative director access. UsersSync#bosh_api_response_body builds a Net::HTTP client with verify_mode = OpenSSL::SSL::VERIFY_NONE for every director call (/info, /deployments, /deployments/<name>/vms).\n\nAffected versions:\n- BOSH: all versions prior to v282.1.9 (inclusive); fixed in v282.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41859",
+    "publishedDate": "2026-06-04T03:16:19.947",
+    "lastModifiedDate": "2026-06-04T03:16:19.947",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "security@vmware.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41860",
+    "description": "CWE-326 in BOSH allows a local attacker to steal Basic-auth credentials or redirect UAA token requests via MITM. HttpRequestHelper#create_async_endpoint and #send_http_get_request_synchronous hard-code OpenSSL::SSL::VERIFY_NONE, enabling an attacker to intercept traffic between bosh-monitor and the BOSH director or UAA and steal credentials.\n\nAffected versions:\n- BOSH: all versions prior to v282.1.9 (inclusive); fixed in v282.1.9 or later",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41860",
+    "publishedDate": "2026-06-04T03:16:20.107",
+    "lastModifiedDate": "2026-06-04T03:16:20.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 6,
+        "source": "security@vmware.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8722",
+    "description": "Net::Async::Statsd::Client versions through 0.005 for Perl allow metric injections.\n\nThe metric names are not checked for newlines, colons or pipes. Metrics generated from untrusted sources could inject additional statsd metrics.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8722",
+    "publishedDate": "2026-06-04T00:17:00.333",
+    "lastModifiedDate": "2026-06-04T00:17:00.333",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-10783",
+    "description": "A security flaw has been discovered in gradio-app gradio 6.14.0. This affects the function save_audio_to_cache of the component Audio Cache Key Handler. Performing a manipulation results in use of weak hash. The attack must be initiated from a local position. The attack is considered to have high complexity. It is indicated that the exploitability is difficult. The exploit has been released to the public and may be used for attacks. The patch is named 13394. To fix this issue, it is recommended to deploy a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10783",
+    "publishedDate": "2026-06-04T00:16:59.010",
+    "lastModifiedDate": "2026-06-04T00:16:59.010",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-2596",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2596",
+    "publishedDate": "2026-06-03T23:16:17.550",
+    "lastModifiedDate": "2026-06-03T23:16:17.550",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-10777",
+    "description": "A vulnerability was identified in ealpha072 Student-Management-System up to 01451bd7a2f58cdda07bd0b86e3967582e3ecd08. Affected by this issue is some unknown functionality of the file admin/config.php of the component Administrative Backend. Such manipulation leads to improper authentication. The attack may be performed from remote. The exploit is publicly available and might be used. This product utilizes a rolling release system for continuous delivery, and as such, version information for affected or updated releases is not disclosed. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10777",
+    "publishedDate": "2026-06-03T23:16:17.280",
+    "lastModifiedDate": "2026-06-03T23:16:17.280",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10775",
+    "description": "A vulnerability was determined in sgl-project SGLang up to 0.5.11. Affected by this vulnerability is the function data_hash of the component Cache Handler. This manipulation causes denial of service. The attack is restricted to local execution. A high degree of complexity is needed for the attack. The exploitation appears to be difficult. The exploit has been publicly disclosed and may be utilized. The pull request to fix this issue awaits acceptance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10775",
+    "publishedDate": "2026-06-03T23:16:17.077",
+    "lastModifiedDate": "2026-06-03T23:16:17.077",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.6,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 2.5,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46447",
+    "description": "OpenStack Ironic through 35.0.x allows Boot Script Injection.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46447",
+    "publishedDate": "2026-06-03T22:16:34.793",
+    "lastModifiedDate": "2026-06-03T22:16:34.793",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-22055",
+    "description": "Active IQ OneCollect version 2.7.3 contains hard-coded credentials that could allow an authenticated attacker with low privileges to perform unauthorized AutoSupport operations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22055",
+    "publishedDate": "2026-06-03T22:16:34.490",
+    "lastModifiedDate": "2026-06-03T22:16:34.490",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-alert@netapp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22054",
+    "description": "Active IQ Config Advisor version 6.7.3 contains hard-coded credentials that could allow an authenticated attacker with low privileges to perform unauthorized AutoSupport operations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22054",
+    "publishedDate": "2026-06-03T22:16:34.343",
+    "lastModifiedDate": "2026-06-03T22:16:34.343",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-alert@netapp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10771",
+    "description": "A vulnerability was found in crmeb crmeb_java 1.4. Affected is the function RestTemplate.getForEntity of the file crmeb-common/src/main/java/com/zbkj/common/utils/RestTemplateUtil.java of the component base64 Qrcode Endpoint. The manipulation of the argument url results in server-side request forgery. The attack can be executed remotely. The exploit has been made public and could be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10771",
+    "publishedDate": "2026-06-03T22:16:34.167",
+    "lastModifiedDate": "2026-06-03T22:16:34.167",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-50033",
     "description": "Local privilege escalation due to DLL hijacking vulnerability. The following products are affected: Acronis DeviceLock DLP (Windows) before build 9.0.15051.93227.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-50033",
@@ -85,255 +467,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-37700",
     "publishedDate": "2026-06-03T20:16:20.070",
     "lastModifiedDate": "2026-06-03T20:16:20.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-26825",
-    "description": "A use-of-uninitialized memory vulnerability exists in libxls 1.6.3 when parsing malformed XLS files. The issue is reachable via xls_parseWorkBook() and is triggered by uninitialized heap memory originating from the OLE layer (ole2_read). The flaw is detectable with MemorySanitizer (MSAN) and can lead to undefined behavior, incorrect parsing logic, or potential information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-26825",
-    "publishedDate": "2026-06-03T20:16:18.797",
-    "lastModifiedDate": "2026-06-03T20:16:18.797",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-26824",
-    "description": "libxls through version 1.6.3 contains a use of uninitialized memory vulnerability in the OLE container parser. Memory allocated for the Master Sector Allocation Table (MSAT) in read_MSAT() is not fully initialized before being consumed by ole2_validate_sector_chain(), which may result in application crashes or potential information disclosure when processing a crafted XLS file",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-26824",
-    "publishedDate": "2026-06-03T20:16:18.677",
-    "lastModifiedDate": "2026-06-03T20:16:18.677",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-10766",
-    "description": "A vulnerability has been found in mlrun up to 1.12.0-rc3. This impacts the function mlrun.utils.helpers.calculate_dataframe_hash of the file mlrun/utils/helpers.py of the component DataFrame Hash Handler. The manipulation leads to use of weak hash. The attack can only be performed from a local environment. The complexity of an attack is rather high. The exploitability is said to be difficult. The exploit has been disclosed to the public and may be used. The pull request to fix this issue awaits acceptance.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10766",
-    "publishedDate": "2026-06-03T20:16:18.463",
-    "lastModifiedDate": "2026-06-03T20:16:18.463",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.6,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 1,
-        "impactScore": 2.5,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 1.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8889",
-    "description": "Version 3.0.7 of the Securly Chrome Extension uses deprecated SHA-1 hashing for IWF CSAM URL matching (25,020 hashes) and CIPA blocklist matching (12,352 hashes).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8889",
-    "publishedDate": "2026-06-03T19:16:39.950",
-    "lastModifiedDate": "2026-06-03T19:16:39.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8888",
-    "description": "Version 3.0.7 of the Securly Chrome Extension downloads config.json over HTTP and compiles server-provided patterns as JavaScript regular expressions via new RegExp() without complexity validation. An on-path attacker can inject specific patterns to cause catastrophic backtracking, resulting in denial of service on all browsing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8888",
-    "publishedDate": "2026-06-03T19:16:39.807",
-    "lastModifiedDate": "2026-06-03T19:16:39.807",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8881",
-    "description": "Version 3.0.7 of the Securly Chrome Extension uses EVP_BytesToKey key derivation with MD5 and a single iteration for AES encryption. MD5 has been broken since 2004 and a single iteration provides no key stretching.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8881",
-    "publishedDate": "2026-06-03T19:16:39.653",
-    "lastModifiedDate": "2026-06-03T19:16:39.653",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8879",
-    "description": "Version 3.0.7 of the Securly Chrome Extension dynamically registers content13.min.js as a content script via chrome.scripting.registerContentScripts() at runtime. This script is NOT declared in manifest.json and bypasses Chrome Web Store static security review. It runs on all URLs and immediately hides all page content, creates a full-page overlay, pauses all videos, and only restores content when the service worker confirms the page passes filtering. If Securly's servers are unreachable, pages remain indefinitely hidden.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8879",
-    "publishedDate": "2026-06-03T19:16:39.513",
-    "lastModifiedDate": "2026-06-03T19:16:39.513",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8878",
-    "description": "Version 3.0.7 of the Securly Chrome Extension exposes multiple publicly accessible endpoints that allow unauthenticated access to sensitive data. The exposed information consists of SHA-1 hashes that are inadequately obfuscated using a simple Caesar cipher, which can be easily reversed to recover the original hash values and access the protected data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8878",
-    "publishedDate": "2026-06-03T19:16:39.387",
-    "lastModifiedDate": "2026-06-03T19:16:39.387",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8876",
-    "description": "Version 3.0.7 of the Securly Chrome Extension contains hardcoded, plaintext AES passphrases in securly.min.js. These keys decrypt crisis alert keyword data and intervention site data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8876",
-    "publishedDate": "2026-06-03T19:16:39.233",
-    "lastModifiedDate": "2026-06-03T19:16:39.233",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8874",
-    "description": "Version 3.0.7 of the Securly Chrome Extension downloads JSON files containing crisis alert keywords and filtering rules over unencrypted HTTP via the Fetch API. Other endpoints in the same extension correctly fetch IWF and CIPA data over HTTPS, demonstrating an inconsistent implementation of TLS.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8874",
-    "publishedDate": "2026-06-03T19:16:39.090",
-    "lastModifiedDate": "2026-06-03T19:16:39.090",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-7888",
-    "description": "Concrete CMS below 9.5.2 is vulnerable to PHP Object Injection via unserialize() calls in the Workflow, Form block, and File/Set components that lack the allowed_classes restriction. An unauthenticated attacker may trigger arbitrary PHP object instantiation if a malicious serialized payload has been placed in the database. Thanks XananasX7 and Sanjorn Keeratirungsan (dizconnect) for both independently reporting. The Concrete CMS security team gave this vulnerability a CVSS v.4.0 score of 8.4 with vector CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7888",
-    "publishedDate": "2026-06-03T19:16:38.910",
-    "lastModifiedDate": "2026-06-03T19:16:38.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff5b8ace-8b95-4078-9743-eac1ca5451de"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-45702",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 4.3.0 and prior to version 4.11.0, a type confusion vulnerability exists in OP-TEE OS when processing an FFA_MEM_SHARE request from the normal world. This only applies when OP-TEE is configured as an SPMC for S-EL0 SPs, that is, with `CFG_CORE_SEL1_SPMC=y` and `CFG_SECURE_PARTITION=y`. Version 4.11.0 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45702",
-    "publishedDate": "2026-06-03T19:16:38.730",
-    "lastModifiedDate": "2026-06-03T19:16:38.730",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-45614",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Prior to version 4.11.0, on many of the ECDH shared secret paths, the public key isn't verified to be a point on the correct curve. By passing approximately 30-40 crafted public keys to OP-TEE, the private key can be reconstructed by a normal world attacker. When calling TEE_DeriveKey the public key is provided with full X and Y values, but the (X, Y) point might not satisfy the `Y^2 == X^3 + aX + b mod P` math for the specific curve that is used. When those public keys aren't rejected, the attacker can select public keys such that each DeriveKey call will leak `d % r` where `d` is the private key and `r` comes from the relationship between the correct curve and the attacker selected curve. With enough leaked data the Chinese remainder theorem can be used to recover the full private key. Version 4.11.0 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45614",
-    "publishedDate": "2026-06-03T19:16:38.510",
-    "lastModifiedDate": "2026-06-03T20:16:21.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42840",
-    "description": "An authenticated user can persist arbitrary HTML/JavaScript in the email_id or mobile_no fields of a Customer record and trigger unescaped rendering in the Point of Sale (POS) interface for every operator who selects that customer.\nThis issue affects ERPNext: 16.16.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42840",
-    "publishedDate": "2026-06-03T19:16:38.190",
-    "lastModifiedDate": "2026-06-03T20:16:20.907",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "help@fluidattacks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42839",
-    "description": "An authenticated ERPNext user with Item record edit permissions can persist arbitrary HTML/JavaScript in the item_name, description, or image fields of an Item and trigger unescaped rendering in the Point of Sale (POS) cart interface for every operator who adds that item to a transaction.This issue affects ERPNext: 16.16.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42839",
-    "publishedDate": "2026-06-03T19:16:38.013",
-    "lastModifiedDate": "2026-06-03T19:16:38.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "help@fluidattacks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-26379",
-    "description": "An issue in Koha v.25.11 and before allows a remote attacker to execute arbitrary code via the Z39.50 configuration module",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-26379",
-    "publishedDate": "2026-06-03T19:16:25.647",
-    "lastModifiedDate": "2026-06-03T19:16:25.647",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-26378",
-    "description": "Cross Site Scripting vulnerability in Koha 25.11 and before allows a remote attacker to execute arbitrary code via file upload function in Invoice features",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-26378",
-    "publishedDate": "2026-06-03T19:16:25.400",
-    "lastModifiedDate": "2026-06-03T19:16:25.400",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-46273",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nibmveth: Disable GSO for packets with small MSS\n\nSome physical adapters on Power systems do not support segmentation\noffload when the MSS is less than 224 bytes. Attempting to send such\npackets causes the adapter to freeze, stopping all traffic until\nmanually reset.\n\nImplement ndo_features_check to disable GSO for packets with small MSS\nvalues. The network stack will perform software segmentation instead.\n\nThe 224-byte minimum matches ibmvnic\ncommit <f10b09ef687f> (\"ibmvnic: Enforce stronger sanity checks\non GSO packets\")\nwhich uses the same physical adapters in SEA configurations.\n\nThe issue occurs specifically when the hardware attempts to perform\nsegmentation (gso_segs > 1) with a small MSS. Single-segment GSO packets\n(gso_segs == 1) do not trigger the problematic LSO code path and are\ntransmitted normally without segmentation.\n\nAdd an ndo_features_check callback to disable GSO when MSS < 224 bytes.\nAlso call vlan_features_check() to ensure proper handling of VLAN packets,\nparticularly QinQ (802.1ad) configurations where the hardware parser may\nnot support certain offload features.\n\nValidated using iptables to force small MSS values. Without the fix,\nthe adapter freezes. With the fix, packets are segmented in software\nand transmission succeeds. Comprehensive regression testing completedd\n(MSS tests, performance, stability).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46273",
-    "publishedDate": "2026-06-03T18:16:29.160",
-    "lastModifiedDate": "2026-06-03T18:16:29.160",
     "vendors": [],
     "products": [],
     "cvssScores": []
