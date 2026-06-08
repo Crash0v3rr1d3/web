@@ -1,110 +1,206 @@
 [
   {
-    "id": "CVE-2026-49975",
-    "description": "Memory Allocation with Excessive Size Value vulnerability in Apache HTTP Server's mod_http leads to denial of service via malicious HTTP requests.\n\nThis issue affects Apache HTTP Server: from 2.4.17 through 2.4.67.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49975",
-    "publishedDate": "2026-06-08T16:16:44.223",
-    "lastModifiedDate": "2026-06-08T18:16:33.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-49756",
-    "description": "Improper Neutralization of CRLF Sequences ('CRLF Injection') vulnerability in wojtekmach Req allows multipart parameter smuggling via attacker-influenced part metadata.\n\nReq.Utils.encode_form_part/2 in lib/req/utils.ex builds the per-part headers by interpolating the caller-supplied name, filename, and content_type values directly into the content-disposition and content-type lines with no escaping or CRLF stripping. A value containing \", \\r, or \\n closes the surrounding quoted value and starts a new header line; an additional \\r\\n--<boundary> terminates the current part and prepends a smuggled part of the attacker's choosing.\n\nThis is reachable through every supported way of supplying a part. It is particularly easy when value is a %File.Stream{}, because filename then defaults to Path.basename(stream.path) and POSIX filenames may legitimately contain \\r and \\n. Any application that forwards user-controlled filenames (or field names / MIME types) through Req.post/2 with form_multipart: lets an attacker inject arbitrary headers into the outgoing multipart body or smuggle additional fields and parts into the request the victim service sends downstream.\n\nThis issue affects req: from 0.5.3 before 0.6.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49756",
-    "publishedDate": "2026-06-08T16:16:44.040",
-    "lastModifiedDate": "2026-06-08T17:16:52.790",
+    "id": "CVE-2026-11584",
+    "description": "A vulnerability was found in CodeAstro Student Attendance Management System 1.0. This impacts an unknown function of the file /attendance-php/Admin/createClass.php?action=edit. The manipulation of the argument ID results in sql injection. It is possible to launch the attack remotely. The exploit has been made public and could be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11584",
+    "publishedDate": "2026-06-08T20:17:00.163",
+    "lastModifiedDate": "2026-06-08T20:17:00.163",
     "vendors": [],
     "products": [],
     "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
       {
         "score": 2.1,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-49755",
-    "description": "Improper Handling of Highly Compressed Data (Data Amplification) vulnerability in wojtekmach Req allows attacker-controlled HTTP servers to exhaust memory in a Req client via decompression-bomb response bodies.\n\nReq's default response pipeline includes Req.Steps.decode_body/1 and Req.Steps.decompress_body/1 in lib/req/steps.ex. decode_body/1 dispatches on the server-supplied content-type (or URL extension) and calls :zip.extract(body, [:memory]) for application/zip, :erl_tar.extract({:binary, body}, [:memory]) for application/x-tar, and :erl_tar.extract({:binary, body}, [:memory, :compressed]) for application/gzip / .tgz. Each returns the full decompressed archive contents as a [{name, bytes}] list in memory, with no per-entry or total size cap. decompress_body/1 walks the content-encoding header and chains :zlib/:brotli/:ezstd decoders, so a response advertising content-encoding: gzip, gzip, gzip inflates through multiple layers without bound.\n\nBoth steps are enabled by default, no caller opt-in is required, and the attacker controls the content-type and content-encoding headers on their own server (or on any host reached via Req's automatic redirect following). A sub-megabyte response can expand to multiple gigabytes on the victim, crashing the BEAM process.\n\nThis issue affects req: from 0.1.0 before 0.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49755",
-    "publishedDate": "2026-06-08T16:16:43.860",
-    "lastModifiedDate": "2026-06-08T17:16:52.627",
+    "id": "CVE-2026-35058",
+    "description": "Improper validation of packet length during tls-crypt-v2 key extraction in OpenVPN 2.6.0 through 2.6.19 and 2.7_alpha1 through 2.7.1 allows authenticated attackers to trigger a fatal assertion and cause a denial of service via a specially crafted packet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35058",
+    "publishedDate": "2026-06-08T20:17:00.497",
+    "lastModifiedDate": "2026-06-08T21:16:32.583",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.2,
+        "score": 6.9,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "source": "security@openvpn.net"
       }
     ]
   },
   {
-    "id": "CVE-2026-48913",
-    "description": "Use After Free vulnerability in Apache HTTP Server module mod_http2 when file handles are already exhausted.\n\nThis issue affects Apache HTTP Server: from 2.4.55 through 2.4.67.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48913",
-    "publishedDate": "2026-06-08T16:16:43.390",
-    "lastModifiedDate": "2026-06-08T16:16:43.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-48488",
-    "description": "phpMyFAQ is an open source FAQ web application. Prior to version 4.1.4, attachment passwords are hashed using SHA-1, a cryptographically broken algorithm. SHA-1 has been vulnerable to collision attacks since 2017 (SHAttered). Version 4.1.4 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48488",
-    "publishedDate": "2026-06-08T16:16:43.227",
-    "lastModifiedDate": "2026-06-08T16:16:43.227",
+    "id": "CVE-2026-40519",
+    "description": "Nginx Proxy Manager versions 2.9.14 through 2.15.1, fixed in commit a5db5ed, contain an authenticated remote code execution vulnerability via OS command injection in the setupCertbotPlugins() function in backend/setup.js, allowing attackers with certificates:manage permission to execute arbitrary commands by storing a malicious payload in the dns_provider_credentials field. The user-controlled dns_provider_credentials value is interpolated directly into a shell command executed via child_process.exec() without sanitization or escaping, causing the injected command to execute upon backend restart.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40519",
+    "publishedDate": "2026-06-08T20:17:00.820",
+    "lastModifiedDate": "2026-06-08T20:17:00.820",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2.7,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46657",
-    "description": "Bludit is a content management system. Versions prior to 3.22.0 have a vulnerability in the user management logic that allows deactivated accounts to maintain access via persistent authentication tokens. When an administrator disables a user account, the application fails to invalidate or clear the associated tokenAuth and tokenRemember fields in the JSON database. Consequently, any user with a pre-existing \"Remember Me\" cookie can bypass the account disablement and maintain a valid authenticated state. Version 3.22.0 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46657",
-    "publishedDate": "2026-06-08T16:16:43.033",
-    "lastModifiedDate": "2026-06-08T17:16:52.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52778",
+    "description": "YesWiki is a wiki system written in PHP. Prior to version 4.6.6, an unsafe execution vulnerability exists in the Bazar form field calculator (CalcField.php) of YesWiki. The application attempts to sanitize user-defined mathematical formulas using a complex recursive regular expression before passing them to the PHP eval() function. This implementation is inherently flawed: it is vulnerable to Regular Expression Denial of Service (ReDoS / Stack Overflow) which can crash the server, and it creates a high-risk architecture where any logic bypass directly results in arbitrary PHP code execution. Version 4.6.6 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52778",
+    "publishedDate": "2026-06-08T19:16:46.683",
+    "lastModifiedDate": "2026-06-08T19:16:46.683",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-46656",
-    "description": "Bludit is a content management system. Versions prior to 3.22.0 have a Broken Access Control flaw where active sessions remain valid even after the corresponding user account has been  physically deleted from the database. This \"Ghost Session\" allows revoked users to maintain full unauthorized access to the system. Version 3.22.0 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46656",
-    "publishedDate": "2026-06-08T16:16:42.873",
-    "lastModifiedDate": "2026-06-08T16:16:42.873",
+    "id": "CVE-2026-46490",
+    "description": "samlify is a Node.js library for SAML single sign-on. Prior to version 2.13.0, samlify’s template substitution only escapes attribute contexts. Values inserted into element text (e.g., <saml:AttributeValue>) are not escaped. A normal user can inject XML markup into an attribute value (e.g., email, name) and add new <saml:Attribute> elements inside the signed assertion. The IdP then signs the tampered assertion and the SP accepts the injected attributes as trusted. This allows privilege escalation when attributes are used for authorization (roles/groups). This issue has been patched in version 2.13.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46490",
+    "publishedDate": "2026-06-08T19:16:45.950",
+    "lastModifiedDate": "2026-06-08T19:16:45.950",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46486",
+    "description": "MVT (Mobile Verification Toolkit) helps with conducting forensics of mobile devices in order to find signs of a potential compromise. Prior to version 2026.5.12, there is a path traversal vulnerability via unsanitized File identifiers in iOS Backup processing. This issue has been patched in version 2026.5.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46486",
+    "publishedDate": "2026-06-08T19:16:45.777",
+    "lastModifiedDate": "2026-06-08T19:16:45.777",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11559",
+    "description": "A vulnerability was detected in CodeAstro Payroll System 1.0. This affects an unknown function of the file /view_account.php. The manipulation of the argument ID results in sql injection. The attack may be performed from remote. The exploit is now public and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11559",
+    "publishedDate": "2026-06-08T19:16:42.087",
+    "lastModifiedDate": "2026-06-08T19:16:42.087",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11558",
+    "description": "A security vulnerability has been detected in CodeAstro Payroll System 1.0. The impacted element is an unknown function of the file /home_salary.php. The manipulation of the argument rate/salary_rate leads to sql injection. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11558",
+    "publishedDate": "2026-06-08T19:16:41.880",
+    "lastModifiedDate": "2026-06-08T19:16:41.880",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11557",
+    "description": "A weakness has been identified in Tenda F451 1.0.0.7/1.0.0.9. The affected element is the function fromNatlimit of the file /goform/Natlimit of the component Web Management Interface. Executing a manipulation of the argument page can lead to stack-based buffer overflow. The attack can be executed remotely. The exploit has been made available to the public and could be used for attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11557",
+    "publishedDate": "2026-06-08T19:16:41.653",
+    "lastModifiedDate": "2026-06-08T19:16:41.653",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -115,288 +211,408 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46480",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, evaluator create and update mass-assignment allows cross-workspace evaluator takeover. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46480",
-    "publishedDate": "2026-06-08T16:16:42.600",
-    "lastModifiedDate": "2026-06-08T17:16:51.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "cna@vuldb.com"
+      },
       {
-        "score": 7.7,
+        "score": 7.4,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-46479",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, evaluation create and update mass-assignment allows cross-workspace evaluation takeover. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46479",
-    "publishedDate": "2026-06-08T16:16:42.443",
-    "lastModifiedDate": "2026-06-08T17:16:51.597",
+    "id": "CVE-2026-11393",
+    "description": "Improper neutralization of triple-quote characters during Python code generation in AgentCore CLI before v0.14.2 might allow an authenticated remote threat actor to execute arbitrary code on AWS AgentCore Runtime under the imported agent's IAM execution role and on the local environment of another user in the same AWS account, via a crafted collaborationInstruction stored on a Bedrock Agent collaborator and later processed by that other user during agent import.\n\n\n\nTo remediate this issue, users should upgrade to version 0.14.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11393",
+    "publishedDate": "2026-06-08T19:16:41.270",
+    "lastModifiedDate": "2026-06-08T19:16:41.270",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46478",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, DatasetRow create and update mass-assignment allows cross-workspace row takeover. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46478",
-    "publishedDate": "2026-06-08T16:16:42.277",
-    "lastModifiedDate": "2026-06-08T16:16:42.277",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46477",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, dataset create and update mass-assignment allows cross-workspace dataset takeover. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46477",
-    "publishedDate": "2026-06-08T16:16:42.097",
-    "lastModifiedDate": "2026-06-08T16:16:42.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46476",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, CustomTemplate create and update mass-assignment allows cross-workspace template takeover. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46476",
-    "publishedDate": "2026-06-08T16:16:41.950",
-    "lastModifiedDate": "2026-06-08T16:16:41.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46475",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, assistant create and update mass-assignment allows cross-workspace assistant takeover. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46475",
-    "publishedDate": "2026-06-08T16:16:41.810",
-    "lastModifiedDate": "2026-06-08T17:16:51.410",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46444",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, all CRUD endpoints for OpenAI Assistants Vector Store have no authentication middleware and the route path /api/v1/openai-assistants-vector-store is not in WHITELIST_URLS. However, it is also not protected by the main auth middleware when accessed via API key — the route requires API key auth (not whitelisted), but no permission checks exist on any operation. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46444",
-    "publishedDate": "2026-06-08T16:16:41.660",
-    "lastModifiedDate": "2026-06-08T16:16:41.660",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46443",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, when credentials are fetched with a credentialName filter parameter, the encryptedData field is not stripped from the response. The code properly omits encryptedData when no filter is used but fails to do so when a filter is used. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46443",
-    "publishedDate": "2026-06-08T16:16:41.493",
-    "lastModifiedDate": "2026-06-08T16:16:41.493",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46442",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, POST /api/v1/node-custom-function lacks route-level authorization, allowing any authenticated user or API key to submit arbitrary JavaScript to the Custom JS Function node. When E2B_APIKEY is not configured — the common deployment case — Flowise executes this code inside a NodeVM sandbox. This sandbox can be escaped, allowing an attacker to reach the host process object and execute system commands via child_process. The result is authenticated remote code execution on the Flowise server host. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46442",
-    "publishedDate": "2026-06-08T16:16:41.347",
-    "lastModifiedDate": "2026-06-08T16:16:41.347",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.4,
-        "version": "CVSS 4.0",
+        "score": 9,
+        "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:A/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
       }
     ]
   },
   {
-    "id": "CVE-2026-46441",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, a mass assignment vulnerability exists in the assistant update endpoint of FlowiseAI. The endpoint allows authenticated users to modify server-controlled properties such as workspaceId, createdDate, and updatedDate when updating an assistant resource. Due to missing server-side validation and authorization checks, an attacker can manipulate the workspaceId field and reassign assistants to arbitrary workspaces. This breaks tenant isolation in multi-workspace environments. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46441",
-    "publishedDate": "2026-06-08T16:16:41.190",
-    "lastModifiedDate": "2026-06-08T17:16:51.187",
+    "id": "CVE-2026-10787",
+    "description": "Missing authorization in the deleted user groups API in Devolutions Server allows an authenticated low-privileged user to enumerate metadata of deleted user groups via a crafted API request.\n\nThis issue affects :\n\n  *  Devolutions Server 2026.2.4.0\n  *  Devolutions Server 2026.1.20.0 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10787",
+    "publishedDate": "2026-06-08T19:16:34.553",
+    "lastModifiedDate": "2026-06-08T19:16:34.553",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-10786",
+    "description": "Improper access control in the ticketing integration settings in Devolutions Server allows an authenticated low-privileged user to obtain cleartext credentials for configured ticketing integrations via a crafted API request.\n\nThis issue affects :\n\n  *  Devolutions Server 2026.2.4.0\n  *  Devolutions Server 2026.1.20.0 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10786",
+    "publishedDate": "2026-06-08T19:16:34.430",
+    "lastModifiedDate": "2026-06-08T21:16:27.813",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.6,
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10544",
+    "description": "Improper neutralization of special elements in the built-in PAM provider password rotation templates in Devolutions Server allows an authenticated user with write access to a vault to execute arbitrary commands on the systems managed by the affected PAM provider.\n\nThis issue affects :\n\n  *  Devolutions Server 2026.2.4.0\n  *  Devolutions Server 2026.1.20.0 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10544",
+    "publishedDate": "2026-06-08T19:16:34.113",
+    "lastModifiedDate": "2026-06-08T21:16:26.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11583",
+    "description": "A vulnerability has been found in CodeAstro Student Attendance Management System 1.0. This affects an unknown function of the file /attendance-php/Admin/createClass.php. The manipulation of the argument className leads to sql injection. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11583",
+    "publishedDate": "2026-06-08T20:16:59.990",
+    "lastModifiedDate": "2026-06-08T20:16:59.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-49141",
+    "description": "WACRM prior to commit 73041bf contain an authorization bypass vulnerability in the automation engine that allows authenticated attackers to access and modify contacts belonging to other tenants by supplying an arbitrary caller-controlled contact_id in the POST request body without tenant ownership verification. Attackers can exploit the service-role client that bypasses row-level security to modify victim contact fields including name, email, and company across tenant boundaries using only a known contact UUID.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49141",
+    "publishedDate": "2026-06-08T20:17:01.997",
+    "lastModifiedDate": "2026-06-08T20:17:01.997",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46484",
+    "description": "Headplane is a feature-complete Web UI for Headscale. Prior to versions 0.6.3 and 0.7.0-beta.3, Headplane was vulnerable to a path traversal / authorization bypass in the Headscale API client used by node and user rename operations. This issue has been patched in versions 0.6.3 and 0.7.0-beta.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46484",
+    "publishedDate": "2026-06-08T20:17:01.437",
+    "lastModifiedDate": "2026-06-08T20:17:01.437",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-46440",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to version 3.1.2, the checkBasicAuth endpoint validates credentials in plaintext without rate limiting and with direct comparison. This issue has been patched in version 3.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46440",
-    "publishedDate": "2026-06-08T16:16:41.043",
-    "lastModifiedDate": "2026-06-08T16:16:41.043",
+    "id": "CVE-2026-47345",
+    "description": "Namespace attributes are not encoded correctly during HTML serialization. This allows bypassing the cross-site scripting prevention mechanism of typo3/html-sanitizer before version 2.3.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47345",
+    "publishedDate": "2026-06-08T20:17:01.743",
+    "lastModifiedDate": "2026-06-08T20:17:01.743",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-46275",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nBluetooth: hci_uart: fix UAFs and race conditions in close and init paths\n\nVulnerabilities leading to Use-After-Free (UAF) and Null Pointer\nDereference (NPD) conditions were observed in the lifecycle management\nof hci_uart.\n\nThe primary issue arises because the workqueues (init_ready and\nwrite_work) are only flushed/cancelled if the HCI_UART_PROTO_READY\nflag is set during TTY close. If a hangup occurs before setup completes,\nhci_uart_tty_close() skips the teardown of these workqueues and\nproceeds to free the `hu` struct. When the scheduled work executes\nlater, it blindly dereferences the freed `hu` struct.\n\nFurthermore, several data races and UAFs were identified in the teardown\nsequence:\n1. Calling hci_uart_flush() from hci_uart_close() without effectively\n   disabling write_work causes a race condition where both can concurrently\n   double-free hu->tx_skb. This happens because protocol timers can\n   concurrently invoke hci_uart_tx_wakeup() and requeue write_work.\n2. Calling hci_free_dev(hdev) before hu->proto->close(hu) causes a UAF\n   when vendor specific protocol close callbacks dereference hu->hdev.\n3. In the initialization error paths, failing to take the proto_lock\n   write lock before clearing PROTO_READY leads to races with active\n   readers. Additionally, hci_uart_tty_receive() accesses hu->hdev\n   outside the read lock, leading to UAFs if the initialization error\n   path frees hdev concurrently.\n\nFix these synchronization and lifecycle issues by:\n1. Re-ordering hci_uart_tty_close() to clear HCI_UART_PROTO_READY first,\n   followed immediately by a cancel_work_sync(&hu->write_work). Clearing\n   the flag locks out concurrent protocol timers from successfully invoking\n   hci_uart_tx_wakeup(), effectively rendering the cancellation permanent\n   and preventing the tx_skb double-free.\n2. Note: Clearing PROTO_READY early causes hci_uart_close() to skip\n   hu->proto->flush(). This is perfectly safe in the tty_close path\n   because hu->proto->close() executes shortly after, which intrinsically\n   purges all protocol SKB queues and tears down the state.\n3. Relocating hu->proto->close(hu) strictly prior to hci_free_dev(hdev)\n   across all close and error paths to prevent vendor-level UAFs.\n4. Moving the hdev->stat.byte_rx increment in hci_uart_tty_receive()\n   inside the proto_lock read-side critical section to safely synchronize\n   with device unregistration.\n5. Adding cancel_work_sync(&hu->write_work) to hci_uart_close() to safely\n   flush the workqueue before hci_uart_flush() is invoked via the HCI core.\n6. Utilizing cancel_work_sync() instead of disable_work_sync() across\n   all paths to prevent permanently breaking user-space retry capabilities.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46275",
-    "publishedDate": "2026-06-08T16:16:40.863",
-    "lastModifiedDate": "2026-06-08T16:16:40.863",
+    "id": "CVE-2026-47344",
+    "description": "When ALLOW_INSECURE_RAW_TEXT is enabled, whitespace-variant closing tags (e.g., </style\\t>) are not recognized by the sanitizer but accepted by browsers as valid end tags, allowing subsequent content to escape sanitization. This allows bypassing the cross-site scripting prevention mechanism of typo3/html-sanitizer before version 2.3.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47344",
+    "publishedDate": "2026-06-08T20:17:01.587",
+    "lastModifiedDate": "2026-06-08T20:17:01.587",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f4fb688c-4412-4426-b4b8-421ecf27b14a"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-46274",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nio-wq: check that the predecessor is hashed in io_wq_remove_pending()\n\nio_wq_remove_pending() needs to fix up wq->hash_tail[] if the cancelled\nwork was the tail of its hash bucket. When doing this, it checks whether\nthe preceding entry in acct->work_list has the same hash value, but\nnever checks that the predecessor is hashed at all. io_get_work_hash()\nis simply atomic_read(&work->flags) >> IO_WQ_HASH_SHIFT, and the hash\nbits are never set for non-hashed work, so it returns 0. Thus, when a\nhashed bucket-0 work is cancelled while a non-hashed work is its list\npredecessor, the check spuriously passes and a pointer to the non-hashed\nio_kiocb is stored in wq->hash_tail[0].\n\nBecause non-hashed work is dequeued via the fast path in\nio_get_next_work(), which never touches hash_tail[], the stale pointer\nis never cleared. Therefore, after the non-hashed io_kiocb completes and\nis freed back to req_cachep, wq->hash_tail[0] is a dangling pointer. The\nio_wq is per-task (tctx->io_wq) and survives ring open/close, so the\ndangling pointer persists for the lifetime of the task; the next hashed\nbucket-0 enqueue dereferences it in io_wq_insert_work() and\nwq_list_add_after() writes through freed memory.\n\nAdd the missing io_wq_is_hashed() check so a non-hashed predecessor\nnever inherits a hash_tail[] slot.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46274",
-    "publishedDate": "2026-06-08T16:16:40.707",
-    "lastModifiedDate": "2026-06-08T16:16:40.707",
+    "id": "CVE-2026-11582",
+    "description": "A flaw has been found in CodeAstro Student Attendance Management System 1.0. The impacted element is an unknown function of the file /attendance-php/index.php. Executing a manipulation of the argument Username can lead to sql injection. The attack may be performed from remote. The exploit has been published and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11582",
+    "publishedDate": "2026-06-08T20:16:59.780",
+    "lastModifiedDate": "2026-06-08T20:16:59.780",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-44631",
-    "description": "Buffer Underwrite vulnerability in Apache HTTP Server on crafted regular expressions in the configuration.\n\nThis issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.\n\nUsers are recommended to upgrade to version 2.4.68, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44631",
-    "publishedDate": "2026-06-08T16:16:40.583",
-    "lastModifiedDate": "2026-06-08T16:16:40.583",
+    "id": "CVE-2026-8913",
+    "description": "A command Injection vulnerability exists in the WireGuard client configuration of Archer MR600 v5 due to improper neutralization of user-controlled input within the web management interface. An authenticated attacker with administrative privileges may be able to execute arbitrary commands when applying configuration changes.Successful exploitation may result in a full compromise of confidentiality, integrity, and availability of the affected device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8913",
+    "publishedDate": "2026-06-08T18:16:34.177",
+    "lastModifiedDate": "2026-06-08T18:16:34.177",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-44186",
-    "description": "Loop with Unreachable Exit Condition ('Infinite Loop') vulnerability in the mod_proxy_ftp module in Apache HTTP Server with an attacker controlled backend FTP server.\n\nThis issue affects undefined: from 2.4.0 through 2.4.67.\n\nUsers are recommended to upgrade to version 2.4.68, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44186",
-    "publishedDate": "2026-06-08T16:16:40.453",
-    "lastModifiedDate": "2026-06-08T16:16:40.453",
+    "id": "CVE-2026-11556",
+    "description": "A security flaw has been discovered in Tenda F451 1.0.0.7/1.0.0.9. Impacted is the function formWriteFacMac of the file /goform/WriteFacMac of the component Web Management Interface. Performing a manipulation of the argument mac results in os command injection. Remote exploitation of the attack is possible. The exploit has been released to the public and may be used for attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11556",
+    "publishedDate": "2026-06-08T18:16:33.040",
+    "lastModifiedDate": "2026-06-08T18:16:33.040",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 7.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-44185",
-    "description": "Buffer Over-read vulnerability in Apache HTTP Server via outbound OCSP requests to an attacker controlled OCSP server\n\nThis issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.\n\nUsers are recommended to upgrade to version 2.4.68, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44185",
-    "publishedDate": "2026-06-08T16:16:40.327",
-    "lastModifiedDate": "2026-06-08T16:16:40.327",
+    "id": "CVE-2026-11555",
+    "description": "A vulnerability was identified in D-Link DGS-1100-08PD 1.00.006. This issue affects some unknown processing of the file /etc/boa.conf of the component Web Interface. Such manipulation leads to least privilege violation. The attack may be launched remotely. The attack requires a high level of complexity. The exploitability is assessed as difficult. The exploit is publicly available and might be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11555",
+    "publishedDate": "2026-06-08T18:16:32.863",
+    "lastModifiedDate": "2026-06-08T18:16:32.863",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-44119",
-    "description": "Improper Privilege Management vulnerability in Apache HTTP Server 2.4.67 and earlier allows local .htaccess authors to read files with the privileges of the httpd user.\n\nThis issue affects Apache HTTP Server: from through 2.4.67.\n\nUsers are recommended to upgrade to version 2.4.68, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44119",
-    "publishedDate": "2026-06-08T16:16:40.203",
-    "lastModifiedDate": "2026-06-08T16:16:40.203",
+    "id": "CVE-2026-11554",
+    "description": "A vulnerability was determined in TOTOLINK CP450 4.1.0cu.747. This vulnerability affects unknown code of the file /etc/vsftpd.conf of the component vsftpd. This manipulation causes least privilege violation. The attack may be initiated remotely. The exploit has been publicly disclosed and may be utilized.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11554",
+    "publishedDate": "2026-06-08T18:16:32.670",
+    "lastModifiedDate": "2026-06-08T18:16:32.670",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-43951",
-    "description": "Out-of-bounds Read vulnerability in Apache HTTP Server with mod_headers and mod_mime and multiple response languages.\n\nThis issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43951",
-    "publishedDate": "2026-06-08T16:16:40.087",
-    "lastModifiedDate": "2026-06-08T16:16:40.087",
+    "id": "CVE-2026-11553",
+    "description": "A vulnerability was found in Tenda HG7HG9 and HG10 300001138_en_xpon. This affects the function formPPPEdit of the file /boaform/formPPPEdit. The manipulation of the argument encodename results in stack-based buffer overflow. The attack can be launched remotely. The exploit has been made public and could be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11553",
+    "publishedDate": "2026-06-08T18:16:32.480",
+    "lastModifiedDate": "2026-06-08T18:16:32.480",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 7.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11552",
+    "description": "A vulnerability has been found in SourceCodester Onlne Examination & Learning Management System and Syllabus-aligned Learning Management and Examination System 1.0. Affected by this issue is some unknown functionality of the file import_users.php. The manipulation of the argument raw_password with the input CICT_2026 leads to use of hard-coded password. The attack can be initiated remotely. The exploit has been disclosed to the public and may be used. This product is distributed under two entirely different names.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11552",
+    "publishedDate": "2026-06-08T18:16:32.307",
+    "lastModifiedDate": "2026-06-08T18:16:32.307",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   }
 ]
