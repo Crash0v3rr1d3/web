@@ -1,227 +1,152 @@
 [
   {
-    "id": "CVE-2026-52902",
-    "description": "A path traversal vulnerability was found in awxkit, the CLI tool for AWX. The YAML !include directive does not sanitize file paths, allowing an attacker to craft a malicious YAML file that reads arbitrary YAML-formatted files from the local filesystem when a user imports it using \"awx --conf.format yaml import\". This is a client-side vulnerability requiring user interaction.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52902",
-    "publishedDate": "2026-06-09T10:16:44.830",
-    "lastModifiedDate": "2026-06-09T10:16:44.830",
+    "id": "CVE-2026-46324",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nf_tables: use list_del_rcu for netlink hooks\n\nnft_netdev_unregister_hooks and __nft_unregister_flowtable_net_hooks need\nto use list_del_rcu(), this list can be walked by concurrent dumpers.\n\nAdd a new helper and use it consistently.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46324",
+    "publishedDate": "2026-06-09T13:16:37.893",
+    "lastModifiedDate": "2026-06-09T13:16:37.893",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-4058",
-    "description": "The User Frontend: AI Powered Frontend Posting, User Directory, Profile, Membership & User Registration plugin for WordPress is vulnerable to unauthorized modification of data due to a missing capability check on the user_subscription_cancel() function in all versions up to, and including, 4.3.2. This makes it possible for authenticated attackers, with Subscriber-level access and above, to cancel any user's subscription pack, including administrators.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4058",
-    "publishedDate": "2026-06-09T10:16:44.557",
-    "lastModifiedDate": "2026-06-09T10:16:44.557",
+    "id": "CVE-2026-46323",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: gro: don't merge zcopy skbs\n\nskb_gro_receive() can currently copy frags between the source and GRO\nskb, without checking the zerocopy status, and in particular the\nSKBFL_MANAGED_FRAG_REFS flag.\n\nWhen SKBFL_MANAGED_FRAG_REFS is set, the skb doesn't hold a reference\non the pages in shinfo->frags. Appending those frags to another skb's\nfrags without fixing up the page refcount can lead to UAF.\n\nWhen either the last skb in the GRO chain (the one we would append\nfrags to) or the source skb is zerocopy, don't merge the skbs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46323",
+    "publishedDate": "2026-06-09T13:16:37.753",
+    "lastModifiedDate": "2026-06-09T13:16:37.753",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-46749",
-    "description": "A vulnerability has been identified in SINEC INS (All versions < V1.0 SP2 Update 6). The affected application uses a password hashing implementation with a static, hardcoded salt shared across all users and installations, and is configured with an insufficient number of iterations. This could allow an attacker to efficiently recover user passwords using brute-force or precomputed attacks, potentially resulting in unauthorized access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46749",
-    "publishedDate": "2026-06-09T10:16:44.410",
-    "lastModifiedDate": "2026-06-09T10:16:44.410",
+    "id": "CVE-2026-46322",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntun: free page on build_skb failure in tun_xdp_one()\n\nWhen build_skb() fails in tun_xdp_one(), the function sets ret to\n-ENOMEM and jumps to the out label, which returns without freeing the\npage that vhost_net_build_xdp() allocated for the frame. As with the\nshort-frame rejection path, tun_sendmsg() discards the per-buffer error\nand still returns total_len, so vhost_tx_batch() takes the success path\nand never frees the page. Each build_skb() failure in a batch leaks one\npage-frag chunk.\n\nFree the page before taking the error path, matching the put_page() the\nother error exits of tun_xdp_one() already perform.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46322",
+    "publishedDate": "2026-06-09T13:16:37.603",
+    "lastModifiedDate": "2026-06-09T13:16:37.603",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46321",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntun: free page on short-frame rejection in tun_xdp_one()\n\ntun_xdp_one() returns -EINVAL on a frame shorter than ETH_HLEN without\nfreeing the page that vhost_net_build_xdp() allocated for it.\ntun_sendmsg() discards that -EINVAL and still returns total_len, so\nvhost_tx_batch() takes the success path and never frees the page; each\nshort frame in a batch leaks one page-frag chunk.\n\nA local process that can open /dev/net/tun and /dev/vhost-net can hit\nthis path: it attaches a tun/tap device as the vhost-net backend and\nfeeds TX descriptors whose length minus the virtio-net header is below\nETH_HLEN. Each kick leaks the page-frag chunks for that batch, and a\ntight submission loop exhausts host memory and triggers an OOM panic.\nFree the page before returning -EINVAL, matching the XDP-program error\npath in the same function.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46321",
+    "publishedDate": "2026-06-09T13:16:37.473",
+    "lastModifiedDate": "2026-06-09T13:16:37.473",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46320",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntap: free page on error paths in tap_get_user_xdp()\n\ntap_get_user_xdp() rejects a frame shorter than ETH_HLEN with -EINVAL,\nand returns -ENOMEM when build_skb() fails. Both paths jump to the err\nlabel without freeing the page that vhost_net_build_xdp() allocated for\nthe frame. tap_sendmsg() discards the per-buffer return value and always\nreturns 0, so vhost_tx_batch() takes the success path and never frees\nthe page; each rejected frame in a batch leaks one page-frag chunk.\n\nFree the page on both error paths, before the skb is built. This is the\ntap counterpart of the same leak in tun_xdp_one().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46320",
+    "publishedDate": "2026-06-09T13:16:37.373",
+    "lastModifiedDate": "2026-06-09T13:16:37.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46319",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: act_ct: Only release RCU read lock after ct_ft\n\nWhen looking up a flow table in act_ct in tcf_ct_flow_table_get(),\nrhashtable_lookup_fast() internally opens and closes an RCU read critical\nsection before returning ct_ft.\nThe tcf_ct_flow_table_cleanup_work() can complete before refcount_inc_not_zero()\nis invoked on the returned ct_ft resulting in a UAF on the already freed ct_ft\nobject. This vulnerability can lead to privilege escalation.\n\nAnalysis from zdi-disclosures@trendmicro.com:\nWhen initializing act_ct, tcf_ct_init() is called, which internally triggers\ntcf_ct_flow_table_get().\n\nstatic int tcf_ct_flow_table_get(struct net *net, struct tcf_ct_params *params)\n\n{\n                struct zones_ht_key key = { .net = net, .zone = params->zone };\n                struct tcf_ct_flow_table *ct_ft;\n                int err = -ENOMEM;\n\n                mutex_lock(&zones_mutex);\n                ct_ft = rhashtable_lookup_fast(&zones_ht, &key, zones_params); // [1]\n                if (ct_ft && refcount_inc_not_zero(&ct_ft->ref)) // [2]\n                                goto out_unlock;\n                ...\n}\n\nstatic __always_inline void *rhashtable_lookup_fast(\n                struct rhashtable *ht, const void *key,\n                const struct rhashtable_params params)\n{\n                void *obj;\n\n                rcu_read_lock();\n                obj = rhashtable_lookup(ht, key, params);\n                rcu_read_unlock();\n\n                return obj;\n}\n\nAt [1], rhashtable_lookup_fast() looks up and returns the corresponding ct_ft\nfrom zones_ht . The lookup is performed within an RCU read critical section\nthrough rcu_read_lock() / rcu_read_unlock(), which prevents the object from\nbeing freed. However, at the point of function return, rcu_read_unlock() has\nalready been called, and there is nothing preventing ct_ft from being freed\nbefore reaching refcount_inc_not_zero(&ct_ft->ref) at [2]. This interval becomes\nthe race window, during which ct_ft can be freed.\n\nFree Process:\n\ntcf_ct_flow_table_put() is executed through the path tcf_ct_cleanup() call_rcu()\ntcf_ct_params_free_rcu() tcf_ct_params_free() tcf_ct_flow_table_put().\n\nstatic void tcf_ct_flow_table_put(struct tcf_ct_flow_table *ct_ft)\n{\n                if (refcount_dec_and_test(&ct_ft->ref)) {\n                                rhashtable_remove_fast(&zones_ht, &ct_ft->node, zones_params);\n                                INIT_RCU_WORK(&ct_ft->rwork, tcf_ct_flow_table_cleanup_work); // [3]\n                                queue_rcu_work(act_ct_wq, &ct_ft->rwork);\n                }\n}\n\nAt [3], tcf_ct_flow_table_cleanup_work() is scheduled as RCU work\n\nstatic void tcf_ct_flow_table_cleanup_work(struct work_struct *work)\n\n{\n                struct tcf_ct_flow_table *ct_ft;\n                struct flow_block *block;\n\n                ct_ft = container_of(to_rcu_work(work), struct tcf_ct_flow_table,\n                                                                rwork);\n                nf_flow_table_free(&ct_ft->nf_ft);\n                block = &ct_ft->nf_ft.flow_block;\n                down_write(&ct_ft->nf_ft.flow_block_lock);\n                WARN_ON(!list_empty(&block->cb_list));\n                up_write(&ct_ft->nf_ft.flow_block_lock);\n                kfree(ct_ft); // [4]\n\n                module_put(THIS_MODULE);\n}\n\ntcf_ct_flow_table_cleanup_work() frees ct_ft at [4]. When this function executes\nbetween [1] and [2], UAF occurs.\n\nThis race condition has a very short race window, making it generally\ndifficult to trigger. Therefore, to trigger the vulnerability an msleep(100) was\ninserted after[1]",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46319",
+    "publishedDate": "2026-06-09T13:16:37.210",
+    "lastModifiedDate": "2026-06-09T13:16:37.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46318",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRevert \"mm/hugetlbfs: update hugetlbfs to use mmap_prepare\"\n\nThis reverts commit ea52cb24cd3f (\"mm/hugetlbfs: update hugetlbfs to use\nmmap_prepare\") with conflict resolution to account for changes in commit\nea52cb24cd3f (\"mm/hugetlbfs: update hugetlbfs to use mmap_prepare\").\n\nThe patch incorrectly handled hugetlb VMA lock allocation at the\nmmap_prepare stage, where a failed allocation occurring after mmap_prepare\nis called might result in the lock leaking.\n\nThere is no risk of a merge causing a similar issues, as\nVMA_DONTEXPAND_BIT is set for hugetlb mappings.\n\nAs a first step in addressing this issue, simply revert the change so we\ncan rework how we do this having corrected the underlying issues.\n\nWe maintain the VMA flags changes as best we can, accounting for the fact\nthat we were working with a VMA descriptor previously and propagating\nlike-for-like changes for this.\n\nNote that we invoke vma_set_flags() and do not call vma_start_write() as\nvm_flags_set() does.  This is OK as it's being done in an .mmap hook where\nthe VMA is not yet linked into the tree so nobody else can be accessing\nit.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46318",
+    "publishedDate": "2026-06-09T13:16:37.107",
+    "lastModifiedDate": "2026-06-09T13:16:37.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46317",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: arm64: Reassign nested_mmus array behind mmu_lock\n\nkvm->arch.nested_mmus[] is walked under kvm->mmu_lock, including from the\nMMU notifier path (kvm_unmap_gfn_range() -> kvm_nested_s2_unmap()), which\ncan run at any time. kvm_vcpu_init_nested() reallocates the array and frees\nthe old buffer while holding only kvm->arch.config_lock, so such a walker\ncan reference the freed array.\n\nAllocate the new array outside of mmu_lock, as the allocation can sleep.\nUnder the lock, copy the existing entries, fix up the back pointers and\nreassign the array. Free the old buffer after dropping the lock, as\nkvfree() can sleep as well.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46317",
+    "publishedDate": "2026-06-09T13:16:37.000",
+    "lastModifiedDate": "2026-06-09T13:16:37.000",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46316",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: arm64: vgic-its: Drop the translation cache reference only for the erased entry\n\nvgic_its_invalidate_cache() walks the per-ITS translation cache with\nxa_for_each() and drops the cache's reference on each entry with\nvgic_put_irq(). It puts the iterated pointer, though, rather than the\nvalue returned by xa_erase().\n\nThe function is called from contexts that do not exclude one another: the\nITS command handlers hold its_lock, the GITS_CTLR write path holds\ncmd_lock, and the path that clears EnableLPIs in a redistributor's\nGICR_CTLR holds neither. Two or more of them can drain the same cache\nconcurrently, and if each one observes the same entry, erases it and then\nputs it, the single reference the cache holds on that entry is dropped\nmore than once. The entry can then be freed while an ITE still maps it.\n\nxa_erase() is atomic and returns the previous entry, so put only the entry\nthat this context actually removed. The cache reference is then dropped\nexactly once per entry even when the invalidations run concurrently, and\nthe behavior is unchanged when only one context runs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46316",
+    "publishedDate": "2026-06-09T13:16:36.887",
+    "lastModifiedDate": "2026-06-09T13:16:36.887",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-2638",
+    "description": "A vulnerability in the quarantine and restore workflow of the X-VPN macOS website versions 77.0 through 77.5 allow a local attacker to leverage a race condition and symlink manipulation to achieve privileged file corruption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2638",
+    "publishedDate": "2026-06-09T13:16:35.680",
+    "lastModifiedDate": "2026-06-09T14:16:38.260",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 6,
-        "source": "productcert@siemens.com"
-      },
-      {
-        "score": 4.9,
+        "score": 7.3,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "productcert@siemens.com"
+        "source": "help@fluidattacks.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-46748",
-    "description": "A vulnerability has been identified in SINEC INS (All versions < V1.0 SP2 Update 6). The affected system includes a binary that is configured with the cap_dac_override capability. This capability allows the process to bypass file system permission checks, resulting in unrestricted file system access. This could allow a local attacker to escalate privileges leading to arbitrary file modification and gaining root privileges on the system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46748",
-    "publishedDate": "2026-06-09T10:16:44.263",
-    "lastModifiedDate": "2026-06-09T10:16:44.263",
+    "id": "CVE-2026-11764",
+    "description": "When creating an export of all reusable media, the secrets of connected \ngift cards were included in the export even if the user creating the \nexport does not have permission to view gift cards. This is inconsistent\n with the UI and API where only the first letters of the gift card \nsecret are shown. Therefore, it allows circumventing a permission \nboundary.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11764",
+    "publishedDate": "2026-06-09T13:16:35.533",
+    "lastModifiedDate": "2026-06-09T13:57:49.980",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "productcert@siemens.com"
-      },
-      {
-        "score": 8.7,
+        "score": 3.6,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "productcert@siemens.com"
+        "source": "655498c3-6ec5-4f0b-aea6-853b334d05a6"
       }
     ]
   },
   {
-    "id": "CVE-2026-46747",
-    "description": "A vulnerability has been identified in SINEC INS (All versions < V1.0 SP2 Update 6). The affected application does not properly sanitize path input in the `GET /api/sftp/uploadFiles` endpoint used for directory listing. This allows path traversal through crafted input, enabling access to unintended file system locations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46747",
-    "publishedDate": "2026-06-09T10:16:44.130",
-    "lastModifiedDate": "2026-06-09T10:16:44.130",
+    "id": "CVE-2017-20251",
+    "description": "WordPress Insert PHP plugin versions before 3.3.1 contain a PHP code injection vulnerability that allows unauthenticated attackers to execute arbitrary PHP code by injecting malicious shortcodes through the WordPress REST API. Attackers can send POST requests to the wp-json/wp/v2/posts endpoint with crafted content containing insert_php shortcodes to include and execute remote PHP files on the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20251",
+    "publishedDate": "2026-06-09T13:16:35.140",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 9.8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "productcert@siemens.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "productcert@siemens.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46746",
-    "description": "A vulnerability has been identified in SINEC INS (All versions < V1.0 SP2 Update 6). The application does not properly sanitize user input in the /api/sftp/uploadFiles endpoint, allowing the injection of shell command payloads via crafted directory names. These payloads are stored and executed when directory listings are retrieved. This could allow an authenticated remote attacker to execute arbitrary commands on the underlying operating system with the privileges of the affected service user (sinecins).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46746",
-    "publishedDate": "2026-06-09T10:16:44.000",
-    "lastModifiedDate": "2026-06-09T10:16:44.000",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "productcert@siemens.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "productcert@siemens.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41031",
-    "description": "A Stored Cross-Site Scripting vulnerability in Vinna Process Monitor Version 4.0 Service Pack 1 (Build 63255) allows an authenticated remote attacker with low privileges to inject malicious JavaScript code into the application. This enables attackers to steal administrative access tokens and session credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41031",
-    "publishedDate": "2026-06-09T10:16:43.850",
-    "lastModifiedDate": "2026-06-09T10:16:43.850",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.8,
-        "source": "info@cert.vde.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "info@cert.vde.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-24349",
-    "description": "A vulnerability has been identified in SIMATIC WinCC Unified PC Runtime V16 (All versions), SIMATIC WinCC Unified PC Runtime V17 (All versions), SIMATIC WinCC Unified PC Runtime V18 (All versions), SIMATIC WinCC Unified PC Runtime V19 (All versions), SIMATIC WinCC Unified PC Runtime V20 (All versions), SIMATIC WinCC Unified PC Runtime V21 (All versions < V21 Update 2). Insufficient protection of key material in WinCC Certificate Manager that could allow an attacker to extract sensitive information.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24349",
-    "publishedDate": "2026-06-09T10:16:42.967",
-    "lastModifiedDate": "2026-06-09T10:16:42.967",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2.5,
-        "impactScore": 4,
-        "source": "productcert@siemens.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
       },
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "productcert@siemens.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10731",
-    "description": "SQL injection in the ‘two_steps_auth_code’ parameter processed by the ‘twoStepsAuthVerification’ function within the ‘/user-login’ endpoint. The two-factor authentication (2FA) functionality can be accessed without prior authentication, allowing unauthenticated attackers to execute arbitrary SQL queries on the backend database. A successful exploit could lead to database enumeration, the unauthorised creation of privileged users, the modification or deletion of critical information, and denial-of-service conditions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10731",
-    "publishedDate": "2026-06-09T10:16:42.820",
-    "lastModifiedDate": "2026-06-09T10:16:42.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
       {
         "score": 9.3,
         "version": "CVSS 4.0",
@@ -229,247 +154,376 @@
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cve-coordination@incibe.es"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-40808",
-    "description": "A vulnerability has been identified in SIPROTEC 5 6MD84 (CP300) (All versions), SIPROTEC 5 6MD85 (CP200) (All versions), SIPROTEC 5 6MD85 (CP300) (All versions), SIPROTEC 5 6MD86 (CP200) (All versions), SIPROTEC 5 6MD86 (CP300) (All versions), SIPROTEC 5 6MD89 (CP300) (All versions), SIPROTEC 5 6MU85 (CP300) (All versions), SIPROTEC 5 7KE85 (CP200) (All versions), SIPROTEC 5 7KE85 (CP300) (All versions), SIPROTEC 5 7SA82 (CP100) (All versions), SIPROTEC 5 7SA82 (CP150) (All versions), SIPROTEC 5 7SA86 (CP200) (All versions), SIPROTEC 5 7SA86 (CP300) (All versions), SIPROTEC 5 7SA87 (CP200) (All versions), SIPROTEC 5 7SA87 (CP300) (All versions), SIPROTEC 5 7SD82 (CP100) (All versions), SIPROTEC 5 7SD82 (CP150) (All versions), SIPROTEC 5 7SD86 (CP200) (All versions), SIPROTEC 5 7SD86 (CP300) (All versions), SIPROTEC 5 7SD87 (CP200) (All versions), SIPROTEC 5 7SD87 (CP300) (All versions), SIPROTEC 5 7SJ81 (CP100) (All versions), SIPROTEC 5 7SJ81 (CP150) (All versions), SIPROTEC 5 7SJ82 (CP100) (All versions), SIPROTEC 5 7SJ82 (CP150) (All versions), SIPROTEC 5 7SJ85 (CP200) (All versions), SIPROTEC 5 7SJ85 (CP300) (All versions), SIPROTEC 5 7SJ86 (CP200) (All versions), SIPROTEC 5 7SJ86 (CP300) (All versions), SIPROTEC 5 7SK82 (CP100) (All versions), SIPROTEC 5 7SK82 (CP150) (All versions), SIPROTEC 5 7SK85 (CP200) (All versions), SIPROTEC 5 7SK85 (CP300) (All versions), SIPROTEC 5 7SL82 (CP100) (All versions), SIPROTEC 5 7SL82 (CP150) (All versions), SIPROTEC 5 7SL86 (CP200) (All versions), SIPROTEC 5 7SL86 (CP300) (All versions), SIPROTEC 5 7SL87 (CP200) (All versions), SIPROTEC 5 7SL87 (CP300) (All versions), SIPROTEC 5 7SS85 (CP200) (All versions), SIPROTEC 5 7SS85 (CP300) (All versions), SIPROTEC 5 7ST85 (CP200) (All versions), SIPROTEC 5 7ST85 (CP300) (All versions), SIPROTEC 5 7ST86 (CP300) (All versions), SIPROTEC 5 7SX82 (CP150) (All versions), SIPROTEC 5 7SX85 (CP300) (All versions), SIPROTEC 5 7SY82 (CP150) (All versions), SIPROTEC 5 7UM85 (CP300) (All versions), SIPROTEC 5 7UT82 (CP100) (All versions), SIPROTEC 5 7UT82 (CP150) (All versions), SIPROTEC 5 7UT85 (CP200) (All versions), SIPROTEC 5 7UT85 (CP300) (All versions), SIPROTEC 5 7UT86 (CP200) (All versions), SIPROTEC 5 7UT86 (CP300) (All versions), SIPROTEC 5 7UT87 (CP200) (All versions), SIPROTEC 5 7UT87 (CP300) (All versions), SIPROTEC 5 7VE85 (CP300) (All versions), SIPROTEC 5 7VK87 (CP200) (All versions), SIPROTEC 5 7VK87 (CP300) (All versions), SIPROTEC 5 7VU85 (CP300) (All versions), SIPROTEC 5 Compact 7SX800 (CP050) (All versions). The affected application allows authenticated users to upload arbitrary files using DIGSI 5 protocol. This could allow an attacker to upload malicious configuration files, that could cause denial of service condition and potentially lead to code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-40808",
-    "publishedDate": "2026-06-09T10:16:35.807",
-    "lastModifiedDate": "2026-06-09T10:16:35.807",
+    "id": "CVE-2017-20250",
+    "description": "Mac Photo Gallery 3.0 contains a path traversal vulnerability that allows unauthenticated attackers to download arbitrary files by manipulating the albid parameter. Attackers can send requests to macdownload.php with directory traversal sequences to access sensitive files like wp-load.php outside the intended plugin directory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20250",
+    "publishedDate": "2026-06-09T13:16:34.993",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20249",
+    "description": "Apptha Slider Gallery 1.0 contains an SQL injection vulnerability that allows unauthenticated attackers to execute arbitrary SQL queries by injecting malicious code through the albid parameter. Attackers can send GET requests with crafted SQL payloads in the albid parameter to extract sensitive database information including user credentials and authentication hashes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20249",
+    "publishedDate": "2026-06-09T13:16:34.850",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20248",
+    "description": "Apptha Slider Gallery 1.0 contains a path traversal vulnerability that allows unauthenticated attackers to download arbitrary files by manipulating the imgname parameter. Attackers can send requests to asgallDownload.php with directory traversal sequences ../ to access sensitive files outside the intended directory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20248",
+    "publishedDate": "2026-06-09T13:16:34.693",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20247",
+    "description": "WordPress Plugin PICA Photo Gallery 1.0 contains an SQL injection vulnerability that allows unauthenticated attackers to execute arbitrary SQL queries by injecting malicious code through the aid parameter. Attackers can send GET requests with crafted SQL payloads in the aid parameter to extract sensitive database information including user credentials and table contents.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20247",
+    "publishedDate": "2026-06-09T13:16:34.550",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20246",
+    "description": "KittyCatfish 2.2 plugin for WordPress contains an SQL injection vulnerability that allows unauthenticated attackers to read database contents by exploiting an unescaped GET parameter. Attackers can inject SQL code through the 'kc_ad' parameter in base.css.php or kittycatfish.php to extract sensitive database information using boolean-based blind or time-based blind techniques.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20246",
+    "publishedDate": "2026-06-09T13:16:34.410",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20245",
+    "description": "Wow Viral Signups 2.1 WordPress plugin contains an SQL injection vulnerability that allows unauthenticated attackers to extract database information by exploiting the unescaped 'idsignup' POST parameter. Attackers can send crafted requests to the admin-ajax.php endpoint with malicious SQL payloads in the 'idsignup' parameter to read arbitrary data from the database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20245",
+    "publishedDate": "2026-06-09T13:16:34.270",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20244",
+    "description": "Wow Forms WordPress Plugin version 2.1 contains an SQL injection vulnerability that allows unauthenticated attackers to read arbitrary database information by exploiting an unescaped POST parameter. Attackers can inject SQL code through the 'mwpformid' parameter in requests to the admin-ajax.php endpoint with the 'send_mwp_form' action to extract sensitive database contents.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20244",
+    "publishedDate": "2026-06-09T13:16:34.123",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2017-20243",
+    "description": "WordPress Car Park Booking Plugin version 13 October 17 contains a time-based SQL injection vulnerability that allows unauthenticated attackers to manipulate database queries by injecting SQL code through the space_id parameter. Attackers can send GET requests to the booking-page endpoint with malicious space_id values using AND SLEEP() payloads to extract sensitive database information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20243",
+    "publishedDate": "2026-06-09T13:16:33.967",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2016-20065",
+    "description": "Product Catalog 8 1.2 plugin for WordPress contains an SQL injection vulnerability that allows unauthenticated attackers to execute arbitrary SQL queries by injecting malicious code through the selectedCategory parameter. Attackers can submit POST requests to the admin-ajax.php endpoint with the UpdateCategoryList action to extract sensitive database information from WordPress tables.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2016-20065",
+    "publishedDate": "2026-06-09T13:16:33.810",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2016-20064",
+    "description": "WP Vault 0.8.6.6 contains a local file inclusion vulnerability that allows unauthenticated attackers to read arbitrary files by exploiting an unescaped parameter in the include functionality. Attackers can supply directory traversal sequences through the wpv-image GET parameter to access sensitive files like system configuration and credentials.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2016-20064",
+    "publishedDate": "2026-06-09T13:16:33.640",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.2,
-        "source": "productcert@siemens.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
       },
       {
         "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "productcert@siemens.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-10263",
-    "description": "Arm C1-Ultra, C1-Premium, Neoverse V3 & V3AE, Neoverse V2, Neoverse V1, Neoverse-N2, Neoverse-N1, Cortex-X925, Cortex-X4, Cortex-X3, Cortex-X2, Cortex-X1 & X1C, Cortex-A710, Cortex-A78, A78AE & A78C, Cortex-A77, Cortex-A76 & A76A may allow writes to resources owned by a higher exception level.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-10263",
-    "publishedDate": "2026-06-09T10:16:33.003",
-    "lastModifiedDate": "2026-06-09T10:16:33.003",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8677",
-    "description": "The Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Widget HTML Tag Settings in all versions up to, and including, 1.3.3 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The exploit succeeds even for users without the unfiltered_html capability because the payload (e.g., 'img src=x onerror=alert(document.domain)') contains no HTML angle brackets and therefore passes through Elementor's wp_kses_post() filter unchanged at save time.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8677",
-    "publishedDate": "2026-06-09T09:16:31.310",
-    "lastModifiedDate": "2026-06-09T09:16:31.310",
+    "id": "CVE-2016-20063",
+    "description": "Single Personal Message 1.0.3 contains an SQL injection vulnerability that allows authenticated users to execute arbitrary SQL queries by injecting malicious code through the message parameter. Attackers can access the admin interface and supply crafted SQL statements in the message parameter to extract sensitive database information including user credentials and site configuration data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2016-20063",
+    "publishedDate": "2026-06-09T13:16:33.480",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8599",
-    "description": "The MailerPress – Email Marketing, Newsletter, Email Automation & WooCommerce Emails plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Campaign HTML Content Field in all versions up to, and including, 2.0.4 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with author-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The public-facing campaign preview endpoint (/mp-email/{id}-slug/) is not affected by this vulnerability, as it applies a Content-Security-Policy header blocking all inline scripts; exploitation is limited to the admin dashboard preview.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8599",
-    "publishedDate": "2026-06-09T09:16:31.170",
-    "lastModifiedDate": "2026-06-09T09:16:31.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8365",
-    "description": "The Blocksy theme for WordPress is vulnerable to PHP Object Injection leading to Remote Code Execution via the 'blocksy_meta' REST API field and the V200 database migration in versions up to and including 2.1.35. This is due to insufficient input sanitization in the blocksy_sanitize_post_meta_options() function, which only blocks values containing '<' or '>' and does not prevent serialized PHP object strings from being stored in post meta, combined with the SearchReplacer::run_recursively() function unconditionally deserializing all string values via @unserialize() during migration without restricting allowed classes. This makes it possible for authenticated attackers, with contributor-level access and above, to inject a serialized Blocksy\\RaiiPattern object into post meta that, when the V200 migration runs on an upgraded site, is deserialized and triggers RaiiPattern::__destruct(), which executes arbitrary PHP callables via call_user_func().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8365",
-    "publishedDate": "2026-06-09T09:16:31.013",
-    "lastModifiedDate": "2026-06-09T09:16:31.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
+        "score": 7.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-7542",
-    "description": "The Slider Revolution plugin for WordPress is vulnerable to Sensitive Information Disclosure in versions up to and including 7.0.10. This is due to three compounding design flaws: (1) the plugin leaks a valid backend AJAX nonce (revslider_actions) to all authenticated users including Subscribers via the admin_footer hook; (2) the wordpress.create.image_from_url action is explicitly allowlisted in the $user_allowed array, bypassing the administrator-only access control; (3) the create_wordpress_image_from_url() function accepts an attacker-controlled url parameter that is passed to import_media(), where path_or_url_exists() explicitly accepts local filesystem paths (file_exists() && is_readable()) with no restriction to remote HTTP/HTTPS URLs, and @copy() physically copies those files into the publicly accessible /wp-content/uploads/revslider/ai/ directory. The MIME type check trusts the attacker-supplied content_type parameter to derive the destination extension without verifying actual file content, and the source extension blacklist does not block many sensitive types (.sql, .log, .json, .bak, .xml, .csv, .conf, .yml, .yaml, .pem, .key, .crt, .txt, .db, etc.). This makes it possible for authenticated attackers with Subscriber-level access and above to read the contents of server files with non-blacklisted extensions by having them copied to a publicly accessible URL.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7542",
-    "publishedDate": "2026-06-09T09:16:30.880",
-    "lastModifiedDate": "2026-06-09T09:16:30.880",
+    "id": "CVE-2016-20062",
+    "description": "Simply Poll 1.4.1 plugin for WordPress contains an SQL injection vulnerability that allows unauthenticated attackers to extract database information by injecting SQL code through the 'pollid' POST parameter. Attackers can send requests to the admin-ajax.php endpoint with the 'spAjaxResults' action and malicious 'pollid' values to execute arbitrary SQL queries and read sensitive data from the WordPress database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2016-20062",
+    "publishedDate": "2026-06-09T13:16:32.263",
+    "lastModifiedDate": "2026-06-09T13:51:18.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 8.2,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6899",
-    "description": "Check for certificate revocation only considers the first matching CRL and ignores other valid CRLs of the same CA in the CycloneCrypto cryptographic wrapper of S2OPC library. It might allow connection between an OPC UA client and server using a revoked certificate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6899",
-    "publishedDate": "2026-06-09T09:16:30.737",
-    "lastModifiedDate": "2026-06-09T09:16:30.737",
+    "id": "CVE-2026-11792",
+    "description": "A heap buffer overflow flaw was found in 389 Directory Server. When audit logging is enabled, the create_masked_entry_string() function in auditlog.c copies a fixed-length password mask into a precisely-sized heap buffer without checking available space. If a short cleartext password is logged (requiring non-default CLEAR password storage or a compromised replication peer), the copy overflows the buffer, corrupting heap memory and audit log output.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11792",
+    "publishedDate": "2026-06-09T14:16:37.353",
+    "lastModifiedDate": "2026-06-09T14:42:21.530",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.6,
+        "score": 3.3,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
-        "source": "cve@gitlab.com"
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 0.7,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-49818",
-    "description": "The Apache Airflow Samba provider's `GCSToSambaOperator` joined GCS object names to the SMB destination path without a containment check, so an object named with `../` segments resolved a write path outside the configured `destination_path`. An attacker able to write objects into the source GCS bucket — typically an external data producer distinct from the trusted DAG author — could write files to arbitrary locations on the Samba target when the operator ran. Upgrade apache-airflow-providers-samba to 4.12.6 or later, which validates the resolved destination stays within `destination_path`.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49818",
-    "publishedDate": "2026-06-09T09:16:30.443",
-    "lastModifiedDate": "2026-06-09T09:16:30.443",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-46315",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nio_uring/waitid: clear waitid info before copying it to userspace\n\nIORING_OP_WAITID stores its result fields in struct io_waitid::info and\nlater copies them to userspace siginfo. The prep path initializes the\nrequest arguments, but it does not initialize info itself.\n\nIf the wait operation completes without reporting a child event, the common\nwait code can return without writing wo_info. In that case io_waitid_finish()\nstill copies iw->info to userspace, exposing stale bytes from the reused\nio_kiocb command storage.\n\nClear the result storage during prep so the io_uring path matches the\nregular waitid syscall, which uses a zero-initialized struct waitid_info.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46315",
-    "publishedDate": "2026-06-09T09:16:30.330",
-    "lastModifiedDate": "2026-06-09T09:16:30.330",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-34905",
-    "description": "Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.0.\n\nThe unlisted question feature did not enforce access restrictions on direct API endpoints, allowing authenticated users to discover and access unlisted questions, their answers, comments, and revision history.\nUsers are recommended to upgrade to version 2.0.1, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34905",
-    "publishedDate": "2026-06-09T09:16:29.537",
-    "lastModifiedDate": "2026-06-09T10:16:43.737",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-34033",
-    "description": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.0.\n\nUser-supplied content was included in notification emails without proper escaping, allowing authenticated users to inject arbitrary HTML into emails sent to other users.\nUsers are recommended to upgrade to version 2.0.1, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34033",
-    "publishedDate": "2026-06-09T09:16:29.420",
-    "lastModifiedDate": "2026-06-09T10:16:43.623",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-34031",
-    "description": "Unrestricted Upload of File with Dangerous Type vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.0.\n\nThe server did not sufficiently validate user-supplied image URLs, allowing arbitrary external content to be embedded as profile images, which could expose users to unintended external requests and tracking by third-party servers.\nUsers are recommended to upgrade to version 2.0.1, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34031",
-    "publishedDate": "2026-06-09T09:16:29.310",
-    "lastModifiedDate": "2026-06-09T10:16:43.533",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-33582",
-    "description": "Unrestricted Upload of File with Dangerous Type vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.0.\n\nA crafted TIFF image could trigger excessive memory allocation during image decoding, allowing an authenticated user to cause the server process to crash.\nUsers are recommended to upgrade to version 2.0.1, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33582",
-    "publishedDate": "2026-06-09T09:16:29.187",
-    "lastModifiedDate": "2026-06-09T10:16:43.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-28262",
-    "description": "Dell iDRAC Tools, versions prior to 11.4.1.0, contains an Improper Link Resolution Before File Access ('Link Following') vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Information tampering.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28262",
-    "publishedDate": "2026-06-09T09:16:29.037",
-    "lastModifiedDate": "2026-06-09T09:16:29.037",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.2,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-25699",
-    "description": "Exposure of Private Personal Information to an Unauthorized Actor vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.0.\n\nTimeline-related APIs lacked proper authorization checks, allowing regular authenticated users to access deleted, private, or unapproved content and its revision history.\nUsers are recommended to upgrade to version 2.0.1, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25699",
-    "publishedDate": "2026-06-09T09:16:28.913",
-    "lastModifiedDate": "2026-06-09T10:16:43.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-25688",
-    "description": "Improper Neutralization of Alternate XSS Syntax vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.0.\n\nAI-generated response content was rendered in the browser without proper sanitization, allowing malicious scripts to be executed when the content was viewed.\nUsers are recommended to upgrade to version 2.0.1, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25688",
-    "publishedDate": "2026-06-09T09:16:28.780",
-    "lastModifiedDate": "2026-06-09T10:16:43.100",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
