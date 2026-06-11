@@ -1,8 +1,11 @@
-toc    true
-title    Visa vulnerability agentic harness
-description    release analysis of Visa vulnerability agentic harness
-pubDate    2026-06-11
-author    Crash0v3rr1d3
+---
+title: "Visa vulnerability agentic harness"
+description: "release analysis of Visa vulnerability agentic harness"
+pubDate: 2026-06-11
+tags: ["agentic", "harness", "open-source"]
+author: "Crash0v3rr1d3"
+draft: false
+---
 
 # Visa's agentic SAST harness and the metric AppSec has been missing
 
