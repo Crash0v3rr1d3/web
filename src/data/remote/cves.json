@@ -1,30 +1,70 @@
 [
   {
-    "id": "CVE-2026-47224",
-    "description": "NanaZip is the 7-Zip derivative intended for the modern Windows experience. From version 3.0.1000.0 to before version 6.0.1698.0, a heap buffer-overflow read exists in the LVM2 physical-volume metadata parser in NanaZip (via the upstream 7-Zip LvmHandler). The vulnerability is triggered when opening a crafted LVM disk image. This issue has been patched in stable version 6.0.1698.0 and preview version 6.5.1742.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47224",
-    "publishedDate": "2026-06-12T17:16:24.227",
-    "lastModifiedDate": "2026-06-12T17:16:24.227",
+    "id": "CVE-2026-54397",
+    "description": "A vulnerability in MISP’s non-REST event editing path allowed an authenticated user with event edit permissions to manipulate the submitted form data and set an event’s sharing_group_id to a sharing group they were not authorized to use. When distribution was set to sharing group distribution, the non-REST save path accepted the submitted sharing_group_id without performing the same sharing group authorization check enforced by the REST edit path.\n\nAn attacker could exploit this by tampering with the event edit request and assigning an event to an undisclosed or unauthorized sharing group. This could result in unauthorized use of restricted sharing groups, disclosure of the sharing group name in event listings, and unintended modification of the event’s distribution metadata.\n\nThe issue is fixed by validating that the selected sharing group can be used by the current user when the sharing group is changed, and by clearing sharing_group_id when the event distribution is not set to sharing group distribution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54397",
+    "publishedDate": "2026-06-12T21:16:25.557",
+    "lastModifiedDate": "2026-06-12T21:16:25.557",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
-        "version": "CVSS 3.1",
+        "score": 6.1,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53607",
+    "description": "ApostropheCMS is an open-source Node.js content management system. In versions up to and including 4.30.0, when `prettyUrls: true` is enabled on `@apostrophecms/file` (a documented SEO feature for serving uploaded files at clean URLs), the public pretty-URL handler builds the upstream URL using the raw `Host` HTTP request header. That URL is then `fetch`'ed and the response body + headers are streamed straight back to the requester. Because `Host` is fully attacker-controlled, an unauthenticated remote attacker can pivot the apostrophe process to issue outbound HTTP requests against any host it can reach on the private network. The path component is constrained to `/uploads/attachments/<cuid>-<slug>.<ext>` (built from a local-DB lookup), which keeps the impact narrow: cross-instance data exfiltration is neutralized by cuid uniqueness, but blind-SSRF residuals remain (network-topology mapping via response-code / timing differences and verbose proxy/WAF 404 body disclosure). As of time of publication, no known patched versions exist.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53607",
+    "publishedDate": "2026-06-12T21:16:24.247",
+    "lastModifiedDate": "2026-06-12T21:16:24.247",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
         "impactScore": 1.4,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47222",
-    "description": "NanaZip is the 7-Zip derivative intended for the modern Windows experience. From version 3.0.1000.0 to before version 6.0.1698.0, a heap out-of-bounds read exists in the Android Verified Boot (AVB) vbmeta image parser in NanaZip (via the upstream 7-Zip AvbHandler). An unsigned integer underflow in a bounds check allows an attacker-controlled value_num_bytes field to pass validation, causing AddNameToString to read up to ~4 GiB past the end of a 64 KiB heap buffer. This causes a deterministic crash (denial of service) when opening a crafted .avb or .img file. This issue has been patched in stable version 6.0.1698.0 and preview version 6.5.1742.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47222",
-    "publishedDate": "2026-06-12T17:16:24.087",
-    "lastModifiedDate": "2026-06-12T17:16:24.087",
+    "id": "CVE-2026-4870",
+    "description": "IBM Qiskit SDK 0.43.0 through 2.5.0 could allow an attacker to trigger a segmentation fault leading to a denial of service due to uncontrolled recursion in the parser.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4870",
+    "publishedDate": "2026-06-12T21:16:23.963",
+    "lastModifiedDate": "2026-06-12T21:16:23.963",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53606",
+    "description": "ApostropheCMS is an open-source Node.js content management system, and sanitize-html provides a simple HTML sanitizer with a clear API. Versions of sanitize-html prior to 2.17.5 use `allowedSchemesAppliedToAttributes` (default: `['href', 'src', 'cite']`) to gate the `naughtyHref()` function that blocks dangerous URI schemes like `javascript:` and `vbscript:`. The HTML specification defines 10+ attributes that accept URIs (`action`, `formaction`, `data`, `poster`, `background`, `ping`, `xlink:href`, `dynsrc`, `lowsrc`), but none of these are included in the default gate list. When a developer allows any of these attributes in their configuration, `javascript:` URIs pass through completely unmodified, enabling XSS. Version 2.17.5 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53606",
+    "publishedDate": "2026-06-12T21:16:24.093",
+    "lastModifiedDate": "2026-06-12T21:16:24.093",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -32,19 +72,109 @@
         "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-53982",
-    "description": "Capgo Console prior to 12.28.2 contains a denial-of-service vulnerability in its account deletion flow that allows an attacker to block authentication and onboarding functions by triggering account deletion while a device identifier is linked to the active session. The platform incorrectly associates the deletion state with the device identifier, causing the affected device or browser environment to be redirected to an account-disabled page for approximately 30 days, preventing any account login or registration from that device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53982",
-    "publishedDate": "2026-06-12T17:16:26.727",
-    "lastModifiedDate": "2026-06-12T17:16:26.727",
+    "id": "CVE-2026-45014",
+    "description": "ApostropheCMS is an open-source Node.js content management system. Versions up to and including 4.29.0 are vulnerable to stored cross-site scripting via unsanitized user display name in draft version tooltip. As of time of publication, no known patched versions are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45014",
+    "publishedDate": "2026-06-12T21:16:22.990",
+    "lastModifiedDate": "2026-06-12T21:16:22.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54396",
+    "description": "MISP AuthKey edit endpoint allows authenticated user email enumeration",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54396",
+    "publishedDate": "Fri, 12 Jun 2026 20:48:18 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45013",
+    "description": "Apostrophe has a Weak Password Recovery Mechanism for Forgotten Password and Improper Input Validation",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45013",
+    "publishedDate": "Fri, 12 Jun 2026 20:46:21 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-24618",
+    "description": "WordPress Hash Elements plugin &lt;= 1.5.4 - Sensitive Data Exposure vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-24618",
+    "publishedDate": "Fri, 12 Jun 2026 20:46:18 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12130",
+    "description": "CodeAstro Human Resource Management System Projects Management Add_Projects cross site scripting",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12130",
+    "publishedDate": "Fri, 12 Jun 2026 20:45:08 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45012",
+    "description": "Apostrophe has authenticated SSRF in rich-text widget import via @apostrophecms/area/validate-widget",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45012",
+    "publishedDate": "Fri, 12 Jun 2026 20:44:48 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-45011",
+    "description": "Apostrophe has stored XSS via javascript: URL in Image Widget Link",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45011",
+    "publishedDate": "Fri, 12 Jun 2026 20:43:18 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-44990",
+    "description": "Apostrophe has default XSS via `xmp` raw-text passthrough in `sanitize-html`",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44990",
+    "publishedDate": "Fri, 12 Jun 2026 20:39:47 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-42853",
+    "description": "ApostropheCMS is an open-source Node.js content management system. Versions of the @apostrophecms/cli package up to and including 3.6.0 contain a command injection vulnerability in the apos create command. User-supplied input from the password prompt is embedded directly into a shell command without proper sanitization or escaping. This allows execution of arbitrary commands on the host system. As of time of publication, no known patched versions are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42853",
+    "publishedDate": "2026-06-12T21:16:21.300",
+    "lastModifiedDate": "2026-06-12T21:16:21.300",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -52,348 +182,88 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.6,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54395",
+    "description": "MISP contains a reflected cross-site scripting vulnerability in the UiBeta event index view. The urlparams value is inserted into an inline JavaScript handler using HTML escaping inside a single-quoted JavaScript string. Because browsers HTML-decode attribute values before JavaScript parsing, a crafted searcheventinfo value can restore encoded quote characters and break out of the JavaScript string. An attacker could craft a malicious URL that, when opened by a victim using the UiBeta event index, executes arbitrary JavaScript in the victim’s browser in the context of the MISP instance. The issue is fixed by encoding the value as a JavaScript string literal with json_encode() before applying HTML escaping at the attribute layer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54395",
+    "publishedDate": "2026-06-12T21:16:25.293",
+    "lastModifiedDate": "2026-06-12T21:16:25.293",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54394",
+    "description": "MISP contains a path traversal vulnerability in OrganisationsController::getOrgLogo. The vulnerable code builds organisation logo file paths using organisation-controlled fields such as id, name, and uuid without ensuring that the resolved file remains inside the intended APP/files/img/orgs/ directory. An attacker able to influence an organisation field, for example the organisation name, could use path traversal sequences to cause MISP to return arbitrary readable .png or .svg files from outside the organisation logo directory. The issue is fixed by resolving candidate paths with realpath() and verifying that they remain under the expected base directory before serving the file.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54394",
+    "publishedDate": "2026-06-12T21:16:25.157",
+    "lastModifiedDate": "2026-06-12T21:16:25.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Green",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12129",
+    "description": "A vulnerability was identified in CodeAstro Human Resource Management System 1.0. Affected by this issue is some unknown functionality of the file /dashboard/add_tod of the component Dashboard Interface. The manipulation of the argument todo_data leads to cross site scripting. The attack may be initiated remotely. The exploit is publicly available and might be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12129",
+    "publishedDate": "2026-06-12T21:16:19.900",
+    "lastModifiedDate": "2026-06-12T21:16:19.900",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
       },
       {
-        "score": 7.1,
+        "score": 2,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-9641",
-    "description": "Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default algorithm and number of iterations.\n\nThe default algorithm is HMAC-SHA1, which should only be used for legacy systems.\n\nThese versions default to using 1000 iterations.\n\nDepending on the chosen algorithm, 220,000 to 1,400,000 iterations should be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9641",
-    "publishedDate": "2026-06-12T16:16:35.047",
-    "lastModifiedDate": "2026-06-12T16:17:58.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9638",
-    "description": "Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure random values for salts.\n\nThese versions use the built-in rand function, which is predictable and unsuitable for cryptography.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9638",
-    "publishedDate": "2026-06-12T16:16:34.937",
-    "lastModifiedDate": "2026-06-12T16:17:58.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8828",
-    "description": "A lack of authorization validation in version 1.0.0 or later of the ChromaDB Rust project allows any authenticated users to arbitrarily read, write, update, or delete data in any tenant's collection regardless of which tenant they belong to.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8828",
-    "publishedDate": "2026-06-12T16:16:34.687",
-    "lastModifiedDate": "2026-06-12T16:22:33.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6f8de1f0-f67e-45a6-b68f-98777fdb759c"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5792",
-    "description": "Authentication bypass by spoofing vulnerability in Hedef Media Promotion Interactive Media Marketing Inc. Related Marketing Cloud (RMC) allows Brute Force.\n\nThis issue affects Related Marketing Cloud (RMC): through 12052026.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5792",
-    "publishedDate": "2026-06-12T16:16:34.240",
-    "lastModifiedDate": "2026-06-12T16:17:58.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53568",
-    "description": "Frappe is a full-stack web application framework. Prior to versions 15.107.2 and 16.17.4, there is a stored XSS vulnerablity in Frappe Report/List View. This issue has been patched in versions 15.107.2 and 16.17.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53568",
-    "publishedDate": "2026-06-12T16:16:33.810",
-    "lastModifiedDate": "2026-06-12T16:17:58.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50560",
-    "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, Netty HTTP/2 max header size handling produces an attack similar to HTTP/2 Rapid Reset. There is a setting in the http2 specification called `SETTINGS_MAX_HEADER_LIST_SIZE`. When a client sends that setting to Netty, it appears that Netty will behave as follows: read the request; proxy the request to the origin; attempt to produce a response; and create an exception while writing the headers for the response. Functionally, this should be similar to the http2 reset attack, but with a different on-the-wire signature. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50560",
-    "publishedDate": "2026-06-12T16:16:32.847",
-    "lastModifiedDate": "2026-06-12T16:18:27.287",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50091",
-    "description": "Aqara Home Android (com.lumiunited.aqarahome) 6.0.0 (and white-label clients embedding the same liblumidevsdk.so) uses hard-coded cryptographic keys, which is an instance of \"CWE-321: Use of Hard-coded Cryptographic Key\" and has an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N (9.1 Critical).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50091",
-    "publishedDate": "2026-06-12T16:16:32.737",
-    "lastModifiedDate": "2026-06-12T17:16:26.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50090",
-    "description": "The Aqara Cloud OAuth Authorization Endpoint (open-cn.aqara.com/oauth/authorize) is vulnerable to a redirect bypass due to lax controls on domain matching, which is an instance of \"CWE-1289: Improper Validation of Unsafe Equivalence in Input\" and has an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N (9.3 Critical).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50090",
-    "publishedDate": "2026-06-12T16:16:32.623",
-    "lastModifiedDate": "2026-06-12T17:16:26.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.8,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50089",
-    "description": "The Aqara IAM/SSO Gateway (gw-builder.aqara.com) provides an open redirect, which is an instance of \"CWE-601: URL Redirection to Untrusted Site,\" with an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N (6.1 Medium), which can be used to set up a phishing attack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50089",
-    "publishedDate": "2026-06-12T16:16:32.513",
-    "lastModifiedDate": "2026-06-12T17:16:26.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50088",
-    "description": "The Aqara Developer Portal (developer.aqara.com) and shared test environments (developer-test.aqara.com, aiot-test.aqara.com) exhibit cross-origin request sharing, which is an instance of \"CWE-942: Permissive Cross-domain Policy with Untrusted Domains,\" and has an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N (8.2 High).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50088",
-    "publishedDate": "2026-06-12T16:16:32.403",
-    "lastModifiedDate": "2026-06-12T17:16:25.940",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50087",
-    "description": "The Aqara IAM/SSO gateway (gw-builder.aqara.com) exhibits a cross-origin request sharing vulnerability, which is an instance of \"CWE-942: Permissive Cross-domain Policy with Untrusted Domains,\" and has an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N (8.2 High).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50087",
-    "publishedDate": "2026-06-12T16:16:32.297",
-    "lastModifiedDate": "2026-06-12T17:16:25.813",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50086",
-    "description": "The Aqara IAM/SSO gateway (gw-builder.aqara.com) exposes bidirectional AES round-trups against the platform's signing key without authentication. This is an instance of \"CWE-306: Missing Authentication for Critical Function\" and \"CWE-327: Use of a Broken or Risky Cryptographic Algorithm,\" and has an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N (7.5 High).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50086",
-    "publishedDate": "2026-06-12T16:16:32.187",
-    "lastModifiedDate": "2026-06-12T17:16:25.547",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 6,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50085",
-    "description": "The Aqara Board service (op-test.aqara.com) accepts arbitrary MQTT command payloads, and forwards them to the platfom's HiveMQ broker without authentication. This is an instance of \"CWE-306: Missing Authentication for Critical Function\" and has an estimated CVSS ofCVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L (8.6 High). When combined with CVE-2026-50082, CVE-50083, and CVE-50084, this can lead to a fully unauthenticated, remote takeover of affected devices.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50085",
-    "publishedDate": "2026-06-12T16:16:32.060",
-    "lastModifiedDate": "2026-06-12T17:16:25.317",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50084",
-    "description": "The Aqara Cloud Production API (open-cn.aqara.com/v3.0/open/api) would authorize any valid developer token for access to any account. This is an instance of \"CWE-862: Missing Authorization\" with an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N (9.6 Critical). When combined with CVE-2026-50082, CVE-50083, and CVE-50085, this can lead to a fully unauthenticated, remote takeover of affected devices.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50084",
-    "publishedDate": "2026-06-12T16:16:31.940",
-    "lastModifiedDate": "2026-06-12T17:16:25.203",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50083",
-    "description": "The Aqara IAM/SSO Gateway (gw-builder.aqara.com) used a hardcoded OAuth client credential, which is an instance of \"CWE-798: Use of Hard-coded Credentials.\" This issue has an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N (9.1 Critical). When combined with CVE-2026-50082, CVE-50084, and CVE-50085, this can lead to a fully unauthenticated, remote takeover of affected devices.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50083",
-    "publishedDate": "2026-06-12T16:16:31.827",
-    "lastModifiedDate": "2026-06-12T17:16:25.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50082",
-    "description": "The Aqara Cloud Developer Portal (developer.aqara.com) issued a developer token to any email address supplied by the attacker. This is an instance of \"CWE-306: Missing Authentication for Critical Function\" with an estimated CVSS of CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N (6.5 Medium). When combined with CVE-2026-50083, CVE-2026-50084, and CVE-2026-50085, any otherwise-unauthenticated attacker could execute a full takeover of affected devices.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50082",
-    "publishedDate": "2026-06-12T16:16:31.707",
-    "lastModifiedDate": "2026-06-12T17:16:25.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50026",
-    "description": "Frappe is a full-stack web application framework. Prior to versions 15.107.0 and 16.17.0, a lack of permission checks in these endpoints allowed unauthorized access to resources. This issue has been patched in versions 15.107.0 and 16.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50026",
-    "publishedDate": "2026-06-12T16:16:31.580",
-    "lastModifiedDate": "2026-06-12T16:17:58.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50020",
-    "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, before reading the first request-line, `HttpObjectDecoder` skips every byte for which `Character.isISOControl(b)` is `true` (0x00–0x1F and 0x7F) as well as all whitespace. RFC 9112 §2.2 only asks servers to ignore empty CRLF lines preceding the request-line — a carefully scoped robustness allowance intended to handle HTTP/1.0 POST workarounds. Silently absorbing NUL bytes, SOH, STX, and other non-CRLF control characters goes significantly beyond this, and can be exploited for request-boundary confusion in pipelined or multiplexed transports where a front-end component treats those bytes differently. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50020",
-    "publishedDate": "2026-06-12T16:16:31.447",
-    "lastModifiedDate": "2026-06-12T17:16:24.827",
+    "id": "CVE-2026-47264",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, DetailedTagSerializer#tag_group_names returned every tag group a tag belonged to without filtering against the requesting user's visibility. With SiteSetting.tags_listed_by_group enabled, anonymous and unprivileged users hitting TagsController#info (which is exempt from requires_login) could read the names of tag groups restricted to specific user groups or non-visible categories. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47264",
+    "publishedDate": "2026-06-12T21:16:23.680",
+    "lastModifiedDate": "2026-06-12T21:16:23.680",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -401,7 +271,7 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
         "source": "security-advisories@github.com"
@@ -409,81 +279,161 @@
     ]
   },
   {
-    "id": "CVE-2026-50011",
-    "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, RedisArrayAggregator pre-allocates ArrayList with initial capacity equal to the RESP array element count declared in an array header. That count is taken from the wire before the corresponding child messages exist. A small malicious header can claim a huge initial capacity. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50011",
-    "publishedDate": "2026-06-12T16:16:31.313",
-    "lastModifiedDate": "2026-06-12T16:18:27.287",
+    "id": "CVE-2026-47263",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, the MessageBus.publish call for /web_hook_events/<id> in Jobs::RedeliverWebHookEvents did not pass group_ids, leaving the channel readable by any authenticated user (or anonymous user on instances where login_required is disabled). Webhook IDs are sequential integers and trivially enumerable. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47263",
+    "publishedDate": "2026-06-12T21:16:23.537",
+    "lastModifiedDate": "2026-06-12T21:16:23.537",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50010",
-    "description": "Netty is a network application framework for development of protocol servers and clients. Prior to versions 4.1.135.Final and 4.2.15.Final, SimpleTrustManagerFactory.engineGetTrustManagers() and related paths wrap any user-supplied plain X509TrustManager in X509TrustManagerWrapper, which extends X509ExtendedTrustManager but implements the 3-arg checkServerTrusted(chain, authType, SSLEngine) by discarding the SSLEngine and calling the 2-arg delegate. Because the object now IS an X509ExtendedTrustManager, neither SunJSSE's internal AbstractTrustManagerWrapper nor Netty's own OpenSslX509TrustManagerWrapper will re-wrap it to add endpoint-identification. Consequently, even though Netty 4.2 sets endpointIdentificationAlgorithm=\"HTTPS\" by default, a client built with `SslContextBuilder.forClient().trustManager(somePlainX509TrustManager)` performs no hostname verification at all. Versions 4.1.135.Final and 4.2.15.Final patch the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50010",
-    "publishedDate": "2026-06-12T16:16:31.180",
-    "lastModifiedDate": "2026-06-12T16:18:27.287",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50009",
-    "description": "Netty is a network application framework for development of protocol servers and clients. Prior to version 4.2.15.Final, Netty QUIC exposes the stateless reset token on the network path when using the default HMAC-based connection-ID and stateless-reset-token generators. The reset token for the server's current source connection ID can be derived from bytes that appear as the connection ID in QUIC headers after a source-CID rotation. An on-path attacker observing the headers can use the token to perform a Denial of Service by sending a spoofed Stateless Reset packet. Version 4.2.15.Final patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50009",
-    "publishedDate": "2026-06-12T16:16:31.047",
-    "lastModifiedDate": "2026-06-12T16:18:27.287",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45775",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, a path traversal vulnerability in Discourse backup handling could allow an authenticated administrator on one site in a multisite deployment to access backup files belonging to another site when backups are stored locally. In affected configurations, an admin on Site A could potentially retrieve sensitive backup data from Site B (same host, multisite) by crafting a backup download request with a traversal payload. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45775",
+    "publishedDate": "2026-06-12T21:16:23.267",
+    "lastModifiedDate": "2026-06-12T21:16:23.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45085",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, four authorization/disclosure issues in the chat plugin (one also involving discourse-calendar): read-only category users could create chat threads, self-deleted chat messages could be restored by their author after channel access was revoked, moderators reviewing a flagged chat message were shown the channel's current last_message (often unrelated DM content), and calendar event payloads exposed the attached chat channel and its last message to viewers without chat access (including anonymous users). This affects sites with the chat plugin enabled; the calendar issue additionally requires discourse-calendar. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45085",
+    "publishedDate": "2026-06-12T21:16:23.123",
+    "lastModifiedDate": "2026-06-12T21:16:23.123",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44785",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, the AI \"explain\" helper only checks can_see? on the post being explained, not its reply_to_post, so any authenticated user with access to the AI helper could read the raw contents of a hidden parent post by invoking \"Explain\" on a reply to it. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44785",
+    "publishedDate": "2026-06-12T21:16:22.180",
+    "lastModifiedDate": "2026-06-12T21:16:22.180",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44784",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, group owners who are not necessarily admins or moderators can view a group's outgoing email/SMTP credentials in plaintext via the group history log (/groups/:name/logs.json). Affected fields: email_password, email_username, smtp_server, smtp_port, smtp_ssl_mode. The most sensitive item is the SMTP password, which an owner could use to send mail as the group from outside Discourse. This impacts sites that have configured per-group SMTP credentials and granted group ownership to users who should not have access to those credentials. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44784",
+    "publishedDate": "2026-06-12T21:16:22.047",
+    "lastModifiedDate": "2026-06-12T21:16:22.047",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44783",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, a flaw in how replies to whisper posts are handled allows authenticated users outside the groups configured in whispers_allowed_groups to post into a topic's staff-only whisper channel. The injected content is visible to whisperers (typically staff) alongside legitimate whispers. Only sites that have whispers enabled are affected. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44783",
+    "publishedDate": "2026-06-12T21:16:21.917",
+    "lastModifiedDate": "2026-06-12T21:16:21.917",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 2.5,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-48748",
-    "description": "Netty is a network application framework for development of protocol servers and clients. Prior to version 4.2.15.Final, a memory exhaustion vulnerability in the Netty HTTP/3 codec allows the creation of an infinite number of blocked streams, which can cause OOM error. Version 4.2.15.Final patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48748",
-    "publishedDate": "2026-06-12T16:16:30.913",
-    "lastModifiedDate": "2026-06-12T16:18:27.287",
+    "id": "CVE-2026-44782",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, GroupPostSerializer declared include_user_long_name? as the predicate for its :name attribute, but AMS looks for include_name?. The misnamed predicate was never called, so object.user.name was always serialized regardless of SiteSetting.enable_names. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44782",
+    "publishedDate": "2026-06-12T21:16:21.780",
+    "lastModifiedDate": "2026-06-12T21:16:21.780",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 4.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44780",
+    "description": "Discourse is an open-source discussion platform. From versions 2026.1.0-latest to before 2026.1.4, 2026.3.0-latest to before 2026.3.1, and 2026.4.0-latest to before 2026.4.1, ReviewableQueuedPostSerializer unconditionally included payload[\"raw_email\"] for posts that arrived via incoming email. Category moderation group members reaching the review queue could therefore read the full inbound email source (headers, sender trace, MUA, body) without being in view_raw_email_allowed_groups — the trust boundary that gates the dedicated raw-email endpoint. This issue has been patched in versions 2026.1.4, 2026.3.1, 2026.4.1, and 2026.5.0-latest.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44780",
+    "publishedDate": "2026-06-12T21:16:21.643",
+    "lastModifiedDate": "2026-06-12T21:16:21.643",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
         "source": "security-advisories@github.com"
       }
     ]
