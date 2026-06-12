@@ -1,33 +1,70 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Parser from "rss-parser";
-import { formatDate } from "@/lib/helpers";
-import { NEWS_FEEDS } from "@/consts";
+import NewsCard from "@/components/News/NewsCard.astro";
+import { NEWS_SOURCES } from "@/consts";
+import {
+    dayLabel,
+    excerptOf,
+    normalizeLink,
+    TAB_ACTIVE,
+    TAB_INACTIVE,
+    type NewsItem,
+} from "@/lib/newsUtils";
+
+const BUILD_MAX_ITEMS = 40;
+const sourceById = Object.fromEntries(NEWS_SOURCES.map((s) => [s.id, s]));
 
 const parser = new Parser();
-let newsFeed: any = [];
+const builtAt = Date.now();
+let items: NewsItem[] = [];
 
-try {
-    // Fetch from all feeds defined in consts.ts concurrently
-    const feedPromises = NEWS_FEEDS.map((url) => parser.parseURL(url));
-    const results = await Promise.allSettled(feedPromises);
+const results = await Promise.allSettled(
+    NEWS_SOURCES.map(async (source) => ({
+        source,
+        feed: await parser.parseURL(source.url),
+    }))
+);
 
-    const allItems = results.reduce((acc: any[], result) => {
-        if (result.status === "fulfilled") {
-            return [...acc, ...result.value.items];
-        }
-        return acc;
-    }, []);
+for (const result of results) {
+    if (result.status !== "fulfilled") {
+        console.error(`Feed failed at build: ${result.reason}`);
+        continue;
+    }
+    const { source, feed } = result.value;
+    for (const entry of feed.items ?? []) {
+        if (!entry.title || !entry.link) continue;
+        items.push({
+            title: entry.title.trim(),
+            link: entry.link,
+            ts: new Date(entry.isoDate ?? entry.pubDate ?? builtAt).getTime(),
+            excerpt: excerptOf(entry.contentSnippet ?? entry.content ?? ""),
+            sourceId: source.id,
+        });
+    }
+}
 
-    // Sort globally by date descending
-    newsFeed = allItems
-        .sort(
-            (a, b) =>
-                new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
-        )
-        .slice(0, 20); // Top 20 aggregated news
-} catch (error) {
-    console.error("Error fetching RSS feeds:", error);
+// Same story syndicated across feeds collapses to its newest copy
+const byLink = new Map<string, NewsItem>();
+for (const item of items) {
+    const key = normalizeLink(item.link);
+    const prev = byLink.get(key);
+    if (!prev || item.ts > prev.ts) byLink.set(key, item);
+}
+items = [...byLink.values()]
+    .sort((a, b) => b.ts - a.ts)
+    .slice(0, BUILD_MAX_ITEMS);
+
+// Flat row list: day headers interleaved with cards (simplest to filter client-side)
+const rows: Array<{ header: string } | { item: NewsItem }> = [];
+let lastDay = "";
+for (const item of items) {
+    const label = dayLabel(item.ts, builtAt);
+    if (label !== lastDay) {
+        rows.push({ header: label });
+        lastDay = label;
+    }
+    rows.push({ item });
 }
 ---
 
@@ -41,8 +78,8 @@ try {
 </script>
 
 <Layout title="InfoSec News" description="Latest Cybersecurity News Feed">
-    <main
-        class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 overflow-y-auto custom-scrollbar"
+    <div
+        class="w-full max-w-4xl mx-auto px-8 py-8 flex flex-col justify-start items-start"
     >
         <a
             href="/"
@@ -50,74 +87,355 @@ try {
             >Back</a
         >
 
-        <div class="flex items-center gap-4 mb-4">
-            <h1 class="text-4xl font-bold text-neutral-100">News Feed</h1>
+        <div class="w-full flex flex-wrap items-center gap-4 mb-4">
+            <h1 class="text-4xl font-bold text-neutral-100 m-0">News Feed</h1>
             <span
-                class="text-xs font-mono text-green-500 bg-green-500/10 border border-green-500/30 px-2 py-1 rounded"
-                >LIVE_RSS</span
+                id="news-status"
+                class="text-xs font-mono text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-1 rounded"
+                >CACHED</span
             >
+            <span id="news-stamp" class="text-xs font-mono text-neutral-500"
+            ></span>
         </div>
 
-        <p class="text-neutral-400 text-sm mb-8 font-mono">
-            >_ Aggregated infosec intel. Auto-updated via RSS build pipelines.
+        <p class="text-neutral-400 text-sm mb-6 font-mono">
+            &gt;_ Aggregated infosec intel from {NEWS_SOURCES.length} sources.
         </p>
 
-        <ul class="w-full">
-            {
-                newsFeed.length > 0 ? (
-                    newsFeed.map((entry: any) => (
-                        <li class="group list-none w-full text-neutral-300 hover:text-green-500 transition-all duration-300 ease-in-out border-b border-dashed border-neutral-700 hover:border-green-500/50 my-2 py-1">
-                            <a
-                                class="text-sm md:text-base text-inherit flex justify-between items-center w-full"
-                                href={entry.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <div class="flex items-center gap-2 overflow-hidden w-full">
-                                    <div class="flex items-center">
-                                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-1 text-green-500 font-bold">
-                                            [
-                                        </span>
-                                        <p class="inline-block whitespace-nowrap m-0 truncate group-hover:translate-x-1 transition-transform duration-300">
-                                            {entry.title}
-                                        </p>
-                                        <span class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-1 text-green-500 font-bold">
-                                            ]
-                                        </span>
-                                    </div>
-                                </div>
-                                {entry.pubDate && (
-                                    <time
-                                        class="text-right tabular-nums text-xs group-hover:text-green-400 transition-colors duration-300 ml-4 shrink-0"
-                                        datetime={new Date(
-                                            entry.pubDate
-                                        ).toISOString()}
-                                    >
-                                        {formatDate(new Date(entry.pubDate))}
-                                    </time>
-                                )}
-                            </a>
-                        </li>
+        <div
+            class="w-full flex flex-col sm:flex-row sm:items-center gap-3 mb-6"
+        >
+            <div
+                id="news-tabs"
+                class="flex flex-wrap items-center gap-2 flex-1"
+            >
+                <button data-source="all" class={TAB_ACTIVE}>ALL</button>
+                {
+                    NEWS_SOURCES.map((source) => (
+                        <button data-source={source.id} class={TAB_INACTIVE}>
+                            {source.abbr}
+                        </button>
                     ))
-                ) : (
-                    <p class="text-red-500 font-mono text-sm">
-                        >_ Error: Connection to intel feed severed.
-                    </p>
+                }
+            </div>
+            <label class="relative block w-full sm:w-64 shrink-0">
+                <span
+                    class="absolute left-3 top-1/2 -translate-y-1/2 text-green-500 font-mono text-xs pointer-events-none"
+                    >&gt;_</span
+                >
+                <input
+                    id="news-search"
+                    type="search"
+                    placeholder="grep intel..."
+                    autocomplete="off"
+                    class="w-full bg-neutral-900/60 border border-neutral-700 rounded pl-9 pr-3 py-1.5 text-sm font-mono text-neutral-200 placeholder-neutral-600 focus:outline-none focus:border-green-500/60 transition-colors"
+                />
+            </label>
+        </div>
+
+        <ul id="news-list" class="w-full flex flex-col gap-2 p-0 m-0">
+            {
+                rows.map((row) =>
+                    "header" in row ? (
+                        <li
+                            data-day-header
+                            class="list-none mt-6 mb-1 first:mt-0 flex items-center gap-3 w-full"
+                        >
+                            <span class="text-xs font-mono text-green-500/80 tracking-widest uppercase">
+                                {row.header}
+                            </span>
+                            <span class="h-px flex-1 bg-neutral-800" />
+                        </li>
+                    ) : (
+                        <NewsCard
+                            title={row.item.title}
+                            link={row.item.link}
+                            ts={row.item.ts}
+                            excerpt={row.item.excerpt}
+                            source={sourceById[row.item.sourceId]}
+                            now={builtAt}
+                        />
+                    )
                 )
             }
         </ul>
-    </main>
+
+        <p
+            id="news-empty"
+            class:list={[
+                "text-red-500 font-mono text-sm mt-4",
+                { hidden: items.length > 0 },
+            ]}
+        >
+            >_ Error: Connection to intel feed severed.
+        </p>
+
+        <template id="news-card-tpl">
+            <NewsCard
+                title=""
+                link="#"
+                ts={builtAt}
+                excerpt=""
+                source={NEWS_SOURCES[0]}
+                now={builtAt}
+            />
+        </template>
+    </div>
 </Layout>
 
-<style>
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
+<script>
+    import { NEWS_SOURCES } from "@/consts";
+    import {
+        dayLabel,
+        excerptOf,
+        fullDate,
+        isFresh,
+        normalizeLink,
+        timeAgo,
+        BADGE_BASE,
+        TAB_ACTIVE,
+        TAB_INACTIVE,
+        type NewsItem,
+    } from "@/lib/newsUtils";
+
+    const MAX_ITEMS = 60;
+    const sourceById = Object.fromEntries(NEWS_SOURCES.map((s) => [s.id, s]));
+
+    const list = document.getElementById("news-list") as HTMLUListElement;
+    const tpl = document.getElementById("news-card-tpl") as HTMLTemplateElement;
+    const statusEl = document.getElementById("news-status") as HTMLSpanElement;
+    const stampEl = document.getElementById("news-stamp") as HTMLSpanElement;
+    const emptyEl = document.getElementById("news-empty") as HTMLParagraphElement;
+    const searchEl = document.getElementById("news-search") as HTMLInputElement;
+    const tabsEl = document.getElementById("news-tabs") as HTMLDivElement;
+
+    let items: NewsItem[] = harvestFromDom();
+    let activeSource = "all";
+    let query = "";
+
+    // The SSR cards double as the initial dataset, so a failed live fetch
+    // still leaves the build-time stories rendered and filterable.
+    function harvestFromDom(): NewsItem[] {
+        return [...list.querySelectorAll<HTMLLIElement>("li[data-card]")].map(
+            (card) => ({
+                title:
+                    card.querySelector('[data-slot="title"]')?.textContent?.trim() ??
+                    "",
+                link: card.dataset.link ?? "#",
+                ts: Number(card.dataset.ts ?? 0),
+                excerpt:
+                    card.querySelector('[data-slot="excerpt"]')?.textContent?.trim() ??
+                    "",
+                sourceId: card.dataset.source ?? NEWS_SOURCES[0].id,
+            })
+        );
     }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
+
+    function makeDayHeader(label: string): HTMLLIElement {
+        const li = document.createElement("li");
+        li.setAttribute("data-day-header", "");
+        li.className =
+            "list-none mt-6 mb-1 first:mt-0 flex items-center gap-3 w-full";
+        const text = document.createElement("span");
+        text.className =
+            "text-xs font-mono text-green-500/80 tracking-widest uppercase";
+        text.textContent = label;
+        const rule = document.createElement("span");
+        rule.className = "h-px flex-1 bg-neutral-800";
+        li.append(text, rule);
+        return li;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: var(--border);
-        border-radius: 4px;
+
+    function makeCard(item: NewsItem, now: number): HTMLLIElement {
+        const li = (tpl.content.firstElementChild as HTMLLIElement).cloneNode(
+            true
+        ) as HTMLLIElement;
+        const source = sourceById[item.sourceId] ?? NEWS_SOURCES[0];
+        li.dataset.source = item.sourceId;
+        li.dataset.ts = String(item.ts);
+        li.dataset.link = item.link;
+        li.dataset.search = `${item.title} ${item.excerpt}`.toLowerCase();
+
+        const link = li.querySelector('[data-slot="link"]') as HTMLAnchorElement;
+        link.href = item.link;
+
+        const badge = li.querySelector('[data-slot="badge"]') as HTMLSpanElement;
+        badge.textContent = source.name;
+        badge.className = BADGE_BASE + source.badge;
+
+        const fresh = li.querySelector('[data-slot="new"]') as HTMLSpanElement;
+        fresh.classList.toggle("hidden", !isFresh(item.ts, now));
+
+        const time = li.querySelector('[data-slot="time"]') as HTMLTimeElement;
+        time.dateTime = new Date(item.ts).toISOString();
+        time.title = fullDate(item.ts);
+        time.textContent = timeAgo(item.ts, now);
+
+        const title = li.querySelector('[data-slot="title"]') as HTMLSpanElement;
+        title.textContent = item.title;
+
+        const excerpt = li.querySelector(
+            '[data-slot="excerpt"]'
+        ) as HTMLParagraphElement;
+        excerpt.textContent = item.excerpt;
+        excerpt.classList.toggle("hidden", !item.excerpt);
+
+        return li;
     }
-</style>
+
+    function render(now: number) {
+        const children: HTMLLIElement[] = [];
+        let lastDay = "";
+        for (const item of items) {
+            const label = dayLabel(item.ts, now);
+            if (label !== lastDay) {
+                children.push(makeDayHeader(label));
+                lastDay = label;
+            }
+            children.push(makeCard(item, now));
+        }
+        list.replaceChildren(...children);
+        applyFilters();
+    }
+
+    function applyFilters() {
+        let visible = 0;
+        for (const card of list.querySelectorAll<HTMLLIElement>("li[data-card]")) {
+            const matches =
+                (activeSource === "all" || card.dataset.source === activeSource) &&
+                (!query || (card.dataset.search ?? "").includes(query));
+            card.classList.toggle("hidden", !matches);
+            if (matches) visible++;
+        }
+        // A day header is visible only if a card before the next header is
+        const children = [...list.children] as HTMLElement[];
+        for (let i = 0; i < children.length; i++) {
+            if (!children[i].hasAttribute("data-day-header")) continue;
+            let any = false;
+            for (
+                let j = i + 1;
+                j < children.length && !children[j].hasAttribute("data-day-header");
+                j++
+            ) {
+                if (!children[j].classList.contains("hidden")) {
+                    any = true;
+                    break;
+                }
+            }
+            children[i].classList.toggle("hidden", !any);
+        }
+        emptyEl.textContent =
+            items.length === 0
+                ? ">_ Error: Connection to intel feed severed."
+                : ">_ grep returned 0 results.";
+        emptyEl.classList.toggle("hidden", visible > 0);
+    }
+
+    function parseFeed(xmlText: string, sourceId: string): NewsItem[] {
+        const doc = new DOMParser().parseFromString(xmlText, "text/xml");
+        if (doc.querySelector("parsererror")) return [];
+        const out: NewsItem[] = [];
+        for (const el of doc.querySelectorAll("item")) {
+            const title = el.querySelector("title")?.textContent?.trim();
+            const link = el.querySelector("link")?.textContent?.trim();
+            if (!title || !link) continue;
+            const pub = el.querySelector("pubDate")?.textContent;
+            const desc = el.querySelector("description")?.textContent ?? "";
+            out.push({
+                title,
+                link,
+                ts: pub ? new Date(pub).getTime() : Date.now(),
+                excerpt: excerptOf(desc),
+                sourceId,
+            });
+        }
+        if (out.length === 0) {
+            // Atom fallback
+            for (const el of doc.querySelectorAll("entry")) {
+                const title = el.querySelector("title")?.textContent?.trim();
+                const link =
+                    el.querySelector('link[rel="alternate"]')?.getAttribute("href") ??
+                    el.querySelector("link")?.getAttribute("href");
+                if (!title || !link) continue;
+                const pub = el.querySelector("published, updated")?.textContent;
+                const desc =
+                    el.querySelector("summary")?.textContent ??
+                    el.querySelector("content")?.textContent ??
+                    "";
+                out.push({
+                    title,
+                    link,
+                    ts: pub ? new Date(pub).getTime() : Date.now(),
+                    excerpt: excerptOf(desc),
+                    sourceId,
+                });
+            }
+        }
+        return out;
+    }
+
+    function setLive(live: boolean) {
+        if (live) {
+            statusEl.textContent = "LIVE";
+            statusEl.className =
+                "text-xs font-mono text-green-500 bg-green-500/10 border border-green-500/30 px-2 py-1 rounded";
+            const t = new Date().toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+            stampEl.textContent = `last sync ${t}`;
+        }
+    }
+
+    async function refresh() {
+        const results = await Promise.allSettled(
+            NEWS_SOURCES.map(async (source) => {
+                const res = await fetch(`/feeds/${source.id}`, {
+                    headers: {
+                        Accept: "application/rss+xml, application/atom+xml, text/xml, */*",
+                    },
+                });
+                if (!res.ok) throw new Error(`${source.id}: HTTP ${res.status}`);
+                return parseFeed(await res.text(), source.id);
+            })
+        );
+        const fetched = results.flatMap((r) =>
+            r.status === "fulfilled" ? r.value : []
+        );
+        if (fetched.length === 0) return; // keep static fallback untouched
+
+        const byLink = new Map<string, NewsItem>();
+        for (const item of [...items, ...fetched]) {
+            const key = normalizeLink(item.link);
+            const prev = byLink.get(key);
+            if (!prev || item.ts > prev.ts) byLink.set(key, item);
+        }
+        items = [...byLink.values()]
+            .sort((a, b) => b.ts - a.ts)
+            .slice(0, MAX_ITEMS);
+        render(Date.now());
+        setLive(true);
+    }
+
+    tabsEl.addEventListener("click", (e) => {
+        const button = (e.target as HTMLElement).closest<HTMLButtonElement>(
+            "button[data-source]"
+        );
+        if (!button) return;
+        activeSource = button.dataset.source ?? "all";
+        for (const b of tabsEl.querySelectorAll<HTMLButtonElement>("button")) {
+            b.className = b === button ? TAB_ACTIVE : TAB_INACTIVE;
+        }
+        applyFilters();
+    });
+
+    searchEl.addEventListener("input", () => {
+        query = searchEl.value.trim().toLowerCase();
+        applyFilters();
+    });
+
+    // Refresh the relative timestamps as static content ages on screen
+    render(Date.now());
+    refresh();
+    setInterval(() => render(Date.now()), 60_000);
+</script>

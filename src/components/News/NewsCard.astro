@@ -1,0 +1,80 @@
+---
+import type { NewsSource } from "@/consts";
+import { timeAgo, fullDate, isFresh, BADGE_BASE } from "@/lib/newsUtils";
+
+interface Props {
+  title: string;
+  link: string;
+  ts: number;
+  excerpt: string;
+  source: NewsSource;
+  now: number;
+}
+
+const { title, link, ts, excerpt, source, now } = Astro.props;
+const fresh = isFresh(ts, now);
+---
+
+<li
+  class="group list-none w-full"
+  data-card
+  data-source={source.id}
+  data-ts={ts}
+  data-link={link}
+  data-search={`${title} ${excerpt}`.toLowerCase()}
+>
+  <a
+    data-slot="link"
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="block border border-neutral-800 rounded-md bg-neutral-900/40 px-4 py-3 transition-all duration-300 ease-in-out hover:border-green-500/50 hover:bg-green-500/5 hover:translate-x-1"
+  >
+    <div class="flex items-center gap-2 mb-1.5">
+      <span
+        data-slot="badge"
+        class={BADGE_BASE + source.badge}
+      >
+        {source.name}
+      </span>
+      <span
+        data-slot="new"
+        class:list={[
+          "text-[10px] font-bold px-1.5 py-0.5 rounded border border-green-500/60 text-green-400 bg-green-500/10 animate-pulse",
+          { hidden: !fresh },
+        ]}
+      >
+        NEW
+      </span>
+      <time
+        data-slot="time"
+        class="ml-auto text-xs tabular-nums text-neutral-500 group-hover:text-green-400 transition-colors duration-300 shrink-0"
+        datetime={new Date(ts).toISOString()}
+        title={fullDate(ts)}
+      >
+        {timeAgo(ts, now)}
+      </time>
+    </div>
+    <h3
+      class="m-0 text-lg md:text-xl leading-snug text-neutral-200 group-hover:text-green-500 transition-colors duration-300"
+      style="font-family: 'Iceland', cursive;"
+    >
+      <span
+        class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-green-500 font-bold"
+        aria-hidden="true">[&nbsp;</span
+      ><span data-slot="title">{title}</span><span
+        class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-green-500 font-bold"
+        aria-hidden="true">&nbsp;]</span
+      >
+    </h3>
+    <p
+      data-slot="excerpt"
+      class:list={[
+        "m-0 mt-1 text-xs md:text-sm text-neutral-400 leading-relaxed line-clamp-2",
+        { hidden: !excerpt },
+      ]}
+    >
+      {excerpt}
+    </p>
+  </a>
+</li>

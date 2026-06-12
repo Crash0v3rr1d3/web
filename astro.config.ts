@@ -25,6 +25,24 @@ import remarkToc from 'remark-toc'
 import sectionize from '@hbsnow/rehype-sectionize'
 import { transformerNotationSkip } from './src/lib/transformerNotationSkip'
 import { transformerDiffHighlight } from './src/lib/transformerDiffHighlight'
+import { NEWS_SOURCES } from './src/consts'
+
+// Dev-server equivalent of the /feeds/* proxies in ../nginx.conf, so the
+// /news/ live fetch also works under `astro dev`
+const newsFeedProxy = Object.fromEntries(
+  NEWS_SOURCES.map((source) => {
+    const url = new URL(source.url)
+    return [
+      `/feeds/${source.id}`,
+      {
+        target: url.origin,
+        changeOrigin: true,
+        rewrite: () => url.pathname + url.search,
+        headers: { 'User-Agent': 'crash0v3rr1d3-news/1.0' },
+      },
+    ]
+  })
+)
 
 
 // https://astro.build/config
@@ -99,6 +117,9 @@ export default defineConfig({
   output: "static",
   vite: {
     assetsInclude: "**/*.riv",
+    server: {
+      proxy: newsFeedProxy,
+    },
     resolve: {
       alias: {
         "@": "/src",
