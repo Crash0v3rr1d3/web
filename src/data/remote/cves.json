@@ -1,5 +1,205 @@
 [
   {
+    "id": "CVE-2026-9134",
+    "description": "The FooGallery plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'custom_attribute_key' shortcode parameter in versions up to, and including, 3.1.31 This is due to an incomplete JavaScript event handler blacklist in the foogallery_sanitize_javascript() function, which blocks only a subset of HTML event attributes (onmouseover, onmouseout, onpointerenter, onclick, onload, onchange, onerror) while permitting others such as 'onmouseenter', combined with the failure to escape the attribute key when building the gallery container HTML in foogallery_build_container_attributes_safe(). This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9134",
+    "publishedDate": "2026-06-13T07:16:15.107",
+    "lastModifiedDate": "2026-06-13T07:16:15.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11769",
+    "description": "We have released version 5.24.0 of the Grafana Operator. This patch includes a CRITICAL severity security fix for a path traversal/privilege escalation vulnerability in the Grafana Operator.\n\n\n\n### Summary\n\n\n\nThe Grafana Operator supports loading dashboards & library panels using the jsonnet data templating language. The jsonnet expression is evaluated in the context of the operator manager pod.\n\n\n\n### Impact\n\n\n\nIt is possible for a malicious user who can create Dashboard or LibraryPanel resources for a Grafana instance to obtain the Kubernetes service account token of the Grafana Operator manager.\n\n\n\n### Affected versions\n\n\n\nAll Grafana Operator versions <= 5.23\n\n\n\n### Solutions and mitigations\n\n\n\nAll installations should be upgraded as soon as possible.\n\n\n\nAs a workaround, the following ValidatingAdmissionPolicy prevent the creation or modification of jsonnet based resources:\n\n\n\napiVersion: admissionregistration.k8s.io/v1\n\n\n\nkind: ValidatingAdmissionPolicy\n\n\n\nmetadata:\n\n  name: \"prevent-jsonnet-dashboards\"\n\n\nspec:\n\n  failurePolicy: Fail\n  matchConstraints:\n    resourceRules:\n      - apiGroups: [\"grafana.integreatly.org\"]\n        apiVersions: [\"v1beta1\"]\n        operations: [\"CREATE\", \"UPDATE\"]\n        resources: [\"grafanadashboards\", \"grafanalibrarypanels\"]\n  validations:\n    - expression: \"!has(object.spec.jsonnetLib)\"\n\n\n---\n\n\n\napiVersion: admissionregistration.k8s.io/v1\n\n\n\nkind: ValidatingAdmissionPolicyBinding\n\n\n\nmetadata:\n\n  name: \"prevent-jsonnet-dashboards-clusterwide\"\n\n\nspec:\n\n  policyName: \"prevent-jsonnet-dashboards\"\n  validationActions: [Deny]\n\n\n### Acknowledgement\n\n\n\nWe would like to thank Artem Cherezov for responsibly disclosing the vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11769",
+    "publishedDate": "2026-06-13T06:16:14.380",
+    "lastModifiedDate": "2026-06-13T06:16:14.380",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@grafana.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9062",
+    "description": "The Store Locator WordPress plugin before 1.6.9 does not validate a parameter before using it in a file path, allowing high-privileged users such as administrators to read arbitrary `.php` files from the server, including configuration files that contain database credentials and authentication keys.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9062",
+    "publishedDate": "2026-06-13T07:16:14.757",
+    "lastModifiedDate": "2026-06-13T07:16:14.757",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-9061",
+    "description": "The Store Locator WordPress plugin before 1.6.9 does not sanitize and escape store logo metadata before storing it and outputting it on the Store Locator WordPress plugin before 1.6.9 admin page, allowing high-privileged users such as administrators to perform Stored Cross-Site Scripting attacks even when the `unfiltered_html` capability is disallowed (e.g. in a multisite network).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9061",
+    "publishedDate": "2026-06-13T07:16:14.370",
+    "lastModifiedDate": "2026-06-13T07:16:14.370",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-9109",
+    "description": "The GPTranslate – Multilingual AI Translation for WordPress: Automatically Translate Websites plugin for WordPress is vulnerable to Stored Cross-Site Scripting via REST API Translation Storage in all versions up to, and including, 2.31 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The deterministically derived API key (sha256 of the site URL) is printed in the HTML source of every page via the JavaScript variable gptApiKey, meaning any unauthenticated visitor can retrieve the key and submit malicious translation payloads to the /wp-json/gptranslate/v1/request endpoint without any additional precondition.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9109",
+    "publishedDate": "2026-06-13T07:16:14.853",
+    "lastModifiedDate": "2026-06-13T07:16:14.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9848",
+    "description": "The WP Ticket plugin for WordPress is vulnerable to SQL Injection via the WordPress search query parameter (`s`) in versions up to, and including, 6.0.4 The plugin hooks WordPress's `posts_request` filter with `wp_ticket_com_posts_request()`, which calls `emd_author_search_results()` when the current request is an unauthenticated front-end search. That function reads `$query->query_vars['s']` — already wp_unslash()'d by `WP_Query::parse_query()`, so wp_magic_quotes protection has been stripped — and concatenates the raw value into a SQL `LIKE` clause inside a UNION sub-SELECT appended to the main query, with no `$wpdb->prepare()` or escaping. This makes it possible for unauthenticated attackers to append additional SQL queries into already-existing queries that can be used to extract sensitive information from the database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9848",
+    "publishedDate": "2026-06-13T03:16:22.017",
+    "lastModifiedDate": "2026-06-13T03:16:22.017",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54231",
+    "description": "A content injection vulnerability was found in the ABRT post-create event handler scripts in libreport. The event script queries the systemd journal for log entries matching the crashed process and writes the results to files in the dump directory without sanitizing embedded control characters. A local user can inject arbitrary content into the journal output by embedding newline characters in syslog messages, controlling the content that root writes to dump directory files.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54231",
+    "publishedDate": "2026-06-13T03:16:21.877",
+    "lastModifiedDate": "2026-06-13T03:16:21.877",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54230",
+    "description": "A symlink following vulnerability was found in the ABRT post-create event handler scripts in libreport. Event scripts write output files using shell redirections without the O_NOFOLLOW flag. If the target file is replaced with a symlink, the shell process running as root follows the symlink and writes content to the symlink target, allowing arbitrary file overwrites on the system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54230",
+    "publishedDate": "2026-06-13T03:16:21.733",
+    "lastModifiedDate": "2026-06-13T03:16:21.733",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54229",
+    "description": "A race condition was found in the abrt-dbus D-Bus service's ChownProblemDir method. ChownProblemDir opens the dump directory with DD_OPEN_READONLY and calls dd_chown to change ownership of all files to the caller's uid, succeeding even while post-create event handlers hold a write lock. This allows an attacker to gain filesystem-level control of the dump directory while privileged event scripts are still running.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54229",
+    "publishedDate": "2026-06-13T03:16:21.587",
+    "lastModifiedDate": "2026-06-13T03:16:21.587",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54228",
+    "description": "A time-of-check time-of-use (TOCTOU) race condition was found in the abrt-dbus D-Bus service's SetElement method. Between dump directory creation and post-create event execution, any local user can call SetElement to write arbitrary text files into the root-owned dump directory, bypassing package validation and allowing crashes of unpackaged binaries to survive post-create processing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54228",
+    "publishedDate": "2026-06-13T03:16:21.440",
+    "lastModifiedDate": "2026-06-13T03:16:21.440",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12089",
+    "description": "The LWS Optimize – All-in-One Speed Booster & Cache Tools plugin for WordPress is vulnerable to Arbitrary File Read in versions up to, and including, 3.3.19. This is due to the combine_current_css() function  trusting <link rel=\"stylesheet\" href=\"...\"> values harvested from page HTML and converting same-site URLs to absolute filesystem paths before reading them with file_get_contents()/Minify\\CSS::add(), without enforcing that the resolved path stay within ABSPATH or have a .css extension. This makes it possible for authenticated attackers, with Editor-level access and above, to read arbitrary files.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12089",
+    "publishedDate": "2026-06-13T03:16:19.573",
+    "lastModifiedDate": "2026-06-13T03:16:19.573",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-11443",
     "description": "Allegra downloadAttachment Cross-Site Scripting Authentication Bypass Vulnerability. This vulnerability allows remote attackers to execute arbitrary script on affected installations of Allegra. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the downloadAttachment method. The issue results from the lack of proper validation of user-supplied data, which can lead to the injection of arbitrary script. An attacker can leverage this vulnerability to execute script in the context of the current user. Was ZDI-CAN-28236.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-11443",
@@ -288,325 +488,6 @@
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
         "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53836",
-    "description": "OpenClaw before 2026.5.12 contains an allowlist bypass vulnerability in PowerShell encoded-command handling that allows attackers to execute encoded commands using abbreviated flag aliases not recognized by the allowlist parser. Remote authenticated operators can bypass execution allowlist checks by using unrecognized encoded-command alias forms to execute arbitrary PowerShell content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53836",
-    "publishedDate": "2026-06-12T22:16:55.413",
-    "lastModifiedDate": "2026-06-12T22:16:55.413",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53835",
-    "description": "OpenClaw before 2026.5.6 contains a configuration enforcement bypass vulnerability in Feishu dynamic-agent bindings that allows authenticated senders to create or update bindings without honoring configured config-write controls. Attackers can exploit this by leveraging the dynamic-agent binding feature to change sender-agent binding state beyond intended policy, potentially enabling unauthorized binding modifications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53835",
-    "publishedDate": "2026-06-12T22:16:55.237",
-    "lastModifiedDate": "2026-06-12T22:16:55.237",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53834",
-    "description": "OpenClaw before 2026.4.27 contains an authorization bypass vulnerability in QQBot pre-dispatch slash commands that allows authenticated senders to skip allowFrom policy checks. Attackers can invoke slash commands before configured access control policies are applied, potentially triggering command handling from blocked senders depending on operator configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53834",
-    "publishedDate": "2026-06-12T22:16:55.090",
-    "lastModifiedDate": "2026-06-12T22:16:55.090",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53833",
-    "description": "OpenClaw before 2026.4.29 contains an authorization bypass vulnerability in the QQBot streaming command that allows authenticated senders to mutate configuration without explicit allowFrom restrictions. Attackers can modify QQBot streaming configuration outside intended admin policy by reaching the affected command without non-wildcard allowlist entry requirements.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53833",
-    "publishedDate": "2026-06-12T22:16:54.947",
-    "lastModifiedDate": "2026-06-12T22:16:54.947",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.5,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53832",
-    "description": "OpenClaw before 2026.5.18 contains an identity header validation vulnerability allowing local same-host callers to forge trusted-proxy identity headers. Attackers with access to the proxy-facing Gateway port can supply forged identity headers to assume operator identity and potentially escalate privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53832",
-    "publishedDate": "2026-06-12T22:16:54.790",
-    "lastModifiedDate": "2026-06-12T22:16:54.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.5,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53831",
-    "description": "OpenClaw before 2026.5.18 contains a policy enforcement vulnerability in system.run safe-bin allowlist validation that allows shell expansion to modify command interpretation on POSIX nodes. Authenticated operators can exploit shell metacharacters in approved commands to read unintended node-local files and expose sensitive configuration data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53831",
-    "publishedDate": "2026-06-12T22:16:54.643",
-    "lastModifiedDate": "2026-06-12T22:16:54.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53830",
-    "description": "OpenClaw before 2026.4.22 contains a webhook secret revocation bypass vulnerability allowing callers with old Slack and Zalo webhook secrets to remain active after secrets.reload. Attackers can exploit the stale-secret window to deliver webhook events after operator-expected secret revocation, potentially accepting previous credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53830",
-    "publishedDate": "2026-06-12T22:16:54.490",
-    "lastModifiedDate": "2026-06-12T22:16:54.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53829",
-    "description": "OpenClaw before 2026.5.18 contains an approval display truncation vulnerability allowing authenticated users to hide command suffixes from approvers. Attackers can submit oversized exec commands with benign prefixes and malicious suffixes to execute unauthorized operations after approval.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53829",
-    "publishedDate": "2026-06-12T22:16:54.347",
-    "lastModifiedDate": "2026-06-12T22:16:54.347",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.1,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53828",
-    "description": "OpenClaw before 2026.5.6 contains an authorization bypass vulnerability in native command handling that allows authenticated senders to execute owner-only commands without proper policy enforcement. Attackers can trigger native command handling to bypass the configured owner-command access control, potentially executing privileged commands from unauthorized users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53828",
-    "publishedDate": "2026-06-12T22:16:54.203",
-    "lastModifiedDate": "2026-06-12T22:16:54.203",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53827",
-    "description": "OpenClaw before 2026.5.2 contains a credential exposure vulnerability in message.action forwarding that allows model-controlled metadata to forward action payloads with Gateway credentials to attacker-supplied loopback URLs. Remote attackers can intercept Gateway tokens and action payloads by providing malicious loopback targets through model-controlled action metadata.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53827",
-    "publishedDate": "2026-06-12T22:16:54.060",
-    "lastModifiedDate": "2026-06-12T22:16:54.060",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53826",
-    "description": "OpenClaw before 2026.4.26 contains an information disclosure vulnerability in sandboxed session spawning that exposes the real workspace path to child prompts. Attackers can exploit this by spawning child sessions from sandboxed parents to reveal host workspace location or related memory context to child models.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53826",
-    "publishedDate": "2026-06-12T22:16:53.913",
-    "lastModifiedDate": "2026-06-12T22:16:53.913",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
