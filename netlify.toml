@@ -1,3 +1,42 @@
 [build]
   command = "npm run build:ci"
   publish = "dist"
+
+# Same-origin RSS proxies for the /news/ live feed (CORS-free for the client JS).
+# Netlify rewrites these to the upstream feeds (status 200 = proxy, not redirect).
+# Keep ids in sync with NEWS_SOURCES in src/consts.ts.
+[[redirects]]
+  from = "/feeds/thn"
+  to = "https://feeds.feedburner.com/TheHackersNews"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/feeds/bc"
+  to = "https://www.bleepingcomputer.com/feed/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/feeds/krebs"
+  to = "https://krebsonsecurity.com/feed/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/feeds/record"
+  to = "https://therecord.media/feed"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/feeds/dr"
+  to = "https://www.darkreading.com/rss.xml"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/feeds/sw"
+  to = "https://www.securityweek.com/feed/"
+  status = 200
+  force = true
