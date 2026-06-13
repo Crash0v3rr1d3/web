@@ -1,5 +1,63 @@
 [
   {
+    "id": "CVE-2026-12183",
+    "description": "Nefteprodukttekhnika BUK TS-G Gas Station Automation System 2.9.1 through 2.10.2 on Linux contains an Improper Authentication vulnerability (CWE-287) in the system configuration module. The /php/ajax-login.php endpoint returns userid=1 (administrator) in response to any HTTP POST request that supplies arbitrary credentials (e.g., action=dologin&login=<any_value>&pwd=<any_value>), and subsequent privileged endpoints under /php/ajax-main.php and /modules/* do not validate a server-side session. A remote unauthenticated attacker can invoke any administrative action exposed by the configuration module, including reading and modifying user rules, fuel tank gauges, fuel dispensers, relays, cash registers, bank terminals, fuel cards, price and customer displays, cash collection, and pricing rules.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12183",
+    "publishedDate": "2026-06-13T18:16:22.310",
+    "lastModifiedDate": "2026-06-13T18:16:22.310",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6428",
+    "description": "SQL Injection in reports/catalogue_out.pl in Koha Community Koha through 22.11.37, 23.x, 24.x before 24.11.16, 25.05.x before 25.05.11, 25.11.x before 25.11.05, 26.05.x before 26.05.01, and 26.11.x before 26.11.00 allows an authenticated staff user with the Reports module flag to read arbitrary data from the Koha application database via the Filter URL parameter when the Criteria parameter matches /branchcode/.\n\n\n\nThe vulnerable sink in sub calculate concatenates the unmodified Filter request parameter directly into a LIKE clause of the auxiliary $strsth2 statement and executes it via DBI without bound parameters:\n\n\n\nmy $f = @$filters[0];\n$f =~ s/\\*/%/g;\n$strsth2 .= \" AND $column LIKE '$f' \";\n\n\n\nThis enables error-based SQL injection (e.g., via EXTRACTVALUE) and full read access to sensitive tables including borrowers (password hashes, 2FA secrets, PII), borrower_password_recovery, api_keys, and sessions.\n\n\n\nProof of concept (error-based, single request):\n\n\n\nGET /cgi-bin/koha/reports/catalogue_out.pl?do_it=1&output=screen&Limit=10&Criteria=branchcode&Filter=x'+AND+EXTRACTVALUE(1,CONCAT(0x7e,VERSION(),0x7c,USER(),0x7c,DATABASE(),0x7e))--+-\nCookie: CGISESSID=<LIBRARIAN_SESSION>\n\n\n\nThe response body contains the DBI exception leaking the MariaDB version, database user, client IP, and database name, after which arbitrary data can be paged out using LIMIT n,1 / SUBSTRING(...).\n\n\n\nThe vulnerable sink was introduced in commit 6bb77ae3e4 (2008-07-09); CVE-2015-4633 patched the same class in sibling files but did not generalise the fix to reports/catalogue_out.pl. Fixed in Koha 22.11.38, 24.11.16, 25.05.11, 25.11.05, 26.05.01, and 26.11.00 by replacing the raw concatenation with a parameterised placeholder.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6428",
+    "publishedDate": "2026-06-13T17:16:17.190",
+    "lastModifiedDate": "2026-06-13T17:16:17.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.7,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      },
+      {
+        "score": 5.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:C/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-5513",
     "description": "The Online Scheduling and Appointment Booking System – Bookly plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'bookly-customer-full-name' cookie in versions up to, and including, 27.2 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Exploitation requires 'Remember personal information in cookies' setting to be enabled (disabled by default).",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-5513",
@@ -416,46 +474,6 @@
         "exploitabilityScore": 1.8,
         "impactScore": 5.9,
         "source": "security@nortonlifelock.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-14098",
-    "description": "Heap buffer out-of-bounds write vulnerability due to integer overflow in Avira Antivirus engine when scanning a malformed MS-DOS executable file may allow Local Execution of Code or Denial-of-Service of the antivirus engine process.\n\nThis issue affects Avira Antivirus on Windows, macOS, and Linux for engine builds before 8.3.70.104.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-14098",
-    "publishedDate": "2026-06-12T23:16:27.350",
-    "lastModifiedDate": "2026-06-12T23:16:27.350",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security@nortonlifelock.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54398",
-    "description": "An authorization flaw in MISP’s object add/edit handling allowed an authenticated user with object editing permissions to assign a MISP object, or attributes contained within an object, to a sharing group that the user was not authorized to use or view. When editing objects, the sharing group validation was performed against the wrong request data structure after object fields had been merged to the top level, causing the check to be bypassed. In addition, attributes embedded in objects were not individually validated for authorized sharing group use.\n\nAn attacker could craft a request with distribution set to 4 and an arbitrary sharing_group_id, potentially disclosing the existence or name of otherwise non-visible sharing groups and improperly modifying the distribution metadata of objects or contained attributes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54398",
-    "publishedDate": "2026-06-12T22:16:56.370",
-    "lastModifiedDate": "2026-06-12T22:16:56.370",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
       }
     ]
   }
