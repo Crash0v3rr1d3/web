@@ -1,5 +1,121 @@
 [
   {
+    "id": "CVE-2026-54413",
+    "description": "driftregion iso14229 through 0.9.0 contains an integer underflow and downstream out-of-bounds read in the Handle_0x27_SecurityAccess() function in iso14229.c that allows a remote unauthenticated attacker to crash a UDS server and potentially read memory past the receive buffer by sending a single-byte 0x27 SecurityAccess request that follows any earlier well-formed 0x27 message. The handler reads the SecurityAccess subFunction from recv_buf[1] without first checking that recv_len is at least 2, then computes the key-data length as the unsigned subtraction (uint16_t)(recv_len - UDS_0X27_REQ_BASE_LEN); when recv_len equals 1 the result underflows to 65535 and is passed as args.len to the application's SecAccessValidateKey or SecAccessRequestSeed callback, which typically iterates or copies that many bytes from the 4-KB receive buffer. Every other UDS sub-function handler in the library (0x10, 0x11, 0x14, 0x19, 0x22, 0x23, 0x28, and others) performs an explicit recv_len lower-bound check before indexing; Handle_0x27_SecurityAccess is the sole outlier. The vulnerable handler reaches over CAN bus, OBD-II, ISO-TP, and DoIP transports and is exposed in the default diagnostic session without prior authentication; deployments on automotive ECUs, industrial controllers, and IoT devices that ship iso14229 as their UDS server are affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54413",
+    "publishedDate": "2026-06-14T18:17:20.943",
+    "lastModifiedDate": "2026-06-14T18:17:20.943",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      },
+      {
+        "score": 7.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:D/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54412",
+    "description": "LiamBindle MQTT-C through version 1.1.6 contains a heap-based out-of-bounds read and integer underflow in the mqtt_unpack_publish_response() function in src/mqtt.c that allows a remote unauthenticated attacker controlling an MQTT broker - or able to inject MQTT traffic into an unencrypted session - to crash a subscribed MQTT-C client and potentially disclose adjacent heap memory by sending a single crafted PUBLISH packet. The function validates only that the fixed-header remaining_length is at least 4, then reads the 16-bit topic_name_size field from the broker-controlled packet and advances the parse pointer by that value without verifying that topic_name_size plus the surrounding overhead fits within remaining_length; it subsequently computes application_message_size as remaining_length - topic_name_size - 2 (QoS 0) or - 4 (QoS greater than 0) in unsigned arithmetic, producing an integer underflow that is then passed to memmove(). A PUBLISH packet with topic_name_size = 0xFFFF and remaining_length = 7 advances the parse pointer 65535 bytes past the receive buffer (out-of-bounds read) and causes an application_message_size near 2^32, crashing the process when the resulting memmove() is executed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54412",
+    "publishedDate": "2026-06-14T18:17:20.750",
+    "lastModifiedDate": "2026-06-14T18:17:20.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      },
+      {
+        "score": 7.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:D/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54411",
+    "description": "Linux-PAM through 1.7.2 contains an observable timing discrepancy (CWE-208) in the pam_userdb module's plaintext-password comparison path in modules/pam_userdb/pam_userdb.c that allows a local or network-adjacent attacker able to repeatedly drive authentication through a calling service to recover the plaintext password of a target account by measuring response-timing differences. The comparison uses strncmp() (or strncasecmp() when PAM_ICASE_ARG is set) preceded by a length-equality check, so the time to reject a candidate depends on the index of the first differing byte and on whether the candidate's length matches the stored password, leaking the password length and individual prefix bytes. The vulnerable path is reached when the administrator configures pam_userdb with crypt=none, with an unrecognized crypt method, or without a crypt= argument, causing the module to store and compare credentials in plaintext.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54411",
+    "publishedDate": "2026-06-14T18:17:20.587",
+    "lastModifiedDate": "2026-06-14T18:17:20.587",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:X/V:D/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54410",
+    "description": "nanoMODBUS through v1.23.0 contains an off-by-one buffer overflow in the recv_msg_header() function of the Modbus/TCP server that allows remote unauthenticated attackers to write one attacker-controlled byte past the end of the 260-byte receive buffer by sending a crafted MBAP frame whose Length field is set to 255. The overflow corrupts the adjacent buffer-index field of the nanoMODBUS state structure, resulting in denial of service through invalid memory accesses and, on bare-metal and RTOS targets without memory protection, one-byte information disclosure and writes to unintended register addresses on the Write Multiple Registers (FC16) handler path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54410",
+    "publishedDate": "2026-06-14T18:17:20.330",
+    "lastModifiedDate": "2026-06-14T18:17:20.330",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      },
+      {
+        "score": 7.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-11527",
     "description": "Config::IniFiles versions before 3.001000 for Perl allow OS command injection and file overwrite via a 2-arg open() of the -file argument in _make_filehandle.\n\nConfig::IniFiles::_make_filehandle opens a filename argument with Perl's 2-arg open(), so a filename that begins or ends with a pipe (\"| cmd\", \"cmd |\") or begins with a redirect (\"> path\", \">> path\") is run as a command or redirect rather than opened as a file. The helper is the open path behind the documented -file argument: new(-file => $thing) reaches it through ReadConfig. An in-memory scalar reference (-file => \\$text) does not open a path and is unaffected.\n\nAny caller that forwards untrusted input to the -file argument can run an arbitrary command or truncate a file under the process UID.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-11527",
@@ -411,86 +527,6 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security@grafana.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9848",
-    "description": "The WP Ticket plugin for WordPress is vulnerable to SQL Injection via the WordPress search query parameter (`s`) in versions up to, and including, 6.0.4 The plugin hooks WordPress's `posts_request` filter with `wp_ticket_com_posts_request()`, which calls `emd_author_search_results()` when the current request is an unauthenticated front-end search. That function reads `$query->query_vars['s']` — already wp_unslash()'d by `WP_Query::parse_query()`, so wp_magic_quotes protection has been stripped — and concatenates the raw value into a SQL `LIKE` clause inside a UNION sub-SELECT appended to the main query, with no `$wpdb->prepare()` or escaping. This makes it possible for unauthenticated attackers to append additional SQL queries into already-existing queries that can be used to extract sensitive information from the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9848",
-    "publishedDate": "2026-06-13T03:16:22.017",
-    "lastModifiedDate": "2026-06-13T03:16:22.017",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54231",
-    "description": "A content injection vulnerability was found in the ABRT post-create event handler scripts in libreport. The event script queries the systemd journal for log entries matching the crashed process and writes the results to files in the dump directory without sanitizing embedded control characters. A local user can inject arbitrary content into the journal output by embedding newline characters in syslog messages, controlling the content that root writes to dump directory files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54231",
-    "publishedDate": "2026-06-13T03:16:21.877",
-    "lastModifiedDate": "2026-06-13T03:16:21.877",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54230",
-    "description": "A symlink following vulnerability was found in the ABRT post-create event handler scripts in libreport. Event scripts write output files using shell redirections without the O_NOFOLLOW flag. If the target file is replaced with a symlink, the shell process running as root follows the symlink and writes content to the symlink target, allowing arbitrary file overwrites on the system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54230",
-    "publishedDate": "2026-06-13T03:16:21.733",
-    "lastModifiedDate": "2026-06-13T03:16:21.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 5.9,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54229",
-    "description": "A race condition was found in the abrt-dbus D-Bus service's ChownProblemDir method. ChownProblemDir opens the dump directory with DD_OPEN_READONLY and calls dd_chown to change ownership of all files to the caller's uid, succeeding even while post-create event handlers hold a write lock. This allows an attacker to gain filesystem-level control of the dump directory while privileged event scripts are still running.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54229",
-    "publishedDate": "2026-06-13T03:16:21.587",
-    "lastModifiedDate": "2026-06-13T03:16:21.587",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 5.9,
-        "source": "secalert@redhat.com"
       }
     ]
   }
