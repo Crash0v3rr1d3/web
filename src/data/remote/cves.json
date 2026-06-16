@@ -1,465 +1,60 @@
 [
   {
-    "id": "CVE-2026-9187",
-    "description": "The Abandoned Contact Form 7 plugin for WordPress is vulnerable to unauthorized arbitrary post deletion in versions up to, and including, 2.2. This is due to a missing capability check and missing nonce validation in the action__remove_abandoned() function, which is registered to both the wp_ajax_remove_abandoned and wp_ajax_nopriv_remove_abandoned hooks. The handler takes a user-supplied recover_id parameter from $_POST and passes it directly to wp_delete_post() with the force-delete flag set to true, without verifying that the ID belongs to the plugin's own cf7af_data post type. This makes it possible for unauthenticated attackers to permanently delete arbitrary posts, pages, or other content on the affected site by sending a single admin-ajax.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9187",
-    "publishedDate": "2026-06-16T06:16:58.817",
-    "lastModifiedDate": "2026-06-16T06:16:58.817",
+    "id": "CVE-2026-12398",
+    "description": "A command injection vulnerability was found in galaxy_ng. The do_git_checkout() function in the legacy role import API (v1) interpolates unsanitized git ref names (branch/tag names) into shell commands executed via subprocess.run() with shell=True. An authenticated user who controls a git repository can create a branch or tag with shell metacharacters in the name to achieve remote code execution on the pulp worker. The vulnerable endpoint is only reachable when GALAXY_ENABLE_LEGACY_ROLES is set to True, which is not the default configuration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12398",
+    "publishedDate": "2026-06-16T15:16:36.103",
+    "lastModifiedDate": "2026-06-16T15:26:04.250",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8443",
-    "description": "The WP Review Slider Pro plugin for WordPress is vulnerable to SQL Injection via the 'stypes' and 'slocations' parameters of the wppro_get_overall_chart_data AJAX action in versions up to, and including, 12.6.8. This is due to the use of stripslashes() on user-supplied JSON strings prior to json_decode(), which removes the escaping applied by WordPress's wp_magic_quotes; the resulting decoded array values are then concatenated directly into SQL WHERE clauses without parameterization, and the constructed query is executed via $wpdb->get_results() without $wpdb->prepare(). This makes it possible for authenticated attackers, with Subscriber-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. The handler also returns the executed SQL string in its JSON response, which simplifies oracle construction for blind exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8443",
-    "publishedDate": "2026-06-16T06:16:58.690",
-    "lastModifiedDate": "2026-06-16T06:16:58.690",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6933",
-    "description": "The Premmerce Dev Tools plugin for WordPress is vulnerable to Remote Code Execution via missing authorization in versions up to and including 2.0. This is due to the 'generatePluginHandler' function lacking any authorization check before processing user-supplied POST data, combined with the 'createFromStub' function performing unsanitized string substitution of the 'premmerce_plugin_namespace' parameter directly into PHP stub files written to the wp-content/plugins/ directory. An attacker can inject a semicolon followed by arbitrary PHP code into the namespace parameter, causing the generated plugin file to contain and execute that code when accessed via HTTP. This makes it possible for authenticated attackers with Subscriber-level access and above to create arbitrary PHP files on the server and achieve remote code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6933",
-    "publishedDate": "2026-06-16T06:16:58.540",
-    "lastModifiedDate": "2026-06-16T06:16:58.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-5149",
-    "description": "The RTMKit plugin for WordPress is vulnerable to Incorrect Authorization in all versions up to, and including, 2.0.7 This is due to the get_submission_content AJAX endpoint lacking a capability check to verify that a user has permission to access the requested form submission data. This makes it possible for authenticated attackers, with Contributor-level access and above, to view arbitrary form submissions from other users by iterating the entries_id parameter.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5149",
-    "publishedDate": "2026-06-16T06:16:58.337",
-    "lastModifiedDate": "2026-06-16T06:16:58.337",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50255",
-    "description": "Incorrect default permissions issue exists in Optical Disc Archive Software for Windows 5.5.3 and earlier. If this vulnerability is exploited, arbitrary code may be executed with SYSTEM privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50255",
-    "publishedDate": "2026-06-16T06:16:58.180",
-    "lastModifiedDate": "2026-06-16T06:16:58.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vultures@jpcert.or.jp"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10780",
-    "description": "The Static Block plugin for WordPress is vulnerable to Insecure Direct Object Reference in all versions up to, and including, 2.2. This is due to the static_block_content() shortcode handler retrieving a post via get_post() using an attacker-supplied 'id' attribute and outputting its post_content without verifying the post's status (private, draft, pending) or the requesting user's capability to view it. This makes it possible for authenticated attackers, with contributor-level access and above, to read the contents of arbitrary posts, including private and draft static blocks (and any other post type) created by administrators, by embedding the [static_block_content id=\"X\"] shortcode in their own content and previewing it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10780",
-    "publishedDate": "2026-06-16T06:16:58.013",
-    "lastModifiedDate": "2026-06-16T06:16:58.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10635",
-    "description": "On Xtensa targets with CONFIG_USERSPACE and CONFIG_XTENSA_MMU, the page-table code (arch/xtensa/core/ptables.c) maintains a global list, xtensa_domain_list, of active memory domains using a list node embedded inside the caller-owned struct k_mem_domain. When a domain is destroyed via k_mem_domain_deinit() - arch_mem_domain_deinit(), the page tables are torn down and domain-arch.ptables is set to NULL, but the domain's node was not removed from xtensa_domain_list. The freed/deinitialized domain therefore remained linked into the global list as a dangling pointer into caller-owned storage that may then be freed or reused. Any subsequent arch_mem_map()/arch_mem_unmap() operation (widely invoked by kernel memory-mapping and demand-paging code) traverses the stale node and dereferences domain-ptables: at minimum a NULL pointer dereference causing a fatal MMU exception (denial of service), and if the k_mem_domain storage has been freed or reused, a use-after-free in which a stale/controlled ptables value is dereferenced and written through during the page-table walk (l2_page_table_map writes l1_table[...] and l2_table[...], and xtensa_mmu_compute_domain_regs writes into the domain struct and the L1 table), yielding page-table memory corruption that can undermine userspace isolation. The vulnerable path is reachable only from privileged kernel/supervisor code (k_mem_domain_deinit is not a syscall), not directly from unprivileged user threads or remotely. Affected: Zephyr v4.4.0 (the Xtensa memory-domain de-initialization feature was introduced in commit 3032b58f52d and first shipped in v4.4.0); fixed on main by adding sys_slist_find_and_remove() in arch_mem_domain_deinit(). The Xtensa MPU path is unaffected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10635",
-    "publishedDate": "2026-06-16T06:16:57.770",
-    "lastModifiedDate": "2026-06-16T06:16:57.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.5,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-10262",
-    "description": "Nokia SR Linux is vulnerable to local privilege escalation vulnerability due to unsanitized format validation. Successful exploitation of this vulnerability may allow an authenticated user to execute arbitrary commands with superuser privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-10262",
-    "publishedDate": "2026-06-16T06:16:57.063",
-    "lastModifiedDate": "2026-06-16T06:16:57.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6964",
-    "description": "The Video Conferencing with Zoom plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 4.6.7. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to obtain the site's Zoom SDK API key and a freshly-signed JWT that can be used with the Zoom Web SDK to join any Zoom meeting associated with those credentials without a legitimate invitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6964",
-    "publishedDate": "2026-06-16T04:17:26.917",
-    "lastModifiedDate": "2026-06-16T04:17:26.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7273",
-    "description": "A stack-based buffer overflow vulnerability in the CGI program of Zyxel GS1900-48HPv2 firmware versions through 2.90(ABTQ.1)C0 could allow a LAN-based, unauthenticated attacker to exploit the flaw and potentially execute OS commands via a crafted HTTP request.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7273",
-    "publishedDate": "2026-06-16T03:16:13.557",
-    "lastModifiedDate": "2026-06-16T03:16:13.557",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@zyxel.com.tw"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42014",
-    "description": "A flaw was found in GnuTLS. The `gnutls_pkcs11_token_set_pin` function, used for changing the Security Officer PIN, can lead to a use-after-free vulnerability. This occurs when an attacker attempts to change the PIN with a NULL old PIN for a token that lacks a protected authentication path.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42014",
-    "publishedDate": "2026-06-16T02:16:19.140",
-    "lastModifiedDate": "2026-06-16T02:16:19.140",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
         "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-1767",
-    "description": "A flaw was found in the GNOME localsearch (previously known as tracker-miners) MP3 Extractor `tracker-extract-mp3` component. A remote attacker could exploit this heap buffer overflow vulnerability by providing a specially crafted MP3 file containing malformed ID3 tags. This incorrect length calculation during the parsing of performer tags can lead to a read beyond the allocated buffer, potentially causing a Denial of Service (DoS) due to a crash or enabling information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1767",
-    "publishedDate": "2026-06-16T02:16:18.447",
-    "lastModifiedDate": "2026-06-16T02:16:18.447",
+    "id": "CVE-2026-47684",
+    "description": "Sync-in Server is a secure, open-source platform for file storage, sharing, collaboration, and syncing. Prior to version 2.3.0, the private IP blocklist regex used in the URL download feature does not match IPv4-mapped IPv6 addresses (e.g. ::ffff:127.0.0.1), allowing SSRF protection to be bypassed on dual-stack systems. Version 2.3.0 fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47684",
+    "publishedDate": "2026-06-16T15:16:41.063",
+    "lastModifiedDate": "2026-06-16T15:46:16.230",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.6,
+        "score": 7.7,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 4.2,
-        "source": "patrick@puiterwijk.org"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-1766",
-    "description": "A flaw was found in GNOME localsearch (previously known as tracker-miners) MP3 Extractor, specifically within the tracker-extract-mp3 component. This heap buffer overflow vulnerability occurs when processing specially crafted MP3 files containing malformed ID3v2.3 COMM (Comment) tags. An attacker could exploit this by providing a malicious MP3 file, leading to a denial of service (DoS), which causes an application crash, and potentially disclosing sensitive information from the heap memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1766",
-    "publishedDate": "2026-06-16T02:16:18.313",
-    "lastModifiedDate": "2026-06-16T02:16:18.313",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 4.2,
-        "source": "patrick@puiterwijk.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-1765",
-    "description": "A flaw was found in the `tracker-extract-mp3` component of GNOME localsearch (previously known as tracker-miners). This vulnerability, a heap buffer overflow, occurs when processing specially crafted MP3 files. A remote attacker could exploit this by providing a malicious MP3 file, leading to a Denial of Service (DoS) where the application crashes. It may also potentially expose sensitive information from the system's memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1765",
-    "publishedDate": "2026-06-16T02:16:18.170",
-    "lastModifiedDate": "2026-06-16T02:16:18.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 4.2,
-        "source": "patrick@puiterwijk.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-1764",
-    "description": "A flaw was found in GNOME localsearch (previously known as tracker-miners) MP3 Extractor. When processing specially crafted MP3 files containing ID3v2.4 tags, a missing bounds check in the `extract_performers_tags` function can lead to a heap buffer overflow. This vulnerability allows a remote attacker to cause a Denial of Service (DoS) by triggering a read of unmapped memory. In some cases, it could also lead to information disclosure by reading visible heap data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-1764",
-    "publishedDate": "2026-06-16T02:16:17.103",
-    "lastModifiedDate": "2026-06-16T02:16:17.103",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 4.2,
-        "source": "patrick@puiterwijk.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12162",
-    "description": "Improper host validation in the social login autofill feature in \nDevolutions Remote Desktop Manager 2026.2.8 allows an attacker to \ndisclose stored social login credentials via a crafted web entry \npointing to a provider lookalike domain.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12162",
-    "publishedDate": "2026-06-16T01:16:23.937",
-    "lastModifiedDate": "2026-06-16T01:16:23.937",
+    "id": "CVE-2026-0647",
+    "description": "Rockwell Automation FLEX I/O Dual-port EtherNet/IP Adapters – Multiple Vulnerabilities",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0647",
+    "publishedDate": "Tue, 16 Jun 2026 14:20:12 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-12161",
-    "description": "Improper input validation in the SSH Elevate Shell feature in \nDevolutions Remote Desktop Manager 2026.2.7 allows an authenticated user\n with permission to create or modify a shared SSH entry to execute \narbitrary commands on a remote SSH host using stored elevation \ncredentials via a crafted alternate username and user interaction with \nthe Elevate Shell action.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12161",
-    "publishedDate": "2026-06-16T01:16:22.950",
-    "lastModifiedDate": "2026-06-16T01:16:22.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9262",
-    "description": "Use of a non-secure protocol as the default FTP configuration in Canon EOS Network Setting Tool Version 1.5.0 or earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9262",
-    "publishedDate": "2026-06-16T00:16:36.020",
-    "lastModifiedDate": "2026-06-16T00:16:36.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9261",
-    "description": "Use of weak SSH cryptographic algorithms in Canon EOS Network Setting Tool Version 1.5.0 or earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9261",
-    "publishedDate": "2026-06-16T00:16:35.887",
-    "lastModifiedDate": "2026-06-16T00:16:35.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      },
-      {
-        "score": 7.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9260",
-    "description": "Use of hard-coded cryptographic keys in Canon EOS Network Setting Tool Version 1.5.0 or earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9260",
-    "publishedDate": "2026-06-16T00:16:35.757",
-    "lastModifiedDate": "2026-06-16T00:16:35.757",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.5,
-        "impactScore": 3.6,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9259",
-    "description": "Improper validation of server certificates in Canon EOS Network Setting Tool Version 1.5.0 or earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9259",
-    "publishedDate": "2026-06-16T00:16:35.623",
-    "lastModifiedDate": "2026-06-16T00:16:35.623",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9258",
-    "description": "Improper validation of SSH host keys in Canon EOS Network Setting Tool Version 1.5.0 or earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9258",
-    "publishedDate": "2026-06-16T00:16:35.460",
-    "lastModifiedDate": "2026-06-16T00:16:35.460",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f98c90f0-e9bd-4fa7-911b-51993f3571fd"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53430",
-    "description": "Improper Handling of Highly Compressed Data (Data Amplification) vulnerability in elixir-grpc grpc (GRPC.Compressor.Gzip, GRPC.Message modules) allows a denial of service via a gzip decompression bomb.\n\nThis vulnerability is associated with program files lib/grpc/compressor/gzip.ex, lib/grpc/message.ex and program routines 'Elixir.GRPC.Compressor.Gzip':decompress/1, 'Elixir.GRPC.Message':from_data/2.\n\n'Elixir.GRPC.Compressor.Gzip':decompress/1 calls :zlib.gunzip/1 directly on attacker-controlled bytes with no decompressed-size limit, ratio check, or incremental decoding. Because this module is the registered gzip GRPC.Compressor implementation, it is invoked automatically whenever an incoming gRPC frame carries the grpc-encoding: gzip header. :zlib.gunzip/1 allocates the entire decompressed result as a single binary, so a small highly compressible payload (for example a few kilobytes of zeros, which gzip compresses at roughly 1000:1) expands to multiple gigabytes inside a single call. The max_receive_message_length limit is enforced only against the already-decompressed message, so it provides no protection. An unauthenticated remote peer can send a single crafted frame to exhaust the BEAM node's heap and trigger an out-of-memory kill.\n\nThis issue affects grpc: from 0.4.0 before 1.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53430",
-    "publishedDate": "2026-06-15T23:16:46.363",
-    "lastModifiedDate": "2026-06-15T23:16:46.363",
+    "id": "CVE-2026-0646",
+    "description": "A denial-of-service security issue exists within the 1794-AENTR adapter due to improper memory handling of CIP protocol requests. This vulnerability can result in the adapter faulting and losing connection to its associated I/O modules, requiring a manual reset to recover.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0646",
+    "publishedDate": "2026-06-16T15:16:33.567",
+    "lastModifiedDate": "2026-06-16T15:26:04.250",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -470,36 +65,76 @@
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "source": "PSIRT@rockwellautomation.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-48854",
-    "description": "Allocation of Resources Without Limits or Throttling vulnerability in elixir-grpc grpc allows unauthenticated attackers to exhaust the BEAM's memory and crash the server by streaming a large or slow-trickle unary request body.\n\n'Elixir.GRPC.Server.Adapters.Cowboy.Handler':read_full_body/3 (lib/grpc/server/adapters/cowboy/handler.ex) accumulates every received chunk into a single growing binary with no size cap. Additionally, when the client omits the grpc-timeout header, the per-chunk read timeout resolves to :infinity, allowing a slow-trickle client to keep the connection alive indefinitely while memory grows. A single connection is sufficient to exhaust server memory and crash the node.\n\nThis issue affects grpc from 0.3.1 before 1.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48854",
-    "publishedDate": "2026-06-15T23:16:45.813",
-    "lastModifiedDate": "2026-06-15T23:16:45.813",
+    "id": "CVE-2026-48780",
+    "description": "Forem is open source software for building communities. Prior to commit a2ab6d4, a maliciously crafted email address could allow an attacker to bypass domain allowlist or denylist restrictions and gain access to invite-only forem deployments. The issue is patched as of `a2ab6d4`. As a workaround, some SMTP servers and email delivery providers may drop or refuse to send maliciously crafted email addresses.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48780",
+    "publishedDate": "2026-06-16T15:16:41.640",
+    "lastModifiedDate": "2026-06-16T15:46:16.230",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.7,
-        "version": "CVSS 4.0",
+        "score": 8.2,
+        "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-48853",
-    "description": "Deserialization of Untrusted Data and Allocation of Resources Without Limits or Throttling vulnerabilities in elixir-grpc grpc allow unauthenticated attackers to crash the BEAM node via atom table exhaustion and, when a decoded term flows into a call site that invokes it, achieve remote code execution on the server.\n\n'Elixir.GRPC.Codec.Erlpack':decode/2 (lib/grpc/codec/erlpack.ex) calls :erlang.binary_to_term/1 on the raw gRPC message body without the :safe option, no size bound, and no type guard. Any unauthenticated peer that sends a request with Content-Type: application/grpc+erlpack can send a crafted payload that mints arbitrary new atoms (which are never garbage-collected, exhausting the bounded atom table and crashing the VM) or that encodes a fun term which, if applied anywhere downstream, executes attacker-controlled code inside the server process.\n\nThis issue affects grpc from 0.4.0 before 1.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48853",
-    "publishedDate": "2026-06-15T23:16:45.663",
-    "lastModifiedDate": "2026-06-15T23:16:45.663",
+    "id": "CVE-2024-22447",
+    "description": "Dell Peripheral Manager, versions prior to 1.7.3, contain an uncontrolled search path element vulnerability. An attacker could potentially exploit this vulnerability through preloading malicious dll., leading to arbitrary code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-22447",
+    "publishedDate": "2026-06-16T15:16:31.633",
+    "lastModifiedDate": "2026-06-16T15:42:57.150",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.8,
+        "impactScore": 5.9,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-14272",
+    "description": "A security issue was identified in Pavilion due to improper authorization enforcement in API endpoints. This vulnerability can allow an unauthorized actor to execute privileged operations, including user/role management and other administrative actions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-14272",
+    "publishedDate": "2026-06-16T15:16:33.000",
+    "lastModifiedDate": "2026-06-16T15:26:04.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "PSIRT@rockwellautomation.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-13036",
+    "description": "An authentication\nbypass security issue exists within FactoryTalk Historian Site Edition. By\ncontinually sending requests to the login endpoint, an attacker may obtain a\nvalid authentication token.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-13036",
+    "publishedDate": "2026-06-16T15:16:32.870",
+    "lastModifiedDate": "2026-06-16T15:26:04.250",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -507,11 +142,281 @@
         "score": 9.2,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "source": "PSIRT@rockwellautomation.com"
       }
     ]
+  },
+  {
+    "id": "CVE-2026-10831",
+    "description": "A denial-of-service vulnerability exists in NPort devices because of improper access control on the command port. The command interface does not properly validate whether a sender is associated with a valid data port session before accepting break signal commands. A remote attacker with network access can send crafted requests to disrupt serial communication for an active user session.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10831",
+    "publishedDate": "2026-06-16T15:16:34.490",
+    "lastModifiedDate": "2026-06-16T15:36:54.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@moxa.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9307",
+    "description": "A sensitive information disclosure security issue exists within the affected CompactLogix controllers. The controller's web server exposes CIP Connection IDs on the diagnostics webpage, which are accessible to any unauthenticated user on the network. This information can be leveraged by an attacker to construct malicious packets, leading to Denial-of-Service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9307",
+    "publishedDate": "2026-06-16T15:16:45.223",
+    "lastModifiedDate": "2026-06-16T15:26:04.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "PSIRT@rockwellautomation.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-11694",
+    "description": "A security issue exists within 1769 CompactLogix controllers due to the missing validation of sequence numbers and source IP addresses in the CIP protocol. This allows attacker to abuse the exposed Connection ID’s visible on the web interface to perform denial-of-service attacks, resulting in a minor fault.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-11694",
+    "publishedDate": "2026-06-16T15:16:32.693",
+    "lastModifiedDate": "2026-06-16T15:26:04.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "PSIRT@rockwellautomation.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10640",
+    "description": "Zephyr's IPv6 Neighbor Discovery send paths (net_ipv6_send_na, net_ipv6_send_ns, net_ipv6_send_rs in subsys/net/ip/ipv6_nbr.c) updated the per-interface ICMP-sent statistics by calling net_pkt_iface(pkt) after net_send_data(pkt) had already returned successfully. On the success path the network stack owns and releases the packet's reference (the L2/driver send unrefs it, e.g. ethernet_send - net_pkt_unref), so for a freshly allocated packet with refcount 1 the net_pkt slab block can be freed before the statistics line runs (synchronously when no TX queue thread is configured, or via a concurrent TX thread otherwise).\n\nThe subsequent net_pkt_iface(pkt) reads pkt-iface from the freed slab block, and with CONFIG_NET_STATISTICS_PER_INTERFACE enabled that loaded pointer is dereferenced to increment iface-stats.icmp.sent, a use-after-free (CWE-416). If the slab block was reallocated in the meantime the read/increment targets unrelated or attacker-influenced memory, yielding corrupted statistics, a fault/crash (denial of service), or potential limited memory corruption.\n\nThe vulnerable Neighbor Advertisement path is reachable by any unauthenticated on-link node simply by sending ICMPv6 Neighbor Solicitations to a Zephyr node with native IPv6 enabled (handle_ns_input - net_ipv6_send_na).\n\nAffected from v3.3.0 through v4.4.0; the fix uses the already-available iface argument instead of touching the sent packet. Configurations without per-interface statistics dereference only a global counter and are not affected by the memory-safety aspect.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10640",
+    "publishedDate": "2026-06-16T15:16:34.317",
+    "lastModifiedDate": "2026-06-16T15:23:42.240",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10639",
+    "description": "In Zephyr's native IPv4 stack, icmpv4_handle_echo_request() in subsys/net/ip/icmpv4.c builds an echo-reply packet (reply), hands it to net_try_send_data(), and then, on success, calls net_stats_update_icmp_sent(net_pkt_iface(reply)). net_try_send_data() transfers ownership of reply to the TX path (net_if_try_queue_tx - net_if_tx - L2/driver send, or the asynchronous net_if_tx_thread), which can unref it to refcount 0 and return the struct net_pkt to its slab (net_pkt_unref - k_mem_slab_free) before the stats line runs. net_core.c documents this exact contract ('the pkt might contain garbage already ... do not use pkt after that call').\n\nThe post-send net_pkt_iface(reply) therefore reads reply-iface out of a freed (and possibly already reallocated) net_pkt, a use-after-free read; with CONFIG_NET_STATISTICS_PER_INTERFACE the stats macro additionally increments a counter through that value, i.e. a dereference/write through a stale or recycled-slot pointer.\n\nThe path is reached unauthenticated by any remote host that pings the device (net_icmpv4_input - net_icmp_call_ipv4_handlers - icmpv4_handle_echo_request) and is gated on CONFIG_NET_STATISTICS_ICMP. Impact is a probabilistic read of recycled packet memory plus a possible wild-pointer write under a timing race, leading most likely to corrupted interface statistics or a remotely triggerable crash (DoS).\n\nThe defect was introduced in 2019 (v1.14) and is present through v4.4.0. The companion change in net_icmpv4_send_error() is not a use-after-free because it reads net_pkt_iface(orig), the caller-owned received packet, which stays alive across the send. The fix caches the interface pointer from the live received packet before sending and uses it for the post-send stats updates.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10639",
+    "publishedDate": "2026-06-16T15:16:34.207",
+    "lastModifiedDate": "2026-06-16T15:23:42.240",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.5,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9507",
+    "description": "A session fixation vulnerability has been identified in osTicket v1.18.2. This security flaw allows an attacker to hijack a victim’s account by keeping the initial session identifier (OSTSESSID) active after a successful login.\n\n\n\nThe issue lies in the fact that the application does not invalidate the pre-authentication cookie or generate a new identifier for the authenticated context. As a result, if an attacker manages to set a known session identifier in the victim’s browser, they will be able to maintain unauthorised access to the account once the victim has authenticated.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9507",
+    "publishedDate": "2026-06-16T13:16:38.140",
+    "lastModifiedDate": "2026-06-16T15:36:43.610",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cve-coordination@incibe.es"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53900",
+    "description": "Firefox for iOS preserved cookies set on the initial PDF request across cross-origin HTTP redirects in TemporaryDocument, allowing a malicious site to inject arbitrary cookies into requests to an unrelated target domain. This vulnerability was fixed in Firefox for iOS 152.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53900",
+    "publishedDate": "2026-06-16T13:16:37.517",
+    "lastModifiedDate": "2026-06-16T15:16:44.727",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53899",
+    "description": "Firefox for iOS used partial domain matching when attaching cookies to PDF requests, allowing a malicious site on a suffix domain to receive cookies belonging to the target site. This vulnerability was fixed in Firefox for iOS 152.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53899",
+    "publishedDate": "2026-06-16T13:16:37.420",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12330",
+    "description": "Incorrect boundary conditions in the Internationalization component. This vulnerability was fixed in Firefox ESR 140.12 and Firefox ESR 115.37.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12330",
+    "publishedDate": "2026-06-16T13:16:33.747",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12329",
+    "description": "Memory safety bug fixed in Firefox ESR 140.12. This vulnerability was fixed in Firefox ESR 140.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12329",
+    "publishedDate": "2026-06-16T13:16:33.657",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12328",
+    "description": "Memory safety bugs present in Firefox ESR 115.36, Firefox ESR 140.11, Thunderbird ESR 140.11, Firefox 151 and Thunderbird 151. Some of these bugs showed evidence of memory corruption and we presume that with enough effort some of these could have been exploited to run arbitrary code. This vulnerability was fixed in Firefox 152, Firefox ESR 140.12, and Firefox ESR 115.37.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12328",
+    "publishedDate": "2026-06-16T13:16:33.567",
+    "lastModifiedDate": "2026-06-16T15:16:35.953",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12327",
+    "description": "Memory safety bugs present in Firefox ESR 140.11, Thunderbird ESR 140.11, Firefox 151 and Thunderbird 151. Some of these bugs showed evidence of memory corruption and we presume that with enough effort some of these could have been exploited to run arbitrary code. This vulnerability was fixed in Firefox 152 and Firefox ESR 140.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12327",
+    "publishedDate": "2026-06-16T13:16:33.473",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12326",
+    "description": "Memory safety bugs present in Firefox 151 and Thunderbird 151. Some of these bugs showed evidence of memory corruption and we presume that with enough effort some of these could have been exploited to run arbitrary code. This vulnerability was fixed in Firefox 152.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12326",
+    "publishedDate": "2026-06-16T13:16:33.380",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12325",
+    "description": "Denial-of-service in the Graphics: ImageLib component. This vulnerability was fixed in Firefox 152, Firefox ESR 140.12, and Firefox ESR 115.37.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12325",
+    "publishedDate": "2026-06-16T13:16:33.267",
+    "lastModifiedDate": "2026-06-16T15:16:35.800",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12324",
+    "description": "Incorrect boundary conditions in the Graphics: CanvasWebGL component. This vulnerability was fixed in Firefox 152 and Firefox ESR 140.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12324",
+    "publishedDate": "2026-06-16T13:16:33.153",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12323",
+    "description": "Spoofing issue in the DOM: Core & HTML component. This vulnerability was fixed in Firefox 152.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12323",
+    "publishedDate": "2026-06-16T13:16:33.043",
+    "lastModifiedDate": "2026-06-16T15:16:35.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12322",
+    "description": "Clickjacking issue in the Widget: Gtk component. This vulnerability was fixed in Firefox 152.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12322",
+    "publishedDate": "2026-06-16T13:16:32.937",
+    "lastModifiedDate": "2026-06-16T14:51:31.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
