@@ -1,330 +1,250 @@
 [
   {
-    "id": "CVE-2026-48777",
-    "description": "FileBrowser Quantum is a free, self-hosted, web-based file manager. Versions prior to 1.3.2-stable, 1.4.0-beta and 1.4.1-beta are vulnerable to Path Traversal through the publicPatchHandler in backend/http/public.go which joins user-controlled fromPath and toPath body fields with the trusted d.share.Path BEFORE the downstream sanitizer runs. Because filepath.Join collapses .. segments during the join, the sanitizer in resourcePatchHandler never sees the traversal and the move/copy/rename operates on a path outside the shared directory. The same root-cause pattern was patched for the bulk DELETE endpoint as CVE-2026-44542 (GHSA-fwj3-42wh-8673), but the PATCH handler with the identical pattern was not updated. A public share link with AllowModify=true is sufficient to exploit this. Anyone holding such a link can move, copy, or rename arbitrary files within the share owner's source root. This issue has been fixed in versions 1.3.3-stable and 1.4.2-beta.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48777",
-    "publishedDate": "2026-06-16T20:16:46.583",
-    "lastModifiedDate": "2026-06-16T20:45:06.307",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47750",
-    "description": "stable-diffusion.cpp is a pure C/C++ library for running diffusion model (Stable Diffusion, Flux, Wan, Qwen Image, Z-Image, and more) inference. In versions prior to master-584-0a7ae07,  the pickle .ckpt parser in src/model.cpp contained a heap buffer overflow vulnerability in the GLOBAL opcode handler. The issue was caused by missing validation when searching for newline-delimited fields. A crafted .ckpt file without the expected newline could cause the parser to use -1 as a copy length, resulting in immediate heap corruption. The attack requires the victim or application to load a .ckpt file from an untrusted source, such as a downloaded model from a model sharing site. The issue has been resolved in version master-584-0a7ae07. If developers are unable to immediately update their applications they can work around this issue by following these instructions: do not load .ckpt checkpoint files from untrusted sources, and prefer trusted model sources and safer formats such as .safetensors where possible.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47750",
-    "publishedDate": "2026-06-16T20:16:44.413",
-    "lastModifiedDate": "2026-06-16T20:44:11.730",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47747",
-    "description": "stable-diffusion.cpp is a pure C/C++ library for running diffusion model (Stable Diffusion, Flux, Wan, Qwen Image, Z-Image, and more) inference. In versions prior to master-584-0a7ae07, the pickle .ckpt parser in src/model.cpp contained a heap buffer overflow vulnerability in the BINUNICODE opcode handler. The issue was caused by sign confusion on the opcode length field. A crafted .ckpt file could trigger memcpy with a very large length derived from a negative signed value, causing immediate heap corruption.\nThe issue has been resolved in version master-584-0a7ae07. If developers are unable to immediately update their applications they can work around this issue by only loading .ckpt checkpoint files from trusted sources and preferring trusted model sources and safer formats such as .safetensors where possible.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47747",
-    "publishedDate": "2026-06-16T20:16:44.163",
-    "lastModifiedDate": "2026-06-16T20:44:11.730",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46448",
-    "description": "In OpenStack Nova before 33.0.2, the server create API does not strip certain hint data. The resulting instance has no Placement allocation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46448",
-    "publishedDate": "2026-06-16T20:16:41.697",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-22313",
-    "description": "The device has a webserver that exposes a REST API authenticated with a token on the management network. By exploiting an OS command injection vulnerability an authenticated attacker can send\narbitrary commands to the device that are executed with administrative permissions by the underlying operating system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22313",
-    "publishedDate": "2026-06-16T20:16:28.710",
-    "lastModifiedDate": "2026-06-16T20:47:43.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-22312",
-    "description": "The device has a webserver that exposes a REST API authenticated with a constant token. The unauthenticated API can be used by an attacker to get access to system settings, modify the configuration\nand execute some commands (e.g. system reboot).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22312",
-    "publishedDate": "2026-06-16T20:16:28.590",
-    "lastModifiedDate": "2026-06-16T20:47:43.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12425",
-    "description": "Improper Neutralization of Input During Web Page Generation (XSS or 'Cross-site Scripting') vulnerability in PowerSchool Employee Access Center allows Cross-Site Scripting (XSS). This issue affects Employee Access Center: 23.10. It is possible to add in javascript code after the login URL and have it be eval()'d in the page and execute in the context of the user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12425",
-    "publishedDate": "2026-06-16T20:16:28.443",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:L/VA:L/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12117",
-    "description": "Improper access control in the social login connection endpoint in \nDevolutions Server 2026.2.5 allows an authenticated vault member to \nenumerate social login entry metadata to which they are not authorized \nvia a crafted API request.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12117",
-    "publishedDate": "2026-06-16T20:16:27.577",
-    "lastModifiedDate": "2026-06-16T20:41:35.520",
+    "id": "CVE-2025-15642",
+    "description": "Netskope Client Service Insufficient Access Controls",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15642",
+    "publishedDate": "Wed, 17 Jun 2026 01:48:39 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-12105",
-    "description": "Improper access control in Devolutions Server 2026.2.5, 2026.1.21 allows\n an authenticated user to access attachments via folder duplication with\n inherited permissions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12105",
-    "publishedDate": "2026-06-16T20:16:27.483",
-    "lastModifiedDate": "2026-06-16T20:41:35.520",
+    "id": "CVE-2026-50203",
+    "description": "Apache Airflow SFTP provider: Path traversal in SFTPHook.retrieve_directory allows local file write outside the destination directory via malicious server-supplied directory-entry names",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50203",
+    "publishedDate": "Wed, 17 Jun 2026 01:47:49 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-11890",
-    "description": "Improper access control in PAM account discovery results in Devolutions \nServer 2026.2.5, 2026.1.21 allows an authenticated user to retrieve \naccount discovery scan results.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11890",
-    "publishedDate": "2026-06-16T20:16:27.227",
-    "lastModifiedDate": "2026-06-16T20:41:35.520",
+    "id": "CVE-2026-12469",
+    "description": "Google Chrome GPU Uninitialized Use Information Leak",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12469",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:27 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-10303",
-    "description": "In ServerCo getssl version 2.49 and prior, the ACME challenge token returned to the client was not strictly validated against RFC 8555 before being used in challenge-file handling, allowing a maliciously crafted token to influence local path/filename usage during validation. An attacker who can supply ACME challenge responses to getssl (for example, a malicious or compromised CA endpoint, or an on-path adversary able to tamper with that response path) could exploit this to achieve unauthorized file write/path traversal effects, usually with elevated privileges, ultimately allowing for remote command injection. This issue appears related in spirit to CVE-2023-38198, and is an instance of CWE-73, \"External control of file name or path.\" Other ACME shell script handlers may be affected by similar issues.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10303",
-    "publishedDate": "2026-06-16T20:16:26.963",
-    "lastModifiedDate": "2026-06-16T20:47:43.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "44488dab-36db-4358-99f9-bc116477f914"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0165",
-    "description": "In several functions of the RTCP packet decoder, there is a possible out-of-bounds read due to a missing bounds check. This could lead to remote information disclosure with no additional execution privileges needed. User interaction is needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0165",
-    "publishedDate": "2026-06-16T20:16:26.877",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12468",
+    "description": "Google Chrome Updater Sandbox Escape",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12468",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:26 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0164",
-    "description": "In Modem, there is a possible out of bounds write due to a missing bounds check. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0164",
-    "publishedDate": "2026-06-16T20:16:26.790",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12467",
+    "description": "Google Chrome Use-After-Free Sandbox Escape",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12467",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:26 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0162",
-    "description": "In ParsePayloads of AudioSdpParser.cpp, there is a possible memory corruption due to type confusion. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0162",
-    "publishedDate": "2026-06-16T20:16:26.697",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12466",
+    "description": "Google Chrome Heap Buffer Overflow",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12466",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:25 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0161",
-    "description": "In numberOfReportBlocks of RtpSession.cpp, there is a possible out of bounds write due to an integer overflow. This could lead to remote escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0161",
-    "publishedDate": "2026-06-16T20:16:26.610",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12465",
+    "description": "Google Chrome Sandbox Escape",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12465",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:25 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0160",
-    "description": "In TextRtpPayloadDecoderNode::DecodeT140 of TextRtpPayloadDecoderNode.cpp, there is a possible out of bounds write due to a missing bounds check. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0160",
-    "publishedDate": "2026-06-16T20:16:26.517",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12464",
+    "description": "Google Chrome Use After Free Sandbox Escape",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12464",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:24 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0158",
-    "description": "In Camera, there is a possible unauthorized way to access photos due to a missing permission check. This could lead to local information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0158",
-    "publishedDate": "2026-06-16T20:16:26.420",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12463",
+    "description": "Google Chrome UXSS",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12463",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:24 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0157",
-    "description": "In RtcpHeader::decodeRtcpHeader, there is a possible OOB read due to a missing bounds check. This could lead to remote information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0157",
-    "publishedDate": "2026-06-16T20:16:26.327",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12462",
+    "description": "Google Chrome Use-After-Free in Media",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12462",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:23 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0156",
-    "description": "In checkSsrcCollisionOnRcv of RtpSession.cpp, there is a possible memory safety issue due to a missing null check. This could lead to remote denial of service with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0156",
-    "publishedDate": "2026-06-16T20:16:26.240",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12461",
+    "description": "Google Chrome Out-of-Bounds Read Information Disclosure",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12461",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:22 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0155",
-    "description": "In ImsMediaBitReader::ReadByteBuffer, there is a possible OOB read due to a missing bounds check. This could lead to remote information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0155",
-    "publishedDate": "2026-06-16T20:16:26.150",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12460",
+    "description": "Google Chrome File System Access Policy Bypass",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12460",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:22 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0154",
-    "description": "In Modem, there is a possible way to trigger a modem crash during a SIP REFER request due to memory corruption. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0154",
-    "publishedDate": "2026-06-16T20:16:26.063",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12459",
+    "description": "Google Chrome UXSS",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12459",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:21 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0153",
-    "description": "In Write of msg_to_host_buffer.cc, there is a possible out of bounds write due to an incorrect bounds check. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0153",
-    "publishedDate": "2026-06-16T20:16:25.970",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12458",
+    "description": "Google Chrome Password Leak Vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12458",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:21 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0152",
-    "description": "In OSMMapPMRGeneric of pmr_os.c, there is a possible way to leverage a system call to system call to maliciously expand the VMA out of bounds due to a logic error in the code. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0152",
-    "publishedDate": "2026-06-16T20:16:25.883",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12457",
+    "description": "Google Chrome Improper Extension Implementation Site Isolation Bypass",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12457",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:20 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0151",
-    "description": "In IntfGraphCreate of intfgraph.c, there is a possible out of bounds write due to an integer overflow. This could lead to remote code execution with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0151",
-    "publishedDate": "2026-06-16T20:16:25.793",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12456",
+    "description": "Google Chrome Extension Same Origin Policy Bypass",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12456",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:19 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-0150",
-    "description": "In ExecuteGraph command handler of EdgeTPU firmware, there is a possible out of bounds write due to an integer overflow. This could lead to local escalation of privilege with root privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0150",
-    "publishedDate": "2026-06-16T20:16:25.707",
-    "lastModifiedDate": "2026-06-16T20:42:25.013",
+    "id": "CVE-2026-12455",
+    "description": "Google Chrome Use After Free",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12455",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:19 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12454",
+    "description": "Google Chrome Sandbox Escape via Race Condition",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12454",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:18 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12453",
+    "description": "Google Chrome Same Origin Policy Bypass",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12453",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:18 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12452",
+    "description": "Google Chrome Use-After-Free",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12452",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:17 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12451",
+    "description": "Google Chrome Use-after-free Sandbox Escape",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12451",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:17 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12450",
+    "description": "Google Chrome Media Information Disclosure",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12450",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:16 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12449",
+    "description": "Google Chrome Chromoting Use-After-Free Privilege Escalation",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12449",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:15 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12448",
+    "description": "Google Chrome Android WebView Privilege Escalation",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12448",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:15 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12447",
+    "description": "Google Chrome heap buffer overflow",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12447",
+    "publishedDate": "Wed, 17 Jun 2026 01:38:14 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
