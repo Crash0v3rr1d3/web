@@ -2,10 +2,11 @@
 import Layout from "@/layouts/Layout.astro";
 import Parser from "rss-parser";
 import NewsCard from "@/components/News/NewsCard.astro";
-import { NEWS_SOURCES } from "@/consts";
+import { NEWS_SOURCES, NEWS_EXCLUDE } from "@/consts";
 import {
     dayLabel,
     excerptOf,
+    isExcluded,
     normalizeLink,
     TAB_ACTIVE,
     TAB_INACTIVE,
@@ -34,6 +35,7 @@ for (const result of results) {
     const { source, feed } = result.value;
     for (const entry of feed.items ?? []) {
         if (!entry.title || !entry.link) continue;
+        if (isExcluded(entry.title, NEWS_EXCLUDE)) continue;
         items.push({
             title: entry.title.trim(),
             link: entry.link,
@@ -184,11 +186,12 @@ for (const item of items) {
 </Layout>
 
 <script>
-    import { NEWS_SOURCES } from "@/consts";
+    import { NEWS_SOURCES, NEWS_EXCLUDE } from "@/consts";
     import {
         dayLabel,
         excerptOf,
         fullDate,
+        isExcluded,
         isFresh,
         normalizeLink,
         timeAgo,
@@ -371,7 +374,7 @@ for (const item of items) {
                 });
             }
         }
-        return out;
+        return out.filter((i) => !isExcluded(i.title, NEWS_EXCLUDE));
     }
 
     function setLive(live: boolean) {

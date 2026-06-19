@@ -99,6 +99,12 @@ export const NEWS_SOURCES: NewsSource[] = [
 
 export const NEWS_FEEDS: string[] = NEWS_SOURCES.map((s) => s.url)
 
+// News items whose title contains any of these (case-insensitive) are dropped
+// from the /news/ feed — recurring non-news filler from upstream sources.
+export const NEWS_EXCLUDE: string[] = [
+  'name that toon',
+]
+
 export const CVE_FEEDS: string[] = [
   'https://cvefeed.io/rssfeed/latest.xml'
 ]

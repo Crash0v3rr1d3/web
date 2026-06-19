@@ -22,6 +22,11 @@ export const TAB_INACTIVE =
   TAB_BASE +
   'text-neutral-400 border-neutral-700 bg-transparent hover:text-green-400 hover:border-green-500/50'
 
+export function isExcluded(title: string, patterns: string[]): boolean {
+  const t = title.toLowerCase()
+  return patterns.some((p) => t.includes(p.toLowerCase()))
+}
+
 export function stripHtml(html: string): string {
   return html
     .replace(/<[^>]*>/g, ' ')
