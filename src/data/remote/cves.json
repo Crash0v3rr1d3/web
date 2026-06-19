@@ -1,80 +1,60 @@
 [
   {
-    "id": "CVE-2026-49257",
-    "description": "mcp-pinot: Unauthenticated tool invocation via default oauth_enabled=False + host 0.0.0.0 bind",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49257",
-    "publishedDate": "Thu, 18 Jun 2026 21:01:10 +0000",
+    "id": "CVE-2026-8806",
+    "description": "Denial-of-service (DoS) vulnerability in MELSEC iQ-F Series FX5-ENET/IP Ethernet module",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8806",
+    "publishedDate": "Fri, 19 Jun 2026 02:31:04 +0000",
     "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-49454",
-    "description": "Relyra SAML SignatureValue not cryptographically verified -&gt; authentication bypass",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49454",
-    "publishedDate": "Thu, 18 Jun 2026 20:52:22 +0000",
+    "id": "CVE-2026-11775",
+    "description": "User Admin Simplifier &lt;= 3.0.0 - Cross-Site Request Forgery",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11775",
+    "publishedDate": "Fri, 19 Jun 2026 02:29:39 +0000",
     "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-46699",
-    "description": "conda-smithy vulnerable to misrouted repository invitation by conda-forge-webservices[bot] due to GitHub username takeover leading to unintended write access in conda-forge feedstock repository",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46699",
-    "publishedDate": "Thu, 18 Jun 2026 20:47:28 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-45696",
-    "description": "OpenEXR is the reference implementation and specification for the EXR image format, widely used in the motion picture industry. In versions 3.4.0 through 3.4.11, the HTJ2K (High-Throughput JPEG 2000) decoder, ht_undo_impl() in OpenEXRCore is vulnerable to a heap-buffer-overflow READ. The  ht_undo_imp function copies decoded pixels out of a per-line OpenJPH buffer using the EXR channel's declared width as the iteration count. The codestream embedded in the EXR chunk can declare different (smaller) tile/line dimensions than the EXR header advertises, but ht_undo_impl() does not validate this — it pulls width 32-bit samples from cur_line->i32[] without checking the OpenJPH line buffer's actual length. A crafted EXR file produces a 4-byte heap-buffer-overflow READ immediately after a buffer allocated by ojph::local::codestream::finalize_alloc(). The bug is reachable through the standard scanline-decode entry point used by every consumer of exr_decoding_run/Imf::checkOpenEXRFile, including thumbnailers, asset pipelines, and the exrcheck utility — i.e. any application that opens untrusted EXR files. The result is a deterministic crash (DoS) and potential adjacent-heap leak. This issue has been fixed in version 3.4.12.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45696",
-    "publishedDate": "2026-06-18T21:16:28.917",
-    "lastModifiedDate": "2026-06-18T21:16:28.917",
+    "id": "CVE-2026-8805",
+    "description": "Integer Overflow or Wraparound vulnerability in the EtherNet/IP function of Mitsubishi Electric MELSEC iQ-F Series FX5-EIP EtherNet/IP module FX5-EIP versions 1.000 and prior allows a remote attacker to cause a denial-of-service (DoS) condition in the affected product by rapidly establishing a large number of TCP connections to it, resulting in an inconsistency in the product's internal connection management process and triggering improper memory access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8805",
+    "publishedDate": "2026-06-19T03:16:14.850",
+    "lastModifiedDate": "2026-06-19T03:16:14.850",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.3,
+        "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "Mitsubishielectric.Psirt@yd.MitsubishiElectric.co.jp"
       }
     ]
   },
   {
-    "id": "CVE-2026-44663",
-    "description": "OpenEXR is the reference implementation and specification for the EXR image format, widely used in the motion picture industry. In versions 3.4.0 through 3.4.11, an integer overflow in ht_undo_impl() in src/lib/OpenEXRCore/internal_ht.cpp leads to a heap-buffer overflow when decoding a crafted HTJ2K-compressed EXR file. decode->channels[i].width (int32_t) is multiplied by bytes_per_element in 32-bit signed arithmetic. With large widths (e.g., >= 536870912 for FLOAT data), this overflows, producing a corrupted offset that is later used for pointer arithmetic and can cause a heap out-of-bounds write. The same unchecked multiplication pattern appears in two other HTJ2K paths (bytes-per-line accumulation and pixel-line pointer advancement). As with related CVE-2026-34378 through CVE-2026-34589 fixes in other codecs, validating only after the multiplication is too late because the value may already be overflowed. This issue has been fixed in version 3.4.12.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44663",
-    "publishedDate": "2026-06-18T21:16:28.767",
-    "lastModifiedDate": "2026-06-18T21:16:28.767",
+    "id": "CVE-2026-40624",
+    "description": "AVer PTC cameras Files or Directories Accessible to External Parties",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40624",
+    "publishedDate": "Thu, 18 Jun 2026 23:54:51 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2025-15661",
-    "description": "libssh2 through 1.11.1, fixed in commit 2dae302, contains an out-of-bounds heap read vulnerability in the sftp_symlink() function in src/sftp.c that allows a malicious SSH server or man-in-the-middle attacker to disclose heap memory contents or cause a crash by sending a crafted SSH_FXP_NAME response. Attackers can supply a link_len value larger than the actual packet data in SSH_FXP_NAME responses for SFTP READLINK and REALPATH operations, triggering a heap buffer over-read of up to target_len minus one bytes due to the missing validation of available packet buffer size before the memcpy operation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15661",
-    "publishedDate": "2026-06-18T21:16:27.143",
-    "lastModifiedDate": "2026-06-18T21:16:27.143",
+    "id": "CVE-2026-50034",
+    "description": "An attacker within BLE communication range can passively intercept \nwireless traffic and obtain sensitive health-related information, \nincluding glucose measurement values.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50034",
+    "publishedDate": "2026-06-19T00:16:47.980",
+    "lastModifiedDate": "2026-06-19T00:16:47.980",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -82,58 +62,148 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "ics-cert@hq.dhs.gov"
       },
       {
-        "score": 8.3,
+        "score": 7.1,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "ics-cert@hq.dhs.gov"
       }
     ]
   },
   {
-    "id": "CVE-2026-49252",
-    "description": "deepstream is a server that allows clients and backend services to sync data, send messages and make rpcs at scale. Versions prior to 10.0.5  are vulnerable to Prototype Pollution. Exploitation can lead to potential privilege escalation from any authenticated user with write permission to any record. This issue has been fixed in version 10.0.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49252",
-    "publishedDate": "2026-06-18T21:16:29.643",
-    "lastModifiedDate": "2026-06-18T21:16:29.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49248",
-    "description": "OneDev: RCE through absolute-path symlink following allows low-privileged users to overwrite arbitrary server via TarUtils.untar",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49248",
-    "publishedDate": "Thu, 18 Jun 2026 19:54:01 +0000",
+    "id": "CVE-2026-52866",
+    "description": "Apollo Pharmacy Blood Glucose Monitoring System APG-01 BT Missing Authorization",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52866",
+    "publishedDate": "Thu, 18 Jun 2026 23:45:34 +0000",
     "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-43994",
-    "description": "Coturn is a free open source implementation of TURN and STUN Server. Versions prior to 4.10.0 contain a stack buffer overflow in decode_oauth_token_gcm(). A uint16_t nonce_len field read from an attacker-supplied OAuth access token (0-65535) is passed directly to memcpy() as the copy length into a 256-byte stack buffer (oauth_encrypted_block.nonce[256]) without bounds checking. The overflow occurs before AES-GCM authentication is verified, the attacker does not need to know the OAuth key or produce a valid AES-GCM token. Up to 735 bytes of attacker-controlled data are written past the buffer, may corrupt adjacent stack data, including control-flow data depending on compiler, ABI, and mitigations. Requires --oauth mode (non-default). This may provide a plausible RCE primitive depending on exploit mitigations; because coturn is widely deployed for WebRTC TURN/STUN and --oauth is commonly recommended, impact can be broad. This issue has been fixed in version 4.10.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43994",
-    "publishedDate": "2026-06-18T21:16:28.630",
-    "lastModifiedDate": "2026-06-18T21:16:28.630",
+    "id": "CVE-2026-12049",
+    "description": "pgAdmin 4: Open redirect in multi-factor authentication flow via unvalidated 'next' parameter",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12049",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:43 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12048",
+    "description": "pgAdmin 4: Stored XSS via untrusted error and plan-node text rendered through html-react-parser",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12048",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:41 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12047",
+    "description": "pgAdmin 4: HTML injection in cloud verify_credentials / deploy endpoints via unsanitised SDK exception text",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12047",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:39 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12046",
+    "description": "pgAdmin 4: Unauthenticated pickle deserialization in SQL Editor close / update_connection routes enables remote code execution",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12046",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:37 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12045",
+    "description": "pgAdmin 4: AI Assistant read-only transaction bypass allows unauthorised writes and remote code execution",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12045",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:35 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12050",
+    "description": "pgAdmin 4: SQL injection in named restore point endpoint",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12050",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:19 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-12044",
+    "description": "pgAdmin 4: SQL injection in COMMENT ON ... IS '&lt;description&gt;' rendering across dialog templates",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12044",
+    "publishedDate": "Thu, 18 Jun 2026 23:37:16 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-10746",
+    "description": "",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10746",
+    "publishedDate": "Thu, 18 Jun 2026 22:19:56 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-6716",
+    "description": "",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6716",
+    "publishedDate": "Thu, 18 Jun 2026 22:19:56 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-56078",
+    "description": "PraisonAI - Arbitrary File Read and Write via Path Traversal in MultiAgentMonitor",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56078",
+    "publishedDate": "Thu, 18 Jun 2026 22:12:25 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-56077",
+    "description": "PraisonAI - Information Disclosure via Shared MultiAgentLedger State",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56077",
+    "publishedDate": "Thu, 18 Jun 2026 22:12:24 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-56076",
+    "description": "PraisonAI before 1.5.128 contains a cross-origin agent execution vulnerability in the AGUI endpoint that allows remote attackers to trigger arbitrary agent execution. The POST /agui endpoint lacks authentication and hardcodes Access-Control-Allow-Origin: * headers, combined with Starlette's Content-Type-agnostic JSON parsing, enabling attackers to bypass CORS preflight checks via simple requests and exfiltrate sensitive agent responses including tool execution results and environment data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56076",
+    "publishedDate": "2026-06-18T23:16:19.490",
+    "lastModifiedDate": "2026-06-18T23:16:19.490",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -141,36 +211,16 @@
         "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-25865",
-    "description": "Punto Switcher through 4.5.0.583 contains an unquoted search path element vulnerability that allows local attackers to execute arbitrary code by exploiting the application's call to WinExec without a fully qualified path for RunDll32.exe when invoking shell32.dll Control_RunDLL input.dll. Attackers can place a malicious executable earlier in the search order to achieve arbitrary code execution in the context of the affected user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25865",
-    "publishedDate": "2026-06-18T20:16:12.923",
-    "lastModifiedDate": "2026-06-18T20:16:12.923",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 8.5,
+        "score": 8.6,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -178,212 +228,93 @@
     ]
   },
   {
-    "id": "CVE-2026-43915",
-    "description": "Coturn is a free open source implementation of TURN and STUN Server. Versions prior to 4.11.0 contain a stored cross-site scripting (XSS) vulnerability in the web-admin HTTPS interface. An attacker who can create a TURN allocation with a crafted USERNAME value can inject HTML/JavaScript that executes when an authenticated web-admin user views the TURN session list. In configurations using anonymous TURN access (--no-auth), this may be exploitable without TURN credentials. In authenticated deployments, exploitation requires valid TURN credentials or control over a provisioned username. This issue has been fixed in version 4.11.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43915",
-    "publishedDate": "2026-06-18T20:16:13.287",
-    "lastModifiedDate": "2026-06-18T21:16:28.527",
+    "id": "CVE-2026-56075",
+    "description": "PraisonAI - Arbitrary Shell Command Execution via Hardcoded Approval Mode Override",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56075",
+    "publishedDate": "Thu, 18 Jun 2026 22:12:23 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-56074",
+    "description": "PraisonAI - Tool Approval Cache Bypass via Coarse-Grained Caching",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56074",
+    "publishedDate": "Thu, 18 Jun 2026 22:12:22 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-47647",
+    "description": "Dynamics 365 Elevation of Privilege Vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47647",
+    "publishedDate": "Thu, 18 Jun 2026 21:42:40 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-54130",
+    "description": "M365 Copilot Information Disclosure Vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54130",
+    "publishedDate": "Thu, 18 Jun 2026 21:42:39 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-32174",
+    "description": "Azure Bot Service Elevation of Privilege Vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-32174",
+    "publishedDate": "Thu, 18 Jun 2026 21:39:17 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-47633",
+    "description": "Exposure of sensitive information to an unauthorized actor in Cost Management Interactive Experiences allows an unauthorized attacker to disclose information over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47633",
+    "publishedDate": "2026-06-18T22:16:31.613",
+    "lastModifiedDate": "2026-06-18T22:16:31.613",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
+        "score": 7.5,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "secure@microsoft.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-56099",
-    "description": "OpenBSD before commit 6a23123 (2026-06-18) contains an out-of-bounds read vulnerability in the mpls_do_error function within sys/netmpls/mpls_input.c that allows remote attackers to disclose kernel stack memory by sending crafted MPLS frames with 16 labels and no Bottom-of-Stack bit set.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56099",
-    "publishedDate": "2026-06-18T20:16:15.370",
-    "lastModifiedDate": "2026-06-18T20:16:15.370",
+    "id": "CVE-2026-8668",
+    "description": "A static credential embedded in Chef 360 prior to v1.7.0 permitted unauthenticated access to internal message queues.  Queue messages contained tenant-specific identifiers.  The credential has been rotated and replaced with per-tenant access in subsequent versions, eliminating this access method entirely.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8668",
+    "publishedDate": "2026-06-18T22:16:32.537",
+    "lastModifiedDate": "2026-06-18T22:16:32.537",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
+        "score": 2.3,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:L/VI:N/VA:L/SC:H/SI:N/SA:L/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:X/V:X/RE:L/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security@progress.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-48980",
-    "description": "pam_usb: getenv() used in PAM context allows environment variable injection into local-check logic",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48980",
-    "publishedDate": "Thu, 18 Jun 2026 19:26:05 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-48983",
-    "description": "pam_usb: TOCTOU race condition in pad directory creation allows symlink substitution",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48983",
-    "publishedDate": "Thu, 18 Jun 2026 19:07:56 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-48982",
-    "description": "pam_usb provides hardware authentication for Linux using ordinary removable media. In versions prior to 0.9.2, when updating a one-time pad file, a temporary file is created using open() without the O_EXCL flag. Without O_EXCL, the create operation is not atomic: two concurrent processes racing to update the same pad may both succeed in opening the file, with the second write silently overwriting the first. The one-time pad is the core replay-prevention mechanism of pam_usb. A successful race could result in the stored pad value diverging from what either process expected, potentially causing authentication failures or, in a precisely timed attack, creating a window for pad reuse. This issue has been fixed in version 0.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48982",
-    "publishedDate": "2026-06-18T20:16:14.530",
-    "lastModifiedDate": "2026-06-18T20:16:14.530",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 1,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-48981",
-    "description": "pam_usb provides hardware authentication for Linux using ordinary removable media. In versions prior to 0.9.2, pam_usb calls xmlReadFile() with flags=0 when loading the configuration file, allowing libxml2 to process external entity references (XXE), potentially making outbound network connections or local file reads at XML parse time from the context of the authenticating process. The vulnerability requires the configuration file to contain crafted XML entity references. Since pam_usb.conf is root-owned, direct exploitation requires prior write access to the config, but the defence-in-depth impact is significant given that pam_usb.so runs in setuid contexts (sudo, su). This issue has been fixed in version 0.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48981",
-    "publishedDate": "2026-06-18T20:16:14.407",
-    "lastModifiedDate": "2026-06-18T20:16:14.407",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:L/A:L",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.3,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2842",
-    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. Reason: This candidate was issued in error. Notes: All references and descriptions in this candidate have been removed to prevent accidental usage.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2842",
-    "publishedDate": "2026-06-18T20:16:13.063",
-    "lastModifiedDate": "2026-06-18T20:16:13.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-48716",
-    "description": "nanobot: Path traversal via unsanitized WhatsApp document fileName enables arbitrary file write",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48716",
-    "publishedDate": "Thu, 18 Jun 2026 18:46:28 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-47846",
-    "description": "Bitnami Cassandra container images are affected by a retained default superuser vulnerability. When a custom administrator account is configured via the CASSANDRA_USER environment variable, the container initialization script creates the new superuser account but fails to drop the built-in cassandra account in certain scenarios. This leaves the default cassandra:cassandra superuser active as an unintended access path.\n\nAffected versions — Container image: 4.0.x prior to 4.0.20-photon-5-r7; 4.1.x prior to 4.1.11-photon-5-r7; 5.0.x prior to 5.0.8-photon-5-r4 / 5.0.8-debian-12-r3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47846",
-    "publishedDate": "2026-06-18T20:16:13.630",
-    "lastModifiedDate": "2026-06-18T21:16:29.190",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47847",
-    "description": "Bitnami MariaDB Galera: Hardcoded Credentials",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47847",
-    "publishedDate": "Thu, 18 Jun 2026 18:37:47 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-12390",
-    "description": "Access of resource using incompatible type ('type confusion') in AzeoTech DAQFactory",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12390",
-    "publishedDate": "Thu, 18 Jun 2026 18:30:57 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-47833",
-    "description": "BPM: Container-to-Host Privilege Escalation via Symlink Following",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47833",
-    "publishedDate": "Thu, 18 Jun 2026 18:30:18 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-48937",
-    "description": "Node.js HTTP/2 Denial of Service",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48937",
-    "publishedDate": "Thu, 18 Jun 2026 18:01:39 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-55392",
-    "description": "NILFS utilities - Undefined Behavior and Out-of-Memory via Unvalidated s_log_block_size",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55392",
-    "publishedDate": "Thu, 18 Jun 2026 18:00:12 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9692",
-    "description": "Mojolicious::Sessions::Storable versions through 0.05 for Perl generate session ids insecurely",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9692",
-    "publishedDate": "Thu, 18 Jun 2026 17:53:03 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
