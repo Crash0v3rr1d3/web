@@ -1,5 +1,20 @@
 [
   {
+    "id": "1276533376",
+    "cve_id": "CVE-2026-4020",
+    "name": "CVE-2026-4020",
+    "owner": "HORKimhab",
+    "full_name": "HORKimhab/CVE-2026-4020",
+    "html_url": "https://github.com/HORKimhab/CVE-2026-4020",
+    "description": "CVE-2026-4020 - Draft",
+    "stargazers_count": "0",
+    "vuln_description": "The Gravity SMTP plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 2.1.4. This is due to a REST API endpoint registered at /wp-json/gravitysmtp/v1/tests/mock-data with a permission_callback that unconditionally returns true, allowing any unauthenticated visitor to access it. When the ?page=gravitysmtp-settings query parameter is appended, the plugin's register_connector_data() method populates internal connector data, causing the endpoint to return approximately 365 KB of JSON containing the full System Report. This makes it possible for unauthenticated attackers to retrieve detailed system configuration data including PHP version, loaded extensions, web server version, document root path, database server type and version, WordPress version, all active plugins with versions, active theme, WordPress configuration details, database table names, and any API keys/tokens configured in the plugin.",
+    "created_at": "2026-06-22 13:18:06",
+    "updated_at": "2026-06-22 13:18:14",
+    "pushed_at": "2026-06-22 13:18:11",
+    "inserted_at": "2026-06-22 16:36:47"
+  },
+  {
     "id": "1276385226",
     "cve_id": "CVE-2026-47729",
     "name": "CVE-2026-47729",
@@ -2983,20 +2998,5 @@
     "updated_at": "2026-06-12 11:00:44",
     "pushed_at": "2026-06-12 11:00:20",
     "inserted_at": "2026-06-12 16:36:43"
-  },
-  {
-    "id": "1266664157",
-    "cve_id": "CVE-2026-43284",
-    "name": "dirtyfrag-cve-2026-43284-auditd-detection",
-    "owner": "g0thamRabb1t",
-    "full_name": "g0thamRabb1t/dirtyfrag-cve-2026-43284-auditd-detection",
-    "html_url": "https://github.com/g0thamRabb1t/dirtyfrag-cve-2026-43284-auditd-detection",
-    "description": "This repository contains a lab validation report and detection artefacts for DirtyFrag CVE-2026-43284, a Linux local privilege escalation issue related to the XFRM/ESP page-cache write path. The focus is on auditd telemetry, event correlation, and SOC-oriented detection logic.",
-    "stargazers_count": "0",
-    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxfrm: esp: avoid in-place decrypt on shared skb frags\n\nMSG_SPLICE_PAGES can attach pages from a pipe directly to an skb. TCP\nmarks such skbs with SKBFL_SHARED_FRAG after skb_splice_from_iter(),\nso later paths that may modify packet data can first make a private\ncopy. The IPv4/IPv6 datagram append paths did not set this flag when\nsplicing pages into UDP skbs.\n\nThat leaves an ESP-in-UDP packet made from shared pipe pages looking\nlike an ordinary uncloned nonlinear skb. ESP input then takes the no-COW\nfast path for uncloned skbs without a frag_list and decrypts in place\nover data that is not owned privately by the skb.\n\nMark IPv4/IPv6 datagram splice frags with SKBFL_SHARED_FRAG, matching\nTCP. Also make ESP input fall back to skb_cow_data() when the flag is\npresent, so ESP does not decrypt externally backed frags in place.\nPrivate nonlinear skb frags still use the existing fast path.\n\nThis intentionally does not change ESP output. In esp_output",
-    "created_at": "2026-06-12 05:51:29",
-    "updated_at": "2026-06-12 05:58:55",
-    "pushed_at": "2026-06-12 05:58:50",
-    "inserted_at": "2026-06-12 10:36:43"
   }
 ]
