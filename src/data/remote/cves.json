@@ -1,10 +1,30 @@
 [
   {
-    "id": "CVE-2026-33612",
-    "description": "A malicious authoritative server can send a crafted zone via the ZoneToCache function that leads to cache poisoning.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33612",
-    "publishedDate": "2026-06-25T13:16:38.437",
-    "lastModifiedDate": "2026-06-25T14:16:37.603",
+    "id": "CVE-2026-54448",
+    "description": "Trivy is a security scanner. Prior to 0.71.0, when Trivy scans a Helm chart archive (.tgz), its custom tar unpacker reads each entry with io.ReadAll(tr) and no size limit. An attacker who can place a malicious .tgz file in the scanned path can craft a small compressed archive that decompresses to gigabytes, causing the Trivy process to be killed by the OS OOM killer. This vulnerability is fixed in 0.71.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54448",
+    "publishedDate": "2026-06-25T17:16:41.257",
+    "lastModifiedDate": "2026-06-25T17:16:41.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-13351",
+    "description": "Zephyr's IPv6 network stack can be prevented from receiving or processing future incoming packets by sending a small number of maliciously fragmented IPv6 packets. When such a packet is handled by the fragment-header processing path, the associated RX network packet buffer (allocated from a memory slab) is not released back to the pool. Repeating the malicious packet exhausts all RX buffer slots, after which the device can no longer obtain RX buffers and stops receiving traffic, resulting in a denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13351",
+    "publishedDate": "2026-06-25T17:16:38.460",
+    "lastModifiedDate": "2026-06-25T17:16:38.460",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -12,341 +32,489 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:H/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.7,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42004",
-    "description": "An attacker can send a crafted EDNS OPT record that will be ignored by DNSdist’s filtering rules, but will be rewritten as a valid OPT record when EDNS Client Subnet is inserted, causing the backend to see the EDNS option(s) that DNSdist did not filter.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42004",
-    "publishedDate": "2026-06-25T13:16:40.547",
-    "lastModifiedDate": "2026-06-25T14:16:39.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40211",
-    "description": "An attacker can send crafted DNS over HTTP/3 queries, triggering an exception that prevents some buffer from being freed right away. The buffer will be freed at the end of the QUIC connection, but on some setups it might be possible to open enough concurrent DoH3 streams to trigger an out-of-memory condition, resulting in a denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40211",
-    "publishedDate": "2026-06-25T13:16:39.717",
-    "lastModifiedDate": "2026-06-25T14:16:39.040",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@open-xchange.com"
+        "impactScore": 3.6,
+        "source": "vulnerabilities@zephyrproject.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-40210",
-    "description": "An out-of-bounds read might happen when SetMacAddrAction is used, potentially resulting in uninitialized memory being sent over the network or a crash.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40210",
-    "publishedDate": "2026-06-25T13:16:39.620",
-    "lastModifiedDate": "2026-06-25T13:16:39.620",
+    "id": "CVE-2026-55092",
+    "description": "Trivy is a security scanner. Prior to 0.71.1, when Trivy downloads an OCI artifact, it uses the org.opencontainers.image.title annotation from the artifact manifest as the destination filename without validation. An attacker who can make Trivy fetch an attacker-controlled artifact can supply a crafted annotation that resolves to a path outside the intended destination, causing Trivy to write the layer content to an arbitrary location on the host filesystem. This vulnerability is fixed in 0.71.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55092",
+    "publishedDate": "2026-06-25T17:16:41.647",
+    "lastModifiedDate": "2026-06-25T17:16:41.647",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40209",
-    "description": "An attacker might be able to cause outgoing TCP connections to backend to be stuck until a timeout occurs instead of being released immediately, by sending IXFR queries. This could be used to cause a denial of service if there is a limit to the number of concurrent connections to this backend, or if the process runs out of file descriptors.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40209",
-    "publishedDate": "2026-06-25T13:16:39.527",
-    "lastModifiedDate": "2026-06-25T13:16:39.527",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40208",
-    "description": "An attacker might be able to delay the processing of DoH3 queries by sending DoH3 GET queries with an invalid DATA frame.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40208",
-    "publishedDate": "2026-06-25T13:16:39.427",
-    "lastModifiedDate": "2026-06-25T14:16:38.943",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-40011",
-    "description": "An attacker sending a large number of crafted DNS queries might be able to trigger a dynamic block being inserted with a value causing invalid output to be produced in the prometheus endpoint. The prometheus endpoint will then be rejected by the scraper until the dynamic block expires.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40011",
-    "publishedDate": "2026-06-25T13:16:39.323",
-    "lastModifiedDate": "2026-06-25T14:16:38.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-42005",
-    "description": "An attacker can send a web request that causes unlimited memory \nallocation in the internal web server, leading to a denial of service. \nThe internal web server is disabled by default.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42005",
-    "publishedDate": "2026-06-25T12:16:47.350",
-    "lastModifiedDate": "2026-06-25T14:16:39.350",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@open-xchange.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56091",
-    "description": "When using Apache Shiro with the shiro-guice module in a web servlet context, a specially crafted HTTP request may cause an authentication bypass.\nThis vulnerability is similar to  https://www.cve.org/CVERecord?id=CVE-2020-1957 https://www.cve.org/CVERecord , except that it affects the `shiro-guice` module instead of the `shiro-spring` module.\n\nThis issue affects all Apache Shiro versions through 2.x, and 3.0.0-alpha-1 only when using `shiro-guice` module in a web servlet context.\n\nUpgrade to version 3.0.0 or later, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56091",
-    "publishedDate": "2026-06-25T09:16:46.103",
-    "lastModifiedDate": "2026-06-25T13:27:40.747",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
+        "score": 7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:P/AU:Y/R:X/V:D/RE:L/U:Amber",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@apache.org"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-56130",
-    "description": "\"Remember me\" cookie age is not verified on the server. This potentially allows an attacker to intercept a valid cookie and reuse it indefinitely, even after the configured expiration time has passed.\nThis issue affects all Apache Shiro versions from 1.2.4 through 2.x, and 3.0.0-alpha-1, only when RememberMe functionality is enabled.\n\n\nUpgrade to version 3.0.0 or later, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56130",
-    "publishedDate": "2026-06-25T09:16:46.230",
-    "lastModifiedDate": "2026-06-25T13:27:40.747",
+    "id": "CVE-2026-9083",
+    "description": "A flaw was found in Keycloak. A realm administrator with the \"manage-realm\" role can exploit this vulnerability by submitting an arbitrary filesystem path as a keystore parameter when creating a key provider component. This allows the administrator to probe arbitrary filesystem paths, determining which files exist and are readable by the Keycloak process. This information disclosure could be used to identify high-value targets for follow-on attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9083",
+    "publishedDate": "2026-06-25T17:17:03.027",
+    "lastModifiedDate": "2026-06-25T17:17:03.027",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:X/V:D/RE:L/U:Green",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-53277",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: arm64: Take the SRCU lock for page table walks in fault injection and AT emulation\n\nwalk_s1() and kvm_walk_nested_s2() expect to be called while holding\nkvm->srcu to guard against memslot changes. While this is generally\nthe case, __kvm_at_s12() and __kvm_find_s1_desc_level() call into the\nrespective walkers without taking kvm->srcu.\n\nFix by acquiring kvm->srcu prior to the table walk in both instances.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53277",
-    "publishedDate": "2026-06-25T09:16:45.897",
-    "lastModifiedDate": "2026-06-25T09:16:45.897",
+    "id": "CVE-2026-9799",
+    "description": "A flaw was found in org.keycloak.authorization. An authenticated user with a granted User-Managed Access (UMA) permission ticket for one resource can exploit this by using a specific permission request prefix to bypass per-resource access control. This allows the user to gain unauthorized access to all resources of that type within the same resource server, even if they do not have a ticket for those specific resources. This vulnerability requires the resource server to be configured in PERMISSIVE policy enforcement mode and affects typed resources with ownerManagedAccess enabled, where no explicit policy protects the resource type. The primary consequence is unauthorized information disclosure or modification of resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9799",
+    "publishedDate": "2026-06-25T17:17:04.047",
+    "lastModifiedDate": "2026-06-25T17:17:04.047",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53276",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nBluetooth: ISO: Fix a use-after-free of the hci_conn pointer\n\nIn iso_sock_rebind_bc(), the bis pointer is cached, then the socket lock is\ndropped:\n\tbis = iso_pi(sk)->conn->hcon;\n\t/* Release the socket before lookups since that requires hci_dev_lock\n\t * which shall not be acquired while holding sock_lock for proper\n\t * ordering.\n\t */\n\trelease_sock(sk);\n\thci_dev_lock(bis->hdev);\n\nDuring the unlocked window, could a concurrent close() destroy the connection\nand free the bis structure, causing hci_dev_lock(bis->hdev) to access memory\nafter it is freed, fix this by using the hdev reference which was safely\nacquired via iso_conn_get_hdev().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53276",
-    "publishedDate": "2026-06-25T09:16:45.807",
-    "lastModifiedDate": "2026-06-25T09:16:45.807",
+    "id": "CVE-2026-9705",
+    "description": "A flaw was found in Keycloak's client registration service. A remote attacker, possessing a previously issued Registration Access Token (RAT), could exploit this vulnerability to re-enable a client that an administrator had explicitly disabled. This bypasses security controls, allowing the attacker to reset the client's secret and potentially regain privileged API access. The primary impact includes unauthorized information disclosure and potential integrity compromise.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9705",
+    "publishedDate": "2026-06-25T17:17:03.590",
+    "lastModifiedDate": "2026-06-25T17:17:03.590",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53275",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv6: mcast: Fix use-after-free when processing MLD queries\n\nWhen processing an MLD query, a pointer to the multicast group address\nis retrieved when initially parsing the packet. This pointer is later\ndereferenced without being reloaded despite the fact that the skb header\nmight have been reallocated following the pskb_may_pull() calls, leading\nto a use-after-free [1].\n\nFix by copying the multicast group address when the packet is initially\nparsed.\n\n[1]\nBUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)\nRead of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118\n\nWorkqueue: mld mld_query_work\nCall Trace:\n<TASK>\ndump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)\nprint_address_description.constprop.0 (mm/kasan/report.c:378)\nprint_report (mm/kasan/report.c:482)\nkasan_report (mm/kasan/report.c:595)\n__mld_query_work (net/ipv6/mcast.c:1512)\nmld_query_work (net/ipv6/mcast.c:1563)\nprocess_one_work (kernel/workqueue.c:3314)\nworker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)\nkthread (kernel/kthread.c:436)\nret_from_fork (arch/x86/kernel/process.c:158)\nret_from_fork_asm (arch/x86/entry/entry_64.S:245)\n</TASK>\n\n[...]\n\nFreed by task 118:\nkasan_save_stack (mm/kasan/common.c:57)\nkasan_save_track (mm/kasan/common.c:78)\nkasan_save_free_info (mm/kasan/generic.c:584)\n__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)\nkfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)\npskb_expand_head (net/core/skbuff.c:2335)\n__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))\n__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))\nmld_query_work (net/ipv6/mcast.c:1563)\nprocess_one_work (kernel/workqueue.c:3314)\nworker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)\nkthread (kernel/kthread.c:436)\nret_from_fork (arch/x86/kernel/process.c:158)\nret_from_fork_asm (arch/x86/entry/entry_64.S:245)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53275",
-    "publishedDate": "2026-06-25T09:16:45.687",
-    "lastModifiedDate": "2026-06-25T09:16:45.687",
+    "id": "CVE-2026-9086",
+    "description": "A flaw was found in Keycloak. A remote attacker with administrative privileges, specifically those with `manage-client` permission or access to client registration endpoints, could bypass client Uniform Resource Identifier (URI) validation. This is achieved by registering a malicious client with a specially crafted redirect URI using a case-insensitive `javascript:` or `data:` scheme. This Cross-Site Scripting (XSS) vulnerability allows for arbitrary code execution in the Keycloak origin when a victim clicks the crafted link, such as in the logout flow or the Admin Console.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9086",
+    "publishedDate": "2026-06-25T17:17:03.147",
+    "lastModifiedDate": "2026-06-25T17:17:03.147",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53274",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/smc: fix sleep-inside-lock in __smc_setsockopt() causing local DoS\n\nA logic flaw in __smc_setsockopt() allows a local unprivileged user to\ncause a Denial of Service (DoS) by holding the socket lock indefinitely.\n\nThe function __smc_setsockopt() calls copy_from_sockptr() while holding\nlock_sock(sk). By passing a userfaultfd-monitored memory page (or\nFUSE-backed memory on systems where unprivileged userfaultfd is disabled)\nas the optval, an attacker can halt execution during the copy operation,\nkeeping the lock held.\n\nCombined with asynchronous tear-down operations like shutdown(), this\nexhausts the kernel wq (kworkers) and triggers the hung task watchdog.\n\n[  240.123456] INFO: task kworker/u8:2 blocked for more than 120 seconds.\n[  240.123489] Call Trace:\n[  240.123501]  smc_shutdown+...\n[  240.123512]  lock_sock_nested+...\n\nThis patch moves the user-space copy outside the lock_sock() critical\nsection to prevent the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53274",
-    "publishedDate": "2026-06-25T09:16:45.577",
-    "lastModifiedDate": "2026-06-25T09:16:45.577",
+    "id": "CVE-2026-9099",
+    "description": "A flaw was found in Keycloak. A missing authorization check in the GroupResource.addChild() endpoint within the Admin REST API allows an authenticated user with limited administrative privileges to reparent any existing group. When Fine-Grained Admin Permissions v2 (FGAPv2) is enabled, an attacker with management rights over a single low-privilege group can reparent a highly privileged group (such as one possessing the realm-admin role) under their managed group.\n\nBecause group permissions follow a hierarchical structure, this action unauthorizedly grants the attacker management and password-reset capabilities over the members of the targeted privileged group. An attacker can exploit this to reset an administrator's password, compromise the account, and achieve a full realm takeover, leading to a complete compromise of confidentiality, integrity, and availability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9099",
+    "publishedDate": "2026-06-25T17:17:03.267",
+    "lastModifiedDate": "2026-06-25T17:17:03.267",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 1.3,
+        "impactScore": 5.8,
+        "source": "secalert@redhat.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53273",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntee: optee: prevent use-after-free when the client exits before the supplicant\n\nCommit 70b0d6b0a199 (\"tee: optee: Fix supplicant wait loop\") made the\nclient wait as killable so it can be interrupted during shutdown or\nafter a supplicant crash. This changes the original lifetime expectations:\nthe client task can now terminate while the supplicant is still processing\nits request.\n\nIf the client exits first it removes the request from its queue and\nkfree()s it, while the request ID remains in supp->idr. A subsequent\nlookup on the supplicant path then dereferences freed memory, leading to\na use-after-free.\n\nSerialise access to the request with supp->mutex:\n\n  * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while\n    looking up and touching the request.\n  * Let optee_supp_thrd_req() notice that the client has terminated and\n    signal optee_supp_send() accordingly.\n\nWith these changes the request cannot be freed while the supplicant still\nhas a reference, eliminating the race.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53273",
-    "publishedDate": "2026-06-25T09:16:45.447",
-    "lastModifiedDate": "2026-06-25T09:16:45.447",
+    "id": "CVE-2026-9800",
+    "description": "A flaw was found in Keycloak Policy Enforcer. This vulnerability allows any authenticated user to bypass all authorization policies, including role, scope, and User-Managed Access (UMA) permission checks. By including the configured access-denied page path within a request URL, either as a path segment or a query parameter, an attacker can gain unauthorized access to protected resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9800",
+    "publishedDate": "2026-06-25T17:17:04.180",
+    "lastModifiedDate": "2026-06-25T17:17:04.180",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53272",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nerofs: fix use-after-free on sbi->sync_decompress\n\nz_erofs_decompress_kickoff() can race with filesystem unmount, causing\na use-after-free on sbi->sync_decompress.\n\nWhen I/O completes, z_erofs_endio() calls z_erofs_decompress_kickoff()\nto queue z_erofs_decompressqueue_work() asynchronously. Then, after all\nfolios are unlocked, unmount workflow can proceed and sbi will be freed\nbefore accessing to sbi->sync_decompress.\n\nThread (unmount)        I/O completion        kworker\n                        queue_work\n                                              z_erofs_decompressqueue_work\n                                               (all folios are unlocked)\ncleanup_mnt\n ..\n erofs_kill_sb\n  erofs_sb_free\n   kfree(sbi)\n                        access sbi->sync_decompress  // UAF!!",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53272",
-    "publishedDate": "2026-06-25T09:16:45.353",
-    "lastModifiedDate": "2026-06-25T09:16:45.353",
+    "id": "CVE-2026-55411",
+    "description": "ToolJet is the open-source foundation am AI-native platform for building and deploying internal tools, workflows and AI agents. Prior to 3.20.1780-lts, the authenticated endpoint POST /api/data-sources/decrypt returns the decrypted plaintext for any credential whose credential_id is supplied in the request body. Unlike every neighbouring data-source route, this handler is not protected by ValidateDataSourceGuard, does not receive the calling @User(), and the underlying CredentialsService.getValue() looks the credential up by id only, with no organization scoping. As a result, any authenticated user of any organization can decrypt the data-source secrets of any other organization by supplying that organization's credential_id — a cross-tenant confidentiality breach. This vulnerability is fixed in 3.20.1780-lts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55411",
+    "publishedDate": "2026-06-25T17:16:41.823",
+    "lastModifiedDate": "2026-06-25T17:16:41.823",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53271",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nksmbd: fix NULL-deref of opinfo->conn in oplock/lease break notifiers\n\nsmb2_oplock_break_noti() and smb2_lease_break_noti() read opinfo->conn\ninto a local with neither READ_ONCE() nor a NULL check.  Both run from\noplock_break() after opinfo_get_list() has dropped ci->m_lock, so a\nconcurrent SMB2 LOGOFF (session_fd_check()) can set op->conn = NULL\nunder ci->m_lock within that window.  ksmbd_conn_r_count_inc(conn) then\nwrites through NULL at offset 0xc4 -- a remotely triggerable oops.\n\nGuard both reads the way compare_guid_key() already does: read\nopinfo->conn with READ_ONCE() and return early if it is NULL, before\nallocating the work struct so nothing leaks.  A NULL conn means the\nclient is gone and the break is moot, so return 0; oplock_break() treats\nthat as success and runs the normal teardown.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53271",
-    "publishedDate": "2026-06-25T09:16:45.247",
-    "lastModifiedDate": "2026-06-25T09:16:45.247",
+    "id": "CVE-2026-55412",
+    "description": "ToolJet is the open-source foundation am AI-native platform for building and deploying internal tools, workflows and AI agents. Prior to 3.20.178-lts, there's an SSRF in the RestAPI data source component. The RestAPI data source executes HTTP requests server-side, and its private IP filter only checks the hostname string — not the resolved IP. DNS names like 169.254.169.254.nip.io resolve to the Azure IMDS link-local address and bypass the filter entirely. This allows any authenticated user (free tier) to steal Azure managed identity tokens for the AKS production cluster. This vulnerability is fixed in 3.20.178-lts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55412",
+    "publishedDate": "2026-06-25T17:16:42.020",
+    "lastModifiedDate": "2026-06-25T17:16:42.020",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53270",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipvs: clear the svc scheduler ptr early on edit\n\nip_vs_edit_service() while unbinding the old scheduler clears\nthe svc->scheduler ptr after the scheduler module initiates\nRCU callbacks. This can cause packets to use the old\nscheduler at the time when svc->sched_data is already freed\nafter RCU grace period.\n\nFix it by clearing the ptr early in ip_vs_unbind_scheduler(),\nbefore the done_service method schedules any RCU callbacks.\n\nAlso, if the new scheduler fails to initialize when replacing\nthe old scheduler, try to restore the old scheduler while still\nreturning the error code.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53270",
-    "publishedDate": "2026-06-25T09:16:45.123",
-    "lastModifiedDate": "2026-06-25T09:16:45.123",
+    "id": "CVE-2026-13350",
+    "description": "Permissions where checked incorrectly during room creation, allowing attackers to create rooms of types they shouldn't be allowed to create.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13350",
+    "publishedDate": "2026-06-25T17:16:38.340",
+    "lastModifiedDate": "2026-06-25T17:16:38.340",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "655498c3-6ec5-4f0b-aea6-853b334d05a6"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53269",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: synproxy: add mutex to guard hook reference counting\n\nAs the synproxy infrastructure register netfilter hooks on-demand when a\nuser adds the first iptables target or nftables expression, if done\nconcurrently they can race each other.\n\nIntroduce a mutex to serialize the refcount control blocks access from\nboth frontends. While a per namespace mutex might be more efficient, it\nis not needed for target/expression like SYNPROXY.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53269",
-    "publishedDate": "2026-06-25T09:16:45.007",
-    "lastModifiedDate": "2026-06-25T09:16:45.007",
+    "id": "CVE-2026-55413",
+    "description": "ToolJet is the open-source foundation am AI-native platform for building and deploying internal tools, workflows and AI agents. Prior to 3.20.178-lts, any authenticated user with builder role (free tier) can overwrite a globally-shared marketplace plugin with arbitrary JavaScript that executes server-side with full Node.js access (require, process). The malicious code runs whenever any user on the instance triggers a query using that plugin — achieving both RCE and supply-chain compromise of the entire ToolJet deployment. This vulnerability is fixed in 3.20.178-lts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55413",
+    "publishedDate": "2026-06-25T17:16:42.200",
+    "lastModifiedDate": "2026-06-25T17:16:42.200",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53268",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: conntrack_irc: fix possible out-of-bounds read\n\nWhen parsing fails after we've matched the command string we\nshould bail out instead of trying to match a different command.\n\nThis helper should be deprecated, given prevalence of TLS I doubt it has\nany relevance in 2026.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53268",
-    "publishedDate": "2026-06-25T09:16:44.883",
-    "lastModifiedDate": "2026-06-25T09:16:44.883",
+    "id": "CVE-2026-54573",
+    "description": "Outline is a service that allows for collaborative documentation. Prior to 1.8.0, the AuthenticationHelper.canAccess function uses ctx.originalUrl to verify if an API key or OAuth token has the required scopes for a request. It extracts the resource by splitting the URL by / and taking the last segment. However, it fails to strip the URL fragment (#). Because Koa's router uses ctx.path (which strips the fragment) for routing, an attacker can append a fragment containing a permitted path (e.g., #foo/api/documents.info) to a restricted endpoint (e.g., /api/documents.create). The router will route the request to the restricted endpoint, but canAccess will evaluate the permitted path in the fragment, bypassing the API key scope restrictions and allowing privilege escalation. This vulnerability is fixed in 1.8.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54573",
+    "publishedDate": "2026-06-25T17:16:41.450",
+    "lastModifiedDate": "2026-06-25T17:16:41.450",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53267",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nft_ct: bail out on template ct in get eval\n\nI noticed this issue while looking at a historic syzbot report [1].\n\nA rule like the one below is enough to trigger the bug:\n\n    table ip t {\n        chain pre {\n            type filter hook prerouting priority raw;\n            ct zone set 1\n            ct original saddr 1.2.3.4 accept\n        }\n    }\n\nThe first expression attaches a per-cpu template ct via\nnft_ct_set_zone_eval() (nf_ct_tmpl_alloc -> kzalloc, tuple is all\nzero, nf_ct_l3num(ct) == 0). The next expression then calls\nnft_ct_get_eval() on the same skb, treats the template as a real ct\nand hits the 16-byte memcpy path. With dreg at NFT_REG32_15 this\noverflows past struct nft_regs on the kernel stack; with smaller\ndreg values it silently clobbers adjacent registers.\n\nReject template ct at the eval entry and in nft_ct_get_fast_eval(),\nmirroring the check nft_ct_set_eval() already has. Additionally,\nbound the address copy in NFT_CT_SRC / NFT_CT_DST by priv->len\ninstead of by nf_ct_l3num(ct): nf_ct_get_tuple() zeroes the tuple\nbefore pkt_to_tuple() fills in only the protocol-relevant leading\nbytes, so the trailing bytes of tuple->{src,dst}.u3.all are\nwell-defined zero. priv->len is validated at rule load, so the\ncopy size is now bounded by the destination register rather than\nby an untrusted field on the conntrack.\n\n[1]: https://syzkaller.appspot.com/bug?id=389cf09cb72926114fce90dc85a2c3231dcb647c",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53267",
-    "publishedDate": "2026-06-25T09:16:44.770",
-    "lastModifiedDate": "2026-06-25T09:16:44.770",
+    "id": "CVE-2026-55439",
+    "description": "Halo is an open source website building tool. Prior to 2.24.3, a path traversal vulnerability in the backup download endpoint allows authenticated administrators to read arbitrary files from the server filesystem. The backup download endpoint (GET /apis/console.api.migration.halo.run/v1alpha1/backups/{name}/files/{filename}) in MigrationServiceImpl.download() resolves the backup filename via Path.resolve() without validating that the resolved path stays within the designated backups directory. Also, the Backup creation endpoint (POST /apis/migration.halo.run/v1alpha1/backups) does not sanitize the status fields during creation This vulnerability is fixed in 2.24.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55439",
+    "publishedDate": "2026-06-25T17:16:43.500",
+    "lastModifiedDate": "2026-06-25T17:16:43.500",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53266",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: bridge: make ebt_snat ARP rewrite writable\n\nThe ebtables SNAT target keeps the Ethernet source address rewrite\nbehind skb_ensure_writable(skb, 0).  This is intentional: at the bridge\nebtables hooks the Ethernet header is addressed through\nskb_mac_header()/eth_hdr(), while skb->data points at the Ethernet\npayload.  Asking skb_ensure_writable() for ETH_HLEN bytes would check\nthe payload, not the Ethernet header, and would reintroduce the small\npacket regression fixed by commit 63137bc5882a.\n\nHowever, the optional ARP sender hardware address rewrite is different.\nIt writes through skb_store_bits() at an offset relative to skb->data:\n\n        skb_store_bits(skb, sizeof(struct arphdr), info->mac, ETH_ALEN)\n\nskb_header_pointer() only safely reads the ARP header; it does not make\nthe later sender hardware address range writable.  If that range is\nstill held in a nonlinear skb fragment backed by a splice-imported file\npage, skb_store_bits() maps the frag page and copies the new MAC address\ndirectly into it.\n\nEnsure the ARP SHA range is writable before reading the ARP header and\nbefore calling skb_store_bits().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53266",
-    "publishedDate": "2026-06-25T09:16:44.643",
-    "lastModifiedDate": "2026-06-25T09:16:44.643",
+    "id": "CVE-2026-54024",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the fix for CVE-2024-11171 (commit bb58a2d0) added limits: { fileSize } to createMulterInstance() in the file upload routes. However, the POST /api/convos/import endpoint uses a separate multer instance that was never updated with the same limits configuration. Combined with the application-level size check being disabled by default (the CONVERSATION_IMPORT_MAX_FILE_SIZE_BYTES env var is commented out in .env.example), an authenticated user can upload arbitrarily large files to exhaust server disk space and memory. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54024",
+    "publishedDate": "2026-06-25T17:16:40.153",
+    "lastModifiedDate": "2026-06-25T17:16:40.153",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53265",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndm cache policy smq: check allocation under invalidate lock\n\ncommit 2d1f7b65f5de (\"dm cache policy smq: fix missing locks in\ninvalidating cache blocks\") added mq->lock around the destructive part of\nsmq_invalidate_mapping(), but left the e->allocated check outside the\ncritical section.\n\nThat leaves a check-then-act race. Two concurrent invalidators can both\nobserve e->allocated as true before either of them takes mq->lock. The\nfirst invalidator that acquires the lock removes the entry from the\nqueues and hash table and then calls free_entry(), which clears\ne->allocated and puts the entry back on the free list. The second\ninvalidator can then acquire mq->lock and continue with the stale result\nof the unlocked check.\n\nThis can corrupt the SMQ queues or hash table by deleting an entry that\nis no longer on those structures. It can also hit the allocation check in\nfree_entry() when the same entry is freed again.\n\nMove the allocation check under mq->lock so the predicate and the\ndestructive operations are serialized by the same lock.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53265",
-    "publishedDate": "2026-06-25T09:16:44.530",
-    "lastModifiedDate": "2026-06-25T09:16:44.530",
+    "id": "CVE-2026-54025",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, there is a vulnerability in LibreChat's markdown artifact preview pipeline. The marked library v15.0.12 does not HTML-escape double-quote characters in image alt text when a custom renderer falls through to the default renderer. LibreChat's generateMarkdownHtml function (in client/src/utils/markdown.ts) installs a custom image renderer that returns false for URLs passing the isSafeUrl allowlist check, which causes marked to fall back to its built-in renderer. That built-in renderer inserts the raw alt text into the alt=\"...\" attribute without escaping double-quote characters. An attacker can craft an alt text such as \" onload=\"payload to break out of the attribute and inject an arbitrary event handler. The resulting HTML is then assigned to document.getElementById('content').innerHTML inside the Sandpack preview iframe, causing the payload to execute in the victim's browser. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54025",
+    "publishedDate": "2026-06-25T17:16:40.277",
+    "lastModifiedDate": "2026-06-25T17:16:40.277",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53264",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: act_api: use RCU with deferred freeing for action lifecycle\n\nWhen NEWTFILTER and DELFILTER are run concurrently it is possible to create a\nrace with an associated action.\n\nLet's illustrate with CPU0 running NEWTFILTER and CPU1 running DELFILTER:\n\n 0: mutex_lock() <-- holds the idr lock\n 0: rcu_read_lock()\n 0: p = idr_find(idr, index) <-- action p is valid (RCU protects IDR)\n 0: mutex_unlock() <-- releases the idr lock\n 1: refcount_dec_and_mutex_lock() <-- refcnt 1->0, mutex held\n 1: idr_remove(idr, index) <-- Action removed from IDR\n 1: mutex_unlock() <-- mutex released allowing us to delete the action\n 1: tcf_action_cleanup(p); kfree(p) <-- Kfrees p immediately, no deferral\n 0: refcount_inc_not_zero(&p->tcfa_refcnt) <-- ouch, UAF p points to freed memory\n\nThis patch fixes the race condition between NEWTFILTER and DELFILTER by\nadding struct rcu_head to tc_action used in the deferral and introducing a\ncall_rcu() in the delete path to defer the final kfree().\n\nNote: this is a revert of commit d7fb60b9cafb (\"net_sched: get rid of tcfa_rcu\")\nbut also modernization/simplification to directly use kfree_rcu().\n\nLet's illustrate the new restored code path:\n\n 0: rcu_read_lock()\n 1: refcount_dec_and_mutex_lock() <-- refcnt 1->0, mutex held\n 1: idr_remove(idr, index)\n 1: mutex_unlock()\n 1: call_rcu(&p->tcfa_rcu, tcf_action_rcu_free) <-- defer kfree after grace period\n 0: p = idr_find(idr, index)\n 0: refcount_inc_not_zero(&p->tcfa_refcnt) <-- fails, refcnt already 0\n 1: rcu_read_unlock() <-- release so freeing can run after grace period\n\nAfter CPU1 calls idr_remove(), the object is no longer reachable through the IDR.\nCPU0's subsequent idr_find() will return NULL, and even if it still held a\nstale pointer, the immediate kfree() is now deferred until after the RCU grace\nperiod, so no UAF can occur.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53264",
-    "publishedDate": "2026-06-25T09:16:44.400",
-    "lastModifiedDate": "2026-06-25T09:16:44.400",
+    "id": "CVE-2026-54027",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the POST /api/files/images endpoint allows any authenticated user to upload files into any agent's tool_resources (e.g., context, execute_code) without verifying ownership or EDIT permission on the target agent. A permission check was added to the POST /api/files route in a previous patch, but the image upload route was never updated with the same check. An attacker can simply use the image endpoint instead of the file endpoint to bypass the authorization entirely. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54027",
+    "publishedDate": "2026-06-25T17:16:40.397",
+    "lastModifiedDate": "2026-06-25T17:16:40.397",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-53263",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\n6lowpan: fix off-by-one in multicast context address compression\n\nThe second memcpy in lowpan_iphc_mcast_ctx_addr_compress() uses\n&data[1] as destination and &ipaddr->s6_addr[11] as source, but\nboth should be offset by one: &data[2] and &ipaddr->s6_addr[12]\nrespectively.\n\nThis off-by-one has two consequences:\n1. data[1] is overwritten with s6_addr[11], corrupting the RIID\n   field in the compressed multicast address\n2. data[5] is never written, so uninitialized kernel stack memory\n   is transmitted over the network via lowpan_push_hc_data(),\n   leaking kernel stack contents\n\nThe correct inline data layout must match what the decompression\nfunction lowpan_uncompress_multicast_ctx_daddr() expects:\n  data[0..1] = s6_addr[1..2]  (flags/scope + RIID)\n  data[2..5] = s6_addr[12..15] (group ID)\n\nAlso zero-initialize the data array as a defensive measure against\nsimilar bugs in the future.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53263",
-    "publishedDate": "2026-06-25T09:16:44.283",
-    "lastModifiedDate": "2026-06-25T09:16:44.283",
+    "id": "CVE-2026-54029",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the DELETE /api/messages/:conversationId/:messageId endpoint allows any authenticated user to delete any other user's messages. The validateMessageReq middleware only validates that the conversationId belongs to the requesting user, but the handler calls deleteMessages({ messageId }) using only the messageId as the MongoDB filter — without adding a user constraint. An attacker provides their own valid conversationId (to pass validation) and the victim's messageId (to target deletion), resulting in permanent, irrecoverable message deletion. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54029",
+    "publishedDate": "2026-06-25T17:16:40.537",
+    "lastModifiedDate": "2026-06-25T17:16:40.537",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54033",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, LibreChat allows users to configure custom OpenAI-compatible API endpoints by setting a baseURL. This URL is used to construct HTTP requests without any SSRF validation — no private IP check, no scheme restriction, no DNS pinning. An authenticated user can set baseURL to internal network addresses. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54033",
+    "publishedDate": "2026-06-25T17:16:40.783",
+    "lastModifiedDate": "2026-06-25T17:16:40.783",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45233",
+    "description": "HTMLy CMS through 3.1.1 contains a path traversal vulnerability that allows low-privileged authenticated attackers to relocate arbitrary files by supplying directory traversal sequences in the oldfile parameter at the admin autosave endpoint. Attackers can pass unsanitized traversal sequences directly to file_exists() and rename() functions in admin.php without canonicalization or directory boundary enforcement to cause unintended relocation of any file writable by the web server process to an attacker-specified draft location.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45233",
+    "publishedDate": "2026-06-25T17:16:39.207",
+    "lastModifiedDate": "2026-06-25T17:16:39.207",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54037",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the fix for CVE-2025-7105 added forkIpLimiter and forkUserLimiter rate limiters to POST /api/convos/fork to prevent rapid-fire conversation duplication. However, the POST /api/convos/duplicate endpoint — which is in the same file and performs the exact same expensive database operations — was not given any rate limiter. An authenticated user can bypass the CVE-2025-7105 fix by using /duplicate instead of /fork to exhaust server resources. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54037",
+    "publishedDate": "2026-06-25T17:16:41.000",
+    "lastModifiedDate": "2026-06-25T17:16:41.000",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54030",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.5, LibreChat's MCP OAuth implementation does not validate that the resource parameter from OAuth Protected Resource metadata (RFC 9728) matches the configured MCP server URL, allowing a malicious MCP server to steal access tokens intended for a legitimate server. This vulnerability is fixed in 0.8.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54030",
+    "publishedDate": "2026-06-25T17:16:40.660",
+    "lastModifiedDate": "2026-06-25T17:16:40.660",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.8,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54040",
+    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the POST /api/auth/2fa/backup/regenerate endpoint regenerates all 2FA backup codes without requiring any TOTP token or existing backup code verification. An attacker with a stolen session token can silently replace a victim's backup codes and use them to bypass 2FA login or disable 2FA entirely. This vulnerability is fixed in 0.8.4-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54040",
+    "publishedDate": "2026-06-25T17:16:41.123",
+    "lastModifiedDate": "2026-06-25T17:16:41.123",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56123",
+    "description": "socat versions 1.8.0.0 through 1.8.1.1 contain a heap-based buffer overflow vulnerability that allows a malicious SOCKS5 proxy server to overwrite adjacent heap memory by exploiting a sign-extension flaw in the DOMAINNAME reply parser. During connection setup, the domain name length byte is read through a signed char field causing a negative bytes_to_read value that is implicitly converted to size_t, resulting in an unbounded heap write into the 262-byte reply buffer with attacker-controlled size and content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56123",
+    "publishedDate": "2026-06-25T17:17:01.967",
+    "lastModifiedDate": "2026-06-25T17:17:01.967",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
   }
 ]
