@@ -1,230 +1,68 @@
 [
   {
-    "id": "CVE-2026-54448",
-    "description": "Trivy is a security scanner. Prior to 0.71.0, when Trivy scans a Helm chart archive (.tgz), its custom tar unpacker reads each entry with io.ReadAll(tr) and no size limit. An attacker who can place a malicious .tgz file in the scanned path can craft a small compressed archive that decompresses to gigabytes, causing the Trivy process to be killed by the OS OOM killer. This vulnerability is fixed in 0.71.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54448",
-    "publishedDate": "2026-06-25T17:16:41.257",
-    "lastModifiedDate": "2026-06-25T17:16:41.257",
+    "id": "CVE-2026-56445",
+    "description": "The qrscp application's C-STORE handler uses a specific instance from attacker-supplied DICOM datasets directly in os.path.join() without sanitization, allowing file writes to arbitrary paths.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56445",
+    "publishedDate": "2026-06-25T21:16:27.550",
+    "lastModifiedDate": "2026-06-25T21:16:27.550",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13351",
-    "description": "Zephyr's IPv6 network stack can be prevented from receiving or processing future incoming packets by sending a small number of maliciously fragmented IPv6 packets. When such a packet is handled by the fragment-header processing path, the associated RX network packet buffer (allocated from a memory slab) is not released back to the pool. Repeating the malicious packet exhausts all RX buffer slots, after which the device can no longer obtain RX buffers and stops receiving traffic, resulting in a denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13351",
-    "publishedDate": "2026-06-25T17:16:38.460",
-    "lastModifiedDate": "2026-06-25T17:16:38.460",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
+        "score": 9.1,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55092",
-    "description": "Trivy is a security scanner. Prior to 0.71.1, when Trivy downloads an OCI artifact, it uses the org.opencontainers.image.title annotation from the artifact manifest as the destination filename without validation. An attacker who can make Trivy fetch an attacker-controlled artifact can supply a crafted annotation that resolves to a path outside the intended destination, causing Trivy to write the layer content to an arbitrary location on the host filesystem. This vulnerability is fixed in 0.71.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55092",
-    "publishedDate": "2026-06-25T17:16:41.647",
-    "lastModifiedDate": "2026-06-25T17:16:41.647",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9083",
-    "description": "A flaw was found in Keycloak. A realm administrator with the \"manage-realm\" role can exploit this vulnerability by submitting an arbitrary filesystem path as a keystore parameter when creating a key provider component. This allows the administrator to probe arbitrary filesystem paths, determining which files exist and are readable by the Keycloak process. This information disclosure could be used to identify high-value targets for follow-on attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9083",
-    "publishedDate": "2026-06-25T17:17:03.027",
-    "lastModifiedDate": "2026-06-25T17:17:03.027",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9799",
-    "description": "A flaw was found in org.keycloak.authorization. An authenticated user with a granted User-Managed Access (UMA) permission ticket for one resource can exploit this by using a specific permission request prefix to bypass per-resource access control. This allows the user to gain unauthorized access to all resources of that type within the same resource server, even if they do not have a ticket for those specific resources. This vulnerability requires the resource server to be configured in PERMISSIVE policy enforcement mode and affects typed resources with ownerManagedAccess enabled, where no explicit policy protects the resource type. The primary consequence is unauthorized information disclosure or modification of resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9799",
-    "publishedDate": "2026-06-25T17:17:04.047",
-    "lastModifiedDate": "2026-06-25T17:17:04.047",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9705",
-    "description": "A flaw was found in Keycloak's client registration service. A remote attacker, possessing a previously issued Registration Access Token (RAT), could exploit this vulnerability to re-enable a client that an administrator had explicitly disabled. This bypasses security controls, allowing the attacker to reset the client's secret and potentially regain privileged API access. The primary impact includes unauthorized information disclosure and potential integrity compromise.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9705",
-    "publishedDate": "2026-06-25T17:17:03.590",
-    "lastModifiedDate": "2026-06-25T17:17:03.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9086",
-    "description": "A flaw was found in Keycloak. A remote attacker with administrative privileges, specifically those with `manage-client` permission or access to client registration endpoints, could bypass client Uniform Resource Identifier (URI) validation. This is achieved by registering a malicious client with a specially crafted redirect URI using a case-insensitive `javascript:` or `data:` scheme. This Cross-Site Scripting (XSS) vulnerability allows for arbitrary code execution in the Keycloak origin when a victim clicks the crafted link, such as in the logout flow or the Admin Console.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9086",
-    "publishedDate": "2026-06-25T17:17:03.147",
-    "lastModifiedDate": "2026-06-25T17:17:03.147",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.1,
         "impactScore": 5.2,
-        "source": "secalert@redhat.com"
+        "source": "ics-cert@hq.dhs.gov"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ics-cert@hq.dhs.gov"
       }
     ]
   },
   {
-    "id": "CVE-2026-9099",
-    "description": "A flaw was found in Keycloak. A missing authorization check in the GroupResource.addChild() endpoint within the Admin REST API allows an authenticated user with limited administrative privileges to reparent any existing group. When Fine-Grained Admin Permissions v2 (FGAPv2) is enabled, an attacker with management rights over a single low-privilege group can reparent a highly privileged group (such as one possessing the realm-admin role) under their managed group.\n\nBecause group permissions follow a hierarchical structure, this action unauthorizedly grants the attacker management and password-reset capabilities over the members of the targeted privileged group. An attacker can exploit this to reset an administrator's password, compromise the account, and achieve a full realm takeover, leading to a complete compromise of confidentiality, integrity, and availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9099",
-    "publishedDate": "2026-06-25T17:17:03.267",
-    "lastModifiedDate": "2026-06-25T17:17:03.267",
+    "id": "CVE-2026-12473",
+    "description": "Two data sources (DICOMWebProxy and DICOMJSON) shipped in the default configuration fetch an arbitrary URL parameter without validation. A global authentication service in OHIF automatically injects the authenticated user's OIDC Bearer token into the resulting requests, sending it to the attacker-controlled server. DICOMweb data sources are not impacted.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12473",
+    "publishedDate": "2026-06-25T21:16:26.530",
+    "lastModifiedDate": "2026-06-25T21:16:26.530",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.7,
+        "score": 8.2,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 1.3,
-        "impactScore": 5.8,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9800",
-    "description": "A flaw was found in Keycloak Policy Enforcer. This vulnerability allows any authenticated user to bypass all authorization policies, including role, scope, and User-Managed Access (UMA) permission checks. By including the configured access-denied page path within a request URL, either as a path segment or a query parameter, an attacker can gain unauthorized access to protected resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9800",
-    "publishedDate": "2026-06-25T17:17:04.180",
-    "lastModifiedDate": "2026-06-25T17:17:04.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55411",
-    "description": "ToolJet is the open-source foundation am AI-native platform for building and deploying internal tools, workflows and AI agents. Prior to 3.20.1780-lts, the authenticated endpoint POST /api/data-sources/decrypt returns the decrypted plaintext for any credential whose credential_id is supplied in the request body. Unlike every neighbouring data-source route, this handler is not protected by ValidateDataSourceGuard, does not receive the calling @User(), and the underlying CredentialsService.getValue() looks the credential up by id only, with no organization scoping. As a result, any authenticated user of any organization can decrypt the data-source secrets of any other organization by supplying that organization's credential_id — a cross-tenant confidentiality breach. This vulnerability is fixed in 3.20.1780-lts.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55411",
-    "publishedDate": "2026-06-25T17:16:41.823",
-    "lastModifiedDate": "2026-06-25T17:16:41.823",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55412",
-    "description": "ToolJet is the open-source foundation am AI-native platform for building and deploying internal tools, workflows and AI agents. Prior to 3.20.178-lts, there's an SSRF in the RestAPI data source component. The RestAPI data source executes HTTP requests server-side, and its private IP filter only checks the hostname string — not the resolved IP. DNS names like 169.254.169.254.nip.io resolve to the Azure IMDS link-local address and bypass the filter entirely. This allows any authenticated user (free tier) to steal Azure managed identity tokens for the AKS production cluster. This vulnerability is fixed in 3.20.178-lts.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55412",
-    "publishedDate": "2026-06-25T17:16:42.020",
-    "lastModifiedDate": "2026-06-25T17:16:42.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "impactScore": 4.7,
+        "source": "ics-cert@hq.dhs.gov"
+      },
       {
         "score": 8.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.7,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ics-cert@hq.dhs.gov"
       }
     ]
   },
   {
-    "id": "CVE-2026-13350",
-    "description": "Permissions where checked incorrectly during room creation, allowing attackers to create rooms of types they shouldn't be allowed to create.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13350",
-    "publishedDate": "2026-06-25T17:16:38.340",
-    "lastModifiedDate": "2026-06-25T17:16:38.340",
+    "id": "CVE-2026-6412",
+    "description": "Certificate policy and RFC 8446 compliance concerns regarding the continued acceptance of SHA-1/MD5 in certificate processing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6412",
+    "publishedDate": "2026-06-25T21:16:27.797",
+    "lastModifiedDate": "2026-06-25T21:16:27.797",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -232,196 +70,394 @@
         "score": 2.3,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Clear",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "655498c3-6ec5-4f0b-aea6-853b334d05a6"
+        "source": "facts@wolfssl.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55413",
-    "description": "ToolJet is the open-source foundation am AI-native platform for building and deploying internal tools, workflows and AI agents. Prior to 3.20.178-lts, any authenticated user with builder role (free tier) can overwrite a globally-shared marketplace plugin with arbitrary JavaScript that executes server-side with full Node.js access (require, process). The malicious code runs whenever any user on the instance triggers a query using that plugin — achieving both RCE and supply-chain compromise of the entire ToolJet deployment. This vulnerability is fixed in 3.20.178-lts.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55413",
-    "publishedDate": "2026-06-25T17:16:42.200",
-    "lastModifiedDate": "2026-06-25T17:16:42.200",
+    "id": "CVE-2026-6450",
+    "description": "A CRL critical extension bypass exists in ParseCRL_Extensions where critical extensions are not properly enforced, allowing a crafted CRL with an unhandled critical extension to be accepted. This only affects builds with CRL support enabled and where a crafted CRL had a trusted signature when parsed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6450",
+    "publishedDate": "2026-06-25T21:16:27.917",
+    "lastModifiedDate": "2026-06-25T21:16:27.917",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.4,
+        "score": 1,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:H/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "facts@wolfssl.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54573",
-    "description": "Outline is a service that allows for collaborative documentation. Prior to 1.8.0, the AuthenticationHelper.canAccess function uses ctx.originalUrl to verify if an API key or OAuth token has the required scopes for a request. It extracts the resource by splitting the URL by / and taking the last segment. However, it fails to strip the URL fragment (#). Because Koa's router uses ctx.path (which strips the fragment) for routing, an attacker can append a fragment containing a permitted path (e.g., #foo/api/documents.info) to a restricted endpoint (e.g., /api/documents.create). The router will route the request to the restricted endpoint, but canAccess will evaluate the permitted path in the fragment, bypassing the API key scope restrictions and allowing privilege escalation. This vulnerability is fixed in 1.8.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54573",
-    "publishedDate": "2026-06-25T17:16:41.450",
-    "lastModifiedDate": "2026-06-25T17:16:41.450",
+    "id": "CVE-2026-6678",
+    "description": "Integer underflow in wc_PKCS7_DecryptOri when handling crafted Other Recipient Info, leading to incorrect length handling during decryption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6678",
+    "publishedDate": "2026-06-25T21:16:28.047",
+    "lastModifiedDate": "2026-06-25T21:16:28.047",
     "vendors": [],
     "products": [],
     "cvssScores": [
+      {
+        "score": 1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:L/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Clear",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6679",
+    "description": "A heap buffer overflow could occur in the DTLS 1.3 ACK serialization path before the connecting peer is authenticated. The buffer overflow was due to an integer truncation when computing the length of the ACK record-number list, causing an undersized buffer to be allocated and then overrun. This affects builds using DTLS 1.3 and wolfSSL version 5.9.0 and earlier. A fix was added to the 5.9.1 release.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6679",
+    "publishedDate": "2026-06-25T21:16:28.167",
+    "lastModifiedDate": "2026-06-25T21:16:28.167",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6681",
+    "description": "The PKCS#7 decode path ignores the caller-supplied output buffer size (outputSz), allowing decoded content to be written past the bounds of the provided buffer. This affects wolfSSL 5.9.0 and earlier and was fixed in the 5.9.1 release.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6681",
+    "publishedDate": "2026-06-25T21:16:28.283",
+    "lastModifiedDate": "2026-06-25T21:16:28.283",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Clear",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6731",
+    "description": "X.509 name constraint bypass via the Subject Common Name when treated as a DNS-type name. A certificate whose Subject CN violates an issuing CA's DNS name constraints could be accepted.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6731",
+    "publishedDate": "2026-06-25T21:16:28.400",
+    "lastModifiedDate": "2026-06-25T21:16:28.400",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7531",
+    "description": "Use-after-free in PQC hybrid key-share handling. This is an incomplete-fix follow-up to CVE-2026-5460 (released in 5.9.1): a malicious TLS 1.3 server sending a truncated PQC hybrid KeyShare can still trigger the error cleanup path to operate on freed memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7531",
+    "publishedDate": "2026-06-25T20:17:17.763",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10097",
+    "description": "ML-KEM-1024 x64 AVX2 implicit rejection failure in the Fujisaki-Okamoto transform breaks IND-CCA2 security, allowing decapsulation to deviate from the implicit-rejection behavior required by the standard. The AVX2 constant-time ciphertext comparison used during decapsulation never compared the final 32-byte block of the 1568-byte ML-KEM-1024 ciphertext, so a ciphertext manipulated only in those final bytes would compare as equal and decapsulation returned the real shared secret instead of performing the required implicit rejection.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10097",
+    "publishedDate": "2026-06-25T20:17:09.160",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10512",
+    "description": "The X25519 x86_64 assembly implementation fails to clear the most significant bit during the final modular reduction, so the computed result may not be fully reduced modulo the field prime 2^255 - 19. This can leave the field element in a non-canonical form, producing an incorrect result from the scalar multiplication and potentially a wrong shared secret. The final carry-propagation chains in the x64 and AVX2 reduction routines could overflow into the top bit, and the high limb was not masked afterward, so the 255-bit field element was left non-canonical.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10512",
+    "publishedDate": "2026-06-25T20:17:09.513",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46602",
+    "description": "The TIFF decoder does not set a limit on the size of tiles in tiled images, permitting a malicious or corrupt image containing a very large tile to cause unbounded memory consumption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46602",
+    "publishedDate": "2026-06-25T20:17:12.553",
+    "lastModifiedDate": "2026-06-25T20:21:19.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46601",
+    "description": "The webp decoder can panic when processing a VP8 chunk with dimensions that do not match the canvas size.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46601",
+    "publishedDate": "2026-06-25T20:17:12.447",
+    "lastModifiedDate": "2026-06-25T20:21:19.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-10592",
+    "description": "Certificates with wildcard DNS SANs (e.g. *.example.com) bypassed CA name-constraint checks. A certificate with a wildcard DNS SAN that should be rejected by the issuing CA's permitted/excluded DNS name constraints could be accepted.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10592",
+    "publishedDate": "2026-06-25T20:17:09.650",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11310",
+    "description": "X.509 trust-chain bypass in the OpenSSL compatibility certificate verifier (wolfSSL_X509_verify_cert()). This affects only builds with --enable-opensslextra (OPENSSL_EXTRA) and whose application validates certificates by calling X509_verify_cert() with caller-supplied untrusted intermediate certificates; for those users it is critical, otherwise the library is unaffected. In particular, native wolfSSL TLS/DTLS usage is not impacted. wolfSSL's X509_verify_cert() temporarily loads each caller-supplied untrusted intermediate into the certificate manager but failed to drop them before the trusted-store check, so an untrusted intermediate could anchor the path itself. An attacker can present a chain that never reaches a configured trust anchor and have it accepted, resulting in acceptance of an attacker-controlled certificate. This is certificate verification independent of TLS (e.g. S/MIME/CMS, code/firmware signing, JWT/JWS x5c), is not specific to any key type or algorithm, and a single untrusted intermediate suffices. The default wolfSSL TLS handshake (WOLFSSL_VERIFY_PEER) is not affected; only TLS applications doing manual or deferred peer verification through this API are, which also requires --enable-sessioncerts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11310",
+    "publishedDate": "2026-06-25T20:17:09.777",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12340",
+    "description": "Out-of-bounds heap read during SM2/SM3 certificate signature verification. When parsing a certificate with an SM3wSM2 signature, the Subject Key Identifier computation reads the trailing 65 bytes of the public key without checking that the key is at least that long. A public key shorter than 65 bytes results in an out-of-bounds heap read, leading to a potential crash (denial of service); there is no out-of-bounds write. Note this only affects builds with SM2 support (--enable-sm2 or --enable-all).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12340",
+    "publishedDate": "2026-06-25T20:17:09.907",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55958",
+    "description": "Out-of-bounds write in the Renesas TSIP TLS 1.3 transcript buffer. In tsip_StoreMessage() the capacity check guarding the fixed message bag (MSGBAG_SIZE) sets an error code but fails to return, so execution falls through to an XMEMCPY that writes past the end of the buffer once the accumulated TLS 1.3 handshake transcript exceeds MSGBAG_SIZE (8 KB), corrupting adjacent heap state and potentially causing a remote denial of service crash. The bag is sized to hold a normal handshake, so this is reached only by an unusually large but valid certificate chain, or by a malicious or man-in-the-middle server sending an oversized handshake message to a client that does not strictly verify the chain. This only affects builds using the Renesas TSIP TLS port (WOLFSSL_RENESAS_TSIP_TLS) as a TLS 1.3 client on Renesas MCUs with TSIP hardware enabled, and is rated High within those builds. All other configurations are unaffected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55958",
+    "publishedDate": "2026-06-25T20:17:16.140",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55960",
+    "description": "Un-negotiated Raw Public Key (RFC 7250) accepted in place of an X.509 certificate, bypassing chain validation. A raw public key has no chain, so ParseCertRelative() accepts it without performing any trust verification; it must therefore only be accepted when RPK was actually negotiated for that peer. The check now defaults the expected type to X.509 (per RFC 7250/8446) when no type was negotiated, comparing against the received server certificate type on the client and the selected client certificate type on the server, and rejects any mismatch, including an un-negotiated raw public key, with UNSUPPORTED_CERTIFICATE. Only affects builds with Raw Public Key support (HAVE_RPK) enabled - disabled by default in a standalone build, but included in --enable-all.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55960",
+    "publishedDate": "2026-06-25T20:17:16.617",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55964",
+    "description": "Chain intermediate CA:TRUE without keyCertSign accepted as a signing CA. Intermediate CA certificates are required to have the keyCertSign key usage when a Key Usage extension is present, but chain-supplied temporary CAs (WOLFSSL_TEMP_CA) added while building a certificate path were previously exempted from this check, so an intermediate asserting CA:TRUE but lacking keyCertSign was accepted as a signing CA. The check now applies to chain-supplied temporary CAs as well; only operator-loaded root certificates (WOLFSSL_USER_CA) and self-signed roots remain exempt. Per RFC 5280 an absent Key Usage extension implies all usages, so the requirement is enforced only when the extension is actually present (extKeyUsageSet). Affects the OpenSSL-compatibility certificate-path-building path (X509_verify_cert / X509_STORE, OPENSSL_EXTRA/OPENSSL_ALL), where untrusted chain intermediates are added as temporary CAs; native (non-OpenSSL-compat) certificate verification does not create temporary CAs and is unaffected. Within those builds, the check applies unless ALLOW_INVALID_CERTSIGN is defined.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55964",
+    "publishedDate": "2026-06-25T20:17:16.817",
+    "lastModifiedDate": "2026-06-25T20:22:48.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "facts@wolfssl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57522",
+    "description": "Bitwarden Server before 2026.5.0 contains a JSON injection vulnerability in IntegrationTemplateProcessor.ReplaceTokens(), which substitutes user-controlled values into event-integration templates without JSON encoding. When an organization has configured an event integration whose template references a user-controlled token (such as #ActingUserName# or #UserName#, populated from a member's display name), an authenticated member can set their display name to JSON metacharacters and inject arbitrary key-value pairs into the rendered payloads delivered to webhook, SIEM, Slack, Teams, or Datadog endpoints, making injected fields indistinguishable from legitimate template output.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57522",
+    "publishedDate": "2026-06-25T20:17:17.377",
+    "lastModifiedDate": "2026-06-25T20:22:03.473",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:N/I:L/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57521",
+    "description": "Bitwarden Server before 2026.5.0 contains a broken access control vulnerability that allows any authenticated user to access arbitrary organization billing data by supplying an arbitrary organizationId to the PreviewInvoiceController endpoints without membership or authorization checks. Attackers can exploit the missing ManageOrganizationBillingRequirement on the preview invoice endpoints to retrieve Stripe-computed tax totals, subscription status, and billing details derived from any target organization's real customer and subscription data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57521",
+    "publishedDate": "2026-06-25T20:17:17.220",
+    "lastModifiedDate": "2026-06-25T20:22:03.473",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
       {
         "score": 5.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55439",
-    "description": "Halo is an open source website building tool. Prior to 2.24.3, a path traversal vulnerability in the backup download endpoint allows authenticated administrators to read arbitrary files from the server filesystem. The backup download endpoint (GET /apis/console.api.migration.halo.run/v1alpha1/backups/{name}/files/{filename}) in MigrationServiceImpl.download() resolves the backup filename via Path.resolve() without validating that the resolved path stays within the designated backups directory. Also, the Backup creation endpoint (POST /apis/migration.halo.run/v1alpha1/backups) does not sanitize the status fields during creation This vulnerability is fixed in 2.24.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55439",
-    "publishedDate": "2026-06-25T17:16:43.500",
-    "lastModifiedDate": "2026-06-25T17:16:43.500",
+    "id": "CVE-2026-57520",
+    "description": "Bitwarden Server before 2026.5.0 contains a privilege escalation vulnerability that allows authenticated Custom users with ManageUsers permission to remove Admin accounts from an organization by exploiting a missing role hierarchy check in the bulk user-remove endpoint. Attackers can supply Admin organization-user IDs in a bulk DELETE request to bypass the guard enforced on the single-user removal path, effectively removing one or more Admin accounts from an organization.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57520",
+    "publishedDate": "2026-06-25T20:17:17.020",
+    "lastModifiedDate": "2026-06-25T20:22:03.473",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.5,
+        "score": 7.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:L",
-        "exploitabilityScore": 1.2,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 2.8,
         "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54024",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the fix for CVE-2024-11171 (commit bb58a2d0) added limits: { fileSize } to createMulterInstance() in the file upload routes. However, the POST /api/convos/import endpoint uses a separate multer instance that was never updated with the same limits configuration. Combined with the application-level size check being disabled by default (the CONVERSATION_IMPORT_MAX_FILE_SIZE_BYTES env var is commented out in .env.example), an authenticated user can upload arbitrarily large files to exhaust server disk space and memory. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54024",
-    "publishedDate": "2026-06-25T17:16:40.153",
-    "lastModifiedDate": "2026-06-25T17:16:40.153",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54025",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, there is a vulnerability in LibreChat's markdown artifact preview pipeline. The marked library v15.0.12 does not HTML-escape double-quote characters in image alt text when a custom renderer falls through to the default renderer. LibreChat's generateMarkdownHtml function (in client/src/utils/markdown.ts) installs a custom image renderer that returns false for URLs passing the isSafeUrl allowlist check, which causes marked to fall back to its built-in renderer. That built-in renderer inserts the raw alt text into the alt=\"...\" attribute without escaping double-quote characters. An attacker can craft an alt text such as \" onload=\"payload to break out of the attribute and inject an arbitrary event handler. The resulting HTML is then assigned to document.getElementById('content').innerHTML inside the Sandpack preview iframe, causing the payload to execute in the victim's browser. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54025",
-    "publishedDate": "2026-06-25T17:16:40.277",
-    "lastModifiedDate": "2026-06-25T17:16:40.277",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54027",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the POST /api/files/images endpoint allows any authenticated user to upload files into any agent's tool_resources (e.g., context, execute_code) without verifying ownership or EDIT permission on the target agent. A permission check was added to the POST /api/files route in a previous patch, but the image upload route was never updated with the same check. An attacker can simply use the image endpoint instead of the file endpoint to bypass the authorization entirely. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54027",
-    "publishedDate": "2026-06-25T17:16:40.397",
-    "lastModifiedDate": "2026-06-25T17:16:40.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54029",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the DELETE /api/messages/:conversationId/:messageId endpoint allows any authenticated user to delete any other user's messages. The validateMessageReq middleware only validates that the conversationId belongs to the requesting user, but the handler calls deleteMessages({ messageId }) using only the messageId as the MongoDB filter — without adding a user constraint. An attacker provides their own valid conversationId (to pass validation) and the victim's messageId (to target deletion), resulting in permanent, irrecoverable message deletion. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54029",
-    "publishedDate": "2026-06-25T17:16:40.537",
-    "lastModifiedDate": "2026-06-25T17:16:40.537",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54033",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, LibreChat allows users to configure custom OpenAI-compatible API endpoints by setting a baseURL. This URL is used to construct HTTP requests without any SSRF validation — no private IP check, no scheme restriction, no DNS pinning. An authenticated user can set baseURL to internal network addresses. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54033",
-    "publishedDate": "2026-06-25T17:16:40.783",
-    "lastModifiedDate": "2026-06-25T17:16:40.783",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-45233",
-    "description": "HTMLy CMS through 3.1.1 contains a path traversal vulnerability that allows low-privileged authenticated attackers to relocate arbitrary files by supplying directory traversal sequences in the oldfile parameter at the admin autosave endpoint. Attackers can pass unsanitized traversal sequences directly to file_exists() and rename() functions in admin.php without canonicalization or directory boundary enforcement to cause unintended relocation of any file writable by the web server process to an attacker-specified draft location.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45233",
-    "publishedDate": "2026-06-25T17:16:39.207",
-    "lastModifiedDate": "2026-06-25T17:16:39.207",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 7.2,
+        "score": 7.1,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -429,91 +465,62 @@
     ]
   },
   {
-    "id": "CVE-2026-54037",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the fix for CVE-2025-7105 added forkIpLimiter and forkUserLimiter rate limiters to POST /api/convos/fork to prevent rapid-fire conversation duplication. However, the POST /api/convos/duplicate endpoint — which is in the same file and performs the exact same expensive database operations — was not given any rate limiter. An authenticated user can bypass the CVE-2025-7105 fix by using /duplicate instead of /fork to exhaust server resources. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54037",
-    "publishedDate": "2026-06-25T17:16:41.000",
-    "lastModifiedDate": "2026-06-25T17:16:41.000",
+    "id": "CVE-2026-2299",
+    "description": "The Mattermost Google Drive plugin before version 1.1.0 fails to validate channel membership in the file creation endpoint, allowing authenticated users with a connected Google account to share Google Drive files to unauthorized private channels and disclose private channel membership.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2299",
+    "publishedDate": "2026-06-25T20:17:10.763",
+    "lastModifiedDate": "2026-06-25T20:20:44.730",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 4.2,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54030",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.5, LibreChat's MCP OAuth implementation does not validate that the resource parameter from OAuth Protected Resource metadata (RFC 9728) matches the configured MCP server URL, allowing a malicious MCP server to steal access tokens intended for a legitimate server. This vulnerability is fixed in 0.8.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54030",
-    "publishedDate": "2026-06-25T17:16:40.660",
-    "lastModifiedDate": "2026-06-25T17:16:40.660",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
         "exploitabilityScore": 1.6,
-        "impactScore": 5.8,
-        "source": "security-advisories@github.com"
+        "impactScore": 2.5,
+        "source": "responsibledisclosure@mattermost.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54040",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.4-rc1, the POST /api/auth/2fa/backup/regenerate endpoint regenerates all 2FA backup codes without requiring any TOTP token or existing backup code verification. An attacker with a stolen session token can silently replace a victim's backup codes and use them to bypass 2FA login or disable 2FA entirely. This vulnerability is fixed in 0.8.4-rc1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54040",
-    "publishedDate": "2026-06-25T17:16:41.123",
-    "lastModifiedDate": "2026-06-25T17:16:41.123",
+    "id": "CVE-2026-50548",
+    "description": "Cursor is a code editor built for programming with AI. Prior to 3.0, Cursor runs agent terminal commands in a sandbox by default, and the sandbox grants write access to the command's working directory. A flaw was identified in how the agent could modify the working_directory parameter, which could cause the sandbox to include writable paths outside the intended workspace. A malicious agent could set working_directory to a sensitive location and write arbitrary files outside the workspace under the user's privileges. This enables non-sandboxed Remote Code Execution — for example by overwriting the cursorsandbox helper so later commands run unsandboxed — with no user interaction beyond a benign prompt. This vulnerability is fixed in 3.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50548",
+    "publishedDate": "2026-06-25T19:16:39.660",
+    "lastModifiedDate": "2026-06-25T20:17:15.043",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56123",
-    "description": "socat versions 1.8.0.0 through 1.8.1.1 contain a heap-based buffer overflow vulnerability that allows a malicious SOCKS5 proxy server to overwrite adjacent heap memory by exploiting a sign-extension flaw in the DOMAINNAME reply parser. During connection setup, the domain name length byte is read through a signed char field causing a negative bytes_to_read value that is implicitly converted to size_t, resulting in an unbounded heap write into the 262-byte reply buffer with attacker-controlled size and content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56123",
-    "publishedDate": "2026-06-25T17:17:01.967",
-    "lastModifiedDate": "2026-06-25T17:17:01.967",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.2,
+        "score": 9.3,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50549",
+    "description": "Cursor is a code editor built for programming with AI. Prior to 3.0, Cursor runs agent terminal commands in a sandbox by default. Before a Write, the agent canonicalizes the target path to confirm it stays inside the workspace, but when canonicalization fails it falls back to the original path and writes without approval. A malicious agent can create an in-workspace symlink that points outside the workspace and force canonicalization to fail — either because the target does not exist or because read permission is removed from the path — so the agent writes through the symlink to an arbitrary location without approval. A malicious agent could write arbitrary files outside the workspace under the user's privileges. This enables non-sandboxed Remote Code Execution — for example by overwriting the cursorsandbox helper so later commands run unsandboxed — with no user interaction beyond a benign prompt. This vulnerability is fixed in 3.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50549",
+    "publishedDate": "2026-06-25T19:16:39.793",
+    "lastModifiedDate": "2026-06-25T20:17:15.220",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   }
