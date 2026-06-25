@@ -1,252 +1,392 @@
 [
   {
-    "id": "CVE-2026-53130",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nfs/omfs: reject s_sys_blocksize smaller than OMFS_DIR_START\n\nomfs_fill_super() rejects oversized s_sys_blocksize values (> PAGE_SIZE),\nbut it does not reject values smaller than OMFS_DIR_START (0x1b8 = 440).\n\nLater, omfs_make_empty() uses\n\n    sbi->s_sys_blocksize - OMFS_DIR_START\n\nas the length argument to memset().  Since s_sys_blocksize is u32,\na crafted filesystem image with s_sys_blocksize < OMFS_DIR_START causes\nan unsigned underflow there, wrapping to a value near 2^32.  That drives\na ~4 GiB memset() from bh->b_data + OMFS_DIR_START and overwrites kernel\nmemory far beyond the backing block buffer.\n\nAdd the corresponding lower-bound check alongside the existing upper-bound\ncheck in omfs_fill_super(), so that malformed images are rejected during\nsuperblock validation before any filesystem data is processed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53130",
-    "publishedDate": "2026-06-24T17:17:28.903",
-    "lastModifiedDate": "2026-06-24T17:17:28.903",
+    "id": "CVE-2026-57589",
+    "description": "sys/kern/sysv_sem.c in OpenBSD through 7.9 has a use-after-free allowing local privilege escalation to root. This is a context switch use-after-free after tsleep in sys_semget().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57589",
+    "publishedDate": "2026-06-25T01:16:26.537",
+    "lastModifiedDate": "2026-06-25T01:16:26.537",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.4,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9153",
+    "description": "Arbitrary File Read vulnerability in Rapid7 InsightConnect Sed Plugin on Linux allows authenticated attackers to read arbitrary files via the expression parameter due to insufficient input validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9153",
+    "publishedDate": "2026-06-25T01:16:27.560",
+    "lastModifiedDate": "2026-06-25T01:16:27.560",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "cve@rapid7.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9154",
+    "description": "Arbitrary File Write vulnerability in Rapid7 InsightConnect Sed Plugin on Linux allows authenticated attackers to write attacker-controlled content to arbitrary file paths via the expression parameter.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9154",
+    "publishedDate": "2026-06-25T01:16:27.673",
+    "lastModifiedDate": "2026-06-25T01:16:27.673",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "cve@rapid7.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9155",
+    "description": "OS Command Injection vulnerability in Rapid7 InsightConnect Sed Plugin on Linux allows authenticated attackers to execute arbitrary OS commands via the expression parameter due to insufficient input validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9155",
+    "publishedDate": "2026-06-25T01:16:27.787",
+    "lastModifiedDate": "2026-06-25T01:16:27.787",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "cve@rapid7.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8659",
+    "description": "OS Command Injection vulnerability in Rapid7 InsightConnect SQLmap Plugin on Linux allows authenticated attackers to execute arbitrary OS commands via the api_host or api_port parameters during connection configuration due to insufficient input validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8659",
+    "publishedDate": "2026-06-25T00:17:47.937",
+    "lastModifiedDate": "2026-06-25T00:17:47.937",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 4.7,
+        "source": "cve@rapid7.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8663",
+    "description": "OS Command Injection vulnerability in Rapid7 InsightConnect RPM Plugin on Linux allows authenticated attackers to execute arbitrary OS commands via the repo, key, or name parameters due to insufficient input sanitization in shell command construction.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8663",
+    "publishedDate": "2026-06-25T00:17:48.070",
+    "lastModifiedDate": "2026-06-25T00:17:48.070",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 4.7,
+        "source": "cve@rapid7.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-40079",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and prior are vulnerable to Command Injection due to lack of sanitization in the escape_command() function. The escape_command() function at lib/rrd.php is a no-op: it returns $command unchanged. The command line built by rrdtool_function_graph() is passed through this function and then to shell_exec($full_commandline). The risk is in __rrd_execute() where text_format values from graph templates (which may contain host variable substitutions) reach shell_exec without adequate escaping. This issue has been addressed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40079",
+    "publishedDate": "2026-06-25T00:17:47.570",
+    "lastModifiedDate": "2026-06-25T00:17:47.570",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7569",
+    "description": "Quest NetVault Backup viewclient Cross-Site Scripting Authentication Bypass Vulnerability. This vulnerability allows remote attackers to bypass authentication on affected installations of Quest NetVault Backup. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the viewclient webpage. The issue results from the lack of proper validation of user-supplied data, which can lead to the injection of an arbitrary script. An attacker can leverage this in conjunction with other vulnerabilities to execute arbitrary code in the context of SYSTEM. Was ZDI-CAN-28202.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7569",
+    "publishedDate": "2026-06-25T00:17:47.707",
+    "lastModifiedDate": "2026-06-25T00:17:47.707",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53129",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nfs/mbcache: cancel shrink work before destroying the cache\n\nmb_cache_destroy() calls shrinker_free() and then frees all cache\nentries and the cache itself, but it does not cancel the pending\nc_shrink_work work item first.\n\nIf mb_cache_entry_create() schedules c_shrink_work via schedule_work()\nand the work item is still pending or running when mb_cache_destroy()\nruns, mb_cache_shrink_worker() will access the cache after its memory\nhas been freed, causing a use-after-free.\n\nThis is only reachable by a privileged user (root or CAP_SYS_ADMIN)\nwho can trigger the last put of a mounted ext2/ext4/ocfs2 filesystem.\n\nCancel the work item with cancel_work_sync() before calling\nshrinker_free(), ensuring the worker has finished and will not be\nrescheduled before the cache is torn down.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53129",
-    "publishedDate": "2026-06-24T17:17:28.793",
-    "lastModifiedDate": "2026-06-24T17:17:28.793",
+    "id": "CVE-2026-9787",
+    "description": "Quest NetVault Backup NVBULogDaemon Command Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBULogDaemon JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to execute a system call. An attacker can leverage this vulnerability to execute code in the context of SYSTEM. Was ZDI-CAN-27625.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9787",
+    "publishedDate": "2026-06-25T00:17:48.963",
+    "lastModifiedDate": "2026-06-25T00:17:48.963",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53128",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrbd: Balance RCU calls in drbd_adm_dump_devices()\n\nMake drbd_adm_dump_devices() call rcu_read_lock() before\nrcu_read_unlock() is called. This has been detected by the Clang\nthread-safety analyzer.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53128",
-    "publishedDate": "2026-06-24T17:17:28.647",
-    "lastModifiedDate": "2026-06-24T17:17:28.647",
+    "id": "CVE-2026-9786",
+    "description": "Quest NetVault Backup NVBUDashboard SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBUDashboard JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27626.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9786",
+    "publishedDate": "2026-06-25T00:17:48.850",
+    "lastModifiedDate": "2026-06-25T00:17:48.850",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53127",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nblock: fix zones_cond memory leak on zone revalidation error paths\n\nWhen blk_revalidate_disk_zones() fails after disk_revalidate_zone_resources()\nhas allocated args.zones_cond, the memory is leaked because no error path\nfrees it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53127",
-    "publishedDate": "2026-06-24T17:17:28.253",
-    "lastModifiedDate": "2026-06-24T17:17:28.253",
+    "id": "CVE-2026-9785",
+    "description": "Quest NetVault Backup NVBULibrarySlot SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBULibrarySlot JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27630.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9785",
+    "publishedDate": "2026-06-25T00:17:48.737",
+    "lastModifiedDate": "2026-06-25T00:17:48.737",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53126",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nblk-cgroup: fix disk reference leak in blkcg_maybe_throttle_current()\n\nAdd the missing put_disk() on the error path in\nblkcg_maybe_throttle_current(). When blkcg lookup, blkg lookup, or\nblkg_tryget() fails, the function jumps to the out label which only\ncalls rcu_read_unlock() but does not release the disk reference acquired\nby blkcg_schedule_throttle() via get_device(). Since current->throttle_disk\nis already set to NULL before the lookup, blkcg_exit() cannot release\nthis reference either, causing the disk to never be freed.\n\nRestore the reference release that was present as blk_put_queue() in the\noriginal code but was inadvertently dropped during the conversion from\nrequest_queue to gendisk.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53126",
-    "publishedDate": "2026-06-24T17:17:27.900",
-    "lastModifiedDate": "2026-06-24T17:17:27.900",
+    "id": "CVE-2026-9784",
+    "description": "Quest NetVault Backup NVBULibraryPort SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBULibraryPort JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27631.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9784",
+    "publishedDate": "2026-06-25T00:17:48.627",
+    "lastModifiedDate": "2026-06-25T00:17:48.627",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53125",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmd: fix array_state=clear sysfs deadlock\n\nWhen \"clear\" is written to array_state, md_attr_store() breaks sysfs\nactive protection so the array can delete itself from its own sysfs\nstore method.\n\nHowever, md_attr_store() currently drops the mddev reference before\ncalling sysfs_unbreak_active_protection(). Once do_md_stop(..., 0)\nhas made the mddev eligible for delayed deletion, the temporary\nkobject reference taken by sysfs_break_active_protection() can become\nthe last kobject reference protecting the md kobject.\n\nThat allows sysfs_unbreak_active_protection() to drop the last\nkobject reference from the current sysfs writer context. kobject\nteardown then recurses into kernfs removal while the current sysfs\nnode is still being unwound, and lockdep reports recursive locking on\nkn->active with kernfs_drain() in the call chain.\n\nReproducer on an existing level:\n1. Create an md0 linear array and activate it:\n   mknod /dev/md0 b 9 0\n   echo none > /sys/block/md0/md/metadata_version\n   echo linear > /sys/block/md0/md/level\n   echo 1 > /sys/block/md0/md/raid_disks\n   echo \"$(cat /sys/class/block/sdb/dev)\" > /sys/block/md0/md/new_dev\n   echo \"$(($(cat /sys/class/block/sdb/size) / 2))\" > \\\n\t/sys/block/md0/md/dev-sdb/size\n   echo 0 > /sys/block/md0/md/dev-sdb/slot\n   echo active > /sys/block/md0/md/array_state\n2. Wait briefly for the array to settle, then clear it:\n   sleep 2\n   echo clear > /sys/block/md0/md/array_state\n\nThe warning looks like:\n\n  WARNING: possible recursive locking detected\n  bash/588 is trying to acquire lock:\n  (kn->active#65) at __kernfs_remove+0x157/0x1d0\n  but task is already holding lock:\n  (kn->active#65) at sysfs_unbreak_active_protection+0x1f/0x40\n  ...\n  Call Trace:\n   kernfs_drain\n   __kernfs_remove\n   kernfs_remove_by_name_ns\n   sysfs_remove_group\n   sysfs_remove_groups\n   __kobject_del\n   kobject_put\n   md_attr_store\n   kernfs_fop_write_iter\n   vfs_write\n   ksys_write\n\nRestore active protection before mddev_put() so the extra sysfs\nkobject reference is dropped while the mddev is still held alive. The\nactual md kobject deletion is then deferred until after the sysfs\nwrite path has fully returned.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53125",
-    "publishedDate": "2026-06-24T17:17:27.770",
-    "lastModifiedDate": "2026-06-24T17:17:27.770",
+    "id": "CVE-2026-9783",
+    "description": "Quest NetVault Backup NVBURemovableMedia SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBURemovableMedia JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27632.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9783",
+    "publishedDate": "2026-06-25T00:17:48.520",
+    "lastModifiedDate": "2026-06-25T00:17:48.520",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53124",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nublk: reset per-IO canceled flag on each fetch\n\nIf a ublk server starts recovering devices but dies before issuing fetch\ncommands for all IOs, cancellation of the fetch commands that were\nsuccessfully issued may never complete. This is because the per-IO\ncanceled flag can remain set even after the fetch for that IO has been\nsubmitted - the per-IO canceled flags for all IOs in a queue are reset\ntogether only once all IOs for that queue have been fetched. So if a\nnonempty proper subset of the IOs for a queue are fetched when the ublk\nserver dies, the IOs in that subset will never successfully be canceled,\nas their canceled flags remain set, and this prevents ublk_cancel_cmd\nfrom actually calling io_uring_cmd_done on the commands, despite the\nfact that they are outstanding.\n\nFix this by resetting the per-IO cancel flags immediately when each IO\nis fetched instead of waiting for all IOs for the queue (which may never\nhappen).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53124",
-    "publishedDate": "2026-06-24T17:17:27.387",
-    "lastModifiedDate": "2026-06-24T17:17:27.387",
+    "id": "CVE-2026-39951",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and prior have a Stored SQL Injection vulnerability through graph_name_regexp in the Reports feature. This issue has been fixed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39951",
+    "publishedDate": "2026-06-25T00:17:47.403",
+    "lastModifiedDate": "2026-06-25T00:17:47.403",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9782",
+    "description": "Quest NetVault Backup NVBUDeviceDrive SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBUDeviceDrive JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27633.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9782",
+    "publishedDate": "2026-06-25T00:17:48.407",
+    "lastModifiedDate": "2026-06-25T00:17:48.407",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53123",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmd: wake raid456 reshape waiters before suspend\n\nDuring raid456 reshape, direct IO across the reshape position can sleep\nin raid5_make_request() waiting for reshape progress while still\nholding an active_io reference. If userspace then freezes reshape and\nwrites md/suspend_lo or md/suspend_hi, mddev_suspend() kills active_io\nand waits for all in-flight IO to drain.\n\nThis can deadlock: the IO needs reshape progress to continue, but the\nreshape thread is already frozen, so the active_io reference is never\ndropped and suspend never completes.\n\nraid5_prepare_suspend() already wakes wait_for_reshape for dm-raid. Do\nthe same for normal md suspend when reshape is already interrupted, so\nwaiting raid456 IO can abort, drop its reference, and let suspend\nfinish.\n\nThe mdadm test tests/25raid456-reshape-deadlock reproduces the hang.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53123",
-    "publishedDate": "2026-06-24T17:17:26.777",
-    "lastModifiedDate": "2026-06-24T17:17:26.777",
+    "id": "CVE-2026-9781",
+    "description": "Quest NetVault Backup NVBURASDevice SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBURASDevice JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27648.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9781",
+    "publishedDate": "2026-06-25T00:17:48.293",
+    "lastModifiedDate": "2026-06-25T00:17:48.293",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53122",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbtrfs: fix deadlock between reflink and transaction commit when using flushoncommit\n\nWhen using the flushoncommit mount option, we can have a deadlock between\na transaction commit and a reflink operation that copied an inline extent\nto an offset beyond the current i_size of the destination node.\n\nThe deadlock happens like this:\n\n1) Task A clones an inline extent from inode X to an offset of inode Y\n   that is beyond Y's current i_size. This means we copied the inline\n   extent's data to a folio of inode Y that is beyond its EOF, using a\n   call to copy_inline_to_page();\n\n2) Task B starts a transaction commit and calls\n   btrfs_start_delalloc_flush() to flush delalloc;\n\n3) The delalloc flushing sees the new dirty folio of inode Y and when it\n   attempts to flush it, it ends up at extent_writepage() and sees that\n   the offset of the folio is beyond the i_size of inode Y, so it attempts\n   to invalidate the folio by calling folio_invalidate(), which ends up at\n   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it\n   tries to lock the folio's range in inode Y's extent io tree, but it\n   blocks since it's currently locked by task A - during a reflink we lock\n   the inodes and the source and destination ranges after flushing all\n   delalloc and waiting for ordered extent completion - after that we\n   don't expect to have dirty folios in the ranges, the exception is if\n   we have to copy an inline extent's data (because the destination offset\n   is not zero);\n\n4) Task A then attempts to start a transaction to update the inode item,\n   and then it's blocked since the current transaction is in the\n   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the\n   current transaction to become unblocked (its state >=\n   TRANS_STATE_UNBLOCKED).\n\n   So task A is waiting for the transaction commit done by task B, and\n   the later waiting on the extent lock of inode Y that is currently\n   held by task A.\n\nSyzbot recently reported this with the following stack traces:\n\n  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.\n        Not tainted syzkaller #0\n  \"echo 0 > /proc/sys/kernel/hung_task_timeout_secs\" disables this message.\n  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000\n  Workqueue: writeback wb_workfn (flush-btrfs-46)\n  Call Trace:\n   <TASK>\n   context_switch kernel/sched/core.c:5298 [inline]\n   __schedule+0x1553/0x5240 kernel/sched/core.c:6911\n   __schedule_loop kernel/sched/core.c:6993 [inline]\n   schedule+0x164/0x360 kernel/sched/core.c:7008\n   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]\n   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914\n   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]\n   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704\n   extent_writepage fs/btrfs/extent_io.c:1852 [inline]\n   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]\n   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713\n   do_writepages+0x32e/0x550 mm/page-writeback.c:2554\n   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750\n   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042\n   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227\n   wb_do_writeback fs/fs-writeback.c:2374 [inline]\n   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414\n   process_one_work kernel/workqueue.c:3276 [inline]\n   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359\n   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440\n   kthread+0x388/0x470 kernel/kthread.c:436\n   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158\n   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245\n   </TASK>\n  INFO: task syz.4.64:6910 blocked for more than 143 seconds.\n        Not tainted syzkaller #0\n  \"echo 0 > /proc/sys/kernel/hung_task_timeout_secs\" disables this message.\n  task:syz.4.64        state:D stack:22752 pid:6910  tgid:\n---truncated---",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53122",
-    "publishedDate": "2026-06-24T17:17:26.573",
-    "lastModifiedDate": "2026-06-24T17:17:26.573",
+    "id": "CVE-2026-9780",
+    "description": "Quest NetVault Backup addclient3 Cross-Site Scripting Authentication Bypass Vulnerability. This vulnerability allows remote attackers to bypass authentication on affected installations of Quest NetVault Backup. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the addclient3 webpage. The issue results from the lack of proper validation of user-supplied data, which can lead to the injection of an arbitrary script. An attacker can leverage this in conjunction with other vulnerabilities to execute arbitrary code in the context of SYSTEM. Was ZDI-CAN-27666.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9780",
+    "publishedDate": "2026-06-25T00:17:48.187",
+    "lastModifiedDate": "2026-06-25T00:17:48.187",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53121",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\namd-pstate: Fix memory leak in amd_pstate_epp_cpu_init()\n\nOn failure to set the epp, the function amd_pstate_epp_cpu_init()\nreturns with an error code without freeing the cpudata object that was\nallocated at the beginning of the function.\n\nEnsure that the cpudata object is freed before returning from the\nfunction.\n\nThis memory leak was discovered by Claude Opus 4.6 with the aid of\nChris Mason's AI review-prompts\n(https://github.com/masoncl/review-prompts/tree/main/kernel).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53121",
-    "publishedDate": "2026-06-24T17:17:26.473",
-    "lastModifiedDate": "2026-06-24T17:17:26.473",
+    "id": "CVE-2026-7570",
+    "description": "Quest NetVault Backup NVBUDashboard SQL Injection Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Quest NetVault Backup. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed.\n\nThe specific flaw exists within the processing of NVBUDashboard JSON-RPC messages. The issue results from the lack of proper validation of a user-supplied string before using it to construct SQL queries. An attacker can leverage this vulnerability to execute code in the context of NETWORK SERVICE. Was ZDI-CAN-27809.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7570",
+    "publishedDate": "2026-06-25T00:17:47.823",
+    "lastModifiedDate": "2026-06-25T00:17:47.823",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53120",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nPCI: use generic driver_override infrastructure\n\nWhen a driver is probed through __driver_attach(), the bus' match()\ncallback is called without the device lock held, thus accessing the\ndriver_override field without a lock, which can cause a UAF.\n\nFix this by using the driver-core driver_override infrastructure taking\ncare of proper locking internally.\n\nNote that calling match() from __driver_attach() without the device lock\nheld is intentional. [1]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53120",
-    "publishedDate": "2026-06-24T17:17:26.380",
-    "lastModifiedDate": "2026-06-24T17:17:26.380",
+    "id": "CVE-2026-39948",
+    "description": "Cacti is an open source performance and fault management framework. In versions 1.2.30 and prior, the rfilter request parameter is retrieved via the raw accessor grv() (rather than gfrv() with FILTER_VALIDATE_IS_REGEX validation) and concatenated directly into RLIKE SQL clauses in lib/html_graph.php and lib/html_tree.php, which are reachable pre-authentication through graph_view.php on installations with guest graph viewing enabled. Because the unbalanced-quote payload bypasses the regex validation that would otherwise reject it, an unauthenticated attacker can inject arbitrary SQL to compromise the confidentiality, integrity, and availability of the database. This advisory is similar to GHSA-69gg-mjfm-jjpc. This issue has been fixed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39948",
+    "publishedDate": "2026-06-24T23:16:40.830",
+    "lastModifiedDate": "2026-06-24T23:16:40.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39955",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and prior have pre-authentication SQL Injection via unanchored FILTER_VALIDATE_REGEXP in graph_view.php. This issue has been fixed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39955",
+    "publishedDate": "2026-06-24T23:16:40.980",
+    "lastModifiedDate": "2026-06-24T23:16:40.980",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39938",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and prior have unauthenticated LFI through graph_theme and rrdtool IPC serialization hardening. This issue has been resolved in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39938",
+    "publishedDate": "2026-06-24T23:16:40.677",
+    "lastModifiedDate": "2026-06-24T23:16:40.677",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39900",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and prior are vulnerable to Reflected XSS via tab parameter in the auth_profile.php JavaScript context. This issue has been fixed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39900",
+    "publishedDate": "2026-06-24T23:16:40.530",
+    "lastModifiedDate": "2026-06-24T23:16:40.530",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39899",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and prior are vulnerable to Path Traversal via filename parameter in package_import.php. This issue has been fixed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39899",
+    "publishedDate": "2026-06-24T23:16:40.367",
+    "lastModifiedDate": "2026-06-24T23:16:40.367",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-8106",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-8106",
+    "publishedDate": "2026-06-24T23:16:40.277",
+    "lastModifiedDate": "2026-06-24T23:16:40.277",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-53119",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nplatform/wmi: use generic driver_override infrastructure\n\nWhen a driver is probed through __driver_attach(), the bus' match()\ncallback is called without the device lock held, thus accessing the\ndriver_override field without a lock, which can cause a UAF.\n\nFix this by using the driver-core driver_override infrastructure taking\ncare of proper locking internally.\n\nNote that calling match() from __driver_attach() without the device lock\nheld is intentional. [1]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53119",
-    "publishedDate": "2026-06-24T17:17:26.283",
-    "lastModifiedDate": "2026-06-24T17:17:26.283",
+    "id": "CVE-2026-39897",
+    "description": "Cacti is an open source performance and fault management framework. Versions 1.2.30 and below contain a Reflected XSS vulnerability in the html_auth_footer. This issue has been fixed in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39897",
+    "publishedDate": "2026-06-24T22:16:46.887",
+    "lastModifiedDate": "2026-06-24T22:16:46.887",
     "vendors": [],
     "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53118",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nvdpa: use generic driver_override infrastructure\n\nWhen a driver is probed through __driver_attach(), the bus' match()\ncallback is called without the device lock held, thus accessing the\ndriver_override field without a lock, which can cause a UAF.\n\nFix this by using the driver-core driver_override infrastructure taking\ncare of proper locking internally.\n\nNote that calling match() from __driver_attach() without the device lock\nheld is intentional. [1]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53118",
-    "publishedDate": "2026-06-24T17:17:26.190",
-    "lastModifiedDate": "2026-06-24T17:17:26.190",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53117",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ns390/cio: use generic driver_override infrastructure\n\nWhen a driver is probed through __driver_attach(), the bus' match()\ncallback is called without the device lock held, thus accessing the\ndriver_override field without a lock, which can cause a UAF.\n\nFix this by using the driver-core driver_override infrastructure taking\ncare of proper locking internally.\n\nNote that calling match() from __driver_attach() without the device lock\nheld is intentional. [1]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53117",
-    "publishedDate": "2026-06-24T17:17:26.090",
-    "lastModifiedDate": "2026-06-24T17:17:26.090",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53116",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ns390/ap: use generic driver_override infrastructure\n\nWhen the AP masks are updated via apmask_store() or aqmask_store(),\nap_bus_revise_bindings() is called after ap_attr_mutex has been\nreleased.\n\nThis calls __ap_revise_reserved(), which accesses the driver_override\nfield without holding any lock, racing against a concurrent\ndriver_override_store() that may free the old string, resulting in a\npotential UAF.\n\nFix this by using the driver-core driver_override infrastructure, which\nprotects all accesses with an internal spinlock.\n\nNote that unlike most other buses, the AP bus does not check\ndriver_override in its match() callback; the override is checked in\nap_device_probe() and __ap_revise_reserved() instead.\n\nAlso note that we do not enable the driver_override feature of struct\nbus_type, as AP - in contrast to most other buses - passes \"\" to\nsysfs_emit() when the driver_override pointer is NULL. Thus, printing\n\"\\n\" instead of \"(null)\\n\".\n\nAdditionally, AP has a custom counter that is modified in the\ncorresponding custom driver_override_store().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53116",
-    "publishedDate": "2026-06-24T17:17:25.993",
-    "lastModifiedDate": "2026-06-24T17:17:25.993",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53115",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbus: fsl-mc: use generic driver_override infrastructure\n\nWhen a driver is probed through __driver_attach(), the bus' match()\ncallback is called without the device lock held, thus accessing the\ndriver_override field without a lock, which can cause a UAF.\n\nFix this by using the driver-core driver_override infrastructure taking\ncare of proper locking internally.\n\nNote that calling match() from __driver_attach() without the device lock\nheld is intentional. [1]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53115",
-    "publishedDate": "2026-06-24T17:17:25.890",
-    "lastModifiedDate": "2026-06-24T17:17:25.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53114",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nperf/amd/ibs: Avoid calling perf_allow_kernel() from the IBS NMI handler\n\nCalling perf_allow_kernel() from the NMI context is unsafe and could be\nfatal. Capture the permission at event-initialization time by storing it\nin event->hw.flags, and have the NMI handler rely on that cached flag\ninstead of making the call directly.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53114",
-    "publishedDate": "2026-06-24T17:17:25.797",
-    "lastModifiedDate": "2026-06-24T17:17:25.797",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53113",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: ath11k: fix memory leaks in beacon template setup\n\nThe functions ath11k_mac_setup_bcn_tmpl_ema() and\nath11k_mac_setup_bcn_tmpl_mbssid() allocate memory for beacon templates\nbut fail to free it when parameter setup returns an error.\n\nSince beacon templates must be released during normal execution, they\nmust also be released in the error handling paths to prevent memory\nleaks.\n\nFix this by using unified exit paths with proper cleanup in the respective\nerror paths.\n\nCompile tested only. Issue found using a prototype static analysis tool\nand code review.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53113",
-    "publishedDate": "2026-06-24T17:17:25.700",
-    "lastModifiedDate": "2026-06-24T17:17:25.700",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53112",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: rtlwifi: pci: fix possible use-after-free caused by unfinished irq_prepare_bcn_tasklet\n\nThe irq_prepare_bcn_tasklet is initialized in rtl_pci_init() and\nscheduled when RTL_IMR_BCNINT interrupt is triggered by hardware.\nBut it is never killed in rtl_pci_deinit(). When the rtlwifi card\nprobe fails or is being detached, the ieee80211_hw is deallocated.\nHowever, irq_prepare_bcn_tasklet may still be running or pending,\nleading to use-after-free when the freed ieee80211_hw is accessed\nin _rtl_pci_prepare_bcn_tasklet().\n\nSimilar to irq_tasklet, add tasklet_kill() in rtl_pci_deinit() to\nensure that irq_prepare_bcn_tasklet is properly terminated before\nthe ieee80211_hw is released.\n\nThe issue was identified through static analysis.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53112",
-    "publishedDate": "2026-06-24T17:17:25.583",
-    "lastModifiedDate": "2026-06-24T17:17:25.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53111",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: test_run: Fix the null pointer dereference issue in bpf_lwt_xmit_push_encap\n\nThe bpf_lwt_xmit_push_encap helper needs to access skb_dst(skb)->dev to\ncalculate the needed headroom:\n\n\terr = skb_cow_head(skb,\n\t\t\t   len + LL_RESERVED_SPACE(skb_dst(skb)->dev));\n\nBut skb->_skb_refdst may not be initialized when the skb is set up by\nbpf_prog_test_run_skb function. Executing bpf_lwt_push_ip_encap function\nin this scenario will trigger null pointer dereference, causing a kernel\ncrash as Yinhao reported:\n\n[  105.186365] BUG: kernel NULL pointer dereference, address: 0000000000000000\n[  105.186382] #PF: supervisor read access in kernel mode\n[  105.186388] #PF: error_code(0x0000) - not-present page\n[  105.186393] PGD 121d3d067 P4D 121d3d067 PUD 106c83067 PMD 0\n[  105.186404] Oops: 0000 [#1] PREEMPT SMP NOPTI\n[  105.186412] CPU: 3 PID: 3250 Comm: poc Kdump: loaded Not tainted 6.19.0-rc5 #1\n[  105.186423] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014\n[  105.186427] RIP: 0010:bpf_lwt_push_ip_encap+0x1eb/0x520\n[  105.186443] Code: 0f 84 de 01 00 00 0f b7 4a 04 66 85 c9 0f 85 47 01 00 00 31 c0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc 48 8b 73 58 48 83 e6 fe <48> 8b 36 0f b7 be ec 00 00 00 0f b7 b6 e6 00 00 00 01 fe 83 e6 f0\n[  105.186449] RSP: 0018:ffffbb0e0387bc50 EFLAGS: 00010246\n[  105.186455] RAX: 000000000000004e RBX: ffff94c74e036500 RCX: ffff94c74874da00\n[  105.186460] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff94c74e036500\n[  105.186463] RBP: 0000000000000001 R08: 0000000000000002 R09: 0000000000000000\n[  105.186467] R10: ffffbb0e0387bd50 R11: 0000000000000000 R12: ffffbb0e0387bc98\n[  105.186471] R13: 0000000000000014 R14: 0000000000000000 R15: 0000000000000002\n[  105.186484] FS:  00007f166aa4d680(0000) GS:ffff94c8b7780000(0000) knlGS:0000000000000000\n[  105.186490] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033\n[  105.186494] CR2: 0000000000000000 CR3: 000000015eade001 CR4: 0000000000770ee0\n[  105.186499] PKRU: 55555554\n[  105.186502] Call Trace:\n[  105.186507]  <TASK>\n[  105.186513]  bpf_lwt_xmit_push_encap+0x2b/0x40\n[  105.186522]  bpf_prog_a75eaad51e517912+0x41/0x49\n[  105.186536]  ? kvm_clock_get_cycles+0x18/0x30\n[  105.186547]  ? ktime_get+0x3c/0xa0\n[  105.186554]  bpf_test_run+0x195/0x320\n[  105.186563]  ? bpf_test_run+0x10f/0x320\n[  105.186579]  bpf_prog_test_run_skb+0x2f5/0x4f0\n[  105.186590]  __sys_bpf+0x69c/0xa40\n[  105.186603]  __x64_sys_bpf+0x1e/0x30\n[  105.186611]  do_syscall_64+0x59/0x110\n[  105.186620]  entry_SYSCALL_64_after_hwframe+0x76/0xe0\n[  105.186649] RIP: 0033:0x7f166a97455d\n\nTemporarily add the setting of skb->_skb_refdst before bpf_test_run to resolve the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53111",
-    "publishedDate": "2026-06-24T17:17:25.453",
-    "lastModifiedDate": "2026-06-24T17:17:25.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53110",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ns390/bpf: Zero-extend bpf prog return values and kfunc arguments\n\ns390x ABI requires callers to zero-extend unsigned arguments and\nsign-extend signed arguments, and callees to zero-extend unsigned\nreturn values and sign-extend signed return values.\n\ns390 BPF JIT currently implements only sign extension. Fix this\nomission and implement zero extension too.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53110",
-    "publishedDate": "2026-06-24T17:17:25.357",
-    "lastModifiedDate": "2026-06-24T17:17:25.357",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53109",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npowerpc/pgtable-frag: Fix bad page state in pte_frag_destroy\n\npowerpc uses pt_frag_refcount as a reference counter for tracking it's\npte and pmd page table fragments. For PTE table, in case of Hash with\n64K pagesize, we have 16 fragments of 4K size in one 64K page.\n\nPatch series [1] \"mm: free retracted page table by RCU\"\nadded pte_free_defer() to defer the freeing of PTE tables when\nretract_page_tables() is called for madvise MADV_COLLAPSE on shmem\nrange.\n[1]: https://lore.kernel.org/all/7cd843a9-aa80-14f-5eb2-33427363c20@google.com/\n\npte_free_defer() sets the active flag on the corresponding fragment's\nfolio & calls pte_fragment_free(), which reduces the pt_frag_refcount.\nWhen pt_frag_refcount reaches 0 (no active fragment using the folio), it\nchecks if the folio active flag is set, if set, it calls call_rcu to\nfree the folio, it the active flag is unset then it calls pte_free_now().\n\nNow, this can lead to following problem in a corner case...\n\n[  265.351553][  T183] BUG: Bad page state in process a.out  pfn:20d62\n[  265.353555][  T183] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x20d62\n[  265.355457][  T183] flags: 0x3ffff800000100(active|node=0|zone=0|lastcpupid=0x7ffff)\n[  265.358719][  T183] raw: 003ffff800000100 0000000000000000 5deadbeef0000122 0000000000000000\n[  265.360177][  T183] raw: 0000000000000000 c0000000119caf58 00000000ffffffff 0000000000000000\n[  265.361438][  T183] page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set\n[  265.362572][  T183] Modules linked in:\n[  265.364622][  T183] CPU: 0 UID: 0 PID: 183 Comm: a.out Not tainted 6.18.0-rc3-00141-g1ddeaaace7ff-dirty #53 VOLUNTARY\n[  265.364785][  T183] Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries\n[  265.364908][  T183] Call Trace:\n[  265.364955][  T183] [c000000011e6f7c0] [c000000001cfaa18] dump_stack_lvl+0x130/0x148 (unreliable)\n[  265.365202][  T183] [c000000011e6f7f0] [c000000000794758] bad_page+0xb4/0x1c8\n[  265.365384][  T183] [c000000011e6f890] [c00000000079c020] __free_frozen_pages+0x838/0xd08\n[  265.365554][  T183] [c000000011e6f980] [c0000000000a70ac] pte_frag_destroy+0x298/0x310\n[  265.365729][  T183] [c000000011e6fa30] [c0000000000aa764] arch_exit_mmap+0x34/0x218\n[  265.365912][  T183] [c000000011e6fa80] [c000000000751698] exit_mmap+0xb8/0x820\n[  265.366080][  T183] [c000000011e6fc30] [c0000000001b1258] __mmput+0x98/0x300\n[  265.366244][  T183] [c000000011e6fc80] [c0000000001c81f8] do_exit+0x470/0x1508\n[  265.366421][  T183] [c000000011e6fd70] [c0000000001c95e4] do_group_exit+0x88/0x148\n[  265.366602][  T183] [c000000011e6fdc0] [c0000000001c96ec] pid_child_should_wake+0x0/0x178\n[  265.366780][  T183] [c000000011e6fdf0] [c00000000003a270] system_call_exception+0x1b0/0x4e0\n[  265.366958][  T183] [c000000011e6fe50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec\n\nThe bad page state error occurs when such a folio gets freed (with\nactive flag set), from do_exit() path in parallel.\n\n... this can happen when the pte fragment was allocated from this folio,\nbut when all the fragments get freed, the pte_frag_refcount still had some\nunused fragments. Now, if this process exits, with such folio as it's cached\npte_frag in mm->context, then during pte_frag_destroy(), we simply call\npagetable_dtor() and pagetable_free(), meaning it doesn't clear the\nactive flag. This, can lead to the above bug. Since we are anyway in\ndo_exit() path, then if the refcount is 0, then I guess it should be\nok to simply clear the folio active flag before calling pagetable_dtor()\n& pagetable_free().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53109",
-    "publishedDate": "2026-06-24T17:17:25.230",
-    "lastModifiedDate": "2026-06-24T17:17:25.230",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53108",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npowerpc/64s: Fix unmap race with PMD migration entries\n\nThe following race is possible with migration swap entries or\ndevice-private THP entries. e.g. when move_pages is called on a PMD THP\npage, then there maybe an intermediate state, where PMD entry acts as\na migration swap entry (pmd_present() is true). Then if an munmap\nhappens at the same time, then this VM_BUG_ON() can happen in\npmdp_huge_get_and_clear_full().\n\nThis patch fixes that.\n\nThread A: move_pages() syscall\n  add_folio_for_migration()\n    mmap_read_lock(mm)\n    folio_isolate_lru(folio)\n    mmap_read_unlock(mm)\n\n  do_move_pages_to_node()\n    migrate_pages()\n      try_to_migrate_one()\n        spin_lock(ptl)\n        set_pmd_migration_entry()\n          pmdp_invalidate()     # PMD: _PAGE_INVALID | _PAGE_PTE | pfn\n          set_pmd_at()          # PMD: migration swap entry (pmd_present=0)\n        spin_unlock(ptl)\n        [page copy phase]       # <--- RACE WINDOW -->\n\nThread B: munmap()\n  mmap_write_downgrade(mm)\n  unmap_vmas() -> zap_pmd_range()\n    zap_huge_pmd()\n      __pmd_trans_huge_lock()\n        pmd_is_huge():          # !pmd_present && !pmd_none -> TRUE (swap entry)\n        pmd_lock() -> \t\t# spin_lock(ptl), waits for Thread A to release ptl\n      pmdp_huge_get_and_clear_full()\n        VM_BUG_ON(!pmd_present(*pmdp))  # HITS!\n\n[  287.738700][ T1867] ------------[ cut here ]------------\n[  287.743843][ T1867] kernel BUG at arch/powerpc/mm/book3s64/pgtable.c:187!\ncpu 0x0: Vector: 700 (Program Check) at [c00000044037f4f0]\n    pc: c000000000094ca4: pmdp_huge_get_and_clear_full+0x6c/0x23c\n    lr: c000000000645dec: zap_huge_pmd+0xb0/0x868\n    sp: c00000044037f790\n   msr: 800000000282b033\n  current = 0xc0000004032c1a00\n  paca    = 0xc000000004fe0000   irqmask: 0x03   irq_happened: 0x09\n    pid   = 1867, comm = a.out\nkernel BUG at :187!\nLinux version 6.19.0-12136-g14360d4f917c-dirty (powerpc64le-linux-gnu-gcc (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #27 SMP PREEMPT Sun Feb 22 10:38:56 IST 2026\nenter ? for help\n[link register   ] c000000000645dec zap_huge_pmd+0xb0/0x868\n[c00000044037f790] c00000044037f7d0 (unreliable)\n[c00000044037f7d0] c000000000645dcc zap_huge_pmd+0x90/0x868\n[c00000044037f840] c0000000005724cc unmap_page_range+0x176c/0x1f40\n[c00000044037fa00] c000000000572ea0 unmap_vmas+0xb0/0x1d8\n[c00000044037fa90] c0000000005af254 unmap_region+0xb4/0x128\n[c00000044037fb50] c0000000005af400 vms_complete_munmap_vmas+0x138/0x310\n[c00000044037fbe0] c0000000005b0f1c do_vmi_align_munmap+0x1ec/0x238\n[c00000044037fd30] c0000000005b3688 __vm_munmap+0x170/0x1f8\n[c00000044037fdf0] c000000000587f74 sys_munmap+0x2c/0x40\n[c00000044037fe10] c000000000032668 system_call_exception+0x128/0x350\n[c00000044037fe50] c00000000000d05c system_call_vectored_common+0x15c/0x2ec\n---- Exception: 3000 (System Call Vectored) at 0000000010064a2c\nSP (7fff9b1ee9c0) is in userspace\n0:mon> zh\n\ncommit a30b48bf1b24 (\"mm/migrate_device: implement THP migration of zone device pages\"),\nenabled migration for device-private PMD entries. Hence this is one\nother path where this warning could get trigger from.\n\n ------------[ cut here ]------------\n WARNING: arch/powerpc/mm/book3s64/hash_pgtable.c:199 at hash__pmd_hugepage_update+0x48/0x284, CPU#3: hmm-tests/1905\n Modules linked in: test_hmm\n CPU: 3 UID: 0 PID: 1905 Comm: hmm-tests Tainted: G    B   W    L   N  7.0.0-rc1-01438-g7e2f0ee7581c #21 PREEMPT\n Tainted: [B]=BAD_PAGE, [W]=WARN, [L]=SOFTLOCKUP, [N]=TEST\n Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries\n NIP [c000000000096b70] hash__pmd_hugepage_update+0x48/0x284\n LR [c000000000096e7c] hash__pmdp_huge_get_and_clear+0xd0/0xd4\n Call Trace:\n [c000000604707670] [c000000004e102b8] 0xc000000004e102b8 (unreliable)\n [c000000604707700] [c00000000064ec3c] set_pmd_migration_entry+0x414/0x498\n [c000000604707760] [c00000000063e5a4] migrate_vma_col\n---truncated---",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53108",
-    "publishedDate": "2026-06-24T17:17:25.107",
-    "lastModifiedDate": "2026-06-24T17:17:25.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53107",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: libertas: don't kill URBs in interrupt context\n\nSerialization for the TX path was enforced by calling\nusb_kill_urb()/usb_kill_anchored_urbs(), to prevent transmission before\na previous URB was completed. usb_tx_block() can be called from\ninterrupt context (e.g. in the HCD giveback path), so we can't always\nuse it to kill in-flight URBs.\n\nPrevent sleeping during interrupt context by checking the tx_submitted\nanchor for existing URBs. We now return -EBUSY, to indicate there's\na pending request.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53107",
-    "publishedDate": "2026-06-24T17:17:24.950",
-    "lastModifiedDate": "2026-06-24T17:17:24.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-53106",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Do not allow deleting local storage in NMI\n\nCurrently, local storage may deadlock when deferring freeing selem or\nlocal storage through kfree_rcu(), call_rcu() or call_rcu_tasks_trace()\nin NMI or reentrant. Since deleting selem in NMI is an unlikely use\ncase, partially mitigate it by returning error when calling from\nbpf_xxx_storage_delete() helpers in NMI. Note that, it is still possible\nto deadlock through reentrant. A full mitigation requires returning\nerror when irqs_disabled() is true, which, however is too heavy-handed\nfor bpf_xxx_storage_delete().\n\nThe long-term solution requires _nolock versions of call_rcu. Another\npossible solution is to defer the free through irq_work [0], but it\nwould grow the size of selem, which is non-ideal.\n\nThe check is only needed in bpf_selem_unlink(), which is used by helpers\nand syscalls. bpf_selem_unlink_nofail() is fine as it is called during\nmap and owner tear down that never run in NMI or reentrant.\n\n[0] https://lore.kernel.org/bpf/20260205190233.912-1-alexei.starovoitov@gmail.com/",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53106",
-    "publishedDate": "2026-06-24T17:17:24.860",
-    "lastModifiedDate": "2026-06-24T17:17:24.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   }
 ]
