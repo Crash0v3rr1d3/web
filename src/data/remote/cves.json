@@ -1,5 +1,25 @@
 [
   {
+    "id": "CVE-2026-49416",
+    "description": "The CONS_HISTORY ioctl handler did not adequately validate the requested history size.  A large value caused an integer overflow in the buffer size calculation, resulting in a heap allocation smaller than expected.  Subsequent initialization of the buffer wrote beyond the end of the allocation.\n\nAn unprivileged local user with access to a vt(4) device can trigger an out-of-bounds write in the kernel, potentially escalating privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49416",
+    "publishedDate": "2026-06-27T10:16:38.077",
+    "lastModifiedDate": "2026-06-27T10:16:38.077",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-49414",
+    "description": "The ELF image activator cleared per-process ASLR preference flags for setuid binaries after the code that computes the PIE base address, rather than before.  As a result, a user-requested ASLR disable was still in effect at the point where the base address was chosen.\n\nAn unprivileged local user can disable ASLR for a setuid PIE binary by calling procctl(2) before execve(2).  This makes exploitation of any separate memory corruption vulnerability in that binary significantly easier.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49414",
+    "publishedDate": "2026-06-27T10:16:37.007",
+    "lastModifiedDate": "2026-06-27T10:16:37.007",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
     "id": "CVE-2026-49413",
     "description": "The Linuxulator determined whether a binary was set-user-ID or set-group-ID by checking the P_SUGID process flag.  During execve(2), this flag is not yet set at the point where the auxiliary vector is constructed, so AT_SECURE was incorrectly set to zero for set-user-ID and set-group-ID executables.\n\nAn unprivileged local user can inject a shared library via LD_PRELOAD into a set-user-ID or set-group-ID Linux binary, gaining the privileges of that binary.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-49413",
@@ -31,10 +51,10 @@
   },
   {
     "id": "CVE-2026-45258",
-    "description": "Multiple vulnerabilities in the sound(4) mmap path",
+    "description": "dsp_mmap_single() validated the requested mapping by checking the sum of the user-supplied offset and length against the buffer size.  This addition could overflow, so that a large offset and length wrapped around and passed the check.  The offset was then narrowed from 64 to 32 bits when converted to a buffer address, yielding a mapping that extended past the audio buffer into unrelated kernel memory.\n\nThe /dev/dsp device nodes are world-accessible by default.  On a system with an audio device, either issue allows an unprivileged local user to read and write kernel memory, which can be used to escalate privileges, potentially gaining full control of the affected system.  At a minimum, an attacker can crash the kernel, resulting in a Denial of Service (DoS).",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-45258",
-    "publishedDate": "Sat, 27 Jun 2026 08:50:56 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-06-27T09:16:22.847",
+    "lastModifiedDate": "2026-06-27T09:16:22.847",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -311,33 +331,33 @@
   },
   {
     "id": "CVE-2026-12404",
-    "description": "NEX-Forms &lt;= 9.2.2 - Missing Authorization to Unauthenticated Sensitive Information Disclosure via CSVExport Class",
+    "description": "The NEX-Forms – Ultimate Forms Plugin for WordPress plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 9.2.2. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to enumerate sequential report IDs and download complete form submission data — including names, email addresses, phone numbers, postal addresses, payment details, and uploaded file paths — for any saved report on the site.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-12404",
-    "publishedDate": "Sat, 27 Jun 2026 05:33:44 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-13245",
-    "description": "The MaxButtons – Create buttons plugin for WordPress is vulnerable to Reflected Cross-Site Scripting via the 'view' parameter in all versions up to, and including, 9.8.5 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that execute if they can successfully trick a user into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13245",
-    "publishedDate": "2026-06-27T06:16:31.773",
-    "lastModifiedDate": "2026-06-27T06:16:31.773",
+    "publishedDate": "2026-06-27T06:16:31.617",
+    "lastModifiedDate": "2026-06-27T06:16:31.617",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
         "source": "security@wordfence.com"
       }
     ]
+  },
+  {
+    "id": "CVE-2026-13245",
+    "description": "MaxButtons &lt;= 9.8.5 - Reflected Cross-Site Scripting via 'view' Parameter",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13245",
+    "publishedDate": "Sat, 27 Jun 2026 05:33:43 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   },
   {
     "id": "CVE-2026-12415",
@@ -376,46 +396,6 @@
         "exploitabilityScore": 1.8,
         "impactScore": 3.6,
         "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13422",
-    "description": "The HD Quiz plugin for WordPress is vulnerable to Cross-Site Request Forgery in versions 2.2.0 to 2.2.1. This is due to missing or incorrect nonce validation on the hdq_validate_nonce function. This makes it possible for unauthenticated attackers to delete or modify quizzes and questions, create new quizzes, and change plugin settings via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13422",
-    "publishedDate": "2026-06-27T02:16:29.237",
-    "lastModifiedDate": "2026-06-27T02:16:29.237",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-11356",
-    "description": "The Ivory Search – WordPress Search Plugin plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'menu_title' and 'menu_magnifier_color' Settings in all versions up to, and including, 5.5.15 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with administrator-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11356",
-    "publishedDate": "2026-06-27T02:16:28.713",
-    "lastModifiedDate": "2026-06-27T02:16:28.713",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1.3,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
       }
     ]
   }
