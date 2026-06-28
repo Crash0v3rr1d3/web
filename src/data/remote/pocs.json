@@ -1,5 +1,35 @@
 [
   {
+    "id": "1282652872",
+    "cve_id": "CVE-2025-56399",
+    "name": "laravel-filemanager-unrestricted-upload",
+    "owner": "Jenderal92",
+    "full_name": "Jenderal92/laravel-filemanager-unrestricted-upload",
+    "html_url": "https://github.com/Jenderal92/laravel-filemanager-unrestricted-upload",
+    "description": "PoC for CVE-2025-56399 - Unrestricted File Upload leading to RCE in alexusmai/laravel-file-manager (≤3.3.1). Automates detection, CSRF extraction, and File Upload",
+    "stargazers_count": "0",
+    "vuln_description": "alexusmai laravel-file-manager 3.3.1 and before allows an authenticated attacker to achieve Remote Code Execution (RCE) through a crafted file upload. A file with a '.png` extension containing PHP code can be uploaded via the file manager interface. Although the upload appears to fail client-side validation, the file is still saved on the server. The attacker can then use the rename API to change the file extension to `.php`, and upon accessing it via a public URL, the server executes the embedded code.",
+    "created_at": "2026-06-28 12:43:50",
+    "updated_at": "2026-06-28 13:02:39",
+    "pushed_at": "2026-06-28 13:02:36",
+    "inserted_at": "2026-06-28 16:36:49"
+  },
+  {
+    "id": "1282643697",
+    "cve_id": "CVE-2026-43503",
+    "name": "DirtyClone",
+    "owner": "gl1tch0x1",
+    "full_name": "gl1tch0x1/DirtyClone",
+    "html_url": "https://github.com/gl1tch0x1/DirtyClone",
+    "description": "DirtyClone - local privilege escalation (LPE) proof-of-concept targeting a kernel/XFRM-related vulnerability described in the source as CVE-2026-43503",
+    "stargazers_count": "0",
+    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: skbuff: propagate shared-frag marker through frag-transfer helpers\n\nTwo frag-transfer helpers (__pskb_copy_fclone() and skb_shift()) fail\nto propagate the SKBFL_SHARED_FRAG bit in skb_shinfo()->flags when\nmoving frags from source to destination.  __pskb_copy_fclone() defers\nthe rest of the shinfo metadata to skb_copy_header() after copying\nfrag descriptors, but that helper only carries over gso_{size,segs,\ntype} and never touches skb_shinfo()->flags; skb_shift() moves frag\ndescriptors directly and leaves flags untouched.  As a result, the\ndestination skb keeps a reference to the same externally-owned or\npage-cache-backed pages while reporting skb_has_shared_frag() as\nfalse.\n\nThe mismatch is harmful in any in-place writer that uses\nskb_has_shared_frag() to decide whether shared pages must be detoured\nthrough skb_cow_data().  ESP input is one such writer (esp4.c,\nesp6.c), and a single nft 'dup to <local>' rule -- or any other\nnf_dup_ipv4(",
+    "created_at": "2026-06-28 12:23:00",
+    "updated_at": "2026-06-28 15:04:23",
+    "pushed_at": "2026-06-28 15:04:19",
+    "inserted_at": "2026-06-28 16:36:49"
+  },
+  {
     "id": "1282554415",
     "cve_id": "CVE-2026-38751",
     "name": "OpenSTAManager-RCE-Exploit-CVE-2026-38751",
@@ -2968,35 +2998,5 @@
     "updated_at": "2026-06-17 18:49:23",
     "pushed_at": "2026-06-17 18:49:14",
     "inserted_at": "2026-06-17 22:36:48"
-  },
-  {
-    "id": "1272108593",
-    "cve_id": "CVE-2026-5411",
-    "name": "CVE-2026-5411",
-    "owner": "izxci",
-    "full_name": "izxci/CVE-2026-5411",
-    "html_url": "https://github.com/izxci/CVE-2026-5411",
-    "description": "CVE-2026-5411 WP Captcha PRO",
-    "stargazers_count": "0",
-    "vuln_description": "The WP Captcha PRO (the premium version of the Advanced Google reCAPTCHA plugin, both have the same slug) plugin for WordPress is vulnerable to arbitrary file upload in all versions up to, and including, 5.38. This is due to a capability check in the save_ajax() function of the licensing module, combined with unrestricted file extraction in sync_cloud_protection(). This makes it possible for authenticated attackers, with Subscriber-level access and above, to upload arbitrary files including PHP webshells to the server by injecting a malicious cloud_protection_url into the license meta, which the plugin then downloads and extracts without file type validation into a web-accessible uploads directory. This can be used for remote code execution. Note: The vulnerability can only be exploited with a remote URL if \"allow_url_fopen\" is enabled in the php.ini config.",
-    "created_at": "2026-06-17 18:47:24",
-    "updated_at": "2026-06-17 18:47:30",
-    "pushed_at": "2026-06-17 18:47:26",
-    "inserted_at": "2026-06-17 22:36:48"
-  },
-  {
-    "id": "1272106359",
-    "cve_id": "CVE-2026-42758",
-    "name": "CVE-2026-42758",
-    "owner": "izxci",
-    "full_name": "izxci/CVE-2026-42758",
-    "html_url": "https://github.com/izxci/CVE-2026-42758",
-    "description": "CVE-2026-42758 WebinarIgnition Exploit",
-    "stargazers_count": "0",
-    "vuln_description": "Incorrect Privilege Assignment vulnerability in Saleswonder Team: Tobias WebinarIgnition webinar-ignition allows Privilege Escalation.This issue affects WebinarIgnition: from n/a through < 4.08.253.",
-    "created_at": "2026-06-17 18:44:46",
-    "updated_at": "2026-06-17 18:45:35",
-    "pushed_at": "2026-06-17 18:45:32",
-    "inserted_at": "2026-06-17 22:36:47"
   }
 ]
