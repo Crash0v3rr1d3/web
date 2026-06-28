@@ -1,5 +1,15 @@
 [
   {
+    "id": "CVE-2026-49048",
+    "description": "The Joomla extension JoomCCK exposes a front-end controller task, that builds two SQL statements by directly concatenating a user-supplied request parameter into the query string without escaping or parameterisation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49048",
+    "publishedDate": "2026-06-28T19:16:52.100",
+    "lastModifiedDate": "2026-06-28T19:16:52.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
     "id": "CVE-2026-13504",
     "description": "A vulnerability has been found in code-projects Project Management System 1.0. This vulnerability affects unknown code of the file /mail.php of the component Mail Compose Page. Such manipulation leads to cross site scripting. The attack may be performed from remote. The exploit has been disclosed to the public and may be used.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-13504",
@@ -204,32 +214,13 @@
   },
   {
     "id": "CVE-2026-13497",
-    "description": "A vulnerability was determined in itsourcecode Hospital Management System 1.0. The impacted element is an unknown function of the file /appointment.php. This manipulation of the argument editid causes sql injection. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized.",
+    "description": "itsourcecode Hospital Management System appointment.php sql injection",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-13497",
-    "publishedDate": "2026-06-28T13:16:53.197",
-    "lastModifiedDate": "2026-06-28T13:16:53.197",
+    "publishedDate": "Sun, 28 Jun 2026 12:45:08 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
     "id": "CVE-2026-13496",
@@ -630,13 +621,23 @@
   },
   {
     "id": "CVE-2026-10646",
-    "description": "Use-after-return in `zsock_getaddrinfo()` when a timed-out DNS query is retried without cancellation",
+    "description": "Zephyr's BSD-sockets getaddrinfo() implementation (subsys/net/lib/sockets/getaddrinfo.c) passes a pointer to a stack-allocated state object (struct getaddrinfo_state ai_state) as the user_data of an asynchronous DNS resolver query. The socket layer waits on a semaphore with a timeout deliberately set slightly longer than the resolver's own per-query timeout. When that semaphore wait nonetheless times out (-EAGAIN) - which can occur when the resolver's timeout work is delayed by workqueue contention, or in the documented multi-retry configuration where CONFIG_NET_SOCKETS_DNS_TIMEOUT exceeds CONFIG_NET_SOCKETS_DNS_BACKOFF_INTERVAL - the pre-fix code retries the query (goto again) without cancelling the previous one and without resetting the semaphore. The previous query slot remains active in the resolver with its callback and the stack pointer as user_data, and ai_state-dns_id is overwritten so the stale query can no longer be cancelled. A subsequent DNS response delivered over UDP and matched by its 16-bit transaction id (in dispatcher_cb()/dns_read()), or the resolver's own delayed query-timeout work, then invokes dns_resolve_cb() against the now out-of-scope stack frame, writing through the stale pointer (state-status, state-idx, state-ai_arr[], and k_sem_give()). Because the triggering response is network-delivered and its 16-bit id is spoofable/replayable by an on- or off-path attacker, this is a network-influenceable use-after-return that can corrupt reused stack memory, leading to crashes/denial of service or memory corruption. The fix cancels the timed-out query by name and type before retrying and resets the local semaphore, eliminating the stale callback path. Affected: Zephyr v4.0.0 through v4.4.0.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-10646",
-    "publishedDate": "Sun, 28 Jun 2026 04:04:11 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-06-28T05:16:21.083",
+    "lastModifiedDate": "2026-06-28T05:16:21.083",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
   },
   {
     "id": "CVE-2026-10644",
@@ -655,35 +656,6 @@
         "exploitabilityScore": 1.6,
         "impactScore": 2.5,
         "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58058",
-    "description": "Nmap through 7.99 does not keep the IPv6 extension-header walk within the captured packet in ipv6_get_data_primitive (libnetutil/netutil.cc), so the pointer advances past the buffer and the remaining-length computation underflows to a large value. A scanned target or on-path attacker returning a crafted IPv6 response with a truncated extension header can trigger out-of-bounds reads and a crash during raw IPv6 scans.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58058",
-    "publishedDate": "2026-06-28T02:16:33.130",
-    "lastModifiedDate": "2026-06-28T02:16:33.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
       }
     ]
   }
