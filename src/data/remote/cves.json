@@ -1,325 +1,70 @@
 [
   {
-    "id": "CVE-2026-13591",
-    "description": "A weakness has been identified in DeepMyst Mysti 0.4.0. Affected is the function _isTrackedConversation of the file src/managers/ChannelBridge.ts of the component Contact Tracking. This manipulation of the argument _channelType causes improper authorization. The attack may be initiated remotely. A high degree of complexity is needed for the attack. The exploitability is told to be difficult. The exploit has been made available to the public and could be used for attacks. Patch name: 9b4aff0f106db424aa45a35aa89dd0b8f2eb9a48. It is suggested to install a patch to address this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13591",
-    "publishedDate": "2026-06-29T17:16:29.210",
-    "lastModifiedDate": "2026-06-29T17:16:29.210",
+    "id": "CVE-2026-53428",
+    "description": "Memory Allocation with Excessive Size Value vulnerability in leandrocp mdex allows an unauthenticated attacker to cause a denial of service through unbounded memory allocation.\n\ncomrak_nif::lumis_adapter::LumisAdapter::parse_highlight_lines in native/comrak_nif/src/lumis_adapter.rs eagerly expands a user-controlled inclusive line range from a fenced code block's highlight_lines decorator into a Vec<usize>, pushing one element per integer in the range with no upper bound on the range size. An attacker who can supply Markdown that an application renders with MDEx.to_html/2 (for example a comment, chat message, or wiki page) can embed a code block whose info string is rust highlight_lines=\"1-100000000\", forcing the native adapter to allocate roughly 8 bytes per line in the range.\n\nA payload that differs by only a few bytes can therefore allocate hundreds of megabytes, and a sufficiently large range (for example 1-2000000000) exhausts host memory and aborts the BEAM, denying service to every user of the rendering process. The per-line write loop additionally tests membership with a linear scan over the same vector, degrading rendering to a quadratic cost even for ranges that do not immediately exhaust memory.\n\nThe vulnerable native code originally shipped inside mdex (in native/comrak_nif/src/lumis_adapter.rs) and was later extracted into the separate mdex_native package (native/mdex_native_nif/src/lumis_adapter.rs), where it remains unpatched.\n\nThis issue affects mdex from 0.11.0 before 0.12.3, and mdex_native from 0.1.0 before 0.2.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53428",
+    "publishedDate": "2026-06-29T19:16:41.817",
+    "lastModifiedDate": "2026-06-29T20:17:38.850",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 1.3,
+        "score": 6.9,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-12672",
-    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. Reason: This candidate was issued in error. Notes: All references and descriptions in this candidate have been removed to prevent accidental usage.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12672",
-    "publishedDate": "2026-06-29T17:16:28.143",
-    "lastModifiedDate": "2026-06-29T17:16:28.143",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-13590",
-    "description": "A security flaw has been discovered in seladb PcapPlusPlus 25.05. This impacts the function pcpp::ModbusLayer::getLength in the library Packet++/header/ModbusLayer.h of the component Modbus Protocol Handler. The manipulation of the argument length results in heap-based buffer overflow. The attack can be launched remotely. A high complexity level is associated with this attack. The exploitability is said to be difficult. The exploit has been released to the public and may be used for attacks. The patch is identified as 4c90c3e3418a2b09dc82b7ca5775e9c1e22fe454. Applying a patch is advised to resolve this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13590",
-    "publishedDate": "2026-06-29T17:16:29.057",
-    "lastModifiedDate": "2026-06-29T17:16:29.057",
+    "id": "CVE-2026-53427",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in leandrocp MDEx allows stored or reflected cross-site scripting via attacker-controlled Markdown.\n\nWhen syntax highlighting and full info-string forwarding (render: [full_info_string: true]) are enabled, the Lumis adapter copies the value of a code fence's highlight_lines_class info-string attribute, unescaped, into the class attribute of every rendered line. comrak_nif::lumis_adapter::LumisAdapter::parse_custom_attributes in native/comrak_nif/src/lumis_adapter.rs shlex-parses the info string and stores each key=value pair verbatim, highlight_lines_config pulls highlight_lines_class into the per-line class value, and write_highlighted interpolates that value directly into the class attribute of the per-line <div>. A single-quoted shell token preserves an inner double quote through shlex parsing, so a value such as '\"><script>alert(1)</script>' terminates the class attribute early and the markup that follows is emitted as live HTML.\n\nAn attacker who can submit Markdown (through comments, posts, wiki pages, documentation, or any user-generated content) can inject arbitrary HTML and JavaScript that runs in the browser of every user who views the rendered output, enabling session theft, account takeover, and other client-side attacks. No authentication or special privileges are required.\n\nThe vulnerable native code originally shipped inside mdex (in native/comrak_nif/src/lumis_adapter.rs) and was later extracted into the separate mdex_native package (native/mdex_native_nif/src/lumis_adapter.rs), where it remains unpatched.\n\nThis issue affects mdex from 0.11.3 before 0.12.3, and mdex_native from 0.1.0 before 0.2.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53427",
+    "publishedDate": "2026-06-29T19:16:41.597",
+    "lastModifiedDate": "2026-06-29T20:17:38.650",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.9,
+        "score": 2.3,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-12912",
-    "description": "A flaw was found in libtiff. A remote attacker could exploit this vulnerability by providing a specially crafted PixarLog-compressed TIFF image. This issue occurs when decoding Pixarlog codec images with the PIXARLOGDATAFMT_8BITABGR output format and a specific stride value, leading to a heap-based buffer overflow. This could potentially result in arbitrary code execution or a denial of service (DoS).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12912",
-    "publishedDate": "2026-06-29T17:16:28.230",
-    "lastModifiedDate": "2026-06-29T17:16:28.230",
+    "id": "CVE-2026-13757",
+    "description": "A flaw was found in p11-kit. The RPC message attribute parsing functions p11_rpc_message_get_attribute() and p11_rpc_message_get_attribute_array_value() form a mutually-recursive call chain with no recursion depth limit when processing nested CKA_WRAP_TEMPLATE, CKA_UNWRAP_TEMPLATE, and CKA_DERIVE_TEMPLATE attributes. An unauthenticated attacker with local access to the p11-kit RPC Unix domain socket can send a specially crafted request with deeply nested template attributes, causing stack exhaustion and crashing the p11-kit server process and its dependent services.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13757",
+    "publishedDate": "2026-06-29T19:16:40.907",
+    "lastModifiedDate": "2026-06-29T20:17:33.013",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
+        "score": 6.2,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.3,
-        "impactScore": 5.9,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
         "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13589",
-    "description": "A vulnerability was identified in seladb PcapPlusPlus 25.05. This affects the function pcpp::TelnetLayer::getSubCommand of the file Packet++/src/TelnetLayer.cpp of the component Telnet Subnegotiation Packet Handler. The manipulation leads to heap-based buffer overflow. The attack can be initiated remotely. The complexity of an attack is rather high. The exploitability is reported as difficult. The exploit is publicly available and might be used. The identifier of the patch is 98e671010bc7c87b95898c22ae289220ae92542b. It is recommended to apply a patch to fix this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13589",
-    "publishedDate": "2026-06-29T17:16:28.907",
-    "lastModifiedDate": "2026-06-29T17:16:28.907",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.9,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13752",
-    "description": "Improper neutralization of parameters in Snowflake CLI versions prior to 3.19 allowed unintended SQL execution. An attacker could exploit this by supplying crafted values to vulnerable command paths, causing Snowflake CLI to execute unintended SQL in the context of the user’s Snowflake session. Successful exploitation required crafted values to reach vulnerable parameters, including through socially engineered input, malicious repository configuration, or compromised automation feeding external values into the CLI, and impact is limited by the privileges assigned to the active session. The fix is available in Snowflake CLI version 3.19, and users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13752",
-    "publishedDate": "2026-06-29T17:16:30.160",
-    "lastModifiedDate": "2026-06-29T17:16:30.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.2,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13588",
-    "description": "A vulnerability was determined in seladb PcapPlusPlus 25.05. The impacted element is the function pcpp::SSLClientHelloMessage::getHandshakeVersion of the file Packet++/src/SSLHandshake.cpp of the component TLS Hello Handler. Executing a manipulation of the argument handshakeVersion can lead to heap-based buffer overflow. It is possible to launch the attack remotely. This attack is characterized by high complexity. The exploitability is regarded as difficult. The exploit has been publicly disclosed and may be utilized. This patch is called 98e671010bc7c87b95898c22ae289220ae92542b. It is best practice to apply a patch to resolve this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13588",
-    "publishedDate": "2026-06-29T17:16:28.753",
-    "lastModifiedDate": "2026-06-29T17:16:28.753",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.9,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13751",
-    "description": "Improper handling of untrusted remote references in Snowflake CLI versions prior to 3.19 allowed server-side request forgery. The SQL statement reader's !source/!load directives could reference remote URLs that were retrieved at runtime without sufficient restriction on the request destination. By supplying crafted SQL content processed through a vulnerable command path, an attacker could cause the victim's environment to issue unintended outbound requests to internal or otherwise non-public network locations, and could cause remote SQL content to be retrieved and executed in the context of the victim user's session. Successful exploitation requires the victim to process attacker-controlled content through a vulnerable command path and is limited by the privileges available to that session and environment. The fix is available in Snowflake CLI version 3.19, which adds an option to disable remote URL retrieval.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13751",
-    "publishedDate": "2026-06-29T17:16:30.050",
-    "lastModifiedDate": "2026-06-29T17:16:30.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 2.7,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13750",
-    "description": "Insertion of sensitive information into log files in Snowflake CLI versions prior to 3.19 allowed plaintext credentials to be written to persistent local debug logs. An attacker could exploit this by obtaining read access to the affected user's local log files, causing credentials such as passwords, tokens, or private key material to be exposed without additional application-level safeguards. Successful exploitation requires credentials to be present in the affected connection context and the resulting logs to be accessible from the local environment. The fix is available in Snowflake CLI version 3.19, and users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13750",
-    "publishedDate": "2026-06-29T16:16:39.750",
-    "lastModifiedDate": "2026-06-29T17:16:29.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9105",
-    "description": "An authenticated stack-based buffer overflow vulnerability exists in the web management interface of TP-Link TL-WR841N v14.  A remote authenticated attacker can send crafted HTTP requests to cause the embedded web server to overflow a stack buffer, resulting in a crash of the affected process.\n\nSuccessful exploitation results in a denial-of-service condition, causing the device to crash and automatically reboot.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9105",
-    "publishedDate": "2026-06-29T16:16:44.980",
-    "lastModifiedDate": "2026-06-29T17:16:30.797",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13749",
-    "description": "Improper neutralization in the Snowpark annotation processor callback template in Snowflake CLI versions prior to 3.19 allowed arbitrary code execution during application bundling or deployment. An attacker could exploit this by supplying crafted project content that is interpolated into generated Python code, causing Snowflake CLI to execute attacker-controlled code in the local context of the user running the CLI. Successful exploitation requires the victim to run the relevant bundling or deployment workflow against attacker-controlled project content, and any resulting code runs with the privileges of that local execution context. The fix is available in Snowflake CLI version 3.19, and users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13749",
-    "publishedDate": "2026-06-29T16:16:39.640",
-    "lastModifiedDate": "2026-06-29T17:16:29.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13587",
-    "description": "A vulnerability was found in seladb PcapPlusPlus 25.05. The affected element is the function parse_by_block_type of the file light_pcapng.c of the component LightPcapNg Parser. Performing a manipulation of the argument captured_packet_length results in heap-based buffer overflow. It is possible to initiate the attack remotely. The attack's complexity is rated as high. The exploitability is described as difficult. The exploit has been made public and could be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13587",
-    "publishedDate": "2026-06-29T16:16:38.943",
-    "lastModifiedDate": "2026-06-29T16:16:38.943",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.9,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13748",
-    "description": "Improper restriction of file path resolution in Snowflake CLI versions prior to 3.19 allowed arbitrary local file content to be read and transmitted to Snowflake services. An attacker could exploit this by supplying crafted repository or project content that referenced files outside the intended project boundary, causing Snowflake CLI to read local files and upload or embed their contents during deployment or SQL template processing. Successful exploitation required the victim to process attacker-controlled project content, and retrieval of exfiltrated data depended on access to the victim's Snowflake account artifacts such as query history or uploaded stage content. The fix is available in Snowflake CLI version 3.19, and users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13748",
-    "publishedDate": "2026-06-29T16:16:39.517",
-    "lastModifiedDate": "2026-06-29T17:16:29.767",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13746",
-    "description": "Improper neutralization of local CLI parameters in Snowflake CLI versions prior to 3.19 allowed unintended SQL execution. A user could trigger this issue by supplying crafted values to vulnerable Cortex SQL or object listing command paths, causing Snowflake CLI to execute unintended SQL in the context of that user's Snowflake session. Successful exploitation is constrained to self-injection because the vulnerable parameters were supplied directly through local CLI arguments rather than through project files, repositories, or other external input sources, and impact is limited to the privileges already available to the current session. The fix is available in Snowflake CLI version 3.19, and users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13746",
-    "publishedDate": "2026-06-29T16:16:39.403",
-    "lastModifiedDate": "2026-06-29T17:16:29.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.6,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 2.5,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13583",
-    "description": "A vulnerability has been found in Edimax EW-7478APC 1.04. Impacted is the function formUSBFolder of the file /goform/formUSBFolder of the component POST Request Handler. Such manipulation of the argument ShareName/SelectName leads to buffer overflow. The attack may be performed from remote. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13583",
-    "publishedDate": "2026-06-29T16:16:38.767",
-    "lastModifiedDate": "2026-06-29T16:16:38.767",
+    "id": "CVE-2026-58000",
+    "description": "luci-proto-openvpn through 0.11.1, fixed in commit e4ff45e, contains a command injection vulnerability in the generateKey ubus method where the cl_meta parameter is interpolated into a shell command without proper escaping or quoting. An authenticated LuCI user with OpenVPN protocol configuration access can inject arbitrary shell metacharacters into cl_meta to execute commands as root via the popen function.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58000",
+    "publishedDate": "2026-06-29T19:16:42.993",
+    "lastModifiedDate": "2026-06-29T20:17:41.193",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -330,94 +75,335 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 7.4,
+        "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41052",
-    "description": "Improper privilege handling could be used by users with Project Owner role to escalate privileges, in Rancher versions 2.14 before 2.14.2, 2.13 before 2.13.6, and 2.12 before 2.12.10.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41052",
-    "publishedDate": "2026-06-29T16:16:39.870",
-    "lastModifiedDate": "2026-06-29T17:16:30.277",
+    "id": "CVE-2026-57999",
+    "description": "luci-app-tailscale-community contains a command injection vulnerability in the tailscale.do_login RPC method that allows authenticated users to execute arbitrary commands as root. The vulnerability exists because user-controlled loginserver and loginserver_authkey parameters are improperly quoted within a double-quoted shell command, allowing shell substitutions like $() to be evaluated by the outer shell before argument processing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57999",
+    "publishedDate": "2026-06-29T19:16:42.857",
+    "lastModifiedDate": "2026-06-29T19:22:57.460",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.4,
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11720",
+    "description": "A path traversal vulnerability exists in the HTTP tool URL builder of googleapis/mcp-toolbox.\n\nWhen constructing downstream API requests, the URL builder substitutes user-controlled pathParams into the configured tool path and parses the resulting string as a relative URL. While it checks that the input does not alter the scheme, host, or user info, it relies on ResolveReference for the final URL resolution. Because dot segments (../) are normalized during this resolution step, an attacker can supply path parameters containing directory traversal sequences to escape the operator-configured path scope. This allows the client to coerce the toolbox into making requests to unintended endpoints on the same target host while forwarding the toolbox's configured credentials (e.g., bypassing a restricted path like /api/v1/users/{{.id}} to reach /admin/secrets).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11720",
+    "publishedDate": "2026-06-29T18:16:36.173",
+    "lastModifiedDate": "2026-06-29T19:16:36.867",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "meissner@suse.de"
+        "source": "cve-coordination@google.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13744",
-    "description": "Improper neutralization of attacker-controlled content in Snowflake CLI versions prior to 3.19 allowed unintended SQL execution. By supplying crafted repository content, project configuration, manifest data, or specification input, an attacker could cause Snowflake CLI to execute unintended SQL in the context of the victim user's Snowflake session. Successful exploitation requires the victim to process attacker-controlled content through a vulnerable command path and is limited by the privileges assigned to that session. The fix is available in Snowflake CLI version 3.19. Users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13744",
-    "publishedDate": "2026-06-29T16:16:39.260",
-    "lastModifiedDate": "2026-06-29T17:16:29.580",
+    "id": "CVE-2026-57960",
+    "description": "Hi.Events through 1.9.0 public check-in list endpoints use short_id as sole access control, allowing unauthenticated access to retrieve full attendee lists including emails and personal information. Attackers with knowledge of the short_id can call GET /api/public/check-in-lists/{short_id}/attendees to read attendee data and create or delete check-in records without authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57960",
+    "publishedDate": "2026-06-29T18:16:42.130",
+    "lastModifiedDate": "2026-06-29T19:15:23.213",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.3,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 6,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13582",
-    "description": "A flaw has been found in Edimax EW-7478APC 1.04. This issue affects the function formUSBAccount of the file /goform/formUSBAccount of the component POST Request Handler. This manipulation of the argument UserName/Password causes buffer overflow. The attack is possible to be carried out remotely. The exploit has been published and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13582",
-    "publishedDate": "2026-06-29T16:16:38.610",
-    "lastModifiedDate": "2026-06-29T17:16:28.630",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 7.4,
+        "score": 8.3,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13437",
-    "description": "Insertion of sensitive information into sent data in the AI Agent job API in Devolutions PowerShell Universal 2026.2.0 allows an authenticated user with AI Agent read access to obtain reusable, potentially higher-privileged authentication tokens via App Tokens serialized in plaintext in job API responses.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13437",
-    "publishedDate": "2026-06-29T16:16:35.773",
-    "lastModifiedDate": "2026-06-29T17:16:28.373",
+    "id": "CVE-2026-57959",
+    "description": "Hi.Events through 1.9.0 contains a promo code validation vulnerability where reservation validates usage count before asynchronous UpdateEventStatisticsJob increments it, allowing attackers to redeem limited promo codes unlimited times. Attackers can sequentially reserve multiple orders with the same restricted promo code, each reading order_usage_count=0 and passing validation, then complete them all at discounted prices without concurrent requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57959",
+    "publishedDate": "2026-06-29T18:16:41.997",
+    "lastModifiedDate": "2026-06-29T20:17:41.073",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57958",
+    "description": "Mixpost through 2.6.0 contains a reflected cross-site scripting vulnerability that allows unauthenticated attackers to execute arbitrary JavaScript in authenticated users' browsers by crafting malicious OAuth callback URLs with unsanitized error query parameters. Attackers can exploit the OAuth callback controller's failure to sanitize error parameters before rendering them through Laravel flash messages via the Vue v-html directive to hijack authenticated user sessions or perform unauthorized actions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57958",
+    "publishedDate": "2026-06-29T18:16:41.253",
+    "lastModifiedDate": "2026-06-29T19:16:42.747",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57957",
+    "description": "Papermark through 0.22.0 contains a cross-origin resource sharing (CORS) misconfiguration vulnerability that allows unauthenticated remote attackers to perform credentialed cross-origin requests by exploiting the TUS-based viewer upload endpoint reflecting arbitrary request Origins with Access-Control-Allow-Credentials set to true. Attackers can lure authenticated victims to malicious pages that silently issue credentialed cross-origin requests to upload arbitrary files into victim datarooms and read credentialed responses.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57957",
+    "publishedDate": "2026-06-29T18:16:41.097",
+    "lastModifiedDate": "2026-06-29T19:15:23.213",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57956",
+    "description": "SigNoz through 0.130.1 contains a broken access control vulnerability that allows authenticated users to access other organizations' alert rules by supplying a target rule UUID, as the alert rule store predicates fail to filter by organization ID. Attackers can read, edit, and delete alert rules belonging to other organizations by exploiting the missing tenant isolation check, bypassing multi-tenant access controls.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57956",
+    "publishedDate": "2026-06-29T18:16:40.963",
+    "lastModifiedDate": "2026-06-29T20:17:40.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57955",
+    "description": "SigNoz through 0.130.1 contains a SQL injection vulnerability that allows authenticated attackers to execute arbitrary ClickHouse queries by injecting URL-encoded quotes into the rule ID path parameter of the alert-history endpoints. Attackers can manipulate the unsanitized rule ID interpolated into ClickHouse queries to read all stored traces, logs, and metrics, or abuse the url() function to perform server-side request forgery.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57955",
+    "publishedDate": "2026-06-29T18:16:40.817",
+    "lastModifiedDate": "2026-06-29T19:16:42.637",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57954",
+    "description": "Elide through 7.1.17 fails to enforce @ReadPermission on client-supplied sort expressions in SortingImpl.getValidSortingRules, allowing attackers to sort collections by forbidden fields. Attackers can infer hidden field values through row ordering analysis, leaking relative field ordering across all rows via both JSON:API and GraphQL read paths.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57954",
+    "publishedDate": "2026-06-29T18:16:40.673",
+    "lastModifiedDate": "2026-06-29T19:15:23.213",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57953",
+    "description": "Mythic before 3.4.0.60 contains an authorization bypass vulnerability that allows authenticated spectator-role users to perform unauthorized write operations by accessing the eventing_import_automatic_webhook endpoint registered under spectator-permitted middleware. Attackers with spectator role can exploit this misconfigured access control to create and delete automation workflows, making unauthorized modifications to operation automation configuration and EventGroups.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57953",
+    "publishedDate": "2026-06-29T18:16:40.547",
+    "lastModifiedDate": "2026-06-29T20:17:40.790",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57952",
+    "description": "Mythic before 3.4.0.60 contains an authorization bypass vulnerability in four REST endpoints (c2profile_config_check_webhook, c2profile_redirect_rules_webhook, c2profile_get_ioc_webhook, c2profile_sample_message_webhook) that fail to verify payload ownership. An operator in one operation can invoke these endpoints with a known payload UUID from another operation to access that operation's C2 profile configuration including encryption keys and callback parameters.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57952",
+    "publishedDate": "2026-06-29T18:16:40.380",
+    "lastModifiedDate": "2026-06-29T19:16:42.507",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57951",
+    "description": "Mythic before 3.4.0.60 contains a broken hasura permission filter on the payload_build_step table with an always-satisfied _or condition that bypasses operation-scoped access controls. Authenticated operators and spectators can query payload_build_step to read step_stdout, step_stderr, step_name, and step_description across all operations on the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57951",
+    "publishedDate": "2026-06-29T18:16:40.253",
+    "lastModifiedDate": "2026-06-29T19:09:08.500",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -428,154 +414,277 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13742",
-    "description": "Honeywell IQ MultiAccess, all versions prior to and including version 28, contain an improper digital signature verification vulnerability. An attacker could potentially exploit this vulnerability, leading to the replacement of downloaded file with a malicious one. Honeywell also recommends updating to the most recent version of this product, service, or offering [V27 SP1, V28 SP1]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13742",
-    "publishedDate": "2026-06-29T16:16:39.110",
-    "lastModifiedDate": "2026-06-29T17:16:29.480",
+    "id": "CVE-2026-57950",
+    "description": "ruoyi-vue-pro through 2026.05, fixed in commit 5d1fd70 contains a broken access control vulnerability in ErpSaleOrderController that allows attackers with erp:sale-out permissions to gain unauthorized access to sale order operations by exploiting an incorrect permission namespace enforcement. Attackers holding shipment-level permissions can perform unauthorized create, update, delete, and read operations on financially sensitive sale orders due to the controller enforcing erp:sale-out instead of the intended erp:sale-order namespace.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57950",
+    "publishedDate": "2026-06-29T18:16:40.130",
+    "lastModifiedDate": "2026-06-29T20:17:40.670",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57949",
+    "description": "ruoyi-vue-pro through 2026.05, fixed in commit c779a47, contains a missing authorization vulnerability in the CRM module's GET /admin-api/crm/follow-up-record/get endpoint that allows authenticated users to read any follow-up record by iterating sequential numeric IDs. Attackers can exploit this by sending requests with arbitrary ID parameters to access other users' follow-up notes, file attachments, scheduling information, and business entity references without proper authorization checks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57949",
+    "publishedDate": "2026-06-29T18:16:39.997",
+    "lastModifiedDate": "2026-06-29T19:16:42.397",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57948",
+    "description": "Pinpoint through version 3.1.0 contains an insecure session management vulnerability that allows attackers to access the pinpointJwt session cookie due to missing HttpOnly and Secure attributes, enabling JavaScript access via document.cookie and cleartext transmission over HTTP. Attackers can exploit stored or reflected cross-site scripting vulnerabilities to exfiltrate the session token or intercept it through network sniffing to perform session hijacking.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57948",
+    "publishedDate": "2026-06-29T18:16:39.863",
+    "lastModifiedDate": "2026-06-29T19:15:23.213",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57947",
+    "description": "Pinpoint through 3.1.0 contains a server-side request forgery vulnerability in the webhook registration endpoint that allows authenticated users to register internal URLs due to missing SSRF protection. Attackers can trigger alarm threshold breaches to force the server to issue POST requests to internal hosts and metadata endpoints, enabling unauthorized access to internal network resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57947",
+    "publishedDate": "2026-06-29T18:16:39.720",
+    "lastModifiedDate": "2026-06-29T20:17:40.450",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57946",
+    "description": "Invidious before version 2.20260626.0 contains a broken access control vulnerability that allows unauthenticated attackers to retrieve private playlist contents by accessing the RSS feed playlist endpoint without authentication. Attackers can supply a playlist ID to the feed endpoint to obtain the full playlist contents, owner email address, and associated video entries without any authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57946",
+    "publishedDate": "2026-06-29T18:16:39.587",
+    "lastModifiedDate": "2026-06-29T19:22:57.460",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57945",
+    "description": "PhotoPrism before 260601-a7d098548 contains a broken access control vulnerability that allows authenticated non-admin users to modify other users' profile information by sending requests to arbitrary user endpoints. Attackers can exploit the missing session-to-user identifier validation in the PUT users API endpoint to overwrite another user's profile details without authorization.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57945",
+    "publishedDate": "2026-06-29T18:16:39.457",
+    "lastModifiedDate": "2026-06-29T19:13:31.073",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57943",
+    "description": "LibrePhotos before 1.0.0 contains a broken object level authorization vulnerability in the SetPhotosShared endpoint that allows authenticated users to grant themselves access to other users' private photos by bypassing ownership validation. Attackers can manipulate shared_to relations without proper owner checks to read arbitrary private photos belonging to other users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57943",
+    "publishedDate": "2026-06-29T18:16:39.323",
+    "lastModifiedDate": "2026-06-29T20:17:40.297",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@honeywell.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13581",
-    "description": "A vulnerability was detected in Edimax EW-7478APC 1.04. This vulnerability affects the function formStaDrvSetup of the file /goform/formStaDrvSetup of the component POST Request Handler. The manipulation of the argument rootAPmac results in os command injection. The attack can be executed remotely. The exploit is now public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13581",
-    "publishedDate": "2026-06-29T16:16:38.447",
-    "lastModifiedDate": "2026-06-29T16:16:38.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 2.1,
+        "score": 6,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13580",
-    "description": "A security vulnerability has been detected in Edimax EW-7478APC 1.04. This affects the function formQoS of the file /goform/formQoS of the component POST Request Handler. The manipulation of the argument selSSID leads to buffer overflow. Remote exploitation of the attack is possible. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13580",
-    "publishedDate": "2026-06-29T16:16:38.280",
-    "lastModifiedDate": "2026-06-29T17:16:28.513",
+    "id": "CVE-2026-57942",
+    "description": "LibreTranslate through 1.9.7, fixed in commit 397fd22, contains an IP spoofing vulnerability in the get_remote_address() function that allows unauthenticated attackers to spoof client IP addresses by injecting arbitrary values into the X-Forwarded-For header without trusted proxy validation. Attackers can bypass per-IP rate limiting and flood bans by supplying forged addresses in the X-Forwarded-For header to enable unlimited API abuse.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57942",
+    "publishedDate": "2026-06-29T18:16:39.180",
+    "lastModifiedDate": "2026-06-29T19:16:42.133",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13579",
-    "description": "A weakness has been identified in itsourcecode Hospital Management System 1.0. Affected by this issue is some unknown functionality of the file /patientchangepassword.php. Executing a manipulation of the argument newpassword can lead to sql injection. The attack may be launched remotely. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13579",
-    "publishedDate": "2026-06-29T15:16:39.163",
-    "lastModifiedDate": "2026-06-29T16:16:38.150",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
+        "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49049",
-    "description": "The Helix3 plugin for Joomla exposes an ajax handler task, that allows unauthenticated attackers to delete arbitrary files, write arbitrary JSON files and update template parameters.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49049",
-    "publishedDate": "2026-06-29T15:16:41.363",
-    "lastModifiedDate": "2026-06-29T16:16:40.513",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-56290",
-    "description": "The Joomla extension Page Builder CK is vulnerable to an unauthenticated arbitrary file upload that allows uploading executable files and leads to full RCE.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56290",
-    "publishedDate": "2026-06-29T15:16:42.360",
-    "lastModifiedDate": "2026-06-29T16:16:42.570",
+    "id": "CVE-2026-56783",
+    "description": "Parseable before 2.9.2 contains an information disclosure vulnerability in the notification-target API endpoints that returns webhook tokens and basic-auth credentials in cleartext due to commented-out secret-masking functionality. Any authenticated user with the GetAlert action, including low-privilege reader roles, can recover credentials and internal endpoint URLs for all configured notification targets by querying GET /api/v1/targets or related endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56783",
+    "publishedDate": "2026-06-29T18:16:38.950",
+    "lastModifiedDate": "2026-06-29T19:13:31.073",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 10,
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:A/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Red",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@joomla.org"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   }
