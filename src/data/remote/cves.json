@@ -1,5 +1,45 @@
 [
   {
+    "id": "CVE-2026-45822",
+    "description": "decode-uri-component through 0.4.1 is vulnerable to denial of service. The decode() function splits input on '%' producing N tokens and calls decodeComponents(), exhibiting super-linear parsing time: 200 '%ab' tokens takes approximately 0.7s, 700 tokens approximately 6s, and 1400 tokens approximately 33s. An attacker can cause significant CPU consumption and event-loop blocking via crafted input.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45822",
+    "publishedDate": "2026-06-30T09:16:25.177",
+    "lastModifiedDate": "2026-06-30T09:16:25.177",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "22e2d327-25fe-45d7-9f0c-dcd23b7108df"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12578",
+    "description": "The affected product is vulnerable to a deserialization of untrusted data, which may allow an attacker to execute arbitrary code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12578",
+    "publishedDate": "2026-06-30T09:16:24.267",
+    "lastModifiedDate": "2026-06-30T09:16:24.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "759f5e80-c8e1-4224-bead-956d7b33c98b"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-12240",
     "description": "The Export User Data plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the unserialize function in all versions up to, and including, 2.2.6. This makes it possible for authenticated attackers, with subscriber-level access and above, to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). Successful exploitation requires an administrator to trigger a user data export while a subscriber-level (or higher) user has stored a crafted serialized XLSXWriter object payload as their display name.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-12240",
@@ -24,7 +64,7 @@
     "description": "A double free issue has been identified in libarchive's RAR5 reader. During parsing of a specially crafted RAR5 archive, the filtered_buf pointer may remain stale after being freed during unpacking state reinitialization. Subsequent processing of another archive entry can trigger a second free of the same memory region, resulting in a double-free condition. Successful exploitation may cause applications using the vulnerable libarchive API to terminate unexpectedly, leading to a denial of service.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-14164",
     "publishedDate": "2026-06-30T07:16:32.170",
-    "lastModifiedDate": "2026-06-30T07:16:32.170",
+    "lastModifiedDate": "2026-06-30T09:16:24.380",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -405,46 +445,6 @@
         "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.2,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34592",
-    "description": "Coolify is an open-source and self-hostable tool for managing servers, applications, and databases. Prior to 4.0.0-beta.471, Coolify server and project lookups are not scoped to the current team, allowing any authenticated user to access servers and projects belonging to other teams by specifying their IDs directly. This vulnerability is fixed in 4.0.0-beta.471.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34592",
-    "publishedDate": "2026-06-29T22:16:44.120",
-    "lastModifiedDate": "2026-06-29T22:16:44.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10647",
-    "description": "The USB CDC-NCM device class (subsys/usb/device_next/class/usbd_cdc_ncm.c) ignores the return value of usbd_ep_enqueue() in its ethernet transmit callback cdc_ncm_send(). When the enqueue fails, the function still calls k_sem_take(&data-sync_sem, K_FOREVER), blocking on a completion semaphore that is only ever signaled from the bulk-IN transfer-completion callback. Because nothing was enqueued, that callback never fires and the calling thread — a shared network traffic-class TX thread — deadlocks permanently while holding the interface TX lock, halting transmission until reboot (and leaking the transmit buffer).\n\nThe enqueue fails under conditions controlled by the attached USB host: usbd_ep_enqueue() returns -EPERM whenever the bus is suspended (a standard, persistent host operation), and the underlying udc_ep_enqueue() returns -EPERM/-ENODEV on disconnect, bus reset, or endpoint disable. The cdc_ncm_send() guard only checks the DATA_IFACE_ENABLED and IFACE_UP flags, not the suspended state, so a packet transmitted while the host holds the bus suspended reaches the failing enqueue and deadlocks the TX path.\n\nThe realistic trigger is a bus suspend that occurs while the exported network interface is active and has traffic to send — host sleep, USB selective/auto-suspend, or hub power management — after which any device-originated packet deadlocks the path, recoverable only by reboot. The impact is a persistent loss of the virtual network connection between the host's NCM interface and the Zephyr device; because the deadlocked thread is a shared traffic-class TX thread, egress on other network interfaces can stall as well. There is no memory corruption or information disclosure.\n\nThe defect was introduced with the CDC-NCM driver and shipped in releases through v4.4.0; it is fixed by checking the usbd_ep_enqueue() return value and freeing the buffer before the blocking wait.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10647",
-    "publishedDate": "2026-06-29T22:16:42.940",
-    "lastModifiedDate": "2026-06-29T22:16:42.940",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
         "source": "vulnerabilities@zephyrproject.org"
       }
     ]
