@@ -1,30 +1,110 @@
 [
   {
-    "id": "CVE-2026-13474",
-    "description": "Denial of service via malformed HTTP/2 requests in NetScaler ADC and NetScaler Gateway if HTTP/2 is enabled in HTTP Profile and associated with the virtual server (of type LB, CS, VPN) or the service configured on NetScaler",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13474",
-    "publishedDate": "2026-06-30T13:17:09.610",
-    "lastModifiedDate": "2026-06-30T13:17:09.610",
+    "id": "CVE-2026-10655",
+    "description": "The asynchronous SNTP client in Zephyr (subsys/net/lib/sntp/sntp.c, sntp_close_async) closed the UDP socket file descriptor directly from the calling thread immediately after detaching it from the network socket service, without synchronizing with the socket-service poll thread.\n\nThe socket service thread polls each socket via zvfs_poll, which (in zsock_poll_prepare_ctx) registers a k_poll_event pointing into the socket's net_context (&ctx->recv_q) and then blocks in k_poll without holding a reference or lock. net_context objects are allocated from a fixed pool (contexts[CONFIG_NET_MAX_CONTEXTS]) and reused after close.\n\nWhen sntp_close_async is invoked from a different thread than the poll thread (in the in-tree consumer subsys/net/lib/config/init_clock_sntp.c, the SNTP timeout handler runs on the system workqueue while the socket service thread is blocked in poll on the same fd), the close frees and may reuse the net_context while the poll thread still has a poller node linked into the freed object, resulting in a use-after-free / object confusion of kernel poll structures.\n\nThe SNTP timeout path is the normal no-response failure mode, so a network peer or off-path attacker who drops or delays the SNTP/NTP response can drive the racing close repeatedly (and periodically with NET_CONFIG_SNTP_INIT_RESYNC). The most likely consequence is a crash of the networking thread (denial of service), with potential memory corruption when the freed context slot is reallocated.\n\nThe fix defers the close to the socket service thread itself via net_socket_service_close (NET_SOCKET_SERVICE_CLOSE_SOCKETS), so the same thread that polls performs the close, eliminating the race. Affected releases: v4.2.0 through v4.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10655",
+    "publishedDate": "2026-06-30T17:16:20.387",
+    "lastModifiedDate": "2026-06-30T17:16:20.387",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5"
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4.2,
+        "source": "vulnerabilities@zephyrproject.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-58016",
-    "description": "A flaw was found in GLib. A state confusion issue exists in g_dbus_node_info_new_for_xml() in the gio/gdbusintrospection.c file when processing malformed D-Bus introspection XML, specifically with a <node> element nested within other elements like <method>, <signal>, <property> or <arg>. This issue can cause an unsigned integer overflow and lead to an out-of-bounds read, resulting in a denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58016",
-    "publishedDate": "2026-06-30T13:19:17.840",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
+    "id": "CVE-2026-10654",
+    "description": "A race condition in the Zephyr Bluetooth Classic RFCOMM host stack (subsys/bluetooth/host/classic/rfcomm.c) mishandles a simultaneous bidirectional session disconnect. When the local device has initiated a session teardown (state BT_RFCOMM_STATE_DISCONNECTING, DISC sent, RTX timer armed) and the connected peer concurrently sends its own DISC frame for dlci 0, rfcomm_handle_disc() invokes rfcomm_session_disconnected(), which unconditionally forced the session to BT_RFCOMM_STATE_DISCONNECTED without ever calling bt_l2cap_chan_disconnect().\n\nBecause the recovery timer was also cancelled and a later UA is ignored in the DISCONNECTED state, the session becomes permanently wedged: the underlying L2CAP channel is never released and the session slot in the fixed bt_rfcomm_pool[CONFIG_BT_MAX_CONN] array is never reclaimed (its conn pointer stays set).\n\nSubsequent bt_rfcomm_dlc_connect() calls on that connection fail with -EINVAL due to the invalid session state, so RFCOMM service is denied for that peer, and repeated occurrences can exhaust the session pool. The DISC frame is peer-controlled over the air, but exploitation requires the peer's DISC to collide with a local-initiated disconnect (a high-complexity timing race). Impact is availability/resource-leak only; there is no memory-safety, confidentiality, or integrity consequence. The defect shipped in released versions (present in v4.4.0 and earlier).\n\nThe fix only transitions to DISCONNECTED when the session is not already in DISCONNECTING, preserving the proper L2CAP teardown path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10654",
+    "publishedDate": "2026-06-30T17:16:20.273",
+    "lastModifiedDate": "2026-06-30T17:16:20.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8864",
+    "description": "The HP Fan Control App might allow local escalation of privileges. An updated version of HP Fan Control App has been released\n               to mitigate this potential vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8864",
+    "publishedDate": "2026-06-30T17:16:26.260",
+    "lastModifiedDate": "2026-06-30T17:16:26.260",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "hp-security-alert@hp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10653",
+    "description": "The Zephyr net_buf library (lib/net_buf/buf.c) manipulated both of its reference counts -- the per-header buf->ref and the per-data-block ref_count at the start of each variable/heap data allocation -- with plain non-atomic C operators (buf->ref++, if (--buf->ref > 0), if (--(*ref_count))). The API is documented as self-synchronizing: callers may share one buffer across threads (e.g. via k_fifo) and each holder independently calls net_buf_unref() with no surrounding lock. Under true concurrency (SMP, or single-core preemption between the non-atomic load and store while another context unrefs the same buffer), two holders can both observe the same prior reference value and both conclude they are the last reference. For heap/variable-data pools (mem_pool_data_unref/heap_data_unref, used by zbus message subscribers, the IP stack RX/TX buffers when CONFIG_NET_BUF_FIXED_DATA_SIZE=n, capture, wireguard, ISO-TP and usbip) this produces a double k_heap_free()/k_free() of the same block -- heap-metadata corruption and a use-after-free on the heap-hardening poison pattern. For the per-header refcount the buffer is returned to the pool free LIFO twice for any pool type (including fixed-data pools used by Bluetooth and networking), corrupting the free list so a later allocation hands the same buffer to two owners. The fix converts both refcounts to atomic_inc/atomic_dec (overlaying buf->ref in an atomic_t-sized union and changing the data-block refcount from uint8_t to atomic_t). Impact is gated on genuine concurrency and on an application architecture that shares one buffer among multiple independent unref'ers; the trigger is a refcount/timing race rather than packet content, so an external attacker has at most weak indirect influence over the race window. Affects all Zephyr releases through v4.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10653",
+    "publishedDate": "2026-06-30T17:16:20.160",
+    "lastModifiedDate": "2026-06-30T17:16:20.160",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.7,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9263",
+    "description": "The Zephyr Bluetooth controller ISO Adaptation Layer (subsys/bluetooth/controller/ll_sw/isoal.c) fails to validate the length field of a framed ISO PDU start segment. Per the Bluetooth specification a start segment (sc=0) always carries a 3-byte time_offset, so its segment-header len must be at least PDU_ISO_SEG_TIMEOFFSET_SIZE (3). isoal_check_seg_header() accepted start segments with len < 3 as valid, and isoal_rx_framed_consume() then computed length = seg_hdr->len - 3 in a uint8_t, underflowing to 253-255 when len is 0-2. That oversized length is passed to isoal_rx_append_to_sdu(), whose copy is clamped only against the destination SDU buffer size, not the source PDU length, so up to ~255 bytes of controller memory beyond the received PDU are copied (via sink_sdu_write_hci()/net_buf_add_mem) into an HCI ISO data packet and delivered to the host. The PDU and its segment headers are entirely attacker-controlled and arrive over the air, reachable through both the CIS and BIS-sync HCI data paths (hci_driver.c) and the vendor data path (ull_iso.c), so a remote CIS peer or a broadcaster the device is synced to can trigger an out-of-bounds read causing information disclosure to the host and potential denial of service (faults or malformed oversized HCI ISO packets). The flaw affects all Zephyr releases since framed ISO reception was introduced in v3.0.0. The fix rejects sc=0 segments with len < 3 in isoal_check_seg_header() and adds a guard before the subtraction in isoal_rx_framed_consume().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9263",
+    "publishedDate": "2026-06-30T17:16:26.387",
+    "lastModifiedDate": "2026-06-30T17:16:26.387",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-49451",
+    "description": "The OpenAPI.NET SDK contains a useful object model for OpenAPI documents in .NET along with common serializers to extract raw OpenAPI JSON and YAML documents from the model. From 2.0.0-preview11 until 2.7.5 and 3.5.4, a small OpenAPI document containing a circular schema reference can cause process termination through stack overflow in Microsoft.OpenApi. The issue affects OpenAPI document parsing through public OpenAPI.NET reader APIs and has been confirmed across both JSON and YAML reader paths. This vulnerability is fixed in 2.7.5 and 3.5.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49451",
+    "publishedDate": "2026-06-30T17:16:22.390",
+    "lastModifiedDate": "2026-06-30T17:16:22.390",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -35,173 +115,33 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "secalert@redhat.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-58015",
-    "description": "A flaw was found in GLib. The D-Bus client-side implementation of the DBUS_COOKIE_SHA1 SASL authentication mechanism does not validate the cookie_context parameter received from the server. A malicious D-Bus server can supply a cookie_context containing path traversal sequences, causing the client to read an arbitrary file and exfiltrate sensitive data by verifying guessed file contents against a generated hash.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58015",
-    "publishedDate": "2026-06-30T13:19:17.707",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
+    "id": "CVE-2026-58377",
+    "description": "JeecgBoot through 3.9.2 contains a broken access control vulnerability that allows authenticated low-privilege users to perform full create, read, update, and delete operations on OpenAPI credentials by accessing the OpenApiAuthController and OpenApiPermissionController endpoints which lack Shiro authorization annotations. Attackers can exploit the unenforced access controls to list, add, edit, and delete all AK/SK credential pairs, with the list endpoint returning secret keys in plaintext, enabling credential theft and unauthorized invocation of the OpenAPI surface.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58377",
+    "publishedDate": "2026-06-30T17:16:26.010",
+    "lastModifiedDate": "2026-06-30T17:16:26.010",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10817",
-    "description": "Insufficient input validation leading to memory overread in NetScaler ADC and NetScaler Gateway if the TCP TimeStamp is enabled in TCP Profile and is associated with the virtual server (of type LB, CS, VPN) or the service configured on NetScaler",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10817",
-    "publishedDate": "2026-06-30T13:17:04.363",
-    "lastModifiedDate": "2026-06-30T13:17:04.363",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58014",
-    "description": "A flaw was found in GLib. An off-by-one error can occur in the g_key_file_get_locale_string_list function in the gkeyfile.c file when loading a key file with an empty value. This flaw can cause an out-of-bounds access of 1 byte or a denial of service when the out-of-bounds access crosses a page boundary.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58014",
-    "publishedDate": "2026-06-30T13:19:17.580",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58013",
-    "description": "A flaw was found in GLib. A buffer over-read can occur in g_io_channel_read_line_backend() in the giochannel.c file when a custom line terminator with a length greater than one is set, causing memcmp to read past the GString buffer. This vulnerability can cause a minor information disclosure of 7 bytes or a denial of service when the buffer over-read crosses a page boundary.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58013",
-    "publishedDate": "2026-06-30T13:19:17.457",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58012",
-    "description": "A flaw was found in GLib. A buffer over-read can occur in the g_regex_replace function when used with the `G_REGEX_RAW` compile flag and case-change replacement escapes because the string_append function processes matched substrings using UTF-8 functions that assume valid UTF-8 input, even when the string is treated as raw bytes. This vulnerability can cause a minor information disclosure of 1-5 bytes and a denial of service when the buffer over-read crosses a page boundary.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58012",
-    "publishedDate": "2026-06-30T13:19:17.330",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58011",
-    "description": "A flaw was found in GLib. An out-of-bounds read of only 2 bytes can occur in the g_date_time_get_ymd function in the glib/gdatetime.c file when an invalid GDateTime object produced by the g_date_time_add_full function is processed. This flaw can corrupt the date output and potentially cause logic errors that may lead to a denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58011",
-    "publishedDate": "2026-06-30T13:19:17.200",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58010",
-    "description": "A flaw was found in GLib. An off-by-one error can occur in the gvs_tuple_is_normal function in the glib/gvariant-serialiser.c file when doing an alignment padding check because the bounds check uses > instead of >=, causing an out-of-bounds read of only 1 byte. This issue can cause a minor information disclosure of 1 byte and a denial of service when the out-of-bounds read crosses a page boundary.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58010",
-    "publishedDate": "2026-06-30T13:19:17.067",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58116",
-    "description": "LLaMA-Factory through 0.9.5 contains a remote code execution vulnerability that allows attackers with WebUI access to execute arbitrary Python code by supplying a malicious model path in the Chat or Training interfaces. The application passes user-supplied model path input unvalidated into AutoTokenizer.from_pretrained() and AutoModel.from_pretrained() with a hardcoded trust_remote_code=True parameter, causing the Hugging Face transformers library to fetch and execute arbitrary code from a remote or local model repository with the privileges of the server process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58116",
-    "publishedDate": "2026-06-30T13:19:18.490",
-    "lastModifiedDate": "2026-06-30T13:19:18.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 9.3,
+        "score": 8.6,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -209,241 +149,69 @@
     ]
   },
   {
-    "id": "CVE-2026-10816",
-    "description": "Arbitrary File Read (Unauthenticated) in NetScaler ADC and NetScaler Gateway if the access to NSIP, Cluster Management IP or SNIP with management access is enabled",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10816",
-    "publishedDate": "2026-06-30T13:17:04.220",
-    "lastModifiedDate": "2026-06-30T14:16:24.807",
+    "id": "CVE-2026-58376",
+    "description": "Dolibarr through 23.0.3, fixed in commit 14db36e, contains a sql injection vulnerability that allows authenticated API users to exfiltrate arbitrary database contents by supplying malicious values to the sqlfilters query parameter in the setup dictionary and multicurrencies REST API endpoints. The affected endpoints in api_setup.class.php and api_multicurrencies.class.php validate sqlfilters only for balanced parentheses and rewrite matched triplets, allowing text placed outside the expected shape such as an appended UNION SELECT to be concatenated into the SQL WHERE clause unmodified, enabling retrieval of sensitive data including password hashes and API keys.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58376",
+    "publishedDate": "2026-06-30T17:16:25.873",
+    "lastModifiedDate": "2026-06-30T17:16:25.873",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47105",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47105",
-    "publishedDate": "2026-06-30T13:18:51.750",
-    "lastModifiedDate": "2026-06-30T13:18:51.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6556",
-    "description": "@fastify/express versions 4.0.6 and earlier only rewrite the plugin prefix for middleware mount paths when the path argument is a string. Non-string mount paths (arrays of paths and regular expressions) are left unprefixed inside prefixed plugin scopes, so middleware registered with those forms does not match the actual prefixed request path. Applications that use path-scoped middleware for authentication, authorization, rate limiting, or auditing on routes inside a prefixed scope can be bypassed by sending a request to the prefixed route, because Fastify still matches the route but the middleware is skipped. Patches: upgrade to @fastify/express 4.0.7. Workarounds: use string mount paths instead of arrays or regular expressions in prefixed plugins, or register one use call per path.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6556",
-    "publishedDate": "2026-06-30T13:19:25.467",
-    "lastModifiedDate": "2026-06-30T14:16:29.327",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
+        "score": 7.6,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8655",
-    "description": "Multiple Memory overflow vulnerabilities in NetScaler ADC and NetScaler Gateway leading to unpredictable or erroneous behavior and Denial of Service if NetScaler ADC is configured as an LB of type Oracle OR NetScaler ADC is configured as a DNS Proxy OR NetScaler ADC is configured as a DNS recursive resolver deployment",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8655",
-    "publishedDate": "2026-06-30T13:19:34.083",
-    "lastModifiedDate": "2026-06-30T14:16:29.737",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8452",
-    "description": "Memory overflow vulnerability NetScaler ADC and NetScaler Gateway leading to unpredictable or erroneous behavior and Denial of Service if the appliance is configured as a Gateway (SSL VPN, ICA Proxy, CVPN, RDP Proxy) or AAA virtual server",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8452",
-    "publishedDate": "2026-06-30T13:19:33.450",
-    "lastModifiedDate": "2026-06-30T14:16:29.637",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58374",
-    "description": "In hostapd before 2.12, a missing bounds check in AP-mode Wi-Fi 7 (IEEE 802.11be) Multi-Link Operation (MLO) association request processing allows an unauthenticated attacker within wireless range to send a crafted management frame containing a malformed Multi-Link Element or Per-STA Profile subelement. In hostapd_process_ml_assoc_req() in src/ap/ieee802_11_eht.c, the received link_id field can be parsed as value 15, but the corresponding links[] storage only has valid entries for lower link IDs (0 through 14). This causes an out-of-bounds write / small memory corruption during association processing before the 4-way handshake. The attack does not require network credentials, prior authentication, or user interaction. The confirmed practical impact is denial of service through hostapd process termination. This affects hostapd v2.11 and newer development snapshots before v2.12 when built with CONFIG_IEEE80211BE enabled. The issue is fixed in hostapd v2.12 and the upstream 2026-1 fixes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58374",
-    "publishedDate": "2026-06-30T13:19:18.960",
-    "lastModifiedDate": "2026-06-30T14:16:29.207",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8451",
-    "description": "Insufficient input validation in NetScaler ADC and NetScaler Gateway leading to memory overread if NetScaler ADC or NetScaler Gateway is configured as a SAML IDP",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8451",
-    "publishedDate": "2026-06-30T13:19:33.347",
-    "lastModifiedDate": "2026-06-30T14:16:29.527",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 8.8,
+        "score": 7.2,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "50a63c94-1ea7-4568-8c11-eb79e7c5a2b5"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-44946",
-    "description": "A SAML authentication replay vulnerability in Rancher's Assertion\n Consumer Service (ACS) handler did not enforce \none-time use of SAML assertion, potentially allowing person in the middle attacks against Rancher, affecting Rancher 2.14.0 before 2.14.3,",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44946",
-    "publishedDate": "2026-06-30T13:18:42.190",
-    "lastModifiedDate": "2026-06-30T14:16:27.110",
+    "id": "CVE-2026-58375",
+    "description": "JimuReport through 2.5.0 exposes the POST /jmreport/auto/export endpoint without authentication: the handler is annotated @JimuNoLoginRequired, so JimuReportTokenInterceptor skips all authentication and authorization, and the export service streams the rendered report for any supplied report id without verifying the auto-export configuration flag. An unauthenticated remote attacker can enumerate Snowflake report identifiers and export the full contents of any report, including the data returned by the report configured SQL queries and any credentials embedded in its data sources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58375",
+    "publishedDate": "2026-06-30T17:16:25.743",
+    "lastModifiedDate": "2026-06-30T17:16:25.743",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.5,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "meissner@suse.de"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53433",
-    "description": "fzf is vulnerable to a Denial of Service (DoS) due to inefficient HTTP body processing in the --listen mode due to inefficient HTTP body processing using repeated string concatenation, resulting in quadratic time complexity (O(n²)). A crafted POST request with many small segments can trigger excessive CPU usage during request handling.This allows a single malicious request to monopolize the single‑threaded HTTP server, blocking all other clients and resulting in denial of service.\n\nThis issue was fixed in version 0.73.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53433",
-    "publishedDate": "2026-06-30T13:19:13.407",
-    "lastModifiedDate": "2026-06-30T14:16:27.710",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53432",
-    "description": "fzf is vulnerable to Integer Overflow leading to crash in FuzzyMatchV2 function. When input line length is approximately 2,200,000 bytes and pattern length is 999 bytes, the product overflows. The Go runtime detects the invalid slice bounds and terminates the process immediately with a non-recoverable panic.\n\nThis issue was fixed in version 0.73.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53432",
-    "publishedDate": "2026-06-30T13:19:13.290",
-    "lastModifiedDate": "2026-06-30T14:12:43.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12388",
-    "description": "A flaw was found in the Identity Provider (IdP) mapper component of Keycloak, which is used to manage how user information from external services is mapped to Keycloak users. An administrator with limited permissions to manage identity providers can exploit this flaw by creating a \"Hardcoded Role\" mapper that assigns high-level administrative roles (like realm-admin) to themselves or others. This allows a restricted administrator to bypass security checks and gain full control over the entire realm.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12388",
-    "publishedDate": "2026-06-30T13:17:08.383",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
+        "score": 7.5,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-4629",
-    "description": "A flaw was found in Keycloak. A highly privileged user with `manage-clients` permission can exploit this vulnerability by injecting a hardcoded role mapper into any client. This action allows the user to bypass existing scope restrictions and inject the `realm-admin` role into generated tokens, resulting in privilege escalation and full administrative access to the realm.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4629",
-    "publishedDate": "2026-06-30T13:18:59.350",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.2,
-        "source": "secalert@redhat.com"
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14209",
-    "description": "A vulnerability was discovered in Keycloak's Admin UI extension that allows certain administrative users to bypass security restrictions. When Fine-Grained Admin Permissions (FGAPv2) are enabled, an administrator who should only be able to search for users (but not view their full details) can use a specific \"brute-force-user\" endpoint to access a user's full profile. This includes sensitive information and security metadata. The issue occurs because the system fails to check if the administrator has the required \"view\" permission for that specific user when using this particular search path.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14209",
-    "publishedDate": "2026-06-30T13:17:10.317",
-    "lastModifiedDate": "2026-06-30T14:14:59.887",
+    "id": "CVE-2026-58373",
+    "description": "CVAT before 2.69.0 contains an improper authorization vulnerability in QualityReportViewSet.get_queryset that allows authenticated attackers to enumerate quality report identifiers belonging to other organizations by exploiting a missing check_object_permissions call on the parent_id query parameter of the quality reports API endpoint. Attackers can send requests with sequential integer parent_id values and distinguish between existing and non-existing reports via HTTP 500 versus HTTP 404 response differences, disclosing cross-organization report existence without returning report content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58373",
+    "publishedDate": "2026-06-30T17:16:25.597",
+    "lastModifiedDate": "2026-06-30T17:16:25.597",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -454,36 +222,344 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 1.4,
-        "source": "secalert@redhat.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-8403",
-    "description": "Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Eksagate Electronic Engineering and Computer Industry Trade Inc. SYSGUARD 6001 allows Stored XSS.\n\nThis issue affects SYSGUARD 6001: from 2.0.2 before 6.1.4.0. \n\nNOTE: The vendor was contacted and it was learned that the product is not supported.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8403",
-    "publishedDate": "2026-06-30T13:19:33.237",
-    "lastModifiedDate": "2026-06-30T14:12:56.833",
+    "id": "CVE-2026-58372",
+    "description": "SeaweedFS before 4.34 contains a path traversal vulnerability in the S3 gateway DeleteMultipleObjectsHandler that allows authenticated S3 principals with write access to a single bucket to delete arbitrary objects in other tenants' buckets by supplying object keys containing ../ sequences in the DeleteObjects XML request body. Attackers can bypass authorization controls through a confused deputy condition, as the validateRequestPath middleware only inspects URL-captured path variables and never examines request-body keys, allowing the filer path to collapse directory traversal sequences and resolve deletions outside the authorized bucket.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58372",
+    "publishedDate": "2026-06-30T17:16:25.450",
+    "lastModifiedDate": "2026-06-30T17:16:25.450",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 8.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "iletisim@usom.gov.tr"
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-41053",
-    "description": "Incorrect authentication caching in the team member ship expansion of the Rancher Github authentication provider caused it granting principal access to any logged in user, in 2.13 before 2.13.6 and 2.14 before 2.14.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41053",
-    "publishedDate": "2026-06-30T12:16:23.580",
-    "lastModifiedDate": "2026-06-30T13:18:21.677",
+    "id": "CVE-2026-58371",
+    "description": "SeaweedFS before 4.30 reflects the callback query parameter verbatim into responses served with Content-Type application/javascript in the shared writeJson helper (weed/server/common.go), with no callback-name validation, no X-Content-Type-Options: nosniff header, and no CORS allow-list. Every JSON endpoint that uses writeJson - including the unauthenticated master endpoints /dir/status, /dir/lookup and /cluster/status, the volume server /status, and the filer directory listing, all reachable in the default configuration (no -whiteList, no security.toml, bound to 0.0.0.0) - can therefore be loaded cross-origin via a script tag with a chosen callback, letting a third-party web page read cluster topology, volume server URLs and gRPC ports, file identifiers, and directory listings. Because the callback string is reflected at the start of the body and no nosniff header is sent, MIME-sniffing clients may also interpret the reflected content as HTML.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58371",
+    "publishedDate": "2026-06-30T17:16:25.113",
+    "lastModifiedDate": "2026-06-30T17:16:25.113",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58370",
+    "description": "Woodpecker before 3.15.0 matches the ApprovalAllowedUsers bypass list against pipeline.Author. For the GitLab forge driver, pipeline.Author is populated from the git commit author name (commit.author.name) carried in the webhook payload, which is attacker-controlled and not verified by GitLab. A user who can open a merge request from a fork can set the commit author name to match an entry in ApprovalAllowedUsers, causing needsApproval to return false so the pipeline runs without the required approval. This defeats the fork-approval security boundary and allows execution of attacker-controlled pipeline steps on a Woodpecker agent and exfiltration of CI secrets exposed to the run. Other built-in forge drivers (Gitea, Forgejo, GitHub, Bitbucket) derive pipeline.Author from the forge-validated sender/actor identity and are not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58370",
+    "publishedDate": "2026-06-30T17:16:24.987",
+    "lastModifiedDate": "2026-06-30T17:16:24.987",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58369",
+    "description": "Woodpecker before 3.15.0 registers the /api/orgs/lookup/*org_full_name endpoint without authentication middleware, and the LookupOrg handler unconditionally dereferences the session user (user.ForgeID, via ForgeFromUser) when selecting the forge to query. For an unauthenticated request session.User returns nil, so any unauthenticated HTTP request triggers a NULL pointer dereference in the handler. The panic is recovered by gin recovery middleware and the server continues serving (returning HTTP 500), but each request writes a multi-line panic stack trace to the error log. A low-bandwidth unauthenticated attacker can repeatedly probe the endpoint to flood the logs (about 37 lines per request), inflating disk usage and downstream log-ingestion cost and burying legitimate log events.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58369",
+    "publishedDate": "2026-06-30T17:16:24.853",
+    "lastModifiedDate": "2026-06-30T17:16:24.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58176",
+    "description": "RuoYi-Vue-Plus through 5.6.2, fixed in commit 88d03d9, exposes workflow task management endpoints under /workflow/task (FlwTaskController) without any permission check: the controller declares no class-level or method-level authorization annotation, so the endpoints are gated only by global authentication. Any authenticated user, regardless of assigned role, can therefore reassign workflow approval tasks to arbitrary users via updateAssignee (defeating segregation of duties in the approval process), urge arbitrary tasks, and enumerate all pending and finished tasks via the pageByAllTaskWait and pageByAllTaskFinish listing endpoints. The issue was resolved by adding permission identifiers (SaCheckPermission) to these endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58176",
+    "publishedDate": "2026-06-30T17:16:24.720",
+    "lastModifiedDate": "2026-06-30T17:16:24.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58174",
+    "description": "Hermes WebUI before 0.51.521 validates the workspace of an imported session under the active named profile but constructs the Session object without setting its profile in the /api/session/import handler, so the imported session is persisted with a null profile. Because a null profile is treated as the default profile by the profile authorization check, a user on the default profile can export the imported session transcript and use its session identifier to read files from the named profile's workspace, defeating the application's profile isolation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58174",
+    "publishedDate": "2026-06-30T17:16:24.573",
+    "lastModifiedDate": "2026-06-30T17:16:24.573",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58173",
+    "description": "Vibe-Trading before 0.1.10 contains a path traversal vulnerability that allows attackers to write files outside the intended memory root directory by supplying a malicious memory_type value containing path traversal sequences through the remember tool. Attackers can manipulate the memory_type parameter in the persistent memory store to cause the application to write arbitrary Markdown files to unintended locations on the filesystem.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58173",
+    "publishedDate": "2026-06-30T17:16:24.447",
+    "lastModifiedDate": "2026-06-30T17:16:24.447",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58172",
+    "description": "Ocelot through 24.1.0, fixed in commit f156fd4, contains a security control bypass vulnerability that allows denied clients to circumvent IP-based access restrictions by sending WebSocket upgrade requests. The WebSocket upgrade pipeline branch configured via MapWhen in OcelotPipelineExtensions.cs omits SecurityMiddleware, causing requests from blocked IP addresses to be proxied to downstream services without enforcement of the configured allow/block list.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58172",
+    "publishedDate": "2026-06-30T17:16:24.313",
+    "lastModifiedDate": "2026-06-30T17:16:24.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58171",
+    "description": "Vibe-Trading before 0.1.10 constructs the swarm run directory by joining a caller-supplied run identifier onto the runs base directory without validation in run_dir (agent/src/swarm/store.py). A crafted run identifier supplied through the MCP swarm tools causes the application to read arbitrary run.json files outside the runs directory and to overwrite existing run.json files at traversed locations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58171",
+    "publishedDate": "2026-06-30T17:16:24.180",
+    "lastModifiedDate": "2026-06-30T17:16:24.180",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58170",
+    "description": "Vibe-Trading before 0.1.10 builds the proposal file path by joining a caller-supplied proposal identifier onto the broker proposals directory without sanitization (agent/src/live/mandate/commit.py). A proposal identifier containing path traversal sequences causes the application to load an attacker-controlled JSON file as an authoritative live trading mandate. Combined with the file upload endpoint, an admitted caller can write a JSON file to a known location and traverse to it, and because the ceilings validation is skipped when ceilings are absent, the attacker fully controls the committed mandate.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58170",
+    "publishedDate": "2026-06-30T17:16:24.057",
+    "lastModifiedDate": "2026-06-30T17:16:24.057",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.5,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58169",
+    "description": "Vibe-Trading before 0.1.10's local API server trusts the TCP peer address to bypass the API_AUTH_KEY bearer-token check for loopback clients and performs no Host header validation, while binding to 0.0.0.0 with credentialed CORS by default. A DNS-rebinding web page can therefore issue authenticated requests to the local API as a trusted loopback client. Because loopback requests also auto-enable shell tools, an attacker can reach POST /swarm/runs with a built-in preset that permits the bash tool and achieve remote code execution as the API process user; the same bypass allows starting the live runner and overwriting LLM and data-source settings to redirect provider traffic and exfiltrate credentials.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58169",
+    "publishedDate": "2026-06-30T17:16:23.907",
+    "lastModifiedDate": "2026-06-30T17:16:23.907",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58168",
+    "description": "DeepTutor before version 1.4.10 contains an authorization bypass vulnerability that allows low-privilege users to invoke unrestricted MCP tools due to the allowed_mcp_tools function returning None instead of a denied result when mcp_tools is omitted from a user's grant in deeptutor/multi_user/tool_access.py. Attackers or prompt-injected content acting within a user session can enumerate and invoke any configured MCP tool, including filesystem, shell, and browser servers, gaining unauthorized access to sensitive deployment resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58168",
+    "publishedDate": "2026-06-30T17:16:23.753",
+    "lastModifiedDate": "2026-06-30T17:16:23.753",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -494,7 +570,94 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "meissner@suse.de"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58167",
+    "description": "Nightingale (n9e) before 9.0.0-beta.2 exposes full datasource configurations, including plaintext database passwords, HTTP bearer tokens, HTTP basic-auth passwords, and mTLS client keys, to any authenticated low-privilege (Standard role) user through POST /api/n9e/datasource/list. The route is registered without an admin authorization gate, unlike the sibling datasource mutation routes, and the open-source DatasourceFilter does not redact secret fields, so the secret-bearing settings, http, and auth objects are serialized in the response. The disclosed credentials enable access to the connected downstream systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58167",
+    "publishedDate": "2026-06-30T17:16:23.623",
+    "lastModifiedDate": "2026-06-30T17:16:23.623",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58166",
+    "description": "OpenBMB ChatDev through 2.2.0, fixed in commit 4fd4da6, contains a path traversal vulnerability that allows unauthenticated remote attackers to write or delete arbitrary files by supplying a malicious multipart filename in the file upload endpoint. Attackers can send a crafted filename containing path traversal sequences or an absolute path to the POST uploads session endpoint, which constructs the destination path without sanitization in save_upload_file, causing file write and cleanup operations to target attacker-chosen paths on the server filesystem.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58166",
+    "publishedDate": "2026-06-30T17:16:23.487",
+    "lastModifiedDate": "2026-06-30T17:16:23.487",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10652",
+    "description": "Zephyr's DNS resolver (subsys/net/lib/dns) parses resource records from DNS responses in dns_unpack_answer(), which validated only the fixed RR header (type, class, TTL, rdlength) and accepted any attacker-declared rdlength, including one extending past the end of the received datagram. The TXT and SRV consumers in dns_validate_record() (resolve.c) then read up to rdlength bytes (clamped only to a record-type maximum such as DNS_MAX_TEXT_SIZE, default 64, not to the packet) from the receive buffer via memcpy without their own bounds check, and pass the result to the application's resolve callback. A malicious or spoofed DNS server, an on-path attacker forging UDP DNS replies, or (with mDNS/LLMNR enabled) any LAN node can craft a truncated TXT or SRV response that causes an out-of-bounds read of adjacent receive-pool memory; the disclosed stale bytes (residual contents of prior DNS packets / uninitialized pool memory) are returned to the application as TXT/SRV record contents, an information leak, and may in some configurations cross the allocation boundary and fault, causing a denial of service. The read is bounded (~64 bytes for TXT, ~6 for SRV) and read-only (no write). The fix rejects any record whose declared rdata extends past dns_msg->msg_size at the single chokepoint in dns_unpack_answer(). Affected: v4.3.0 and v4.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10652",
+    "publishedDate": "2026-06-30T17:16:20.040",
+    "lastModifiedDate": "2026-06-30T17:16:20.040",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.5,
+        "source": "vulnerabilities@zephyrproject.org"
       }
     ]
   }
