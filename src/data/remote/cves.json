@@ -1,5 +1,365 @@
 [
   {
+    "id": "CVE-2026-46467",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an insertion of sensitive information into log file vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to information exposure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46467",
+    "publishedDate": "2026-07-03T13:17:22.990",
+    "lastModifiedDate": "2026-07-03T13:17:22.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 4.7,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46468",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper link resolution before file access ('Link following') vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to information exposure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46468",
+    "publishedDate": "2026-07-03T13:17:23.110",
+    "lastModifiedDate": "2026-07-03T13:17:23.110",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 0.8,
+        "impactScore": 3.6,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56015",
+    "description": "Net::IP::LPM versions through 1.10 for Perl allow a heap out-of-bounds read via an unbounded prefix length.\n\nadd() passes the prefix string to the trie builder addPrefixToTrie() without checking it against the address width.\n\naddPrefixToTrie() then walks the prefix buffer by prefix_length bits, reading prefix[byte] for byte up to prefix_len/8, where prefix is the 4-byte (IPv4) or 16-byte (IPv6) packed address. A prefix length greater than 32 for IPv4 or 128 for IPv6, for example add(\"1.2.3.4/255\", $v) or add(\"2001:db8::/255\", $v), reads past the end of the packed address.\n\nThe out-of-bounds read happens during trie construction and is bounded: the prefix length is stored as an unsigned char, so the bit walk reads at most 32 bytes from the start of the packed address, a short distance past the end of the 4-byte or 16-byte buffer. It is detectable under AddressSanitizer, valgrind, or a hardened allocator, where it can abort the process. Lookups and dump() format only the valid address width, so the out-of-bounds bytes are not exposed through the module's API.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56015",
+    "publishedDate": "2026-07-03T13:17:30.130",
+    "lastModifiedDate": "2026-07-03T13:17:30.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-46730",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an incorrect authorization vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to unauthorized command execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46730",
+    "publishedDate": "2026-07-03T13:17:23.390",
+    "lastModifiedDate": "2026-07-03T13:17:23.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 0.8,
+        "impactScore": 3.4,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59234",
+    "description": "Authorization Bypass Through User-Controlled Key (CWE-639) in CalendarDeleteEventController (app/Http/Controllers/Calendar/CalendarDeleteEventController.php), exposed at GET /calendar/event/delete/{id}, in Prospero Flow CRM before 5.5.3 allows a remote, authenticated attacker to delete arbitrary calendar events belonging to other users by manipulating the {id} path parameter, because the delete handler resolves the record with Calendar::find($id)->delete() and performs no ownership check (no user_id/company_id scoping) before deletion. This results in unauthorized destruction of other users' calendar events across the platform.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59234",
+    "publishedDate": "2026-07-03T13:17:30.353",
+    "lastModifiedDate": "2026-07-03T13:17:30.353",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "4daa8cea-433a-44bd-9456-53b127fc289a"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56085",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an use of uninitialized resource vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to information exposure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56085",
+    "publishedDate": "2026-07-03T13:17:30.240",
+    "lastModifiedDate": "2026-07-03T13:17:30.240",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-26355",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper neutralization of special Elements used in an OS command ('OS command Injection') vulnerability. A high privileged attacker with remote access could potentially exploit this vulnerability, leading to command execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-26355",
+    "publishedDate": "2026-07-03T13:17:02.320",
+    "lastModifiedDate": "2026-07-03T13:17:02.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54483",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.6, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper neutralization of special elements used in an OS command ('OS command Injection') vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to Command execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54483",
+    "publishedDate": "2026-07-03T13:17:29.507",
+    "lastModifiedDate": "2026-07-03T13:17:29.507",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.8,
+        "impactScore": 5.9,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41123",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.6, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper access control vulnerability in the RBAC. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to information tampering.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41123",
+    "publishedDate": "2026-07-03T13:17:10.720",
+    "lastModifiedDate": "2026-07-03T13:17:10.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-41124",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.6, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an Improper limitation of a pathname to a restricted directory ('path traversal') vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to Information exposure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41124",
+    "publishedDate": "2026-07-03T13:17:10.837",
+    "lastModifiedDate": "2026-07-03T13:17:10.837",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 0.8,
+        "impactScore": 1.4,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44268",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.6, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an incorrect permission Assignment for critical resource vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to unauthorized access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44268",
+    "publishedDate": "2026-07-03T13:17:15.750",
+    "lastModifiedDate": "2026-07-03T13:17:15.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 0.8,
+        "impactScore": 3.6,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44269",
+    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.6, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper link resolution before file access ('link following') vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to unauthorized access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44269",
+    "publishedDate": "2026-07-03T13:17:15.870",
+    "lastModifiedDate": "2026-07-03T13:17:15.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 0.8,
+        "impactScore": 3.6,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10055",
+    "description": "In Eclipse Theia since version 1.26.0, the backend /services/request-service RPC accepts an attacker-controlled URL from any client connected to the standard /services messaging endpoint, performs the HTTP request server-side, and returns the full response body to the caller.\n\n\n\n\nBecause the destination URL is neither validated nor allowlisted, a remote attacker with access to the Theia service connection can issue server-side HTTP requests to localhost or other backend-reachable hosts and read their responses, exposing internal administrative endpoints, cloud instance metadata services, and other resources that are intentionally outside the browser network boundary.\n\n\n\n\nThe vulnerability affects deployments where the Theia service connection is reachable by untrusted users (for example, multi-tenant or publicly-reachable Theia deployments).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10055",
+    "publishedDate": "2026-07-03T11:16:27.600",
+    "lastModifiedDate": "2026-07-03T11:16:27.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4.7,
+        "source": "emo@eclipse.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50238",
+    "description": "Rejected reason: Red Hat Product Security has concluded that this CVE is not required. The reported issue has been classified as a regular bug and will be addressed through the standard bug-fixing process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50238",
+    "publishedDate": "2026-07-03T11:16:27.850",
+    "lastModifiedDate": "2026-07-03T11:16:27.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-13341",
+    "description": "A vulnerability exists in the Kong Konnect Model Context Protocol (MCP) server prior to version 1.0.0, which could allow a remote attacker to perform an indirect prompt injection attack and execute unintended API requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13341",
+    "publishedDate": "2026-07-03T11:16:27.720",
+    "lastModifiedDate": "2026-07-03T11:16:27.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4,
+        "source": "02762ae7-200e-4b20-9b2b-a77d5b8fc4cb"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10054",
+    "description": "In affected versions of Eclipse Theia (1.8.1 and later), the browser backend exposes privileged terminal RPC over WebSocket (/services/shell-terminal, /services/terminals/:id) without service-level authentication.\n\n\n\n\nWebSocket origin validation in @theia/core is fail-open: connections are accepted when the Origin header is missing or when no THEIA_HOSTS allowlist is configured (the default). The Socket.IO integration additionally replaces the real Origin header with a client-supplied fix-origin header that an attacker can control or omit.\n\n\n\n\nAs a result, a foreign-origin web page visited by a user with a running Theia instance can open the /services WebSocket namespace, invoke terminal creation, attach to the resulting terminal data channel, execute arbitrary OS commands, and read their output. This affects both local developer setups (drive-by attack) and hosted or tunneled deployments without strong external authentication.\n\n\n\n\nA fix is in development that enforces same-origin validation by default, removes trust in the fix-origin header, gates HTTP and WebSocket access on a SameSite=Strict; HttpOnly connection-token cookie, and sanitizes shell terminal creation options.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10054",
+    "publishedDate": "2026-07-03T11:16:26.847",
+    "lastModifiedDate": "2026-07-03T11:16:26.847",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "emo@eclipse.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5137",
+    "description": "The RTMKit (rometheme-for-elementor) plugin for WordPress is vulnerable to Local File Inclusion in versions up to, and including, 2.0.7 This is due to insufficient path validation on the 'template' parameter in the render_templates AJAX endpoint, which is used directly in a require/include statement without sanitization. This makes it possible for authenticated attackers, with Contributor-level access and above, to include and execute files on the server ending in _templates.php, allowing the execution of any PHP code in those files.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5137",
+    "publishedDate": "2026-07-03T10:16:33.113",
+    "lastModifiedDate": "2026-07-03T10:16:33.113",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4322",
+    "description": "Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Raera - Ankara Web Design and Digital Advertising Agency Destekz allows Reflected XSS.\n\nThis issue affects Destekz: through 02062026. NOTE: The vendor was contacted and it was learned that the product is not supported.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4322",
+    "publishedDate": "2026-07-03T10:16:32.993",
+    "lastModifiedDate": "2026-07-03T10:16:32.993",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-4321",
+    "description": "Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in Raera - Ankara Web Design and Digital Advertising Agency Destekz allows SQL Injection.\n\nThis issue affects Destekz: through 02062026. NOTE: The vendor was contacted and it was learned that the product is not supported.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4321",
+    "publishedDate": "2026-07-03T10:16:32.760",
+    "lastModifiedDate": "2026-07-03T10:16:32.760",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-35159",
     "description": "Dell Client Platform BIOS contains an Authentication Bypass by Primary Weakness vulnerability. An unauthenticated attacker with physical access could potentially exploit this vulnerability, leading to Information Disclosure.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-35159",
@@ -118,275 +478,5 @@
         "source": "security@wordfence.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-47896",
-    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Apache Lucene.Net (Lucene.Net.Replicator library).\n\nThis issue affects Apache Lucene.Net.Replicator: from 4.8.0-beta00005 through 4.8.0-beta00017.\n\nUsers are recommended to upgrade to version 4.8.0-beta00018, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47896",
-    "publishedDate": "2026-07-03T09:16:37.397",
-    "lastModifiedDate": "2026-07-03T10:16:32.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:L/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47897",
-    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Apache Lucene.Net (Lucene.Net.Replicator library).\n\nThis issue affects Apache Lucene.Net.Replicator: from 4.8.0-beta00005 before 4.8.0-beta00018.\n\nUsers are recommended to upgrade to version 4.8.0-beta00018, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47897",
-    "publishedDate": "2026-07-03T08:16:24.817",
-    "lastModifiedDate": "2026-07-03T10:16:32.553",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:L/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47898",
-    "description": "Improper Restriction of XML External Entity Reference vulnerability in Apache Lucene.Net (Lucene.Net.Analysis.Common library).\n\nThis issue affects Apache Lucene.Net.Analysis.Common: from 4.8.0-beta00005 before 4.8.0-beta00018.\n\nUsers are recommended to upgrade to version 4.8.0-beta00018, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47898",
-    "publishedDate": "2026-07-03T08:16:24.977",
-    "lastModifiedDate": "2026-07-03T10:16:32.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8804",
-    "description": "Puppet resource_api (shipped in Puppet Core 8.x and Puppet Enterprise 2023.8.x and 2025.x) does not preserve the sensitive flag on parameters defined via the resource-api, causing values such as passwords to be stored in cleartext in the agent's local transaction state cache. Affected versions of the resource_api module include all versions between 1.5.0 - 1.9.1 and 2.0.0 The issue was fixed in puppet resource_api 1.9.2 and 2.0.1 released with Puppet Core 8.20.0 and PE 2023.8.10 & PE 2025.11.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8804",
-    "publishedDate": "2026-07-03T08:16:25.227",
-    "lastModifiedDate": "2026-07-03T08:16:25.227",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@puppet.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14544",
-    "description": "A flaw was found in HPLIP (HP Linux Imaging and Printing Software). This vulnerability, an incomplete fix for CVE-2026-8631, may allow a remote attacker to escalate privileges or achieve arbitrary code execution. This can occur through an integer overflow in the hpcups processing path when handling specially crafted print data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14544",
-    "publishedDate": "2026-07-03T08:16:24.433",
-    "lastModifiedDate": "2026-07-03T08:16:24.433",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9148",
-    "description": "The Comments – wpDiscuz plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the guest commenter 'Website' field in versions up to, and including, 7.6.56 This is due to insufficient output escaping in the getCommentAuthor() function, which interpolates the stored comment_author_url value directly into single-quoted HTML attributes without applying esc_url() or esc_attr(). This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9148",
-    "publishedDate": "2026-07-03T08:16:25.367",
-    "lastModifiedDate": "2026-07-03T08:16:25.367",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9230",
-    "description": "The Quiz and Survey Master (QSM) – Easy Quiz and Survey Maker plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 11.1.4. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with contributor-level access and above, to modify quizzes they do not own, overwrite quiz results pages, and reroute quiz-result notification emails to attacker-controlled addresses. An attacker first calls the /quiz/structure endpoint with an arbitrary victim quiz ID to obtain a valid nonce bound to that quiz ID and their own user ID, then presents that nonce to the /quizzes/{id}/emails save endpoint, which accepts it without verifying quiz ownership.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9230",
-    "publishedDate": "2026-07-03T08:16:25.483",
-    "lastModifiedDate": "2026-07-03T08:16:25.483",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8351",
-    "description": "The RTMKit plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the Advanced Heading widget's 'Background Text' parameter in versions up to, and including, 2.0.7 This is due to insufficient output escaping on the 'background_text_heading' setting in the render() function, which concatenates the value directly into an HTML attribute without applying esc_attr(). This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8351",
-    "publishedDate": "2026-07-03T08:16:25.107",
-    "lastModifiedDate": "2026-07-03T08:16:25.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9547",
-    "description": "When a libcurl-based application performs transfers via `SCP://` or `SFTP://`\nand utilizes the `CURLOPT_SSH_KEYFUNCTION` callback, it may silently accept an\nuntrusted server. This vulnerability occurs when a server presents a host key\ntype that does not match the specific key type already recorded for that host\nin the `known_hosts` file. Instead of rejecting the mismatch, the callback\nmechanism fails to properly enforce the restriction, allowing the connection\nto succeed without warning and risking a potential man-in-the-middle attack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9547",
-    "publishedDate": "2026-07-03T07:16:25.990",
-    "lastModifiedDate": "2026-07-03T07:16:25.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9546",
-    "description": "A vulnerability in libcurl caused the HTTP `Referer:` header to persist even\nwhen explicitly cleared. While the documentation states that passing NULL to\n`CURLOPT_REFERER` suppresses the header, the option failed to clear the\ninternal state. As a result the previous referrer string was erroneously\nreused and sent in subsequent requests, potentially leaking sensitive\ninformation to unintended servers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9546",
-    "publishedDate": "2026-07-03T07:16:25.893",
-    "lastModifiedDate": "2026-07-03T07:16:25.893",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9545",
-    "description": "In this scenario, libcurl first uses a proper HTTP/3 server for the initial\ntransfers, and when it makes a second transfer to the same site it has been\nreplaced by the attacker's impostor machine - without a valid certificate.\n\nWhen libcurl returns to the hostname the second time with a cached SSL session\n(`CURLOPT_SSL_SESSIONID_CACHE` is not disabled) and early data enabled (the\n`CURLSSLOPT_EARLYDATA` bit is set in `CURLOPT_SSL_OPTIONS`), libcurl might\nsend off the second request's bytes on that new connection *before* enforcing\nthe certificate verification failure. Potentially leaking sensitive\ninformation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9545",
-    "publishedDate": "2026-07-03T07:16:25.807",
-    "lastModifiedDate": "2026-07-03T07:16:25.807",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9080",
-    "description": "Calling `curl_easy_pause()` within the event-based `CURLMOPT_SOCKETFUNCTION`\ncallback triggers a use-after-free vulnerability, where libcurl attempts to\nstore a flag using a dangling struct pointer immediately after that pointer's\nmemory has been freed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9080",
-    "publishedDate": "2026-07-03T07:16:25.713",
-    "lastModifiedDate": "2026-07-03T07:16:25.713",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-9079",
-    "description": "libcurl had a flaw that when instructed to clear proxy authentication\ncredentials which made it not do so, leaving the old credentials around to get\nused for subsequent transfers that should not know nor use them.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9079",
-    "publishedDate": "2026-07-03T07:16:25.620",
-    "lastModifiedDate": "2026-07-03T07:16:25.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8932",
-    "description": "libcurl would reuse a previously created connection even when some mTLS config\nrelated option had been changed that should have prohibited reuse.\n\nlibcurl keeps previously used connections in a connection pool for subsequent\ntransfers to reuse if one of them matches the setup. However, some TLS\nsettings related to client certificates were left out from the configuration\nmatch checks, making them match too easily. In particular options related to\nthe private key.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8932",
-    "publishedDate": "2026-07-03T07:16:25.363",
-    "lastModifiedDate": "2026-07-03T07:16:25.363",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8927",
-    "description": "When reusing a libcurl handle for sequential transfers driven by\nenvironment-variable proxy configuration, libcurl fails to clear the proxy\nauthentication state between requests. Specifically, if the initial transfer\nauthenticates against `proxyA` using Digest auth, a subsequent transfer routed\nthrough `proxyB` erroneously leaks the `Proxy-Authorization:` header intended\nsolely for `proxyA`.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8927",
-    "publishedDate": "2026-07-03T07:16:25.123",
-    "lastModifiedDate": "2026-07-03T07:16:25.123",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8926",
-    "description": "When asking curl to use a `.netrc` file to find credentials and at the same\ntime specifying a URL with a username(without a password), like\n`https://user@example.com/`, curl could wrongly get and use the password for\n*another* user set in the `.netrc` file for that host if such a one exists and\nthere is no match for the specified user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8926",
-    "publishedDate": "2026-07-03T07:16:25.037",
-    "lastModifiedDate": "2026-07-03T07:16:25.037",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8925",
-    "description": "The curl logic that works with SASL authentication could end up cleaning up\nthe GSASL context *twice* without clearing the pointer in between, making it\n`free()` the same pointer twice.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8925",
-    "publishedDate": "2026-07-03T07:16:24.950",
-    "lastModifiedDate": "2026-07-03T07:16:24.950",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8924",
-    "description": "A flaw in curl’s cookie parsing logic allows a malicious HTTP server to set\n'super cookies' that bypass the Public Suffix List check. This enables an\nattacker-controlled origin to inject cookies that curl subsequently scopes and\ntransmits to unrelated third-party domains.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8924",
-    "publishedDate": "2026-07-03T07:16:24.793",
-    "lastModifiedDate": "2026-07-03T07:16:24.793",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-8458",
-    "description": "libcurl might in some circumstances reuse the wrong connection when asked to\ndo Negotiate-authenticated ones, even when they are set to use different\n'services'.\n\nlibcurl features a pool of recent connections so that subsequent requests can\nreuse an existing connection to avoid overhead.\n\nWhen reusing a connection a range of criteria must be met. Due to a logical\nerror in the code, a request that was issued by an application could\nwrongfully reuse an existing connection to the same server that was\nauthenticated using different services.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8458",
-    "publishedDate": "2026-07-03T07:16:24.630",
-    "lastModifiedDate": "2026-07-03T07:16:24.630",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
