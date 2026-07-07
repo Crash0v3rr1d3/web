@@ -1,10 +1,348 @@
 [
   {
+    "id": "CVE-2026-59708",
+    "description": "The GET /api/v1/public/:accessId/portfolio endpoint in ghostfolio accepts private access IDs without validating granteeUserId filtering, allowing unauthenticated access to full portfolio data. Attackers with a private access ID can retrieve sensitive portfolio information including holdings, quantities, buy prices, and performance metrics without authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59708",
+    "publishedDate": "2026-07-07T19:16:55.130",
+    "lastModifiedDate": "2026-07-07T19:16:55.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59800",
+    "description": "9Router before 0.4.44 contains an OS command injection vulnerability in the unauthenticated POST /api/tunnel/tailscale-install endpoint (this route is not covered by the dashboard middleware matcher, so no authorization check is applied). The sudoPassword field from the request body is written to the stdin of a 'sudo -S sh' child process. When sudo does not prompt for a password (the process runs as root, NOPASSWD is configured, or a recent sudo timestamp cache exists), the sudoPassword value is interpreted by sh as a shell command, allowing a remote unauthenticated attacker to execute arbitrary OS commands. Exploitation evidence was first observed by the Shadowserver Foundation on 2026-07-04 (UTC).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59800",
+    "publishedDate": "2026-07-07T19:16:55.260",
+    "lastModifiedDate": "2026-07-07T20:16:29.397",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7017",
+    "description": "HTTP::Tiny versions before 0.095 for Perl forward credential headers to cross-origin redirect targets.\n\nWhen the server returns a 3xx redirect, `_maybe_redirect` follows the `Location:` header and `_prepare_headers_and_cb` re-merges the caller's `headers` argument into the new request, without checking whether the redirect target shares an origin with the original URL. Caller-supplied `Authorization`, `Cookie` and `Proxy-Authorization` headers are therefore re-sent to whatever host the redirect names, across scheme, host or port boundaries, and including `https` to `http` downgrades that expose them in plaintext on the wire.\n\nThe HTTP::Tiny POD note that \"Authorization headers will not be included in a redirected request\" applied only to the URL-userinfo Basic-auth path, not to headers passed explicitly by the caller.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7017",
+    "publishedDate": "2026-07-07T19:16:55.530",
+    "lastModifiedDate": "2026-07-07T21:17:29.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55435",
+    "description": "Coder allows organizations to provision remote development environments via Terraform. Starting in version 2.30.0 and prior to versions 2.32.7, 2.33.8, and 2.34.2, AI Bridge proxy endpoints authenticate via `Server.IsAuthorized` in `coderd/aibridgedserver`, which validates key format, expiry, secret and deleted or system users but does not check whether the account is suspended. Because suspension does not revoke existing API keys, a suspended user's unexpired token keeps working. Practical impact is limited to already-issued API keys of suspended users until those keys are deleted. Versions 2.32.7, 2.33.8, and 2.34.2 patch the issue. As a workaround, on suspension, delete the user's API keys via `DELETE /api/v2/users/{user}/keys`.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55435",
+    "publishedDate": "2026-07-07T19:16:54.873",
+    "lastModifiedDate": "2026-07-07T19:16:54.873",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48952",
+    "description": "Lack of escaping leads to an XSS vulnerability in the update list view of com_installer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48952",
+    "publishedDate": "2026-07-07T19:16:53.810",
+    "lastModifiedDate": "2026-07-07T19:16:53.810",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48947",
+    "description": "An improper access check allows privileged users to overwrite media files without editing permissions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48947",
+    "publishedDate": "2026-07-07T19:16:52.607",
+    "lastModifiedDate": "2026-07-07T19:16:52.607",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:L/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48958",
+    "description": "An improper access check allows unauthorized users to create custom fields via webservices endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48958",
+    "publishedDate": "2026-07-07T19:16:54.567",
+    "lastModifiedDate": "2026-07-07T19:16:54.567",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:L/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48950",
+    "description": "Lack of escaping leads to an XSS vulnerability in the file management view of com_templates.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48950",
+    "publishedDate": "2026-07-07T19:16:53.543",
+    "lastModifiedDate": "2026-07-07T19:16:53.543",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48955",
+    "description": "An improper access check allows unauthorized users to access workflow stage and transition information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48955",
+    "publishedDate": "2026-07-07T19:16:54.193",
+    "lastModifiedDate": "2026-07-07T19:16:54.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48956",
+    "description": "An improper access check allows users to display a list of modules in the frontend.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48956",
+    "publishedDate": "2026-07-07T19:16:54.313",
+    "lastModifiedDate": "2026-07-07T19:16:54.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48957",
+    "description": "An improper access check allows unauthorized users to access com_privacy datasets.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48957",
+    "publishedDate": "2026-07-07T19:16:54.440",
+    "lastModifiedDate": "2026-07-07T19:16:54.440",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48951",
+    "description": "Lack of escaping leads to XSS vulnerabilities in modalreturn layouts of various components.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48951",
+    "publishedDate": "2026-07-07T19:16:53.680",
+    "lastModifiedDate": "2026-07-07T19:16:53.680",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48953",
+    "description": "Lack of escaping leads to an XSS vulnerability in the generic image output layout.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48953",
+    "publishedDate": "2026-07-07T19:16:53.933",
+    "lastModifiedDate": "2026-07-07T19:16:53.933",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48948",
+    "description": "An improper access check allows user to download vcard exports of com_contact contacts that are inaccessible.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48948",
+    "publishedDate": "2026-07-07T19:16:52.800",
+    "lastModifiedDate": "2026-07-07T19:16:52.800",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48949",
+    "description": "Lack of validation leads to an XSS vulnerability in the MFA management views.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48949",
+    "publishedDate": "2026-07-07T19:16:53.203",
+    "lastModifiedDate": "2026-07-07T19:16:53.203",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48954",
+    "description": "Improper validation leads to a generic XSS vector in the language override feature.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48954",
+    "publishedDate": "2026-07-07T19:16:54.060",
+    "lastModifiedDate": "2026-07-07T19:16:54.060",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-57851",
     "description": "MSI Feature Manager contains a local privilege escalation vulnerability in the KernCoreLib64.sys kernel driver that allows any locally logged-on user to perform arbitrary physical memory read/write and unrestricted I/O port operations by accessing exposed IOCTL handlers without administrator privileges. Attackers can exploit the accessible device object through IOCTL handlers to manipulate kernel objects, tamper with kernel-mode callbacks, bypass Protected Process Light protections, and disable security software.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-57851",
     "publishedDate": "2026-07-07T17:16:36.880",
-    "lastModifiedDate": "2026-07-07T17:16:36.880",
+    "lastModifiedDate": "2026-07-07T18:16:39.590",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -33,7 +371,7 @@
     "description": "Vtiger CRM through 8.4.0 contains an authenticated remote code execution vulnerability in the admin module import feature that allows administrator-level attackers to upload arbitrary PHP files by submitting a crafted zip archive through the ModuleManager import function, which extracts contents directly into the modules/ directory under the web root without validating file types beyond the manifest.xml descriptor. Attackers can place executable PHP files in the modules/ directory that become directly accessible via HTTP, bypassing Vtiger's authentication and authorization layer entirely since Apache resolves the path and invokes the PHP interpreter before the application routing layer is involved, resulting in a persistent web shell independent of the originating session.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-23698",
     "publishedDate": "2026-07-07T17:16:36.123",
-    "lastModifiedDate": "2026-07-07T17:16:36.123",
+    "lastModifiedDate": "2026-07-07T18:16:35.857",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -62,7 +400,7 @@
     "description": "Vtiger CRM before 8.4.0 contains an authenticated file upload vulnerability that allows low-privileged users to achieve remote code execution by uploading a .phar file containing arbitrary PHP code through the Documents module, bypassing the extension denylist in config.inc.php which omits the .phar extension. The uploaded file is stored with its original .phar extension under the web-accessible storage directory, and a misconfigured .htaccess using Apache 2.2 syntax is silently ignored on Apache 2.4 deployments, allowing unauthenticated HTTP requests to directly execute the uploaded PHP payload.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-23697",
     "publishedDate": "2026-07-07T17:16:35.977",
-    "lastModifiedDate": "2026-07-07T17:16:35.977",
+    "lastModifiedDate": "2026-07-07T19:16:51.263",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -91,7 +429,7 @@
     "description": "AWS Research and Engineering Studio (RES) is an open-source solution that enables researchers and engineers to create and manage secure virtual desktops and computing resources on AWS.\n\n\n\nImproper link resolution before file access issue (CWE-59) in the Auth.GetUserPrivateKey API. An authenticated remote user could read arbitrary files on the cluster-manager EC2 instance by replacing their SSH private key file (~/.ssh/id_rsa) with a symbolic link targeting any file on the host. Because the cluster-manager process runs as root, any file readable by root is exposed, including other users' SSH private keys and application configuration secrets.\n\n\n\nIt's recommended to upgrade to RES version 2026.06.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-14904",
     "publishedDate": "2026-07-07T17:16:35.627",
-    "lastModifiedDate": "2026-07-07T17:16:35.627",
+    "lastModifiedDate": "2026-07-07T18:16:35.140",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -120,7 +458,7 @@
     "description": "A Weak Password Recovery Mechanism for Forgotten Password exists in Esri Portal for ArcGIS versions 12.1 and earlier on Windows, Linux and Kubernetes. A remote, unauthorized attacker may assume ownership of a user’s account by manipulating this mechanism. ArcGIS Administrators should configure an email server with ArcGIS Enterprise to facilitate user self-service password recovery. The ability for an administrator to reset a user’s password remains unchanged.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-13020",
     "publishedDate": "2026-07-07T17:16:35.510",
-    "lastModifiedDate": "2026-07-07T17:16:35.510",
+    "lastModifiedDate": "2026-07-07T18:16:34.460",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -140,7 +478,7 @@
     "description": "Esri Portal for ArcGIS versions 12.1 and earlier on Windows, Linux and Kubernetes have a missing authentication for critical function vulnerability allows a remote, unauthenticated attacker to access an unprotected API.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-13019",
     "publishedDate": "2026-07-07T17:16:35.400",
-    "lastModifiedDate": "2026-07-07T17:16:35.400",
+    "lastModifiedDate": "2026-07-07T18:16:34.367",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -160,7 +498,7 @@
     "description": "A flaw was found in Jastow. Jastow is vulnerable to Cross-Site Scripting (XSS) attack. If using a set of combined configuration to allow unescaped characters in URL with embedded Undertow and Jastow, a server might be vulnerable to improper input handling.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2025-12799",
     "publishedDate": "2026-07-07T17:16:34.640",
-    "lastModifiedDate": "2026-07-07T17:16:34.640",
+    "lastModifiedDate": "2026-07-07T19:16:48.130",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -212,362 +550,6 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14969",
-    "description": "A flaw was found in 389-ds-base where the LDBM backend attribute encryption uses a hardcoded static initialization vector for AES-CBC and 3DES-CBC operations, allowing an attacker with privileged filesystem access to detect plaintext equality across encrypted entries by comparing ciphertext blocks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14969",
-    "publishedDate": "2026-07-07T16:16:38.310",
-    "lastModifiedDate": "2026-07-07T17:16:35.863",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 0.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14935",
-    "description": "A logic vulnerability was found in GStreamer's webrtcbin component. The _check_sdp_crypto() function contains an inverted boolean condition that causes it to accept remote SDP offers or answers that lack the required a=fingerprint attribute, while incorrectly rejecting those that include it. An attacker with the ability to intercept and modify WebRTC signaling messages could exploit this to bypass the SDP-level DTLS certificate fingerprint binding, weakening defenses against man-in-the-middle attacks on media streams.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14935",
-    "publishedDate": "2026-07-07T16:16:38.010",
-    "lastModifiedDate": "2026-07-07T17:16:35.753",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59709",
-    "description": "Ghostfolio's PUT /api/v1/portfolio/holding/:dataSource/:symbol/tags endpoint fails to verify Access.permissions field when processing the Impersonation-Id header, allowing read-only access grantees to modify portfolio holding tags. Attackers with valid read-only share tokens can assign or remove tags on victim holdings, corrupting portfolio categorization and reports.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59709",
-    "publishedDate": "2026-07-07T15:16:49.430",
-    "lastModifiedDate": "2026-07-07T15:16:49.430",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53878",
-    "description": "An issue was discovered in Django 6.0 before 6.0.7 and 5.2 before 5.2.16.\n`DomainNameValidator` does not prohibit newlines in domain names (unless used via a form field, since `CharField` strips newlines). If an application uses values with newlines in an HTTP response, header injection can occur. Django itself is unaffected because `HttpResponse` prohibits newlines in HTTP headers.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Bence Nagy for reporting this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53878",
-    "publishedDate": "2026-07-07T15:16:48.583",
-    "lastModifiedDate": "2026-07-07T16:16:40.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53877",
-    "description": "An issue was discovered in Django 6.0 before 6.0.7 and 5.2 before 5.2.16.\n`django.contrib.gis.gdal.GDALRaster` over-reads its in-memory buffer when constructed from a bytes object, which can disclose adjacent memory or cause service degradation via a potential segmentation fault when the `vsi_buffer` property is accessed.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Bence Nagy for reporting this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53877",
-    "publishedDate": "2026-07-07T15:16:48.453",
-    "lastModifiedDate": "2026-07-07T16:16:40.073",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
-      },
-      {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-48588",
-    "description": "An issue was discovered in Django 6.0 before 6.0.7 and 5.2 before 5.2.16.\n`UpdateCacheMiddleware` and the `cache_page()` decorator cache responses that vary on cookies when the incoming request carries unrelated cookies, which allows remote attackers to read private data from the shared cache.\nEarlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) were not evaluated and may also be affected.\nDjango would like to thank Chris Whyland for reporting this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48588",
-    "publishedDate": "2026-07-07T15:16:47.447",
-    "lastModifiedDate": "2026-07-07T16:16:39.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
-      },
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14940",
-    "description": "A heap-buffer-overflow flaw was found in 389 Directory Server (389-ds-base). When\nnormalizing a Distinguished Name (DN) that contains a legacy-quoted value encoding a\nmultivalued nested Relative Distinguished Name (RDN), the server can write past the\nend of a heap allocation while sorting RDN attribute-value pairs. An unauthenticated\nremote attacker can trigger this condition by sending an LDAP operation whose DN\nreaches the DN normalization routine, such as a search with a crafted base DN. This\ncan corrupt heap memory and may cause denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14940",
-    "publishedDate": "2026-07-07T15:16:43.193",
-    "lastModifiedDate": "2026-07-07T16:16:38.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12948",
-    "description": "A stored cross-site scripting (XSS) vulnerability in the web management interface of the Digi PortServer TS, Digi One SP, Digi One SP IA, and Digi One IA allows a remote, authenticated administrator to inject script into certain system configuration fields. The script subsequently executes in the browser of a user who views the affected pages (CWE-79).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12948",
-    "publishedDate": "2026-07-07T15:16:42.413",
-    "lastModifiedDate": "2026-07-07T16:16:37.780",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "e8a6bb0b-e373-42b1-a5de-93e314325576"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12352",
-    "description": "This vulnerability allows an unauthenticated actor to bypass authentication and gain access to restricted resources on the device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12352",
-    "publishedDate": "2026-07-07T15:16:42.283",
-    "lastModifiedDate": "2026-07-07T16:16:37.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "e8a6bb0b-e373-42b1-a5de-93e314325576"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6101",
-    "description": "The AMP for WP – Accelerated Mobile Pages plugin for WordPress is vulnerable to Arbitrary File Write in versions up to and including 1.1.12. This is due to unsafe ZIP file extraction in the ampforwp_save_local_font() function combined with inadequate cleanup that fails to remove nested directories and files. This makes it possible for authenticated attackers, with Author-level access and above, and permissions granted by an Administrator, to write arbitrary files to the server in a web-accessible location, potentially leading to remote code execution on hosts that execute PHP files in the uploads directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6101",
-    "publishedDate": "2026-07-07T14:16:34.543",
-    "lastModifiedDate": "2026-07-07T15:16:49.807",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53479",
-    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper neutralization of special elements used in an OS command ('OS command Injection') vulnerability. A remote high privileged attacker could potentially exploit this vulnerability, leading to protection mechanism bypass. This is a Critical vulnerability as it allows an attacker to invoke arbitrary command execution with root privileges; so Dell recommends customers to upgrade at the earliest opportunity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53479",
-    "publishedDate": "2026-07-07T14:16:32.410",
-    "lastModifiedDate": "2026-07-07T14:35:12.823",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44938",
-    "description": "A vulnerability has been identified in Fleet's agent-side deployer, which did not filter security-sensitive keys from namespaceLabels in fleet.yaml (or BundleDeployment.spec.options.namespaceLabels) when applying them to the target namespace.\n\n\n\n\nAn attacker with git push access to a\n Fleet-monitored repository could overwrite Pod Security Standards (PSS)\n enforcement labels on a target namespace. This allows the attacker to \nweaken admission controls and deploy workloads that PSS policies would \notherwise block.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44938",
-    "publishedDate": "2026-07-07T14:16:30.690",
-    "lastModifiedDate": "2026-07-07T15:16:47.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "meissner@suse.de"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53483",
-    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 an improper authentication vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to unauthorized access. This is a critical severity vulnerability as it allows an attacker to take complete control of system; so Dell recommends customers to upgrade at the earliest opportunity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53483",
-    "publishedDate": "2026-07-07T13:16:31.590",
-    "lastModifiedDate": "2026-07-07T14:16:32.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53481",
-    "description": "Dell PowerProtect Data Domain, versions 7.7.1.0 through 8.7, LTS2026 release version 8.6.1.0 through 8.6.1.10, LTS2025 release version 8.3.1.0 through 8.3.1.30, LTS2024 release versions 7.13.1.0 through 7.13.1.70 contain an improper limitation of a pathname to a restricted directory ('Path Traversal') vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to unauthorized access to the system. This is a critical severity vulnerability as it allows an attacker to take complete control of system; so Dell recommends customers to upgrade at the earliest opportunity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53481",
-    "publishedDate": "2026-07-07T13:16:31.397",
-    "lastModifiedDate": "2026-07-07T14:16:32.533",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10659",
-    "description": "The Dhara flash translation layer disk driver (drivers/disk/ftl_dhara.c) implemented the dhara_nand_ callbacks so that, on a flash error, the error code was written unconditionally through the caller-supplied dhara_error_t err pointer (e.g. *err = DHARA_E_ECC in dhara_nand_read, and similar in dhara_nand_erase/prog/copy). The upstream Dhara library calls these callbacks with err == NULL along its journal-resume binary search: find_last_checkblock() invokes find_checkblock(j, mid, &found, NULL), which forwards the NULL pointer into dhara_nand_read(). This path runs during disk_ftl_access_init() -> dhara_map_resume() whenever the FTL disk is mounted/initialised. If a flash read error (uncorrectable ECC, bad block, controller error) occurs on one of the probed checkpoint pages, the driver dereferences and writes to NULL, faulting the kernel (denial of service). The trigger is conditioned on the NAND medium content/health, which can be influenced by media wear, induced faults, or a corrupted/crafted on-flash image. The fix routes all error assignments through the library's NULL-safe dhara_set_error() helper. Affects Zephyr v4.4.0, where the driver was introduced.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10659",
-    "publishedDate": "2026-07-07T13:16:29.043",
-    "lastModifiedDate": "2026-07-07T14:16:27.527",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 3.6,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13696",
-    "description": "Improper neutralization of special elements used in an LDAP query ('LDAP injection') vulnerability in HAVELSAN Inc. Liman MYS allows LDAP Injection.\n\nThis issue affects Liman MYS: before release.Master.1107.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13696",
-    "publishedDate": "2026-07-07T12:16:32.730",
-    "lastModifiedDate": "2026-07-07T14:16:28.740",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "iletisim@usom.gov.tr"
       }
     ]
   }
