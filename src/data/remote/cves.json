@@ -1,18 +1,18 @@
 [
   {
-    "id": "CVE-2026-50134",
-    "description": "Hugo is a static site generator. From 0.91.0 until 0.162.0, resources.GetRemote enforces security.http.urls on the URL it is called with, but it did not re-validate intermediate URLs on HTTP 3xx redirects. An allowed server (or an attacker controlling its DNS or response) could therefore redirect the request to a host that the policy was meant to forbid and Hugo would fetch from the redirected target. The same bypass also lifted any host-shape restriction the operator had put in place. This vulnerability is fixed in 0.162.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50134",
-    "publishedDate": "2026-07-06T20:16:37.197",
-    "lastModifiedDate": "2026-07-06T20:16:37.197",
+    "id": "CVE-2026-53648",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Prior to version 0.8.1, downloadable product files are stored using a deterministic filename-derived path. When an administrator uploads a file for a downloadable product, FOSSBilling stores the file as `md5(<original filename>)` under the uploads directory. Because the stored path depends only on the client-supplied filename, two different downloadable products, or product/order files, uploaded with the same original filename will resolve to the same stored file path. A later upload can overwrite an earlier upload, causing customers or administrators downloading the earlier product to receive the later file instead. Version 0.8.1 patches the issue. Some workarounds are available. Restrict the `servicedownloadable.manage` permission to fully trusted administrators only. As an operational mitigation, ensure downloadable product files use unique filenames before upload. This reduces accidental collisions but does not fully address the underlying issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53648",
+    "publishedDate": "2026-07-07T00:16:34.390",
+    "lastModifiedDate": "2026-07-07T00:16:34.390",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
+        "score": 5.1,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -20,91 +20,370 @@
     ]
   },
   {
-    "id": "CVE-2026-14898",
-    "description": "The OpenAI Codex desktop app for macOS rendered remote images from Markdown in model responses. An attacker who could place an indirect prompt injection in content processed by Codex, such as a connected-tool result or another untrusted source, could induce the model to construct a remote image URL containing sensitive data. The app automatically fetched that URL when rendering the response, sending the embedded data to an attacker-controlled server without a separate user click. Successful exploitation could exfiltrate secrets and other information accessible in the Codex session, including API keys, source code, and data returned by connected tools. No direct integrity or availability impact was demonstrated, and there is no known exploitation in the wild.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14898",
-    "publishedDate": "2026-07-06T20:16:30.580",
-    "lastModifiedDate": "2026-07-06T20:16:30.580",
+    "id": "CVE-2026-53647",
+    "description": "FOSSBilling is a free, open-source billing and client management system. In versions 0.5.3 through 0.7.2, the Guest `serviceapikey/get_info` API endpoint is accessible without authentication. Any caller with a valid API key can retrieve all custom configuration parameters (`custom_*` fields) stored in the key's database record. These custom fields are populated by billing administrators and can contain business-sensitive data such as pricing tiers, feature flags, rate limits, expiry overrides, or access scope data. Version 0.8.0 patches the issue. Some workarounds are available. Administrators can avoid storing sensitive data in `custom_*` API key configuration fields, monitor API logs for suspicious calls to `/api/guest/serviceapikey/get_info`, and/or disable the Serviceapikey module if not in active use.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53647",
+    "publishedDate": "2026-07-07T00:16:34.263",
+    "lastModifiedDate": "2026-07-07T00:16:34.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-13356",
+    "description": "A malicious webpage could interrupt a pending navigation by enqueuing a synchronous JavaScript dialog, causing the browser UI to display the destination origin in the address bar while continuing to render attacker-controlled content. This vulnerability was fixed in Firefox for iOS 152.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13356",
+    "publishedDate": "2026-07-07T00:16:34.063",
+    "lastModifiedDate": "2026-07-07T00:16:34.063",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-55646",
-    "description": "vLLM is an inference and serving engine for large language models. From 0.22.0 to 0.23.0, the /v1/audio/transcriptions and /v1/audio/translations routes call request.file.read() to fully materialize an uploaded audio file into memory before vLLM checks the documented VLLM_MAX_AUDIO_CLIP_FILESIZE_MB compressed upload size limit (default 25 MB) later in the speech-to-text preprocessing step, so an API caller who can reach those routes can submit an oversized multipart upload and cause vLLM to allocate memory proportional to the uploaded file size before the request is rejected as too large, creating memory pressure or terminating the process depending on deployment resource limits. This issue is fixed in version 0.24.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55646",
-    "publishedDate": "2026-07-06T20:16:37.663",
-    "lastModifiedDate": "2026-07-06T21:16:57.483",
+    "id": "CVE-2024-56141",
+    "description": "Minosoft is an open-source, multi-version Minecraft Java Edition client written in Kotlin. Starting in commit f1ae30e2b046a490026a8413b075685deb795122, the CryptManager  encryption routine ( CryptManager.kt ) initializes its AES cipher using an initialization vector (IV) that is set equal to the secret key rather than to a sufficiently random value. Because the IV is not random and is derived directly from the key, the encryption is vulnerable to chosen-ciphertext/chosen-plaintext attacks: an attacker who can submit specific messages for encryption can recover the secret key. This affects all versions supporting Minecraft protocol 1.7 and later. No patched version is available, and no known workarounds are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-56141",
+    "publishedDate": "2026-07-07T00:16:33.607",
+    "lastModifiedDate": "2026-07-07T00:16:33.607",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53646",
+    "description": "FOSSBilling is a free, open-source billing and client management system. In versions 0.5.6 through 0.7.2, when a `ClientPasswordReset` record already exists for a client (from a previous unexpired reset request), subsequent calls to the `reset_password` guest API endpoint reuse the existing token instead of generating a new one. The 15-minute validity window is anchored to the first request's `created_at` timestamp, not the time of the most recent email. An attacker who obtained the original reset link remains able to use it even after the victim requests a new reset, because the original token is never invalidated or rotated. Version 0.8.0 patches the issue. Some workarounds are available. Configure a reverse proxy (e.g., Nginx, Apache, Cloudflare) to apply per-IP rate limiting to the `/client/reset-password` endpoint to minimize the window of opportunity, and/or manually clear expired `client_password_reset` records from the database after a client reports a suspected compromise.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53646",
+    "publishedDate": "2026-07-06T23:16:56.683",
+    "lastModifiedDate": "2026-07-06T23:16:56.683",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53645",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Versions prior to 0.8.0 allow a low-privileged staff account to grant arbitrary module permissions to itself through the admin API, resulting in persistent privilege escalation. A staff user that only has `staff.create_and_edit_staff` can call `/api/admin/staff/permissions_update` targeting their own account and write any permission structure, bypassing the intended role-based access control boundary. Version 0.8.0 patches the issue. Some workarounds are available. Restrict the `staff.create_and_edit_staff` permission to only highly trusted staff members and/or use a reverse proxy or WAF to restrict access to `/api/admin/staff/permissions_update` to specific trusted roles.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53645",
+    "publishedDate": "2026-07-06T23:16:56.493",
+    "lastModifiedDate": "2026-07-06T23:16:56.493",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53644",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Versions 0.5.3 through 0.7.2 allow authenticated clients to both read and reset API key service secrets for orders that are no longer in an `active` state (e.g., `suspended`, `canceled`). The root cause is missing order-state validation in two client API endpoints, despite an `isActive()` helper already existing in the `Serviceapikey` module and the frontend UI correctly gating access on `order.status == 'active'`. Version 0.8.0 contains a fix. Some workarounds are available. If the `Serviceapikey` module is not needed, uninstall it to remove the affected endpoints. One may also use a reverse proxy or WAF to restrict access to `/api/client/order/service` and `/api/client/serviceapikey/reset` based on application-level order-state logic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53644",
+    "publishedDate": "2026-07-06T23:16:56.360",
+    "lastModifiedDate": "2026-07-06T23:16:56.360",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53643",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Versions prior to 0.8.0 allow low-privileged staff accounts to perform unauthorized actions via admin API endpoints. The root cause is a combination of the `can_always_access` module flag (which grants all staff access to certain modules) and insufficient permission checks or unsafe parameter handling on individual endpoints. Version 0.8.0 contains a fix. Some workarounds are available. Restrict staff accounts to only those who need access to sensitive settings and/or use a reverse proxy or WAF to restrict access to the affected endpoints to trusted IP addresses or higher-privilege roles.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53643",
+    "publishedDate": "2026-07-06T23:16:56.227",
+    "lastModifiedDate": "2026-07-06T23:16:56.227",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53642",
+    "description": "FOSSBilling is a free, open-source billing and client management system. In versions 0.5.6 through 0.7.2, when the \"Require Email Confirmation\" setting is enabled, a logged-in client with an unverified email address (`email_approved = 0`) can access all client-area pages (e.g. `/client/balance`, `/client/order/list`, `/client/invoice`) and read real account data, including wallet balances and transaction history. The API-side enforcement correctly restricts unverified clients to only profile-related endpoints, but the page-side enforcement is overly permissive, allowing any request whose path starts with `/client`. Version 0.8.0 contains a fix. No known workarounds that don't involve modifying the source code are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53642",
+    "publishedDate": "2026-07-06T23:16:56.097",
+    "lastModifiedDate": "2026-07-06T23:16:56.097",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53641",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Versions 0.6.0 through 0.7.2 have a stored cross-site scripting (XSS) vulnerability in the client-facing email history views of FOSSBilling. Email HTML content (`content_html`) is rendered into a JavaScript template literal using the `|raw` filter, bypassing all output escaping. An attacker with admin access can inject malicious JavaScript payloads into email content that execute in the browser of any client who views their email history. Version 0.8.0 contains a fix. Some workarounds are available. Restrict admin account access, audit email content in the database for suspicious payloads, and/or monitor client accounts for unusual activity.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53641",
+    "publishedDate": "2026-07-06T23:16:55.967",
+    "lastModifiedDate": "2026-07-06T23:16:55.967",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53640",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Prior to version 0.8.0, low-privileged staff accounts may read sensitive data via admin API endpoints that lack permission checks. While sibling write endpoints correctly enforce fine-grained permissions, the corresponding read endpoints have no authorization guards. Version 0.8.0 contains a fix. Some workarounds are available. Restrict staff accounts to only those who need access to sensitive data and/or use a reverse proxy or WAF to restrict access to the affected endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53640",
+    "publishedDate": "2026-07-06T23:16:55.430",
+    "lastModifiedDate": "2026-07-06T23:16:55.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59710",
+    "description": "showdown contains a stored cross-site scripting vulnerability in the parseHeaders function of src/subParsers/makehtml/tables.js that fails to properly escape table header ID attributes. Attackers can inject arbitrary HTML and script-executing SVG elements through double-quote characters in markdown table headers, achieving stored XSS when untrusted markdown is rendered with the default github flavor configuration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59710",
+    "publishedDate": "2026-07-06T22:16:50.977",
+    "lastModifiedDate": "2026-07-06T22:16:50.977",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-43928",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Prior to version 0.8.0, the PayPalEmail payment adapter accepts PayPal IPN callbacks and credits the IPN-supplied amount (`mc_gross`) to the client's balance without validating it against the invoice total. Combined with a $0.05 floating-point epsilon tolerance in the invoice credit-payment logic, this allows a client to underpay an invoice by up to $0.04 and still have it marked as fully paid. Version 0.8.0 patches the issue. There is no effective workaround without modifying the source code. Merchants using the PayPalEmail adapter should monitor IPN transactions for amounts that do not match their corresponding invoice totals, and manually review and refund suspicious payments.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43928",
+    "publishedDate": "2026-07-06T22:16:50.210",
+    "lastModifiedDate": "2026-07-06T22:16:50.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-59089",
-    "description": "A flaw was found in GIMP. The PlayStation TIM loader, responsible for handling PlayStation image files, incorrectly calculates the size of the Color Look-Up Table (CLUT) due to an integer overflow. This occurs when multiplying num_colors and num_cluts, both 16-bit unsigned short integers, resulting in a value exceeding the maximum integer limit. An attacker could exploit this by providing a specially crafted image file, leading to undefined behavior and causing the GIMP plug-in to abort, effectively resulting in a denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59089",
-    "publishedDate": "2026-07-06T20:16:38.433",
-    "lastModifiedDate": "2026-07-06T21:16:58.547",
+    "id": "CVE-2026-43927",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Prior to version 0.8.0, a race condition in the cart checkout flow allows an authenticated client to apply a promo code beyond its configured maximum uses. By sending concurrent checkout requests before any single request completes the usage increment, a client can obtain unlimited discounted or free orders from a single-use or limited-use promo code. Version 0.8.0 patches the issue. Some workarounds are available. Disable promo codes entirely until a patch is available or monitor the `promo` table for `used` values exceeding `maxuses` and manually review affected orders.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43927",
+    "publishedDate": "2026-07-06T22:16:50.083",
+    "lastModifiedDate": "2026-07-06T22:16:50.083",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.5,
-        "version": "CVSS 3.1",
+        "score": 6.9,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53763",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 3.0.0 and prior to version 4.11.0, 32-bit integer overflows in OP-TEE core's AES-GCM implementation cause the authentication tag to be computed with incorrect bit-length values after processing more than 512 megabytes of payload or Additional Authenticated Data (AAD). Version 4.11.0 contains a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53763",
-    "publishedDate": "2026-07-06T20:16:37.327",
-    "lastModifiedDate": "2026-07-06T20:16:37.327",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-44362",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 3.20.0 and prior to version 4.11.0, a vulnerability in OP-TEE’s subkey rollback protection allows the use of revoked or older subkey versions because the system fails to propagate versioning data during the Trusted Application (TA) loading process. In `core/crypto/signed_hdr.c`, the function `shdr_load_pub_key()` parses subkey headers but does not assign the `subkey_version` to the runtime `shdr_pub_key` structure. As a result, the `key->version` field remains at zero regardless of the version specified in the header. When `ree_fs_ta_open()` in `core/kernel/ree_fs_ta.c` calls `check_update_version()`, it passes this zeroed version to the rollback database. Because the database never receives a non-zero version to record, it never advances, effectively bypassing the rollback check and allowing TAs signed with downgraded subkey chains to load successfully. This impacts OP-TEE mainline configurations that utilize subkey-based signing chains for Trusted Application (TA) authentication. Version 4.11.0 contains a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44362",
-    "publishedDate": "2026-07-06T20:16:33.950",
-    "lastModifiedDate": "2026-07-06T21:16:56.123",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-42546",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 3.3.0 and prior to version 4.11.0, a resource leak exists in OP-TEE’s shared memory cleanup logic because the function `cleanup_shm_refs()` in `core/tee/entry_std.c`  fails to apply a required bitmask (`OPTEE_MSG_ATTR_TYPE_MASK`) to parameter attributes. When processing non-contiguous memory parameters from a normal-world caller, the system fails to match the attribute type in its internal switch statement and skips the necessary mobj_put() call. This results in a persistent reference leak of `mobj_reg_shm` objects, which remain on internal lists with dangling refcounts. This affects non-FF-A configurations that support non-contiguous, non-secure shared memory. Over time, these accumulated leaks progressively consume the secure-world heap, degrading the system's ability to service trusted application operations and eventually requiring a reboot to recover. Version 4.11.0 contains a patch. No known workarounds are available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42546",
-    "publishedDate": "2026-07-06T20:16:33.257",
-    "lastModifiedDate": "2026-07-06T21:16:55.870",
+    "id": "CVE-2026-43925",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Prior to version 0.8.0, an unauthenticated mass assignment vulnerability in the client self-registration endpoint allows any visitor to assign themselves to an arbitrary client group during sign-up. Because client groups can gate promo code eligibility, an attacker may apply group-restricted discount codes and receive unauthorized discounts. Version 0.8.0 contains a patch. As a workaround, administrators can either remove group restrictions from promo codes or disable client self-registration (Settings → Clients → Disable signup).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43925",
+    "publishedDate": "2026-07-06T22:16:49.963",
+    "lastModifiedDate": "2026-07-06T22:16:49.963",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-43921",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Versions 0.6.10 through 0.7.2 have a PHP code injection vulnerability in FOSSBilling's `Config::prettyPrintArrayToPHP()` method. When configuration values are updated, string values are written into `config.php` without escaping single quotes. Because `config.php` is loaded via a bare `include` on every HTTP request, an attacker with admin privileges can inject arbitrary PHP code that executes on every subsequent request. Version 0.8.0 contains a patch. Some workarounds are available. Restrict admin access to trusted personnel only; audit `config.php` for unexpected PHP code; and/ or at the reverse proxy/WAF level, restrict access to admin API endpoints that modify configuration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43921",
+    "publishedDate": "2026-07-06T22:16:49.837",
+    "lastModifiedDate": "2026-07-06T22:16:49.837",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.9,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-43918",
+    "description": "FOSSBilling is a free, open-source billing and client management system. Prior to version 0.8.0, when a client or staff/admin account is suspended or marked inactive, existing authenticated sessions are not invalidated. The session identity loaders in src/di.php (loggedin_client and loggedin_admin) only reject sessions if the backing account record no longer exists in the database. They do not verify that the account's status is still active. This allows a suspended or deactivated user to retain full access until their session naturally expires. This issue has been fixed in version 0.8.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43918",
+    "publishedDate": "2026-07-06T22:16:49.707",
+    "lastModifiedDate": "2026-07-06T22:16:49.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42204",
+    "description": "Coolify is an open-source and self-hostable tool for managing servers, applications, and databases. From 4.0.0-beta.471 through 4.0.0-beta.473, a regression in SHELL_SAFE_COMMAND_PATTERN allowed ampersands in custom Docker Compose build, start, and pre/post-deployment command fields, allowing an authenticated team member to inject shell commands that execute on the host. This issue is fixed in version 4.0.0-beta.474.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42204",
+    "publishedDate": "2026-07-06T22:16:49.510",
+    "lastModifiedDate": "2026-07-06T22:16:49.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42153",
+    "description": "Coolify is an open-source and self-hostable tool for managing servers, applications, and databases. Prior to 4.0.0-beta.474, PostgreSQL healthcheck command generation used attacker-controlled database settings (postgres_user and postgres_db) in shell-form commands, allowing an authenticated user to inject commands executed in the database container. This issue is fixed in version 4.0.0-beta.474.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42153",
+    "publishedDate": "2026-07-06T22:16:49.383",
+    "lastModifiedDate": "2026-07-06T22:16:49.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-42148",
+    "description": "Coolify is an open-source and self-hostable tool for managing servers, applications, and databases. Prior to 4.0.0-beta.474, the buildHelperImage method in app/Livewire/Settings/Index.php constructs a Docker build command using the dev_helper_version field without shell escaping, allowing an attacker who can set the helper version and trigger the helper image build in a development environment to execute arbitrary commands on the server. This issue is fixed in version 4.0.0-beta.474.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-42148",
+    "publishedDate": "2026-07-06T22:16:49.257",
+    "lastModifiedDate": "2026-07-06T22:16:49.257",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -112,349 +391,79 @@
         "score": 3.8,
         "version": "CVSS 3.1",
         "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:L",
-        "exploitabilityScore": 2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50133",
-    "description": "Hugo is a static site generator. Prior to 0.162.0, Hugo accepts content files in several markup formats. Files mapped to the text/html media type (typically .html files under /content, or pages produced by a content adapter that sets content.mediaType = \"text/html\") had their body emitted verbatim into the rendered page. A site that ingests HTML content from an untrusted source could therefore be served stored cross-site scripting. This vulnerability is fixed in 0.162.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50133",
-    "publishedDate": "2026-07-06T20:16:37.043",
-    "lastModifiedDate": "2026-07-06T20:16:37.043",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41516",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 4.5.0 and prior to version 4.11.0, the RSA PKCS#1 v1.5 decryption implementation in the Hisilicon HPRE crypto driver uses non-constant-time `memcmp()` for label hash verification and has multiple distinguishable error paths. This creates a Bleichenbacher-style padding oracle that allows an attacker to recover RSA PKCS#1 v1.5  plaintext. Version 4.11.0 contains a patch. As a workaround, disable Hisilicon HPRE RSA driver with `CFG_HISILICON_ACC_V3=n`.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41516",
-    "publishedDate": "2026-07-06T20:16:32.197",
-    "lastModifiedDate": "2026-07-06T21:16:55.513",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58403",
-    "description": "Hugo is a static site generator. From v0.123.0 through v0.163.0, Hugo's virtual filesystem is designed so that files under a mount cannot reach outside the mount tree, but a regression caused RootMappingFs.statRoot to call Stat, which follows symlinks, instead of Lstat, so a direct os.ReadFile \"somefile\" where somefile was a symlink pointing outside the mount would return the target's contents. This effectively let a symlink planted inside a theme or local mount read arbitrary files reachable to the user running hugo. This issue is fixed in v0.163.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58403",
-    "publishedDate": "2026-07-06T20:16:38.173",
-    "lastModifiedDate": "2026-07-06T21:16:58.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41515",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 3.9.0 and prior to version 4.11.0, the RSA-OAEP decryption implementation in the NXP CAAM crypto driver uses non-constant-time `memcmp()` for label hash verification and has multiple distinguishable error paths. This creates a Manger-style padding oracle that allows an attacker to recover RSA-OAEP plaintext with approximately 1000-2000 adaptive chosen ciphertext queries. Version 4.11.0 contains a patch. As a workaround, disable the NXP CAAM RSA driver with `CFG_CRYPTO_DRV_RSA=n`.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41515",
-    "publishedDate": "2026-07-06T20:16:32.060",
-    "lastModifiedDate": "2026-07-06T20:16:32.060",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14536",
-    "description": "Improper enforcement of a mandatory multi-factor authentication policy in Devolutions Server 2026.2.9.0 allows an attacker with valid user credentials to bypass the MFA Required policy and authenticate without completing multi-factor authentication. The problem occurs when DVLS encounters an invalid default MFA value.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14536",
-    "publishedDate": "2026-07-06T20:16:29.883",
-    "lastModifiedDate": "2026-07-06T20:16:29.883",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-58402",
-    "description": "Hugo is a static site generator. From 0.60.0 until 0.163.3, Hugo's default code-block renderer wrote the Markdown code-fence language or info-string into the code class=\"language-…\" data-lang=\"…\" wrapper without HTML escaping. A fence info-string containing a quote and a script payload breaks out of the attribute and injects a live script element. This issue is fixed in 0.163.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58402",
-    "publishedDate": "2026-07-06T20:16:38.040",
-    "lastModifiedDate": "2026-07-06T21:16:58.337",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9182",
-    "description": "ArcGIS Server contains an unrestricted file upload vulnerability. An unauthenticated attacker could exploit this issue by uploading a crafted file to the affected endpoint. Successful exploitation could allow arbitrary file upload.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9182",
-    "publishedDate": "2026-07-06T19:17:09.680",
-    "lastModifiedDate": "2026-07-06T20:16:38.653",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "psirt@esri.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9181",
-    "description": "ArcGIS Server contains a directory traversal vulnerability.  An unauthenticated attacker could exploit this issue by sending crafted path parameters.  Successful exploitation could allow access to sensitive files on the system. This issue impacts all versions of ArcGIS Server 12.0 and prior.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9181",
-    "publishedDate": "2026-07-06T19:17:09.553",
-    "lastModifiedDate": "2026-07-06T20:16:38.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "psirt@esri.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55798",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, WindowsViewer.get_command() constructed a cmd.exe shell command by directly embedding a file path into an f-string without escaping and passed the result to subprocess.Popen(..., shell=True), allowing shell metacharacters in the file path to inject arbitrary cmd.exe commands. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55798",
-    "publishedDate": "2026-07-06T19:17:08.830",
-    "lastModifiedDate": "2026-07-06T19:38:37.300",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 1,
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 0.3,
         "impactScore": 3.4,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55380",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, PIL/GdImageFile.py GdImageFile._open() read image dimensions from the GD 2.x header and stored them in self._size without calling Image._decompression_bomb_check(), allowing a crafted .gd file to trigger excessive C-heap allocation when loaded. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55380",
-    "publishedDate": "2026-07-06T19:17:08.703",
-    "lastModifiedDate": "2026-07-06T20:16:37.553",
+    "id": "CVE-2026-41899",
+    "description": "Coolify is an open-source and self-hostable tool for managing servers, applications, and databases. Prior to 4.0.0-beta.474, POST /api/feedback has no authentication, no rate limiting, and no input validation, allowing arbitrary content to be forwarded directly to a Discord webhook and enabling spam, content injection, and webhook abuse. This issue is fixed in version 4.0.0-beta.474.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41899",
+    "publishedDate": "2026-07-06T22:16:49.130",
+    "lastModifiedDate": "2026-07-06T22:16:49.130",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
+        "impactScore": 2.5,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55379",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, PIL/BdfFontFile.py bdf_char() read the BBX width and height field from a BDF font file and passed attacker-controlled dimensions to Image.new() without calling Image._decompression_bomb_check(), bypassing Pillow's documented decompression bomb protection and allowing excessive memory allocation. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55379",
-    "publishedDate": "2026-07-06T19:17:08.577",
-    "lastModifiedDate": "2026-07-06T20:16:37.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54291",
-    "description": "pgjdbc is an open source postgresql JDBC Driver. In releases 42.7.4 through 42.7.11, channelBinding=require connections can be silently downgraded from SCRAM-SHA-256-PLUS with channel binding to plain SCRAM-SHA-256 without it, losing the man-in-the-middle protection the setting is meant to guarantee. An attacker who can intercept the TLS connection can trigger the downgrade with a certificate whose signature algorithm has no tls-server-end-point channel-binding hash, because the bundled com.ongres.scram:scram-client returns an empty byte array instead of failing and pgJDBC ScramAuthenticator checks only that the server advertised a PLUS mechanism, without rejecting the empty binding or checking that the negotiated mechanism uses channel binding. This issue is fixed in version 42.7.12.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54291",
-    "publishedDate": "2026-07-06T19:17:08.407",
-    "lastModifiedDate": "2026-07-06T21:16:56.610",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54060",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, PIL/FontFile.py FontFile.compile() assembled per-glyph images into a combined bitmap with Image.new(\"1\", (xsize, ysize)) without calling Image._decompression_bomb_check(), allowing a font to trigger excessive allocation during conversion or saving. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54060",
-    "publishedDate": "2026-07-06T19:17:08.270",
-    "lastModifiedDate": "2026-07-06T19:38:37.300",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54059",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, PIL/PcfFontFile.py _load_bitmaps() read glyph dimensions from the PCF METRICS section and passed them directly to Image.frombytes() without calling Image._decompression_bomb_check(), allowing crafted PCF font data to cause excessive memory allocation. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54059",
-    "publishedDate": "2026-07-06T19:17:08.127",
-    "lastModifiedDate": "2026-07-06T19:38:37.300",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-11405",
-    "description": "The web server binary /bin/httpd contains a hidden backdoor authentication mechanism in the login() function at 004c88b8.\r\n\r\n- The function contains a normal authentication path using MD5/hash-based password verification (prod_encode64/PasswordToMd5/check_rand_key).\r\n- After normal authentication fails, it calls GetValue(\"sys.rzadmin.password\") to read a backdoor password from the device configuration.\r\n- It performs a direct strcmp() comparison (plaintext, not hashed) between the config value and the user-supplied password.\r\n\r\nA successful match grants role=2 (admin-level access) and creates a valid session. The rzadmin username is never checked — any username works with the backdoor",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11405",
-    "publishedDate": "2026-07-06T20:16:29.450",
-    "lastModifiedDate": "2026-07-06T21:16:52.907",
+    "id": "CVE-2026-38979",
+    "description": "ajenti through v2.2.13 has a clickjacking weakness in the browser-facing login and administrative UI. In ajenti-core/aj/http.py, the core HTTP response path initializes an empty header list, forwards handler-added headers verbatim, and finalizes responses through WSGI start_response() without adding anti-framing protections such as X-Frame-Options or a Content-Security-Policy frame-ancestors restriction.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38979",
+    "publishedDate": "2026-07-06T22:16:49.010",
+    "lastModifiedDate": "2026-07-06T22:16:49.010",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-13753",
-    "description": "A missing authorization vulnerability exists in the embedded webserver of HP Deskjet 2800 Series Printers running firmware version <=TBP1CN2612AR. An unauthenticated attacker with network access can send GET requests to multiple exposed administrative API endpoints and retrieve sensitive configuration data such as plaintext Wi‑Fi Direct credentials, unique device identity information, and other administrative security state details. When accessed through the web interface, these setting pages explicitly require administrator credentials before sensitive information is displayed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13753",
-    "publishedDate": "2026-07-06T19:16:55.963",
-    "lastModifiedDate": "2026-07-06T20:16:29.737",
+    "id": "CVE-2026-38976",
+    "description": "mrubyc through 3.4.1 was found to contain a NULL pointer dereference in src/vm.c in op_super() / OP_SUPER due to a missing runtime guard for top-level super.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38976",
+    "publishedDate": "2026-07-06T22:16:48.900",
+    "lastModifiedDate": "2026-07-06T22:16:48.900",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-38973",
+    "description": "mrubyc through release3.4.1 was found to contain an out-of-bounds read in builtin missing-method lookup inside mrbc_find_method().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38973",
+    "publishedDate": "2026-07-06T22:16:48.767",
+    "lastModifiedDate": "2026-07-06T22:16:48.767",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-34599",
+    "description": "Coolify is an open-source and self-hostable tool for managing servers, applications, and databases. Prior to 4.0.0-beta.471, there is an authenticated command injection vulnerability in the GetLogs Livewire component which allows users with team membership (lowest privilege member role) to execute arbitrary commands as root on managed servers. The $container Livewire public property is interpolated directly into shell commands (docker logs, docker service logs) without sanitization, and can be modified by any client via the Livewire wire protocol because it lacks the #[Locked] attribute. This issue is fixed in version 4.0.0-beta.471.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34599",
+    "publishedDate": "2026-07-06T22:16:48.623",
+    "lastModifiedDate": "2026-07-06T22:16:48.623",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58404",
-    "description": "Hugo is a static site generator. From v0.162.0 through v0.163.0, the default security.http.urls policy denies requests to loopback, internal, and cloud-metadata IPv4 literals, but the deny rule only matched dotted-decimal notation, so alternate IPv4 encodings of the same addresses, including integer, hex, or octal, passed the policy. When a template passes an untrusted or data-derived URL to resources.GetRemote and the host platform uses the cgo system resolver, these encodings resolve to the blocked address, allowing build-time server-side requests to loopback and internal services, including the cloud-metadata endpoint in hosted or CI builds; the same check is reused on redirects, so the gap also applies to each redirect hop. This issue is fixed in v0.163.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58404",
-    "publishedDate": "2026-07-06T20:16:38.307",
-    "lastModifiedDate": "2026-07-06T20:16:38.307",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41514",
-    "description": "OP-TEE is a Trusted Execution Environment (TEE) designed as companion to a non-secure Linux kernel running on Arm; Cortex-A cores using the TrustZone technology. Starting in version 4.5.0 and prior to version 4.11.0, the RSA-OAEP decryption implementation in the Hisilicon HPRE crypto driver uses non-constant-time `memcmp()` for label hash verification and has multiple distinguishable error paths. This creates a Manger-style padding oracle that allows an attacker to recover RSA-OAEP plaintext with approximately 1000-2000 adaptive chosen ciphertext queries. Only affects plat-d06 with `CFG_HISILICON_ACC_V3=y`, which seems to be disabled by default. Version 4.11.0 contains a patch. As a workaround, disable Hisilicon HPRE RSA driver with `CFG_HISILICON_ACC_V3=n`.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41514",
-    "publishedDate": "2026-07-06T20:16:31.917",
-    "lastModifiedDate": "2026-07-06T20:16:31.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 1.4,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
         "source": "security-advisories@github.com"
       }
     ]
