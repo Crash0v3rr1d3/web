@@ -1,284 +1,429 @@
 [
   {
-    "id": "CVE-2026-56676",
-    "description": "9Router is an AI router & token saver. Prior to 0.5.2, 9router validates image URLs by resolving the host before fetching, but open-sse/translator/concerns/image.js performs the later server-side image fetch with a separate DNS resolution. An authenticated attacker with access to the LLM proxy can use a vision-capable model and an attacker-controlled DNS name that first resolves to a public IP and then rebinds to an internal address, allowing server-side requests to internal-only HTTP services. This issue is fixed in version 0.5.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56676",
-    "publishedDate": "2026-07-10T16:16:34.923",
-    "lastModifiedDate": "2026-07-10T17:25:46.957",
+    "id": "CVE-2026-55377",
+    "description": "Logto is the modern, open-source auth infrastructure for SaaS and AI apps. Prior to 1.41.0, Logto's Account Center step-up check accepted any active verification record that belonged to the current user and had isVerified === true. A WebAuthn registration verification record for binding a new passkey could be created and verified with only an existing Account API bearer token, then sent in the logto-verification-id header and treated as identityVerified=true by Account Center routes, allowing MFA factor management without proving possession of an existing password, identifier, or MFA factor. This issue is fixed in version 1.41.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55377",
+    "publishedDate": "2026-07-10T20:16:46.460",
+    "lastModifiedDate": "2026-07-10T20:16:46.460",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.4,
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 3.1,
-        "impactScore": 3.7,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55500",
-    "description": "9Router is an AI router & token saver. Prior to 0.4.80, the /api/settings/database endpoint allows full database export (containing all credentials, API keys, OAuth tokens, and settings) and full database import (complete overwrite) without any authentication requirement beyond the ALWAYS_PROTECTED middleware check, which only validates JWT or CLI token. This issue is fixed in version 0.4.80.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55500",
-    "publishedDate": "2026-07-10T16:16:33.357",
-    "lastModifiedDate": "2026-07-10T17:25:46.957",
+    "id": "CVE-2026-55370",
+    "description": "Logto is the modern, open-source auth infrastructure for SaaS and AI apps. Prior to 1.41.0, Logto's existing TOTP verification accepted a successfully used TOTP code again while the code remained inside the RFC 6238 acceptance window because the verifier used otplib's stateless check with window = 1 and did not persist or compare the accepted TOTP time-step counter. An attacker who has the victim's first factor and captures a live TOTP value can replay that value to satisfy MFA during the same acceptance window. This issue is fixed in version 1.41.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55370",
+    "publishedDate": "2026-07-10T20:16:46.333",
+    "lastModifiedDate": "2026-07-10T20:16:46.333",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15143",
-    "description": "A flaw was found in the file_type content detector of guardrails-detectors. This vulnerability allows a remote attacker to supply an arbitrary XML Schema Definition (XSD) string, which is processed without proper restrictions. This can lead to server-side requests to arbitrary URLs or local file reads, potentially resulting in sensitive information disclosure, such as cloud provider credentials or access to internal network services.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15143",
-    "publishedDate": "2026-07-10T16:16:25.680",
-    "lastModifiedDate": "2026-07-10T17:16:53.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55501",
-    "description": "9Router is an AI router & token saver. Prior to 0.4.80, the dashboard login rate limiter in src/lib/auth/loginLimiter.js derives the client identity from the attacker-controlled X-Forwarded-For HTTP header, and src/app/api/auth/login/route.js uses that spoofable value for checkLock and recordFail. A remote attacker can rotate the X-Forwarded-For value on each login attempt to receive a fresh rate-limit bucket, bypass the 5-attempt threshold and progressive lockout durations, and perform unlimited brute-force attempts against the dashboard password. This issue is fixed in version 0.4.80.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55501",
-    "publishedDate": "2026-07-10T16:16:33.493",
-    "lastModifiedDate": "2026-07-10T17:25:46.957",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61492",
-    "description": "In JetBrains YouTrack before 2026.2.17394 stored XSS via article titles in digest emails was possible",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61492",
-    "publishedDate": "2026-07-10T15:16:51.153",
-    "lastModifiedDate": "2026-07-10T17:17:03.877",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61456",
-    "description": "The Grav API plugin (getgrav/grav-plugin-api) before 1.0.3 fails to sanitize SVG files uploaded through the POST /api/v1/media endpoint. The HandlesMediaUploads::processUploadedFile() method validates only the file extension and never invokes Security::sanitizeSVG(), so an authenticated attacker with the api.media.write permission can upload an SVG containing arbitrary JavaScript. The file is stored unmodified and served with Content-Type: image/svg+xml; when an administrator opens it in a browser (directly or via <object>/<iframe>), the embedded script executes in their session context, enabling cookie theft and session hijacking.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61456",
-    "publishedDate": "2026-07-10T15:16:51.023",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.6,
+        "score": 6.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 2.5,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55789",
+    "description": "Logto is the modern, open-source auth infrastructure for SaaS and AI apps. Prior to 1.41.0, Logto's self-hosted SAML application IdP built the signed SAML response and assertion by string-substituting user-controlled profile attributes such as name, email, and custom attribute-mapping values into element-text placeholders of a SAML XML template using samlify 2.10.0, which left those placeholders unescaped. An authenticated low-privilege user could place XML markup in a profile attribute so Logto signed a forged SAML attribute, such as an arbitrary role, allowing privilege escalation at relying Service Providers that authorize on SAML attributes. This issue is fixed in version 1.41.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55789",
+    "publishedDate": "2026-07-10T20:16:47.933",
+    "lastModifiedDate": "2026-07-10T20:16:47.933",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:H/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54714",
+    "description": "Logto is the modern, open-source auth infrastructure for SaaS and AI apps. Prior to 1.41.0, @logto/core reflected the SAML RelayState, SAMLResponse, and actionUrl into a Logto-origin auto-submit HTML form in packages/core/src/saml-application/SamlApplication/utils.ts without HTML-attribute escaping. A SAML application flow with a crafted RelayState from GET or POST /api/saml/:id/authn could inject script that runs on the Logto tenant origin after the user completes login. This issue is fixed in version 1.41.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54714",
+    "publishedDate": "2026-07-10T20:16:46.173",
+    "lastModifiedDate": "2026-07-10T20:16:46.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57850",
+    "description": "RustDesk before 1.4.9 does not enforce a session's authorized connection scope on the server side, so a peer granted a limited session type (FileTransfer, PortForward, ViewCamera, or Terminal) can send control messages and login options reserved for a full Remote session. An authenticated remote peer can exploit this missing scope check to act outside its granted scope, injecting out-of-scope control messages to observe and control the host beyond the permissions it was given.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57850",
+    "publishedDate": "2026-07-10T20:16:48.663",
+    "lastModifiedDate": "2026-07-10T20:16:48.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.5,
         "source": "disclosure@vulncheck.com"
       },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57156",
+    "description": "FreeRDP is a free implementation of the Remote Desktop Protocol. Prior to 3.28.0 on 32-bit builds, FreeRDP clients contain an integer overflow in update_read_delta_points in libfreerdp/core/orders.c when multiplying an attacker-controlled point count by sizeof(DELTA_POINT), allowing a malicious RDP peer to allocate an undersized heap buffer and then write beyond it during initialization. This issue is fixed in version 3.28.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57156",
+    "publishedDate": "2026-07-10T20:16:48.257",
+    "lastModifiedDate": "2026-07-10T20:16:48.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57157",
+    "description": "FreeRDP is a free implementation of the Remote Desktop Protocol. Prior to 3.28.0, FreeRDP server implementations with the MS-RDPECAM camera device enumerator channel enabled scan attacker-supplied DeviceName and VirtualChannelName fields for a NUL terminator in channels/rdpecam/server/camera_device_enumerator_main.c and then dereference once past the scan bound, allowing a malicious RDP client to trigger a 1- to 2-byte out-of-bounds heap read. This issue is fixed in version 3.28.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57157",
+    "publishedDate": "2026-07-10T20:16:48.387",
+    "lastModifiedDate": "2026-07-10T20:16:48.387",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57158",
+    "description": "FreeRDP is a free implementation of the Remote Desktop Protocol. From 3.21.0 before 3.28.0, FreeRDP clients using the GFX pipeline contain an incomplete fix for CVE-2026-23530 in planar_decompress_plane_rle_only in libfreerdp/codec/planar.c, allowing a malicious RDP server to send a truncated RDPGFX_CMDID_WIRETOSURFACE_1 planar payload that reads one byte past the input buffer. This issue is fixed in version 3.28.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57158",
+    "publishedDate": "2026-07-10T20:16:48.523",
+    "lastModifiedDate": "2026-07-10T20:16:48.523",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
       {
         "score": 5.1,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-61455",
-    "description": "Grav before 2.0.1 contains a decompression bomb vulnerability in ZipArchiver::extract() that lacks limits on uncompressed size, file count, and nesting depth. Attackers can supply a crafted ZIP archive that expands to fill available disk space, causing denial of service by exhausting storage resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61455",
-    "publishedDate": "2026-07-10T15:16:50.877",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "id": "CVE-2026-55827",
+    "description": "FreeRDP is a free implementation of the Remote Desktop Protocol. Prior to 3.27.1, FreeRDP clients launched with the non-default /cache:codec:rfx option pass desktop stride and height to RemoteFX decoding for Cache Bitmap V3 data while allocating bitmap->data only for the smaller DstWidth and DstHeight in gdi_Bitmap_Decompress, allowing a malicious RDP server to trigger a heap out-of-bounds write with attacker-controlled offset and content. This issue is fixed in version 3.27.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55827",
+    "publishedDate": "2026-07-10T20:16:48.060",
+    "lastModifiedDate": "2026-07-10T20:16:48.060",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61450",
-    "description": "Grav before 2.0.2 contains a Twig sandbox bypass that allows a page author (any admin.pages user, or anyone able to write to user/pages) to exfiltrate configuration secrets. Although the sandbox replaces the 'config' variable with a redacted facade and strips Config::get/toArray from the method allowlist, the raw container remains accessible via the allow-listed grav.offsetGet('config'), which returns the real Config object. Allow-listed object-dumping filters (json_encode, print_r, yaml_encode) then serialize that object at the PHP level without invoking the sandbox method gate, exposing the full config tree including plugin secrets such as SMTP credentials, API keys, and plugin DB credentials. This is an incomplete fix for GHSA-j274-39qw-32c9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61450",
-    "publishedDate": "2026-07-10T15:16:50.740",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61444",
-    "description": "PraisonAI versions before 4.6.78 contain a code injection vulnerability in deploy/api.py where the agents_file parameter is directly interpolated into an f-string without sanitization. Attackers can inject arbitrary Python code that executes when the generated server code runs via subprocess.Popen().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61444",
-    "publishedDate": "2026-07-10T15:16:50.610",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.4,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61441",
-    "description": "PraisonAI Platform (praisonai-platform) before 0.1.9 improperly authorizes deletion of issue dependencies. The DELETE dependency route accepts either endpoint of a dependency edge and checks delete permission only against the caller-selected URL issue. A workspace member who cannot delete a dependency through an owner-created issue endpoint (which returns 403) can delete the same dependency edge by targeting a related member-owned issue endpoint, because permission is validated against the member-owned issue's owner. This allows members to bypass owner/admin authorization and remove owner-created issue dependencies.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61441",
-    "publishedDate": "2026-07-10T15:16:50.480",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61437",
-    "description": "PraisonAI (pip package praisonaiagents) before 1.6.78 contains an unsafe dynamic module loading vulnerability in AgentFlow._resolve_pydantic_class (src/praisonai-agents/praisonaiagents/workflows/workflows.py). When a workflow step uses a string output_pydantic reference, the framework locates and imports a sibling tools.py from the workflow file's directory via importlib exec_module without sandboxing, ignoring the PRAISONAI_ALLOW_*_TOOLS environment variables. An attacker who controls a workflow file and its sibling tools.py can execute arbitrary Python code with the workflow runner's privileges when the workflow is executed via WorkflowManager or after load_yaml.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61437",
-    "publishedDate": "2026-07-10T15:16:50.350",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
         "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-61434",
-    "description": "PraisonAI versions before 4.6.78 contain an allowlist bypass vulnerability in shell command execution that allows attackers to execute restricted commands via find's built-in -exec, -execdir, and -delete actions. Attackers can craft find commands with these built-in actions to read blocked files, delete files, or execute non-allowlisted binaries without triggering shell metacharacter filters.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61434",
-    "publishedDate": "2026-07-10T15:16:50.213",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "id": "CVE-2026-55481",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, default.blade.php renders header_color and related branding color settings inside a CSS style block with HTML escaping that is insufficient for the CSS context, allowing a superadmin to inject arbitrary CSS that affects authenticated users on subsequent page loads when Content Security Policy is disabled. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55481",
+    "publishedDate": "2026-07-10T20:16:47.587",
+    "lastModifiedDate": "2026-07-10T20:16:47.587",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:N/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15295",
+    "description": "The WordPress Infinite Scroll – Ajax Load More plugin for WordPress is vulnerable to Stored Cross-Site Scripting via admin settings in all versions up to, and including, 7.0.1 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with administrator-level permissions and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. This only affects multi-site installations and installations where unfiltered_html has been disabled.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15295",
+    "publishedDate": "2026-07-10T20:16:45.733",
+    "lastModifiedDate": "2026-07-10T20:16:45.733",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 1.3,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55475",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.1, the Importer API endpoint allows a user with CSV import capabilities and a valid API key to overwrite the created_by value of an import file, allowing unauthorized modification of import ownership metadata. This issue is fixed in version 8.6.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55475",
+    "publishedDate": "2026-07-10T20:16:47.333",
+    "lastModifiedDate": "2026-07-10T20:16:47.333",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55469",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, an authenticated user with import and assets.update permissions can place a path traversal string in an asset image field through CSV import and then trigger image deletion, allowing deletion of arbitrary files accessible to the server process. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55469",
+    "publishedDate": "2026-07-10T20:16:47.093",
+    "lastModifiedDate": "2026-07-10T20:16:47.093",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55461",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, the user edit flow stores url()->previous() from the attacker-controlled Referer header into Laravel’s intended URL session value and later uses redirect()->intended(...) when redirect_option=back is submitted, allowing Snipe-IT to be used as a trusted redirector after a legitimate user edit action. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55461",
+    "publishedDate": "2026-07-10T20:16:46.713",
+    "lastModifiedDate": "2026-07-10T20:16:46.713",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55479",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, the legacy single-seat license checkin flow authorizes the action with the checkout permission instead of the checkin permission, allowing a user who can assign licenses but not unassign them to directly access the old checkin endpoint and reclaim a license seat assigned to another user or asset. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55479",
+    "publishedDate": "2026-07-10T20:16:47.463",
+    "lastModifiedDate": "2026-07-10T20:16:47.463",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55452",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.5.0, Actionlog::logaction() stores the request User-Agent header and ReportsController::postActivityReport() writes that value to the Activity Report CSV without formula escaping, allowing a low-privileged authenticated user to store a formula-like User-Agent that may execute when a report viewer opens the exported CSV in spreadsheet software. This issue is fixed in version 8.5.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55452",
+    "publishedDate": "2026-07-10T20:16:46.590",
+    "lastModifiedDate": "2026-07-10T20:16:46.590",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55466",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, UploadFileRequest sanitizes SVG content only when PHP finfo reports image/svg+xml and UploadedFilesController serves attachments inline without using StorageHelper::allowSafeInline(), allowing a low-privilege user to upload active XHTML or XML content that is later served same-origin and executes JavaScript in a viewer’s browser. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55466",
+    "publishedDate": "2026-07-10T20:16:46.970",
+    "lastModifiedDate": "2026-07-10T20:16:46.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:N/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55515",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, the unaccepted-assets report delete endpoint authorizes only reports.view and deletes CheckoutAcceptance::pending()->find($acceptanceId) by global ID without checking access to the related checkoutable asset, allowing a reports user in one company to delete pending checkout acceptance records for another company. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55515",
+    "publishedDate": "2026-07-10T20:16:47.713",
+    "lastModifiedDate": "2026-07-10T20:16:47.713",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55462",
+    "description": "Snipe-IT is an IT asset/license management system. Prior to 8.6.2, UsersController::show() and printInventory() authorize only user viewing before loading and rendering assigned license, accessory, and consumable relationships, allowing an authenticated user with only users.view to see inventory and cost/order metadata from modules that direct permissions would otherwise deny. This issue is fixed in version 8.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55462",
+    "publishedDate": "2026-07-10T20:16:46.837",
+    "lastModifiedDate": "2026-07-10T20:16:46.837",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6872",
+    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. Reason: This candidate was issued in error. Notes: All references and descriptions in this candidate have been removed to prevent accidental usage.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6872",
+    "publishedDate": "2026-07-10T19:17:27.947",
+    "lastModifiedDate": "2026-07-10T19:17:27.947",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-6212",
+    "description": "Authorization bypass through User-Controlled key vulnerability in Teracity Software Technologies Inc. TeraMIS allows Privilege Abuse.\n\nThis issue affects TeraMIS: from V03.26.01.14 through 30.04.2026.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6212",
+    "publishedDate": "2026-07-10T19:17:27.840",
+    "lastModifiedDate": "2026-07-10T20:16:49.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61461",
+    "description": "Dify before 1.16.0-rc1 contains a SQL injection vulnerability in the MyScale vector store backend that allows attackers to execute arbitrary SQL by supplying unsanitized search parameters to the search_by_full_text method without escaping or parameterization. Attackers can inject malicious SQL through the search parameters to read, modify, or delete data in the underlying ClickHouse database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61461",
+    "publishedDate": "2026-07-10T19:17:27.713",
+    "lastModifiedDate": "2026-07-10T20:16:49.137",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -303,216 +448,11 @@
     ]
   },
   {
-    "id": "CVE-2026-61432",
-    "description": "PraisonAI (praisonaiagents) before 1.6.78 contains a path traversal vulnerability in the FastContext feature (praisonaiagents.context.fast). FastContextAgent.execute_tool() prepends the configured workspace_path only for relative paths and neither rejects absolute paths nor canonicalizes joined paths before enforcing workspace containment. As a result, tool arguments or model-generated function calls to grep_search, glob_search, read_file, or list_directory can supply absolute paths or '../' traversal sequences to read, search, and enumerate files outside the intended workspace directory, with file contents returned to the caller or injected into the model's tool-result context.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61432",
-    "publishedDate": "2026-07-10T15:16:50.077",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61431",
-    "description": "PraisonAI before 4.6.78 contains a path traversal vulnerability in ContextGatherer that fails to validate include paths in .praisoncontext and .praisoninclude files. Attackers can supply absolute paths or parent directory traversal sequences to read arbitrary files outside the workspace and include their contents in the generated context bundle.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61431",
-    "publishedDate": "2026-07-10T15:16:49.947",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-60091",
-    "description": "PraisonAI before 4.6.78 contains an unauthenticated server-side request forgery vulnerability in the Jobs API /api/v1/runs endpoint. The webhook_url parameter is validated at request time but re-resolved at connection time, allowing attackers to use DNS rebinding to reach internal services with a blind SSRF attack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60091",
-    "publishedDate": "2026-07-10T15:16:49.700",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-60089",
-    "description": "PraisonAI (pip package praisonaiagents) before 1.6.78 automatically loads defaults from a project-local .praisonai/config.toml when constructing an Agent, and does not validate the defaults.output.output_file path. A repository-controlled config file can set output_file to an absolute or '..' traversal path; when the developer subsequently calls agent.start() without explicitly passing an output parameter, PraisonAI writes the agent response to that path (creating parent directories as needed), allowing an untrusted checked-out project to overwrite files outside the project root with the privileges of the user running PraisonAI.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60089",
-    "publishedDate": "2026-07-10T15:16:49.567",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-60086",
-    "description": "PraisonAI before 4.6.78 contains a prompt injection defense bypass vulnerability where the injection defense only blocks threats classified as CRITICAL, requiring three or more detector families to match simultaneously. Attackers can craft single or double-vector prompt injections that are classified as HIGH threat level and pass through unblocked to reach the model.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60086",
-    "publishedDate": "2026-07-10T15:16:49.417",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59796",
-    "description": "In JetBrains TeamCity before 2026.1.2 pipeline modification was possible due to improper permission checks",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59796",
-    "publishedDate": "2026-07-10T15:16:48.683",
-    "lastModifiedDate": "2026-07-10T17:17:03.553",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59795",
-    "description": "In JetBrains TeamCity before 2026.1.2 stored XSS via unauthenticated agent registration was possible",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59795",
-    "publishedDate": "2026-07-10T15:16:48.573",
-    "lastModifiedDate": "2026-07-10T17:17:03.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59794",
-    "description": "In JetBrains TeamCity before 2026.1.2 stored XSS on the cloud profile page was possible via agent-reported data",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59794",
-    "publishedDate": "2026-07-10T15:16:48.463",
-    "lastModifiedDate": "2026-07-10T17:17:03.307",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 5.2,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59793",
-    "description": "In JetBrains TeamCity before 2026.1.2 arbitrary file access was possible via the Perforce VCS integration",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59793",
-    "publishedDate": "2026-07-10T15:16:48.350",
-    "lastModifiedDate": "2026-07-10T17:17:03.160",
+    "id": "CVE-2026-61460",
+    "description": "Krayin CRM through 2.2.3 contains an insecure direct object reference vulnerability in LeadController, PersonController, OrganizationController, QuoteController, and ActivityController that allows authenticated users to edit, update, or delete records owned by other users. Attackers can modify CRM records and reassign ownership by exploiting missing record-level ownership validation in edit, update, and destroy methods.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61460",
+    "publishedDate": "2026-07-10T19:17:27.587",
+    "lastModifiedDate": "2026-07-10T20:16:49.030",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -523,96 +463,65 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59792",
-    "description": "In JetBrains IntelliJ IDEA before 2026.1.4, \n2026.2 code execution via path traversal in project workspace ID handling was possible",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59792",
-    "publishedDate": "2026-07-10T15:16:48.240",
-    "lastModifiedDate": "2026-07-10T17:17:03.010",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 6,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59791",
-    "description": "In JetBrains YouTrack before 2026.2.17012 cSS injection via Mermaid diagram rendering was possible",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59791",
-    "publishedDate": "2026-07-10T15:16:48.110",
-    "lastModifiedDate": "2026-07-10T17:17:02.893",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "cve@jetbrains.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58661",
-    "description": "n8n before 2.28.0 (and before 1.123.58 on the 1.x branch) contains a disk space exhaustion vulnerability in the data-table file upload endpoint. The per-request quota check does not account for files already written to the shared temporary directory, allowing an authenticated user to repeatedly upload files that accumulate on disk until the periodic cleanup runs, potentially exhausting available disk space on the host.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58661",
-    "publishedDate": "2026-07-10T15:16:47.987",
-    "lastModifiedDate": "2026-07-10T17:49:57.737",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-57994",
-    "description": "phpMyFAQ before 4.1.5 applies inconsistent active=yes and publication-date filtering across its public FAQ API endpoints, allowing unauthenticated attackers to retrieve inactive (draft or review-only) FAQ content. Specifically, GET /api/v3.1/faq/{categoryId}/{faqId} returns the inactive FAQ title and full answer, while GET /api/v3.1/faqs/tags/{tagId} and GET /api/v4.0/faqs/tags/{tagId} return the inactive FAQ title and answer preview, disclosing non-public content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57994",
-    "publishedDate": "2026-07-10T15:16:47.850",
-    "lastModifiedDate": "2026-07-10T17:41:47.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.9,
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61459",
+    "description": "MCP Server Kubernetes before 3.9.0 contains an argument injection vulnerability in structured tools (kubectl_get, kubectl_describe, kubectl_delete) that allows attackers to bypass the assertNoDangerousFlags security check by supplying resourceType and name parameters with leading dashes. Attackers can inject the --server flag to redirect kubectl commands to an attacker-controlled API server, causing the operator's bearer token to be transmitted externally and enabling full cluster compromise.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61459",
+    "publishedDate": "2026-07-10T19:17:27.450",
+    "lastModifiedDate": "2026-07-10T19:21:09.530",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5801",
+    "description": "Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in Semtek Informatics Software Consulting Trade Ltd. Co. SEM-PMP allows Command Line Execution through SQL Injection.\n\nThis issue affects SEM-PMP: through 23042026.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5801",
+    "publishedDate": "2026-07-10T19:17:27.323",
+    "lastModifiedDate": "2026-07-10T20:16:48.923",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
       }
     ]
   }
