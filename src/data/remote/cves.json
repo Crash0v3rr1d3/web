@@ -1,280 +1,50 @@
 [
   {
-    "id": "CVE-2026-56814",
-    "description": "Plug.Parsers.MULTIPART, the multipart request-body parser used to handle file uploads and multipart forms, does not enforce its :length budget against all consumed resources, allowing an unauthenticated remote attacker to cause denial of service. The parser charges the :length limit only for part body bytes; part header bytes are never counted, and a part with an empty body costs zero.\n\nBecause every part whose Content-Disposition carries a non-empty filename creates a fresh temporary file (via Plug.Upload) and retains a Plug.Upload struct for the duration of the request, an attacker can send a single request composed of many empty-body file parts. Such a request stays well under the configured :length limit (8,000,000 bytes by default) while creating one temporary file per part, leading to inode and disk exhaustion and unbounded memory growth. Any application using Plug.Parsers with the :multipart parser is affected, and no authentication is required, only reachability of a multipart endpoint over HTTP.\n\nThis vulnerability is associated with program files lib/plug/parsers/multipart.ex and program routines Plug.Parsers.MULTIPART.parse_multipart/2, Plug.Parsers.MULTIPART.parse_multipart_headers/5, Plug.Parsers.MULTIPART.parse_multipart_body/4, and Plug.Parsers.MULTIPART.parse_multipart_file/4.\n\nThis issue affects plug: from 1.4.0 before 1.16.6, from 1.17.0 before 1.17.4, from 1.18.0 before 1.18.5, from 1.19.0 before 1.19.5, and from 1.20.0 before 1.20.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56814",
-    "publishedDate": "2026-07-10T12:17:24.837",
-    "lastModifiedDate": "2026-07-10T12:17:24.837",
+    "id": "CVE-2026-56676",
+    "description": "9Router is an AI router & token saver. Prior to 0.5.2, 9router validates image URLs by resolving the host before fetching, but open-sse/translator/concerns/image.js performs the later server-side image fetch with a separate DNS resolution. An authenticated attacker with access to the LLM proxy can use a vision-capable model and an attacker-controlled DNS name that first resolves to a public IP and then rebinds to an internal address, allowing server-side requests to internal-only HTTP services. This issue is fixed in version 0.5.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56676",
+    "publishedDate": "2026-07-10T16:16:34.923",
+    "lastModifiedDate": "2026-07-10T17:25:46.957",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56690",
-    "description": "Dell PowerFlex Manager, Version prior to 5.1.0.1, contain(s) an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Information disclosure, Information exposure, and Unauthorized access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56690",
-    "publishedDate": "2026-07-10T12:17:23.700",
-    "lastModifiedDate": "2026-07-10T12:17:23.700",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
+        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:L",
         "exploitabilityScore": 3.1,
-        "impactScore": 4.7,
-        "source": "security_alert@emc.com"
+        "impactScore": 3.7,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-56689",
-    "description": "Dell PowerFlex Manager, Version prior to 5.1.0.1, contain(s) an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Information exposure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56689",
-    "publishedDate": "2026-07-10T12:17:23.577",
-    "lastModifiedDate": "2026-07-10T12:17:23.577",
+    "id": "CVE-2026-55500",
+    "description": "9Router is an AI router & token saver. Prior to 0.4.80, the /api/settings/database endpoint allows full database export (containing all credentials, API keys, OAuth tokens, and settings) and full database import (complete overwrite) without any authentication requirement beyond the ALWAYS_PROTECTED middleware check, which only validates JWT or CLI token. This issue is fixed in version 0.4.80.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55500",
+    "publishedDate": "2026-07-10T16:16:33.357",
+    "lastModifiedDate": "2026-07-10T17:25:46.957",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56688",
-    "description": "Dell PowerFlex Manager, Version prior to 5.1.0.1, contain(s) an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A high privileged attacker with remote access could potentially exploit this vulnerability during OS Repository processing to achieve arbitrary command execution as root, potentially leading to full appliance compromise and lateral movement into managed infrastructure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56688",
-    "publishedDate": "2026-07-10T12:17:23.453",
-    "lastModifiedDate": "2026-07-10T12:17:23.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
+        "score": 9.9,
         "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
         "impactScore": 6,
-        "source": "security_alert@emc.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54468",
-    "description": "Dell Unisphere for PowerMax, version(s) 10.3.0.5 and prior, contain(s) a path traversal vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability to read arbitrary files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54468",
-    "publishedDate": "2026-07-10T12:17:23.290",
-    "lastModifiedDate": "2026-07-10T12:17:23.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-53363",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxfrm: iptfs: preserve shared-frag marker in iptfs_consume_frags()\n\niptfs_consume_frags() transfers paged fragments from one socket buffer\nto another but fails to propagate the SKBFL_SHARED_FRAG flag. This is\nthe same class of bug that was fixed in skb_try_coalesce() for\nCVE-2026-46300: when fragments backed by read-only page-cache pages are\nmerged, the marker indicating their shared nature must be preserved so\nthat ESP can decide correctly whether in-place encryption is safe.\n\nApply the same two-line fix used in skb_try_coalesce() to\niptfs_consume_frags().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53363",
-    "publishedDate": "2026-07-10T12:17:22.983",
-    "lastModifiedDate": "2026-07-10T12:17:22.983",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-58225",
-    "description": "SQL Injection vulnerability in elixir-ecto postgrex allows an attacker who can influence a LISTEN channel name to inject SQL into the reconnect replay query, causing a denial of service of the notification connection.\n\nPostgrex.Notifications sanitizes channel names with quote_channel/1, which doubles double quotes so the name is safe inside a double-quoted identifier. This protects the single-statement LISTEN and UNLISTEN paths. On every (re)connect, however, handle_connect/1 replays all registered channels at once by concatenating their LISTEN statements and wrapping them in a dollar-quoted anonymous code block (DO $$BEGIN ... END$$). quote_channel/1 does not escape the $$ dollar-quote delimiter that opens and closes this block.\n\nThe listen/3 guards only reject null bytes and names longer than 63 bytes, so a channel name containing $$ passes validation unchanged. Once such a name is embedded, its $$ prematurely terminates the outer dollar-quoted string and PostgreSQL parses the remainder as additional top-level statements. Because handle_connect/1 runs on every (re)connect, the malformed replay query is rejected each time and the notification connection never re-establishes its subscriptions, silently dropping notifications for every channel sharing that connection.\n\nAn application is affected when it passes untrusted input (for example a tenant or user identifier) as a channel name to Postgrex.Notifications.listen/3. The double-quote doubling prevents forming a fully valid injected statement, so arbitrary SQL execution is not possible, but the corrupted query reliably breaks the shared notification connection for all tenants, resulting in denial of service.\n\nThis issue affects postgrex: from 0.16.0 before 0.22.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58225",
-    "publishedDate": "2026-07-10T11:16:36.300",
-    "lastModifiedDate": "2026-07-10T12:17:25.043",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14461",
-    "description": "mtr is vulnerable to Out-of-bound read vulnerability in ipinfo_lookup() function. An attacker who can influence the TXT response used for AS lookups can trigger this bug by returning a DNS response that is larger than 512 bytes and uses a crafted compression pointer in the answer NAME field. ipinfo_lookup() function uses the length of the response as the end-of-message boundary for dn_expand() function. The result is a reliable crash.\n\n\nThis issue exists in the mtr through version 0.96 and it was fixed in commit 48e1794414d338ce47abc0f27c25ade8788af9c3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14461",
-    "publishedDate": "2026-07-10T11:16:32.823",
-    "lastModifiedDate": "2026-07-10T11:16:32.823",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9857",
-    "description": "The Invoice123 plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.7.0. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to overwrite the plugin's API key stored in wp_options, modify invoice plugin settings, and alter WooCommerce tax rate data in the wp_woocommerce_tax_rates table.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9857",
-    "publishedDate": "2026-07-10T10:16:24.310",
-    "lastModifiedDate": "2026-07-10T10:16:24.310",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41880",
-    "description": "R-SOFT DMS is vulnerable to OS Command Injection in the Optical Character Recognition (OCR) module. Multiple command execution functions accept user-controllable file paths without proper sanitization before passing them to the system shell via SSH. In current infrastructure the URL encoding neutralizes the injection during the standard web upload flow. An authenticated attacker who is able to trigger the OCR functionality for the uploaded file can execute OS commands within the context of a root user.\n\nThis issue was fixed in version v3.19-2862 and v3.17-2580.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41880",
-    "publishedDate": "2026-07-10T10:16:24.193",
-    "lastModifiedDate": "2026-07-10T11:16:35.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41879",
-    "description": "R-SOFT DMS stores superadmin credentials using a non-salted nested MD5 hash. This allows an attacker who obtain password hash to decode superadmin credentials. Critically, this password cannot be changed except by modifying the configuration file.\n\nThis issue was fixed in version v3.17-2000.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41879",
-    "publishedDate": "2026-07-10T10:16:24.077",
-    "lastModifiedDate": "2026-07-10T11:16:35.010",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41878",
-    "description": "R-SOFT DMS is vulnerable to Insecure Direct Object Reference (IDOR) attack in multiple file download endpoints. The application fetches files from the database by ID and serves them to whoever requests them, relying only on session authentication, meaning any valid user can access any file.\n\nThis issue was fixed in version v3.19-2862 and v3.17-2580.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41878",
-    "publishedDate": "2026-07-10T10:16:23.957",
-    "lastModifiedDate": "2026-07-10T11:16:34.367",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41877",
-    "description": "R-SOFT DMS is vulnerable to Stored XSS in file upload functionality. Authenticated attacker can inject arbitrary HTML and JS into the name of the file being uploaded, which will be executed when visiting file list or upload status by other users.\n\nThis issue was fixed in version v3.19-2832 and v3.17-2580.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41877",
-    "publishedDate": "2026-07-10T10:16:23.847",
-    "lastModifiedDate": "2026-07-10T11:16:33.700",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-41876",
-    "description": "R-SOFT DMS is vulnerable to OS Command Injection in konwertujAction() function. The document converter executes shell commands using unsanitized file paths and format parameters. This allows an authenticated attacker to execute arbitrary system commands with the privileges of the web server user.\n\nThis issue was fixed in version v3.19-2752 and v3.17-2580.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41876",
-    "publishedDate": "2026-07-10T10:16:23.687",
-    "lastModifiedDate": "2026-07-10T11:16:32.963",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cvd@cert.pl"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15378",
-    "description": "A flaw was found in the `guardrails-detectors` component. This vulnerability allows a remote attacker to perform a blind Server-Side Request Forgery (SSRF) by submitting a specially crafted XML Schema Definition (XSD) string. This can lead to unauthorized access to sensitive information, including credentials from cloud metadata services, Kubernetes API, internal MinIO, and other internal network endpoints. Additionally, it enables local file reads of critical data such as service account tokens and pod secrets.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15378",
-    "publishedDate": "2026-07-10T10:16:23.553",
-    "lastModifiedDate": "2026-07-10T10:16:23.553",
+    "id": "CVE-2026-15143",
+    "description": "A flaw was found in the file_type content detector of guardrails-detectors. This vulnerability allows a remote attacker to supply an arbitrary XML Schema Definition (XSD) string, which is processed without proper restrictions. This can lead to server-side requests to arbitrary URLs or local file reads, potentially resulting in sensitive information disclosure, such as cloud provider credentials or access to internal network services.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15143",
+    "publishedDate": "2026-07-10T16:16:25.680",
+    "lastModifiedDate": "2026-07-10T17:16:53.820",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -290,71 +60,109 @@
     ]
   },
   {
-    "id": "CVE-2026-15028",
-    "description": "A flaw was found in libarchive. This vulnerability allows a remote attacker to trigger a heap overflow by providing a specially crafted tar archive. The issue occurs during the parsing of a PAX extended header containing a malformed SUN.holesdata sparse-file attribute. Successful exploitation could lead to a denial of service, making the system unavailable, or potentially allow for arbitrary code execution, giving the attacker control over the affected system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15028",
-    "publishedDate": "2026-07-10T10:16:23.417",
-    "lastModifiedDate": "2026-07-10T12:16:32.100",
+    "id": "CVE-2026-55501",
+    "description": "9Router is an AI router & token saver. Prior to 0.4.80, the dashboard login rate limiter in src/lib/auth/loginLimiter.js derives the client identity from the attacker-controlled X-Forwarded-For HTTP header, and src/app/api/auth/login/route.js uses that spoofable value for checkLock and recordFail. A remote attacker can rotate the X-Forwarded-For value on each login attempt to receive a fresh rate-limit bucket, bypass the 5-attempt threshold and progressive lockout durations, and perform unlimited brute-force attempts against the dashboard password. This issue is fixed in version 0.4.80.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55501",
+    "publishedDate": "2026-07-10T16:16:33.493",
+    "lastModifiedDate": "2026-07-10T17:25:46.957",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.9,
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61492",
+    "description": "In JetBrains YouTrack before 2026.2.17394 stored XSS via article titles in digest emails was possible",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61492",
+    "publishedDate": "2026-07-10T15:16:51.153",
+    "lastModifiedDate": "2026-07-10T17:17:03.877",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
         "version": "CVSS 3.1",
         "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 1.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "cve@jetbrains.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61456",
+    "description": "The Grav API plugin (getgrav/grav-plugin-api) before 1.0.3 fails to sanitize SVG files uploaded through the POST /api/v1/media endpoint. The HandlesMediaUploads::processUploadedFile() method validates only the file extension and never invokes Security::sanitizeSVG(), so an authenticated attacker with the api.media.write permission can upload an SVG containing arbitrary JavaScript. The file is stored unmodified and served with Content-Type: image/svg+xml; when an administrator opens it in a browser (directly or via <object>/<iframe>), the embedded script executes in their session context, enabling cookie theft and session hijacking.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61456",
+    "publishedDate": "2026-07-10T15:16:51.023",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.1,
         "impactScore": 2.5,
-        "source": "secalert@redhat.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13710",
-    "description": "The Jeg Kit for Elementor – Powerful Addons for Elementor, Widgets & Templates for WordPress plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the Image Box widget's 'sg_body_description' parameter in versions up to, and including, 3.2.6. This is due to insufficient input sanitization and output escaping on the description attribute in the render_body() method of the Image_Box_View class — every other attribute used by the method is wrapped in esc_attr(), but the description value is concatenated directly into HTML body context. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13710",
-    "publishedDate": "2026-07-10T10:16:23.270",
-    "lastModifiedDate": "2026-07-10T11:16:32.180",
+    "id": "CVE-2026-61455",
+    "description": "Grav before 2.0.1 contains a decompression bomb vulnerability in ZipArchiver::extract() that lacks limits on uncompressed size, file count, and nesting depth. Attackers can supply a crafted ZIP archive that expands to fill available disk space, causing denial of service by exhausting storage resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61455",
+    "publishedDate": "2026-07-10T15:16:50.877",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.4,
+        "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13247",
-    "description": "The Logo Slider – Logo Carousel, Client Logo Slider & Brand Showcase for WordPress plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'lgx_tooltip_position' parameter in all versions up to, and including, 5.5 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13247",
-    "publishedDate": "2026-07-10T10:16:23.137",
-    "lastModifiedDate": "2026-07-10T10:16:23.137",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13010",
-    "description": "The JoomSport – for Sports: Team & League, Football, Hockey & more plugin for WordPress is vulnerable to time-based SQL Injection via 'event' Shortcode Attribute in all versions up to, and including, 5.7.9 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with contributor-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. The shortcode can be embedded in posts or pages by Contributor-level users, making this exploitable by any authenticated user with at least that role.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13010",
-    "publishedDate": "2026-07-10T10:16:23.020",
-    "lastModifiedDate": "2026-07-10T10:16:23.020",
+    "id": "CVE-2026-61450",
+    "description": "Grav before 2.0.2 contains a Twig sandbox bypass that allows a page author (any admin.pages user, or anyone able to write to user/pages) to exfiltrate configuration secrets. Although the sandbox replaces the 'config' variable with a redacted facade and strips Config::get/toArray from the method allowlist, the raw container remains accessible via the allow-listed grav.offsetGet('config'), which returns the real Config object. Allow-listed object-dumping filters (json_encode, print_r, yaml_encode) then serialize that object at the PHP level without invoking the sandbox method gate, exposing the full config tree including plugin secrets such as SMTP credentials, API keys, and plugin DB credentials. This is an incomplete fix for GHSA-j274-39qw-32c9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61450",
+    "publishedDate": "2026-07-10T15:16:50.740",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -365,36 +173,257 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-12918",
-    "description": "The Mail Mint – Email Marketing, Newsletter, Email Automation & WooCommerce Emails plugin for WordPress is vulnerable to generic SQL Injection via the 'recipients' parameter in all versions up to, and including, 1.24.1 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. This is a second-order SQL injection: the malicious payload is first stored unsanitized via a POST request to /mrm/v1/campaigns/ (bypassing filter_recipients() validation because an int-cast of a string like '1) OR ...' evaluates to a real numeric ID), and is then triggered by a subsequent GET request to /mrm/v1/campaigns/{id} that deserializes the recipients and passes the raw id string through array_column() into the vulnerable query.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12918",
-    "publishedDate": "2026-07-10T10:16:22.893",
-    "lastModifiedDate": "2026-07-10T10:16:22.893",
+    "id": "CVE-2026-61444",
+    "description": "PraisonAI versions before 4.6.78 contain a code injection vulnerability in deploy/api.py where the agents_file parameter is directly interpolated into an f-string without sanitization. Attackers can inject arbitrary Python code that executes when the generated server code runs via subprocess.Popen().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61444",
+    "publishedDate": "2026-07-10T15:16:50.610",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.9,
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61441",
+    "description": "PraisonAI Platform (praisonai-platform) before 0.1.9 improperly authorizes deletion of issue dependencies. The DELETE dependency route accepts either endpoint of a dependency edge and checks delete permission only against the caller-selected URL issue. A workspace member who cannot delete a dependency through an owner-created issue endpoint (which returns 403) can delete the same dependency edge by targeting a related member-owned issue endpoint, because permission is validated against the member-owned issue's owner. This allows members to bypass owner/admin authorization and remove owner-created issue dependencies.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61441",
+    "publishedDate": "2026-07-10T15:16:50.480",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-11990",
-    "description": "The KiviCare – Clinic & Patient Management System (EHR) plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 4.4.0. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to mark arbitrary pending appointments as Confirmed and forge an associated completed payment record in wp_kc_payments_appointment_mappings using an attacker-supplied payment ID, bypassing payment entirely. This exploit is achievable on a default installation because the gateway resolution logic returns all registered gateways regardless of admin-enabled status, making the manual (KCPayLater) gateway always selectable.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11990",
-    "publishedDate": "2026-07-10T10:16:21.323",
-    "lastModifiedDate": "2026-07-10T10:16:21.323",
+    "id": "CVE-2026-61437",
+    "description": "PraisonAI (pip package praisonaiagents) before 1.6.78 contains an unsafe dynamic module loading vulnerability in AgentFlow._resolve_pydantic_class (src/praisonai-agents/praisonaiagents/workflows/workflows.py). When a workflow step uses a string output_pydantic reference, the framework locates and imports a sibling tools.py from the workflow file's directory via importlib exec_module without sandboxing, ignoring the PRAISONAI_ALLOW_*_TOOLS environment variables. An attacker who controls a workflow file and its sibling tools.py can execute arbitrary Python code with the workflow runner's privileges when the workflow is executed via WorkflowManager or after load_yaml.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61437",
+    "publishedDate": "2026-07-10T15:16:50.350",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61434",
+    "description": "PraisonAI versions before 4.6.78 contain an allowlist bypass vulnerability in shell command execution that allows attackers to execute restricted commands via find's built-in -exec, -execdir, and -delete actions. Attackers can craft find commands with these built-in actions to read blocked files, delete files, or execute non-allowlisted binaries without triggering shell metacharacter filters.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61434",
+    "publishedDate": "2026-07-10T15:16:50.213",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61432",
+    "description": "PraisonAI (praisonaiagents) before 1.6.78 contains a path traversal vulnerability in the FastContext feature (praisonaiagents.context.fast). FastContextAgent.execute_tool() prepends the configured workspace_path only for relative paths and neither rejects absolute paths nor canonicalizes joined paths before enforcing workspace containment. As a result, tool arguments or model-generated function calls to grep_search, glob_search, read_file, or list_directory can supply absolute paths or '../' traversal sequences to read, search, and enumerate files outside the intended workspace directory, with file contents returned to the caller or injected into the model's tool-result context.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61432",
+    "publishedDate": "2026-07-10T15:16:50.077",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61431",
+    "description": "PraisonAI before 4.6.78 contains a path traversal vulnerability in ContextGatherer that fails to validate include paths in .praisoncontext and .praisoninclude files. Attackers can supply absolute paths or parent directory traversal sequences to read arbitrary files outside the workspace and include their contents in the generated context bundle.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61431",
+    "publishedDate": "2026-07-10T15:16:49.947",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-60091",
+    "description": "PraisonAI before 4.6.78 contains an unauthenticated server-side request forgery vulnerability in the Jobs API /api/v1/runs endpoint. The webhook_url parameter is validated at request time but re-resolved at connection time, allowing attackers to use DNS rebinding to reach internal services with a blind SSRF attack.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60091",
+    "publishedDate": "2026-07-10T15:16:49.700",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-60089",
+    "description": "PraisonAI (pip package praisonaiagents) before 1.6.78 automatically loads defaults from a project-local .praisonai/config.toml when constructing an Agent, and does not validate the defaults.output.output_file path. A repository-controlled config file can set output_file to an absolute or '..' traversal path; when the developer subsequently calls agent.start() without explicitly passing an output parameter, PraisonAI writes the agent response to that path (creating parent directories as needed), allowing an untrusted checked-out project to overwrite files outside the project root with the privileges of the user running PraisonAI.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60089",
+    "publishedDate": "2026-07-10T15:16:49.567",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-60086",
+    "description": "PraisonAI before 4.6.78 contains a prompt injection defense bypass vulnerability where the injection defense only blocks threats classified as CRITICAL, requiring three or more detector families to match simultaneously. Attackers can craft single or double-vector prompt injections that are classified as HIGH threat level and pass through unblocked to reach the model.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60086",
+    "publishedDate": "2026-07-10T15:16:49.417",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -405,36 +434,165 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-9838",
-    "description": "The ICS Calendar plugin for WordPress is vulnerable to Reflected Cross-Site Scripting via the 'htmltagtitle' parameter in all versions up to, and including, 12.0.9 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that execute if they can successfully trick a user into performing an action such as clicking on a link. The vulnerability is reachable via the unauthenticated wp_ajax_nopriv_r34ics_ajax AJAX action, which accepts attacker-controlled js_args values merged over stored shortcode configuration without nonce verification, allowing the htmltagtitle key to bypass the normal shortcode allowlist check.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9838",
-    "publishedDate": "2026-07-10T09:16:54.110",
-    "lastModifiedDate": "2026-07-10T09:16:54.110",
+    "id": "CVE-2026-59796",
+    "description": "In JetBrains TeamCity before 2026.1.2 pipeline modification was possible due to improper permission checks",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59796",
+    "publishedDate": "2026-07-10T15:16:48.683",
+    "lastModifiedDate": "2026-07-10T17:17:03.553",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 8.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "impactScore": 5.2,
+        "source": "cve@jetbrains.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6802",
-    "description": "The Easy Upload Files During Checkout plugin for WordPress is vulnerable to unauthorized access in all versions up to, and including, 3.0.1. This is due to missing authorization checks in the ufdc_custom_init() function, which processes the 'eufdc-delete' parameter without any nonce verification, capability check, or attachment ownership validation. This makes it possible for unauthenticated attackers to permanently delete arbitrary media library attachments from the WordPress site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6802",
-    "publishedDate": "2026-07-10T09:16:53.973",
-    "lastModifiedDate": "2026-07-10T11:16:36.470",
+    "id": "CVE-2026-59795",
+    "description": "In JetBrains TeamCity before 2026.1.2 stored XSS via unauthenticated agent registration was possible",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59795",
+    "publishedDate": "2026-07-10T15:16:48.573",
+    "lastModifiedDate": "2026-07-10T17:17:03.453",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "cve@jetbrains.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59794",
+    "description": "In JetBrains TeamCity before 2026.1.2 stored XSS on the cloud profile page was possible via agent-reported data",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59794",
+    "publishedDate": "2026-07-10T15:16:48.463",
+    "lastModifiedDate": "2026-07-10T17:17:03.307",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.2,
+        "source": "cve@jetbrains.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59793",
+    "description": "In JetBrains TeamCity before 2026.1.2 arbitrary file access was possible via the Perforce VCS integration",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59793",
+    "publishedDate": "2026-07-10T15:16:48.350",
+    "lastModifiedDate": "2026-07-10T17:17:03.160",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "cve@jetbrains.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59792",
+    "description": "In JetBrains IntelliJ IDEA before 2026.1.4, \n2026.2 code execution via path traversal in project workspace ID handling was possible",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59792",
+    "publishedDate": "2026-07-10T15:16:48.240",
+    "lastModifiedDate": "2026-07-10T17:17:03.010",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "cve@jetbrains.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59791",
+    "description": "In JetBrains YouTrack before 2026.2.17012 cSS injection via Mermaid diagram rendering was possible",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59791",
+    "publishedDate": "2026-07-10T15:16:48.110",
+    "lastModifiedDate": "2026-07-10T17:17:02.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "cve@jetbrains.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-58661",
+    "description": "n8n before 2.28.0 (and before 1.123.58 on the 1.x branch) contains a disk space exhaustion vulnerability in the data-table file upload endpoint. The per-request quota check does not account for files already written to the shared temporary directory, allowing an authenticated user to repeatedly upload files that accumulate on disk until the periodic cleanup runs, potentially exhausting available disk space on the host.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58661",
+    "publishedDate": "2026-07-10T15:16:47.987",
+    "lastModifiedDate": "2026-07-10T17:49:57.737",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57994",
+    "description": "phpMyFAQ before 4.1.5 applies inconsistent active=yes and publication-date filtering across its public FAQ API endpoints, allowing unauthenticated attackers to retrieve inactive (draft or review-only) FAQ content. Specifically, GET /api/v3.1/faq/{categoryId}/{faqId} returns the inactive FAQ title and full answer, while GET /api/v3.1/faqs/tags/{tagId} and GET /api/v4.0/faqs/tags/{tagId} return the inactive FAQ title and answer preview, disclosing non-public content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57994",
+    "publishedDate": "2026-07-10T15:16:47.850",
+    "lastModifiedDate": "2026-07-10T17:41:47.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -442,50 +600,19 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6440",
-    "description": "The GoodMeet – Google Meet Integration for Webinar, Meeting & Video Conference plugin for WordPress is vulnerable to Cross-Site Request Forgery in versions up to and including 1.1.8. This is due to a missing nonce verification in the reset_credential() function, which handles the wp_ajax_goodmeet_reset_google_meet_credential AJAX action. While the function does verify the user's capability (manage_options), it does not validate a nonce, making it susceptible to CSRF attacks. This makes it possible for unauthenticated attackers to trick a site administrator into clicking a malicious link that will reset (delete) the plugin's stored Google Meet API credentials (goodmeet_google_credentials) and OAuth tokens (goodmeet_google_token), effectively disabling the Google Meet integration on the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6440",
-    "publishedDate": "2026-07-10T09:16:53.820",
-    "lastModifiedDate": "2026-07-10T09:16:53.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 4.3,
-        "version": "CVSS 3.1",
+        "score": 6.9,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-3907",
-    "description": "The Hostel plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'wphostel-book' shortcode in all versions up to and including 1.1.7. This is due to insufficient input sanitization and output escaping on user-supplied shortcode attributes. Specifically, the second shortcode attribute (used as button text) is passed to the `$text` variable without sanitization at line 79 and then output directly into an HTML `value` attribute at line 91 without `esc_attr()` or any other escaping. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-3907",
-    "publishedDate": "2026-07-10T09:16:53.677",
-    "lastModifiedDate": "2026-07-10T09:16:53.677",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   }
