@@ -1,140 +1,370 @@
 [
   {
-    "id": "CVE-2026-55616",
-    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2026-49757. Reason: This candidate is a duplicate of CVE-2026-49757. Notes: All CVE users should reference CVE-2026-49757 instead of this candidate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55616",
-    "publishedDate": "2026-07-10T00:16:33.993",
-    "lastModifiedDate": "2026-07-10T00:16:33.993",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-55615",
-    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.65.5, Neo4jChatAgent passes LLM-generated Cypher queries straight to the Neo4j driver with no validation, no statement-type allowlist, and no opt-out gate. The query text is influenceable by prompt injection (direct user input or indirect content the agent reads back via RAG), so an attacker who can influence the prompt can read or destroy all graph data and, when APOC or dbms.security procedures are enabled on the server, achieve OS-command and filesystem access. This is the same defect class and threat model as the SQLChatAgent prompt-to-SQL-to-RCE issue fixed in version 0.63.0 (CVE-2026-25879); that fix did not extend to the neo4j module. Version 0.65.5 contains a fix for the neo4j module.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55615",
-    "publishedDate": "2026-07-10T00:16:33.867",
-    "lastModifiedDate": "2026-07-10T00:16:33.867",
+    "id": "CVE-2026-21057",
+    "description": "Improper input validation in Samsung Pass prior to version 5.2.10.3 allows local privileged attackers to write out-of-bounds memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21057",
+    "publishedDate": "2026-07-10T05:16:36.453",
+    "lastModifiedDate": "2026-07-10T05:16:36.453",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.2,
+        "score": 6.8,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:L/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "mobile.security@samsung.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54771",
-    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.65.3, a Langroid application exposing a chat interface to untrusted users may allow direct tool invocation via raw JSON payloads, even when tools are registered with `use=False, handle=True`. Version 0.65.3 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54771",
-    "publishedDate": "2026-07-10T00:16:33.737",
-    "lastModifiedDate": "2026-07-10T00:16:33.737",
+    "id": "CVE-2026-21056",
+    "description": "Improper authorization in Samsung Health prior to version 7.00.0.107 allows local attackers to access connected device information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21056",
+    "publishedDate": "2026-07-10T05:16:36.330",
+    "lastModifiedDate": "2026-07-10T05:16:36.330",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54769",
-    "description": "Langroid is a framework for building large-language-model-powered applications. Versions prior to 0.65.2 are vulnerable to a critical Sandbox Escape leading to Remote Code Execution (RCE) in its `TableChatAgent` and `VectorStore` capabilities. When these agents evaluate LLM-generated tool messages with `full_eval=True`, they attempt to sandbox the execution by explicitly setting `locals` to an empty dictionary `{}` inside Python's `eval()` function. However, this relies on an incomplete understanding of Python's execution model. Because `__builtins__` is not explicitly scrubbed from the `globals` dictionary mapping, Python implicitly injects all built-ins during execution, granting full access to functions like `__import__('os').system()`. Since `TableChatAgent.pandas_eval()` executes external LLM outputs natively, this bypass permits any attacker providing prompt payload to achieve unauthenticated RCE on the host system. Version 0.65.2 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54769",
-    "publishedDate": "2026-07-10T00:16:33.603",
-    "lastModifiedDate": "2026-07-10T00:16:33.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54760",
-    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.65.1, the `SQLChatAgent` SQL-injection mitigation, with default `allow_dangerous_operations=False`, combines a raw-text regex blocklist (`_DANGEROUS_SQL_PATTERNS`) with a `sqlglot` SELECT-only statement allowlist. The blocklist entries that target callable functions require the function name to be immediately followed by `\\s*\\(`. PostgreSQL accepts the same call with the name separated from `(` by a quoted identifier, an inline comment, or schema qualification. These forms evade the regex, still parse as `SELECT`, and execute the same PostgreSQL function. This restores the `pg_read_file` server-side file-read primitive that the prior CVE-2026-25879 / GHSA-pmch-g965-grmr fix was meant to block: the parent advisory fixed a missing `pg_read_file` blocklist entry, while this report shows that the added regex is bypassable. Version 0.65.1 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54760",
-    "publishedDate": "2026-07-10T00:16:33.477",
-    "lastModifiedDate": "2026-07-10T00:16:33.477",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
+        "score": 4.8,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "mobile.security@samsung.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-50181",
-    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.64.0, Langroid's `ReadFileTool` and `WriteFileTool` appear to treat `curr_dir` as the intended working-directory boundary for file operations. However, the tools only change the process working directory to `curr_dir` and then operate on the user-supplied `file_path` without resolving and enforcing that the final path remains inside `curr_dir`. As a result, a tool caller can supply path traversal sequences such as `../secret.txt` to read files outside the configured current directory, or `../written_by_tool.txt` to write files outside that directory. This can impact applications that expose Langroid file tools to an LLM agent, user-controlled tool call, or delegated coding/documentation agent while relying on `curr_dir` to restrict file access to a project/workspace directory. Version 0.64.0 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50181",
-    "publishedDate": "2026-07-10T00:16:33.340",
-    "lastModifiedDate": "2026-07-10T00:16:33.340",
+    "id": "CVE-2026-21055",
+    "description": "Improper export of android application components in Bixby prior to version 4.0.70.8 allows local attackers to execute arbitrary commands with Bixby privilege.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21055",
+    "publishedDate": "2026-07-10T05:16:36.217",
+    "lastModifiedDate": "2026-07-10T05:16:36.217",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50180",
-    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.64.0, `SQLChatAgent` in `langroid` ships a `_validate_query` defense-in-depth layer whose `_DANGEROUS_SQL_PATTERNS` regex blocklist enumerates dangerous SQL primitives by specific function name. The list misses the canonical PostgreSQL filesystem-disclosure family `pg_read_file()`, `pg_stat_file()`, `pg_ls_logdir()`, `pg_ls_waldir()`, `pg_current_logfile()` (and similar `SELECT`-shaped functions in the same family). It also leaves SQL Server `OPENDATASOURCE` and SQLite `ATTACH '<file>' AS x` (DATABASE keyword omitted) unblocked. An attacker able to shape the LLM's generated SQL (directly via prompt input or transitively via prompt-injection in data the LLM ingests) can read arbitrary files from the PostgreSQL host through ordinary `SELECT` queries, even with the agent's strict default configuration (`allow_dangerous_operations=False`, `allowed_statement_types=['SELECT']`). The payloads survive the statement-type allowlist (each is a `SELECT`) and pass through the regex blocklist (none of the function names match), then reach the live SQLAlchemy engine via `SQLChatAgent.run_query`. Version 0.64.0 contains a patch for the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50180",
-    "publishedDate": "2026-07-10T00:16:33.197",
-    "lastModifiedDate": "2026-07-10T00:16:33.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
+        "score": 8.5,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "mobile.security@samsung.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15317",
-    "description": "A security flaw has been discovered in Sipeed PicoClaw up to 0.2.9. Affected by this vulnerability is the function WebFetchTool.Execute of the file pkg/tools/integration/web.go of the component Guarded Web Fetch Flow. The manipulation results in server-side request forgery. The attack can be executed remotely. The exploit has been released to the public and may be used for attacks. The reported GitHub issue was closed automatically due to inactivity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15317",
-    "publishedDate": "2026-07-10T00:16:33.027",
-    "lastModifiedDate": "2026-07-10T00:16:33.027",
+    "id": "CVE-2026-21054",
+    "description": "Improper export of android application components in InputSharing prior to version 2.7.01.4 allows local attackers to access sharing data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21054",
+    "publishedDate": "2026-07-10T05:16:36.100",
+    "lastModifiedDate": "2026-07-10T05:16:36.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21053",
+    "description": "Improper input validation in Samsung Email prior to version 6.2.13.1 allows local attackers to create arbitrary files within the application sandbox.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21053",
+    "publishedDate": "2026-07-10T05:16:35.987",
+    "lastModifiedDate": "2026-07-10T05:16:35.987",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21052",
+    "description": "Path traversal in SemClipboardService prior to SMR Jul-2026 Release 1 allows local privileged attackers to access files with system privilege.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21052",
+    "publishedDate": "2026-07-10T05:16:35.877",
+    "lastModifiedDate": "2026-07-10T05:16:35.877",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21051",
+    "description": "Incorrect default permissions in WLAN security prior to SMR Jul-2026 Release 1 allows local attackers to configure TencentWifiSecurity settings.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21051",
+    "publishedDate": "2026-07-10T05:16:35.760",
+    "lastModifiedDate": "2026-07-10T05:16:35.760",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21050",
+    "description": "Improper access control in SmartThingsKit prior to SMR Jul-2026 Release 1 allows local attackers to access sensitive information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21050",
+    "publishedDate": "2026-07-10T05:16:35.650",
+    "lastModifiedDate": "2026-07-10T05:16:35.650",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21049",
+    "description": "Out-of-bounds write in libpadm.so library prior to SMR Jul-2026 Release 1 allows local attackers to execute arbitrary code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21049",
+    "publishedDate": "2026-07-10T05:16:35.533",
+    "lastModifiedDate": "2026-07-10T05:16:35.533",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21048",
+    "description": "Out-of-bounds write in parsing DNG format in libimagecodec.media.quram.so prior to SMR Jul-2026 Release 1 allows remote attackers to write out-of-bounds memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21048",
+    "publishedDate": "2026-07-10T05:16:35.410",
+    "lastModifiedDate": "2026-07-10T05:16:35.410",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21046",
+    "description": "Time-of-check time-of-use race condition in fabricKeymaster trustlet prior to SMR Jul-2026 Release 1 allows local privileged attackers to execute arbitrary code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21046",
+    "publishedDate": "2026-07-10T05:16:35.290",
+    "lastModifiedDate": "2026-07-10T05:16:35.290",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21045",
+    "description": "Out-of-bounds write in parsing TIFF format in libimagecodec.media.quram.so prior to SMR Jul-2026 Release 1 allows remote attackers to write out-of-bounds memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21045",
+    "publishedDate": "2026-07-10T05:16:35.177",
+    "lastModifiedDate": "2026-07-10T05:16:35.177",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21044",
+    "description": "Improper authorization in KnoxGuardManager prior to SMR Jul-2026 Release 1 allows local attackers to bypass the persistence configuration of the application.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21044",
+    "publishedDate": "2026-07-10T05:16:35.063",
+    "lastModifiedDate": "2026-07-10T05:16:35.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21043",
+    "description": "Path traversal in Wallpaper service prior to SMR Jul-2026 Release 1 allows local privileged attackers to access files with system server privilege.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21043",
+    "publishedDate": "2026-07-10T05:16:34.930",
+    "lastModifiedDate": "2026-07-10T05:16:34.930",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21042",
+    "description": "Out-of-bounds write in libsavsac.so prior to SMR Jul-2026 Release 1 allows local attackers to execute arbitrary code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21042",
+    "publishedDate": "2026-07-10T05:16:34.797",
+    "lastModifiedDate": "2026-07-10T05:16:34.797",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21041",
+    "description": "Improper access control in SamsungSEAgentService prior to SMR Jul-2026 Release 1 allows local attackers to access sensitive information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21041",
+    "publishedDate": "2026-07-10T05:16:34.663",
+    "lastModifiedDate": "2026-07-10T05:16:34.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21040",
+    "description": "Improper access control in IAFDService prior to SMR Jul-2026 Release 1 allows local privileged attackers to use the privileged APIs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21040",
+    "publishedDate": "2026-07-10T05:16:34.530",
+    "lastModifiedDate": "2026-07-10T05:16:34.530",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21039",
+    "description": "Improper access control in Settings prior to SMR Jul-2026 Release 1 allows local attackers to configure Theft protection settings.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21039",
+    "publishedDate": "2026-07-10T05:16:34.387",
+    "lastModifiedDate": "2026-07-10T05:16:34.387",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "mobile.security@samsung.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15332",
+    "description": "A security flaw has been discovered in zhayujie CowAgent up to 2.1.0. The impacted element is an unknown function of the file channel/channel.py of the component Message Endpoint. The manipulation results in missing authorization. The attack may be launched remotely. The exploit has been released to the public and may be used for attacks. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15332",
+    "publishedDate": "2026-07-10T05:16:34.200",
+    "lastModifiedDate": "2026-07-10T05:16:34.200",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -142,7 +372,7 @@
         "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
         "impactScore": 3.4,
         "source": "cna@vuldb.com"
@@ -151,7 +381,7 @@
         "score": 2.1,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -159,28 +389,28 @@
     ]
   },
   {
-    "id": "CVE-2026-15311",
-    "description": "A vulnerability was identified in NousResearch hermes-agent up to 2026.5.29.2. Affected by this issue is the function MatrixAdapter._markdown_to_html of the file gateway/platforms/matrix.py of the component Matrix Adapter. Such manipulation leads to cross site scripting. The attack can be executed remotely. The exploit is publicly available and might be used. The pull request to fix this issue awaits acceptance.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15311",
-    "publishedDate": "2026-07-10T00:16:32.853",
-    "lastModifiedDate": "2026-07-10T00:16:32.853",
+    "id": "CVE-2026-15331",
+    "description": "A vulnerability was identified in zhayujie CowAgent up to 2.1.0. The affected element is the function _add_url/_add_package of the file agent/skills/service.py of the component Skill Installation Handler. The manipulation of the argument Name leads to path traversal. The attack may be initiated remotely. Upgrading to version 2.1.2 is sufficient to fix this issue. The identifier of the patch is e85290cddcbb5ffc9c235927f4c92e5b4c3ec264. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15331",
+    "publishedDate": "2026-07-10T05:16:34.010",
+    "lastModifiedDate": "2026-07-10T05:16:34.010",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.5,
+        "score": 5.4,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 2,
+        "score": 5.3,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -188,291 +418,40 @@
     ]
   },
   {
-    "id": "CVE-2026-12598",
-    "description": "The LoginPress Pro plugin for WordPress is vulnerable to authentication bypass in versions up to and including 6.2.3 via the Spotify Social Login addon. This is due to the loginpress_on_spotify_login() function trusting the unverified 'email' field returned by Spotify's /v1/me endpoint and using it directly with get_user_by('email', $profile['email']) to identify and log in an existing WordPress account, without confirming that the Spotify user actually owns the email address (Spotify documents that the profile email is unverified) and without requiring the user to prove ownership of the matching WordPress account. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including Administrators, by registering a Spotify account using the targeted user's email address and authenticating via the Spotify provider.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12598",
-    "publishedDate": "2026-07-10T00:16:32.727",
-    "lastModifiedDate": "2026-07-10T00:16:32.727",
+    "id": "CVE-2026-15330",
+    "description": "A vulnerability was determined in zhayujie CowAgent up to 2.1.1. Impacted is the function _build_image_content/_download_to_data_url of the file agent/tools/vision/vision.py of the component Vision Tool. Executing a manipulation of the argument image can lead to server-side request forgery. The attack can be launched remotely. The exploit has been publicly disclosed and may be utilized. Upgrading to version 2.1.2 is recommended to address this issue. This patch is called e85290cddcbb5ffc9c235927f4c92e5b4c3ec264. Upgrading the affected component is advised.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15330",
+    "publishedDate": "2026-07-10T05:16:33.820",
+    "lastModifiedDate": "2026-07-10T05:16:33.820",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
+        "score": 7.3,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12597",
-    "description": "The LoginPress Pro plugin for WordPress is vulnerable to Authentication Bypass via the GitHub OAuth callback in versions up to, and including, 6.2.3. The vulnerability exists in the loginpress_on_github_login() function, which blindly trusts the first element (profile[0]['email']) of the array returned by GitHub's /user/emails endpoint as an account-binding identifier without verifying that the email carries a verified === true status. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including administrators, by adding an unverified email address matching a local account to their GitHub profile and triggering the OAuth callback via a crafted code parameter — causing the plugin to call get_user_by('email', ...) and establish an authenticated session for the matched account. Practical exploitation is conditional on GitHub returning the attacker-added unverified email at index 0 of the /user/emails response, as GitHub typically prioritizes the primary verified address first; nonetheless, the absence of any email verification check in the plugin constitutes a fundamental authentication bypass flaw.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12597",
-    "publishedDate": "2026-07-10T00:16:32.603",
-    "lastModifiedDate": "2026-07-10T00:16:32.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12595",
-    "description": "The LoginPress Pro plugin for WordPress is vulnerable to Authentication Bypass via Unverified OAuth Email in all versions up to and including 6.2.3. The vulnerability exists in the loginpress_on_discord_login() Discord OAuth callback handler, which accepts the email field returned by Discord's /users/@me endpoint without ever checking that the profile's verified flag is true, then directly maps that email to a local WordPress account via get_user_by('email', $profile['email']) and issues an authenticated session cookie via wp_set_auth_cookie(). This makes it possible for unauthenticated attackers to take over any existing WordPress account — including administrator accounts — by registering a Discord account configured with an unverified email address that matches the target user's registered WordPress email and completing the standard Discord OAuth flow.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12595",
-    "publishedDate": "2026-07-10T00:16:32.120",
-    "lastModifiedDate": "2026-07-10T00:16:32.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59858",
-    "description": "Vim is an open source, command line text editor. Prior to 9.2.0735, the C omni-completion script in runtime/autoload/ccomplete.vim interpolates the typeref: or typename: extension field of a tags entry, without escaping, into a :vimgrep pattern that is run through :execute. Because :vimgrep honors the bar as a command separator, a crafted tag field can close the search pattern and append an arbitrary Ex command; opening a hostile .c file whose project tags file contains such an entry and invoking C omni-completion runs that command as the editing user. This issue is fixed in version 9.2.0735.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59858",
-    "publishedDate": "2026-07-09T23:17:06.740",
-    "lastModifiedDate": "2026-07-09T23:17:06.740",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59857",
-    "description": "Vim is an open source, command line text editor. Prior to 9.2.0725, the single-byte branch of spell_soundfold_sal() in src/spell.c translates a word through a spell file's SAL sound-folding rules into a caller-owned result buffer, but its result writes are guarded with reslen < MAXWLEN, allowing reslen to reach MAXWLEN before res[reslen] = NUL writes one byte past the end of the MAXWLEN-element stack buffer. A boundary-length word passed to soundfold(), or reached via sound-based spell suggestion while a SAL-based spell language is active under a non-multibyte 8-bit encoding, can corrupt the eval_soundfold() stack frame and crash the editor. This issue is fixed in version 9.2.0725.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59857",
-    "publishedDate": "2026-07-09T23:17:06.580",
-    "lastModifiedDate": "2026-07-09T23:17:06.580",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59856",
-    "description": "Vim is an open source, command line text editor. Prior to 9.2.0736, the PHP omni-completion script in runtime/autoload/phpcomplete.vim interpolates a class or trait name, taken from the contents of the edited buffer, into a search() pattern that is run via win_execute() without escaping. A name containing a single quote can terminate the search() string argument early, and because the bar is honored as an Ex command separator, the remainder of the name is run as Ex commands; via the :! command this allows arbitrary operating-system command execution when a victim opens a crafted PHP file and invokes omni-completion. This issue is fixed in version 9.2.0736.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59856",
-    "publishedDate": "2026-07-09T23:17:06.420",
-    "lastModifiedDate": "2026-07-09T23:17:06.420",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59855",
-    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, Asset.render in app/src/asset/index.ts interpolates the unsanitized this.path value into HTML assigned to innerHTML, allowing a crafted asset link containing a double quote to break out of the src attribute, inject an event handler, and execute JavaScript that can run OS commands in the Electron renderer. This issue is fixed in versions 3.7.1-alpha.2 and 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59855",
-    "publishedDate": "2026-07-09T23:17:06.293",
-    "lastModifiedDate": "2026-07-09T23:17:06.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59854",
-    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, POST /api/file/globalCopyFiles accepts attacker-supplied absolute source paths and relies on util.IsSensitivePath in kernel/util/path.go, whose denylist misses common home-directory credential files such as .git-credentials, .netrc, .pgpass, .kube/config, .docker/config.json, and .gnupg, allowing an authenticated administrator or API-token user to copy those files into the workspace and exfiltrate them through the file API. This issue is fixed in versions 3.7.1-alpha.2 and 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59854",
-    "publishedDate": "2026-07-09T23:17:06.163",
-    "lastModifiedDate": "2026-07-09T23:17:06.163",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59853",
-    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, the /api/storage/getCriteria endpoint returns saved search criteria from data/storage/criteria.json without the publish-access filtering used by sibling storage endpoints, allowing a publish-mode Reader to read private document paths, notebook, document, and block IDs, and search and replace keywords for unpublished documents. This issue is fixed in versions 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59853",
-    "publishedDate": "2026-07-09T23:17:06.030",
-    "lastModifiedDate": "2026-07-09T23:17:06.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59834",
-    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, the block search endpoint POST /api/search/fullTextSearchBlock concatenates attacker-controlled paths values into SQL predicates used by non-SQL search modes, allowing an unauthenticated publish visitor to inject a UNION SELECT and return rows from hidden documents by projecting an allowed visible box and path. This issue is fixed in versions 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59834",
-    "publishedDate": "2026-07-09T23:17:05.900",
-    "lastModifiedDate": "2026-07-09T23:17:05.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59833",
-    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, SiYuan renders note and package content to HTML through the Lute engine with sanitization enabled, but Lute's dangerous javascript scheme block does not check form action or SVG xlink:href attributes, allowing stored cross-site scripting in document export-preview and Bazaar package README render paths that can execute OS commands in the Electron desktop renderer. This issue is fixed in versions 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59833",
-    "publishedDate": "2026-07-09T23:17:05.773",
-    "lastModifiedDate": "2026-07-09T23:17:05.773",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
       {
-        "score": 8.6,
+        "score": 5.5,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-59832",
-    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, the /snippets/*filepath route handler serveSnippets in kernel/server/serve.go joins a single-decoded request path with the snippets directory without subpath containment or sensitive-path checks, allowing an authenticated request such as /snippets/%2e%2e/%2e%2e/conf/conf.json to read workspace secrets and the document database. This issue is fixed in versions 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59832",
-    "publishedDate": "2026-07-09T23:17:05.627",
-    "lastModifiedDate": "2026-07-09T23:17:05.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59831",
-    "description": "GitHub CLI (gh) is GitHub’s official command line tool. From 2.10.0 through 2.95.0, connecting to a malicious Codespace with gh codespace jupyter can allow command execution because the command opens a JupyterLab URL supplied by a process inside the Codespace without validating that it is a loopback HTTP or HTTPS address, allowing a crafted vscode:// or vscode-insiders:// URL to be handed to VS Code. This issue is fixed in version 2.96.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59831",
-    "publishedDate": "2026-07-09T23:17:05.483",
-    "lastModifiedDate": "2026-07-09T23:17:05.483",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1.3,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-57501",
-    "description": "Zen is a firefox-based browser. Prior to 1.21.5b, Zen's glance and split-view context-menu actions, Open link in glance and Split link in new tab, load a page-controlled link URL with the System principal instead of the originating page's principal, allowing a malicious web page to place a link to a file URL that can load with System privileges when opened through either context-menu item and bypass the content-to-file security check that blocks an ordinary click. This issue is fixed in version 1.21.5b.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57501",
-    "publishedDate": "2026-07-09T23:17:05.353",
-    "lastModifiedDate": "2026-07-09T23:17:05.353",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 0,
-        "version": "CVSS 3.1",
-        "severity": "NONE",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 0,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44342",
-    "description": "New API is a large language mode (LLM) gateway and artificial intelligence (AI) asset management system. Prior to 0.12.0-alpha.1, the email and WeChat account binding endpoints GET /api/oauth/email/bind and GET /api/oauth/wechat/bind used GET requests for state-changing account operations, allowing an attacker to trigger a logged-in user's browser to bind an attacker-controlled email address or OAuth identity in deployments where session cookies could be sent on cross-site navigations. This issue is fixed in version 0.12.0-alpha.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44342",
-    "publishedDate": "2026-07-09T23:17:05.217",
-    "lastModifiedDate": "2026-07-09T23:17:05.217",
+    "id": "CVE-2026-15302",
+    "description": "The ARMember plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 4.0.27 via the 'X-FILENAME' HTTP header. This makes it possible for unauthenticated attackers to upload and overwrite certain files (e.g., CSS) to directories outside the 'wp-content/uploads/armember' directory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15302",
+    "publishedDate": "2026-07-10T05:16:33.677",
+    "lastModifiedDate": "2026-07-10T05:16:33.677",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -480,30 +459,70 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-33655",
-    "description": "New API is a large language mode (LLM) gateway and artificial intelligence (AI) asset management system. Prior to 0.12.0-alpha.1, the default SSRF protection configuration did not apply IP filtering to hostnames; with ApplyIPFilterForDomain disabled by default, URL validation checked domain allow/block rules but did not resolve a hostname and validate the resolved IP address, allowing authenticated users to configure Webhook, Bark, or Gotify notification URLs that point at an internal or metadata IP address. This issue is fixed in version 0.12.0-alpha.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33655",
-    "publishedDate": "2026-07-09T23:17:04.763",
-    "lastModifiedDate": "2026-07-09T23:17:04.763",
+    "id": "CVE-2026-15301",
+    "description": "The BuddyHolis TableSearch plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the ‘placeholder’ parameter in all versions up to, and including, 1.1.0 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15301",
+    "publishedDate": "2026-07-10T05:16:33.537",
+    "lastModifiedDate": "2026-07-10T05:16:33.537",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.7,
+        "score": 6.4,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
         "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15300",
+    "description": "The GEO my WP plugin for WordPress was vulnerable to SQL Injection via the 'distance', 'lat', and 'lng' parameters in versions up to, and including, 4.5.4. The values were read from $_SERVER['QUERY_STRING'] via parse_str() (bypassing wp_magic_quotes, which does not cover $_SERVER), then passed through bare esc_sql() before being interpolated into unquoted numeric positions in the proximity-search query (HAVING/SELECT clause distance math, BETWEEN bounding-box pre-filter) built by gmw_locations_query() in plugins/posts-locator/includes/class-gmw-wp-query.php. Because esc_sql() only escapes string delimiters and these positions are numeric, payloads such as `1 OR SLEEP(3)` survived sanitization. Fixed in 4.5.5 by adding an upstream is_numeric() guard that short-circuits the WHERE clause to `AND 1 = 0` when either coordinate is non-numeric, and by replacing the three esc_sql() calls with (float) casts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15300",
+    "publishedDate": "2026-07-10T05:16:33.393",
+    "lastModifiedDate": "2026-07-10T05:16:33.393",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15299",
+    "description": "The Animation Addons for Elementor plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'weather_style' and 'move_direction' parameters of the Weather widget in all versions up to, and including, 2.6.3. This is due to insufficient output escaping in the Weather widget's render() function at widgets/weather.php:1246, where both settings values are placed into an HTML class attribute without esc_attr(). Elementor does not server-side validate widget SELECT control values against allowed options on save, so an authenticated attacker with Contributor-level access or above can submit a crafted save_builder AJAX request storing arbitrary values in the _elementor_data post meta. The stored payload renders unescaped on every frontend visit to the affected page (the Weather widget requires an OpenWeatherMap API key to reach the vulnerable output, which is the normal operational state for sites using this widget).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15299",
+    "publishedDate": "2026-07-10T05:16:33.257",
+    "lastModifiedDate": "2026-07-10T05:16:33.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
       }
     ]
   }
