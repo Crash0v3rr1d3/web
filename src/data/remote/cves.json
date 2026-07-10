@@ -1,27 +1,157 @@
 [
   {
-    "id": "CVE-2026-15270",
-    "description": "A weakness has been identified in D-link DIR-823G 1.0.2B05_20181207. Affected by this vulnerability is an unknown functionality of the file /etc/boa/boa.conf of the component Web Interface. Executing a manipulation can lead to least privilege violation. The attack can be launched remotely. The attack requires a high level of complexity. The exploitation appears to be difficult. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15270",
-    "publishedDate": "2026-07-09T20:16:28.887",
-    "lastModifiedDate": "2026-07-09T20:16:28.887",
+    "id": "CVE-2026-55616",
+    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2026-49757. Reason: This candidate is a duplicate of CVE-2026-49757. Notes: All CVE users should reference CVE-2026-49757 instead of this candidate.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55616",
+    "publishedDate": "2026-07-10T00:16:33.993",
+    "lastModifiedDate": "2026-07-10T00:16:33.993",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-55615",
+    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.65.5, Neo4jChatAgent passes LLM-generated Cypher queries straight to the Neo4j driver with no validation, no statement-type allowlist, and no opt-out gate. The query text is influenceable by prompt injection (direct user input or indirect content the agent reads back via RAG), so an attacker who can influence the prompt can read or destroy all graph data and, when APOC or dbms.security procedures are enabled on the server, achieve OS-command and filesystem access. This is the same defect class and threat model as the SQLChatAgent prompt-to-SQL-to-RCE issue fixed in version 0.63.0 (CVE-2026-25879); that fix did not extend to the neo4j module. Version 0.65.5 contains a fix for the neo4j module.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55615",
+    "publishedDate": "2026-07-10T00:16:33.867",
+    "lastModifiedDate": "2026-07-10T00:16:33.867",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54771",
+    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.65.3, a Langroid application exposing a chat interface to untrusted users may allow direct tool invocation via raw JSON payloads, even when tools are registered with `use=False, handle=True`. Version 0.65.3 fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54771",
+    "publishedDate": "2026-07-10T00:16:33.737",
+    "lastModifiedDate": "2026-07-10T00:16:33.737",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54769",
+    "description": "Langroid is a framework for building large-language-model-powered applications. Versions prior to 0.65.2 are vulnerable to a critical Sandbox Escape leading to Remote Code Execution (RCE) in its `TableChatAgent` and `VectorStore` capabilities. When these agents evaluate LLM-generated tool messages with `full_eval=True`, they attempt to sandbox the execution by explicitly setting `locals` to an empty dictionary `{}` inside Python's `eval()` function. However, this relies on an incomplete understanding of Python's execution model. Because `__builtins__` is not explicitly scrubbed from the `globals` dictionary mapping, Python implicitly injects all built-ins during execution, granting full access to functions like `__import__('os').system()`. Since `TableChatAgent.pandas_eval()` executes external LLM outputs natively, this bypass permits any attacker providing prompt payload to achieve unauthenticated RCE on the host system. Version 0.65.2 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54769",
+    "publishedDate": "2026-07-10T00:16:33.603",
+    "lastModifiedDate": "2026-07-10T00:16:33.603",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54760",
+    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.65.1, the `SQLChatAgent` SQL-injection mitigation, with default `allow_dangerous_operations=False`, combines a raw-text regex blocklist (`_DANGEROUS_SQL_PATTERNS`) with a `sqlglot` SELECT-only statement allowlist. The blocklist entries that target callable functions require the function name to be immediately followed by `\\s*\\(`. PostgreSQL accepts the same call with the name separated from `(` by a quoted identifier, an inline comment, or schema qualification. These forms evade the regex, still parse as `SELECT`, and execute the same PostgreSQL function. This restores the `pg_read_file` server-side file-read primitive that the prior CVE-2026-25879 / GHSA-pmch-g965-grmr fix was meant to block: the parent advisory fixed a missing `pg_read_file` blocklist entry, while this report shows that the added regex is bypassable. Version 0.65.1 fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54760",
+    "publishedDate": "2026-07-10T00:16:33.477",
+    "lastModifiedDate": "2026-07-10T00:16:33.477",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50181",
+    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.64.0, Langroid's `ReadFileTool` and `WriteFileTool` appear to treat `curr_dir` as the intended working-directory boundary for file operations. However, the tools only change the process working directory to `curr_dir` and then operate on the user-supplied `file_path` without resolving and enforcing that the final path remains inside `curr_dir`. As a result, a tool caller can supply path traversal sequences such as `../secret.txt` to read files outside the configured current directory, or `../written_by_tool.txt` to write files outside that directory. This can impact applications that expose Langroid file tools to an LLM agent, user-controlled tool call, or delegated coding/documentation agent while relying on `curr_dir` to restrict file access to a project/workspace directory. Version 0.64.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50181",
+    "publishedDate": "2026-07-10T00:16:33.340",
+    "lastModifiedDate": "2026-07-10T00:16:33.340",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50180",
+    "description": "Langroid is a framework for building large-language-model-powered applications. Prior to version 0.64.0, `SQLChatAgent` in `langroid` ships a `_validate_query` defense-in-depth layer whose `_DANGEROUS_SQL_PATTERNS` regex blocklist enumerates dangerous SQL primitives by specific function name. The list misses the canonical PostgreSQL filesystem-disclosure family `pg_read_file()`, `pg_stat_file()`, `pg_ls_logdir()`, `pg_ls_waldir()`, `pg_current_logfile()` (and similar `SELECT`-shaped functions in the same family). It also leaves SQL Server `OPENDATASOURCE` and SQLite `ATTACH '<file>' AS x` (DATABASE keyword omitted) unblocked. An attacker able to shape the LLM's generated SQL (directly via prompt input or transitively via prompt-injection in data the LLM ingests) can read arbitrary files from the PostgreSQL host through ordinary `SELECT` queries, even with the agent's strict default configuration (`allow_dangerous_operations=False`, `allowed_statement_types=['SELECT']`). The payloads survive the statement-type allowlist (each is a `SELECT`) and pass through the regex blocklist (none of the function names match), then reach the live SQLAlchemy engine via `SQLChatAgent.run_query`. Version 0.64.0 contains a patch for the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50180",
+    "publishedDate": "2026-07-10T00:16:33.197",
+    "lastModifiedDate": "2026-07-10T00:16:33.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15317",
+    "description": "A security flaw has been discovered in Sipeed PicoClaw up to 0.2.9. Affected by this vulnerability is the function WebFetchTool.Execute of the file pkg/tools/integration/web.go of the component Guarded Web Fetch Flow. The manipulation results in server-side request forgery. The attack can be executed remotely. The exploit has been released to the public and may be used for attacks. The reported GitHub issue was closed automatically due to inactivity.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15317",
+    "publishedDate": "2026-07-10T00:16:33.027",
+    "lastModifiedDate": "2026-07-10T00:16:33.027",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 6.8,
+        "score": 2.1,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -29,21 +159,200 @@
     ]
   },
   {
-    "id": "CVE-2026-0275",
-    "description": "Prisma Browser: Local Privilege Escalation on macOS",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0275",
-    "publishedDate": "Thu, 09 Jul 2026 19:19:24 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-15311",
+    "description": "A vulnerability was identified in NousResearch hermes-agent up to 2026.5.29.2. Affected by this issue is the function MatrixAdapter._markdown_to_html of the file gateway/platforms/matrix.py of the component Matrix Adapter. Such manipulation leads to cross site scripting. The attack can be executed remotely. The exploit is publicly available and might be used. The pull request to fix this issue awaits acceptance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15311",
+    "publishedDate": "2026-07-10T00:16:32.853",
+    "lastModifiedDate": "2026-07-10T00:16:32.853",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-59149",
-    "description": "Mockoon provides way to design and run mock APIs. Prior to 9.7.0, a FILE response whose filePath embeds request data is confined by getSafeFilePath in packages/commons-server/src/libs/server/server.ts with resolvedPath.startsWith(staticBaseDir). That prefix test has no path-separator boundary, so a ../-escaped path whose absolute form string-prefixes the base directory passes, allowing an unauthenticated client to read files from sibling paths outside the served directory through HTTP sendFile, WebSocket, or callbacks. This issue is fixed in version 9.7.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59149",
-    "publishedDate": "2026-07-09T19:17:07.207",
-    "lastModifiedDate": "2026-07-09T19:17:07.207",
+    "id": "CVE-2026-12598",
+    "description": "The LoginPress Pro plugin for WordPress is vulnerable to authentication bypass in versions up to and including 6.2.3 via the Spotify Social Login addon. This is due to the loginpress_on_spotify_login() function trusting the unverified 'email' field returned by Spotify's /v1/me endpoint and using it directly with get_user_by('email', $profile['email']) to identify and log in an existing WordPress account, without confirming that the Spotify user actually owns the email address (Spotify documents that the profile email is unverified) and without requiring the user to prove ownership of the matching WordPress account. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including Administrators, by registering a Spotify account using the targeted user's email address and authenticating via the Spotify provider.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12598",
+    "publishedDate": "2026-07-10T00:16:32.727",
+    "lastModifiedDate": "2026-07-10T00:16:32.727",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12597",
+    "description": "The LoginPress Pro plugin for WordPress is vulnerable to Authentication Bypass via the GitHub OAuth callback in versions up to, and including, 6.2.3. The vulnerability exists in the loginpress_on_github_login() function, which blindly trusts the first element (profile[0]['email']) of the array returned by GitHub's /user/emails endpoint as an account-binding identifier without verifying that the email carries a verified === true status. This makes it possible for unauthenticated attackers to log in as any existing WordPress user, including administrators, by adding an unverified email address matching a local account to their GitHub profile and triggering the OAuth callback via a crafted code parameter — causing the plugin to call get_user_by('email', ...) and establish an authenticated session for the matched account. Practical exploitation is conditional on GitHub returning the attacker-added unverified email at index 0 of the /user/emails response, as GitHub typically prioritizes the primary verified address first; nonetheless, the absence of any email verification check in the plugin constitutes a fundamental authentication bypass flaw.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12597",
+    "publishedDate": "2026-07-10T00:16:32.603",
+    "lastModifiedDate": "2026-07-10T00:16:32.603",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12595",
+    "description": "The LoginPress Pro plugin for WordPress is vulnerable to Authentication Bypass via Unverified OAuth Email in all versions up to and including 6.2.3. The vulnerability exists in the loginpress_on_discord_login() Discord OAuth callback handler, which accepts the email field returned by Discord's /users/@me endpoint without ever checking that the profile's verified flag is true, then directly maps that email to a local WordPress account via get_user_by('email', $profile['email']) and issues an authenticated session cookie via wp_set_auth_cookie(). This makes it possible for unauthenticated attackers to take over any existing WordPress account — including administrator accounts — by registering a Discord account configured with an unverified email address that matches the target user's registered WordPress email and completing the standard Discord OAuth flow.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12595",
+    "publishedDate": "2026-07-10T00:16:32.120",
+    "lastModifiedDate": "2026-07-10T00:16:32.120",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59858",
+    "description": "Vim is an open source, command line text editor. Prior to 9.2.0735, the C omni-completion script in runtime/autoload/ccomplete.vim interpolates the typeref: or typename: extension field of a tags entry, without escaping, into a :vimgrep pattern that is run through :execute. Because :vimgrep honors the bar as a command separator, a crafted tag field can close the search pattern and append an arbitrary Ex command; opening a hostile .c file whose project tags file contains such an entry and invoking C omni-completion runs that command as the editing user. This issue is fixed in version 9.2.0735.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59858",
+    "publishedDate": "2026-07-09T23:17:06.740",
+    "lastModifiedDate": "2026-07-09T23:17:06.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59857",
+    "description": "Vim is an open source, command line text editor. Prior to 9.2.0725, the single-byte branch of spell_soundfold_sal() in src/spell.c translates a word through a spell file's SAL sound-folding rules into a caller-owned result buffer, but its result writes are guarded with reslen < MAXWLEN, allowing reslen to reach MAXWLEN before res[reslen] = NUL writes one byte past the end of the MAXWLEN-element stack buffer. A boundary-length word passed to soundfold(), or reached via sound-based spell suggestion while a SAL-based spell language is active under a non-multibyte 8-bit encoding, can corrupt the eval_soundfold() stack frame and crash the editor. This issue is fixed in version 9.2.0725.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59857",
+    "publishedDate": "2026-07-09T23:17:06.580",
+    "lastModifiedDate": "2026-07-09T23:17:06.580",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59856",
+    "description": "Vim is an open source, command line text editor. Prior to 9.2.0736, the PHP omni-completion script in runtime/autoload/phpcomplete.vim interpolates a class or trait name, taken from the contents of the edited buffer, into a search() pattern that is run via win_execute() without escaping. A name containing a single quote can terminate the search() string argument early, and because the bar is honored as an Ex command separator, the remainder of the name is run as Ex commands; via the :! command this allows arbitrary operating-system command execution when a victim opens a crafted PHP file and invokes omni-completion. This issue is fixed in version 9.2.0736.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59856",
+    "publishedDate": "2026-07-09T23:17:06.420",
+    "lastModifiedDate": "2026-07-09T23:17:06.420",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59855",
+    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, Asset.render in app/src/asset/index.ts interpolates the unsanitized this.path value into HTML assigned to innerHTML, allowing a crafted asset link containing a double quote to break out of the src attribute, inject an event handler, and execute JavaScript that can run OS commands in the Electron renderer. This issue is fixed in versions 3.7.1-alpha.2 and 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59855",
+    "publishedDate": "2026-07-09T23:17:06.293",
+    "lastModifiedDate": "2026-07-09T23:17:06.293",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59854",
+    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, POST /api/file/globalCopyFiles accepts attacker-supplied absolute source paths and relies on util.IsSensitivePath in kernel/util/path.go, whose denylist misses common home-directory credential files such as .git-credentials, .netrc, .pgpass, .kube/config, .docker/config.json, and .gnupg, allowing an authenticated administrator or API-token user to copy those files into the workspace and exfiltrate them through the file API. This issue is fixed in versions 3.7.1-alpha.2 and 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59854",
+    "publishedDate": "2026-07-09T23:17:06.163",
+    "lastModifiedDate": "2026-07-09T23:17:06.163",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59853",
+    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, the /api/storage/getCriteria endpoint returns saved search criteria from data/storage/criteria.json without the publish-access filtering used by sibling storage endpoints, allowing a publish-mode Reader to read private document paths, notebook, document, and block IDs, and search and replace keywords for unpublished documents. This issue is fixed in versions 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59853",
+    "publishedDate": "2026-07-09T23:17:06.030",
+    "lastModifiedDate": "2026-07-09T23:17:06.030",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -51,7 +360,7 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
         "source": "security-advisories@github.com"
@@ -59,71 +368,11 @@
     ]
   },
   {
-    "id": "CVE-2026-59148",
-    "description": "Mockoon provides way to design and run mock APIs. Prior to 9.7.0, Mockoon's admin API in commons-server/src/libs/server/admin-api.ts is mounted on the same Express listener as user-defined mock routes, enabled by default in shipped runtimes, serves Access-Control-Allow-Origin: * with write methods allowed, and has no authentication. Any unauthenticated caller who can reach the mock server port can read MOCKOON_* environment variables, write arbitrary process environment variables through /mockoon-admin/env-vars, rewrite mock route bodies, statuses, and headers through PUT /mockoon-admin/environment, read transaction logs and SSE streams, and purge state. This issue is fixed in version 9.7.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59148",
-    "publishedDate": "2026-07-09T19:17:07.067",
-    "lastModifiedDate": "2026-07-09T20:16:30.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58198",
-    "description": "ChatterBot is a machine learning, conversational dialog engine for creating chat bots. Prior to 1.2.14, UbuntuCorpusTrainer.extract() uses a predictable home-rooted output directory (~/ubuntu_data/ubuntu_dialogs) with a check-then-create pattern followed by tar.extractall(path=self.data_path), allowing a local attacker who pre-plants a symlink at the predictable path to cause archive contents to be written through the symlink to an attacker-chosen directory. This issue is fixed in version 1.2.14.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58198",
-    "publishedDate": "2026-07-09T19:17:06.933",
-    "lastModifiedDate": "2026-07-09T20:16:30.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55590",
-    "description": "CakePHP Authentication is an authentication plugin for CakePHP that can also be used in PSR-7 based applications. Prior to 2.11.1, 3.3.6, and 4.1.1, the getLoginRedirect() method contains a weakness to backslash bypasses that allows redirect targets with attacker-controlled hostnames through the redirect query string parameter. This issue is fixed in versions 2.11.1, 3.3.6, and 4.1.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55590",
-    "publishedDate": "2026-07-09T19:17:06.670",
-    "lastModifiedDate": "2026-07-09T20:16:29.810",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54695",
-    "description": "Pipecat is an open-source Python framework for building real-time voice and multimodal conversational agents. Prior to 1.4.0, the pipecat development runner registers a /ws WebSocket endpoint for telephony testing that accepts connections without authentication, reads an attacker-supplied callSid from a Twilio stream-start handshake in src/pipecat/runner/utils.py, and passes it to TwilioFrameSerializer so the server can issue an authenticated Twilio REST API hang-up request with the server operator's credentials; equivalent unauthenticated call-control sinks exist for Telnyx and Plivo. This issue is fixed in version 1.4.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54695",
-    "publishedDate": "2026-07-09T19:17:06.540",
-    "lastModifiedDate": "2026-07-09T19:22:39.890",
+    "id": "CVE-2026-59834",
+    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, the block search endpoint POST /api/search/fullTextSearchBlock concatenates attacker-controlled paths values into SQL predicates used by non-SQL search modes, allowing an unauthenticated publish visitor to inject a UNION SELECT and return rows from hidden documents by projecting an allowed visible box and path. This issue is fixed in versions 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59834",
+    "publishedDate": "2026-07-09T23:17:05.900",
+    "lastModifiedDate": "2026-07-09T23:17:05.900",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -131,27 +380,27 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:L/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.7,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54005",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and 5.4.4, Kirby sites where a role has the pages.access permission disabled allowed authenticated users who know or guess page IDs or UUIDs to retrieve page information, including full content and metadata, for arbitrary published pages through the /api/site/find route without authorization to access those pages. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54005",
-    "publishedDate": "2026-07-09T19:17:06.400",
-    "lastModifiedDate": "2026-07-09T19:17:06.400",
+    "id": "CVE-2026-59833",
+    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, SiYuan renders note and package content to HTML through the Lute engine with sanitization enabled, but Lute's dangerous javascript scheme block does not check form action or SVG xlink:href attributes, allowing stored cross-site scripting in document export-preview and Bazaar package README render paths that can execute OS commands in the Electron desktop renderer. This issue is fixed in versions 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59833",
+    "publishedDate": "2026-07-09T23:17:05.773",
+    "lastModifiedDate": "2026-07-09T23:17:05.773",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 8.6,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -159,342 +408,102 @@
     ]
   },
   {
-    "id": "CVE-2026-54004",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and 5.4.4, Kirby sites with content.fileRedirects enabled could redirect unauthenticated clean file URL requests for files stored in top-level draft pages to physical media URLs without checking page access permissions or preview tokens, leading to disclosure of draft file contents. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54004",
-    "publishedDate": "2026-07-09T19:17:06.270",
-    "lastModifiedDate": "2026-07-09T20:16:29.603",
+    "id": "CVE-2026-59832",
+    "description": "SiYuan is an open-source personal knowledge management system. Prior to 3.7.1, the /snippets/*filepath route handler serveSnippets in kernel/server/serve.go joins a single-decoded request path with the snippets directory without subpath containment or sensitive-path checks, allowing an authenticated request such as /snippets/%2e%2e/%2e%2e/conf/conf.json to read workspace secrets and the document database. This issue is fixed in versions 3.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59832",
+    "publishedDate": "2026-07-09T23:17:05.627",
+    "lastModifiedDate": "2026-07-09T23:17:05.627",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
-        "version": "CVSS 4.0",
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59831",
+    "description": "GitHub CLI (gh) is GitHub’s official command line tool. From 2.10.0 through 2.95.0, connecting to a malicious Codespace with gh codespace jupyter can allow command execution because the command opens a JupyterLab URL supplied by a process inside the Codespace without validating that it is a loopback HTTP or HTTPS address, allowing a crafted vscode:// or vscode-insiders:// URL to be handed to VS Code. This issue is fixed in version 2.96.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59831",
+    "publishedDate": "2026-07-09T23:17:05.483",
+    "lastModifiedDate": "2026-07-09T23:17:05.483",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 1.3,
+        "impactScore": 2.7,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54003",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and from 5.4.4, Kirby sites with no configured user accounts that run on publicly accessible servers behind a reverse proxy setting the Forwarded, X-Client-IP, or X-Real-IP request header could allow remote attackers to install the Panel and create the first admin user because local-IP checks trusted those headers incorrectly. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54003",
-    "publishedDate": "2026-07-09T19:17:06.120",
-    "lastModifiedDate": "2026-07-09T20:16:29.500",
+    "id": "CVE-2026-57501",
+    "description": "Zen is a firefox-based browser. Prior to 1.21.5b, Zen's glance and split-view context-menu actions, Open link in glance and Split link in new tab, load a page-controlled link URL with the System principal instead of the originating page's principal, allowing a malicious web page to place a link to a file URL that can load with System privileges when opened through either context-menu item and bypass the content-to-file security check that blocks an ordinary click. This issue is fixed in version 1.21.5b.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57501",
+    "publishedDate": "2026-07-09T23:17:05.353",
+    "lastModifiedDate": "2026-07-09T23:17:05.353",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
+        "score": 0,
+        "version": "CVSS 3.1",
+        "severity": "NONE",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 0,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54002",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and 5.4.4, Kirby sites and plugins that use the writer or list fields or call Dom::sanitize(), Sane::sanitize(), Sane::Html::sanitize(), Sane::Svg::sanitize(), Sane::Xml::sanitize(), Sane::sanitizeFile(), or file sanitizeContents() with untrusted input allow malicious markup injected as children of an unknown HTML or XML tag to pass through Dom::sanitize() without being correctly sanitized, causing stored cross-site scripting. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54002",
-    "publishedDate": "2026-07-09T19:17:05.977",
-    "lastModifiedDate": "2026-07-09T20:16:29.387",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50188",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and 5.4.4, Kirby sites and plugins using the Kirby Http Remote class, including Remote::request(), Remote::get(), and Remote::post(), to send outgoing HTTP requests with untrusted data in the headers option could allow newline characters in a header value to inject a separate unintended request header to the remote service. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50188",
-    "publishedDate": "2026-07-09T19:17:05.827",
-    "lastModifiedDate": "2026-07-09T20:16:29.270",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49276",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and 5.4.4, Kirby sites using the writer field in any blueprint allowed a scripting link to be included as the target of a link or email link in writer mark components, making the target clickable by the user who entered it and enabling self cross-site scripting in the Panel. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49276",
-    "publishedDate": "2026-07-09T19:17:05.670",
-    "lastModifiedDate": "2026-07-09T19:17:05.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49274",
-    "description": "Kirby is an open-source content management system. Prior to 4.9.4 and 5.4.4, Kirby sites using the pages field with roles that have the pages.access permission disabled allowed authenticated users to provide an inaccessible parent page or site to the page picker backend and confirm arbitrary page existence and retrieve title field values. This issue is fixed in versions 4.9.4 and 5.4.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49274",
-    "publishedDate": "2026-07-09T19:17:05.490",
-    "lastModifiedDate": "2026-07-09T19:17:05.490",
+    "id": "CVE-2026-44342",
+    "description": "New API is a large language mode (LLM) gateway and artificial intelligence (AI) asset management system. Prior to 0.12.0-alpha.1, the email and WeChat account binding endpoints GET /api/oauth/email/bind and GET /api/oauth/wechat/bind used GET requests for state-changing account operations, allowing an attacker to trigger a logged-in user's browser to bind an attacker-controlled email address or OAuth identity in deployments where session cookies could be sent on cross-site navigations. This issue is fixed in version 0.12.0-alpha.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44342",
+    "publishedDate": "2026-07-09T23:17:05.217",
+    "lastModifiedDate": "2026-07-09T23:17:05.217",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.3,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13492",
-    "description": "The UsersWP plugin for WordPress is vulnerable to Arbitrary File Deletion in versions up to, and including, 1.2.65. This is due to insufficient validation of file-field values in the UsersWP_Validation::validate_fields() function (which falls through to sanitize_text_field() for fields of type 'file', leaving directory-traversal sequences intact) combined with the UsersWP_Forms::upload_file_remove() AJAX handler building the deletion target from the uploads basedir concatenated with the attacker-controlled metadata value without any realpath canonicalization or uploads-directory boundary check before calling unlink(). This makes it possible for authenticated attackers, with Subscriber-level access and above, to delete arbitrary files on the affected site's server, including wp-config.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13492",
-    "publishedDate": "2026-07-09T19:17:03.883",
-    "lastModifiedDate": "2026-07-09T20:16:28.767",
+    "id": "CVE-2026-33655",
+    "description": "New API is a large language mode (LLM) gateway and artificial intelligence (AI) asset management system. Prior to 0.12.0-alpha.1, the default SSRF protection configuration did not apply IP filtering to hostnames; with ApplyIPFilterForDomain disabled by default, URL validation checked domain allow/block rules but did not resolve a hostname and validate the resolved IP address, allowing authenticated users to configure Webhook, Bark, or Gotify notification URLs that point at an internal or metadata IP address. This issue is fixed in version 0.12.0-alpha.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33655",
+    "publishedDate": "2026-07-09T23:17:04.763",
+    "lastModifiedDate": "2026-07-09T23:17:04.763",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 7.7,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0287",
-    "description": "Multiple denial of service vulnerabilities in Palo Alto Networks PAN-OS® software allow an unauthenticated attacker with network access to cause a denial of service (DoS) condition by sending specially crafted network traffic to or through a dataplane interface. Repeated attempts to trigger this condition result in the firewall entering maintenance mode.\n\nPanorama is not impacted by these vulnerabilities.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0287",
-    "publishedDate": "2026-07-09T19:17:02.747",
-    "lastModifiedDate": "2026-07-09T20:16:28.233",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:C/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0286",
-    "description": "A command injection vulnerability in the management plane of Palo Alto Networks PAN-OS® software enables an authenticated administrator to execute arbitrary OS commands as root.\n\n\n\nThe security risk posed by this issue is significantly minimized when CLI access is restricted to a limited group of administrators.\n\n\n\nThis issue is applicable to PAN-OS software on PA-Series and VM-Series firewalls and on Panorama (virtual and M-Series).\n\n\n\nCloud NGFW and Prisma Access®  are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0286",
-    "publishedDate": "2026-07-09T19:17:02.227",
-    "lastModifiedDate": "2026-07-09T20:16:27.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0285",
-    "description": "A server-side request forgery (SSRF) vulnerability in Palo Alto Networks PAN-OS software enables an authenticated administrator with network access to the management web interface to make unauthorized requests from the firewall to internal services.\n\n\n\nThe security risk posed by this issue is minimized when the management interface is restricted to only trusted internal IP addresses according to our recommended  best practice deployment guidelines https://live.paloaltonetworks.com/t5/community-blogs/tips-amp-tricks-how-to-secure-the-management-access-of-your-palo/ba-p/464431 . \n\nPanorama, Cloud NGFW, and Prisma® Access are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0285",
-    "publishedDate": "2026-07-09T19:17:01.633",
-    "lastModifiedDate": "2026-07-09T20:16:27.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0276",
-    "description": "A privilege escalation vulnerability in Palo Alto Networks Cortex® XDR Broker VM enables a locally authenticated user to perform actions as the root user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0276",
-    "publishedDate": "2026-07-09T20:16:24.670",
-    "lastModifiedDate": "2026-07-09T20:16:24.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0284",
-    "description": "An XML injection vulnerability in the Large Scale VPN (LSVPN) functionality of Palo Alto Networks PAN-OS® software enables an unauthenticated attacker with network access to inject malicious XML content, potentially leading to information disclosure or corruption of internal LSVPN satellite data.\n\nPanorama, Cloud NGFW, and Prisma® Access are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0284",
-    "publishedDate": "2026-07-09T19:17:01.140",
-    "lastModifiedDate": "2026-07-09T20:16:26.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:H/SI:L/SA:L/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0283",
-    "description": "An authentication bypass vulnerability in Large Scale VPN ( LSVPN) functionality of Palo Alto Networks PAN-OS software allows an attacker with network access to bypass security restrictions and establish an unauthorized site-to-site VPN connection.\n\nPanorama, Cloud NGFW, and Prisma® Access are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0283",
-    "publishedDate": "2026-07-09T19:17:00.593",
-    "lastModifiedDate": "2026-07-09T20:16:26.467",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:H/SI:L/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0282",
-    "description": "A file deletion vulnerability in Palo Alto Networks PAN-OS® software enables an unauthenticated attacker with network access to the management web interface to delete files from a temporary directory.\n\nThe security risk posed by this issue is minimized by restricting access to the management web interface to only trusted internal IP addresses according to our recommended  best practice deployment guidelines https://live.paloaltonetworks.com/t5/community-blogs/tips-amp-tricks-how-to-secure-the-management-access-of-your-palo/ba-p/464431 .\n\nThis issue is applicable to PAN-OS software on PA-Series and VM-Series firewalls and on Panorama (virtual and M-Series).\n\nCloud NGFW and Prisma® Access are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0282",
-    "publishedDate": "2026-07-09T19:17:00.110",
-    "lastModifiedDate": "2026-07-09T20:16:26.177",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.7,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0281",
-    "description": "An information disclosure vulnerability in Palo Alto Networks PAN-OS® software enables an unauthenticated attacker with network access to the management web interface to obtain web session tokens. This requires a legitimate user to first click on a malicious link provided by the attacker.\n\nThe security risk posed by this issue is minimized by restricting access to the management web interface to only trusted internal IP addresses according to our recommended  best practice deployment guidelines https://live.paloaltonetworks.com/t5/community-blogs/tips-amp-tricks-how-to-secure-the-management-access-of-your-palo/ba-p/464431 .\n\nThis issue is applicable to PAN-OS software on PA-Series and VM-Series firewalls and on Panorama (virtual and M-Series).\n\nCloud NGFW and Prisma® Access are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0281",
-    "publishedDate": "2026-07-09T19:16:59.780",
-    "lastModifiedDate": "2026-07-09T20:16:25.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0280",
-    "description": "An IPv6 packet processing vulnerability in the dataplane of Palo Alto Networks PAN-OS® software enables an unauthenticated attacker to bypass firewall security policy enforcement, allowing network traffic that should be blocked to reach protected services.\n\nCloud NGFW and Panorama are not impacted by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0280",
-    "publishedDate": "2026-07-09T19:16:59.280",
-    "lastModifiedDate": "2026-07-09T20:16:25.470",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.7,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0279",
-    "description": "Multiple cross site scripting vulnerabilities in the User-ID™ Authentication Portal (aka Captive Portal) service, GlobalProtect™ gateway/portal features and Clientless VPN of Palo Alto Networks PAN-OS® software enables a malicious unauthenticated user to store or execute malicious JavaScript payload.\n\n\nThe security risk posed by this issue is minimized when the management interface and access to the User-ID™ Authentication Portal is restricted to only trusted internal IP addresses according to our recommended  best practice deployment guidelines https://live.paloaltonetworks.com/t5/community-blogs/tips-amp-tricks-how-to-secure-the-management-access-of-your-palo/ba-p/464431 .\n\nThis issue is applicable to PAN-OS software on PA-Series and VM-Series firewalls and on Panorama (virtual and M-Series).\n\nCloud NGFW is not affected by this vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0279",
-    "publishedDate": "2026-07-09T19:16:58.717",
-    "lastModifiedDate": "2026-07-09T20:16:25.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@paloaltonetworks.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
       }
     ]
   }
