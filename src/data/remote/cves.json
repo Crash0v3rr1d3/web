@@ -1,5 +1,25 @@
 [
   {
+    "id": "CVE-2026-10660",
+    "description": "The Bluetooth BAP Broadcast Assistant GATT client in subsys/bluetooth/audio/bap_broadcast_assistant.c reassembled remote Broadcast Receive State data into a single file-static net_buf_simple (att_buf, BT_ATT_MAX_ATTRIBUTE_LEN = 512 bytes) shared by all connection instances, while the BUSY flag, long-read handle, and reset/offset state were per-connection.\n\nWhen the device acts as a Broadcast Assistant connected to multiple Scan Delegator peripherals, notification and long-read callbacks from different connections interleave on the shared buffer: the append in notify_handler (net_buf_simple_add_mem at the not-busy branch) performs no tailroom check, so receive-state notifications from two or more delegators accumulate on the same 512-byte buffer and, with a sufficiently large configured ATT MTU (BT_L2CAP_TX_MTU up to 2000) and two-to-three concurrent connections, write past the buffer into adjacent .bss (net_buf_simple_add only asserts in debug builds).\n\nEven below the overflow threshold, one connection's net_buf_simple_reset zeroes the shared length while another connection's reassembly and GATT read offset are in flight, mixing one peer's data into another's parse. A malicious or compromised Scan Delegator (or two colluding peers) over BLE can trigger this, causing out-of-bounds writes (memory corruption / denial of service) and cross-connection data corruption.\n\nThe fix moves the buffer into the per-connection instance struct so each connection reassembles into its own buffer. Affects Zephyr releases shipping the Broadcast Assistant with the shared buffer, including v4.4.0 and earlier.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10660",
+    "publishedDate": "2026-07-11T17:16:23.920",
+    "lastModifiedDate": "2026-07-11T17:16:23.920",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.7,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-61870",
     "description": "ImageMagick before 7.1.2-26 contains a memory leak vulnerability in the VIFF encoder when memory allocation fails. Attackers can trigger allocation failures by processing specially crafted VIFF images to exhaust available memory and cause denial of service.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-61870",
@@ -655,26 +675,6 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9282",
-    "description": "The W3 Total Cache plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 2.9.4 via the setupSources function. This makes it possible for unauthenticated attackers to read the contents of arbitrary files on the server, which can contain sensitive information. Exploitation requires enabling manual minify mode and supplying a manual-format minify filename so that the hash is empty and the f_array[] entries are not overwritten before reaching setupSources().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9282",
-    "publishedDate": "2026-07-11T07:16:47.070",
-    "lastModifiedDate": "2026-07-11T07:16:47.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
         "source": "security@wordfence.com"
       }
     ]
