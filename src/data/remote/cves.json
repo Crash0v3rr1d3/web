@@ -1,290 +1,13 @@
 [
   {
-    "id": "CVE-2026-59198",
-    "description": "Pillow is a Python imaging library. From 5.2.0 until 12.3.0, Pillow's TGA RLE encoder reads past its packed row buffer when saving a mode 1 image with TGA RLE compression, allowing adjacent process heap bytes to be copied into the generated TGA file. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59198",
-    "publishedDate": "2026-07-14T16:17:01.797",
-    "lastModifiedDate": "2026-07-14T16:43:42.970",
+    "id": "CVE-2026-45755",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 7.4.12 and 8.0.12, MailtrapRequestParser::doParse() received the configured webhook secret but ignored the X-Mt-Signature HMAC header, allowing unauthenticated POST requests to inject forged Mailtrap delivery, bounce, open, click, or spam events. This issue is fixed in versions 7.4.12 and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45755",
+    "publishedDate": "2026-07-14T19:17:07.907",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62644",
-    "description": "In Roundcube Webmail before 1.6.17 and 1.7.x before 1.7.2, the password plugin of the Roundcube Webmail was subject to username spoofing via session data, which could lead to account takeover.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62644",
-    "publishedDate": "2026-07-14T16:17:04.810",
-    "lastModifiedDate": "2026-07-14T16:17:04.810",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.2,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14504",
-    "description": "An authorization bypass in Nexus Repository 3's component upload API allowed a user with only read/browse privileges on a Swift, Terraform, or Conda hosted repository to upload arbitrary artifacts, bypassing the intended write-permission check.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14504",
-    "publishedDate": "2026-07-14T16:16:45.423",
-    "lastModifiedDate": "2026-07-14T16:16:45.423",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "103e4ec9-0a87-450b-af77-479448ddef11"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62643",
-    "description": "In Roundcube Webmail before 1.6.17 and 1.7.x before 1.7.2, insufficient Cascading Style Sheets (CSS) sanitization in HTML e-mail messages may lead to SSRF or Information Disclosure, e.g., if stylesheet links point to local network hosts. NOTE: this issue exists because of insufficient fixes for CVE-2026-35540 and CVE-2026-48843.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62643",
-    "publishedDate": "2026-07-14T16:17:04.670",
-    "lastModifiedDate": "2026-07-14T16:17:04.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12523",
-    "description": "Summary\n\n\n\nCloudflare quiche's HTTP/3 layer was discovered to be vulnerable to resource exhaustion (i.e., memory) by means of specially crafted HTTP/3 frames.\n\n\n\n\nImpact\n\n\n\nHTTP/3 defines multiple frame types to support HTTP message exchanges and connection management. Each frame has a length and a payload whose length depends on the frame type. quiche was found to be vulnerable when parsing some frame types to pre-allocating memory based on the declared length. An attacker would not need to send the number of declared bytes to trigger this issue.\n\n\n\nIn addition, quiche was found to not apply QPACK decompression limits correctly. This could allow an attacker to send specially crafted HEADERS frames that would cause more memory commitment than otherwise advertised by MAX_FIELD_SECTION_SIZE (configured by set_max_field_section_size()).\n\n\n\n\n\n\nMitigation:\n\n  *  \n\nUsers are requested to upgrade to quiche 0.29.3 which is the earliest version containing the fix for this issue.\n\n\n\n\n\n\n\n\n\nCredits: Disclosed responsibly by Sébastien Féry",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12523",
-    "publishedDate": "2026-07-14T16:16:45.050",
-    "lastModifiedDate": "2026-07-14T16:45:02.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "cna@cloudflare.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62642",
-    "description": "In Roundcube Webmail before 1.6.17 and 1.7.x before 1.7.2, an infinite loop was discovered in the TNEF decoder, which may lead to denial of service upon opening an email with a TNEF attachment.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62642",
-    "publishedDate": "2026-07-14T16:17:04.530",
-    "lastModifiedDate": "2026-07-14T16:17:04.530",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59205",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, Pillow's ImageCms.ImageCmsTransform.apply(im, imOut) API can trigger controlled native heap corruption when the caller supplies an output image whose mode does not match the transform's declared output mode. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59205",
-    "publishedDate": "2026-07-14T16:17:02.370",
-    "lastModifiedDate": "2026-07-14T16:43:42.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58461",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58461",
-    "publishedDate": "2026-07-14T16:17:01.600",
-    "lastModifiedDate": "2026-07-14T16:17:01.600",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-62641",
-    "description": "In Roundcube Webmail before 1.6.17 and 1.7.x before 1.7.2, the TNEF decoder was subject to denial of service via a crafted compressed-RTF size.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62641",
-    "publishedDate": "2026-07-14T16:17:04.377",
-    "lastModifiedDate": "2026-07-14T16:17:04.377",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7494",
-    "description": "Nexus Repository 3 is vulnerable to Server-Side Request Forgery (SSRF) via the SSL Certificate Retrieval endpoint. A user holding the nexus:ssl-truststore:read permission could cause the server to initiate outbound connections to internal or otherwise restricted network hosts. This issue affects Nexus Repository 3.0.0 through versions prior to 3.94.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7494",
-    "publishedDate": "2026-07-14T16:17:04.953",
-    "lastModifiedDate": "2026-07-14T16:17:04.953",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "103e4ec9-0a87-450b-af77-479448ddef11"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15699",
-    "description": "A vulnerability was identified in spencermountain compromise up to 14.15.1. Affected is the function nlp.extend of the file src/API/extend.js of the component Public Root API. The manipulation of the argument plugin leads to improperly controlled modification of object prototype attributes. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The identifier of the patch is b4644ab7179700df0607521f61c1ee9b5f78d89d. Applying a patch is the recommended action to fix this issue. The vendor was contacted early, responded in a very professional manner and quickly released a fixed version of the affected product.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15699",
-    "publishedDate": "2026-07-14T16:16:46.477",
-    "lastModifiedDate": "2026-07-14T16:42:11.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-60119",
-    "description": "Hi.Events through v1.10.0-beta contains a cross-site scripting vulnerability that allows authenticated attackers with event creation or edit permissions to inject arbitrary HTML and JavaScript by embedding a malicious event title containing the </script> sequence, which is not escaped by JSON.stringify() when embedded in inline script tags. Attackers can craft an event title that breaks out of the script context in the application/ld+json structured data block or server-side rehydrated state, causing the payload to execute in the browser of any user who views the public event page, including unauthenticated visitors and authenticated administrators.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60119",
-    "publishedDate": "2026-07-14T16:17:04.250",
-    "lastModifiedDate": "2026-07-14T16:17:04.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59203",
-    "description": "Pillow is a Python imaging library. From 12.0.0 through 12.2.0, Pillow's EPS parser in PIL/EpsImagePlugin.py accepts a negative byte count in the %%BeginBinary directive, allowing a crafted EPS file to cause Image.open() to seek backwards to the same directive and parse it repeatedly in an infinite loop. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59203",
-    "publishedDate": "2026-07-14T16:17:02.063",
-    "lastModifiedDate": "2026-07-14T16:43:42.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-60118",
-    "description": "Hi.Events through v1.10.0-beta contains a missing server-side visibility enforcement vulnerability that allows unauthenticated attackers to purchase hidden tickets by referencing hidden product and price IDs in order creation requests without authorization checks. Attackers can enumerate sequential hidden ticket IDs from visible ones and submit order creation requests referencing those IDs to purchase VIP, invite-only, or discounted tickets intentionally withheld from public sale.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60118",
-    "publishedDate": "2026-07-14T16:17:04.090",
-    "lastModifiedDate": "2026-07-14T16:17:04.090",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
       {
         "score": 6.9,
         "version": "CVSS 4.0",
@@ -292,36 +15,36 @@
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59199",
-    "description": "Pillow is a Python imaging library. Prior to 12.3.0, Pillow public image coordinate APIs can trigger a native heap out-of-bounds write when given coordinates near the signed 32-bit integer limits in Image.paste(), Image.crop(), or Image.alpha_composite(). This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59199",
-    "publishedDate": "2026-07-14T16:17:01.937",
-    "lastModifiedDate": "2026-07-14T16:43:42.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-59204",
-    "description": "Pillow is a Python imaging library. From 8.2.0 through 12.2.0, src/libImaging/Jpeg2KDecode.c accumulates total_component_width across every tile in a JPEG2000 image instead of recomputing it per tile, allowing a crafted tiled JPEG2000 file to force substantially higher transient memory usage and trigger out-of-memory failures during decoding. This issue is fixed in version 12.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59204",
-    "publishedDate": "2026-07-14T16:17:02.227",
-    "lastModifiedDate": "2026-07-14T16:43:42.970",
+    "id": "CVE-2026-45754",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 6.4.40, 7.4.12, and 8.0.12, the Mailjet mailer bridge and LOX24 notifier bridge webhook parsers received configured webhook secrets but did not verify them, allowing unauthenticated POST requests to inject forged Mailjet and LOX24 event payloads. This issue is fixed in versions 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45754",
+    "publishedDate": "2026-07-14T19:17:07.777",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45305",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 5.4.52, 6.4.40, 7.4.12, and 8.0.12, Symfony\\Component\\Yaml\\Parser::cleanup() used regular expressions with overlapping quantifiers for YAML directive, comment, and document marker cleanup, allowing crafted input to make parsing hang for an arbitrarily long time. This issue is fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45305",
+    "publishedDate": "2026-07-14T19:17:07.187",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -337,90 +60,11 @@
     ]
   },
   {
-    "id": "CVE-2026-60082",
-    "description": "DBI versions before 1.651 for Perl do not enforce statement handle consistency with the row.\n\nWhen the statement handle had no fields but the source row was non-empty, the internal row-buffer helper would read from a negative array index.\n\nThis could be triggered by a caller supplying inconsistent metadata and rows to the prepare method.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60082",
-    "publishedDate": "2026-07-14T16:17:03.750",
-    "lastModifiedDate": "2026-07-14T16:44:28.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-60081",
-    "description": "DBI::ProfileData versions before 1.651 for Perl do not limit the path index.\n\nThe path index column of profile dump files is used to allocate an array of data for the parser. An unbounded value allows an attacker to specify a large index and consume available memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60081",
-    "publishedDate": "2026-07-14T16:17:03.647",
-    "lastModifiedDate": "2026-07-14T16:44:28.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15392",
-    "description": "DBD::File versions before 1.651 for Perl do not ensure the table file is not a symlink to an untrusted location.\n\nThe complete_table_name method builds the absolute table file path without checking whether the file is a symbolic link. A link inside the data directory can point to a table file at any path outside of the configured f_dir and f_dir_search directories.\n\nCallers of file-based drivers can read or write files outside of the data directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15392",
-    "publishedDate": "2026-07-14T16:16:45.827",
-    "lastModifiedDate": "2026-07-14T16:44:28.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-55651",
-    "description": "Easy!Appointments is a self hosted appointment scheduler. In version 1.5.2, an Excessive Data Exposure vulnerability in the customers search endpoint allows an authenticated user to obtain appointment hashes belonging to other users.\nUsing these hashes, an attacker can modify or delete appointments of other providers, resulting in an Appointments Takeover. Version 1.6.0 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55651",
-    "publishedDate": "2026-07-14T16:17:00.937",
-    "lastModifiedDate": "2026-07-14T16:42:11.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15698",
-    "description": "A vulnerability was determined in kofrasa mingo up to 7.2.1. This impacts the function update/updateOne/updateMany of the component Update API. Executing a manipulation of the argument Set can lead to improperly controlled modification of object prototype attributes. The attack may be launched remotely. Upgrading to version 7.2.2 will fix this issue. This patch is called fadc398251792c2ba441cbc539f359fc7943c0c2. It is recommended to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15698",
-    "publishedDate": "2026-07-14T16:16:46.310",
-    "lastModifiedDate": "2026-07-14T16:42:11.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-11403",
-    "description": "A vulnerability in Sonatype Nexus Repository Manager's format-specific API key generation may allow a remote attacker to gain unauthorized access to repository operations as a targeted user. A format-specific API key realm (NuGet API Key, Docker Bearer Token, or npm Bearer Token) must be enabled and the targeted user must have an active API key for this vulnerability to be exploitable.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11403",
-    "publishedDate": "2026-07-14T16:16:44.217",
-    "lastModifiedDate": "2026-07-14T16:16:44.217",
+    "id": "CVE-2026-45304",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 5.4.52, 6.4.40, 7.4.12, and 8.0.12, Symfony\\Component\\Yaml\\Parser resolved YAML collection aliases recursively, allowing a small untrusted YAML input to expand into a multi-gigabyte structure and exhaust memory. This issue is fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45304",
+    "publishedDate": "2026-07-14T19:17:07.050",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -428,70 +72,400 @@
         "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "103e4ec9-0a87-450b-af77-479448ddef11"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52841",
-    "description": "Easy!Appointments is a self hosted appointment scheduler. In versions prior to 1.6.0, `Google::oauth` at `application/controllers/Google.php:278` stores its URL-supplied `provider_id` in the session, and `oauth_callback` saves the issued Google OAuth token against that row without checking the caller owns the provider. Any logged-in backend user (admin, provider, or secretary) rebinds a peer provider's Google sync to a Google account they control. The peer's appointments then sync into the attacker's calendar with each customer's name and email attached as attendee data. Version 1.6.0 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52841",
-    "publishedDate": "2026-07-14T16:17:00.800",
-    "lastModifiedDate": "2026-07-14T16:42:11.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 0.5,
-        "impactScore": 2.5,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-52840",
-    "description": "Easy!Appointments is a self hosted appointment scheduler. In versions prior to 1.6.0, `Caldav::connect_to_server` at `application/controllers/Caldav.php:60` hands the request's `caldav_url` to a Guzzle `REPORT` call without scheme or host validation. A logged-in backend user (admin, provider, or secretary) reaches loopback, RFC1918, and link-local hosts on the deployment's network. The Guzzle exception path returns the upstream status code plus ~120 bytes of response body in the JSON `message` field (`Caldav.php:74-78`), so the SSRF is semi-blind. Version 1.6.0 contains a patch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52840",
-    "publishedDate": "2026-07-14T16:17:00.670",
-    "lastModifiedDate": "2026-07-14T16:42:11.910",
+    "id": "CVE-2026-45069",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 6.4.40, 7.4.12, and 8.0.12, OidcTokenHandler::verifyClaims() registered audience (aud), issuer (iss), and expiry (exp) checkers but did not pass the mandatory claims list to ClaimCheckerManager::check(), so a validly signed JWT that omitted those claims could pass verification. This issue is fixed in versions 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45069",
+    "publishedDate": "2026-07-14T19:17:06.017",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 1.4,
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-11944",
-    "description": "openSIS Classic 9.3 contains an authenticated path traversal vulnerability in the legacy messaging sent-mail attachment download functionality that allows an authenticated attacker to read arbitrary files on the server via crafted path traversal sequences.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11944",
-    "publishedDate": "2026-07-14T16:16:44.917",
-    "lastModifiedDate": "2026-07-14T16:38:41.077",
+    "id": "CVE-2026-47305",
+    "description": "Protection mechanism failure in Visual Studio allows an unauthorized attacker to execute code locally.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47305",
+    "publishedDate": "2026-07-14T19:17:08.970",
+    "lastModifiedDate": "2026-07-14T20:35:32.720",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47304",
+    "description": "Improper verification of cryptographic signature in .NET allows an unauthorized attacker to bypass a security feature over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47304",
+    "publishedDate": "2026-07-14T19:17:08.830",
+    "lastModifiedDate": "2026-07-14T20:35:32.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47303",
+    "description": "Authentication bypass by assumed-immutable data in ASP.NET Core allows an authorized attacker to elevate privileges over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47303",
+    "publishedDate": "2026-07-14T19:17:08.707",
+    "lastModifiedDate": "2026-07-14T20:35:32.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47302",
+    "description": "Allocation of resources without limits or throttling in .NET allows an unauthorized attacker to deny service over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47302",
+    "publishedDate": "2026-07-14T19:17:08.540",
+    "lastModifiedDate": "2026-07-14T20:35:32.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47301",
+    "description": "Improper access control in Microsoft Configuration Manager allows an authorized attacker to elevate privileges over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47301",
+    "publishedDate": "2026-07-14T19:17:08.420",
+    "lastModifiedDate": "2026-07-14T20:35:32.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45133",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 5.4.52, 6.4.40, 7.4.12, and 8.0.12, when the parser is exposed to attacker-controlled input, deeply nested mappings or sequences cause both the block-level (Parser::parseBlock()) and inline (Inline::parseSequence() / Inline::parseMapping()) parsers to recurse without a depth limit. A crafted document exhausts the PHP stack and crashes the worker. This issue is fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45133",
+    "publishedDate": "2026-07-14T19:17:06.913",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45075",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 7.4.12 and 8.0.12, method-scoped #[IsGranted], #[IsSignatureValid], and #[IsCsrfTokenValid] attributes can be configured for GET only, but Symfony routes HEAD requests to the GET handler while the attribute check is skipped, allowing protected controllers to execute and leak headers or perform side effects. This issue is fixed in versions 7.4.12 and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45075",
+    "publishedDate": "2026-07-14T19:17:06.650",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47767",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. From 5.4.46 until 5.4.52, 6.4.40, 7.4.12, and 8.0.12, the CVE-2024-50340 fix gated runtime argv parsing on empty($_GET), but parse_str() and the web SAPI can disagree, allowing a crafted query string to leave $_GET empty while $_SERVER['argv'] still carries attacker-controlled --env or --no-debug flags that change APP_ENV or APP_DEBUG. This issue is fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47767",
+    "publishedDate": "2026-07-14T19:17:09.237",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45064",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. From 6.1.0-BETA1 until 6.4.40, 7.4.12, and 8.0.12, UrlSanitizer::parse() passes Unicode explicit-direction BiDi formatting characters through into sanitized href and src attributes, allowing sanitized content to display a link destination that visually differs from the actual destination and enabling phishing-style visual spoofing. This issue is fixed in versions 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45064",
+    "publishedDate": "2026-07-14T19:17:05.763",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45063",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 5.4.52, 6.4.40, 7.4.12, and 8.0.12, X509Authenticator extracts the user identifier from $_SERVER['SSL_CLIENT_S_DN'] with an unanchored regex that matches emailAddress= anywhere in the distinguished name, allowing an attacker with a trusted certificate containing emailAddress=victim inside another RDN value such as CN to authenticate as the victim. This issue is fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45063",
+    "publishedDate": "2026-07-14T19:17:05.620",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45070",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 5.4.52, 6.4.40, 7.4.12, and 8.0.12, Symfony\\Component\\Mime\\Header\\ParameterizedHeader validates and encodes parameter values but emits parameter names verbatim, allowing a caller that derives a parameter name from untrusted input to include CRLF or other non-token bytes and inject additional headers into rendered structured mail headers such as Content-Type or Content-Disposition. This issue is reported as fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45070",
+    "publishedDate": "2026-07-14T19:17:06.147",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "help@fluidattacks.com"
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45073",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. Prior to 5.4.52, 6.4.40, 7.4.12, and 8.0.12, PdoAdapter::doClear() builds a DELETE statement using a namespace derived from the caller-supplied $prefix without binding or escaping it, allowing a caller able to influence $prefix to break out of the LIKE literal and alter query semantics or deletion scope. This issue is fixed in versions 5.4.52, 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45073",
+    "publishedDate": "2026-07-14T19:17:06.413",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45753",
+    "description": "Symfony is a PHP framework for web and console applications and a set of reusable PHP components. From 6.1.0-BETA1 until 6.4.40, 7.4.12, and 8.0.12, UrlAttributeSanitizer::getSupportedAttributes() omits URL-valued attributes including action, formaction, poster, and cite, so configurations that admit those attributes can leave javascript: URIs unsanitized and enable XSS when the resulting HTML is rendered or a victim submits a form or clicks a button. This issue is fixed in versions 6.4.40, 7.4.12, and 8.0.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45753",
+    "publishedDate": "2026-07-14T19:17:07.633",
+    "lastModifiedDate": "2026-07-14T20:25:54.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15720",
+    "description": "Pre-auth heap out-of-bounds read in the AMF NAS 5GS mobile-identity handler",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15720",
+    "publishedDate": "Tue, 14 Jul 2026 18:20:22 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-47300",
+    "description": "ASP.NET Core Elevation of Privilege Vulnerability",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47300",
+    "publishedDate": "Tue, 14 Jul 2026 18:20:12 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-62659",
+    "description": "Authenticated users can make unauthorized changes on NETGEAR WAX333 Access Points",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62659",
+    "publishedDate": "Tue, 14 Jul 2026 18:18:48 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-62658",
+    "description": "A security flaw was discovered in certain NETGEAR Nighthawk RAX series routers\nthat could allow someone already logged in to the device to run unauthorized commands\nor code on the router.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62658",
+    "publishedDate": "2026-07-14T18:18:48.013",
+    "lastModifiedDate": "2026-07-14T18:18:48.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "a2826606-91e7-4eb6-899e-8484bd4575d5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62657",
+    "description": "A security flaw in the router's certificate validation process was\ndiscovered in the NETGEAR XR1000 Gaming Router and certain Nighthawk models that could allow an unauthorized person to remotely access and take\ncontrol of the device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62657",
+    "publishedDate": "2026-07-14T18:18:47.857",
+    "lastModifiedDate": "2026-07-14T18:18:47.857",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "a2826606-91e7-4eb6-899e-8484bd4575d5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62656",
+    "description": "A\nsecurity flaw was found in certain NETGEAR RAX models that could allow\na logged-in user to send specially crafted requests to the router and run\nunauthorized commands. This could enable the user to make unauthorized changes\nto the router and affect its security and operation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62656",
+    "publishedDate": "2026-07-14T18:18:47.707",
+    "lastModifiedDate": "2026-07-14T18:18:47.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "a2826606-91e7-4eb6-899e-8484bd4575d5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62655",
+    "description": "A\nsecurity flaw was found in certain NETGEAR Orbi models that\ncould allow an unauthorized user to cause the device to stop responding or\nrestart unexpectedly, disrupting network connectivity and making the device\ntemporarily unavailable.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62655",
+    "publishedDate": "2026-07-14T18:18:47.510",
+    "lastModifiedDate": "2026-07-14T18:18:47.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "a2826606-91e7-4eb6-899e-8484bd4575d5"
       }
     ]
   }
