@@ -1,230 +1,228 @@
 [
   {
-    "id": "CVE-2026-59249",
-    "description": "Inconsistent interpretation of HTTP requests (HTTP response smuggling) vulnerability in elixir-mint mint allows a malicious HTTP/1 server to desynchronize a strict intermediary and the Mint client on the same pooled connection, enabling response-queue poisoning against subsequent requests that share the connection.\n\nThe Mint.HTTP1.decode_body/5 function in lib/mint/http1.ex parses the chunk-size line of a Transfer-Encoding: chunked response with Integer.parse(data, 16). RFC 7230 defines chunk-size = 1*HEXDIG and forbids any sign prefix, but Integer.parse/2 accepts an optional leading + or -. A chunk-size line of +5 is accepted as a five-byte chunk; lines of +0 and -0 are accepted as the terminating zero-length chunk and end the message body early.\n\nAn RFC-strict intermediary in the response path rejects these forms, so the intermediary and the Mint client disagree on where one response ends and the next begins. On a pooled keep-alive connection, an attacker-influenced origin can inject bytes that the client attributes to the next legitimate response on the same connection, poisoning the response queue and corrupting the responses returned to unrelated in-flight requests.\n\nThis issue affects mint: from 0.1.0 before 1.9.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59249",
-    "publishedDate": "2026-07-16T12:18:07.170",
-    "lastModifiedDate": "2026-07-16T13:16:32.883",
+    "id": "CVE-2026-45695",
+    "description": "Kopia is a cross-platform backup tool for Windows, macOS, and Linux with fast incremental backups, client-side end-to-end encryption, compression, and data deduplication. Prior to 0.23.0, Kopia's HTTP server started with --without-password accepts unauthenticated requests to /api/v1/repo/exists and forwards attacker-supplied SFTP storage configuration to blob.NewStorage, where externalSSH: true and sshArguments containing -oProxyCommand=<cmd> can cause exec.CommandContext(\"ssh\") to invoke the command through OpenSSH. This issue is fixed in version 0.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45695",
+    "publishedDate": "2026-07-16T16:19:08.307",
+    "lastModifiedDate": "2026-07-16T16:19:08.307",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55440",
+    "description": "Microsoft UFO open-source framework for intelligent automation across devices and platforms. Prior to 3.0.7, the COMMAND_RESULTS handler in ufo/server/ws/handler.py called get_or_create_session in ufo/server/services/session_manager.py without owner_client_id, allowing an authenticated client to create an unowned attacker-chosen session_id such as constellation_task_id = f\"{task_name}@{task_id}\" and deny the legitimate owner or exhaust memory with phantom sessions. This issue is fixed in version 3.0.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55440",
+    "publishedDate": "2026-07-16T16:19:13.787",
+    "lastModifiedDate": "2026-07-16T16:19:13.787",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63082",
+    "description": "Perfect Support Ticketing & Document Management System through 1.7 contains a broken access control vulnerability that allows authenticated attackers with Agent-level privileges to manipulate the Support Agent assignment field of tickets by bypassing intended authorization checks. Attackers can add or remove any user, including Superadmin accounts, from the Support Agent field of any ticket to which they are assigned, circumventing role-based access controls.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63082",
+    "publishedDate": "2026-07-16T16:19:16.343",
+    "lastModifiedDate": "2026-07-16T16:19:16.343",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2023-49900",
-    "description": "An unauthenticated remote attacker is able to perform remote code execution due to incorrectly sanitized user input in the SetParameter command.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-49900",
-    "publishedDate": "2026-07-16T11:16:36.597",
-    "lastModifiedDate": "2026-07-16T11:16:36.597",
+    "id": "CVE-2026-63081",
+    "description": "Perfect Support Ticketing & Document Management System through 1.7 contains a stored cross-site scripting vulnerability that allows authenticated attackers with Agent-level privileges to inject malicious payloads into the Notes field of assigned support tickets. Attackers can store malicious scripts that execute in the browser context of any user who views the affected ticket notes, including Superadmin users, enabling session hijacking or unauthorized actions on behalf of the victim.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63081",
+    "publishedDate": "2026-07-16T16:19:16.210",
+    "lastModifiedDate": "2026-07-16T16:19:16.210",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "info@cert.vde.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2023-49899",
-    "description": "An unauthenticated remote attacker can execute any command on the affected device due to not correctly verifying the origin of a communication channel.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-49899",
-    "publishedDate": "2026-07-16T11:16:35.597",
-    "lastModifiedDate": "2026-07-16T11:16:35.597",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "info@cert.vde.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-35147",
-    "description": "HCL DFXServer is affected by a Broken Authentication vulnerability via direct API access. The application fails to verify the user's authentication status when accessing specific API endpoints, allowing an unauthenticated attacker to interact with the APIs and perform unauthorized actions without valid credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35147",
-    "publishedDate": "2026-07-16T12:17:35.617",
-    "lastModifiedDate": "2026-07-16T12:17:35.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-35149",
-    "description": "HCL DFXServer is affected by an Authentication Bypass vulnerability via server response manipulation. An unauthorized user without valid credentials can exploit this flaw by intercepting and altering the server's authentication responses, allowing them to gain unauthorized access to the application without verification.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35149",
-    "publishedDate": "2026-07-16T12:17:35.870",
-    "lastModifiedDate": "2026-07-16T12:17:35.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-35148",
-    "description": "HCL DFXServer is affected by a Missing Access Control vulnerability. This vulnerability states that certain endpoints are accessible without any form of authentication in another browser. This allows any network user to invoke these APIs and interact with the application without verification of their identity or authorization level.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35148",
-    "publishedDate": "2026-07-16T12:17:35.733",
-    "lastModifiedDate": "2026-07-16T12:17:35.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
+        "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-35146",
-    "description": "HCL DFXServer is affected by an Unencrypted Communication vulnerability. The application permits users to establish connections over unencrypted channels via the HTTP protocol, which could allow a remote attacker to intercept network traffic and expose sensitive data transmitted between the user and the application.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-35146",
-    "publishedDate": "2026-07-16T12:17:35.493",
-    "lastModifiedDate": "2026-07-16T13:16:31.133",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-22752",
-    "description": "Authentication bypass by primary weakness vulnerability in Spring Security Spring Authorization Server.\n\nThis issue affects Spring Authorization Server: from 7.0.0 through 7.0.4, from 1.5.0 through 1.5.6, from 1.4.0 through 1.4.9, from 1.3.0 through 1.3.10.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22752",
-    "publishedDate": "2026-07-16T10:16:24.767",
-    "lastModifiedDate": "2026-07-16T13:16:30.323",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7543",
-    "description": "The Breakdance plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'fields' parameter in versions up to, and including, 2.7.1 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7543",
-    "publishedDate": "2026-07-16T09:16:19.527",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
         "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6424",
-    "description": "Use-after-free vulnerability in ESET Linux products potentially allowed an attacker to trigger kernel panic on the system",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6424",
-    "publishedDate": "2026-07-16T09:16:19.403",
-    "lastModifiedDate": "2026-07-16T13:16:34.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 6.7,
+        "score": 5.1,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@eset.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-6423",
-    "description": "A local privilege escalation vulnerability in ESET Inspect Connector. \nThe vulnerability was caused by improper authentication in an IPC channel.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6423",
-    "publishedDate": "2026-07-16T09:16:19.273",
-    "lastModifiedDate": "2026-07-16T13:16:33.730",
+    "id": "CVE-2026-12379",
+    "description": "An Open Redirect vulnerability (CWE-601) exists in the OAuth/OIDC authentication implementation of the Axivion Dashboard. The login flow did not properly restrict the post-authentication redirect to the application's own origin, so a user who follows a crafted login link can be sent to an untrusted external site after authenticating against the genuine Dashboard. Because the link points at the legitimate Dashboard, this can be abused for phishing, for example credential or second-factor theft via a convincing look-alike page. Exploitation requires the victim to follow the attacker-supplied link and complete the authentication flow.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12379",
+    "publishedDate": "2026-07-16T16:18:59.320",
+    "lastModifiedDate": "2026-07-16T16:18:59.320",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.5,
+        "score": 6.8,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:M/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@eset.com"
+        "source": "a59d8014-47c4-4630-ab43-e1b13cbe58e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-58078",
-    "description": "The Joomla extension Quix Page Builder Pro is vulnerable to an unauthenticated SQL injection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58078",
-    "publishedDate": "2026-07-16T09:16:19.140",
-    "lastModifiedDate": "2026-07-16T13:16:32.483",
+    "id": "CVE-2026-54568",
+    "description": "Microsoft UFO open-source framework for intelligent automation across devices and platforms. From 3.0.0 until 3.0.6, a client connected to the UFO WebSocket server as a DEVICE could call DEVICE_INFO_REQUEST with another device's target_id and receive that device's server-side system_info through ufo/server/ws/handler.py, because handle_device_info_request and get_device_info did not enforce the constellation-only role or object-level authorization boundary. This issue is fixed in version 3.0.6.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54568",
+    "publishedDate": "2026-07-16T16:19:13.220",
+    "lastModifiedDate": "2026-07-16T16:19:13.220",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57206",
+    "description": "SimpleChat is a secure AI conversation application with personal and group workspaces for document-grounded interactions. Prior to 0.241.206, several plugin validation routes in application/single_app/plugin_validation_endpoint.py, including `POST /api/admin/plugins/test-instantiation`, `GET /api/admin/plugins/health-check/<plugin_name>`, `POST /api/admin/plugins/repair/<plugin_name>`, and `POST /api/plugins/validate`, relied on @swagger_route(security=get_auth_security()) documentation without enforcing @login_required, @user_required, or @admin_required at runtime, allowing unauthenticated or unauthorized clients to invoke plugin validation, health, and repair behavior. This issue is fixed in version 0.241.206.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57206",
+    "publishedDate": "2026-07-16T16:19:14.217",
+    "lastModifiedDate": "2026-07-16T16:19:14.217",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59863",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.5, Kiota honored a poisoned .kiota/workspace.json workspace configuration without validating per-client or per-plugin outputPath values during kiota client generate and kiota plugin generate, allowing a malicious repository or pull request to use absolute paths, rooted POSIX / paths, UNC \\\\ or // paths, Windows drive X:\\ paths, or .. traversal segments to write generated client files outside the workspace root on a developer or CI host. This issue is fixed in version 1.32.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59863",
+    "publishedDate": "2026-07-16T15:16:35.707",
+    "lastModifiedDate": "2026-07-16T16:19:15.140",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59862",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.0, Kiota's Python generator let attacker-controlled enum value descriptions from x-ms-enum.values[].description flow through KiotaBuilder.SetEnumOptions into Documentation.DescriptionTemplate and PythonConventionService.RemoveInvalidDescriptionCharacters without newline sanitization, allowing generated inline comments to split and execute attacker-controlled Python code at module scope when generated modules were imported. This issue is fixed in version 1.32.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59862",
+    "publishedDate": "2026-07-16T15:16:35.570",
+    "lastModifiedDate": "2026-07-16T15:16:35.570",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59861",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.0, Kiota's Ruby generator embedded OpenAPI default fields, property names, and other schema-derived strings through CodeMethodWriter.cs and SanitizeForQuotedLiteral() in Writers/StringExtensions.cs into Ruby double-quoted literals without escaping #, allowing attacker-controlled #{expr}, #$var, or #@var interpolation markers to inject arbitrary Ruby code into generated model classes. This issue is fixed in version 1.32.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59861",
+    "publishedDate": "2026-07-16T15:16:35.440",
+    "lastModifiedDate": "2026-07-16T16:19:15.043",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59860",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.3, Kiota is affected by a code-generation injection vulnerability in the C# XML documentation-comment sink (the description, externalDocs label, and externalDocs link fields emitted as /// … comments). When text from an OpenAPI description is written into single-line XML doc comments without stripping newline and Unicode line-terminator characters, an attacker can break out of the /// comment line and inject additional code into generated C# clients. This issue is fixed in version 1.32.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59860",
+    "publishedDate": "2026-07-16T15:16:35.310",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -235,136 +233,266 @@
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@joomla.org"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15727",
-    "description": "The WP Bulk Delete plugin for WordPress is vulnerable to generic SQL Injection via the 'delete_user_roles' parameter in all versions up to, and including, 1.4.2 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. wp_unslash() is applied to the raw POST body before parse_str() decomposes it, stripping WordPress magic-quotes protection and leaving attacker-controlled values fully unescaped prior to reaching the SQL sink.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15727",
-    "publishedDate": "2026-07-16T09:16:18.510",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-59859",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.4, Kiota's PHP generator embedded OpenAPI description, default fields, property names, and other schema-derived strings into PHP double-quoted literals through SanitizeDoubleQuote() in Writers/StringExtensions.cs without escaping $, allowing attacker-controlled ${...}, $var, or {$obj->prop} interpolation constructs to inject arbitrary PHP code into generated model and request-builder classes. This issue is fixed in version 1.32.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59859",
+    "publishedDate": "2026-07-16T15:16:35.167",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.9,
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59237",
+    "description": "Authorization Bypass Through User-Controlled Key (CWE-639) in the Order and OrderItem REST API controllers in Roskus Prospero Flow CRM before 5.5.3 allows a remote, authenticated user to read, modify, and delete orders and order items belonging to any other company (tenant) via a sequential numeric {id} supplied to GET /api/order/{id}, PUT /api/order/{id}, GET /api/order-item/{id}, PUT /api/order-item/{id}, or DELETE /api/order-item/{id}, because the controllers resolve records with Order::find($id) / Item::find($id) without scoping by the authenticated user's company.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59237",
+    "publishedDate": "2026-07-16T15:16:34.730",
+    "lastModifiedDate": "2026-07-16T16:19:14.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "4daa8cea-433a-44bd-9456-53b127fc289a"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14254",
+    "description": "A race condition in the account lockout mechanism in Delphix Continous Data allowed the lockout threshold to be bypassed through concurrent authentication requests. Parallel login attempts were processed before the failed-login counter and lockout status were updated, defeating brute-force protections and enabling continued password guessing against a targeted account.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14254",
+    "publishedDate": "2026-07-16T15:16:30.617",
+    "lastModifiedDate": "2026-07-16T16:19:00.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@puppet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57205",
+    "description": "SimpleChat is a secure AI conversation application with personal and group workspaces for document-grounded interactions. Prior to 0.241.203, the authenticated GET /api/user/info/<user_id> and GET /api/user/profile-image/<user_id> endpoints in application/single_app/route_backend_users.py accepted a caller-supplied user_id and read the matching Cosmos DB user-settings document without object-level authorization, allowing a low-privilege authenticated user to retrieve another user's email address, display name, and profile image. This issue is fixed in version 0.241.203.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57205",
+    "publishedDate": "2026-07-16T16:19:14.050",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53598",
+    "description": "Prompty is a markdown file format (.prompty) for LLM prompts. Prior to 2.0.0-beta.2, Prompty loaders expanded ${file:...} references in .prompty frontmatter without enforcing that resolved paths stayed within the prompt directory or allowed roots, allowing an attacker-controlled prompt file to read local files through absolute paths, .. traversal, or symlink escapes. This issue is fixed in versions 2.0.0-beta.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53598",
+    "publishedDate": "2026-07-16T16:19:12.990",
+    "lastModifiedDate": "2026-07-16T16:19:12.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15651",
-    "description": "The WP TripAdvisor Review Slider plugin for WordPress is vulnerable to generic SQL Injection via the 'filtersource' parameter in all versions up to, and including, 14.6 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15651",
-    "publishedDate": "2026-07-16T09:16:18.393",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-53597",
+    "description": "Prompty is a markdown file format (.prompty) for LLM prompts. From 2.0.0-alpha.1 until 2.0.0-beta.3, the @prompty/core TypeScript loader in runtime/typescript/packages/core/src/core/loader.ts used gray-matter without overriding executable js and javascript frontmatter engines, allowing an attacker-controlled .prompty file with ---js frontmatter to execute arbitrary JavaScript during prompt loading. This issue is fixed in version 2.0.0-beta.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53597",
+    "publishedDate": "2026-07-16T16:19:12.860",
+    "lastModifiedDate": "2026-07-16T16:19:12.860",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15610",
-    "description": "The WPBot – AI ChatBot for Live Support, Lead Generation, AI Services plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 8.5.6. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to trigger arbitrary re-embedding of stored RAG documents, modifying the rag_documents table and consuming the site owner's paid third-party AI API credits (OpenAI, Gemini, OpenRouter, or xAI).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15610",
-    "publishedDate": "2026-07-16T09:16:18.280",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-54733",
+    "description": "The Microsoft 365 and Microsoft Entra ID Plugins for Moodle provide Office 365 and Azure Active Directory integration for Moodle. Prior to 4.5.6, 5.0.5, and 5.1.1, the Microsoft Office 365 Integration plugin local_o365 Teams SSO endpoint sso_login.php base64-decodes a JWT payload and authenticates users from the upn claim without verifying the JWT signature, allowing an unauthenticated attacker to forge a token and obtain a Moodle session as an O365-authenticated user. This issue is fixed in versions 4.5.6, 5.0.5, and 5.1.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54733",
+    "publishedDate": "2026-07-16T16:19:13.360",
+    "lastModifiedDate": "2026-07-16T16:19:13.360",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59867",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.5, Kiota resolved OpenAPI $ref values by fetching remote http(s) URLs and reading local absolute or out-of-tree file paths, allowing `kiota generate` on an attacker-controlled or attacker-influenced description to perform build-time SSRF, remote file inclusion, and local file inclusion by inlining external schemas such as REMOTE_KIOTA_PROP or Leaked into generated clients. This issue is fixed in version 1.32.5 by AllowedExternalOriginsStreamLoader and the --allowed-external-origins option.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59867",
+    "publishedDate": "2026-07-16T16:19:15.620",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15407",
-    "description": "The Themify Builder plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 7.7.7. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to overwrite or delete the generated CSS stylesheet file of arbitrary posts, including private and draft posts owned by other users, and modify plugin-scoped font options. The required CSRF nonce (tf_nonce) is emitted on public front-end builder pages via wp_localize_script, making it trivially obtainable by any authenticated user visiting such a page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15407",
-    "publishedDate": "2026-07-16T09:16:18.163",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-59866",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.5, Kiota emitted x-ms-kiota-info clientClassName and clientNamespaceName values without identifier or path sanitization as both generated client class or namespace names and generated output path components when `kiota generate` ran without -c/--class-name, allowing an attacker-controlled or compromised OpenAPI description to write generated source outside the -o output directory and inject arbitrary text into generated class or namespace declarations. This issue is fixed in version 1.32.5 by GenerationConfiguration.SanitizeClientClassName and SanitizeClientNamespaceName.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59866",
+    "publishedDate": "2026-07-16T16:19:15.493",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15350",
-    "description": "The The Cache Purger plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 2.3.20. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to permanently truncate the plugin's cache-purge audit log (wp-content/purge.log), destroying the entire cache-purge audit history. The tcp_log_purge nonce is rendered in the admin bar on frontend pages accessible to all authenticated users including subscribers, meaning any authenticated user possesses the nonce required to trigger the deletion.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15350",
-    "publishedDate": "2026-07-16T09:16:18.047",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-59864",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.5, `kiota plugin add` and `kiota plugin generate` (with `-t APIPlugin`) emitted attacker-controlled static_template.file values from x-ai-adaptive-card and x-ai-capabilities into generated Microsoft 365 Copilot and Teams plugin manifests without path validation, allowing ../, absolute, rooted, UNC, Windows drive, or URI paths in response_semantics.static_template.file to cause path traversal or out-of-package file inclusion when the generated plugin was deployed. This issue is fixed in version 1.32.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59864",
+    "publishedDate": "2026-07-16T16:19:15.240",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15324",
-    "description": "The SysBasics Customize My Account for WooCommerce – Live My Account Customizer plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'row_type' parameter in all versions up to, and including, 4.4.14 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with shop manager-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15324",
-    "publishedDate": "2026-07-16T09:16:17.920",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-14890",
+    "description": "SGLang uses an expert-parallel backup subsystem that exposes a ZeroMQ PULL socket on a routable network interface that does not contain authentication or deserialization safeguards, allowing an attacker to provide a malicious pickle file that results in unauthenticated remote code execution when the feature is enabled and the service is reachable over the network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14890",
+    "publishedDate": "2026-07-16T16:19:00.413",
+    "lastModifiedDate": "2026-07-16T16:19:00.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-59865",
+    "description": "Kiota is an OpenAPI based HTTP Client code generator. Prior to 1.32.5, `kiota info` read x-ms-kiota-info.languagesInformation.<language>.dependencyInstallCommand plus dependency name and version values from an OpenAPI description and presented the spec-supplied command as Kiota's recommended install command, allowing an attacker-controlled or compromised description to cause command injection when the suggested command was run manually or through the Kiota VS Code extension's kiota info --json dependency-install flow. This issue is fixed in version 1.32.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59865",
+    "publishedDate": "2026-07-16T16:19:15.373",
+    "lastModifiedDate": "2026-07-16T17:13:54.870",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1.3,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15106",
-    "description": "The WPBot – AI ChatBot for Live Support, Lead Generation, AI Services plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 8.5.6. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to delete arbitrary chat session records from the wpbot_user and wpbot_conversation tables, including chat history and conversation logs, by supplying a crafted userid value.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15106",
-    "publishedDate": "2026-07-16T09:16:17.800",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
+    "id": "CVE-2026-5674",
+    "description": "A flaw was found in PipeWire, a multimedia server. This vulnerability allows an attacker to escape sandboxed applications, such as Flatpak, by exploiting PipeWire's PulseAudio compatibility layer. An attacker with minimal permissions within a sandboxed environment can load a malicious library, leading to arbitrary code execution outside the sandbox and potential compromise of the user's system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5674",
+    "publishedDate": "2026-07-16T14:16:56.070",
+    "lastModifiedDate": "2026-07-16T15:16:35.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56456",
+    "description": "HCL DFXAnalytics is affected by an Internal File Path Disclosure vulnerability. The application dashboard inadvertently leaks sensitive information regarding its internal file structure and directory paths through unhandled error messages, system logs, or debugging output, which could allow a remote attacker to map the underlying server environment and identify targets for further exploitation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56456",
+    "publishedDate": "2026-07-16T14:16:54.943",
+    "lastModifiedDate": "2026-07-16T15:16:33.437",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -372,130 +500,10 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15103",
-    "description": "The WPFunnels – Funnel Builder for WooCommerce with Checkout & One Click Upsell plugin for WordPress is vulnerable to Privilege Escalation via arbitrary option update in all versions up to, and including, 3.12.8. This is due to the `update_settings()` REST callback failing to validate the `group_id` path parameter against an allowlist of permitted option names before passing it directly to `get_option()` and `update_option()`, allowing the built-in `wp_user_roles` option — which satisfies the route's loose `[\\w-]+` regex — to be targeted. This makes it possible for authenticated attackers with the `wpf_manage_funnels` capability and above to elevate their privileges to administrator by writing a crafted role definition containing arbitrary capabilities into the `wp_user_roles` option, thereby granting any WordPress role full site administrator access. The `wpf_manage_funnels` capability is typically assigned to the Funnel Manager custom role created by the plugin, meaning this role is the minimum required to exploit the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15103",
-    "publishedDate": "2026-07-16T09:16:17.677",
-    "lastModifiedDate": "2026-07-16T13:39:36.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15099",
-    "description": "The Delicious Recipes plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'steps' block attribute in versions up to, and including, 1.10.2. This is due to insufficient input sanitization and output escaping in the wrap_direction_text() function, which interpolates the user-supplied href value from nested link nodes ($node['props']['href']) directly into an anchor tag via sprintf() at line 1627 without esc_url() or any URL scheme validation. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts (including javascript: URIs) in pages that will execute whenever a user (such as an editor or administrator previewing the pending post) accesses an injected page and clicks the malicious link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15099",
-    "publishedDate": "2026-07-16T09:16:17.557",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15022",
-    "description": "The Tutor LMS – eLearning and online course solution plugin for WordPress is vulnerable to generic SQL Injection via Stored Quiz Answer Array in all versions up to, and including, 4.0.0 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with custom-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. The payload is stored at quiz-attempt time via the wp_ajax_tutor_quiz_abandon handler, but the injected SQL executes only when a privileged user or Tutor REST API key holder requests the /wp-json/tutor/v1/quiz-attempt-details/{id} endpoint, making this a second-order (stored) injection chain.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15022",
-    "publishedDate": "2026-07-16T09:16:17.440",
-    "lastModifiedDate": "2026-07-16T13:39:36.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15021",
-    "description": "The wpForo Forum plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'location' Profile Field in all versions up to, and including, 3.1.1 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The sanitize_text_field() function applied at input does not encode double quotes, allowing attribute breakout via a payload that escapes the href attribute context and injects event handler attributes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15021",
-    "publishedDate": "2026-07-16T09:16:17.323",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15008",
-    "description": "The Uncanny Automator – Easy Automation, Integration, Webhooks & Workflow Builder Plugin plugin for WordPress is vulnerable to arbitrary file deletion due to insufficient file path validation in the fr_token function in all versions up to, and including, 7.3.1.4. This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). Exploitation requires a Forminator form connected to an Uncanny Automator recipe configured for 'Everyone', allowing unauthenticated form submissions to supply the malicious serialized payload; a gadget chain is present within the plugin via the Action_Helpers_Email __destruct() method, meaning no external gadget library is required.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15008",
-    "publishedDate": "2026-07-16T09:16:17.200",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15005",
-    "description": "The Loco Translate plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 2.8.5. This is due to missing or incorrect nonce validation on the execTemplate function. This makes it possible for unauthenticated attackers to execute arbitrary PHP code on the server by supplying a php://filter stream wrapper URI as the 'template' parameter, which bypasses path validation and is passed directly to the include sink in execTemplate() via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15005",
-    "publishedDate": "2026-07-16T09:16:17.060",
-    "lastModifiedDate": "2026-07-16T13:38:53.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "source": "psirt@hcl.com"
       }
     ]
   }
