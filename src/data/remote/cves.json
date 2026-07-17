@@ -1,13 +1,252 @@
 [
   {
+    "id": "CVE-2026-16008",
+    "description": "A security vulnerability has been detected in sagold json-schema-library 11.5.0/11.5.1. This impacts the function parsePropertyDependencies of the file src/keywords/propertyDependencies.ts. The manipulation leads to improperly controlled modification of object prototype attributes. The attack can be initiated remotely. Upgrading to version 11.6.0 will fix this issue. The identifier of the patch is 432287ee6f68a02ce6f015354618486ec427a32d. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16008",
+    "publishedDate": "2026-07-17T11:17:13.080",
+    "lastModifiedDate": "2026-07-17T13:17:57.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-22104",
+    "description": "Improper access control in Hashtopolis server web-interface chunk activity component for versions prior to 0.14.8 allows any created account to read all cracked hashes of a Hashtopolis server instance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22104",
+    "publishedDate": "2026-07-17T10:16:36.550",
+    "lastModifiedDate": "2026-07-17T11:17:13.277",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:I/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "csirt@divd.nl"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59252",
+    "description": "Improper Validation of Specified Quantity in Input in ZenHive mpp allows an unauthenticated remote client to drain the fee-payer wallet, resulting in denial of service for legitimate clients.\n\nWhen the mpp Elixir library is configured as fee payer (fee_payer: true), the MPP.Methods.Tempo payment method co-signs and broadcasts a client-supplied EVM transaction without first validating that the client-supplied gas_limit is sufficient to complete the intended call. A malicious client can submit a signed transferWithMemo transaction with gas_limit deliberately set just below the amount required for successful execution. The server co-signs the transaction and broadcasts it via rpc_broadcast_sync. The transaction runs out of gas during EVM execution and reverts, but the fee-payer wallet is still charged for the burned gas while the client pays nothing and receives no resource. Repeated requests from one or more malicious clients drain the fee-payer wallet at near-zero cost to the attacker, ultimately preventing the server from sponsoring gas for legitimate payment requests.\n\nThe wait_for_confirmation = false (optimistic) path is also affected: it invokes simulate_payment_call via eth_call, but that simulation omits the gas parameter and therefore does not catch out-of-gas conditions.\n\nThis issue affects mpp: from 0.2.0 before 0.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59252",
+    "publishedDate": "2026-07-17T11:17:13.803",
+    "lastModifiedDate": "2026-07-17T13:18:58.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59694",
+    "description": "Improper Validation of Specified Quantity in Input in ZenHive mpp allows an unauthenticated remote client to inflate the fee-payer's gas cost per payment by a large multiplier, degrading the sponsor's operating margin.\n\nWhen the mpp Elixir library is configured as fee payer (fee_payer: true), MPP.Tempo.Transaction.cosign_fee_payer/3 re-signs the client-supplied base fields of the 0x76 AASigned envelope verbatim, including the EIP-2930 access list, without validating its length or contents. EIP-2930 access list entries incur intrinsic gas (~2,400 gas per address, plus 1,900 gas per storage key) charged before any opcode executes, regardless of whether the listed addresses are ever touched. A malicious client submits a valid transferWithMemo call alongside a large number of fabricated access-list entries. The server co-signs and broadcasts the transaction. The intended transfer executes normally, but the fee-payer wallet pays a large multiple of the expected gas cost with no corresponding on-chain work.\n\nAt the maintainer's default of 137 access-list entries (fitting within Bandit's 10,000-byte per-header-field limit) and 100 Gwei max_fee_per_gas, per-payment gas cost rises from ~51,287 to ~380,087 gas, a 7.4x multiplier. Sustained abuse destroys the sponsor's operating margin on low-cost payments and, over time, drains the fee-payer wallet.\n\nThis issue affects mpp: from 0.2.0 before 0.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59694",
+    "publishedDate": "2026-07-17T11:17:13.960",
+    "lastModifiedDate": "2026-07-17T13:18:59.000",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59695",
+    "description": "Improper Validation of Specified Quantity in Input in ZenHive mpp allows an unauthenticated remote client to drain the fee-payer wallet in a single request by naming an arbitrarily high gas price.\n\nWhen the mpp Elixir library is configured as fee payer (fee_payer: true), MPP.Tempo.Transaction.cosign_fee_payer/3 re-signs the client-supplied base fields of the 0x76 AASigned envelope verbatim, including max_fee_per_gas and max_priority_fee_per_gas, without validating that they are within reasonable bounds. A malicious client embeds arbitrarily large values for these fields in the signed envelope. The server co-signs and broadcasts the transaction. The effective_gas_price billed against the fee-payer wallet is derived from the attacker-supplied ceilings, so the server pays those inflated per-gas rates out of its own wallet. A single crafted request can drain the wallet entirely, after which the server can no longer sponsor gas for legitimate payment requests.\n\nThis issue affects mpp: from 0.2.0 before 0.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59695",
+    "publishedDate": "2026-07-17T11:17:14.117",
+    "lastModifiedDate": "2026-07-17T13:18:59.167",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8075",
+    "description": "Mattermost Desktop App versions <=6.2 5.5.13 6.0.2.0 fail to properly null check when checking for headers in the Mattermost Desktop App which allows any user to crash another channel members Desktop App via posting a malicious link with an embedded image that misses one of those headers. Mattermost Advisory ID: MMSA-2026-00668",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8075",
+    "publishedDate": "2026-07-17T11:17:15.180",
+    "lastModifiedDate": "2026-07-17T13:19:01.723",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "responsibledisclosure@mattermost.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9602",
+    "description": "Mattermost Desktop App versions <=6.2 6.0.2 5.6.13.0 fail to validate payloads sent from the Mattermost Web App to the Desktop App which allows a malicious server owner to crash the Mattermost Desktop App via changing the payload of a method to a malformed one. Mattermost Advisory ID: MMSA-2026-00678",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9602",
+    "publishedDate": "2026-07-17T11:17:15.297",
+    "lastModifiedDate": "2026-07-17T13:19:02.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "responsibledisclosure@mattermost.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62764",
+    "description": "Improper Handling of Insufficient Privileges vulnerability in Apache Accumulo.\nAn authenticated, but low-privileged user without system permissions may\nissue a remote command to gracefully shutdown system components\n(compaction-coordinator, compactor, gc, manager, monitor, tserver, or sserver),\nleading to a denial of service.\n\nThis issue affects Apache Accumulo 2.1.4 and 2.1.5.\n\nUsers are recommended to upgrade to version 2.1.6, which fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62764",
+    "publishedDate": "2026-07-17T09:16:41.853",
+    "lastModifiedDate": "2026-07-17T11:17:15.067",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:D/RE:L/U:Green",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@apache.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9656",
+    "description": "The HubSpot All-In-One Marketing – Forms, Popups, Live Chat plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 11.3.62 via the wp_localize_script() / window.leadinConfig JavaScript object. This makes it possible for authenticated attackers, with contributor-level access and above, to extract the site's plaintext HubSpot OAuth refresh token exposed via the window.leadinConfig JavaScript object, which can then be used to access or modify data in the connected HubSpot tenant. Although the refresh token is stored at rest with AES-256-CTR encryption, decryption occurs server-side before the plaintext value is passed to wp_localize_script(), rendering the at-rest encryption ineffective against this exposure path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9656",
+    "publishedDate": "2026-07-17T08:16:59.043",
+    "lastModifiedDate": "2026-07-17T13:19:02.630",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15380",
+    "description": "A non-administrator interactive user can obtain full SYSTEM code execution through a DCOM/task scheduler logic chain — no network access, no memory corruption required (ITMS 8.7.3)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15380",
+    "publishedDate": "2026-07-17T08:16:58.913",
+    "lastModifiedDate": "2026-07-17T11:17:12.873",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:A/V:C/RE:M/U:Red",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "secure@symantec.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15379",
+    "description": "The Altiris WMI provider exposes a class (AltirisAgent_Stream) that allows any local standard user to read the contents of any file accessible to the SYSTEM account, bypassing filesystem ACLs. No admin privileges required. The provider reverts to the LocalSystem context when servicing WMI queries without re-impersonating the caller. Any local standard user can therefore read SYSTEM-readable files — including configuration files, service logs, and secrets stored with SYSTEM/Administrator-only ACLs — by querying the provider directly.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15379",
+    "publishedDate": "2026-07-17T08:16:57.773",
+    "lastModifiedDate": "2026-07-17T11:17:12.763",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:C/RE:M/U:Red",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "secure@symantec.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-9810",
     "description": "The AI Copilot  WordPress plugin before 1.5.4 does not bind OAuth access tokens to a WordPress user, and accepts any valid token as an administrator session, allowing unauthenticated attackers who complete the public OAuth flow to execute privileged MCP tools as an administrator, including arbitrary user creation and role escalation.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-9810",
     "publishedDate": "2026-07-17T07:16:38.230",
-    "lastModifiedDate": "2026-07-17T07:16:38.230",
+    "lastModifiedDate": "2026-07-17T13:19:02.733",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
   },
   {
     "id": "CVE-2026-13402",
@@ -74,7 +313,7 @@
     "description": "**UNSUPPORTED WHEN ASSIGNED**  Exposed IOCTL with Insufficient Access Control in the ASUS AURA SYNC driver allows a local user to bypass the driver's verification and invoke arbitrary IOCTLs, resulting in privilege escalation.\n\nRefer to the 'End-of-Life Notice and Driver Update for Legacy ASUS Drivers ' section on the ASUS Security Advisory for more information.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2019-25764",
     "publishedDate": "2026-07-17T07:16:37.193",
-    "lastModifiedDate": "2026-07-17T07:16:37.193",
+    "lastModifiedDate": "2026-07-17T11:17:11.683",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -90,71 +329,11 @@
     ]
   },
   {
-    "id": "CVE-2026-15380",
-    "description": "A non-administrator interactive user can obtain full SYSTEM code execution through a DCOM/task scheduler logic chain — no network access, no memory corruption required (ITMS 8.7.3)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15380",
-    "publishedDate": "2026-07-17T08:16:58.913",
-    "lastModifiedDate": "2026-07-17T08:16:58.913",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:A/V:C/RE:M/U:Red",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "secure@symantec.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9656",
-    "description": "The HubSpot All-In-One Marketing – Forms, Popups, Live Chat plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 11.3.62 via the wp_localize_script() / window.leadinConfig JavaScript object. This makes it possible for authenticated attackers, with contributor-level access and above, to extract the site's plaintext HubSpot OAuth refresh token exposed via the window.leadinConfig JavaScript object, which can then be used to access or modify data in the connected HubSpot tenant. Although the refresh token is stored at rest with AES-256-CTR encryption, decryption occurs server-side before the plaintext value is passed to wp_localize_script(), rendering the at-rest encryption ineffective against this exposure path.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9656",
-    "publishedDate": "2026-07-17T08:16:59.043",
-    "lastModifiedDate": "2026-07-17T08:16:59.043",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15379",
-    "description": "The Altiris WMI provider exposes a class (AltirisAgent_Stream) that allows any local standard user to read the contents of any file accessible to the SYSTEM account, bypassing filesystem ACLs. No admin privileges required. The provider reverts to the LocalSystem context when servicing WMI queries without re-impersonating the caller. Any local standard user can therefore read SYSTEM-readable files — including configuration files, service logs, and secrets stored with SYSTEM/Administrator-only ACLs — by querying the provider directly.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15379",
-    "publishedDate": "2026-07-17T08:16:57.773",
-    "lastModifiedDate": "2026-07-17T08:16:57.773",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:C/RE:M/U:Red",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "secure@symantec.com"
-      }
-    ]
-  },
-  {
     "id": "CVE-2026-15982",
     "description": "The Aimogen Pro - All-in-One AI Content Writer, Editor, ChatBot & Automation Toolkit plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 2.8.4. This is due to due to a missing capability check on the 'aiomatic_call_google_ai_function' function. This makes it possible for unauthenticated attackers to leverage the 'aimogen_wp_god_mode' tool to clear function blacklists and execute arbitrary PHP functions, such as creating administrator accounts.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-15982",
     "publishedDate": "2026-07-17T06:16:36.560",
-    "lastModifiedDate": "2026-07-17T06:16:36.560",
+    "lastModifiedDate": "2026-07-17T11:17:12.970",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -275,166 +454,6 @@
         "exploitabilityScore": 0.6,
         "impactScore": 5.9,
         "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15759",
-    "description": "The ChatHelp – Click to Chat Button, WooCommerce Chat to Order & Floating Chat Form plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'number' and 'group' Shortcode Attributes in all versions up to, and including, 3.5.1 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15759",
-    "publishedDate": "2026-07-17T05:16:38.447",
-    "lastModifiedDate": "2026-07-17T05:16:38.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15457",
-    "description": "The Kirki – Freeform Page Builder, Website Builder & Customizer plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 6.0.13 via the 'family' parameter. This makes it possible for authenticated attackers, with editor-level access and above, to delete arbitrary directories on the server, which can result in loss of data and availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15457",
-    "publishedDate": "2026-07-17T05:16:38.323",
-    "lastModifiedDate": "2026-07-17T05:16:38.323",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15349",
-    "description": "The ERP: Complete HR, Accounting & CRM Suite Built for WooCommerce plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.17.6. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to create arbitrary company locations in the ERP database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15349",
-    "publishedDate": "2026-07-17T05:16:38.197",
-    "lastModifiedDate": "2026-07-17T05:16:38.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15161",
-    "description": "The Ninja Forms - Excel Export plugin for WordPress is vulnerable to Stored Cross-Site Scripting in versions up to, and including, 3.3.6. This is due to the save_filter() AJAX handler storing the raw $_POST['filter'] array into a WordPress option via update_option() without any capability check, nonce verification, or input sanitization, combined with the get_filter_row() method on the admin Excel Export screen concatenating the stored filter values (field_key, condition, value) directly into HTML attributes without esc_attr(). This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15161",
-    "publishedDate": "2026-07-17T05:16:38.087",
-    "lastModifiedDate": "2026-07-17T05:16:38.087",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14503",
-    "description": "The pCloud WP Backup plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 2.0.3 via the wp2pcl_ajax_process_request_inner. This makes it possible for authenticated attackers, with subscriber-level access and above, to extract force generation of a full-site backup archive written to a publicly accessible directory, exposing wp-config.php database credentials, WordPress secret salts, and the complete PHP source tree. The resulting archive is deposited in the plugin's unprotected tmp/ directory at a predictable URL, making the extracted data accessible to unauthenticated visitors once the backup is triggered.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14503",
-    "publishedDate": "2026-07-17T05:16:37.960",
-    "lastModifiedDate": "2026-07-17T05:16:37.960",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13765",
-    "description": "The LearnPress – WordPress LMS Plugin for Create and Sell Online Courses plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 4.4.1 via the check_answer. This makes it possible for unauthenticated attackers to extract the correct-answer markers, full option lists, explanations, and question content for any quiz question on the site — including questions belonging to paid courses the attacker is not enrolled in.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13765",
-    "publishedDate": "2026-07-17T05:16:37.837",
-    "lastModifiedDate": "2026-07-17T05:16:37.837",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13352",
-    "description": "The Paid Membership Plugin, Ecommerce, User Registration Form, Login Form, User Profile & Restrict Content – ProfilePress plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 4.16.18 via the allowed_mime_types function. This is due to the unconditional registration of an upload_mimes filter that adds executable file extensions (.exe, .apk, .msi) to the global WordPress MIME allowlist, without scoping the expansion to digital-product upload contexts. This makes it possible for authenticated attackers, with author-level access and above, to upload files that may be executable, which makes remote code execution possible. This filter is registered globally on every request regardless of whether the digital products feature is configured or in use, meaning the expanded MIME allowlist affects all WordPress upload contexts site-wide.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13352",
-    "publishedDate": "2026-07-17T05:16:36.730",
-    "lastModifiedDate": "2026-07-17T05:16:36.730",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8616",
-    "description": "The Fense Proxy & VPN Blocker plugin for WordPress is vulnerable to unauthorized modification of data due to a missing capability check and missing nonce validation on the fense_bpvt_save_settings() function in versions up to, and including, 3.0.1. The callback is registered to both wp_ajax_* and wp_ajax_nopriv_* hooks and unconditionally calls delete_option() on four plugin options and delete_transient() on three transients tied to the plugin's API key cache and settings. This makes it possible for unauthenticated attackers to delete plugin options and transients, effectively resetting the plugin's API key/data cache and forcing the plugin to refetch state.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8616",
-    "publishedDate": "2026-07-17T04:16:51.197",
-    "lastModifiedDate": "2026-07-17T04:16:51.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
       }
     ]
   }
