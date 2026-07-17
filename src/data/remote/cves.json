@@ -1,50 +1,10 @@
 [
   {
-    "id": "CVE-2026-39359",
-    "description": "Wazuh is a free and open source platform used for threat prevention, detection, and response. In versions 4.0.0 through 4.10.3 and 4.11.0 through 4.14.4, a logic flaw affects the Wazuh Manager's enrollment daemon (authd) and synchronization daemon (remoted). The authd process allows agents to select a group during enrollment but does not filter path traversal sequences such as \"...\" While the manager checks for the group directory using wopendir(), the \"..\" sequence references the parent directory (/var/ossec/etc), allowing it to pass validation. After the malicious group is accepted and stored in the manager's global database, the remoted process uses this unchecked value to build paths for agent configuration synchronization. As a result, sensitive files from /var/ossec/etc, such as client.keys, ossec.conf, and internal certificates, are included in the agent's shared configuration stream and exposed to the attacker. This issue has been fixed in versions 4.10.4 and 4.14.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39359",
-    "publishedDate": "2026-07-17T00:16:25.663",
-    "lastModifiedDate": "2026-07-17T00:16:25.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-34150",
-    "description": "Wazuh is a free and open source platform used for threat prevention, detection, and response. In versions 1.0.0 and above, prior to 4.14.5, a heap buffer overflow in wazuh-analysisd allows an unauthenticated remote attacker to crash the Wazuh manager's analysis engine, causing complete loss of SIEM alert processing. The attack exploits the default configuration shipped in the official wazuh/wazuh-docker deployment with default configuration. An attacker can enroll with authd without a password to obtain a valid agent ID and encryption key, connect to remoted over the Wazuh agent protocol, and inject rootcheck events containing  {key: value}  patterns longer than 30 bytes that trigger a sprintf overflow of a 30-byte buffer in W_JSON_ParseRootcheck, corrupting the heap and crashing wazuh-analysisd so that all alert processing silently stops while the dashboard and API keep showing stale data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-34150",
-    "publishedDate": "2026-07-17T00:16:25.520",
-    "lastModifiedDate": "2026-07-17T00:16:25.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-33754",
-    "description": "Wazuh is a free and open source platform used for threat prevention, detection, and response. In versions 3.9.0 and above, prior to 4.14.5, a remote attacker can trigger memory exhaustion in the cluster protocol parser by sending a crafted message header with an arbitrarily large payload length. The length is trusted before authentication/decryption and used directly to allocate memory, allowing unauthenticated denial of service of the cluster service. This issue has been fixed in version 4.14.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33754",
-    "publishedDate": "2026-07-17T00:16:25.383",
-    "lastModifiedDate": "2026-07-17T00:16:25.383",
+    "id": "CVE-2026-21770",
+    "description": "HCL Traveler for Microsoft Outlook (HTMO) is susceptible to a DLL hijacking vulnerability which could allow an attacker to modify or replace the application with malicious content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21770",
+    "publishedDate": "2026-07-17T05:16:38.567",
+    "lastModifiedDate": "2026-07-17T05:16:38.567",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -52,19 +12,59 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.6,
+        "impactScore": 5.9,
+        "source": "psirt@hcl.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-33434",
-    "description": "Wazuh is a free and open source platform used for threat prevention, detection, and response. In versions 4.6.0 and above, prior to 4.14.5, a logic error in CheckRateLimitsMiddleware.dispatch() causes the /events endpoint rate check to unconditionally overwrite the general rate limit result. When the global max_request_per_minute is exceeded, requests to /events still succeed if the events-specific counter (hardcoded 30/min) has not been reached. This allows event injection into analysisd beyond the admin-configured global rate limit. This issue has been fixed in version 4.14.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-33434",
-    "publishedDate": "2026-07-17T00:16:24.573",
-    "lastModifiedDate": "2026-07-17T00:16:24.573",
+    "id": "CVE-2026-8616",
+    "description": "The Fense Proxy & VPN Blocker plugin for WordPress is vulnerable to unauthorized modification of data due to a missing capability check and missing nonce validation on the fense_bpvt_save_settings() function in versions up to, and including, 3.0.1. The callback is registered to both wp_ajax_* and wp_ajax_nopriv_* hooks and unconditionally calls delete_option() on four plugin options and delete_transient() on three transients tied to the plugin's API key cache and settings. This makes it possible for unauthenticated attackers to delete plugin options and transients, effectively resetting the plugin's API key/data cache and forcing the plugin to refetch state.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8616",
+    "publishedDate": "2026-07-17T04:16:51.197",
+    "lastModifiedDate": "2026-07-17T04:16:51.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15395",
+    "description": "The Kali Forms — Contact Form & Drag-and-Drop Builder plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'digitalSignature' Field Value in all versions up to, and including, 2.4.18 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The required form-submission nonce is publicly available on any page containing the form shortcode, making this exploitable by fully unauthenticated attackers without any precondition beyond the form being published.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15395",
+    "publishedDate": "2026-07-17T04:16:50.840",
+    "lastModifiedDate": "2026-07-17T04:16:50.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15160",
+    "description": "The Ninja Forms - Excel Export plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 3.3.6 via the 'spreadsheet_export_tmp_name' parameter. This makes it possible for authenticated attackers, with subscriber-level access and above, to write .xls/.xlsx files to arbitrary locations on the server, which can be used to stage further attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15160",
+    "publishedDate": "2026-07-17T04:16:50.700",
+    "lastModifiedDate": "2026-07-17T04:16:50.700",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -72,319 +72,39 @@
         "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 1.4,
-        "source": "security-advisories@github.com"
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-54340",
-    "description": "h2o is an HTTP server with support for HTTP/1.x, HTTP/2 and HTTP/3. Prior to commit 9265bdd, there is an HTTP/2 state amplification issue that combines HPACK decompression amplification with Slowloris-style stream stalling. Amplified decoded header state can be retained by stalled HTTP/2 streams, and depending on the configuration, additional limits are needed to bound decoded header state and prevent attack. This issue has been fixed by commit 9265bdd.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54340",
-    "publishedDate": "2026-07-17T00:16:25.810",
-    "lastModifiedDate": "2026-07-17T00:16:25.810",
+    "id": "CVE-2026-15159",
+    "description": "The Ninja Forms - Excel Export plugin for WordPress is vulnerable to Insecure Direct Object Reference in all versions up to, and including, 3.3.6 via the 'spreadsheet_export_form_id' parameter due to missing validation on a user controlled key. This makes it possible for authenticated attackers, with subscriber-level access and above, to enumerate any Ninja Forms form ID and download all stored submission data — including names, email addresses, phone numbers, physical addresses, and any other PII collected by site forms — as a downloadable XLSX file.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15159",
+    "publishedDate": "2026-07-17T04:16:50.540",
+    "lastModifiedDate": "2026-07-17T04:16:50.540",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44453",
-    "description": "h2o is an HTTP server with support for HTTP/1.x, HTTP/2 and HTTP/3. Prior to commit 6b5370d, h2o is vulnerable to a Denial of Service attack when calling alloca under certain conditions. When serving static files, h2o builds the file path on stack, by calling alloca. The maximum size of the memory allocated using alloca can be as huge as ~600KB, which exceeds the default pthread stack size used by musl libc (128KB). If the amount of memory allocated by alloca exceeds the stack size, the h2o server crashes with a segmentation fault, while it tries to touch the guard page. This issue has been fixed by commit 6b5370d.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44453",
-    "publishedDate": "2026-07-16T23:16:17.423",
-    "lastModifiedDate": "2026-07-16T23:16:17.423",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44452",
-    "description": "h2o is an HTTP server with support for HTTP/1.x, HTTP/2 and HTTP/3. Prior to commit 8dc37cb, when h2o receives a ClientHello message over TLS or QUIC and it contains a zero-length SNI extension, the h2o server runs over the zero-length hostname while trying to copy the hostname, assuming that it is NULL-terminated. This is a potential denial-of-service attack vector in sense that it might trigger segmentation violation. This issue has been fixed by commit 8dc37cb.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44452",
-    "publishedDate": "2026-07-16T23:16:17.280",
-    "lastModifiedDate": "2026-07-16T23:16:17.280",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44436",
-    "description": "Quicly is an IETF QUIC protocol implementation intended primarily for use within the H2O HTTP server. Prior to commit 8b178e6, Quicly is vulnerable to a Denial of Service attack through connection state corruption. In QUIC Invariants, the maximum length of a Connection ID is 255 bytes, while QUIC version 1 further restricts the maximum to 20 bytes. Quicly implements QUIC version 1 and therefore its CID buffers are limited to 20 bytes. However, to be able to respond to unknown versions of QUIC, its packet decoder accepts Connection IDs of up to 255 bytes. As its CID buffers are merely 20 bytes long, Quicly must reject QUIC version 1 packets with Connection IDs longer than that. The command line tool bundled with Quicly has had that check, however the library itself lacked such enforcement. As a consequence, when used by applications that lack their own enforcement, the connection state becoming inconsistent to buffer overrun. Fortunately, the overflow stops within the allocated chunk of memory, but nevertheless, the bug leads to assertion failures. This issue has been fixed by commit 8b178e6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44436",
-    "publishedDate": "2026-07-16T23:16:17.143",
-    "lastModifiedDate": "2026-07-16T23:16:17.143",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44435",
-    "description": "Quicly is an IETF QUIC protocol implementation intended primarily for use within the H2O HTTP server. Prior to commit 937d0e9, an assertion failure is raised when the total number of valid handshake messages received over a CRYPTO stream of a single packet number space exceeds 32KB, causing a Denial of Service. This issue has been fixed by commit 937d0e9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44435",
-    "publishedDate": "2026-07-16T23:16:17.010",
-    "lastModifiedDate": "2026-07-16T23:16:17.010",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44434",
-    "description": "Quicly is an IETF QUIC protocol implementation intended primarily for use within the H2O HTTP server. Prior to commit dccf5d4, Quicly was vulnerable to stateless reset injection through lack of packet entry validation. The QUIC protocol is designed to withstand packet injection attacks, once the handshake is complete. Only packets that carry some secret patterns are considered as stateless resets. Quicly allows the peer to share up to 4 such patterns per connection. However, until now, it failed to determine which of the 4 slots that it uses to retain the secret patterns contains a valid entry. As the slots are zero-initialized, the failure meant that, unless the peer advertised 4 of such patterns, an all-zero pattern was treated as a stateless reset.In effect, this allowed an on-path attacker to reset QUIC connections governed by Quicly. This issue has been fixed by commit dccf5d4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44434",
-    "publishedDate": "2026-07-16T23:16:16.870",
-    "lastModifiedDate": "2026-07-16T23:16:16.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44433",
-    "description": "Quicly is an IETF QUIC protocol implementation intended primarily for use within the H2O HTTP server. Prior to commit 8b178e6, an adversarial peer could send a STREAM frame carrying just one byte at the largest offset being permitted to obtain additional flow control credit, which under certain circumstances could lead to a Denial of Service. Assuming the application prepares a receive buffer for storing all data that arrive out-of-order, up to the largest offset being received, this behavior could lead to the application allocating large amount of memory with the peer sending only a handful of packets, resulting in memory exhaustion. In addition to the receive buffer allocation strategy, the severity of this vulnerability depends on how the application controls the stream concurrency. In case of the H2O HTTP server, under its default setting, this bug increases the maximum amount of memory allocated per connection by about 4 times. This issue has been fixed by commit 8b178e6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44433",
-    "publishedDate": "2026-07-16T23:16:16.727",
-    "lastModifiedDate": "2026-07-16T23:16:16.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44182",
-    "description": "Jupyter Enterprise Gateway launches remote Jupyter Notebook kernels across distributed clusters like Apache Spark, Kubernetes, and Docker Swarm. In versions prior to 3.3.0, the server interpolates untrusted environment variables (e.g., KERNEL_XXX) into Kubernetes manifests without YAML-aware escaping, enabling YAML injection attacks. Attackers can inject new fields, overwrite critical fields (e.g., duplicate securityContext keys, where the last one prevails), and inject document boundaries (--- for new documents, ... for end-of-document) to generate multiple resources, potentially creating arbitrary types, such as privileged pods. The Jinja2 template for the Kubernetes manifest contains several kernel_xxx variables, such as kernel_working_dir that are used when rendering the manifest and are all vectors for YAML injection. This issue has been fixed in version 3.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44182",
-    "publishedDate": "2026-07-16T23:16:16.590",
-    "lastModifiedDate": "2026-07-16T23:16:16.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44181",
-    "description": "Jupyter Enterprise Gateway launches remote Jupyter Notebook kernels across distributed clusters like Apache Spark, Kubernetes, and Docker Swarm. In versions 2.0.0rc2 and above, prior to 3.3.0, the environment variables (KERNEL_XXX) used during the rendering of the Kubernetes manifest are vulnerable to Server Side Template Injection (SSTI). By including Jinja2 template expressions it is possible to execution Python code and OS Commands in the Enterprise Gateway service. The code can use or steal the Kubernetes service account token, which can steal Kubernetes secrets and be used to fully compromise the Kubernetes cluster by scheduling a privileged pod or a pod with a hostPath volume mount. This issue has been fixed in version 3.3.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44181",
-    "publishedDate": "2026-07-16T23:16:16.453",
-    "lastModifiedDate": "2026-07-16T23:16:16.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43978",
-    "description": "wger is a free, open-source workout and fitness manager. In versions prior to 2.6, a gym trainer can escalate their session to any higher-privileged account (gym manager, general manager) by chaining two calls to the trainer-login endpoint. Once a trainer performs a legitimate switch into a low-privileged user, the session flag trainer.identity is set and this flag alone bypasses the permission check on all subsequent trainer-login calls. This grants full gym administration capabilities including viewing all member data, modifying contracts, managing gym configuration, and accessing other trainers' and managers' personal information. This issue has been fixed in version 2.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43978",
-    "publishedDate": "2026-07-16T23:16:16.310",
-    "lastModifiedDate": "2026-07-16T23:16:16.310",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-43977",
-    "description": "wger is a free, open-source workout and fitness manager. In versions prior to 2.6, any authenticated user can read another user's private workout session notes, exercise history, and training statistics by calling the /logs/ and /stats/ actions on a routine they do not own. The vulnerability exists in RoutineViewSet (wger/manager/api/views.py). The view defines two custom actions /logs/ and /stats/ that are intended to return data for the requesting user's own training history within a routine. However, the underlying permission check (RoutinePermission.has_object_permission) grants read access to any authenticated user when the routine has is_template=True, regardless of ownership. When the /logs/ or /stats/ actions are invoked against a routine the attacker does not own, they return the owner's private workout history, not the attacker's. This issue has been fixed in version 2.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43977",
-    "publishedDate": "2026-07-16T23:16:16.167",
-    "lastModifiedDate": "2026-07-16T23:16:16.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15997",
-    "description": "Out-of-bounds write vulnerability in Legion of the Bouncy Castle Inc. BC-LTS bcprov-lts8on on ARM allows Overflow Buffers.\n\n This vulnerability is associated with program files https://github.Com/bcgit/bc-lts-java/blob/main/native_c/arm/sha/shake.C, https://github.Com/bcgit/bc-lts-java/blob/main/native_c/arm/sha/sha3.C.\n\n\n\nThis issue affects BC-LTS: from 2.73.0 before 2.73.12.1.\n\n\n\nIssue is only applicable if application involved is accepting memoable SHA3 / SHAKE states from potentially untrusted sources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15997",
-    "publishedDate": "2026-07-16T23:16:15.727",
-    "lastModifiedDate": "2026-07-16T23:16:15.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.7,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:P/AU:N/R:A/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "91579145-5d7b-4cc5-b925-a0262ff19630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14253",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14253",
-    "publishedDate": "2026-07-16T23:16:15.660",
-    "lastModifiedDate": "2026-07-16T23:16:15.660",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-11740",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11740",
-    "publishedDate": "2026-07-16T23:16:15.490",
-    "lastModifiedDate": "2026-07-16T23:16:15.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-62826",
-    "description": "Improper neutralization of input during web page generation ('cross-site scripting') in Microsoft Office SharePoint allows an authorized attacker to perform spoofing over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62826",
-    "publishedDate": "2026-07-16T22:17:52.720",
-    "lastModifiedDate": "2026-07-16T22:17:52.720",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 2.5,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59117",
-    "description": "Integer overflow or wraparound in Windows Terminal allows an unauthorized attacker to execute code over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59117",
-    "publishedDate": "2026-07-16T22:17:52.597",
-    "lastModifiedDate": "2026-07-16T22:17:52.597",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58643",
-    "description": "Improper neutralization of input during web page generation ('cross-site scripting') in Windows Admin Center allows an unauthorized attacker to perform spoofing over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58643",
-    "publishedDate": "2026-07-16T22:17:52.370",
-    "lastModifiedDate": "2026-07-16T22:17:52.370",
+    "id": "CVE-2026-11324",
+    "description": "The WooCommerce Placetopay Gateway and PlacetoPay/AvalPay gateway plugins for WordPress are vulnerable to Reflected Cross-Site Scripting via the 'redirect-url' parameter in versions up to, and including, 3.2.2 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that execute if they can successfully trick a user into performing an action such as clicking on a link.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11324",
+    "publishedDate": "2026-07-17T04:16:50.177",
+    "lastModifiedDate": "2026-07-17T04:16:50.177",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -395,58 +115,469 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 2.7,
-        "source": "secure@microsoft.com"
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-58598",
-    "description": "Concurrent execution using shared resource with improper synchronization ('race condition') in Windows Backup Engine allows an authorized attacker to elevate privileges locally.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58598",
-    "publishedDate": "2026-07-16T22:17:50.330",
-    "lastModifiedDate": "2026-07-16T22:17:50.330",
+    "id": "CVE-2026-58317",
+    "description": "Unsigned to Signed Conversion Error (CWE-196) vulnerability exists in TTSSH2 plugin of Tera Term provided by TeraTerm Project. When Tera Term attempts to establish an SSH connection to a server set up by an attacker, out-of-bounds read/write may occur. As a result, the contents of adjacent memory regions may be transmitted to the server, and Tera Term may behave unexpected or terminate abnormally.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58317",
+    "publishedDate": "2026-07-17T05:16:40.180",
+    "lastModifiedDate": "2026-07-17T05:16:40.180",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 5.9,
-        "source": "secure@microsoft.com"
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vultures@jpcert.or.jp"
       }
     ]
   },
   {
-    "id": "CVE-2026-57077",
-    "description": "YAML::Syck versions before 1.47 for Perl allow an out-of-bounds read via an unbounded newline scan in newline_len.\n\nIn the bundled libsyck newline_len and is_newline dereference the scan pointer, and the following byte for a \"\\r\\n\" pair, with no NUL-terminator or bounds check. During block-scalar lexing at a document boundary the scan runs one byte past the heap lexer buffer. This is an incomplete fix of CVE-2025-11683, on a lexer path the earlier fix did not cover.\n\nAny caller that runs Load or LoadFile on an untrusted document with a block scalar at a document boundary reaches the over-read.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57077",
-    "publishedDate": "2026-07-16T22:17:43.650",
-    "lastModifiedDate": "2026-07-16T22:17:43.650",
+    "id": "CVE-2026-60060",
+    "description": "Improper Handling of Length Parameter Inconsistency (CWE-130) vulnerability exists in TTSSH2 plugin of Tera Term provided by TeraTerm Project. When Tera Term attempts to establish an SSH connection to a server set up by an attacker, out-of-bounds read/write may occur. As a result, the contents of adjacent memory regions may be transmitted to the server, and Tera Term may behave unexpected or terminate abnormally.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60060",
+    "publishedDate": "2026-07-17T05:16:41.360",
+    "lastModifiedDate": "2026-07-17T05:16:41.360",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vultures@jpcert.or.jp"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-57076",
-    "description": "YAML::Syck versions before 1.47 for Perl allow a heap use-after-free via an anchor name reused as an anchors-table key in syck_hdlr_add_anchor.\n\nIn the bundled libsyck an anchor name allocated by syck_strndup is stored both as node->anchor, freed when the node is freed, and as the key in the parser's anchors table. Freeing the node frees the shared key, and a later anchor redefinition makes st_delete compare against the freed key, so st_strcmp reads freed heap memory. Anchors are a standard YAML feature and need no special flags, so this is reached on the default Load path.\n\nAny caller that runs Load or LoadFile on an untrusted document that redefines an anchor reaches the read of freed memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57076",
-    "publishedDate": "2026-07-16T22:17:43.550",
-    "lastModifiedDate": "2026-07-16T22:17:43.550",
+    "id": "CVE-2026-41993",
+    "description": "Improper Access Control vulnerability in the Removable Media Validation function of TXOne Networks products allows a local attacker with administrator privileges to bypass the file lockdown mechanism, resulting in unauthorized file transfer to the victim device. The attacker needs to deploy unauthorized file on the removable media in advance. This issue affects SafePortAgent: before 3.2.5024; StellarProtect: from 3.2.4011 before 5.0.1083.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-41993",
+    "publishedDate": "2026-07-17T05:16:39.007",
+    "lastModifiedDate": "2026-07-17T05:16:39.007",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 0.8,
+        "impactScore": 3.6,
+        "source": "3ad20294-822c-4ebc-9301-f9a7cf62d46e"
+      },
+      {
+        "score": 6.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "3ad20294-822c-4ebc-9301-f9a7cf62d46e"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-57075",
-    "description": "YAML::Syck versions before 1.47 for Perl allow an out-of-bounds read via a signed-char lookup-table index in syck_base64dec.\n\nThe base64 decoder in the bundled libsyck indexes the 256-entry static table b64_xtable with a signed char, so any !!binary byte >= 0x80 sign-extends to a negative index and reads before the table. The decoder receives the raw bytes of any !!binary node, a standard YAML type not gated by $LoadBlessed or $LoadCode, so it is reached on the default Load path.\n\nAny caller that runs Load or LoadFile on an untrusted document containing a !!binary scalar with a high-bit byte triggers the read, and the value read can surface in the decoded result.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57075",
-    "publishedDate": "2026-07-16T22:17:43.447",
-    "lastModifiedDate": "2026-07-16T22:17:43.447",
+    "id": "CVE-2026-13765",
+    "description": "The LearnPress – WordPress LMS Plugin for Create and Sell Online Courses plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 4.4.1 via the check_answer. This makes it possible for unauthenticated attackers to extract the correct-answer markers, full option lists, explanations, and question content for any quiz question on the site — including questions belonging to paid courses the attacker is not enrolled in.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13765",
+    "publishedDate": "2026-07-17T05:16:37.837",
+    "lastModifiedDate": "2026-07-17T05:16:37.837",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15161",
+    "description": "The Ninja Forms - Excel Export plugin for WordPress is vulnerable to Stored Cross-Site Scripting in versions up to, and including, 3.3.6. This is due to the save_filter() AJAX handler storing the raw $_POST['filter'] array into a WordPress option via update_option() without any capability check, nonce verification, or input sanitization, combined with the get_filter_row() method on the admin Excel Export screen concatenating the stored filter values (field_key, condition, value) directly into HTML attributes without esc_attr(). This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15161",
+    "publishedDate": "2026-07-17T05:16:38.087",
+    "lastModifiedDate": "2026-07-17T05:16:38.087",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15759",
+    "description": "The ChatHelp – Click to Chat Button, WooCommerce Chat to Order & Floating Chat Form plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'number' and 'group' Shortcode Attributes in all versions up to, and including, 3.5.1 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15759",
+    "publishedDate": "2026-07-17T05:16:38.447",
+    "lastModifiedDate": "2026-07-17T05:16:38.447",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-13352",
+    "description": "The Paid Membership Plugin, Ecommerce, User Registration Form, Login Form, User Profile & Restrict Content – ProfilePress plugin for WordPress is vulnerable to Arbitrary File Upload in all versions up to, and including, 4.16.18 via the allowed_mime_types function. This is due to the unconditional registration of an upload_mimes filter that adds executable file extensions (.exe, .apk, .msi) to the global WordPress MIME allowlist, without scoping the expansion to digital-product upload contexts. This makes it possible for authenticated attackers, with author-level access and above, to upload files that may be executable, which makes remote code execution possible. This filter is registered globally on every request regardless of whether the digital products feature is configured or in use, meaning the expanded MIME allowlist affects all WordPress upload contexts site-wide.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13352",
+    "publishedDate": "2026-07-17T05:16:36.730",
+    "lastModifiedDate": "2026-07-17T05:16:36.730",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15349",
+    "description": "The ERP: Complete HR, Accounting & CRM Suite Built for WooCommerce plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.17.6. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to create arbitrary company locations in the ERP database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15349",
+    "publishedDate": "2026-07-17T05:16:38.197",
+    "lastModifiedDate": "2026-07-17T05:16:38.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14503",
+    "description": "The pCloud WP Backup plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 2.0.3 via the wp2pcl_ajax_process_request_inner. This makes it possible for authenticated attackers, with subscriber-level access and above, to extract force generation of a full-site backup archive written to a publicly accessible directory, exposing wp-config.php database credentials, WordPress secret salts, and the complete PHP source tree. The resulting archive is deposited in the plugin's unprotected tmp/ directory at a predictable URL, making the extracted data accessible to unauthenticated visitors once the backup is triggered.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14503",
+    "publishedDate": "2026-07-17T05:16:37.960",
+    "lastModifiedDate": "2026-07-17T05:16:37.960",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15457",
+    "description": "The Kirki – Freeform Page Builder, Website Builder & Customizer plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 6.0.13 via the 'family' parameter. This makes it possible for authenticated attackers, with editor-level access and above, to delete arbitrary directories on the server, which can result in loss of data and availability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15457",
+    "publishedDate": "2026-07-17T05:16:38.323",
+    "lastModifiedDate": "2026-07-17T05:16:38.323",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62387",
+    "description": "The Grav API plugin (getgrav/grav-plugin-api) before 1.0.0-rc.16 shipped Access-Control-Allow-Origin: * as its default CORS configuration on all responses, including authenticated endpoints and preflight (OPTIONS) responses. Because the plugin accepts credentials via the Authorization and X-API-Token headers (set programmatically by JavaScript rather than via cookies), an attacker who obtains a valid access token (e.g., via log leakage, Referer headers, browser history, or network capture) can issue fully authenticated cross-origin requests from any malicious website to read sensitive data and perform write operations as the token's user. Fixed in 1.0.0-rc.16.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62387",
+    "publishedDate": "2026-07-17T02:18:12.053",
+    "lastModifiedDate": "2026-07-17T02:18:12.053",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62386",
+    "description": "The Grav API plugin (getgrav/grav-plugin-api) before 1.0.0-rc.16 accepts JWT access tokens through the ?token= URL query parameter on every API route (JwtAuthenticator::extractBearerToken fallback). Because tokens are embedded in URLs, they are logged verbatim in web server access logs, leaked via the Referer header, stored in browser history, and captured by upstream proxy and CDN logs, exposing valid admin access tokens. A leaked token grants unauthorized API access, including reading configuration and user data, creating admin accounts, modifying system settings, and deleting pages.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62386",
+    "publishedDate": "2026-07-17T02:18:11.903",
+    "lastModifiedDate": "2026-07-17T02:18:11.903",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62241",
+    "description": "clawvet self-hosted API server (apps/api) before 0.7.5 hard-codes a fallback JWT secret ('clawvet-dev-secret-change-me') in auth.ts and ships it as the default in .env.example. Because GET /api/v1/scans returns scan records containing userId values without authentication, a remote unauthenticated attacker can harvest a victim's userId, forge a valid HS256 cg_session cookie offline using the known secret, and call GET /api/v1/auth/me to obtain the victim's email address, subscription plan, and secret apiKey. The published clawvet npm package (CLI only) is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62241",
+    "publishedDate": "2026-07-17T02:18:11.740",
+    "lastModifiedDate": "2026-07-17T02:18:11.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62238",
+    "description": "OpenRemote before 1.26.0 contain an authenticated SQL injection vulnerability in the datapoint crosstab export endpoint that constructs PostgreSQL queries by concatenating asset display names into raw SQL. An authenticated attacker with asset creation or rename permissions can inject SQL through the asset name parameter and receive query results in the exported CSV response, enabling database data exfiltration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62238",
+    "publishedDate": "2026-07-17T02:18:11.613",
+    "lastModifiedDate": "2026-07-17T02:18:11.613",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62237",
+    "description": "Grav before 2.0.4 contains a regular expression denial of service (ReDoS) vulnerability in the regex_replace filter and function, which are allowlisted in the Twig content sandbox. When Twig processing in page content is enabled (security.twig_content.process_enabled: true, disabled by default), an authenticated page editor can supply a catastrophically backtracking PCRE pattern that is passed directly to PHP's preg_replace(), causing unbounded CPU consumption and denial of service to the web server process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62237",
+    "publishedDate": "2026-07-17T02:18:11.477",
+    "lastModifiedDate": "2026-07-17T02:18:11.477",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62236",
+    "description": "grav-plugin-login before 3.8.11 contains a cross-site request forgery (CSRF) vulnerability in the login.regenerate2FASecret frontend task, which regenerates and persists a new TOTP secret for the authenticated session user without any anti-CSRF nonce or Origin/Referer check. Because Grav core dispatches the task from the GET 'task:' URI parameter and the default session cookie is SameSite=Lax, an attacker can lure a logged-in victim to an off-site page that performs a top-level GET navigation, rotating the victim's TOTP secret so their enrolled authenticator no longer matches the server, effectively forcing 2FA re-enrollment. Sites configured with session.samesite: Strict are not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62236",
+    "publishedDate": "2026-07-17T02:18:11.327",
+    "lastModifiedDate": "2026-07-17T02:18:11.327",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62235",
+    "description": "Grav Flex-Objects before version 1.4.3 contains a broken access control vulnerability in the admin-next REST API that allows authenticated users with only api.access permission to perform unauthorized CRUD operations on permission-less directories. Attackers with api.access credentials can create, read, update, delete, and export objects from any directory lacking an explicit permissions configuration, bypassing intended authorization controls.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62235",
+    "publishedDate": "2026-07-17T02:18:11.183",
+    "lastModifiedDate": "2026-07-17T02:18:11.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62234",
+    "description": "Grav before 2.0.4 fails to restrict cURL protocols in webhook dispatch, allowing authenticated users with api.webhooks.write permission to create webhooks with file://, dict://, or gopher:// URLs. Attackers can trigger webhook events to read local files, access process information, or pivot to internal services via unrestricted protocol handlers.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62234",
+    "publishedDate": "2026-07-17T02:18:11.040",
+    "lastModifiedDate": "2026-07-17T02:18:11.040",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62233",
+    "description": "grav-plugin-api before 1.0.6 fails to validate super-admin status in createApiKey, generate2fa, and disable2fa endpoints, allowing non-super api.users.write managers to escalate to super-admin. Attackers can mint API keys bound to super-admin accounts or strip 2FA from super-admin users to achieve full instance takeover.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62233",
+    "publishedDate": "2026-07-17T02:18:10.890",
+    "lastModifiedDate": "2026-07-17T02:18:10.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
   }
 ]
