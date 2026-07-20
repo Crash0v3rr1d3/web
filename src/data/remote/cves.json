@@ -1,390 +1,10 @@
 [
   {
-    "id": "CVE-2026-64207",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: dualpi2: fix GSO backlog accounting\n\nWhen DualPI2 splits a GSO skb into N segments, it propagates N\nadditional packets to its parent before returning NET_XMIT_SUCCESS.\nThe parent then accounts for the original skb once more, leaving its\nqlen one larger than the number of packets actually queued.\n\nWith QFQ as the parent, after all real packets are dequeued, QFQ still\nhas a non-zero qlen while its in-service aggregate has no active\nclasses. qfq_choose_next_agg() returns NULL and qfq_dequeue() passes\nthe result to qfq_peek_skb(), causing a NULL pointer dereference.\n\nFollow the same pattern used by tbf_segment() and taprio: count only\nsuccessfully queued segments, propagate the difference between the\noriginal skb and those segments, and return NET_XMIT_SUCCESS whenever\nat least one segment was queued.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64207",
-    "publishedDate": "2026-07-20T17:18:22.733",
-    "lastModifiedDate": "2026-07-20T17:18:22.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64206",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nBluetooth: L2CAP: cancel pending_rx_work before taking conn->lock\n\nl2cap_conn_del() takes conn->lock and then calls cancel_work_sync() for\npending_rx_work.  process_pending_rx() takes the same mutex, so teardown\ncan deadlock against the worker it is flushing.\n\nThis issue was found by our static analysis tool and then manually\nreviewed against the current tree.\n\nThe grounded PoC kept the l2cap_conn_ready() -> queue_work(...,\n&conn->pending_rx_work) submit path, the l2cap_conn_del() ->\ncancel_work_sync(&conn->pending_rx_work) teardown path, and the\nprocess_pending_rx() -> mutex_lock(&conn->lock) worker edge.  Lockdep\n\n  WARNING: possible circular locking dependency detected\n  process_pending_rx+0x21/0x2a [vuln_msv]\n  l2cap_conn_del.constprop.0+0x3f/0x4e [vuln_msv]\n  *** DEADLOCK ***\n\nCancel pending_rx_work before taking conn->lock, matching the existing\nlock-before-drain ordering used for the two delayed works in the same\nteardown path.  The pending_rx queue is still purged after the work has\nbeen cancelled and conn->lock has been acquired.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64206",
-    "publishedDate": "2026-07-20T17:18:22.620",
-    "lastModifiedDate": "2026-07-20T17:18:22.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64205",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ni2c: i801: fix hardware state machine corruption in error path\n\nA severe livelock and subsequent Hung Task panic were observed in the\ni2c-i801 driver during concurrent Fuzzing. The crash is caused by an\nunconditional hardware register cleanup in the error handling path of\ni801_access().\n\nWhen i801_check_pre() fails (e.g., returning -EBUSY because the SMBus\ncontroller is actively used by BIOS/ACPI), the kernel does not actually\nacquire the hardware ownership. However, the code jumps to the 'out'\nlabel and executes:\n\n    iowrite8(SMBHSTSTS_INUSE_STS | STATUS_FLAGS, SMBHSTSTS(priv));\n\nThis forcefully clears the INUSE_STS lock and resets the hardware status\nflags without owning the controller. Doing so interrupts ongoing BIOS/ACPI\ntransactions and totally corrupts the SMBus hardware state machine.\n\nConsequently, all subsequent i801_access() calls fail at the pre-check\nstage, triggering an endless stream of \"SMBus is busy, can't use it!\"\nerror logs. Over a slow serial console, this printk flood monopolizes\nthe CPU (Console Livelock), starving other processes trying to acquire\nthe mmap_lock down_read semaphore, ultimately triggering the hung task\nwatchdog.\n\nFix this by moving the 'out' label below the hardware register cleanup.\nIf i801_check_pre() fails, we safely bypass the iowrite8() and only\nrelease the software locks (pm_runtime and mutex), strictly adhering to\nthe rule of not releasing resources that were never acquired.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64205",
-    "publishedDate": "2026-07-20T17:18:22.487",
-    "lastModifiedDate": "2026-07-20T17:18:22.487",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64192",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Reject BPF_MAP_TYPE_INODE_STORAGE creation if BPF LSM is uninitialized\n\nWhen CONFIG_BPF_LSM=y is set, BPF inode storage maps\n(BPF_MAP_TYPE_INODE_STORAGE) are compiled into the kernel. However,\nif the BPF LSM is not explicitly enabled at boot time (e.g. omitted\nfrom the \"lsm=\" boot parameter), lsm_prepare() is never executed for\nthe BPF LSM.\n\nConsequently, the BPF inode security blob offset\n(bpf_lsm_blob_sizes.lbs_inode) is never initialized and remains at\nits default compiled size of 8 bytes instead of being updated to a\nvalid offset past the reserved struct rcu_head (typically 16 bytes\nor more).\n\nWhen a privileged user creates and updates a BPF_MAP_TYPE_INODE_STORAGE\nmap, bpf_inode() evaluates inode->i_security + 8. This erroneously\naliases the struct rcu_head.func callback pointer at the beginning\nof the inode->i_security blob. During subsequent map element cleanup\nor inode destruction, writing NULL to owner_storage clears the queued\nRCU callback pointer. When rcu_do_batch() later executes the queued\ncallback, it attempts an instruction fetch at address 0x0, triggering\nan immediate kernel panic.\n\nFix this by introducing a global bpf_lsm_initialized boolean flag\nmarked with __ro_after_init. Set this flag to true inside bpf_lsm_init()\nwhen the LSM framework successfully registers the BPF LSM. Gate map\nallocation in inode_storage_map_alloc() on this flag, returning\n-EOPNOTSUPP if the BPF LSM is in turn uninitialized.\n\nThis fail-fast approach prevents userspace from allocating inode\nstorage maps when the supporting BPF LSM infrastructure is absent,\navoiding zombie map states.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64192",
-    "publishedDate": "2026-07-20T17:18:22.367",
-    "lastModifiedDate": "2026-07-20T17:18:22.367",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64191",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ni2c: stub: Reject I2C block transfers with invalid length\n\nThe I2C_SMBUS_I2C_BLOCK_DATA case in stub_xfer() uses data->block[0]\nas the transfer length. The existing check only clamps it to avoid\noverrunning the chip->words[256] register array, but does not validate\nit against I2C_SMBUS_BLOCK_MAX (32), which is the limit of the union\ni2c_smbus_data.block buffer (34 bytes total). The driver is a\ndevelopment/test tool (CONFIG_I2C_STUB=m, not built by default)\nthat must be loaded with a chip_addr= parameter.\n\nA local user with access to /dev/i2c-* can issue an I2C_SMBUS ioctl\nwith I2C_SMBUS_I2C_BLOCK_DATA and data->block[0] > 32, causing\nstub_xfer() to read or write past the end of the union\ni2c_smbus_data.block buffer:\n\n BUG: KASAN: stack-out-of-bounds in stub_xfer (drivers/i2c/i2c-stub.c:223)\n Read of size 1 at addr ffff88800abcfd92 by task exploit/81\n Call Trace:\n  <TASK>\n  stub_xfer (drivers/i2c/i2c-stub.c:223)\n  __i2c_smbus_xfer (drivers/i2c/i2c-core-smbus.c:593)\n  i2c_smbus_xfer (drivers/i2c/i2c-core-smbus.c:536)\n  i2cdev_ioctl_smbus (drivers/i2c/i2c-dev.c:391)\n  i2cdev_ioctl (drivers/i2c/i2c-dev.c:478)\n  __x64_sys_ioctl (fs/ioctl.c:583)\n  do_syscall_64 (arch/x86/entry/syscall_64.c:94)\n  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)\n  </TASK>\n\nThe bug exists because i2c-stub implements .smbus_xfer directly,\nbypassing the I2C_SMBUS_BLOCK_MAX validation in\ni2c_smbus_xfer_emulated(). The I2C_SMBUS_BLOCK_DATA case in the same\nfunction correctly validates against I2C_SMBUS_BLOCK_MAX, but the\nI2C_SMBUS_I2C_BLOCK_DATA case does not.\n\nFix by rejecting transfers with data->block[0] == 0 or\ndata->block[0] > I2C_SMBUS_BLOCK_MAX with -EINVAL, consistent with\nboth the I2C_SMBUS_BLOCK_DATA case in the same function and the\nI2C_SMBUS_I2C_BLOCK_DATA validation in i2c_smbus_xfer_emulated().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64191",
-    "publishedDate": "2026-07-20T17:18:22.217",
-    "lastModifiedDate": "2026-07-20T17:18:22.217",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64190",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: team: fix NULL pointer dereference in team_xmit during mode change\n\n__team_change_mode() clears team->ops with memset() before restoring\nsafe dummy handlers via team_adjust_ops(). A concurrent team_xmit()\nrunning under RCU on another CPU can read team->ops.transmit during\nthis window and call a NULL function pointer, crashing the kernel.\n\nThe race requires a mode change (CAP_NET_ADMIN) concurrent with\ntransmit on the team device.\n\n BUG: kernel NULL pointer dereference, address: 0000000000000000\n Oops: 0010 [#1] SMP KASAN NOPTI\n RIP: 0010:0x0\n Call Trace:\n  team_xmit (drivers/net/team/team_core.c:1853)\n  dev_hard_start_xmit (net/core/dev.c:3904)\n  __dev_queue_xmit (net/core/dev.c:4871)\n  packet_sendmsg (net/packet/af_packet.c:3109)\n  __sys_sendto (net/socket.c:2265)\n\nThe original code assumed that no ports means no traffic, so mode\nchanges could freely memset()/memcpy() the ops.  AF_PACKET with\nforced carrier breaks that assumption.\n\nPrevent the race instead of making it safe: replace memset()/memcpy()\nwith per-field updates that never touch transmit or receive.  Those\ntwo handlers are managed solely by team_adjust_ops(), which already\ninstalls dummies when tx_en_port_count == 0 (always true during mode\nchange since no ports are present).  WRITE_ONCE/READ_ONCE prevent\nstore/load tearing on the handler pointers.\n\nsynchronize_net() before exit_op() drains in-flight readers that may\nstill reference old mode state from before port removal switched the\nhandlers to dummies.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64190",
-    "publishedDate": "2026-07-20T17:18:22.117",
-    "lastModifiedDate": "2026-07-20T17:18:22.117",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64189",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: ipset: fix race between dump and ip_set_list resize\n\nThe release path of ip_set_dump_do() and ip_set_dump_done() read\ninst->ip_set_list via ip_set_ref_netlink(), a plain rcu_dereference_raw()\nof the array pointer. These run from netlink_recvmsg() without the nfnl\nmutex and without an RCU read-side critical section.\n\nA concurrent ip_set_create() can grow the array: it publishes the new\narray, calls synchronize_net() and then kvfree()s the old one. Since the\ndump paths read the array outside any RCU reader, synchronize_net() does\nnot wait for them and the old array can be freed while they still index\ninto it, causing a use-after-free.\n\nThe dumped set itself stays pinned via set->ref_netlink, so only the\narray load needs protecting. Take rcu_read_lock() around it, matching\nip_set_get_byname() and __ip_set_put_byindex().\n\n  BUG: KASAN: slab-use-after-free in ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)\n  Read of size 8 at addr ffff88800b5c4018 by task exploit/150\n  Call Trace:\n   ...\n   kasan_report (mm/kasan/report.c:595)\n   ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1697)\n   netlink_dump (net/netlink/af_netlink.c:2325)\n   netlink_recvmsg (net/netlink/af_netlink.c:1976)\n   sock_recvmsg (net/socket.c:1159)\n   __sys_recvfrom (net/socket.c:2315)\n   ...\n  Oops: general protection fault, probably for non-canonical address ... KASAN NOPTI\n  KASAN: maybe wild-memory-access in range [0x02d6...d0-0x02d6...d7]\n  RIP: 0010:ip_set_dump_do (net/netfilter/ipset/ip_set_core.c:1698)\n  Kernel panic - not syncing: Fatal exception",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64189",
-    "publishedDate": "2026-07-20T17:18:21.997",
-    "lastModifiedDate": "2026-07-20T17:18:21.997",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64188",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: qualcomm: rmnet: fix endpoint use-after-free in rmnet_dellink()\n\nrmnet_dellink() removes the endpoint from the hash table with\nhlist_del_init_rcu() and then immediately frees it with kfree(). However,\nRCU readers on the receive path (rmnet_rx_handler ->\n__rmnet_map_ingress_handler) may still hold a reference to the endpoint and\ndereference ep->egress_dev after the memory has been freed. The endpoint is\na kmalloc-32 object, and the stale read at offset 8 corresponds to the\negress_dev pointer.\n\n  BUG: unable to handle page fault for address: ffffffffde942eef\n  Oops: 0002 [#1] SMP NOPTI\n  CPU: 1 UID: 0 PID: 137 Comm: poc_write Not tainted 7.0.0+ #4 PREEMPTLAZY\n  RIP: 0010:rmnet_vnd_rx_fixup (rmnet_vnd.c:27)\n  Call Trace:\n   <TASK>\n   __rmnet_map_ingress_handler (rmnet_handlers.c:48 rmnet_handlers.c:101)\n   rmnet_rx_handler (rmnet_handlers.c:129 rmnet_handlers.c:235)\n   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6096)\n   __netif_receive_skb_one_core (net/core/dev.c:6208)\n   netif_receive_skb (net/core/dev.c:6467)\n   tun_get_user (drivers/net/tun.c:1955)\n   tun_chr_write_iter (drivers/net/tun.c:2003)\n   vfs_write (fs/read_write.c:688)\n   ksys_write (fs/read_write.c:740)\n   </TASK>\n\nAdd an rcu_head field to struct rmnet_endpoint and replace kfree() with\nkfree_rcu() so the endpoint memory remains valid through the RCU grace\nperiod. Also remove the rmnet_vnd_dellink() call and inline only the\nnr_rmnet_devs decrement, since rmnet_vnd_dellink() would set\nep->egress_dev to NULL during the grace period, creating a data race\nwith lockless readers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64188",
-    "publishedDate": "2026-07-20T17:18:21.853",
-    "lastModifiedDate": "2026-07-20T17:18:21.853",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64187",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxfs: fail recovery on a committed log item with no regions\n\nIf the first op of a transaction is a bare transaction header\n(len == sizeof(struct xfs_trans_header)), xlog_recover_add_to_trans()\nadds an item but no region, leaving it on r_itemq with ri_cnt == 0 and\nri_buf == NULL.\n\nThe header can be split across op records, so later ops may still add\nregions; the item is only invalid if the transaction commits with none.\nThe runtime commit path never emits such a transaction, so this only\nhappens on a crafted log.  It came from an AI-assisted code audit of the\nrecovery parser.\n\nxlog_recover_reorder_trans() calls ITEM_TYPE() on the item, which reads\n*(unsigned short *)item->ri_buf[0].iov_base and faults on the NULL\nri_buf.  Reject it there, before the commit handlers that also read\nri_buf[0].\n\n KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]\n RIP: 0010:xlog_recover_reorder_trans (fs/xfs/xfs_log_recover.c:1836)\n  xlog_recover_commit_trans (fs/xfs/xfs_log_recover.c:2043)\n  xlog_recover_process_data (fs/xfs/xfs_log_recover.c:2501)\n  xlog_do_recovery_pass (fs/xfs/xfs_log_recover.c:3244)\n  xlog_recover (fs/xfs/xfs_log_recover.c:3493)\n  xfs_log_mount (fs/xfs/xfs_log.c:618)\n  xfs_mountfs (fs/xfs/xfs_mount.c:1034)\n  xfs_fs_fill_super (fs/xfs/xfs_super.c:1938)\n  vfs_get_tree (fs/super.c:1695)\n  path_mount (fs/namespace.c:4161)\n  __x64_sys_mount (fs/namespace.c:4367)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64187",
-    "publishedDate": "2026-07-20T17:18:21.743",
-    "lastModifiedDate": "2026-07-20T17:18:21.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-58484",
-    "description": "Network-AI is a TypeScript/Node.js multi-agent orchestrator. Prior to version 5.12.2, `EnvironmentManager.listBackups()` reads each backup's `_manifest.json` and trusts the manifest's `path` field. `EnvironmentManager.pruneBackups()` later passes that trusted `entry.path` directly to `rmSync(entry.path, { recursive: true, force: true })`. An attacker who can place or modify a manifest inside `data/<env>/.backups/<name>/_manifest.json` can cause `network-ai env backup prune --env <env> --keep <n>` or any code path invoking `pruneBackups()` to recursively delete an arbitrary path accessible to the Network-AI process user. This is fixed in v5.12.2. `pruneBackups()` no longer passes `entry.path` from the on-disk manifest to `rmSync`. The deletion path is recomputed from a format-validated `entry.backupId`, and a `dirname` containment check confines deletion to exactly one level under the backups directory. A poisoned manifest (e.g. `\"path\": \"/\"`) is now inert.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58484",
-    "publishedDate": "2026-07-20T17:18:16.160",
-    "lastModifiedDate": "2026-07-20T17:18:16.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58482",
-    "description": "Network-AI, a TypeScript/Node.js multi-agent orchestrator, has a shipped, exported, documented feature called `ApprovalInbox` (`lib/approval-inbox.ts`). It is the network surface of the human-in-the-loop Approval Gate, which `ApprovalGate` uses to require explicit human approval for high-risk operations. The HTTP server it exposes has no authentication of any kind and sets `Access-Control-Allow-Origin: *` on every route, including the state-changing `POST /approvals/:id/approve` and `/deny`. As a result, in versions 5.0.0 through 5.12.1, any party who can send an HTTP request to the inbox port — a co-located process, a container/SSRF on the same host, a remote client when the operator binds a non-loopback address, or any website the operator visits in a browser (via the wildcard CORS) — can enumerate pending approvals and approve them, defeating the entire human-in-the-loop control and causing the gated high-risk action (e.g. a shell command the agent was holding for review) to execute without consent. This issue is fixed in v5.12.2. `ApprovalInbox` now accepts a `secret` option. When set, the mutating endpoints `POST /:id/approve` and `POST /:id/deny` require an `Authorization: Bearer <secret>` header, validated in constant time with `crypto.timingSafeEqual`. `startServer()` already binds to `127.0.0.1` by default; operators exposing the inbox on a network must set a secret.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58482",
-    "publishedDate": "2026-07-20T17:18:15.997",
-    "lastModifiedDate": "2026-07-20T17:18:15.997",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58481",
-    "description": "Network-AI is a TypeScript/Node.js multi-agent orchestrator. Prior to version 5.12.2, `AgentRuntime` promises scoped file access under a configured sandbox `basePath`, but its path containment checks use raw string prefix tests. A sandbox base such as `/tmp/network-ai-sandbox` also matches a sibling path such as `/tmp/network-ai-sandbox_evil/secret.txt`. An agent/user that can call `AgentRuntime.readFile()` or `AgentRuntime.listDir()` can read or list files outside the intended sandbox when the target path is in a sibling directory sharing the base path prefix. This breaks the documented sandbox boundary. The issue is fixed in v5.12.2. `SandboxPolicy.resolvePath()` and `isPathAllowed()` now use separator-anchored prefix checks (`resolved === base || resolved.startsWith(base + path.sep)`) for both the allow-list and block-list. A sibling directory that merely shares a name prefix (e.g. `/srv/app-evil` vs base `/srv/app`) is no longer treated as in-scope.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58481",
-    "publishedDate": "2026-07-20T17:18:15.857",
-    "lastModifiedDate": "2026-07-20T17:18:15.857",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58414",
-    "description": "Network-AI is a TypeScript/Node.js multi-agent orchestrator. Prior to version 5.12.2, `EnvironmentManager.backup()` recursively collects files using `_collectBackupFiles()`. `_collectBackupFiles()` uses `statSync(full)`, which follows symlinks. If `data/<env>` contains a symlink to a directory outside the environment root, backup recursion follows the symlink and copies external files into `data/<env>/.backups/<backupId>/`. An attacker who can place a symlink under the environment data directory can cause backup operations to disclose files outside the environment root into backup artifacts. The issue is fixed in v5.12.2. `_collectBackupFiles()` now uses `lstatSync` instead of `statSync` and skips any entry where `isSymbolicLink()` is true. Symlinks are never traversed, so `backup()` can no longer follow a link out of the environment root and copy external files into a backup artifact.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58414",
-    "publishedDate": "2026-07-20T17:18:15.720",
-    "lastModifiedDate": "2026-07-20T17:18:15.720",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58413",
-    "description": "Network-AI is a TypeScript/Node.js multi-agent orchestrator. Prior to version 5.12.2, `EnvironmentManager.restore(env, backupId)` computes the backup path with `join(envDir, '.backups', backupId)` and only checks that this path exists. It does not resolve the result or verify that it remains under `data/<env>/.backups`. A caller can pass a traversal backup ID such as `../../../outside/source-dir` to restore files from an arbitrary directory into the target environment data directory. The issue is fixed in v5.12.2. `restore()` now validates `backupId` against `/^[\\w\\-]+$/` and asserts `dirname(resolve(join(backupsDir, backupId))) === resolve(backupsDir)` before touching the filesystem. Backup IDs containing path separators or `..` are rejected, so a crafted ID can no longer copy directories from outside `.backups/` into the environment.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58413",
-    "publishedDate": "2026-07-20T17:18:15.570",
-    "lastModifiedDate": "2026-07-20T17:18:15.570",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55645",
-    "description": "xrdp is an open source RDP server. Versions 0.10.6 and prior contain a vulnerability concerning the processing of Client Control PDUs. During the RDP connection sequence, the parser does not perform sufficient length validation before reading specific data fields from the network stream. A remote, unauthenticated attacker could potentially exploit this flaw by sending a specially crafted, truncated Client Control PDU. Due to missing bounds checks, the xrdp process may perform out-of-bounds memory reads, which can result in the termination of the service (Denial of Service). However, since xrdp forks a new process for each connection by default, an out-of-bounds read causing a process crash is unlikely to bring down the entire xrdp service.This issue has been fixed in version 0.10.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55645",
-    "publishedDate": "2026-07-20T17:18:07.430",
-    "lastModifiedDate": "2026-07-20T17:18:07.430",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55238",
-    "description": "xrdp is an open source RDP server. Versions 0.10.6 and prior contain a vulnerability concerning the processing of RDP Confirm Active PDU, where during the capability negotiation phase, the parser did not perform sufficient length validation for specific capability sets. A remote, unauthenticated attacker could potentially exploit this flaw by sending a specially crafted RDP packet containing malformed capability data. Due to missing bounds checks, the xrdp process may perform out-of-bounds memory reads, which can result in the termination of the service (Denial of Service). However, since xrdp forks a new process for each connection by default, an out-of-bounds read causing a process crash is unlikely to bring down the entire xrdp service. This issue has been fixed in version 0.10.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55238",
-    "publishedDate": "2026-07-20T17:18:07.277",
-    "lastModifiedDate": "2026-07-20T17:18:07.277",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54538",
-    "description": "xrdp is an open source RDP server. In versions 0.10.6 and prior, a n issue was discovered where the software fails to properly validate the totalLength field within the RDP protocol control header during packet reception. An unauthenticated remote attacker can exploit this vulnerability by sending a specially crafted packet that forces the xrdp process or thread into an infinite, CPU-bound loop. Because the internal pointer fails to advance and the deadlock prevention mechanism is bypassed for specific protocol data unit types, the process consumes excessive CPU resources indefinitely. This can render the xrdp service unavailable and potentially lead to system-wide resource exhaustion if multiple malicious connections are established. This issue has been fixed in version 0.10.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54538",
-    "publishedDate": "2026-07-20T17:17:59.723",
-    "lastModifiedDate": "2026-07-20T17:17:59.723",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54051",
-    "description": "Network-AI is a TypeScript/Node.js multi-agent orchestrator. Prior to version 5.9.1, the agent sandbox gates shell commands behind an allowlist (`SandboxPolicy.isCommandAllowed`), which THREAT_MODEL.md calls the main control against a compromised agent (Adversary 3.2). The allowlist glob-matches the whole command string, but `ShellExecutor` runs that string through `/bin/sh -c`. So any wildcard allow such as `git *`, `npm *` or `node *` also matches `git status; <anything>`, and a scoped command becomes arbitrary execution. The issue is fixed in v5.9.1. `ShellExecutor` now executes via `spawn(file, args, { shell: false })` using a quote-aware parsed argv, so no shell is invoked. `SandboxPolicy.isCommandAllowed` and the new `SandboxPolicy.tokenizeCommand` reject any unquoted shell metacharacter (`; & | $ ` ` ` ( ) < > { }` newline) or unterminated quote before the allowlist glob match; quoted metacharacters are preserved as literal argument data. Users should upgrade to `network-ai@5.9.1` or later. As defense in depth, avoid broad wildcard allowlist entries such as `node *` / `npm *` which are direct code execution by design.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54051",
-    "publishedDate": "2026-07-20T17:17:57.643",
-    "lastModifiedDate": "2026-07-20T17:17:57.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-50743",
-    "description": "A CSRF vulnerability exists in the `zone-include.php` script in Revive Adserver 6.0.7. Linking and unlinking banners or campaigns to zones could be triggered via crafted GET or POST requests without any verification of the CSRF token, allowing an attacker to perform these actions on behalf of an authenticated administrator.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50743",
-    "publishedDate": "2026-07-20T17:17:57.500",
-    "lastModifiedDate": "2026-07-20T17:17:57.500",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-47276",
-    "description": "In nanomq versions 0.24.11 and earlier, a NULL pointer dereference in `properties_parse()` allows an authenticated attacker to crash the NanoMQ broker by sending a POST request to `/api/v4/mqtt/publish` with `user_properties` as a JSON array instead of a JSON object. The crash occurs because `strlen()` is called on a NULL `item->string` pointer when iterating over array elements. An authenticated attacker can exploit this to crash the NanoMQ broker process. This is patched in version 0.24.14.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47276",
-    "publishedDate": "2026-07-20T17:17:10.260",
-    "lastModifiedDate": "2026-07-20T17:17:10.260",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47275",
-    "description": "In nanomq versions 0.24.11 and earlier, a NULL pointer dereference in `nni_mqttv5_msg_decode_connect()` allows a malicious MQTT broker to crash any connecting NanoMQ MQTTv5 client (including bridge mode) with a single packet, causing remote denial of service via SIGSEGV. In `nni_mqttv5_msg_decode_connect()` (`mqtt_codec.c:1863`), the code iterates over CONNECT properties using variable `prop` when it should use `will_prop`. When a CONNECT packet has no connect-level properties (`prop == NULL`) but has will properties (`will_prop != NULL`), dereferencing `prop->next` causes SIGSEGV at address `0x38` (NULL + `offsetof(property, next)`).\n\nThis affects both `nanomq_cli` and **NanoMQ bridge mode** (Core component), as both use the same `mqtt_client.c` receive path. This can lead to remote DoS if a malicious MQTT broker can crash the client process with a single 35-byte packet and persistent DoS if auto-reconnect causes infinite crash loop.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47275",
-    "publishedDate": "2026-07-20T17:17:10.120",
-    "lastModifiedDate": "2026-07-20T17:17:10.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.6,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 1.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46701",
-    "description": "Network-AI is a TypeScript/Node.js multi-agent orchestrator. Prior to version 5.4.5, the MCP SSE server defaults to an empty secret (`process.env['NETWORK_AI_MCP_SECRET'] ?? ''` at `bin/mcp-server.ts:89`), which causes `_isAuthorized` (`lib/mcp-transport-sse.ts:254`) to return `true` unconditionally for every request — no `Authorization` header is required. Simultaneously, `_handleRequest` sets `Access-Control-Allow-Origin: *` (`lib/mcp-transport-sse.ts:272`) on every response, so a cross-origin browser fetch can read the result without restriction. An unauthenticated attacker who can lure a user to a malicious web page can invoke all 22 exposed MCP tools — including `config_set`, `agent_spawn`, and `blackboard_write` — against a default-configured localhost server. Version 5.4.5 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46701",
-    "publishedDate": "2026-07-20T17:17:09.990",
-    "lastModifiedDate": "2026-07-20T17:17:09.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-46555",
-    "description": "WhatsApp MCP Server is a Model Context Protocol (MCP) server for WhatsApp, enabling Claude to read and send WhatsApp messages. Prior to version 0.2.1, the `whatsapp-bridge` HTTP API listens on `127.0.0.1:8080` without authentication and without Host header validation, and the `/api/send` endpoint accepts an absolute `media_path` parameter without confining it to a safe directory. Combined, these issues allow any local process running as the same user as the bridge to send WhatsApp messages from the paired account without authorization; the same caller to read arbitrary files readable by the user (e.g. SSH private keys, browser session data, source code, dotfiles) and exfiltrate them as WhatsApp document attachments; and/or a remote attacker to trigger the same operations via DNS rebinding from a webpage the user visits, since no Host header validation is performed. In MCP environments, \"local caller\" extends beyond processes the user explicitly launched — sibling MCP servers, IDE extensions, and tool-triggered flows running in the user's session can act as the effective caller. This issue is fixed in whatsapp-mcp v0.2.1 and corresponding Docker images / release artifacts. Users should upgrade immediately. The fix introduces bearer token authentication on the bridge HTTP API (configured via environment variable, required on all requests, validated with constant-time comparison); host header allow-list validation to prevent DNS rebinding; and confinement of `media_path` to a configured directory, with rejection of absolute paths outside the root and path traversal sequences. This is a breaking change for clients of the bridge API. For users who cannot immediately upgrade: Stop the bridge, or block loopback access to port 8080, when the bridge is not actively in use; avoid running the bridge alongside untrusted MCP servers, browser extensions, or other untrusted local processes; avoid browsing untrusted sites while the bridge is running (DNS rebinding mitigation); and/or run the bridge under a dedicated user account or in a sandbox/container with no access to sensitive files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46555",
-    "publishedDate": "2026-07-20T17:17:09.820",
-    "lastModifiedDate": "2026-07-20T17:17:09.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.5,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44978",
-    "description": "xrdp is an open source RDP server. Versions 0.10.6 and prior contain a heap out-of-bounds read vulnerability within the FIPS-specific receive paths. This vulnerability does not affect the default configuration of xrdp. The vulnerability is only exploitable when the security layer is set to security_layer=negotiate or security_layer=rdp, and the crypto level is changed to crypt_level=fips in xrdp.ini. In this specific non-default mode, the server fails to validate the FIPS padding length field, leading to a pointer underflow and a subsequent negative length calculation. An unauthenticated remote attacker can exploit this by sending a crafted FIPS-protected PDU, causing a heap out-of-bounds read that results in a process crash and denial of service (DoS). However, since xrdp forks a new process for each connection by default, an out-of-bounds read causing a process crash is unlikely to bring down the entire xrdp service. This issue has been fixed in version 0.10.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44978",
-    "publishedDate": "2026-07-20T17:17:09.370",
-    "lastModifiedDate": "2026-07-20T17:17:09.370",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-44178",
-    "description": "xrdp is an open source RDP server. Versions 0.10.6 and prior contain a heap-based buffer overflow vulnerability within the virtual channel forwarding mechanism. When forwarding data from a remote client to the internal channel server, the xrdp process utilizes a fixed-size buffer without adequate bounds checking on the incoming payload. An authenticated remote attacker can exploit this flaw by sending a specially crafted virtual channel message that exceeds the buffer capacity, leading to heap memory corruption. This may result in a denial of service or the execution of arbitrary code with the privileges of the xrdp process. This issue has been fixed in version 0.10.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44178",
-    "publishedDate": "2026-07-20T17:17:09.060",
-    "lastModifiedDate": "2026-07-20T17:17:09.060",
+    "id": "CVE-2026-53593",
+    "description": "FreeScout is a free help desk and shared inbox built with PHP's Laravel framework. Prior to version 1.8.224, the denylist that neutralizes dangerous file uploads (`Helper::$restricted_extensions`) is incomplete: it does not cover the `.pht` extension. The authenticated upload endpoint `POST /uploads/upload` (`SecureController@upload`) stores files with their original extension into the web-accessible directory `storage/app/public/uploads/` (served at `/storage/uploads/`). On the standard Apache + `libapache2-mod-php` deployment, the default handler `<FilesMatch \".+\\.ph(ar|p[3457]?|t|tml)$\">` executes `.pht`, so **any authenticated agent can upload a `.pht` web shell and run arbitrary commands as the web-server user** (`www-data`). This is a direct bypass of the fix for CVE-2025-48471, which added `phtml`/`phar` but not `pht` (nor `phtm`, `phps`). Version 1.8.224 contains an updated fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53593",
+    "publishedDate": "2026-07-20T20:16:44.883",
+    "lastModifiedDate": "2026-07-20T20:16:44.883",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -396,6 +16,536 @@
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
         "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53592",
+    "description": "FreeScout is a free help desk and shared inbox built with PHP's Laravel framework. A Prototype Pollution condition in the `getQueryParam` function `/public/js/main.js` and was addressed in version 1.8.139 by blocking URL query keys matching the pattern `__proto__`. However, this mitigation is incomplete: it only filters top-level `__proto__` keys and fails to sanitize nested forms such as `b[__proto__][polluted]=PWNED`. As a result, an attacker-controlled URL query string can still write into `Object.prototype` on any page that loads `main.js`. Version 1.8.223 contains a updated fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53592",
+    "publishedDate": "2026-07-20T20:16:44.747",
+    "lastModifiedDate": "2026-07-20T20:16:44.747",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53591",
+    "description": "FreeScout is a free help desk and shared inbox built with PHP's Laravel framework. Prior to version 1.8.223, an unauthenticated attacker can inject messages into any existing support conversation by sending a single email to the helpdesk's public address with a crafted `In-Reply-To` header. No credentials, tokens, or prior access are required. The injected message is rendered in the agent UI as a legitimate customer reply, the conversation is automatically reopened, and the `last_reply_from` field is set to the attacker's identity. Version 1.8.223 contains a fix.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53591",
+    "publishedDate": "2026-07-20T20:16:44.613",
+    "lastModifiedDate": "2026-07-20T20:16:44.613",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44230",
+    "description": "RT is an open source, enterprise-grade issue and ticket tracking system. Versions 5.0.4 up to (but not including) 5.0.10, and 6.0.0 up to (but not including) 6.0.3 contain a reflected Cross-Site Scripting (XSS) vulnerability where an attacker who can induce an authenticated RT user to visit a crafted URL can execute arbitrary JavaScript in that user's browser session. This issue has been fixed in versions 5.0.10 and 6.0.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44230",
+    "publishedDate": "2026-07-20T20:16:43.660",
+    "lastModifiedDate": "2026-07-20T20:16:43.660",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44231",
+    "description": "RT is an open source, enterprise-grade issue and ticket tracking system. Versions prior to 5.0.10, 6.0.0 and above, prior to 6.0.3 contain an information disclosure and privilege escalation vulnerability in the REST 2.0 API. A privileged (non-administrative) user can obtain authentication credentials belonging to other users — including users with administrative privileges — and use those credentials to read data as those users via RT's feed endpoints. The same request that exposes the credentials also rotates them, invalidating previously-distributed feed URLs across the instance. This issue has been fixed in versions 5.0.10 and 6.0.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44231",
+    "publishedDate": "2026-07-20T20:16:43.797",
+    "lastModifiedDate": "2026-07-20T20:16:43.797",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:L",
+        "exploitabilityScore": 3.1,
+        "impactScore": 5.3,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44229",
+    "description": "RT is an open source, enterprise-grade issue and ticket tracking system. Versions 5.0.0 and 6.0.0 and above, prior to both 5.0.10 and 6.0.3 contain a Cross-Site Scripting (XSS) vulnerability where uploaded content is served inline rather than as an attachment. An authenticated user who can upload content can include JavaScript in the upload that will execute in the browser session of any RT user who later views or downloads it. This issue has been fixed in versions 5.0.10 and 6.0.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44229",
+    "publishedDate": "2026-07-20T20:16:43.527",
+    "lastModifiedDate": "2026-07-20T20:16:43.527",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63766",
+    "description": "GPT-SoVITS through 20250606v2pro contains an OS command injection vulnerability in webui.py where ASR, slice, denoise, and uvr5 functions interpolate unsanitized Gradio textbox values directly into shell commands executed with shell=True. Attackers can inject shell metacharacters through path parameters to execute arbitrary OS commands as the server process user without authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63766",
+    "publishedDate": "2026-07-20T20:16:46.170",
+    "lastModifiedDate": "2026-07-20T20:16:46.170",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-64619",
+    "description": "FileCodeBox before 2.4 contains a rate-limit bypass vulnerability in the IPRateLimit class that allows unauthenticated attackers to circumvent request throttling by supplying attacker-controlled X-Real-IP and X-Forwarded-For headers without verification of trusted reverse proxy origin. Attackers can supply unique spoofed IP values on each request to enumerate all possible share codes and retrieve other users' files without authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64619",
+    "publishedDate": "2026-07-20T19:17:30.373",
+    "lastModifiedDate": "2026-07-20T19:17:30.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-64194",
+    "description": "Net::DNS versions through 1.55 for Perl allow Denial of Service via deep DNS compression pointer chains.\n\nNet::DNS::DomainName::decode follows RFC 1035 compression pointers by recursing into itself with no depth limit. It is possible to construct a name which saturates the call stack (at least with larger TCP responses), leading to a potential Denial of Service.\n\nThe guard `$link < $offset` prevents forward and circular chains, but still allows arbitrarily long backward chains. The per-offset cache (`$cache`) is populated at the start of each call and short-circuits only re-traverses of the same offset - the initial descent through a fresh chain still recurses at full depth.\n\nA crafted packet can chain two-byte compression pointers so that each one points two bytes earlier than the previous, producing a chain length of `offset / 2`. For the 14-bit pointer field (max offset 16383) this gives up to ~8191 recursive frames. For a TCP DNS message the limit is the 16-bit length field (~32767 frames). Perl's default C stack handles only a few thousand frames; beyond that the process receives SIGSEGV or similar, which is a denial-of-service for any application parsing untrusted DNS data.\n\nThe vulnerability is triggered by `Net::DNS::Packet->new(\\$wire)` i.e. any point where the library decodes a DNS message from the network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64194",
+    "publishedDate": "2026-07-20T19:17:30.157",
+    "lastModifiedDate": "2026-07-20T19:17:30.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-64193",
+    "description": "Net::DNS versions through 1.55 for Perl allow remote execution injection via EDNS EXTENDED ERROR.\n\nNet::DNS::RR::OPT::EXTENDED_ERROR::_decompose parses the EXTRA-TEXT field of an EDNS EXTENDED-ERROR option (RFC 8914) by tokenising the raw bytes and passing the result to Perl's eval. There is some escaping done for $ and @, but not for backticks. This can be exploited for command execution if $pkt->edns->option('EXTENDED-ERROR') is called in array context, for example with a payload of {0:`\"<command>\"`} in EXTRA-TEXT.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64193",
+    "publishedDate": "2026-07-20T19:17:30.047",
+    "lastModifiedDate": "2026-07-20T19:17:30.047",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-63771",
+    "description": "Adminer before 5.4.3 contains a cookie injection vulnerability that allows attackers to manipulate cookie attributes by injecting arbitrary values through the unsanitized X-Forwarded-Prefix HTTP header used in Set-Cookie path attributes. Attackers can exploit a misconfigured reverse proxy to downgrade SameSite protection and enable cross-origin authenticated requests, bypassing cookie security controls.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63771",
+    "publishedDate": "2026-07-20T19:17:29.910",
+    "lastModifiedDate": "2026-07-20T19:17:29.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63770",
+    "description": "Glance through 0.8.5 contains an IP address spoofing vulnerability in the authentication handler that allows unauthenticated attackers to bypass brute-force lockout protections by supplying arbitrary values in the X-Forwarded-For request header when the server proxied option is enabled. Attackers can manipulate the leftmost value of the X-Forwarded-For header to make each login attempt appear to originate from a distinct IP address, preventing the per-IP failed-login counter from reaching the lockout threshold and enabling unlimited credential guessing against the authentication endpoint.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63770",
+    "publishedDate": "2026-07-20T19:17:29.770",
+    "lastModifiedDate": "2026-07-20T19:17:29.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63769",
+    "description": "Huginn through 2022.08.18 contains a server-side request forgery vulnerability in the fetch_url method of ScenarioImport that allows authenticated users to make arbitrary HTTP requests by submitting crafted URLs. Attackers can probe internal network services, enumerate ports via error signatures, and access cloud metadata endpoints to retrieve sensitive credentials.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63769",
+    "publishedDate": "2026-07-20T19:17:29.633",
+    "lastModifiedDate": "2026-07-20T19:17:29.633",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63768",
+    "description": "cal.diy through 6.2.0 contains an open redirect vulnerability in the conferencing OAuth callback endpoint that allows attackers to redirect users to arbitrary URLs by crafting malicious state parameters. Attackers can exploit the unsigned state parameter and onErrorReturnTo field to silently redirect visitors from the trusted domain to attacker-controlled URLs for phishing attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63768",
+    "publishedDate": "2026-07-20T19:17:29.497",
+    "lastModifiedDate": "2026-07-20T20:16:46.503",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63731",
+    "description": "HyperDX before 2.31.0 contains a server-side request forgery vulnerability that allows authenticated team members to direct the server to arbitrary internal destinations by supplying a caller-controlled host parameter to the ClickHouse proxy test endpoint with no URL validation or allowlist enforcement. Attackers can exploit the reflected error responses from the endpoint to disclose internal service response bodies, enabling access to internal APIs, container services, and cloud provider metadata endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63731",
+    "publishedDate": "2026-07-20T19:17:29.360",
+    "lastModifiedDate": "2026-07-20T19:17:29.360",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63730",
+    "description": "HyperDX before 2.31.0 contains a server-side request forgery vulnerability that allows authenticated team members to direct the server to make requests to arbitrary internal network destinations by supplying a caller-controlled URL to the webhook test endpoint. Attackers can bypass the insufficient hostname blacklist validation in the webhook handler to enumerate internal services, interact with internal containers, or access cloud instance metadata services including provider metadata endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63730",
+    "publishedDate": "2026-07-20T19:17:29.213",
+    "lastModifiedDate": "2026-07-20T19:17:29.213",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63108",
+    "description": "Roo Code through 3.54.0 contains a command injection vulnerability in the auto-approve execute feature that allows attackers to bypass allowlist/denylist enforcement by nesting command substitutions inside parameter expansion defaults. The command parser in parse-command.ts replaces parameter expansions with opaque placeholders before extracting command substitutions, causing the containsDangerousSubstitution guard to miss nested payloads, which are then auto-approved based on the outer allowlisted command prefix and executed by the shell via execa, enabling arbitrary command execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63108",
+    "publishedDate": "2026-07-20T19:17:29.057",
+    "lastModifiedDate": "2026-07-20T19:17:29.057",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63107",
+    "description": "LimeSurvey through 6.17.10 and 7.0.4 contains a server-side request forgery vulnerability in the REST API survey template endpoint that allows authenticated users to cause the server to issue arbitrary HTTP requests by supplying a manipulated Host header. Attackers can exploit the unsanitized use of the HTTP Host header in the getTemplateData() function to reach internal network services, cloud metadata endpoints, and extract sensitive credentials such as IAM tokens from instance metadata services.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63107",
+    "publishedDate": "2026-07-20T19:17:28.913",
+    "lastModifiedDate": "2026-07-20T19:17:28.913",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62414",
+    "description": "The Joomla extension Page Builder CK does not properly apply access control to frontend page list views.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62414",
+    "publishedDate": "2026-07-20T19:17:28.603",
+    "lastModifiedDate": "2026-07-20T19:17:28.603",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-61901",
+    "description": "The Joomla extension Hikashop is vulnerable to an open redirect.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61901",
+    "publishedDate": "2026-07-20T19:17:28.383",
+    "lastModifiedDate": "2026-07-20T19:17:28.383",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-61900",
+    "description": "The Joomla extension JDownloads is vulnerable to an unauthenticated file upload, leading to full RCE.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61900",
+    "publishedDate": "2026-07-20T19:17:28.267",
+    "lastModifiedDate": "2026-07-20T19:17:28.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61425",
+    "description": "The Joomla extension Gridbox is vulnerable an authenticated bypass, potentially leading to full admin access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61425",
+    "publishedDate": "2026-07-20T19:17:28.150",
+    "lastModifiedDate": "2026-07-20T19:17:28.150",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61424",
+    "description": "The Joomla extension DJ-Classifieds is vulnerable to an unauthenticated file upload, leading to full RCE.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61424",
+    "publishedDate": "2026-07-20T19:17:28.027",
+    "lastModifiedDate": "2026-07-20T19:17:28.027",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-60034",
+    "description": "The Joomla extension JMedia is vulnerable to a stored XSS vulnerability. Unsanitised SVG uploads served without nosniff, leading to stored/reflected XSS.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60034",
+    "publishedDate": "2026-07-20T19:17:27.910",
+    "lastModifiedDate": "2026-07-20T19:17:27.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-60033",
+    "description": "The Joomla extension JMedia is vulnerable to an SSRF vulnerability. Remote-URL download could target internal/reserved addresses.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60033",
+    "publishedDate": "2026-07-20T19:17:27.780",
+    "lastModifiedDate": "2026-07-20T19:17:27.780",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
       }
     ]
   }
