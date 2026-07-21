@@ -1,10 +1,50 @@
 [
   {
-    "id": "CVE-2026-47396",
-    "description": "PraisonAI is a multi-agent teams system. Prior to version 4.6.40, PraisonAI's call server exposes a network-facing agent control API without authentication when `CALL_SERVER_TOKEN` is not configured. The affected component is the `praisonai.api.agent_invoke` router as mounted by `praisonai.api.call`. The authentication helper `verify_token()` fails open when `CALL_SERVER_TOKEN` is unset. Since every sensitive agent-control endpoint depends on this helper, starting the call server without a token allows any reachable client to list agents, inspect agent metadata and instructions, invoke agents, and unregister agents. This is security-relevant because the bundled call server includes the vulnerable router and binds to `0.0.0.0`. As a result, operators who launch the call server without explicitly setting `CALL_SERVER_TOKEN` may unintentionally expose an unauthenticated remote agent control plane. Version 4.6.40 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47396",
-    "publishedDate": "2026-07-21T16:17:12.760",
-    "lastModifiedDate": "2026-07-21T16:17:12.760",
+    "id": "CVE-2026-59142",
+    "description": "Data::HashMap::Shared versions before 0.14 for Perl allow an out-of-bounds read via an unvalidated arena offset and length in shm_str_copy.\n\nThe attach-time validator shm_validate_header checks the header scalars and region layout against the file size, but does not validate the array contents it then trusts. shm_str_copy does memcpy(dst, arena + off, len) with off and len read raw from the mmap'd segment and unbounded, on the each, keys, values, pop, shift, take, swap, drain and cursor paths. The get path bounds off and len separately and is not affected.\n\nA local peer that can write the backing file can leave the header valid while poisoning a record's offset and length, so iterating or draining the map copies a file-controlled offset and length out of the arena, reading adjacent memory or crashing the process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59142",
+    "publishedDate": "2026-07-21T19:17:11.800",
+    "lastModifiedDate": "2026-07-21T19:35:17.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-59141",
+    "description": "Data::RadixTree::Shared versions before 0.02 for Perl allow an out-of-bounds read via unvalidated node and arena indices in rdx_find_locked.\n\nThe attach-time validator rdx_validate_header checks the header scalars and region layout against the file size, but does not validate the node records it then trusts. rdx_find_locked indexes nodes[cur].children[k] and reads each node's label_off and label_len raw from the mmap'd segment, none bounded against the node count or the arena size.\n\nA local peer that can write the backing file can leave the header valid while poisoning the node records, so a lookup dereferences an out-of-bounds node or arena index, reading adjacent memory or crashing the process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59141",
+    "publishedDate": "2026-07-21T19:17:11.697",
+    "lastModifiedDate": "2026-07-21T19:35:17.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-59140",
+    "description": "Data::SortedSet::Shared versions before 0.03 for Perl allow an out-of-bounds read via unvalidated node indices in the rank and min/max query paths.\n\nThe attach-time validator ss_validate_header bounds only the root index against the node pool (node_capacity). The order-statistics and min/max queries then follow children[], leftmost and rightmost node indices read raw from the mmap'd segment without bounding them against node_capacity. A full structural check (ss_validate_tree) exists but runs only via an explicit validate method, not on attach.\n\nA local peer that can write the backing file can leave the header valid while poisoning the tree links, so the next rank, min or max query dereferences an out-of-bounds node index, reading adjacent memory or crashing the process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59140",
+    "publishedDate": "2026-07-21T19:17:11.583",
+    "lastModifiedDate": "2026-07-21T19:35:17.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-59139",
+    "description": "Data::ReqRep::Shared versions before 0.05 for Perl allow an out-of-bounds read via an unvalidated arena offset and length in reqrep_recv_locked.\n\nThe attach-time validator reqrep_validate_header checks the header scalars and region layout against the file size, but does not validate the array contents it then trusts. reqrep_recv_locked does memcpy(copy_buf, req_arena + arena_off, len) with arena_off and len read raw from the mmap'd segment and never bounded against the arena capacity (req_arena_cap).\n\nA local peer that can write the backing file can leave the header valid while poisoning a request slot's offset and length, so receiving the request copies a file-controlled offset and length out of the arena, reading adjacent memory or crashing the process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59139",
+    "publishedDate": "2026-07-21T19:17:11.467",
+    "lastModifiedDate": "2026-07-21T19:35:17.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2016-20096",
+    "description": "Linknat VOS3000 and VOS2009 through version 2.1.2.0 contain an unauthenticated SQL injection vulnerability that allows remote attackers to execute arbitrary SQL commands by manipulating the name parameter in a POST request to the login endpoint. Attackers can inject malicious SQL through the login form and retrieve injected query results from a subsequent session request, enabling extraction of plaintext credentials and other database content with DBA-level privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2016-20096",
+    "publishedDate": "2026-07-21T19:17:07.357",
+    "lastModifiedDate": "2026-07-21T19:17:07.357",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -15,36 +55,25 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47395",
-    "description": "PraisonAI is a multi-agent teams system. Prior to version 4.6.40 of PraisonAI, corresponding to version 1.6.40 of praisonaiagents, PraisonAI's direct-prompt CLI automatically expands `@url:` mentions in raw prompt text before agent execution begins. If a prompt contains `@url:<http-or-https-url>`, the CLI calls `MentionsParser.process(...)`. The `@url:` handler then performs a direct `urllib.request.urlopen()` request to the attacker-controlled URL and returns the response body. That response body is prepended to the final model prompt context. There is no loopback/private-address restriction, no metadata-service restriction, and no approval gate before the fetch. As a result, attacker-influenced prompt text can cause the operator's machine to fetch localhost-only HTTP resources and inject the response into model context. PraisonAI version 4.6.40 and praisonaiagents version 1.6.40 contain a fix.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47395",
-    "publishedDate": "2026-07-21T16:17:12.600",
-    "lastModifiedDate": "2026-07-21T16:17:12.600",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47394",
-    "description": "PraisonAI is a multi-agent teams system. Prior to version 4.6.40, the fix for GHSA-9mqq-jqxf-grvw / CVE-2026-44336 is incomplete. The original advisory description named four vulnerable handlers in `mcp_server/adapters/cli_tools.py`. Commit `68cc9427` (\"fix(security): harden MCP rules path handling…\") added a `_resolve_rule_path()` helper and applied it to `rules.create`, `rules.show`, and `rules.delete`. `workflow.show` was left unchanged. Two adjacent handlers in the same file have the same pattern, `workflow.validate` and `deploy.validate`. Neither was mentioned in the original advisory. Both remained  unchanged. The original advisory also identified the dispatcher (`server.py:281-298`) as a root cause. It accepts unvalidated `**kwargs` from `params[\"arguments\"]` with no enforcement against the tool's declared `input_schema`. That code is unchanged prior to version 4.6.40. A single unauthenticated MCP `tools/call` to `praisonai.workflow.show` returns the contents of any file the host user can read: `/etc/passwd`, `~/.ssh/id_rsa`, `~/.aws/credentials`, or any project `.env`. Version 4.6.40 contains an updated fix.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47394",
-    "publishedDate": "2026-07-21T16:17:12.440",
-    "lastModifiedDate": "2026-07-21T16:17:12.440",
+    "id": "CVE-2026-55082",
+    "description": "DHIS2 is a flexible information system for data capture, management, validation, analytics and visualization. DHIS2 SQL View data endpoints allowed authenticated users with SQL View access to provide crafted filter values that were interpolated into generated SQL. An authenticated user with access to SQL View execution could manipulate SQL generated for SQL View filters and potentially access data outside the intended SQL View result set.\n\nThis is distinct from CVE-2026-55084, which tracks the related SQL View filter column-name injection.\n\nKnown affected release lines for this advisory: DHIS2 2.37, 2.38, and 2.39 before the 2026-06-09 EOS security updates.\nPatched by the 2026-06-09 EOS security updates for 2.37, 2.38, and 2.39. The same value-slot hardening was already present on later supported branches through DHIS2-20174 / PR #22253.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55082",
+    "publishedDate": "2026-07-21T19:17:11.093",
+    "lastModifiedDate": "2026-07-21T19:44:19.067",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -52,7 +81,7 @@
         "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -60,469 +89,398 @@
     ]
   },
   {
-    "id": "CVE-2026-64825",
-    "description": "Home Assistant Core before 2026.6.0 contains a path traversal vulnerability that allows unauthenticated attackers to write arbitrary files to any directory on the host filesystem by uploading a crafted backup archive during the initial onboarding window. Attackers can manipulate the 'name' field inside the uploaded archive's backup.json to supply an absolute path, causing pathlib.Path.__truediv__ to discard the configured backup directory prefix and write attacker-controlled content to arbitrary locations, with full filesystem access when the process runs as root.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64825",
-    "publishedDate": "2026-07-21T16:17:21.633",
-    "lastModifiedDate": "2026-07-21T16:17:21.633",
+    "id": "CVE-2026-12548",
+    "description": "A heap out-of-bounds read flaw was found in libsoup. When parsing multipart HTTP messages, an integer type mismatch between the caller and soup_headers_parse() can cause the length parameter to be incorrectly truncated, leading to a heap buffer over-read. A remote attacker could use this flaw to crash an application using libsoup or potentially disclose heap memory contents.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12548",
+    "publishedDate": "2026-07-21T19:17:09.440",
+    "lastModifiedDate": "2026-07-21T19:49:44.020",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.3,
+        "score": 4.2,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-64824",
-    "description": "Home Assistant Core before 2026.6.0 contains a path traversal vulnerability in the backup-restore function that allows attackers to write files to arbitrary absolute filesystem paths by supplying a crafted tar archive with a SYMTYPE entry containing a benign member name paired with an absolute linkname pointing outside the extraction directory. Because the official Docker image runs the Home Assistant process as root and the subsequent regular-file entry is written through the unvalidated symlink, attackers can achieve remote code execution by overwriting auto-imported Python paths such as site-packages/sitecustomize.py or custom component directories.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64824",
-    "publishedDate": "2026-07-21T16:17:21.433",
-    "lastModifiedDate": "2026-07-21T16:17:21.433",
+    "id": "CVE-2026-55081",
+    "description": "DHIS2 is a flexible information system for data capture, management, validation, analytics and visualization. The DHIS2 OpenAPI HTML endpoint reflected values from the `scope` query parameter into the generated HTML document without sufficient sanitization. A crafted `scope` value could be rendered as active HTML or JavaScript in the OpenAPI documentation page. An attacker able to get a user to open a crafted OpenAPI HTML URL could execute JavaScript in that user's browser in the DHIS2 origin.\n\nAffected versions: DHIS2 2.42 and 2.43 before the 2026-06-09 security patch releases, and the development branch for DHIS2 2.44 before the fix was merged.\nPatched in 2.42.5.1, 2.43.0.1, the 2.42 and 2.43 line branches, and the 2.44 development branch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55081",
+    "publishedDate": "2026-07-21T19:17:10.950",
+    "lastModifiedDate": "2026-07-21T19:44:19.067",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.4,
-        "version": "CVSS 3.1",
+        "score": 7.3,
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.7,
-        "impactScore": 6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:A/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28321",
-    "description": "SolarWinds Serv-U is affected by a broken access control vulnerability that could allow arbitrary file read and write, which can then be used to escalate privileges and execute code as root. A domain administrator access is required, and the impact is lower in Windows installations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28321",
-    "publishedDate": "2026-07-21T16:17:10.293",
-    "lastModifiedDate": "2026-07-21T16:17:10.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28317",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference (IDOR) vulnerability that can lead to privilege escalation. This issue requires domain administrator access. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28317",
-    "publishedDate": "2026-07-21T16:17:10.157",
-    "lastModifiedDate": "2026-07-21T16:17:10.157",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47393",
-    "description": "PraisonAI is a multi-agent teams system. CVE-2026-44338 (GHSA-6rmh-7xcm-cpxj) documents that PraisonAI ships a code-generator (`praisonai.deploy.api.generate_api_server_code`) that emits a Flask API server with authentication disabled by default. Users who follow the documented quickstart (`praisonai deploy --type api`) get a server that binds to `0.0.0.0` per the recommended sample YAML, exposes `/chat` and `/agents` endpoints, runs `praisonai.run()` on user-supplied JSON input — LLM orchestration with the API key materials present in the process environment, and does not require any authentication. Versions prior to 4.6.40 still ship the generator with `auth_enabled` defaulting to `False`. The fix shape is opt-in via `APIConfig(auth_enabled=True, auth_token=...)`. Version 4.6.40 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47393",
-    "publishedDate": "2026-07-21T16:17:12.270",
-    "lastModifiedDate": "2026-07-21T16:17:12.270",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-28316",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference (IDOR) vulnerability that can lead to privilege escalation to a system administrator with the ability to execute commands as the root user. This issue requires a domain account with administrator access. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28316",
-    "publishedDate": "2026-07-21T16:17:09.943",
-    "lastModifiedDate": "2026-07-21T16:17:09.943",
+    "id": "CVE-2026-12547",
+    "description": "SoupAuthManager caches proxy authentication credentials without scoping them to the proxy authority (host:port). When the proxy configuration changes (e.g., via system settings or WPAD), cached Proxy-Authorization headers from the previous proxy are sent to the new proxy, leaking credentials.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12547",
+    "publishedDate": "2026-07-21T19:17:09.303",
+    "lastModifiedDate": "2026-07-21T20:16:58.620",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 3.4,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28315",
-    "description": "SolarWinds Serv-U was found to be affected by a stored cross-site scripting vulnerability that could lead to session hijacking or information disclosure from an administrator account.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28315",
-    "publishedDate": "2026-07-21T16:17:09.417",
-    "lastModifiedDate": "2026-07-21T16:17:09.417",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 1.7,
-        "impactScore": 4,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28314",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference vulnerability that leads to an account takeover. User authentication is required. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28314",
-    "publishedDate": "2026-07-21T16:17:09.283",
-    "lastModifiedDate": "2026-07-21T16:17:09.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28313",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference (IDOR) vulnerability that can lead to SMTP hijacking leading to arbitrary account takeover. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28313",
-    "publishedDate": "2026-07-21T16:17:09.147",
-    "lastModifiedDate": "2026-07-21T16:17:09.147",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28312",
-    "description": "SolarWinds Serv-U is affected by a privilege escalation vulnerability. This would elevate a group’s access to system administrator and allow code execution as root. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28312",
-    "publishedDate": "2026-07-21T16:17:09.000",
-    "lastModifiedDate": "2026-07-21T16:17:09.000",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28310",
-    "description": "SolarWinds Serv-U is affected by a privilege escalation vulnerability that allows a domain administrator to escalate their user type to that of a system administrator. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28310",
-    "publishedDate": "2026-07-21T16:17:08.877",
-    "lastModifiedDate": "2026-07-21T16:17:08.877",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28309",
-    "description": "SolarWinds Serv-U is affected by a broken access control vulnerability that allows a domain administrator to create system administrator accounts. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28309",
-    "publishedDate": "2026-07-21T16:17:08.743",
-    "lastModifiedDate": "2026-07-21T16:17:08.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28308",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference (IDOR) vulnerability that can lead to remote code execution. Domain administrator access is required. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28308",
-    "publishedDate": "2026-07-21T16:17:08.577",
-    "lastModifiedDate": "2026-07-21T16:17:08.577",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28307",
-    "description": "SolarWinds Serv-U is affected by a privilege escalation vulnerability that allows a domain user group to be elevated into an administrator group. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28307",
-    "publishedDate": "2026-07-21T16:17:08.443",
-    "lastModifiedDate": "2026-07-21T16:17:08.443",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28306",
-    "description": "SolarWinds Serv-U is affected by a privilege escalation vulnerability that allows a domain administrator to elevate their privileges to a system administrator. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28306",
-    "publishedDate": "2026-07-21T16:17:08.317",
-    "lastModifiedDate": "2026-07-21T16:17:08.317",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28305",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference (IDOR) vulnerability that can lead to remote code execution as root. A domain account with admin privileges and read and write access to the home directory is required. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28305",
-    "publishedDate": "2026-07-21T16:17:08.180",
-    "lastModifiedDate": "2026-07-21T16:17:08.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28304",
-    "description": "SolarWinds Serv-U is affected by a remote code execution vulnerability that, when exploited, can allow the arbitrary execution of code remotely as root. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28304",
-    "publishedDate": "2026-07-21T16:17:08.050",
-    "lastModifiedDate": "2026-07-21T16:17:08.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-28302",
-    "description": "SolarWinds Serv-U is affected by an insecure direct object reference (IDOR) vulnerability that can lead to privilege escalation and remote code execution as root. This issue requires group administrator access. The impact is lower in Windows deployments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-28302",
-    "publishedDate": "2026-07-21T16:17:07.903",
-    "lastModifiedDate": "2026-07-21T16:17:07.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "psirt@solarwinds.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-16450",
-    "description": "A vulnerability was identified in zsadmin2025 ZS-Admin up to b52e14536d59fda11e56e2536a1c32e82a38cead. This affects the function getTenantId of the file /api/system/sys/dept/page of the component MyBatis-Plus Tenant Plugin. Such manipulation of the argument X-Tenant-Id leads to authorization bypass. The attack may be performed from remote. The exploit is publicly available and might be used. This product utilizes a rolling release system for continuous delivery, and as such, version information for affected or updated releases is not disclosed. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16450",
-    "publishedDate": "2026-07-21T16:17:07.493",
-    "lastModifiedDate": "2026-07-21T17:07:04.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:N/A:N",
+        "exploitabilityScore": 1.7,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47392",
-    "description": "PraisonAI is a multi-agent teams system. Prior to version 4.6.40 of PraisonAI, corresponding to version 1.6.40 of praisonaiagents, `execute_code()` in `praisonaiagents/tools/python_tools.py` (v1.6.37, subprocess sandbox mode) can be fully bypassed using `print.__self__` to retrieve the real Python `builtins` module, from which `__import__` can be extracted via `vars()` and runtime string construction. This achieves arbitrary OS command execution on the host, completely defeating the sandbox. This is a novel bypass that survives all patches for CVE-2026-39888 (frame traversal), CVE-2026-34938 (str subclass), and CVE-2026-40158 (`type.__getattribute__` trampoline). PraisonAI version 4.6.40 and praisonaiagents version 1.6.40 contain an updated fix.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47392",
-    "publishedDate": "2026-07-21T16:17:12.087",
-    "lastModifiedDate": "2026-07-21T17:17:08.563",
+    "id": "CVE-2026-55084",
+    "description": "DHIS2 is a flexible information system for data capture, management, validation, analytics and visualization. A SQL injection vulnerability was identified in the SqlView API endpoint of the DHIS2 application in the `filter` parameter used by the\n`/api/sqlViews/{viewId}/data.json` endpoint. An authenticated user with access to a SqlView can inject arbitrary SQL queries inside the `filter` parameter by abusing an expression executed by PostgreSQL and its output is reflected inside the application error message. This behavior enables attackers to extract arbitrary database content using error-based SQL injection.\n\nAffected versions include: 2.37, 2.38, 2.39, 2.40.x before 2.40.11.1/2.40.12, 2.41.x before 2.41.8.2, 2.42.x before 2.42.5.1, 2.43.0 before 2.43.0.1, 2.44 development branch before PR #24162\nPatched versions include: 2.37-EOS (2026-06-09), 2.38-EOS (2026-06-09), 2.39-EOS (2026-06-09), 2.40.11.1, 2.40.12, 2.41.8.2, 2.42.5.1, 2.43.0.1, 2.44 development branch after PR #24162",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55084",
+    "publishedDate": "2026-07-21T19:17:11.223",
+    "lastModifiedDate": "2026-07-21T20:17:02.277",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47391",
-    "description": "PraisonAI is a multi-agent teams system. Prior to version 4.6.40, PraisonAI's first-party A2A server example exposes an unauthenticated A2A JSON-RPC endpoint and registers a `calculate(expression)` tool implemented with Python `eval()`. The example also binds to `0.0.0.0`. A remote unauthenticated attacker can send `message/send` to `/a2a`; the request reaches `agent.chat()`, and a real LLM can invoke the registered `calculate` tool. In testing with `gemini/gemini-2.5-flash-lite`, this resulted in arbitrary Python execution in the server process, confirmed by creation of a marker file from an unauthenticated HTTP request. The issue affects deployments following the official A2A example or similar unauthenticated public A2A deployments with unsafe tools. The default unauthenticated A2A surface also exposes task history and task cancellation APIs, increasing confidentiality and integrity impact. Version 4.6.40 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47391",
-    "publishedDate": "2026-07-21T16:17:11.920",
-    "lastModifiedDate": "2026-07-21T16:17:11.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8933",
-    "description": "A local privilege escalation vulnerability exists in snap-confine, a set-capabilities core component used internally by Canonical snapd to construct the secure execution environment for snap applications. This vulnerability uniquely affects versions of snap-confine configured with set-capabilities (rather than standard set-uid-root installations).\nDue to a flaw in how privilege boundaries or security sandboxes are initialized when the binary runs under limited ambient capabilities, a local, unprivileged attacker can exploit this behavior to bypass intended restrictions and execute arbitrary code. Successful exploitation allows the local user to elevate their privileges to full root authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8933",
-    "publishedDate": "2026-07-21T15:16:39.563",
-    "lastModifiedDate": "2026-07-21T15:16:39.563",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
+        "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "security@ubuntu.com"
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56583",
+    "description": "HCL MyCloud was affected with Concurrent Login Vulnerability. It may increase the risk of unauthorized access, session hijacking, and account misuse.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56583",
+    "publishedDate": "2026-07-21T18:17:02.287",
+    "lastModifiedDate": "2026-07-21T18:33:31.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56582",
+    "description": "HCL MyCloud was affected by the SSL/TLS LUCKY13 Vulnerability. An attacker may exploit this vulnerability to decrypt sensitive information through a TLS/SSL padding oracle attack.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56582",
+    "publishedDate": "2026-07-21T18:17:02.170",
+    "lastModifiedDate": "2026-07-21T19:45:42.617",
+    "vendors": [
+      "hcltech"
+    ],
+    "products": [
+      "mycloud"
+    ],
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56581",
+    "description": "HCL MyCloud was affected with Cookie Attribute Path Not Set. It may increase the risk of unauthorized access to session data or authentication tokens.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56581",
+    "publishedDate": "2026-07-21T18:17:02.047",
+    "lastModifiedDate": "2026-07-21T19:45:47.890",
+    "vendors": [
+      "hcltech"
+    ],
+    "products": [
+      "mycloud"
+    ],
+    "cvssScores": [
+      {
+        "score": 2.6,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56580",
+    "description": "HCL MyCloud was affected by Using Components with Known Vulnerability ( IIS Server ). It may allow attackers to exploit publicly disclosed weaknesses and compromise the system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56580",
+    "publishedDate": "2026-07-21T18:17:01.903",
+    "lastModifiedDate": "2026-07-21T18:33:31.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.2,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 0.7,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56579",
+    "description": "HCL MyCloud was affected with License Key Revealed in HTTP Response. It may enable attackers to misuse the exposed information and compromise the application's security.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56579",
+    "publishedDate": "2026-07-21T18:17:01.787",
+    "lastModifiedDate": "2026-07-21T19:45:29.713",
+    "vendors": [
+      "hcltech"
+    ],
+    "products": [
+      "mycloud"
+    ],
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56578",
+    "description": "HCL MyCloud was affected by Server Version Disclosure. It may help attackers identify and exploit known vulnerabilities affecting the disclosed software versions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56578",
+    "publishedDate": "2026-07-21T18:17:01.667",
+    "lastModifiedDate": "2026-07-21T19:45:24.537",
+    "vendors": [
+      "hcltech"
+    ],
+    "products": [
+      "mycloud"
+    ],
+    "cvssScores": [
+      {
+        "score": 2.2,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 0.7,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56577",
+    "description": "HCL MyCloud was affected with Weak Password Policy. It may increase the risk of account compromise through brute-force or credential-based attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56577",
+    "publishedDate": "2026-07-21T18:17:01.547",
+    "lastModifiedDate": "2026-07-21T18:33:31.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "psirt@hcl.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47657",
+    "description": "HumHub is an Open Source Enterprise Social Network. In versions 1.13.0 through 1.18.2, a missing authorization check in the Space member management controller allowed any authenticated user to trigger the removal of all members from any Space, regardless of their own role or membership in that Space. Versions 1.13.0 through 1.18.2 are affected. The vulnerability has been patched in version 1.18.3, and all users are encouraged to upgrade to this version or later immediately. No known workaround is available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47657",
+    "publishedDate": "2026-07-21T18:17:01.277",
+    "lastModifiedDate": "2026-07-21T19:17:10.583",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47425",
+    "description": "Rattler is a library that provides common functionality used within the conda ecosystem. Prior to version 0.43.2, `EntryPoint::FromStr` in `rattler_conda_types` performs only `.trim()` on the `command` field before the linker joins it onto the install prefix and writes an executable Python script. A malicious `noarch:python` package can ship an `info/link.json` with an entry-point name containing `..`, `/`, `\\`, or an absolute path; the resulting file is written outside the prefix (or clobbers an existing in-prefix entry-point such as `bin/pip`) with mode `0o775` on Unix and a copied launcher `.exe` on Windows. This affects the default install path of `pixi install`, `mamba install` via py-rattler, `rattler-build`, and any other consumer of the `rattler` install crate; no flag or post-link-script opt-in is involved. Version 0.43.2 contains a fix for the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47425",
+    "publishedDate": "2026-07-21T18:17:01.130",
+    "lastModifiedDate": "2026-07-21T18:17:01.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47419",
+    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an* Insecure Direct Object Reference. The agent CRUD endpoints (`GET / PATCH / DELETE /workspaces/{workspace_id}/agents/{agent_id}`) gate access on `require_workspace_member(workspace_id)` only, then resolve `agent_id` through `AgentService.get(agent_id)` which is a primary-key lookup with no workspace constraint. A user who is a member of any workspace `W1` can read, modify, or delete agents that belong to a different workspace `W2` by guessing or harvesting an agent UUID and calling `…/workspaces/W1/agents/<W2-agent-id>`. PraisonAI Platform version 0.1.4 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47419",
+    "publishedDate": "2026-07-21T18:17:00.990",
+    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47418",
+    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. The project CRUD endpoints (`GET / PATCH / DELETE /workspaces/{workspace_id}/projects/{project_id}` and `GET .../{project_id}/stats`) gate access on `require_workspace_member(workspace_id)` only, then resolve `project_id` through `ProjectService.get(project_id)` / `update(project_id, ...)` / `delete(project_id)` / `get_stats(project_id)`. None of these calls thread `workspace_id` through to constrain the lookup. A user who is a member of any workspace `W1` can read, modify, delete, or read stats for projects that belong to a different workspace `W2`. PraisonAI Platform version 0.1.4 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47418",
+    "publishedDate": "2026-07-21T18:17:00.853",
+    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47417",
+    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. The comment endpoints (`POST /workspaces/{workspace_id}/issues/{issue_id}/comments` and `GET .../comments`) gate access on `require_workspace_member(workspace_id)` only, then call `CommentService.create(issue_id=issue_id, ...)` and `CommentService.list_for_issue(issue_id)` without verifying that `issue_id` belongs to `workspace_id`. A user who is a member of any workspace `W1` can read every comment on, and post new comments to, any issue in any other workspace `W2`. PraisonAI Platform version 0.1.4 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47417",
+    "publishedDate": "2026-07-21T18:17:00.707",
+    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47416",
+    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 are vulnerable to vertical privilege escalation. The `PATCH /workspaces/{workspace_id}/members/{user_id}` endpoint is gated by `require_workspace_member(workspace_id)`, which defaults to `min_role=\"member\"` and is never overridden by the route. The handler then calls `MemberService.update_role(workspace_id, user_id, body.role)` which sets the target member's role to whatever the request body specifies, with no check that the caller has owner-or-admin privilege, no check that the new role is not higher than the caller's own, and no check that the caller is not silently promoting themselves. PraisonAI Platform version 0.1.4 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47416",
+    "publishedDate": "2026-07-21T18:17:00.563",
+    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 5.8,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47415",
+    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. The issue CRUD endpoints (`GET / PATCH / DELETE /workspaces/{workspace_id}/issues/{issue_id}`) gate access on `require_workspace_member(workspace_id)` only, then resolve `issue_id` through `IssueService.get(issue_id)` which is a primary-key lookup with no workspace constraint. A user who is a member of any workspace `W1` can read, modify, or delete issues that belong to a different workspace `W2`. PraisonAI Platform version 0.1.4 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47415",
+    "publishedDate": "2026-07-21T18:17:00.423",
+    "lastModifiedDate": "2026-07-21T19:17:10.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47414",
+    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. Five label endpoints — `PATCH /workspaces/{workspace_id}/labels/{label_id}`, `DELETE .../labels/{label_id}`, `POST .../issues/{issue_id}/labels/{label_id}`, `DELETE .../issues/{issue_id}/labels/{label_id}`, `GET .../issues/{issue_id}/labels` — gate access on `require_workspace_member(workspace_id)` only and pass URL-supplied `label_id` and `issue_id` straight through to `LabelService` without verifying either belongs to the workspace. PraisonAI Platform version 0.1.4 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47414",
+    "publishedDate": "2026-07-21T18:17:00.283",
+    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
       }
     ]
   }
