@@ -1,487 +1,506 @@
 [
   {
-    "id": "CVE-2026-59142",
-    "description": "Data::HashMap::Shared versions before 0.14 for Perl allow an out-of-bounds read via an unvalidated arena offset and length in shm_str_copy.\n\nThe attach-time validator shm_validate_header checks the header scalars and region layout against the file size, but does not validate the array contents it then trusts. shm_str_copy does memcpy(dst, arena + off, len) with off and len read raw from the mmap'd segment and unbounded, on the each, keys, values, pop, shift, take, swap, drain and cursor paths. The get path bounds off and len separately and is not affected.\n\nA local peer that can write the backing file can leave the header valid while poisoning a record's offset and length, so iterating or draining the map copies a file-controlled offset and length out of the arena, reading adjacent memory or crashing the process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59142",
-    "publishedDate": "2026-07-21T19:17:11.800",
-    "lastModifiedDate": "2026-07-21T19:35:17.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-59141",
-    "description": "Data::RadixTree::Shared versions before 0.02 for Perl allow an out-of-bounds read via unvalidated node and arena indices in rdx_find_locked.\n\nThe attach-time validator rdx_validate_header checks the header scalars and region layout against the file size, but does not validate the node records it then trusts. rdx_find_locked indexes nodes[cur].children[k] and reads each node's label_off and label_len raw from the mmap'd segment, none bounded against the node count or the arena size.\n\nA local peer that can write the backing file can leave the header valid while poisoning the node records, so a lookup dereferences an out-of-bounds node or arena index, reading adjacent memory or crashing the process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59141",
-    "publishedDate": "2026-07-21T19:17:11.697",
-    "lastModifiedDate": "2026-07-21T19:35:17.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-59140",
-    "description": "Data::SortedSet::Shared versions before 0.03 for Perl allow an out-of-bounds read via unvalidated node indices in the rank and min/max query paths.\n\nThe attach-time validator ss_validate_header bounds only the root index against the node pool (node_capacity). The order-statistics and min/max queries then follow children[], leftmost and rightmost node indices read raw from the mmap'd segment without bounding them against node_capacity. A full structural check (ss_validate_tree) exists but runs only via an explicit validate method, not on attach.\n\nA local peer that can write the backing file can leave the header valid while poisoning the tree links, so the next rank, min or max query dereferences an out-of-bounds node index, reading adjacent memory or crashing the process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59140",
-    "publishedDate": "2026-07-21T19:17:11.583",
-    "lastModifiedDate": "2026-07-21T19:35:17.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-59139",
-    "description": "Data::ReqRep::Shared versions before 0.05 for Perl allow an out-of-bounds read via an unvalidated arena offset and length in reqrep_recv_locked.\n\nThe attach-time validator reqrep_validate_header checks the header scalars and region layout against the file size, but does not validate the array contents it then trusts. reqrep_recv_locked does memcpy(copy_buf, req_arena + arena_off, len) with arena_off and len read raw from the mmap'd segment and never bounded against the arena capacity (req_arena_cap).\n\nA local peer that can write the backing file can leave the header valid while poisoning a request slot's offset and length, so receiving the request copies a file-controlled offset and length out of the arena, reading adjacent memory or crashing the process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59139",
-    "publishedDate": "2026-07-21T19:17:11.467",
-    "lastModifiedDate": "2026-07-21T19:35:17.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2016-20096",
-    "description": "Linknat VOS3000 and VOS2009 through version 2.1.2.0 contain an unauthenticated SQL injection vulnerability that allows remote attackers to execute arbitrary SQL commands by manipulating the name parameter in a POST request to the login endpoint. Attackers can inject malicious SQL through the login form and retrieve injected query results from a subsequent session request, enabling extraction of plaintext credentials and other database content with DBA-level privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2016-20096",
-    "publishedDate": "2026-07-21T19:17:07.357",
-    "lastModifiedDate": "2026-07-21T19:17:07.357",
+    "id": "CVE-2026-56844",
+    "description": "A vulnerability in the Veeam Updater component of the Veeam Software Appliance that could allow a local user to elevate their privileges and gain root-level access to the underlying operating system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56844",
+    "publishedDate": "2026-07-22T01:16:26.523",
+    "lastModifiedDate": "2026-07-22T01:16:26.523",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "support@hackerone.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16492",
+    "description": "A weakness has been identified in umijs umi up to 4.6.63. The affected element is the function git.getFileCreateInfo of the file packages/utils/src/getFileGitIno.ts of the component GIT File Helper. This manipulation causes os command injection. The exploit has been made available to the public and could be used for attacks. Upgrading to version 4.6.64 is sufficient to fix this issue. Patch name: b6da12c17b024a43badb1fa565720c38cf42e647. Upgrading the affected component is advised.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16492",
+    "publishedDate": "2026-07-22T01:16:26.257",
+    "lastModifiedDate": "2026-07-22T01:16:26.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.1,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
       },
       {
-        "score": 9.3,
+        "score": 2,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55082",
-    "description": "DHIS2 is a flexible information system for data capture, management, validation, analytics and visualization. DHIS2 SQL View data endpoints allowed authenticated users with SQL View access to provide crafted filter values that were interpolated into generated SQL. An authenticated user with access to SQL View execution could manipulate SQL generated for SQL View filters and potentially access data outside the intended SQL View result set.\n\nThis is distinct from CVE-2026-55084, which tracks the related SQL View filter column-name injection.\n\nKnown affected release lines for this advisory: DHIS2 2.37, 2.38, and 2.39 before the 2026-06-09 EOS security updates.\nPatched by the 2026-06-09 EOS security updates for 2.37, 2.38, and 2.39. The same value-slot hardening was already present on later supported branches through DHIS2-20174 / PR #22253.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55082",
-    "publishedDate": "2026-07-21T19:17:11.093",
-    "lastModifiedDate": "2026-07-21T19:44:19.067",
+    "id": "CVE-2026-16490",
+    "description": "A security flaw has been discovered in itsourcecode Hospital Management System 1.0. Impacted is an unknown function of the file /prescription.php. The manipulation of the argument editid results in sql injection. The attack can be executed remotely. The exploit has been released to the public and may be used for attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16490",
+    "publishedDate": "2026-07-22T01:16:25.197",
+    "lastModifiedDate": "2026-07-22T01:16:25.197",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12548",
-    "description": "A heap out-of-bounds read flaw was found in libsoup. When parsing multipart HTTP messages, an integer type mismatch between the caller and soup_headers_parse() can cause the length parameter to be incorrectly truncated, leading to a heap buffer over-read. A remote attacker could use this flaw to crash an application using libsoup or potentially disclose heap memory contents.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12548",
-    "publishedDate": "2026-07-21T19:17:09.440",
-    "lastModifiedDate": "2026-07-21T19:49:44.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.2,
+        "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 1.6,
-        "impactScore": 2.5,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55081",
-    "description": "DHIS2 is a flexible information system for data capture, management, validation, analytics and visualization. The DHIS2 OpenAPI HTML endpoint reflected values from the `scope` query parameter into the generated HTML document without sufficient sanitization. A crafted `scope` value could be rendered as active HTML or JavaScript in the OpenAPI documentation page. An attacker able to get a user to open a crafted OpenAPI HTML URL could execute JavaScript in that user's browser in the DHIS2 origin.\n\nAffected versions: DHIS2 2.42 and 2.43 before the 2026-06-09 security patch releases, and the development branch for DHIS2 2.44 before the fix was merged.\nPatched in 2.42.5.1, 2.43.0.1, the 2.42 and 2.43 line branches, and the 2.44 development branch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55081",
-    "publishedDate": "2026-07-21T19:17:10.950",
-    "lastModifiedDate": "2026-07-21T19:44:19.067",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12547",
-    "description": "SoupAuthManager caches proxy authentication credentials without scoping them to the proxy authority (host:port). When the proxy configuration changes (e.g., via system settings or WPAD), cached Proxy-Authorization headers from the previous proxy are sent to the new proxy, leaking credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12547",
-    "publishedDate": "2026-07-21T19:17:09.303",
-    "lastModifiedDate": "2026-07-21T20:16:58.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.4,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 1.7,
-        "impactScore": 1.4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55084",
-    "description": "DHIS2 is a flexible information system for data capture, management, validation, analytics and visualization. A SQL injection vulnerability was identified in the SqlView API endpoint of the DHIS2 application in the `filter` parameter used by the\n`/api/sqlViews/{viewId}/data.json` endpoint. An authenticated user with access to a SqlView can inject arbitrary SQL queries inside the `filter` parameter by abusing an expression executed by PostgreSQL and its output is reflected inside the application error message. This behavior enables attackers to extract arbitrary database content using error-based SQL injection.\n\nAffected versions include: 2.37, 2.38, 2.39, 2.40.x before 2.40.11.1/2.40.12, 2.41.x before 2.41.8.2, 2.42.x before 2.42.5.1, 2.43.0 before 2.43.0.1, 2.44 development branch before PR #24162\nPatched versions include: 2.37-EOS (2026-06-09), 2.38-EOS (2026-06-09), 2.39-EOS (2026-06-09), 2.40.11.1, 2.40.12, 2.41.8.2, 2.42.5.1, 2.43.0.1, 2.44 development branch after PR #24162",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55084",
-    "publishedDate": "2026-07-21T19:17:11.223",
-    "lastModifiedDate": "2026-07-21T20:17:02.277",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56583",
-    "description": "HCL MyCloud was affected with Concurrent Login Vulnerability. It may increase the risk of unauthorized access, session hijacking, and account misuse.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56583",
-    "publishedDate": "2026-07-21T18:17:02.287",
-    "lastModifiedDate": "2026-07-21T18:33:31.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
       {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56582",
-    "description": "HCL MyCloud was affected by the SSL/TLS LUCKY13 Vulnerability. An attacker may exploit this vulnerability to decrypt sensitive information through a TLS/SSL padding oracle attack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56582",
-    "publishedDate": "2026-07-21T18:17:02.170",
-    "lastModifiedDate": "2026-07-21T19:45:42.617",
-    "vendors": [
-      "hcltech"
-    ],
-    "products": [
-      "mycloud"
-    ],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56581",
-    "description": "HCL MyCloud was affected with Cookie Attribute Path Not Set. It may increase the risk of unauthorized access to session data or authentication tokens.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56581",
-    "publishedDate": "2026-07-21T18:17:02.047",
-    "lastModifiedDate": "2026-07-21T19:45:47.890",
-    "vendors": [
-      "hcltech"
-    ],
-    "products": [
-      "mycloud"
-    ],
-    "cvssScores": [
-      {
-        "score": 2.6,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56580",
-    "description": "HCL MyCloud was affected by Using Components with Known Vulnerability ( IIS Server ). It may allow attackers to exploit publicly disclosed weaknesses and compromise the system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56580",
-    "publishedDate": "2026-07-21T18:17:01.903",
-    "lastModifiedDate": "2026-07-21T18:33:31.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.2,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 0.7,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56579",
-    "description": "HCL MyCloud was affected with License Key Revealed in HTTP Response. It may enable attackers to misuse the exposed information and compromise the application's security.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56579",
-    "publishedDate": "2026-07-21T18:17:01.787",
-    "lastModifiedDate": "2026-07-21T19:45:29.713",
-    "vendors": [
-      "hcltech"
-    ],
-    "products": [
-      "mycloud"
-    ],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56578",
-    "description": "HCL MyCloud was affected by Server Version Disclosure. It may help attackers identify and exploit known vulnerabilities affecting the disclosed software versions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56578",
-    "publishedDate": "2026-07-21T18:17:01.667",
-    "lastModifiedDate": "2026-07-21T19:45:24.537",
-    "vendors": [
-      "hcltech"
-    ],
-    "products": [
-      "mycloud"
-    ],
-    "cvssScores": [
-      {
-        "score": 2.2,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 0.7,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56577",
-    "description": "HCL MyCloud was affected with Weak Password Policy. It may increase the risk of account compromise through brute-force or credential-based attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56577",
-    "publishedDate": "2026-07-21T18:17:01.547",
-    "lastModifiedDate": "2026-07-21T18:33:31.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47657",
-    "description": "HumHub is an Open Source Enterprise Social Network. In versions 1.13.0 through 1.18.2, a missing authorization check in the Space member management controller allowed any authenticated user to trigger the removal of all members from any Space, regardless of their own role or membership in that Space. Versions 1.13.0 through 1.18.2 are affected. The vulnerability has been patched in version 1.18.3, and all users are encouraged to upgrade to this version or later immediately. No known workaround is available.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47657",
-    "publishedDate": "2026-07-21T18:17:01.277",
-    "lastModifiedDate": "2026-07-21T19:17:10.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
+        "score": 2.1,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47425",
-    "description": "Rattler is a library that provides common functionality used within the conda ecosystem. Prior to version 0.43.2, `EntryPoint::FromStr` in `rattler_conda_types` performs only `.trim()` on the `command` field before the linker joins it onto the install prefix and writes an executable Python script. A malicious `noarch:python` package can ship an `info/link.json` with an entry-point name containing `..`, `/`, `\\`, or an absolute path; the resulting file is written outside the prefix (or clobbers an existing in-prefix entry-point such as `bin/pip`) with mode `0o775` on Unix and a copied launcher `.exe` on Windows. This affects the default install path of `pixi install`, `mamba install` via py-rattler, `rattler-build`, and any other consumer of the `rattler` install crate; no flag or post-link-script opt-in is involved. Version 0.43.2 contains a fix for the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47425",
-    "publishedDate": "2026-07-21T18:17:01.130",
-    "lastModifiedDate": "2026-07-21T18:17:01.130",
+    "id": "CVE-2026-63263",
+    "description": "Uncontrolled Resource Consumption (CWE-400) in Elasticsearch can lead to denial of service via Exponential Data Expansion (CAPEC-197). An authenticated user may submit a specially crafted query to the ES|QL engine that causes exponential CPU consumption during query evaluation. Because the resource exhaustion persists beyond query completion, repeated requests can fully exhaust the available query worker resources, rendering ES|QL queries unavailable until the node is restarted.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63263",
+    "publishedDate": "2026-07-22T00:17:31.283",
+    "lastModifiedDate": "2026-07-22T00:17:31.283",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
+        "score": 6.5,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@elastic.co"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63262",
+    "description": "Missing Authorization (CWE-862) in Kibana can lead to unauthorized cross-space information disclosure via user-supplied input that circumvents space-level access control.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63262",
+    "publishedDate": "2026-07-22T00:17:31.173",
+    "lastModifiedDate": "2026-07-22T00:17:31.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@elastic.co"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16489",
+    "description": "A vulnerability was identified in jsforce up to 3.10.16. This issue affects the function _execCommand in the library lib/registry/sfdx.js of the component SFDX Connection Registry. The manipulation leads to os command injection. The attack can only be performed from a local environment. The exploit is publicly available and might be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16489",
+    "publishedDate": "2026-07-22T00:17:30.887",
+    "lastModifiedDate": "2026-07-22T00:17:30.887",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47419",
-    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an* Insecure Direct Object Reference. The agent CRUD endpoints (`GET / PATCH / DELETE /workspaces/{workspace_id}/agents/{agent_id}`) gate access on `require_workspace_member(workspace_id)` only, then resolve `agent_id` through `AgentService.get(agent_id)` which is a primary-key lookup with no workspace constraint. A user who is a member of any workspace `W1` can read, modify, or delete agents that belong to a different workspace `W2` by guessing or harvesting an agent UUID and calling `…/workspaces/W1/agents/<W2-agent-id>`. PraisonAI Platform version 0.1.4 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47419",
-    "publishedDate": "2026-07-21T18:17:00.990",
-    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "id": "CVE-2026-16488",
+    "description": "A vulnerability was determined in QUSETIONS MiniCode-Python 0.1.0. This vulnerability affects the function subprocess.Popen of the file minicode/config.py of the component Project File Handler. Executing a manipulation can lead to os command injection. The attack may be launched remotely. A high complexity level is associated with this attack. It is stated that the exploitability is difficult. The exploit has been publicly disclosed and may be utilized. Upgrading to version 0.1.0-rc1 is able to resolve this issue. This patch is called 9d868dc2550f426c6ddf8ee98f30ffe450ca5e32. It is suggested to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16488",
+    "publishedDate": "2026-07-22T00:17:30.693",
+    "lastModifiedDate": "2026-07-22T00:17:30.693",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.3,
+        "score": 5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63261",
+    "description": "Uncontrolled Resource Consumption (CWE-400) in Kibana can lead to denial of service via Excessive Allocation (CAPEC-130). A low-privileged authenticated user can send a specially crafted request to a Kibana machine learning feature, causing the server to exhaust available memory and become unavailable to all users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63261",
+    "publishedDate": "2026-07-21T23:18:02.817",
+    "lastModifiedDate": "2026-07-21T23:18:02.817",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.5,
-        "source": "security-advisories@github.com"
+        "impactScore": 3.6,
+        "source": "security@elastic.co"
       }
     ]
   },
   {
-    "id": "CVE-2026-47418",
-    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. The project CRUD endpoints (`GET / PATCH / DELETE /workspaces/{workspace_id}/projects/{project_id}` and `GET .../{project_id}/stats`) gate access on `require_workspace_member(workspace_id)` only, then resolve `project_id` through `ProjectService.get(project_id)` / `update(project_id, ...)` / `delete(project_id)` / `get_stats(project_id)`. None of these calls thread `workspace_id` through to constrain the lookup. A user who is a member of any workspace `W1` can read, modify, delete, or read stats for projects that belong to a different workspace `W2`. PraisonAI Platform version 0.1.4 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47418",
-    "publishedDate": "2026-07-21T18:17:00.853",
-    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "id": "CVE-2026-63260",
+    "description": "Uncontrolled Resource Consumption (CWE-400) in Kibana can lead to denial of service via Excessive Allocation (CAPEC-130). An authenticated attacker with low-privilege access can trigger a denial of service condition in Kibana by sending a specially crafted, oversized request payload. Processing this user-supplied input requires resource-intensive memory allocation that can exhaust the available heap memory in the Kibana process, causing it to crash and become unavailable to all users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63260",
+    "publishedDate": "2026-07-21T23:18:02.697",
+    "lastModifiedDate": "2026-07-21T23:18:02.697",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
+        "impactScore": 3.6,
+        "source": "security@elastic.co"
       }
     ]
   },
   {
-    "id": "CVE-2026-47417",
-    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. The comment endpoints (`POST /workspaces/{workspace_id}/issues/{issue_id}/comments` and `GET .../comments`) gate access on `require_workspace_member(workspace_id)` only, then call `CommentService.create(issue_id=issue_id, ...)` and `CommentService.list_for_issue(issue_id)` without verifying that `issue_id` belongs to `workspace_id`. A user who is a member of any workspace `W1` can read every comment on, and post new comments to, any issue in any other workspace `W2`. PraisonAI Platform version 0.1.4 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47417",
-    "publishedDate": "2026-07-21T18:17:00.707",
-    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "id": "CVE-2026-63259",
+    "description": "Authorization Bypass Through User-Controlled Key (CWE-639) in Kibana can lead to information disclosure via user-supplied identifiers that reference scheduled query result data from Kibana Spaces the requester is not authorized to access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63259",
+    "publishedDate": "2026-07-21T23:18:02.580",
+    "lastModifiedDate": "2026-07-21T23:18:02.580",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
+        "score": 4.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
+        "impactScore": 1.4,
+        "source": "security@elastic.co"
       }
     ]
   },
   {
-    "id": "CVE-2026-47416",
-    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 are vulnerable to vertical privilege escalation. The `PATCH /workspaces/{workspace_id}/members/{user_id}` endpoint is gated by `require_workspace_member(workspace_id)`, which defaults to `min_role=\"member\"` and is never overridden by the route. The handler then calls `MemberService.update_role(workspace_id, user_id, body.role)` which sets the target member's role to whatever the request body specifies, with no check that the caller has owner-or-admin privilege, no check that the new role is not higher than the caller's own, and no check that the caller is not silently promoting themselves. PraisonAI Platform version 0.1.4 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47416",
-    "publishedDate": "2026-07-21T18:17:00.563",
-    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "id": "CVE-2026-63145",
+    "description": "Incorrect Authorization (CWE-863) in Kibana can lead to integrity compromise of Machine Learning audit and notification records via Accessing Functionality Not Properly Constrained by ACLs (CAPEC-1).\n\nA vulnerability exists in Kibana's Machine Learning functionality where a Machine Learning management endpoint performs an insufficient authorization check. The endpoint validates only a coarse privilege level but does not verify that the requesting user has access to the specific Machine Learning job or notification resources provided in the request. As a result, a low-privileged user with Machine Learning access in any Kibana space can manipulate Machine Learning audit and notification records for arbitrary jobs—including jobs in other spaces or belonging to other users—by leveraging Kibana's internally elevated credentials to write to restricted Machine Learning system indices that the user cannot access directly.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63145",
+    "publishedDate": "2026-07-21T23:18:02.460",
+    "lastModifiedDate": "2026-07-21T23:18:02.460",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.6,
+        "score": 4.3,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@elastic.co"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63144",
+    "description": "Uncontrolled Recursion (CWE-674) in Elasticsearch can lead to denial of service via a specially crafted search request submitted by a low-privileged authenticated user. A user with read-level index access can submit a request that triggers unbounded recursive processing within the Elasticsearch query evaluation component, causing a fatal error that terminates the affected node. In single-node deployments, this results in complete service outage; in multi-node clusters, it causes repeated node restarts and sustained availability degradation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63144",
+    "publishedDate": "2026-07-21T23:18:02.343",
+    "lastModifiedDate": "2026-07-21T23:18:02.343",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@elastic.co"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63143",
+    "description": "Missing Authorization (CWE-862) in Kibana can lead to unauthorized information disclosure via Privilege Abuse (CAPEC-122). A user with limited feature privileges can access workflow execution outputs in their Kibana space without the authorization required to do so through the documented API. The accessible data may include sensitive information returned by workflow steps, such as results from connected data sources that the caller would not otherwise be authorized to access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63143",
+    "publishedDate": "2026-07-21T23:18:02.230",
+    "lastModifiedDate": "2026-07-21T23:18:02.230",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@elastic.co"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-63142",
+    "description": "Incomplete List of Disallowed Inputs (CWE-184) in Kibana can allow an authenticated attacker with access to the Reporting feature to bypass outbound request restrictions configured by an administrator, causing the reporting service to send requests to network destinations that should be denied by the configured security policy.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63142",
+    "publishedDate": "2026-07-21T23:18:02.110",
+    "lastModifiedDate": "2026-07-21T23:18:02.110",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:N/A:N",
         "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
+        "impactScore": 1.4,
+        "source": "security@elastic.co"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56820",
+    "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and prior to 4.1.135.Final, `OcspClient` does not validate that the `CertificateID` in an OCSP response matches the requested `CertificateID`, which can lead to replay attack. `OcspClient.validateResponse` accepts a legitimately signed `GOOD` status response for an unrelated certificate issued by the same CA, allowing bypass of revocation checks for another certificate. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56820",
+    "publishedDate": "2026-07-21T23:17:52.403",
+    "lastModifiedDate": "2026-07-21T23:17:52.403",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47415",
-    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. The issue CRUD endpoints (`GET / PATCH / DELETE /workspaces/{workspace_id}/issues/{issue_id}`) gate access on `require_workspace_member(workspace_id)` only, then resolve `issue_id` through `IssueService.get(issue_id)` which is a primary-key lookup with no workspace constraint. A user who is a member of any workspace `W1` can read, modify, or delete issues that belong to a different workspace `W2`. PraisonAI Platform version 0.1.4 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47415",
-    "publishedDate": "2026-07-21T18:17:00.423",
-    "lastModifiedDate": "2026-07-21T19:17:10.480",
+    "id": "CVE-2026-56819",
+    "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and 4.1.0.Final through 4.1.135.Final, a remote unauthenticated peer can leak one direct `ByteBuf` per HTTP/2 `DATA` frame in applications that enable HTTP/2 content decompression via `DelegatingDecompressorFrameListener`. When a `DATA` frame is processed for a stream whose decompressor has already been closed, `Http2Decompressor.decompress(...)` calls `decompressor.writeInbound(data.retain())` and does not release the retained buffer on the error path, eventually exhausting direct memory and crashing the JVM. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56819",
+    "publishedDate": "2026-07-21T23:17:52.263",
+    "lastModifiedDate": "2026-07-21T23:17:52.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56817",
+    "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and 4.1.0.Final through 4.1.135.Final, any caller that can deliver bytes to a Netty channel pipeline containing `XmlDecoder` can send XML with a `DOCTYPE` declaration to an `AsyncXMLInputFactory` instantiated with no security configuration, leaving DTD and entity handling active depending on Aalto XML async parser behavior and creating conditional XML external entity risk. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56817",
+    "publishedDate": "2026-07-21T23:17:52.127",
+    "lastModifiedDate": "2026-07-21T23:17:52.127",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 8.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.5,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47414",
-    "description": "PraisonAI Platform is the platform layer for the PraisonAI multi-agent teams system. Versions prior to 0.1.4 have an Insecure Direct Object Reference. Five label endpoints — `PATCH /workspaces/{workspace_id}/labels/{label_id}`, `DELETE .../labels/{label_id}`, `POST .../issues/{issue_id}/labels/{label_id}`, `DELETE .../issues/{issue_id}/labels/{label_id}`, `GET .../issues/{issue_id}/labels` — gate access on `require_workspace_member(workspace_id)` only and pass URL-supplied `label_id` and `issue_id` straight through to `LabelService` without verifying either belongs to the workspace. PraisonAI Platform version 0.1.4 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47414",
-    "publishedDate": "2026-07-21T18:17:00.283",
-    "lastModifiedDate": "2026-07-21T18:59:43.940",
+    "id": "CVE-2026-16517",
+    "description": "A signed integer overflow vulnerability was found in libarchive's ZIP writer. In the archive_write_zip_header function in archive_write_set_format_zip.c, when ZIP encryption is enabled and the entry file size is close to INT64_MAX, the addition of the encryption overhead to the entry size overflows int64_t, resulting in undefined behavior. This could lead to incorrect Zip64 extension decisions or potential memory corruption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16517",
+    "publishedDate": "2026-07-21T23:17:00.587",
+    "lastModifiedDate": "2026-07-22T00:17:31.060",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.6,
+        "score": 2.9,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.4,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
       }
     ]
+  },
+  {
+    "id": "CVE-2026-16486",
+    "description": "A vulnerability was found in SourceCodester Class and Exam Timetabling System 1.0. This affects an unknown part of the file /BSIS.php. Performing a manipulation of the argument day results in cross site scripting. The attack may be initiated remotely. The exploit has been made public and could be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16486",
+    "publishedDate": "2026-07-21T23:17:00.403",
+    "lastModifiedDate": "2026-07-21T23:17:00.403",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16485",
+    "description": "A vulnerability has been found in SourceCodester Class and Exam Timetabling System 1.0. Affected by this issue is some unknown functionality of the file /class.php. Such manipulation of the argument day leads to cross site scripting. The attack can be launched remotely. The exploit has been disclosed to the public and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16485",
+    "publishedDate": "2026-07-21T23:17:00.153",
+    "lastModifiedDate": "2026-07-21T23:17:00.153",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16424",
+    "description": "Use after free in GPU in Google Chrome on Android prior to 150.0.7871.182 allowed a remote attacker who had compromised the renderer process to potentially perform a sandbox escape via a crafted HTML page. (Chromium security severity: High)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16424",
+    "publishedDate": "2026-07-21T23:17:00.030",
+    "lastModifiedDate": "2026-07-21T23:17:00.030",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16423",
+    "description": "Use after free in UI in Google Chrome prior to 150.0.7871.182 allowed a remote attacker who convinced a user to engage in specific UI gestures to potentially exploit heap corruption via a crafted HTML page. (Chromium security severity: High)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16423",
+    "publishedDate": "2026-07-21T23:16:59.923",
+    "lastModifiedDate": "2026-07-21T23:16:59.923",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16422",
+    "description": "Insufficient validation of untrusted input in Certificate in Google Chrome on Linux prior to 150.0.7871.182 allowed an attacker in a privileged network position to perform domain spoofing via malicious network traffic. (Chromium security severity: High)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16422",
+    "publishedDate": "2026-07-21T23:16:59.817",
+    "lastModifiedDate": "2026-07-21T23:16:59.817",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16421",
+    "description": "Inappropriate implementation in WebAudio in Google Chrome prior to 150.0.7871.182 allowed a remote attacker to execute arbitrary code inside a sandbox via a crafted HTML page. (Chromium security severity: High)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16421",
+    "publishedDate": "2026-07-21T23:16:59.710",
+    "lastModifiedDate": "2026-07-21T23:16:59.710",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16420",
+    "description": "Type Confusion in WebAudio in Google Chrome prior to 150.0.7871.182 allowed a remote attacker to execute arbitrary code inside a sandbox via a crafted HTML page. (Chromium security severity: High)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16420",
+    "publishedDate": "2026-07-21T23:16:59.607",
+    "lastModifiedDate": "2026-07-21T23:16:59.607",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
