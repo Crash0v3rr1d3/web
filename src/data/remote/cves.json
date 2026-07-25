@@ -1,5 +1,45 @@
 [
   {
+    "id": "CVE-2026-66374",
+    "description": "Knot Resolver before 6.4.1 allows remote code execution via a heap-based buffer overflow in the DoQ (DNS-over-QUIC) receive path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66374",
+    "publishedDate": "2026-07-25T01:16:26.423",
+    "lastModifiedDate": "2026-07-25T01:16:26.423",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:H/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.3,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66373",
+    "description": "Redis before 8.8.0, in the unusual case where an authenticated attacker can execute RESTORE, allows remote code execution via a RESTORE payload where the same NACK (pending entry) is referenced by more than one consumer, because deleting both consumers via XGROUP DELCONSUMER leads to a double free. NOTE: this issue exists because of an incomplete fix for CVE-2026-25243.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66373",
+    "publishedDate": "2026-07-25T01:16:26.277",
+    "lastModifiedDate": "2026-07-25T01:16:26.277",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-66339",
     "description": "A flaw was found in libsoup. After a CONNECT tunnel is established through an HTTP proxy, libsoup incorrectly attaches the Proxy-Authorization header to subsequent HTTPS requests sent through that tunnel to the destination server. This allows the destination server to capture proxy credentials, leading to information disclosure.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-66339",
@@ -277,7 +317,7 @@
     "description": "FFmpeg 7.0 through 8.1.2, fixed in commit 4da9812, contains a heap out-of-bounds write vulnerability in the vf_quirc filter that allows an attacker to corrupt heap memory by supplying a crafted PGS/SUP subtitle file with mismatched frame dimensions. Attackers can provide a subtitle file whose second presentation has larger dimensions than its first, causing av_image_copy_plane() to copy data exceeding the initial allocation size into the undersized libquirc grayscale image buffer, resulting in heap corruption and process crash with potential for code execution.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-66041",
     "publishedDate": "2026-07-24T20:18:21.240",
-    "lastModifiedDate": "2026-07-24T20:18:21.240",
+    "lastModifiedDate": "2026-07-25T02:16:40.150",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -361,13 +401,32 @@
   },
   {
     "id": "CVE-2026-66038",
-    "description": "FFmpeg LCL/ZLIB Video Decoder Information Disclosure via lcldec.c",
+    "description": "FFmpeg through 8.1.2, fixed in commit 8670835, contains an information disclosure vulnerability in the LCL/ZLIB video decoder that allows attackers to expose uninitialized heap memory by supplying a valid zlib stream that inflates to fewer bytes than the expected frame size. The zlib_decomp() function in lcldec.c treats short decompression as non-fatal and continues to the RGB24 conversion path, which copies a full frame's worth of rows from the allocation buffer using original frame dimensions, causing uninitialized heap contents including pointer-derived allocator bytes to be copied into the attacker-observable AVFrame output and potentially defeating ASLR in long-lived media processing services.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-66038",
-    "publishedDate": "Fri, 24 Jul 2026 20:18:20 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-07-24T20:18:20.727",
+    "lastModifiedDate": "2026-07-24T21:16:46.147",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-66037",
@@ -413,7 +472,7 @@
     "description": "Improper authorization in Azure Portal allows an unauthorized attacker to disclose information over a network.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-62835",
     "publishedDate": "2026-07-24T20:18:19.410",
-    "lastModifiedDate": "2026-07-24T20:48:18.380",
+    "lastModifiedDate": "2026-07-25T02:16:39.663",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -540,46 +599,6 @@
         "version": "CVSS 4.0",
         "severity": "HIGH",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:L/SC:N/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-48035",
-    "description": "Hulumi is an open-source toolkit that ships secure-by-default cloud and platform infrastructure components for Pulumi. Prior to version 1.4.0, consumers using AccountFoundation could ship an AWS account whose CloudTrail / Config audit logs were deletable by any S3-delete-capable principal — while believing the startup-hardened tier guaranteed tamper-resistance. Sandbox-tier deployments had no audit immutability at all (defects 1 and 3 compounded). This issue has been patched in version 1.4.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48035",
-    "publishedDate": "2026-07-24T19:16:58.617",
-    "lastModifiedDate": "2026-07-24T19:16:58.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-48034",
-    "description": "Hulumi is an open-source toolkit that ships secure-by-default cloud and platform infrastructure components for Pulumi. Prior to version 1.4.0, there is a bypass via decoy sibling resources targeting a different bucket. This issue has been patched in version 1.4.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48034",
-    "publishedDate": "2026-07-24T19:16:58.477",
-    "lastModifiedDate": "2026-07-24T21:16:45.267",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
