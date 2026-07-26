@@ -1,8 +1,40 @@
 {
   "added_date": "2023-08-09",
-  "altname": null,
+  "altname": "Inc Ransom",
   "description": "INC Ransom is a prolific ransomware-as-a-service operation active since July 2023 that systematically targets healthcare, government, education, and manufacturing sectors in North America and Europe, having posted over 200 victims in 2025 alone with no sector off-limits.",
   "locations": [
+    {
+      "available": false,
+      "enabled": false,
+      "fqdn": "incapt.blog",
+      "slug": "http://incapt.blog/blog/leaks",
+      "title": "INC Ransom",
+      "type": "DLS"
+    },
+    {
+      "available": false,
+      "enabled": false,
+      "fqdn": "incapt.su",
+      "slug": "http://incapt.su/blog/leaks",
+      "title": "Error Response Page",
+      "type": "DLS"
+    },
+    {
+      "available": false,
+      "enabled": false,
+      "fqdn": "incbackend.top",
+      "slug": "http://incbackend.top/api/blog/get-leaks",
+      "title": "Error Response Page",
+      "type": "DLS"
+    },
+    {
+      "available": true,
+      "enabled": true,
+      "fqdn": "incblog6qu4y4mm4zvw5nrmue6qbwtgjsxpw6b7ixzssu36tsajldoad.onion",
+      "slug": "http://incblog6qu4y4mm4zvw5nrmue6qbwtgjsxpw6b7ixzssu36tsajldoad.onion/blog/disclosures",
+      "title": "Disclosures",
+      "type": "DLS"
+    },
     {
       "available": false,
       "enabled": false,
@@ -25,38 +57,6 @@
       "fqdn": "incbackrlasjesgpfu5brktfjknbqoahe2hhmqfhasc5fb56mtukn4yd.onion",
       "slug": "http://incbackrlasjesgpfu5brktfjknbqoahe2hhmqfhasc5fb56mtukn4yd.onion/api/blog/get-leaks",
       "title": "",
-      "type": "DLS"
-    },
-    {
-      "available": false,
-      "enabled": false,
-      "fqdn": "incapt.blog",
-      "slug": "http://incapt.blog/blog/leaks",
-      "title": "INC Ransom",
-      "type": "DLS"
-    },
-    {
-      "available": false,
-      "enabled": false,
-      "fqdn": "incbackend.top",
-      "slug": "http://incbackend.top/api/blog/get-leaks",
-      "title": "Error Response Page",
-      "type": "DLS"
-    },
-    {
-      "available": false,
-      "enabled": false,
-      "fqdn": "incapt.su",
-      "slug": "http://incapt.su/blog/leaks",
-      "title": "Error Response Page",
-      "type": "DLS"
-    },
-    {
-      "available": false,
-      "enabled": true,
-      "fqdn": "incblog6qu4y4mm4zvw5nrmue6qbwtgjsxpw6b7ixzssu36tsajldoad.onion",
-      "slug": "http://incblog6qu4y4mm4zvw5nrmue6qbwtgjsxpw6b7ixzssu36tsajldoad.onion/blog/disclosures",
-      "title": "Disclosures",
       "type": "DLS"
     }
   ],
@@ -92,6 +92,225 @@
       ]
     }
   ],
-  "ttps": [],
+  "ttps": [
+    {
+      "tactic_id": "TA0001",
+      "tactic_name": "Initial Access",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used compromised valid accounts for access to victim environments.(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has exploited known vulnerabilities including CVE-2023-3519 in Citrix NetScaler for initial access.(Citation: SOCRadar INC Ransom January 2024)(Citation: SentinelOne INC Ransomware)",
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used phishing to gain initial access.(Citation: SOCRadar INC Ransom January 2024)(Citation: SentinelOne INC Ransomware)",
+          "technique_id": "T1566",
+          "technique_name": "Phishing"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0002",
+      "tactic_name": "Execution",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used WMIC to deploy ransomware.(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)",
+          "technique_id": "T1047",
+          "technique_name": "Windows Management Instrumentation"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used `cmd.exe` to launch malicious payloads.(Citation: Huntress INC Ransom Group August 2023)",
+          "technique_id": "T1059.003",
+          "technique_name": "Command and Scripting Interpreter: Windows Command Shell"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has run a file encryption executable via `Service Control Manager/7045;winupd,%SystemRoot%\\winupd.exe,user mode service,demand start,LocalSystem`.(Citation: Huntress INC Ransom Group August 2023)",
+          "technique_id": "T1569.002",
+          "technique_name": "System Services: Service Execution"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0003",
+      "tactic_name": "Persistence",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used compromised valid accounts for access to victim environments.(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0004",
+      "tactic_name": "Privilege Escalation",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used compromised valid accounts for access to victim environments.(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0005",
+      "tactic_name": "Stealth",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has named a [PsExec](https://attack.mitre.org/software/S0029) executable winupd to mimic a legitimate Windows update file.(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)",
+          "technique_id": "T1036.005",
+          "technique_name": "Masquerading: Match Legitimate Resource Name or Location"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has uninstalled tools from compromised endpoints after use.(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1070.004",
+          "technique_name": "Indicator Removal: File Deletion"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used compromised valid accounts for access to victim environments.(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1078",
+          "technique_name": "Valid Accounts"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0007",
+      "tactic_name": "Discovery",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used NETSCAN.EXE for internal reconnaissance.(Citation: SOCRadar INC Ransom January 2024)(Citation: SentinelOne INC Ransomware)",
+          "technique_id": "T1046",
+          "technique_name": "Network Service Discovery"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used RDP to test network connections.(Citation: SOCRadar INC Ransom January 2024)",
+          "technique_id": "T1049",
+          "technique_name": "System Network Connections Discovery"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has enumerated domain groups on targeted hosts.(Citation: Huntress INC Ransom Group August 2023)",
+          "technique_id": "T1069.002",
+          "technique_name": "Permission Groups Discovery: Domain Groups"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has scanned for domain admin accounts in compromised environments.(Citation: SOCRadar INC Ransom January 2024)",
+          "technique_id": "T1087.002",
+          "technique_name": "Account Discovery: Domain Account"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used Internet Explorer to view folders on other systems.(Citation: Huntress INC Ransom Group August 2023)",
+          "technique_id": "T1135",
+          "technique_name": "Network Share Discovery"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0008",
+      "tactic_name": "Lateral Movement",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used RDP to move laterally.(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1021.001",
+          "technique_name": "Remote Services: Remote Desktop Protocol"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used a rapid succession of copy commands to install a file encryption executable across multiple endpoints within compromised infrastructure.(Citation: Huntress INC Ransom Group August 2023)(Citation: Secureworks GOLD IONIC April 2024)",
+          "technique_id": "T1570",
+          "technique_name": "Lateral Tool Transfer"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0009",
+      "tactic_name": "Collection",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has staged data on compromised hosts prior to exfiltration.(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)",
+          "technique_id": "T1074",
+          "technique_name": "Data Staged"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used 7-Zip and WinRAR to archive collected data prior to exfiltration.(Citation: Huntress INC Ransom Group August 2023)(Citation: Secureworks GOLD IONIC April 2024)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1560.001",
+          "technique_name": "Archive Collected Data: Archive via Utility"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0010",
+      "tactic_name": "Exfiltration",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used Megasync to exfiltrate data to the cloud.(Citation: Secureworks GOLD IONIC April 2024)",
+          "technique_id": "T1537",
+          "technique_name": "Transfer Data to Cloud Account"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0011",
+      "tactic_name": "Command and Control",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used valid accounts over RDP to connect to targeted systems.(Citation: Huntress INC Ransom Group August 2023)",
+          "technique_id": "T1071",
+          "technique_name": "Application Layer Protocol"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has downloaded tools to compromised servers including Advanced IP Scanner. (Citation: Huntress INC Ransom Group August 2023)(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1105",
+          "technique_name": "Ingress Tool Transfer"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used AnyDesk and PuTTY on compromised systems.(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)(Citation: SentinelOne INC Ransomware)",
+          "technique_id": "T1219",
+          "technique_name": "Remote Access Tools"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0040",
+      "tactic_name": "Impact",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has used [INC Ransomware](https://attack.mitre.org/software/S1139) to encrypt victim's data.(Citation: SentinelOne INC Ransomware)(Citation: Huntress INC Ransom Group August 2023)(Citation: Bleeping Computer INC Ransomware March 2024)(Citation: Secureworks GOLD IONIC April 2024)(Citation: Cybereason INC Ransomware November 2023)(Citation: SOCRadar INC Ransom January 2024)",
+          "technique_id": "T1486",
+          "technique_name": "Data Encrypted for Impact"
+        },
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has stolen and encrypted victim's data in order to extort payment for keeping it private or decrypting it.(Citation: Cybereason INC Ransomware November 2023)(Citation: Bleeping Computer INC Ransomware March 2024)(Citation: Secureworks GOLD IONIC April 2024)(Citation: SOCRadar INC Ransom January 2024)(Citation: SentinelOne INC Ransomware)",
+          "technique_id": "T1657",
+          "technique_name": "Financial Theft"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0042",
+      "tactic_name": "Resource Development",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) has acquired and used several tools including MegaSync, AnyDesk,  [esentutl](https://attack.mitre.org/software/S0404) and [PsExec](https://attack.mitre.org/software/S0029).(Citation: Cybereason INC Ransomware November 2023)(Citation: Huntress INC Ransom Group August 2023)(Citation: SOCRadar INC Ransom January 2024)(Citation: Huntress INC Ransomware May 2024)(Citation: SentinelOne INC Ransomware)",
+          "technique_id": "T1588.002",
+          "technique_name": "Obtain Capabilities: Tool"
+        }
+      ]
+    },
+    {
+      "tactic_id": "TA0112",
+      "tactic_name": "Defense Impairment",
+      "techniques": [
+        {
+          "technique_details": "[INC Ransom](https://attack.mitre.org/groups/G1032) can use SystemSettingsAdminFlows.exe, a native Windows utility, to disable Windows Defender.(Citation: Huntress INC Ransomware May 2024)",
+          "technique_id": "T1685",
+          "technique_name": "Disable or Modify Tools"
+        }
+      ]
+    }
+  ],
   "url": "https://www.ransomware.live/group/incransom"
 }
