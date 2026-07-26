@@ -1,5 +1,54 @@
 [
   {
+    "id": "CVE-2026-15962",
+    "description": "The Fluent Forms Pro Add On Pack plugin for WordPress is vulnerable to PHP Object Injection in all versions up to, and including, 6.2.6 via deserialization of untrusted input. This makes it possible for authenticated attackers, with Subscriber-level access and above, to inject a PHP Object. The additional presence of a POP chain allows attackers to change user passwords and potentially take over administrator accounts. Note: This can only be exploited if user update integration is enabled and a user meta field is mapped.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15962",
+    "publishedDate": "2026-07-26T02:16:28.790",
+    "lastModifiedDate": "2026-07-26T02:16:28.790",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-17432",
+    "description": "A vulnerability was detected in NousResearch hermes-agent 2026.6.5. Affected by this vulnerability is an unknown functionality of the file hermes-agent/plugins/platforms/simplex/adapter.py of the component SimpleX Gateway Authorization. The manipulation of the argument contactId results in improper access controls. The attack may be launched remotely. A high complexity level is associated with this attack. The exploitation appears to be difficult. The exploit is now public and may be used. The patch is identified as 490c486ff65b766d9de0fe0e6f26e1778aaa8fb3. Applying a patch is advised to resolve this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17432",
+    "publishedDate": "2026-07-26T01:16:25.783",
+    "lastModifiedDate": "2026-07-26T01:16:25.783",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-10681",
     "description": "In Zephyr's userspace dynamic-objects subsystem, thread_idx_alloc() in kernel/userspace/userspace.c allocated a new thread permission index from the global _thread_idx_map[] bitmap without holding lists_lock.\n\nOn SMP systems, two user-mode threads invoking the k_object_alloc(K_OBJ_THREAD) syscall concurrently can both observe the same low free bit, perform the same non-atomic RMW to clear it, and return the identical tidx.\n\nThe two newly created K_OBJ_THREAD objects are then assigned the same thread_id, so the two user threads alias a single bit position in every kernel object's perms[] bitfield: any subsequent grant of access on a kernel object to one thread is implicitly a grant to the other, defeating userspace ACL isolation. A secondary lost-update window between the unlocked &=~BIT() in alloc and the locked |= BIT() in thread_idx_free() can also leak entries from the thread-index pool.\n\nThe defect is reachable from any user-mode thread via the unrestricted __syscall k_object_alloc and is gated on CONFIG_USERSPACE, CONFIG_DYNAMIC_OBJECTS, and CONFIG_SMP. The flaw was introduced when the per-thread permission index was added in 2018 and is present in every release up to and including v4.4.0. Fixed by holding lists_lock across the bitmap RMW and the permissions clear (and inlining the obj_list traversal that previously took the lock itself).",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-10681",
@@ -279,30 +328,10 @@
   },
   {
     "id": "CVE-2026-64511",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nACPI: NFIT: core: Fix possible NULL pointer dereference\n\nAfter commit 9b311b7313d6 (\"ACPI: NFIT: Install Notify() handler before\ngetting NFIT table\"), acpi_nfit_probe() installs an ACPI notify handler\nfor the NFIT device before checking the presence of the NFIT table.  If\nthat table is not there, 0 is returned without allocating the acpi_desc\nobject and setting the driver data pointer of the NFIT device.  If the\nplatform firmware triggers an NFIT_NOTIFY_UC_MEMORY_ERROR notification\non the NFIT device at that point, acpi_nfit_uc_error_notify() will\ndereference a NULL pointer.\n\nPrevent that from occurring by adding an acpi_desc check against NULL\nto acpi_nfit_uc_error_notify().",
+    "description": "ACPI: NFIT: core: Fix possible NULL pointer dereference",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-64511",
-    "publishedDate": "2026-07-25T10:17:37.273",
-    "lastModifiedDate": "2026-07-25T10:17:37.273",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64510",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nACPI: NFIT: core: Fix acpi_nfit_init() error cleanup\n\nIf acpi_nfit_init() fails after adding the acpi_desc object to the\nacpi_descs list, that object is never removed from that list because\nthe acpi_nfit_shutdown() devm action is not added for the NFIT device\nin that case.  Next, the acpi_nfit_init() failure causes\nacpi_nfit_probe() to fail, the acpi_desc object is freed, and a\ndangling pointer is left behind in the acpi_descs.  Any subsequent\nACPI Machine Check Exception will trigger nfit_handle_mce() which\niterates over acpi_descs and so a use-after-free will occur.\n\nMoreover, if acpi_nfit_probe() returns 0 after installing a notify\nhandler for the NFIT device and without allocating the acpi_desc\nobject and setting the NFIT device's driver data pointer, the\nacpi_desc object will be allocated by acpi_nfit_update_notify()\nand acpi_nfit_init() will be called to initialize it.  Regardless\nof whether or not acpi_nfit_init() fails in that case, the\nacpi_nfit_shutdown() devm action is not added for the NFIT device\nand acpi_desc is never removed from the acpi_descs list.  If the\nacpi_desc object is freed subsequently on driver removal, any\nsubsequent ACPI MCE will lead to a use-after-free like in the\nprevious case.\n\nTo address the first issue mentioned above, make acpi_nfit_probe()\ncall acpi_nfit_shutdown() directly on acpi_nfit_init() failures and\nto address the other one, add a remove callback to the driver and\nmake it call acpi_nfit_shutdown().  Also, since it is now possible to\npass NULL to acpi_nfit_shutdown() or the acpi_desc object passed to it\nmay not have been initialized, add checks against NULL for acpi_desc and\nits nvdimm_bus field to that function and make acpi_nfit_unregister()\nclear the latter after unregistering the NVDIMM bus.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64510",
-    "publishedDate": "2026-07-25T10:17:37.137",
-    "lastModifiedDate": "2026-07-25T10:17:37.137",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64509",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrust: block: fix GenDisk cleanup paths\n\nGenDiskBuilder::build() still has fallible work after\n__blk_mq_alloc_disk(), but its error path only recovers the\nforeign queue data. That leaks the temporary gendisk and\nrequest_queue until later teardown. If the caller moved the last\nArc<TagSet<T>> into build(), the leaked queue can retain blk-mq\nstate after the tag set is dropped.\n\nFix the pre-registration failure path by dropping the temporary\ngendisk reference with put_disk() before recovering queue_data,\nso disk_release() can tear down the owned queue.\n\nAlso pair GenDisk::drop() with put_disk() after del_gendisk().\nOnce a Rust GenDisk has been added with device_add_disk(),\ndel_gendisk() only unregisters it; the final gendisk reference\nstill has to be dropped to complete the release path.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64509",
-    "publishedDate": "2026-07-25T10:17:37.030",
-    "lastModifiedDate": "2026-07-25T10:17:37.030",
+    "publishedDate": "Sat, 25 Jul 2026 10:17:37 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
