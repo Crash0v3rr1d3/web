@@ -1,5 +1,65 @@
 [
   {
+    "id": "CVE-2026-57990",
+    "description": "Files or directories accessible to external parties in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57990",
+    "publishedDate": "2026-07-26T18:18:25.153",
+    "lastModifiedDate": "2026-07-26T18:18:25.153",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57989",
+    "description": "Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to disclose information over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57989",
+    "publishedDate": "2026-07-26T18:18:25.033",
+    "lastModifiedDate": "2026-07-26T18:18:25.033",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-57978",
+    "description": "Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57978",
+    "publishedDate": "2026-07-26T18:18:23.780",
+    "lastModifiedDate": "2026-07-26T18:18:23.780",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-17497",
     "description": "NoteGen before 0.32.0 grants the Tauri shell plugin shell:allow-execute capability for bash, python, and python3 with arbitrary arguments in the default desktop capabilities. JavaScript running in the application webview can therefore invoke plugin:shell|execute to run attacker-controlled operating system commands with the privileges of the NoteGen process. In combination with script execution in the webview (for example via chat XSS), this enables full remote code execution on the user's machine.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-17497",
@@ -436,36 +496,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-64524",
     "publishedDate": "2026-07-25T10:17:38.713",
     "lastModifiedDate": "2026-07-25T10:17:38.713",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64523",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/handshake: Take a long-lived file reference at submit\n\nhandshake_nl_accept_doit() needs the file pointer backing\nreq->hr_sk->sk_socket to survive the window between\nhandshake_req_next() and the subsequent FD_PREPARE() and get_file().\nThe submit-side sock_hold() does not provide that.  sk_refcnt keeps\nstruct sock alive, but struct socket is owned by sock->file: when\nthe consumer fputs the last file reference, sock_release() tears\nthe socket down regardless of any sock_hold.\n\nAdd an hr_file pointer to struct handshake_req and acquire an\nexplicit reference on sock->file during handshake_req_submit().\nhandshake_complete() and handshake_req_cancel() release the\nreference on the completion-bit-winning path.\n\nThe submit error path must also release the file reference, but\nafter rhashtable insertion a concurrent handshake_req_cancel() can\ndiscover the request and race the error path.  Gate the error-path\ncleanup -- sk_destruct restoration, fput, and request destruction\n-- with test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED), the same\nserialization handshake_complete() and handshake_req_cancel()\nalready use.  When cancel has already claimed ownership, the submit\nerror path returns without touching the request; socket teardown\nhandles final destruction.\n\nThe accept-side dereferences are not yet retargeted; that change\ncomes in the next patch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64523",
-    "publishedDate": "2026-07-25T10:17:38.597",
-    "lastModifiedDate": "2026-07-25T10:17:38.597",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64522",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/mlx5e: Fix eswitch mode block underflow on IPsec acquire SA\n\nmlx5e_xfrm_add_state() handles acquire-flow temporary SAs by allocating\nsoftware state and skipping hardware offload setup.\n\nThat path jumps to the common success label before taking the eswitch mode\nblock. After tunnel-mode validation was moved earlier, the common success\nlabel unconditionally calls mlx5_eswitch_unblock_mode(). For acquire SAs,\nthis decrements esw->offloads.num_block_mode without a matching increment.\n\nReturn directly after installing the acquire SA offload handle, so only the\npaths that successfully called mlx5_eswitch_block_mode() call the matching\nunblock.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64522",
-    "publishedDate": "2026-07-25T10:17:38.497",
-    "lastModifiedDate": "2026-07-25T10:17:38.497",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64521",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npinctrl: meson: amlogic-a4: fix deadlock issue\n\nAccessing the pinconf-pins sysfs node may deadlock.\n\npinconf_pins_show() holds pctldev->mutex, and the platform driver\ncalls pinctrl_find_gpio_range_from_pin(), which tries to acquire\nthe same mutex again, leading to a deadlock.\n\nUse pinctrl_find_gpio_range_from_pin_nolock() to fix this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64521",
-    "publishedDate": "2026-07-25T10:17:38.393",
-    "lastModifiedDate": "2026-07-25T10:17:38.393",
     "vendors": [],
     "products": [],
     "cvssScores": []
