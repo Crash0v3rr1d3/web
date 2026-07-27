@@ -1,5 +1,25 @@
 [
   {
+    "id": "CVE-2026-15928",
+    "description": "XMLRPC-C Library versions 1.07 through 1.67.01 are vulnerable to a reflected cross-site scripting (XSS) vulnerability in the error page component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15928",
+    "publishedDate": "2026-07-27T03:16:18.830",
+    "lastModifiedDate": "2026-07-27T03:16:18.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vdp@themissinglink.com.au"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-17501",
     "description": "A flaw has been found in ggml-org llama.cpp e15efe0. This vulnerability affects the function transform of the file common/json-schema-to-grammar.cpp of the component JSON-Schema-to-GBNF Conversion. This manipulation causes allocation of resources. The attack may be initiated remotely. The pull request to fix this issue awaits acceptance.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-17501",
@@ -249,17 +269,27 @@
     "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: cls_api: Handle TC_ACT_CONSUMED in tcf_qevent_handle\n\ntcf_classify() can return TC_ACT_CONSUMED while the skb is held by the\ndefragmentation engine (e.g. act_ct on out-of-order fragments). When\nthat happens the skb is no longer owned by the caller and must not be\ntouched again.\n\ntcf_qevent_handle() did not handle TC_ACT_CONSUMED: it fell through the\nswitch and returned the skb to the caller as if classification had\npassed. The only qdisc that wires up qevents today is RED, via three call sites\n(qe_mark on RED_PROB_MARK/HARD_MARK, qe_early_drop on congestion_drop)\nred_enqueue() was continuing to operate on an skb it no longer owns  in this\ncase -- enqueueing it, dropping it, or updating statistics. Resulting in a UAF.\n\n  tc qdisc add dev eth0 root handle 1: red ... qevent early_drop block 10\n  tc filter add block 10 ... action ct\n\n  (with ct defrag enabled and traffic that produces out-of-order\n  fragments, e.g. a fragmented UDP stream)\n\nHandle TC_ACT_CONSUMED in tcf_qevent_handle() the same way the ingress\nand egress fast paths do: treat it as stolen and return NULL without\ntouching the skb. Unlike the TC_ACT_STOLEN case, the skb must not be\ndropped/freed here, as it is no longer owned by us.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-64530",
     "publishedDate": "2026-07-26T07:16:41.680",
-    "lastModifiedDate": "2026-07-26T07:16:41.680",
+    "lastModifiedDate": "2026-07-27T05:16:56.730",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67"
+      }
+    ]
   },
   {
     "id": "CVE-2024-14040",
     "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: nexthop: Increase weight to u16\n\nIn CLOS networks, as link failures occur at various points in the network,\nECMP weights of the involved nodes are adjusted to compensate. With high\nfan-out of the involved nodes, and overall high number of nodes,\na (non-)ECMP weight ratio that we would like to configure does not fit into\n8 bits. Instead of, say, 255:254, we might like to configure something like\n1000:999. For these deployments, the 8-bit weight may not be enough.\n\nTo that end, in this patch increase the next hop weight from u8 to u16.\n\nIncreasing the width of an integral type can be tricky, because while the\ncode still compiles, the types may not check out anymore, and numerical\nerrors come up. To prevent this, the conversion was done in two steps.\nFirst the type was changed from u8 to a single-member structure, which\ninvalidated all uses of the field. This allowed going through them one by\none and audit for type correctness. Then the structure was replaced with a\nvanilla u16 again. This should ensure that no place was missed.\n\nThe UAPI for configuring nexthop group members is that an attribute\nNHA_GROUP carries an array of struct nexthop_grp entries:\n\n\tstruct nexthop_grp {\n\t\t__u32\tid;\t  /* nexthop id - must exist */\n\t\t__u8\tweight;   /* weight of this nexthop */\n\t\t__u8\tresvd1;\n\t\t__u16\tresvd2;\n\t};\n\nThe field resvd1 is currently validated and required to be zero. We can\nlift this requirement and carry high-order bits of the weight in the\nreserved field:\n\n\tstruct nexthop_grp {\n\t\t__u32\tid;\t  /* nexthop id - must exist */\n\t\t__u8\tweight;   /* weight of this nexthop */\n\t\t__u8\tweight_high;\n\t\t__u16\tresvd2;\n\t};\n\nKeeping the fields split this way was chosen in case an existing userspace\nmakes assumptions about the width of the weight field, and to sidestep any\nendianness issues.\n\nThe weight field is currently encoded as the weight value minus one,\nbecause weight of 0 is invalid. This same trick is impossible for the new\nweight_high field, because zero must mean actual zero. With this in place:\n\n- Old userspace is guaranteed to carry weight_high of 0, therefore\n  configuring 8-bit weights as appropriate. When dumping nexthops with\n  16-bit weight, it would only show the lower 8 bits. But configuring such\n  nexthops implies existence of userspace aware of the extension in the\n  first place.\n\n- New userspace talking to an old kernel will work as long as it only\n  attempts to configure 8-bit weights, where the high-order bits are zero.\n  Old kernel will bounce attempts at configuring >8-bit weights.\n\nRenaming reserved fields as they are allocated for some purpose is commonly\ndone in Linux. Whoever touches a reserved field is doing so at their own\nrisk. nexthop_grp::resvd1 in particular is currently used by at least\nstrace, however they carry an own copy of UAPI headers, and the conversion\nshould be trivial. A helper is provided for decoding the weight out of the\ntwo fields. Forcing a conversion seems preferable to bending backwards and\nintroducing anonymous unions or whatever.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2024-14040",
     "publishedDate": "2026-07-26T07:16:39.583",
-    "lastModifiedDate": "2026-07-26T07:16:39.583",
+    "lastModifiedDate": "2026-07-27T05:16:33.740",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -503,10 +533,20 @@
     "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: qat - remove unused character device and IOCTLs\n\nThe QAT driver exposes a character device (qat_adf_ctl) with IOCTLs\nfor device configuration, start, stop, status query and enumeration.\nThese IOCTLs are not part of any public uAPI header and have no known\nin-tree or out-of-tree users. Device lifecycle is already managed via\nsysfs.\n\nThe ioctl interface also increases the attack surface and is the\nsubject of a number of bug reports.\n\nRemove the character device, the IOCTL definitions, and the related\ndata structures (adf_dev_status_info, adf_user_cfg_key_val,\nadf_user_cfg_section, adf_user_cfg_ctl_data). Drop the now-unused\nadf_cfg_user.h header and strip adf_ctl_drv.c down to the minimal\nmodule_init/module_exit hooks for workqueue, AER, and crypto/compression\nalgorithm registration.\n\nClean up leftover dead code that was only reachable from the removed\nIOCTL paths: adf_cfg_del_all(), adf_devmgr_verify_id(),\nadf_devmgr_get_num_dev(), adf_devmgr_get_dev_by_id(),\nadf_get_vf_real_id() and the unused ADF_CFG macros.\n\nAdditionally, drop the entry associated to QAT IOCTLs in\nioctl-number.rst.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-64529",
     "publishedDate": "2026-07-25T10:17:39.317",
-    "lastModifiedDate": "2026-07-25T10:17:39.317",
+    "lastModifiedDate": "2026-07-27T05:16:56.580",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "416baaa9-dc9f-4396-8d5f-8c081fb06d67"
+      }
+    ]
   },
   {
     "id": "CVE-2026-64528",
@@ -524,16 +564,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-64527",
     "publishedDate": "2026-07-25T10:17:39.053",
     "lastModifiedDate": "2026-07-25T10:17:39.053",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-64526",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nethtool: tsconfig: fix missing ethnl_ops_complete()\n\ntsconfig_prepare_data() calls ethnl_ops_begin(), we need to call\nethnl_ops_complete() before returning the error.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64526",
-    "publishedDate": "2026-07-25T10:17:38.950",
-    "lastModifiedDate": "2026-07-25T10:17:38.950",
     "vendors": [],
     "products": [],
     "cvssScores": []
