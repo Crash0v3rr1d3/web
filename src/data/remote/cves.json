@@ -1,10 +1,250 @@
 [
   {
+    "id": "CVE-2026-18072",
+    "description": "The Advanced Responsive Video Embedder for Rumble, Odysee, YouTube, Vimeo, Kick … plugin for WordPress is vulnerable to Authentication Bypass via a Hardcoded Backdoor in version 10.8.7. The vulnerability exists because the `_arve_uc_init()` function — registered on WordPress's `init` hook at priority 1 so that it runs before any authentication checks on every request — reads an attacker-supplied token from the `_wplogin` (or `_wpm`) parameter and compares it against a hardcoded SHA-256 hash embedded directly in the plugin source, with no nonce verification, no capability check, and no password validation anywhere in the flow. Because this static hash constitutes a set of universal credentials that are publicly accessible in the plugin's source code, unauthenticated attackers can supply the known token to be authenticated as an arbitrarily selected existing administrator account, gaining full administrative control over the affected WordPress site. This was likely introduced by an attacker who gained commit access to the developers account.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18072",
+    "publishedDate": "2026-07-29T05:16:40.840",
+    "lastModifiedDate": "2026-07-29T05:16:40.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-5626",
+    "description": "The Survey Form Block plugin for WordPress is vulnerable to unauthorized access of data due to a missing capability check on the get_all_data() function in all versions up to, and including, 1.0.1. This makes it possible for authenticated attackers, with Subscriber-level access and above, to export all survey submission data and column metadata.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5626",
+    "publishedDate": "2026-07-29T04:17:13.503",
+    "lastModifiedDate": "2026-07-29T04:17:13.503",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15344",
+    "description": "The WP Photo Album Plus plugin for WordPress is vulnerable to generic SQL Injection via the 'table' parameter in all versions up to, and including, 9.2.04.002 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. The export-table endpoint lacks a nonce check, meaning this vulnerability can also be triggered via CSRF by tricking an authenticated administrator into visiting a malicious page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15344",
+    "publishedDate": "2026-07-29T04:17:13.313",
+    "lastModifiedDate": "2026-07-29T04:17:13.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12476",
+    "description": "The Easy Digital Downloads plugin for WordPress is vulnerable to Arbitrary File Upload in versions up to and including 3.6.9. This is due to insufficient file type validation in the edd_do_ajax_import_file_upload() function , which only checks the client-supplied $_FILES['edd-import-file']['type'] Content-Type header against an allow-list of CSV mime types, then uses raw move_uploaded_file() (bypassing wp_handle_upload()'s core MIME enforcement) to write the file under its original extension into the web-accessible wp-content/uploads/edd/exports/ directory. This makes it possible for authenticated attackers, with Shop Manager-level access and above, to upload arbitrary files on the affected site's server which may make remote code execution possible.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12476",
+    "publishedDate": "2026-07-29T04:17:06.887",
+    "lastModifiedDate": "2026-07-29T04:17:06.887",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-17166",
+    "description": "The Event Booking Manager for WooCommerce – Sell Tickets, Event Registration, RSVP & Event Calendar plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 5.3.7. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with contributor-level access and above, to modify site-wide payment settings — including WooCommerce payment enablement, cart redirect behavior, login requirements for checkout, confirmation page ID, and confirmed ticket statuses — that govern how all event bookings are processed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17166",
+    "publishedDate": "2026-07-29T02:16:43.613",
+    "lastModifiedDate": "2026-07-29T02:16:43.613",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-17162",
+    "description": "The WowStore – Store Builder & Product Blocks for WooCommerce plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'currentPostId' Block Attribute in all versions up to, and including, 4.4.24 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17162",
+    "publishedDate": "2026-07-29T02:16:43.480",
+    "lastModifiedDate": "2026-07-29T02:16:43.480",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-17161",
+    "description": "The WowStore – Store Builder & Product Blocks for WooCommerce plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'filterMobileText' Block Attribute in all versions up to, and including, 4.4.24 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The save-time wp_kses_post sanitization is ineffective because the payload is stored inside a Gutenberg block delimiter comment as JSON, which wp_kses_post preserves, allowing an attribute-breakout string to survive to the server-side render_callback.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17161",
+    "publishedDate": "2026-07-29T02:16:43.337",
+    "lastModifiedDate": "2026-07-29T02:16:43.337",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15735",
+    "description": "The Contact Form to Any API plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'cf7anyapi_form_field' Post Meta in all versions up to, and including, 3.0.6 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15735",
+    "publishedDate": "2026-07-29T02:16:43.183",
+    "lastModifiedDate": "2026-07-29T02:16:43.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12939",
+    "description": "The Newsletters Lite plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'link' attribute of the post_thumbnail (and newsletters_post_thumbnail) shortcodes in versions up to and including 4.15. This is due to insufficient input sanitization and output escaping in the post_thumbnail() method in helpers/shortcode.php, which concatenates the user-controlled $link shortcode attribute directly into an href attribute without esc_url() or esc_attr(). This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12939",
+    "publishedDate": "2026-07-29T02:16:43.037",
+    "lastModifiedDate": "2026-07-29T02:16:43.037",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12938",
+    "description": "The Newsletters Lite plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'target' attribute of the [newsletters_post] shortcode in versions up to and including 4.15. This is due to insufficient input sanitization and output escaping in the posts_single() function which propagates the attacker-controlled 'target' attribute into the global $wpml_target, and in the shortcode_posts() 'post_thumbnail' handler which concatenates $wpml_target into a target=\"...\" HTML attribute without esc_attr(). This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12938",
+    "publishedDate": "2026-07-29T02:16:42.883",
+    "lastModifiedDate": "2026-07-29T02:16:42.883",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12144",
+    "description": "The Wholesale for WooCommerce plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 2.0.5. This is due to the `save_requests_meta()` function applying only `sanitize_text_field()` to the `user_role_set` POST parameter before passing it directly to `WP_User::add_role()`, with no allowlist validation against permitted wholesale roles and no capability check such as `current_user_can('promote_users')` or `current_user_can('manage_options')`. This makes it possible for authenticated attackers with author-level access and above to escalate their privileges to administrator by supplying `administrator` as the `user_role_set` value in a crafted request. The function is gated only by a nonce (`request_user_role_nonce`) that is rendered in the meta box on the `wwp_requests` post edit screen; because the post type is registered with `capability_type => 'post'`, any author-level user who has authored a `wwp_requests` post — such as one created via the wholesale registration form — can access this nonce and submit the role-assignment request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12144",
+    "publishedDate": "2026-07-29T02:16:41.840",
+    "lastModifiedDate": "2026-07-29T02:16:41.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-56822",
     "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, the OcspServerCertificateValidator forwards the SslHandshakeCompletionEvent before the asynchronous OCSP validation completes. This allows the client's downstream handlers to send sensitive application data (e.g., HTTP requests) to a revoked server before the channel is closed by the OCSP check. n io.netty.handler.ssl.ocsp.OcspServerCertificateValidator#userEventTriggered, when an SslHandshakeCompletionEvent is received, the validator immediately calls ctx.fireUserEventTriggered(evt). It then initiates an asynchronous OCSP query using OcspClient.query. Because the handshake completion event is forwarded immediately, downstream handlers in the client's pipeline are notified that the TLS handshake is successful. They may then begin reading and processing incoming application data or sending outgoing data. If the OCSP response later indicates the server's certificate is REVOKED, the validator closes the channel, but by this time, the client may have already leaked sensitive data to a revoked server or processed malicious responses from it. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-56822",
     "publishedDate": "2026-07-29T00:16:38.717",
     "lastModifiedDate": "2026-07-29T00:16:38.717",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-56821",
+    "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, the OcspServerCertificateValidator flags an out-of-date OCSP response but does not stop processing it, so an expired GOOD response is still reported as VALID, letting an on-path attacker replay a stale GOOD response to bypass revocation of a since-revoked certificate. Exploitation can lead to certificate revocation bypass via replay of an expired OCSP response. Any application using OcspServerCertificateValidator is affected; a revoked certificate can be accepted. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56821",
+    "publishedDate": "2026-07-29T00:16:38.573",
+    "lastModifiedDate": "2026-07-29T00:16:38.573",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -240,26 +480,6 @@
     ]
   },
   {
-    "id": "CVE-2026-56821",
-    "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, the OcspServerCertificateValidator flags an out-of-date OCSP response but does not stop processing it, so an expired GOOD response is still reported as VALID, letting an on-path attacker replay a stale GOOD response to bypass revocation of a since-revoked certificate. Exploitation can lead to certificate revocation bypass via replay of an expired OCSP response. Any application using OcspServerCertificateValidator is affected; a revoked certificate can be accepted. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56821",
-    "publishedDate": "2026-07-29T00:16:38.573",
-    "lastModifiedDate": "2026-07-29T00:16:38.573",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
     "id": "CVE-2026-55415",
     "description": "datamodel-code-generator generates Pydantic v2 models, dataclasses, TypedDict, and msgspec.Struct from OpenAPI, JSON Schema, GraphQL, Avro, Protobuf, and raw JSON, YAML, or CSV. From 0.11.6 until 0.64.0, datamodel-code-generator allows attacker-controlled x-python-import or customTypePath schema extensions to reach src/datamodel_code_generator/parser/jsonschema.py and generated import handling through Import.from_full_path and Imports.create_line in src/datamodel_code_generator/imports.py, allowing a newline to break out of an import statement and execute Python code when the generated model is imported. This issue is fixed in version 0.64.0.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-55415",
@@ -274,226 +494,6 @@
         "severity": "HIGH",
         "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55403",
-    "description": "datamodel-code-generator generates Python data models from schema definitions. Prior to 0.63.0, src/datamodel_code_generator/http.py get_body reuses Authorization, Cookie, and Proxy-Authorization headers when following cross-origin redirects while fetching remote schemas, allowing credentials scoped to one schema host to be leaked to another redirect target. This issue is fixed in version 0.63.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55403",
-    "publishedDate": "2026-07-28T22:17:48.840",
-    "lastModifiedDate": "2026-07-28T22:17:48.840",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55391",
-    "description": "datamodel-code-generator generates Pydantic v2 models, dataclasses, TypedDict, and msgspec.Struct from OpenAPI, JSON Schema, GraphQL, Avro, Protobuf, and raw JSON, YAML, or CSV. Prior to 0.63.0, datamodel-code-generator validates a URL host once in src/datamodel_code_generator/http.py through get_body, _validate_url_for_fetch, and _get_ips_from_host, but then lets httpx resolve the host again for the connection, allowing DNS rebinding to bypass allow_private_network=False and reach internal services. This issue is fixed in version 0.63.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55391",
-    "publishedDate": "2026-07-28T22:17:48.697",
-    "lastModifiedDate": "2026-07-28T22:17:48.697",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55390",
-    "description": "datamodel-code-generator generates Python data models from schema definitions. From 0.59.0 until 0.62.0, XML Schema parsing in src/datamodel_code_generator/parser/xmlschema.py for --input-file-type xmlschema resolves xs:include, xs:import, xs:redefine, and xs:override schemaLocation values outside the input base path, allowing arbitrary local files to be read and reflected into generated models. This issue is fixed in version 0.62.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55390",
-    "publishedDate": "2026-07-28T22:17:48.557",
-    "lastModifiedDate": "2026-07-28T22:17:48.557",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55389",
-    "description": "datamodel-code-generator generates Pydantic v2 models, dataclasses, TypedDict, and msgspec.Struct from OpenAPI, JSON Schema, GraphQL, Avro, Protobuf, and raw JSON, YAML, or CSV. Prior to 0.62.0, datamodel-code-generator resolves JSON Schema $ref targets in src/datamodel_code_generator/parser/jsonschema.py through is_url and _get_ref_body without containing file:// or ../ traversal references to the input directory and without honoring --no-allow-remote-refs, allowing arbitrary local file reads. This issue is fixed in version 0.62.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55389",
-    "publishedDate": "2026-07-28T22:17:48.400",
-    "lastModifiedDate": "2026-07-28T22:17:48.400",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54691",
-    "description": "datamodel-code-generator generates Python data models from schema definitions. From 0.9.1 until 0.61.0, src/datamodel_code_generator/http.py http.get_body accepts --url targets and redirect chain targets without host/IP validation, allowing server-side request forgery against loopback, private, link-local, metadata, and other network-accessible resources. This issue is fixed in version 0.61.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54691",
-    "publishedDate": "2026-07-28T22:17:40.800",
-    "lastModifiedDate": "2026-07-28T22:17:40.800",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54690",
-    "description": "datamodel-code-generator generates Pydantic v2 models, dataclasses, TypedDict, and msgspec.Struct from OpenAPI, JSON Schema, GraphQL, Avro, Protobuf, and raw JSON, YAML, or CSV. From 0.9.1 until 0.61.0, datamodel-code-generator silently dereferences attacker-controlled JSON Schema $ref HTTP or HTTPS URLs in src/datamodel_code_generator/parser/jsonschema.py through _get_ref_body, and the --allow-remote-refs gate can warn instead of blocking, allowing server-side request forgery through src/datamodel_code_generator/http.py. This issue is fixed in version 0.61.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54690",
-    "publishedDate": "2026-07-28T22:17:40.650",
-    "lastModifiedDate": "2026-07-28T22:17:40.650",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54656",
-    "description": "datamodel-code-generator generates Pydantic v2 models, dataclasses, TypedDict, and msgspec.Struct from OpenAPI, JSON Schema, GraphQL, Avro, Protobuf, and raw JSON, YAML, or CSV. From 0.52.1 until 0.60.2, datamodel-code-generator interpolates validators from --extra-template-data in src/datamodel_code_generator/model/pydantic_v2/base_model.py through _process_validators into @field_validator decorators without safe validation, allowing Python code execution when the generated Pydantic v2 model is imported. This issue is fixed in version 0.60.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54656",
-    "publishedDate": "2026-07-28T22:17:40.507",
-    "lastModifiedDate": "2026-07-28T22:17:40.507",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54655",
-    "description": "datamodel-code-generator generates Python data models from schema definitions. From 0.51.0 until 0.60.2, x-python-type values parsed by src/datamodel_code_generator/parser/jsonschema.py in _get_python_type_override are inserted into generated field annotations without sufficient validation, allowing attacker-controlled JSON Schema content to execute Python code when the generated module is imported. This issue is fixed in version 0.60.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54655",
-    "publishedDate": "2026-07-28T22:17:40.360",
-    "lastModifiedDate": "2026-07-28T22:17:40.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54654",
-    "description": "datamodel-code-generator generates Python data models from schema definitions. From 0.14.1 until 0.60.2, the --extra-template-data comment field is rendered into Python comments in src/datamodel_code_generator/model/template/TypeAliasAnnotation.jinja2, src/datamodel_code_generator/model/template/TypedDict.jinja2, src/datamodel_code_generator/model/template/dataclass.jinja2, src/datamodel_code_generator/model/template/msgspec.Struct.jinja2, src/datamodel_code_generator/model/template/pydantic/BaseModel.jinja2, and src/datamodel_code_generator/model/template/pydantic_v2/BaseModel.jinja2 without neutralizing carriage returns in Python # comments, allowing an attacker-controlled comment value to inject Python code into generated models that runs when imported. This issue is fixed in version 0.60.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54654",
-    "publishedDate": "2026-07-28T22:17:40.217",
-    "lastModifiedDate": "2026-07-28T22:17:40.217",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54653",
-    "description": "datamodel-code-generator generates Pydantic v2 models, dataclasses, TypedDict, and msgspec.Struct from OpenAPI, JSON Schema, GraphQL, Avro, Protobuf, and raw JSON, YAML, or CSV. From  0.17.0 until 0.60.2, datamodel-code-generator preserves attacker-controlled default_factory values in src/datamodel_code_generator/parser/jsonschema.py through JsonSchemaObject.init and get_field_extras and emits them into Field(default_factory=...) or field(default_factory=...), allowing Python expression execution when the generated model is imported. This issue is fixed in version 0.60.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54653",
-    "publishedDate": "2026-07-28T22:17:40.077",
-    "lastModifiedDate": "2026-07-28T22:17:40.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54621",
-    "description": "datamodel-code-generator generates Python data models from schema definitions. Prior to 0.60.1, GraphQL Union description values in src/datamodel_code_generator/model/template/UnionTypeStatement.jinja2 and src/datamodel_code_generator/model/template/UnionTypeStatement.py312.jinja2 are rendered into Python comments without neutralizing carriage returns in Python # comments, allowing attacker-controlled GraphQL schema content to inject Python code into generated models that runs when imported. This issue is fixed in version 0.60.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54621",
-    "publishedDate": "2026-07-28T22:17:39.930",
-    "lastModifiedDate": "2026-07-28T22:17:39.930",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
         "impactScore": 5.9,
         "source": "security-advisories@github.com"
       }
