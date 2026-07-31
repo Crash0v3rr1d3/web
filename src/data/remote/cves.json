@@ -1,170 +1,350 @@
 [
   {
-    "id": "CVE-2026-56673",
-    "description": "ComfyUI is a modular diffusion model GUI, API, and backend with a graph-and-node interface. Prior to 0.28.0, folder_paths.get_annotated_filepath and exists_annotated_filepath join workflow-controlled annotated filenames to a base directory without a containment check, allowing an unauthenticated crafted POST /prompt workflow using LoadImage or sibling nodes to probe arbitrary host paths and exfiltrate image-format files through /view. LoadImage defines a VALIDATE_INPUTS method, which causes the execution engine to skip COMBO (input-directory) validation. Affected nodes include LoadImage, LoadImageMask, LoadImageOutput, LoadAudio, LoadLatent, LoadVideo, and Load3D. This issue is fixed in version 0.28.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56673",
-    "publishedDate": "2026-07-31T06:16:30.520",
-    "lastModifiedDate": "2026-07-31T06:16:30.520",
+    "id": "CVE-2026-18437",
+    "description": "The MailerPress – Newsletter, email marketing & AI automation plugin for WordPress is vulnerable to unauthorized access due to a missing capability check on the  `mailerpress/v1/contact` endpoint in all versions up to, and including, 1.5.0. This makes it possible for unauthenticated attackers to update contact details.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18437",
+    "publishedDate": "2026-07-31T10:16:45.157",
+    "lastModifiedDate": "2026-07-31T10:16:45.157",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 5.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56672",
-    "description": "ComfyUI is a node-based diffusion model GUI, API, and backend. Prior to 0.28.0, GET /userdata/{file} served user-controlled HTML and SVG files with extension-derived content types, allowing stored cross-site scripting in the ComfyUI origin and access to browser-stored API tokens, settings, workflows, and authenticated-equivalent API calls. The handler used web.FileResponse(path), so an uploaded .html/.svg was served as text/html/image/svg+xml. POST /userdata stores arbitrary request bodies (confined to the user's userdata directory). When a victim navigated to the file URL, the embedded script executed same-origin. The /view endpoint already forced dangerous MIME types to download; that protection had never been applied to /userdata. This issue is fixed in version 0.28.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56672",
-    "publishedDate": "2026-07-31T06:16:30.170",
-    "lastModifiedDate": "2026-07-31T06:16:30.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56671",
-    "description": "ComfyUI is a modular diffusion model GUI, api and backend with a graph/nodes interface. Prior to 0.28.0, get_model_preview in app/model_manager.py joins an unrestricted filename route capture to a selected model directory without a containment check, allowing an unauthenticated remote attacker to use traversal, encoded traversal, absolute paths, or an unbounded path_index to read image-decodable files and enumerate host paths. get_model_preview (app/model_manager.py) built the path with os.path.join(folder, filename) where filename is an unrestricted {filename:.*} route capture. Literal ../, percent-encoded %2e%2e%2f, and absolute paths all escaped the model directory; path_index was also unbounded. The target file is piped through Pillow and re-encoded as WEBP, so disclosure is limited to image-decodable files plus a file-existence/enumeration oracle (and internal-path leakage via path_index errors). This issue is fixed in version 0.28.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56671",
-    "publishedDate": "2026-07-31T06:16:29.860",
-    "lastModifiedDate": "2026-07-31T06:16:29.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56670",
-    "description": "ComfyUI is a modular diffusion model GUI, api and backend with a graph/nodes interface. Prior to 0.28.0, the /view endpoint served uploaded SVG files inline because image/svg+xml and related XML content types were absent from the dangerous-content-type handling, allowing stored cross-site scripting in the ComfyUI origin. This issue is fixed in version 0.28.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56670",
-    "publishedDate": "2026-07-31T06:16:27.560",
-    "lastModifiedDate": "2026-07-31T06:16:27.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-63220",
-    "description": "CodeIgniter is a PHP full-stack web framework. In versions prior to 4.7.4, IncomingRequest::isSecure() trusted the X-Forwarded-Proto and Front-End-Https headers from any incoming request, allowing an attacker could spoof these headers and cause the application to incorrectly treat an HTTP request as secure. This may have impacted applications that rely on isSecure(), force_https(), forceGlobalSecureRequests, or similar logic to enforce HTTPS-only access or make security-sensitive decisions. Exploitability depends on deployment configuration. Applications are most exposed if the backend is reachable directly over HTTP, or if a reverse proxy/load balancer forwards client-supplied forwarding headers without stripping or overwriting them. This issue has been fixed in version 4.7.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63220",
-    "publishedDate": "2026-07-31T04:17:24.337",
-    "lastModifiedDate": "2026-07-31T04:17:24.337",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62323",
-    "description": "Cloudreve is a self-hosted file management and sharing system. Prior to 4.17.0, ViewerSessionValidation uses only the session-id prefix of a WOPI access token and does not enforce the requested viewer action, allowing a malicious or compromised WOPI viewer with a view session to forge the token suffix and invoke WOPI write routes for the underlying file. This issue is fixed in version 4.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62323",
-    "publishedDate": "2026-07-31T04:17:24.160",
-    "lastModifiedDate": "2026-07-31T04:17:24.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55502",
-    "description": "Cloudreve is a self-hosted file management and sharing system. Prior to 4.17.0, POST /api/v4/admin/policy/oauth/signin requires only Admin.Read even though GetOauthRedirectService persists caller-supplied OneDrive secret and app_id values, allowing an OAuth token without Admin.Write to modify storage policy credentials. The route is inside the admin group that requires Admin.Read, but it does not add the local Admin.Write guard used by sibling policy mutation routes. Its handler persists attacker-supplied secret and app_id values into the selected OneDrive storage policy before returning an OAuth URL. This issue is fixed in version 4.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55502",
-    "publishedDate": "2026-07-31T04:17:23.563",
-    "lastModifiedDate": "2026-07-31T04:17:23.563",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55499",
-    "description": "Cloudreve is a self-hosted file management and sharing system. Prior to 4.17.0, a single-file share event-stream subscription resolves the share root to the owner’s parent folder and subscribes to that folder topic, allowing an authenticated share recipient to receive names, paths, rename targets, event types, and hashed identifiers for unshared sibling files and folders. This issue is fixed in version 4.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55499",
-    "publishedDate": "2026-07-31T04:17:23.380",
-    "lastModifiedDate": "2026-07-31T04:17:23.380",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
         "impactScore": 1.4,
-        "source": "security-advisories@github.com"
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55497",
-    "description": "Cloudreve is a self-hosted file management and sharing system. Prior to 4.17.0, the built-in thumbnail and avatar image decoders limit compressed file size but do not limit decoded pixel dimensions, allowing an authenticated user to submit a small PNG, JPEG, or GIF that triggers an unbounded allocation and terminates the Cloudreve process through fatal out-of-memory behavior. This issue is fixed in version 4.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55497",
-    "publishedDate": "2026-07-31T04:17:23.137",
-    "lastModifiedDate": "2026-07-31T04:17:23.137",
+    "id": "CVE-2026-18436",
+    "description": "The MailPress plugin for WordPress is vulnerable to unauthorized access in versions up to, and including, 1.5.0 via the campaign revision-restore REST endpoint (POST /wp-json/mailpress/v1/campaign/<id>/restore-revision/<revision_id>). The route in the vulnerable range was registered without a permissionCallback, allowing the restoreRevision() handler to run for unauthenticated requests and overwrite a campaign's content_html with any prior revision. This makes it possible for unauthenticated attackers to modify campaign content by restoring an arbitrary revision.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18436",
+    "publishedDate": "2026-07-31T10:16:45.020",
+    "lastModifiedDate": "2026-07-31T10:16:45.020",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15722",
+    "description": "A stack buffer overflow flaw was found in 389 Directory Server (389-ds-base). The get_ruvelement_from_berval() function in repl5_ruv.c copies digit characters from a network-supplied RUV berval into a fixed 16-byte stack buffer without bounds checking. A remote unauthenticated attacker can crash the LDAP server by sending a crafted StartNSDS50ReplicationRequest extended operation containing a replica ID field with more than 16 digit characters. The overflow occurs during payload decoding, before any authorization check. Stack protectors limit impact to denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15722",
+    "publishedDate": "2026-07-31T10:16:44.863",
+    "lastModifiedDate": "2026-07-31T10:16:44.863",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-11770",
+    "description": "A flaw was found in 389 Directory Server. An unauthenticated remote attacker can inject LDAP search filters into the CleanAllRUV replication status-check extended operation. Because the handler performs the search against cn=config with elevated replication plugin privileges and returns a boolean match result, the attacker can extract sensitive server configuration metadata, including replication bind DNs and password storage scheme information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11770",
+    "publishedDate": "2026-07-31T10:16:44.720",
+    "lastModifiedDate": "2026-07-31T10:16:44.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10079",
+    "description": "A flaw was found in Red Hat Advanced Cluster Security for Kubernetes (RHACS). When processing Kubernetes Deployments, ACS replaces deployment identity metadata based on the openshift.io/encoded-deployment-config label. A user with permission to create Deployments can set this label to \"null\", causing ACS to treat the workload as having empty UID, name and labels and namespace \"default\". This bypasses deploy-time policy detection and enforcement visibility, prevents correct persistence in Central and breaks violation reporting and compliance correlation for the affected deployment.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10079",
+    "publishedDate": "2026-07-31T10:16:43.190",
+    "lastModifiedDate": "2026-07-31T10:16:43.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:H/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4.7,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-64607",
+    "description": "Apache HttpComponents Client: Connection Leak on Content-Encoding Decode Error Leads to Pool Exhaustion DoS",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64607",
+    "publishedDate": "Fri, 31 Jul 2026 10:12:18 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-62391",
+    "description": "Apache Kyuubi: kyuubi.session.local.dir.allow.list bypass via unprefixed Spark file-conf aliases",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62391",
+    "publishedDate": "Fri, 31 Jul 2026 09:58:15 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-17567",
+    "description": "Fluent Forms &lt;= 6.2.8 - Unauthenticated Sensitive Information Exposure via Insecure Direct Object Reference and Weak Transaction Hash in 'transaction' Parameter",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17567",
+    "publishedDate": "Fri, 31 Jul 2026 09:32:01 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16843",
+    "description": "Hikvision Wireless Access Point Authenticated Command Injection",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16843",
+    "publishedDate": "Fri, 31 Jul 2026 09:31:30 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-65313",
+    "description": "A provisioning script used when installing HIPASE-250 (formerly 250\nSCALA) engineering workstations sets a fixed, hard-coded x11vnc\npassword. Because the same credential is applied to every workstation\nprovisioned this way, an attacker with adjacent-network access who\nknows the password can gain VNC access to affected workstations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65313",
+    "publishedDate": "2026-07-31T09:16:59.090",
+    "lastModifiedDate": "2026-07-31T09:16:59.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65311",
+    "description": "The HTTP server component of ANDRITZ HIPASE-250 (formerly 250 SCALA)\nin affected versions exposes an undocumented endpoint that changes\nthe server's logging level and target without requiring\nauthentication. A remote, unauthenticated attacker with network\naccess to the service may suppress audit logging, potentially\nconcealing other activity on the system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65311",
+    "publishedDate": "2026-07-31T09:16:58.960",
+    "lastModifiedDate": "2026-07-31T09:16:58.960",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65310",
+    "description": "ANDRITZ HIPASE-250 (formerly 250 SCALA), in the default configuration\nof affected versions, exposes its data and configuration endpoint\nwithout any authentication and permissive CORS on every response. An\nunauthenticated attacker with network access can read live process\nvalues and server configuration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65310",
+    "publishedDate": "2026-07-31T09:16:58.447",
+    "lastModifiedDate": "2026-07-31T09:16:58.447",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65309",
+    "description": "ANDRITZ HIPASE-250 (formerly 250 SCALA) in affected versions stores\nand transmits user passwords using a reversible format instead of a\none-way password hash. This allows an attacker able to read the\ncredential store or capture network traffic to recover all stored\npasswords.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65309",
+    "publishedDate": "2026-07-31T08:16:28.330",
+    "lastModifiedDate": "2026-07-31T08:16:28.330",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18218",
+    "description": "A flaw was found in the TokenManager component of the Keycloak identity management service. When an administrator attempts to revoke tokens for a specific application (client) using a \"not-before\" policy, the revocation may be silently ignored if the overall security realm already has an older, non-zero revocation policy in place. This issue can allow previously issued tokens to remain valid for refreshing sessions and accessing user information even after an administrator has attempted to invalidate them.\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18218",
+    "publishedDate": "2026-07-31T08:16:28.177",
+    "lastModifiedDate": "2026-07-31T08:16:28.177",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18217",
+    "description": "A flaw was found in the SAML protocol implementation of Keycloak, an open-source identity and access management solution. The issue occurs when Keycloak handles SAML authentication requests using the HTTP-Redirect binding. If a client is configured with a wildcard redirect URL, an attacker can craft a request that includes malicious parameters. When a user authenticates, Keycloak appends its legitimate response to the attacker's parameters. This can cause some service providers to process the attacker's data instead of the real login information, potentially leading to a user being logged into the wrong account.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18217",
+    "publishedDate": "2026-07-31T08:16:28.037",
+    "lastModifiedDate": "2026-07-31T08:16:28.037",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.4,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18215",
+    "description": "Keycloak provides a way to let users log in using Microsoft accounts while restricting access to a specific organization (tenant). A flaw was discovered where this restriction is ignored when using the token exchange feature. This means an attacker with a valid Microsoft token from a completely different organization could gain access to the Keycloak realm, potentially accessing sensitive data or performing unauthorized actions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18215",
+    "publishedDate": "2026-07-31T08:16:27.893",
+    "lastModifiedDate": "2026-07-31T08:16:27.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18214",
+    "description": "Keycloak allows users to log in using Google accounts and can be configured to only allow users from specific Google Workspace domains. A flaw was found where the token exchange feature, which allows swapping a Google token for a Keycloak token, does not check these domain restrictions. This means an attacker with a valid Google account from a different domain could bypass the security check and gain access to the Keycloak realm.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18214",
+    "publishedDate": "2026-07-31T08:16:27.753",
+    "lastModifiedDate": "2026-07-31T08:16:27.753",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18211",
+    "description": "A flaw was found in the secure-client-uris client policy executor within Keycloak core services. This component is responsible for enforcing security requirements on client configurations, such as requiring encrypted connections for redirect URIs. Due to an improper check that only looks at the start of a web address rather than properly verifying the host, an attacker can bypass these security restrictions by using a specially crafted domain name. This could allow an attacker to intercept sensitive authentication codes over unencrypted connections.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18211",
+    "publishedDate": "2026-07-31T08:16:27.610",
+    "lastModifiedDate": "2026-07-31T08:16:27.610",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18209",
+    "description": "A flaw was found in the keycloak-services component of Keycloak, which handles OpenID Connect (OIDC) authentication flows. The issue occurs because the security check designed to prevent HTTP parameter pollution only inspects the query portion of a redirect URL and ignores the fragment portion. When a client is configured with a wildcard redirect URI, an attacker can use this to inject duplicate security parameters into the login response. If a client application is not configured correctly, it might trust the attacker's injected data instead of the real security information from Keycloak, leading to session fixation or account confusion.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18209",
+    "publishedDate": "2026-07-31T08:16:27.467",
+    "lastModifiedDate": "2026-07-31T08:16:27.467",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.4,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18208",
+    "description": "A flaw was found in the OIDC token introspection endpoint of the keycloak-services component. Keycloak is an open-source identity and access management solution used to secure modern applications and services. The issue occurs when a confidential client, configured to receive signed JWT introspection responses, attempts to introspect a token issued for a different audience. Although the endpoint correctly identifies the token as inactive for that client, it still returns the full set of token claims within a signed JWT field. This allows an unauthorized client to bypass audience-based restrictions and access sensitive information contained in the token.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18208",
+    "publishedDate": "2026-07-31T08:16:27.323",
+    "lastModifiedDate": "2026-07-31T08:16:27.323",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -172,300 +352,109 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55496",
-    "description": "Cloudreve is a self-hosted file management and sharing system. Prior to 4.17.0, GET /api/v4/user/search calls SearchActive without adding a StatusActive predicate and serializes matches at RedactLevelUser, allowing any logged-in user to enumerate email addresses and profile metadata for inactive or banned accounts. The service calls userClient.SearchActive, but despite its name that method filters only by email/nickname keyword and never adds a StatusActive predicate — while the sibling lookups GetActiveByID and GetActiveByDavAccount, defined a few lines above it, do. Search hits are serialized at RedactLevelUser, which includes the email address. This issue is fixed in version 4.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55496",
-    "publishedDate": "2026-07-31T04:17:22.877",
-    "lastModifiedDate": "2026-07-31T04:17:22.877",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55495",
-    "description": "Cloudreve is a self-hosted file management and sharing system. Prior to 4.17.0, the WOPI PUT_RELATIVE handler passes X-WOPI-SuggestedTarget to URI.JoinRaw as a path rather than a filename, allowing slash and dot-dot segments to escape the source file directory and create or conditionally overwrite files elsewhere in the same owner account. This issue is fixed in version 4.17.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55495",
-    "publishedDate": "2026-07-31T04:17:22.597",
-    "lastModifiedDate": "2026-07-31T04:17:22.597",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43833",
-    "description": "Successful exploitation of the vulnerability\ncould allow an authenticated attacker to exploit a stack-based buffer overflow\nin the upload functionality to conduct code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43833",
-    "publishedDate": "2026-07-31T04:17:22.380",
-    "lastModifiedDate": "2026-07-31T04:17:22.380",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5f57b9bf-260d-4433-bf07-b6a79e9bb7d4"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43832",
-    "description": "Successful exploitation of the\nvulnerability could allow an unauthenticated attacker to exploit a stack-based\nbuffer overflow in the Cookie parsing methods to conduct code execution when\nthe SafeEnhancement feature is enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43832",
-    "publishedDate": "2026-07-31T04:17:22.187",
-    "lastModifiedDate": "2026-07-31T04:17:22.187",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.2,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5f57b9bf-260d-4433-bf07-b6a79e9bb7d4"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43831",
-    "description": "Successful\nexploitation of the vulnerability could allow an unauthenticated attacker to\nexploit a stack-based buffer overflow in the log message functionality to\nconduct code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43831",
-    "publishedDate": "2026-07-31T04:17:21.963",
-    "lastModifiedDate": "2026-07-31T04:17:21.963",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.2,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5f57b9bf-260d-4433-bf07-b6a79e9bb7d4"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43830",
-    "description": "Successful exploitation of the\ncommand injection vulnerability could allow an attacker to execute arbitrary\ncommands during the firmware upgrade file verification process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43830",
-    "publishedDate": "2026-07-31T04:17:21.760",
-    "lastModifiedDate": "2026-07-31T04:17:21.760",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5f57b9bf-260d-4433-bf07-b6a79e9bb7d4"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-43829",
-    "description": "Stack-based Buffer Overflow Vulnerability",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-43829",
-    "publishedDate": "Fri, 31 Jul 2026 04:17:20 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-63223",
-    "description": "CodeIgniter is a PHP full-stack web framework. Prior to 4.7.4, the is_image and mime_in upload validation rules do not independently enforce a safe client filename extension, allowing a remote attacker to upload executable content when an application preserves the client filename and stores uploads in a web-accessible script-enabled directory. Applications are impacted when they validate uploads using is_image or mime_in without an independent safe extension check (such as ext_in on patched versions), save uploaded files using the client-supplied filename, and place uploads in a web-accessible directory where PHP files can execute. This issue is fixed in version 4.7.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63223",
-    "publishedDate": "2026-07-31T06:16:32.297",
-    "lastModifiedDate": "2026-07-31T06:16:32.297",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-63222",
-    "description": "CodeIgniter is a PHP full-stack web framework. Prior to 4.7.4, calling UploadedFile::move() without a second argument uses the client-provided filename without sanitization, allowing a remote attacker to use path traversal sequences to write uploaded content outside the intended directory when the application exposes an upload path. This issue is fixed in version 4.7.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63222",
-    "publishedDate": "2026-07-31T06:16:31.953",
-    "lastModifiedDate": "2026-07-31T06:16:31.953",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-63221",
-    "description": "CodeIgniter is a PHP full-stack web framework. From 4.3.0 through 4.7.3, Query Builder deleteBatch() substitutes bound values from where() conditions into generated SQL while ignoring their escape flags, allowing user-controlled condition values to be interpreted as SQL. This affects only the deleteBatch() code path. Regular delete() operations escape where() binds correctly. This issue is fixed in version 4.7.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63221",
-    "publishedDate": "2026-07-31T06:16:31.603",
-    "lastModifiedDate": "2026-07-31T06:16:31.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.4,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6890",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6890",
-    "publishedDate": "2026-07-31T03:16:25.530",
-    "lastModifiedDate": "2026-07-31T06:16:33.173",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6889",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6889",
-    "publishedDate": "2026-07-31T03:16:25.387",
-    "lastModifiedDate": "2026-07-31T06:16:32.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18157",
-    "description": "A flaw was found in yggdrasil-worker-package-manager. A local attacker with existing access to the system could exploit an argument injection vulnerability in the APT backend. This allows specially crafted package names, which begin with a hyphen, to be misinterpreted as command options by apt-get. Successful exploitation could lead to remote code execution (RCE) with root privileges, enabling the attacker to fully compromise the system's integrity, confidentiality, and availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18157",
-    "publishedDate": "2026-07-31T03:16:25.223",
-    "lastModifiedDate": "2026-07-31T03:16:25.223",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
         "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14541",
-    "description": "An authentication bypass and audience confusion vulnerability exists in the Google OAuth provider component of Google mcp-toolbox version 1.4.0. When a Google authService is initialized with mcpEnabled: true but lacks an explicitly defined audience or clientId, the ValidateMCPAuth pipeline for opaque tokens skips audience validation entirely. As a result, the toolbox will accept any valid Google OAuth access token—even those minted for unrelated ecosystem applications—granting unauthorized clients access to protected tools and data backends.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14541",
-    "publishedDate": "2026-07-31T03:16:24.170",
-    "lastModifiedDate": "2026-07-31T03:16:24.170",
+    "id": "CVE-2026-18206",
+    "description": "A flaw was found in the keycloak-services component of Keycloak, which provides identity and access management services. The issue occurs when a realm administrator uses a wildcard domain (like *.example.com) to restrict which hosts can register or update clients. Due to improper validation, the system accepts any hostname that ends with the specified domain suffix, even if it is not a legitimate subdomain. An attacker who can control the reverse DNS of their connection can bypass these host-based restrictions, potentially allowing unauthorized client modifications.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18206",
+    "publishedDate": "2026-07-31T08:16:27.177",
+    "lastModifiedDate": "2026-07-31T08:16:27.177",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cve-coordination@google.com"
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14540",
-    "description": "A Server-Side Request Forgery (SSRF) vulnerability exists in the generic HTTP source and tool components of Google mcp-toolbox versions 0.3.0 through 1.4.0. While the toolbox implements baseline input sanitization for user-controlled parameters, the underlying HTTP client (internal/sources/http/http.go) fails to safely regulate request redirection boundaries. Specifically, the client is initialized without a restrictive CheckRedirect policy hook and lacks target IP validation. An attacker or a malicious data-driven prompt can supply a crafted path parameter that triggers an open redirect or a direct destination swap on the target backend, coercing the mcp-toolbox into blindly following the redirection and making unauthorized requests to internal or arbitrary external endpoints.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14540",
-    "publishedDate": "2026-07-31T02:16:29.060",
-    "lastModifiedDate": "2026-07-31T02:16:29.060",
+    "id": "CVE-2026-18203",
+    "description": "A flaw was found in the group policy evaluation logic of Keycloak, an identity and access management solution. When a group policy is set to extend permissions to child groups, the system incorrectly uses a simple text-based prefix check to verify group membership. This allows a user who belongs to a different group with a similar starting name to bypass security checks and gain unauthorized access to administrative functions or protected resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18203",
+    "publishedDate": "2026-07-31T08:16:27.010",
+    "lastModifiedDate": "2026-07-31T08:16:27.010",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cve-coordination@google.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14539",
-    "description": "An allocation of resources without limits vulnerability in the HTTP handler component of Google mcp-toolbox versions up to and including 1.4.0 allows an unauthenticated attacker to cause a denial of service (DoS). The /mcp endpoint handler reads incoming payloads directly into system memory using an unrestricted buffer loop (io.ReadAll) without applying defensive constraints such as http.MaxBytesReader or pre-read Content-Length enforcement. By submitting a single, massive HTTP request body, an attacker can linearly consume available host memory until the runtime process is terminated by an Out-Of-Memory (OOM) error.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14539",
-    "publishedDate": "2026-07-31T02:16:28.920",
-    "lastModifiedDate": "2026-07-31T02:16:28.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 4.0",
+        "score": 6.5,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16105",
+    "description": "A flaw was found in the RoleContainerResource component of Keycloak. The issue occurs because certain name-based endpoints in the admin REST API do not properly enforce authorization checks when managing composite roles. This allows a delegated administrator with manage-realm permissions to remove essential child roles from built-in admin roles, potentially disrupting administrative functions within a realm.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16105",
+    "publishedDate": "2026-07-31T08:16:25.940",
+    "lastModifiedDate": "2026-07-31T08:16:25.940",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8155",
+    "description": "The BuddyPress WordPress plugin before 14.5.0 does not properly enforce authorization on its private messaging endpoints, allowing any authenticated user (Subscriber+) to read, modify, or delete other users' private messages.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8155",
+    "publishedDate": "2026-07-31T07:16:28.593",
+    "lastModifiedDate": "2026-07-31T07:16:28.593",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-18452",
+    "description": "DMS+ (Non-Mobile) developed by Rich Source has a Use of Hard-coded Credentials vulnerability. Unauthenticated remote attackers can exploit a fixed API key to gain control over all installed DMS+ devices.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18452",
+    "publishedDate": "2026-07-31T07:16:27.400",
+    "lastModifiedDate": "2026-07-31T07:16:27.400",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "twcert@cert.org.tw"
+      },
+      {
+        "score": 10,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cve-coordination@google.com"
+        "source": "twcert@cert.org.tw"
       }
     ]
   }
