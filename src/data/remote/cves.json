@@ -1,5 +1,85 @@
 [
   {
+    "id": "CVE-2026-55735",
+    "description": "Improper Verification of Cryptographic Signature in ueberauth guardian allows an unauthenticated attacker to revoke a victim's session with a forged token.\n\nGuardian.revoke/3 in lib/guardian.ex decodes the supplied token with peek/1, which performs no signature verification (it only base64-decodes the JWT header and payload). The resulting unverified claims are forwarded directly to the configured token module's revoke callback and the implementation's on_revoke callback, a state-mutating sink. The sibling operations refresh/2 and exchange/4 both call decode_and_verify first, so the signature is checked before anything acts on the claims; revoke/3 is the only state-mutating path that acts on claims without verifying the signature.\n\nAn attacker who knows or guesses a victim's identifying claim values (jti, sub) can forge a JWT carrying those claims, sign it with an arbitrary key, and submit it to any endpoint that funnels a caller-supplied token into Guardian.revoke/3 (the standard logout / session-revocation pattern). When the token module mutates state keyed by the claims (whitelist deletion or blacklist insertion, for example a GuardianDb-style store), the victim's legitimate session is evicted. This is an unauthenticated session-revocation denial of service; the attacker never needs the signing secret.\n\nThis issue affects guardian: from 1.0.0 before 2.4.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55735",
+    "publishedDate": "2026-08-01T19:16:42.510",
+    "lastModifiedDate": "2026-08-01T19:16:42.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55734",
+    "description": "Allocation of Resources Without Limits or Throttling vulnerability in ueberauth guardian (Guardian.Permissions module) allows a denial of service via BEAM atom-table exhaustion.\n\nThis vulnerability is associated with program file lib/guardian/permissions.ex and program routines 'Elixir.Guardian.Permissions':encode_permissions!/1, 'Elixir.Guardian.Permissions':encode_permissions_into_claims!/2, 'Elixir.Guardian.Permissions':do_encode_permissions!/2.\n\nThe Guardian.Permissions mixin installs a public encode_permissions!/1 function on every module that does use Guardian.Permissions. For each key of the supplied map, encode_permissions!/1 calls String.to_atom(to_string(k)) before any validation runs. The integer-value clause of do_encode_permissions!/2 then short-circuits straight to encoding without validating the key against the configured permission set, so a key with an integer value is interned as a fresh atom with no exception raised. Atoms are never garbage collected and the BEAM atom table is a fixed-size resource (default roughly 1,048,576 entries), so each unique attacker-chosen key permanently consumes one slot. An attacker who can influence a permission map that reaches encode_permissions!/1 (for example a permissions map read from a request body and passed into token issuance via encode_permissions_into_claims!/2) can mint an unbounded number of atoms and exhaust the atom table, crashing the entire BEAM node and every service running on it. The sibling decode_permissions/1 is not affected because it skips keys absent from the configured permission set.\n\nThis issue affects guardian: from 2.0.0 before 2.4.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55734",
+    "publishedDate": "2026-08-01T19:16:42.333",
+    "lastModifiedDate": "2026-08-01T19:16:42.333",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55733",
+    "description": "Allocation of Resources Without Limits or Throttling in ueberauth guardian allows denial of service via unbounded atom creation from attacker-controlled binary input.\n\nGuardian.Permissions.AtomEncoding encodes permission scopes by passing arbitrary binaries to String.to_atom/1. When encode/3 in lib/guardian/permissions/atom_encoding.ex is called with a list, each binary entry is handled by the encode_value/3 binary clause, which calls String.to_atom(value) with no allow-list check. The perm_set argument (the application's small, finite set of legitimate permission names) is discarded, so any external string flows straight into atom creation. This encoder is selected with use Guardian.Permissions, encoding: Guardian.Permissions.AtomEncoding and reached through the imported encode/3 entry point.\n\nString.to_atom/1 creates a brand-new atom for every previously unseen binary, atoms are never garbage collected, and the BEAM atom table is fixed at roughly 1,048,576 entries by default. An application that funnels attacker-influenced permission scopes (from a request body, a JWT claim, or other external input) into encode/3 therefore mints one permanent atom per distinct value. A modest stream of varied, unauthenticated input permanently consumes the atom table and crashes the BEAM node with system_limit, taking down every application running on it.\n\nThe default encoder is Guardian.Permissions.BitwiseEncoding, which is not affected.\n\nThis issue affects guardian: from 2.0.0 before 2.4.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55733",
+    "publishedDate": "2026-08-01T19:16:42.157",
+    "lastModifiedDate": "2026-08-01T19:16:42.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54894",
+    "description": "Allocation of Resources Without Limits or Throttling in ueberauth guardian allows denial of service via unbounded atom creation from attacker-influenced binary input.\n\nGuardian.Plug.Keys derives connection and session namespace keys by passing arbitrary binaries to String.to_atom/1. base_key/1 in lib/guardian/plug/keys.ex converts any binary into the atom :\"guardian_<input>\", and the derived helpers claims_key/1, resource_key/1, and token_key/1 create a second atom on top of that. key_from_other/1 likewise converts a regex-captured binary through String.to_atom/1. The public specs advertise String.t() as a valid argument, so passing a string is documented usage, and higher-level entry points such as Guardian.Plug.current_token(conn, key: key) thread the caller-supplied key straight into these functions.\n\nString.to_atom/1 creates a brand-new atom for every previously unseen binary, atoms are never garbage collected, and the BEAM atom table is fixed at roughly 1,048,576 entries by default. An application that routes attacker-influenced data (a tenant identifier, header, or other request input) into a Guardian key therefore mints one permanent atom per distinct value. A modest stream of varied, unauthenticated input permanently consumes the atom table and crashes the BEAM node, taking down every application running on it.\n\nThis issue affects guardian: from 0.1.0 before 2.4.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54894",
+    "publishedDate": "2026-08-01T19:16:41.977",
+    "lastModifiedDate": "2026-08-01T19:16:41.977",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-67355",
     "description": "guzzlehttp/guzzle versions before 7.15.1 fail to preserve host-only cookie scope, storing the request host in the Domain field instead of marking cookies as host-only. Attackers controlling child hosts can receive host-only cookies intended only for parent hosts, potentially disclosing session identifiers and authorization tokens when the same cookie jar is reused across trust boundaries.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-67355",
@@ -602,122 +682,6 @@
         "version": "CVSS 4.0",
         "severity": "HIGH",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67327",
-    "description": "better-auth versions >= 1.1.3 and < 1.6.22 (and pre-release versions >= 1.7.0-beta.0 and < 1.7.0-beta.10) are vulnerable to account takeover via pre-account hijacking on magic-link and email-OTP sign-in when open email/password registration is enabled. An attacker registers an account with the victim's email address and an attacker-chosen password; the account remains unverified. When the legitimate owner later signs in via the magic-link or email-OTP passwordless flow, the account is marked verified without removing the pre-existing password or revoking existing sessions, so the attacker's password remains valid, granting persistent access to the victim's account. Fixed in 1.6.22 and 1.7.0-beta.10.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67327",
-    "publishedDate": "2026-08-01T13:17:03.227",
-    "lastModifiedDate": "2026-08-01T13:17:03.227",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67326",
-    "description": "GitPython before 3.1.50 fails to validate newline characters in the section parameter of config_writer(), allowing attackers to inject arbitrary section headers into .git/config. Attackers can inject newlines to create a forged [core] section with hooksPath pointing to attacker-controlled directories, achieving remote code execution when git hooks are triggered.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67326",
-    "publishedDate": "2026-08-01T13:17:03.063",
-    "lastModifiedDate": "2026-08-01T13:17:03.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67325",
-    "description": "GitPython before 3.1.51 contains an incomplete command injection blocklist that fails to account for git's long-option prefix abbreviation feature. Attackers can bypass the unsafe options guard by using abbreviated option names like upload_p instead of upload_pack, which git resolves to dangerous options and executes arbitrary commands.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67325",
-    "publishedDate": "2026-08-01T13:17:02.923",
-    "lastModifiedDate": "2026-08-01T13:17:02.923",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67324",
-    "description": "GitPython 3.1.50 fails to recognize joined short-option forms such as -u<value> (the short form of --upload-pack=<value>) when enforcing its default unsafe-option gate. When an application passes attacker-influenced clone options into Repo.clone_from(..., multi_options=..., allow_unsafe_options=False), an attacker can supply -u<helper> to bypass the gate that blocks --upload-pack/-u, causing Git to execute the specified helper command during clone. Fixed in 3.1.51.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67324",
-    "publishedDate": "2026-08-01T13:17:02.770",
-    "lastModifiedDate": "2026-08-01T13:17:02.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
