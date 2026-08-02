@@ -1,5 +1,383 @@
 [
   {
+    "id": "CVE-2026-65321",
+    "description": "PyAthena prior to 3.35.4 contains a sql injection vulnerability that allows unauthenticated attackers to inject arbitrary SQL by exploiting improper quote-escaping in DefaultParameterFormatter.format(), which routes DELETE and CTAS statements to the _escape_hive function that backslash-escapes single quotes rather than doubling them. Because Athena and Trino do not treat backslashes as escape characters inside string literals, attacker-supplied input such as a single quote followed by SQL syntax causes the parser to terminate the string literal prematurely, enabling data exfiltration via UNION SELECT, execution of destructive statements, and attacker-controlled CTAS destination and content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65321",
+    "publishedDate": "2026-08-02T15:16:33.957",
+    "lastModifiedDate": "2026-08-02T15:16:33.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-10774",
+    "description": "Zephyr's Bluetooth Mesh subnet key management leaks one PSA Crypto key slot on every subnet-key teardown. In subsys/bluetooth/mesh/subnet.c, net_keys_create() imports the Private Beacon Key into a PSA key slot under CONFIG_BT_MESH_PRIV_BEACONS (enabled by default), but subnet_keys_destroy() guarded the matching psa_destroy_key() with CONFIG_BT_MESH_V1d1. That Kconfig symbol was removed when explicit Mesh 1.0.1 support was dropped, so the destroy branch became permanently dead code and the import is never balanced by a destroy.\n\nThe imbalanced teardown is reached every time subnet keys are destroyed: deleting a subnet (Config Server NetKey Delete), completing a Key Refresh Procedure (which retires the old key set), and resetting/re-provisioning the node. The over-the-air triggers are processed only under the node's device key, so they are exercisable by the provisioner or network administrator that owns the node, reachable over the Bluetooth Mesh network.\n\nWith the default CONFIG_MBEDTLS_PSA_KEY_SLOT_COUNT of 16, repeated add/delete or key-refresh cycles exhaust the shared PSA key-slot pool after roughly a dozen rounds. Once exhausted, bt_mesh_private_beacon_key() and thus subnet creation fail: the node can no longer add subnets or complete key refresh, and other PSA crypto consumers on the device may be starved, until the device is rebooted. The fix aligns the destroy guard with the import guard (CONFIG_BT_MESH_PRIV_BEACONS) so each slot is freed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10774",
+    "publishedDate": "2026-08-02T15:16:33.793",
+    "lastModifiedDate": "2026-08-02T15:16:33.793",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.4,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 0.9,
+        "impactScore": 1.4,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9856",
+    "description": "A vulnerability in huggingface/transformers versions <=5.8.0.dev0 allows an attacker to perform arbitrary file writes via path traversal. The issue resides in the `save_pretrained()` methods of `PreTrainedTokenizerBase` and `ProcessorMixin`, where keys from the `chat_template` dictionary are used directly as filenames without proper validation. An attacker can exploit this by publishing a malicious Hugging Face Hub repository with a crafted `tokenizer_config.json` file. When a victim downloads and saves the tokenizer or processor, the attacker-controlled keys can escape the intended save directory, enabling arbitrary file writes with attacker-controlled content. This vulnerability affects multiple processors inheriting from `ProcessorMixin`, including Idefics, Florence, Gemma, Phi, and Qwen-VL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9856",
+    "publishedDate": "2026-08-02T16:16:25.413",
+    "lastModifiedDate": "2026-08-02T16:16:25.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-68583",
+    "description": "luci-app-adblock-fast before 1.2.4-4 contains a stored cross-site scripting vulnerability in the blocklist name field that allows lower-privileged users to inject active HTML. When an administrator views the AdBlock Fast status page, the injected payload executes in the administrator's browser under the LuCI origin.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68583",
+    "publishedDate": "2026-08-02T13:16:54.377",
+    "lastModifiedDate": "2026-08-02T13:16:54.377",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68582",
+    "description": "Vikunja versions >= 0.24.0 and <= 2.3.0 contain a broken object level authorization (BOLA) vulnerability in the task-collection endpoint (GET /api/v1/projects/{project}/views/{view}/tasks). The endpoint loads the requested project view from the URL path without verifying the caller is authorized for it. For a link-share token holder, the task scope is pinned to the share's own project, but the view is taken from the attacker-controlled path and never re-validated. As a result, a holder of any project share link can read any other tenant's kanban bucket records — bucket titles and the full created_by user object (username, name, id) — for every view in the instance. The same missing pre-authorization view load also creates a project/view-ID existence oracle (404 vs. non-404) usable by link shares and ordinary authenticated users. Task contents remain constrained to the share's own project and are not disclosed. Fixed in 2.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68582",
+    "publishedDate": "2026-08-02T13:16:54.233",
+    "lastModifiedDate": "2026-08-02T13:16:54.233",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68581",
+    "description": "Vikunja versions 0.22.0 through 2.3.0 fail to validate the principal type in API token management. Because user IDs and link-share IDs are independent numeric sequences and both resolve through a generic web.Auth.GetID() interface, a link-share JWT whose numeric ID equals a target user's ID is treated as that user by the /api/v1/tokens endpoints. An authenticated attacker can obtain a target's numeric user ID via authenticated user search, then create link shares on an attacker-writable project until the link-share sequence reaches that value, and use the resulting link-share JWT to list, create, and delete the target user's API tokens (including issuing a new token with attacker-chosen scopes under the target's permissions). Fixed in version 2.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68581",
+    "publishedDate": "2026-08-02T13:16:54.087",
+    "lastModifiedDate": "2026-08-02T13:16:54.087",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68580",
+    "description": "FreeRDP before 3.29.0 contains integer overflow vulnerabilities in the audio input redirection channel (audin) across ALSA, sndio, WinMM, and OpenSL ES backends that fail to validate the FramesPerPacket parameter from RDP servers. Attackers can supply a malicious FramesPerPacket value causing allocation size wraparound, resulting in heap-based buffer overflow on ALSA or denial of service on all platforms.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68580",
+    "publishedDate": "2026-08-02T13:16:53.950",
+    "lastModifiedDate": "2026-08-02T13:16:53.950",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68579",
+    "description": "FreeRDP before 3.30.0 (<= 3.29.0) contains a heap-based buffer overflow in the Windows clipboard client's CliprdrStream_Read function (client/Windows/wf_cliprdr.c). When an OLE paste consumer (e.g. explorer.exe) calls IStream::Read with a fixed-size buffer of cb bytes, CliprdrStream_Read requests file contents from the RDP server and then copies the response into the caller's buffer using the server-supplied length (req_fsize) instead of cb. A malicious or compromised RDP server can return an oversized CB_FILECONTENTS_RESPONSE, causing an out-of-bounds write of attacker-controlled data into the paste consumer's heap buffer when a user pastes server-offered clipboard file contents.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68579",
+    "publishedDate": "2026-08-02T13:16:53.800",
+    "lastModifiedDate": "2026-08-02T13:16:53.800",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68578",
+    "description": "ArcadeDB versions before 26.7.3 fail to bind the authenticated principal in the MCP HTTP transport, causing all engine permission checks to silently pass as no-ops. Non-root MCP-allowed users can perform arbitrary database writes, DDL, schema mutations, and execute arbitrary JavaScript code via the query tool.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68578",
+    "publishedDate": "2026-08-02T13:16:53.657",
+    "lastModifiedDate": "2026-08-02T13:16:53.657",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67357",
+    "description": "ArcadeDB versions before 26.7.3 contain an information disclosure vulnerability in the MCP get_server_settings tool that leaks the arcadedb.ha.clusterToken in cleartext. Attackers with MCP access can retrieve the cluster token and use it with X-ArcadeDB-Cluster-Token and X-ArcadeDB-Forwarded-User headers to impersonate root and achieve full server compromise.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67357",
+    "publishedDate": "2026-08-02T13:16:53.520",
+    "lastModifiedDate": "2026-08-02T13:16:53.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67356",
+    "description": "ArcadeDB before 26.7.3 binds the real LocalDatabase object into JavaScript trigger contexts with HostAccess.ALL, allowing schema-admins to call getSecurity().createUser() without permission checks. Attackers with UPDATE_SCHEMA permission can create triggers that execute JavaScript to create server-wide admin users, escalating privileges beyond their authorization level.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67356",
+    "publishedDate": "2026-08-02T13:16:53.363",
+    "lastModifiedDate": "2026-08-02T13:16:53.363",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-71401",
+    "description": "better-auth (npm) before 1.4.2 allows an external request to configure baseURL when it is not otherwise defined (e.g., BETTER_AUTH_URL is unset). An attacker able to make the very first request to the server after startup can poison the router's base path, causing all routes to return 404 for all users (denial of service). The issue is not reachable when baseURL is explicitly configured or on typical managed hosting platforms.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-71401",
+    "publishedDate": "2026-08-02T13:16:52.530",
+    "lastModifiedDate": "2026-08-02T13:16:52.530",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-71400",
+    "description": "better-auth passkey versions before 1.4.0 contain an insecure direct object reference vulnerability in the passkey deletion endpoint that allows authenticated users to delete arbitrary passkeys by ID. Attackers with valid sessions can submit crafted requests to the delete-passkey endpoint with enumerated passkey IDs to remove other users' passkeys.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-71400",
+    "publishedDate": "2026-08-02T13:16:52.387",
+    "lastModifiedDate": "2026-08-02T13:16:52.387",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-71399",
+    "description": "Better Auth relies on better-call, which uses the rou3 router library. In affected versions of rou3, paths are normalized by removing empty segments, so /path, //path, and ///path resolve to the same route. In Better Auth versions prior to 1.4.5 (which bundles the fixed rou3), this can allow attackers to bypass disabledPaths configuration and path-based rate limits by submitting requests with extra slashes in the URL path. The issue does not apply in deployments where the proxy or platform normalizes URLs by collapsing multiple slashes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-71399",
+    "publishedDate": "2026-08-02T13:16:52.210",
+    "lastModifiedDate": "2026-08-02T13:16:52.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-12231",
     "description": "The Exclusive Addons for Elementor plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the ‘ exad_infobox_image’ parameter in all versions up to, and including, 2.7.9.8 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-12231",
@@ -155,146 +533,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-16261",
     "publishedDate": "2026-08-02T06:16:39.450",
     "lastModifiedDate": "2026-08-02T06:16:39.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16256",
-    "description": "The POUCO Import Users WordPress plugin through 1.0.0 does not perform any capability or nonce checks on AJAX actions available to unauthenticated users that create and update WordPress accounts, and it trusts an attacker-supplied role value, allowing unauthenticated attackers to create a new administrator account and take over the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16256",
-    "publishedDate": "2026-08-02T06:16:39.163",
-    "lastModifiedDate": "2026-08-02T06:16:39.163",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16064",
-    "description": "The Event Booking Manager for WooCommerce  WordPress plugin before 5.3.7 does not properly verify authorization on the object being modified when quick-editing events, only checking a global capability, allowing users with the Contributor role and above to modify the title and publication status of arbitrary posts and pages on the site, including content they do not own.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16064",
-    "publishedDate": "2026-08-02T06:16:38.983",
-    "lastModifiedDate": "2026-08-02T06:16:38.983",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16063",
-    "description": "The Event Booking Manager for WooCommerce  WordPress plugin before 5.3.7 does not sanitise or escape event timeline content submitted by users with post-editing access before storing it and rendering it on the public event page, allowing users with the Author role and above to inject arbitrary JavaScript that executes in the browser of any visitor viewing the event, including administrators.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16063",
-    "publishedDate": "2026-08-02T06:16:38.830",
-    "lastModifiedDate": "2026-08-02T06:16:38.830",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16062",
-    "description": "The Event Booking Manager for WooCommerce  WordPress plugin before 5.3.7 does not prevent the deserialization of user-controlled input in some of its event content fields, allowing users with Contributor-level access and above to inject PHP objects. No POP chain is present in the Event Booking Manager for WooCommerce  WordPress plugin before 5.3.7 itself, but if one is present via another installed Event Booking Manager for WooCommerce  WordPress plugin before 5.3.7 or , this could lead to actions such as arbitrary file deletion, sensitive data retrieval, or remote code execution. This is an incomplete fix of the Event Booking Manager for WooCommerce  WordPress plugin before 5.3.7's earlier object-injection advisories.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16062",
-    "publishedDate": "2026-08-02T06:16:38.630",
-    "lastModifiedDate": "2026-08-02T06:16:38.630",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16042",
-    "description": "The LWS Optimize  WordPress plugin before 3.4 does not perform a capability check on its cache-clearing actions, allowing any authenticated user, including Subscribers, to flush the site's caches and force repeated cache rebuilds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16042",
-    "publishedDate": "2026-08-02T06:16:38.320",
-    "lastModifiedDate": "2026-08-02T06:16:38.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15939",
-    "description": "The Simple Restrict WordPress plugin before 1.2.9 does not enforce its content-restriction permission check on the REST API the way it does on the front end, relying there on a generic capability check instead of the Simple Restrict WordPress plugin before 1.2.9's own permission system, allowing users with contributor-level access or above to read the content of restricted posts and pages they were never granted access to.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15939",
-    "publishedDate": "2026-08-02T06:16:37.980",
-    "lastModifiedDate": "2026-08-02T06:16:37.980",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15385",
-    "description": "The RT Mega Menu  WordPress plugin before 1.5.2 does not perform a capability check on the AJAX action that saves mega-menu configuration and per-menu-item settings; its only gate is a nonce that any logged-in user can read from a standard admin page. A subscriber-level user can therefore enable the mega menu on a site menu and store a menu-item style value that is rendered, without output escaping, into a style attribute on the public navigation. By breaking out of that attribute the user persists a JavaScript event handler that executes for every visitor who hovers the navigation, including administrators, leading to session/site takeover.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15385",
-    "publishedDate": "2026-08-02T06:16:37.687",
-    "lastModifiedDate": "2026-08-02T06:16:37.687",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15248",
-    "description": "The Meta Box WordPress plugin before 5.13.1 does not verify that a user is authorized to delete the supplied attachment before deleting it, allowing users with a low-privilege role such as Contributor to permanently delete arbitrary media attachments belonging to other users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15248",
-    "publishedDate": "2026-08-02T06:16:37.403",
-    "lastModifiedDate": "2026-08-02T06:16:37.403",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15241",
-    "description": "The AI ChatBot for WooCommerce  WordPress plugin before 4.8.4 does not perform any authorization or nonce check on one of its AJAX actions, allowing unauthenticated users to abuse the site owner's stored third-party API key to send requests billed to the owner's account and, when an optional feature is enabled, to retrieve indexed knowledge-base content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15241",
-    "publishedDate": "2026-08-02T06:16:37.100",
-    "lastModifiedDate": "2026-08-02T06:16:37.100",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15236",
-    "description": "The Gallery for Google Photos  WordPress plugin before 1.2.1 does not properly restrict access to the stored third-party OAuth credentials of the connected account, exposing the persistent access and refresh tokens to unauthenticated users and allowing long-term compromise of the linked account.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15236",
-    "publishedDate": "2026-08-02T06:16:36.830",
-    "lastModifiedDate": "2026-08-02T06:16:36.830",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15206",
-    "description": "The SMS Alert  WordPress plugin before 3.9.8 does not bind its \"mobile verified\" session flag to the phone number that was actually verified: after an attacker verifies an OTP sent to their own phone, the signup/login handler reads a fresh, attacker-supplied phone number to select the account and logs them in. An unauthenticated attacker can therefore log in as any user, including an administrator, who has a billing phone on file.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15206",
-    "publishedDate": "2026-08-02T06:16:36.513",
-    "lastModifiedDate": "2026-08-02T06:16:36.513",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15151",
-    "description": "The Five Star Restaurant Reservations  WordPress plugin before 2.7.23 does not perform a capability check on one of its AJAX actions, allowing users with the lowest booking-management role (which by default cannot access the Five Star Restaurant Reservations  WordPress plugin before 2.7.23's settings) to reset the site's configured booking notification rules.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15151",
-    "publishedDate": "2026-08-02T06:16:36.227",
-    "lastModifiedDate": "2026-08-02T06:16:36.227",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-14938",
-    "description": "The FluentBoards  WordPress plugin before 1.95.3 does not verify that the items selected for a board import operation belong to a board the requesting user is authorized to access, allowing any authenticated user with member access to a single board to copy and read the stages and tasks (including titles, descriptions and file attachments) of any other board on the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14938",
-    "publishedDate": "2026-08-02T06:16:35.947",
-    "lastModifiedDate": "2026-08-02T06:16:35.947",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-14920",
-    "description": "## Summary",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14920",
-    "publishedDate": "2026-08-02T06:16:35.677",
-    "lastModifiedDate": "2026-08-02T06:16:35.677",
     "vendors": [],
     "products": [],
     "cvssScores": []
