@@ -1,10 +1,30 @@
 [
   {
-    "id": "CVE-2026-18642",
-    "description": "Deserialization of untrusted data vulnerability in TUBITAK BILGEM Software Technologies Research Institute eta-otp-lock allows Object Injection.\n\nThis issue affects eta-otp-lock: before 1.0.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18642",
-    "publishedDate": "2026-08-03T14:16:26.123",
-    "lastModifiedDate": "2026-08-03T14:16:26.123",
+    "id": "CVE-2026-18248",
+    "description": "@fastify/aws-lambda version 6.4.0 decorates each Fastify request with request.awsLambda.event and request.awsLambda.context, values that applications are documented to use for authorization decisions such as reading API Gateway authorizer claims. In the default configuration, the getter that populates this decoration reads the client-controlled x-apigateway-event and x-apigateway-context HTTP headers before falling back to the trusted internal request token, and those reserved headers are not stripped from the incoming event. An unauthenticated attacker who can set a single HTTP header can therefore forge the entire Lambda proxy event, including the authorizer context, and override the genuine one. This results in a full authentication and authorization bypass and privilege escalation for any application that trusts request.awsLambda.event for identity or access control. Only version 6.4.0 is affected. Patches: upgrade to @fastify/aws-lambda 6.4.1, which resolves the decoration only through the internal per-invocation token and strips the reserved headers before the request is processed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18248",
+    "publishedDate": "2026-08-03T16:16:28.247",
+    "lastModifiedDate": "2026-08-03T16:16:28.247",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67609",
+    "description": "Telenia Software TVox 26.5.3 and prior 26.x versions, and 24.9.21 and prior 24.x versions, contain a privilege escalation vulnerability that allows attackers with access to the apache account to execute arbitrary commands as root by exploiting an insecure sudoers configuration in /etc/sudoers.d/telenia. The configuration grants the apache user NOPASSWD execution of /bin/nice, which can be leveraged to invoke arbitrary commands, enabling full root-level command execution without supplying a password.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67609",
+    "publishedDate": "2026-08-03T15:16:20.980",
+    "lastModifiedDate": "2026-08-03T17:16:43.570",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -12,36 +32,16 @@
         "score": 7.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 1.8,
         "impactScore": 5.9,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67608",
-    "description": "Telenia Software TVox 26.5.3 and prior 26.x versions, and 24.9.21 and prior 24.x versions, contain an OS command injection vulnerability in action_audio.php that allows authenticated attackers to execute arbitrary operating system commands by passing an unsanitized pid parameter into an exec() call when the action parameter is set to checkProcess. Attackers can inject malicious OS commands through the pid request parameter to execute arbitrary commands with the privileges of the apache user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67608",
-    "publishedDate": "2026-08-03T14:16:27.793",
-    "lastModifiedDate": "2026-08-03T14:16:27.793",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.9,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 8.6,
+        "score": 8.5,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -49,40 +49,81 @@
     ]
   },
   {
-    "id": "CVE-2026-64827",
-    "description": "Telenia Software TVox 26.5.3 and prior 26.x versions, and 24.9.21 and prior 24.x versions, contain an authentication bypass vulnerability in set_env.php where the redirectToLoginAdminIRequestHaveAccessToken() function derives the current page name from PHP_SELF and skips authentication when the value matches 'login_admin.php'. Attackers can append '/login_admin.php' to the path of any target PHP script to cause the authentication check to pass and gain unauthenticated access to all PHP scripts under the manager HTML directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64827",
-    "publishedDate": "2026-08-03T14:16:27.630",
-    "lastModifiedDate": "2026-08-03T14:16:27.630",
+    "id": "CVE-2026-18651",
+    "description": "A flaw was found in 389 Directory Server. During SASL PLAIN authentication, the server installs connection-level bind credentials before performing the account-lock check. If the account is subsequently found to be locked, the bind is reported as failed to the client, but the already-installed authenticated state on the connection is not reverted. A client that supplies valid credentials for an account that has been administratively locked can continue to use the same connection with that account's privileges, defeating account lock as an access-revocation control.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18651",
+    "publishedDate": "2026-08-03T16:16:29.073",
+    "lastModifiedDate": "2026-08-03T17:16:36.330",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
+        "score": 5.4,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18092",
-    "description": "Net::SAML2 versions before 0.86 for Perl allow SAML authentication bypass via XML signature wrapping because new_from_xml reads assertion identity with document-wide XPath instead of the signed subtree.\n\nnew_from_xml reads the NameID, attribute values, SessionIndex, audience and other identity fields with document-wide XPath, such as //saml:Assertion/saml:AttributeStatement/saml:Attribute and //saml:Subject/saml:NameID, which select the first matching element in document order rather than the element covered by the verified signature. handle_response confirms that a signature is present and, when a cacert is configured, that it chains to the CA, but XML::Sig verifies only the element named by the signature's Reference URI, so unsigned sibling assertions in the same document are not covered. An attacker who holds any one IdP-signed assertion can add an unsigned attacker-authored assertion earlier in document order; the signature still verifies and the document-order XPath returns the attacker's NameID and attributes.\n\nAny caller that passes an untrusted Response to new_from_xml can accept identity fields from an assertion the IdP never signed, even when a cacert trust anchor is configured, so a party holding one valid IdP-signed assertion can authenticate as an arbitrary user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18092",
-    "publishedDate": "2026-08-03T14:16:25.030",
-    "lastModifiedDate": "2026-08-03T14:16:25.030",
+    "id": "CVE-2026-18508",
+    "description": "A flaw was found in GNU tar. When extracting an archive with the --one-top-level option, hardlink targets are not confined to the designated top-level directory and may resolve relative to the extraction working directory. A crafted archive can create hardlinks that escape the intended boundary and, when combined with a preexisting symbolic link under the working directory, may allow writing outside that boundary during a single extraction.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18508",
+    "publishedDate": "2026-08-03T16:16:28.387",
+    "lastModifiedDate": "2026-08-03T17:16:34.077",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15430",
+    "description": "Improper access control in the IRP_MJ_WRITE command interface in\r\nWellbia XIGNCODE3 xhunter2.sys, version 2026.6.1.192, allows a local, unprivileged attacker to achieve local privilege escalation to\r\nNT AUTHORITY\\SYSTEM, extract credentials from PPL-protected\r\nlsass.exe, and terminate PPL-protected security processes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15430",
+    "publishedDate": "2026-08-03T16:16:28.123",
+    "lastModifiedDate": "2026-08-03T17:38:23.240",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-18568",
+    "description": "XML::Sig versions from 0.29 before 0.72 for Perl allow signature verification bypass because verify returns true when every signature was skipped before any cryptographic check.\n\nverify in lib/XML/Sig.pm counts the `//dsig:Signature` elements into `$numsigs` and iterates over them, but two paths reach `next` before any digest or key check runs: a `SignedInfo/Reference/@URI` that resolves to no element while `$numsigs` is greater than 1, and, when `id_attr` is set, a reference that does not match the requested ID. The loop records nothing about what it checked, so when every signature takes one of those paths control reaches the unconditional `return 1` that ends verify. Two `Signature` elements whose Reference URI names an ID that no element carries is enough, as is one such element combined with `id_attr`.\n\nAny caller that passes untrusted XML to verify can receive a true return for a document in which no digest and no signature value was checked; a `cert` or `cert_text` trust anchor does not change this, because no key check runs. Versions up to 0.28 use an XML::XPath based verify that has no such skip and are not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18568",
+    "publishedDate": "2026-08-03T16:16:28.560",
+    "lastModifiedDate": "2026-08-03T16:41:32.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-9487",
+    "description": "XML::Sig versions before 0.71 for Perl allow signature wrapping via duplicate ID.\n\n_get_signed_xml() in lib/XML/Sig.pm, called from verify(), resolves the SignedInfo Reference/@URI to a node with the XPath expression \"//*[@ID='$id']\" and returns the first node of the resulting node set. A document in which two elements share that ID value is accepted: the digest and signature are checked against whichever element comes first in document order, and the duplicate is not detected.\n\nSuch a document verifies successfully while an application that resolves the same ID independently can read the second, attacker supplied element; in a SAML2 context this places the contents of an Assertion under attacker control.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9487",
+    "publishedDate": "2026-08-03T14:16:31.110",
+    "lastModifiedDate": "2026-08-03T16:41:32.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-9390",
+    "description": "XML::Sig versions before 0.71 for Perl allow XPath injection in ID lookup.\n\nverify() and _get_signed_xml() in lib/XML/Sig.pm build XPath expressions by concatenating the SignedInfo/Reference/@URI value read from the document being verified. The value is neither escaped nor checked against the NCName grammar that XML requires of an ID, so a URI containing a single quote closes the string literal in the generated expression and appends arbitrary XPath operators.\n\nA crafted URI can make the lookup match elements the reference does not name, or every element in the document, so which node is selected for digest verification is decided by the injected expression rather than by the reference.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9390",
+    "publishedDate": "2026-08-03T14:16:30.983",
+    "lastModifiedDate": "2026-08-03T16:41:32.357",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -92,7 +133,7 @@
     "description": "GitPython before 3.1.53 fails to properly escape section names in git config files, allowing attackers to inject arbitrary configuration directives through malicious submodule names. Attackers can inject core.sshCommand or other dangerous config keys into the victim's .git/config via create_submodule or clone_from operations, achieving remote code execution when git performs ssh operations.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69097",
     "publishedDate": "2026-08-03T14:16:30.677",
-    "lastModifiedDate": "2026-08-03T14:16:30.677",
+    "lastModifiedDate": "2026-08-03T15:16:22.077",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -121,7 +162,7 @@
     "description": "OpenWrt luci-app-dockerman (LuCI master and openwrt-25.12 snapshots containing the ucode docker_rpc.uc RPC backend after the JS/ucode conversion) contains an OS command injection vulnerability. The package's read ACL grants broad ubus access to docker.* / docker.container.*, which exposes the docker.container.ttyd_start method even though it performs mutating operations. The run_ttyd handler builds a shell command from the request-controlled id, cmd, and uid fields and passes it to system() without quoting or argv-style execution in the rpcd root context. An authenticated attacker holding only the luci-app-dockerman read ACL can inject shell metacharacters (e.g., in id) to execute arbitrary commands as root via an HTTP POST to /ubus. openwrt-24.10 and openwrt-23.05 do not contain this backend and are not affected; no patched version was known as of the advisory.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69096",
     "publishedDate": "2026-08-03T14:16:30.500",
-    "lastModifiedDate": "2026-08-03T14:16:30.500",
+    "lastModifiedDate": "2026-08-03T17:16:45.490",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -150,7 +191,7 @@
     "description": "OpenWrt luci-app-bmx7 before commit 5890760a454dad2cb00389dba2cdc5e779e0ffdd contains a path traversal vulnerability in the bmx7-info CGI script that allows unauthenticated attackers to read files outside the configured runtimeDir. Attackers can supply directory traversal sequences in the query string to escape the intended directory and read sensitive files accessible to the CGI process.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69095",
     "publishedDate": "2026-08-03T14:16:30.343",
-    "lastModifiedDate": "2026-08-03T14:16:30.343",
+    "lastModifiedDate": "2026-08-03T15:16:21.913",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -208,7 +249,7 @@
     "description": "Admidio before 5.0.11 does not validate the adm_csrf_token in modules/category-report/preferences.php, which performs persistent Category Report configuration changes based on GET parameters (delete and copy). An attacker can trick an authenticated administrator into visiting a crafted URL to delete or duplicate Category Report configurations, affecting the integrity and availability of that module's configuration.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69093",
     "publishedDate": "2026-08-03T14:16:30.057",
-    "lastModifiedDate": "2026-08-03T14:16:30.057",
+    "lastModifiedDate": "2026-08-03T16:16:31.780",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -237,7 +278,7 @@
     "description": "Admidio versions before 5.0.11 contain a reflected cross-site scripting vulnerability in the SSO/SAML endpoint that echoes unencoded exception messages to the HTTP response. Unauthenticated attackers can inject arbitrary JavaScript through SAML Issuer elements or LightSaml library parameters to execute code in users' browsers and hijack sessions.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69092",
     "publishedDate": "2026-08-03T14:16:29.887",
-    "lastModifiedDate": "2026-08-03T14:16:29.887",
+    "lastModifiedDate": "2026-08-03T15:16:21.757",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -266,7 +307,7 @@
     "description": "Admidio before 5.0.11 contains an authentication bypass vulnerability in the forum module when configured in login-only mode. The access control logic in modules/forum.php fails to validate the login-only configuration state, allowing unauthenticated attackers to read forum topics and posts by directly accessing the module with read-only parameters.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69091",
     "publishedDate": "2026-08-03T14:16:29.730",
-    "lastModifiedDate": "2026-08-03T14:16:29.730",
+    "lastModifiedDate": "2026-08-03T17:16:45.340",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -295,7 +336,7 @@
     "description": "Admidio before 5.0.11 fails to validate target organization membership in role handlers, allowing authenticated role administrators to delete, activate, deactivate, or edit roles belonging to other organizations. Attackers can supply a role UUID from another organization to groups_roles.php handlers to modify that organization's roles without authorization.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69090",
     "publishedDate": "2026-08-03T14:16:29.580",
-    "lastModifiedDate": "2026-08-03T14:16:29.580",
+    "lastModifiedDate": "2026-08-03T15:16:21.610",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -353,7 +394,7 @@
     "description": "Grav CMS versions 2.0.7 through 2.0.10 fail to validate fully-qualified static method calls (Class::method) in blueprint dynamic-field directives because Blueprint::isSafeDynamicCall() only applies its dangerous-callable denylist to strings that do not contain '::'. An account with only page-editing rights (admin.pages, not super-admin or admin.pages_twig) can plant a directive in a page's form-field frontmatter that invokes an arbitrary public static PHP method with attacker-controlled arguments. Using built-in gadget methods this allows reading of any server-readable file (disclosed to anonymous visitors of the crafted page) and arbitrary creation/copying of files and directories under the web-server account. Fixed in 2.0.11.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69088",
     "publishedDate": "2026-08-03T14:16:29.253",
-    "lastModifiedDate": "2026-08-03T14:16:29.253",
+    "lastModifiedDate": "2026-08-03T16:16:31.647",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -382,7 +423,7 @@
     "description": "The Grav form plugin (getgrav/grav-plugin-form) before 9.1.13 contains an open redirect vulnerability. Since v9.1.11, the redirect process action evaluates user-supplied form data inside Twig expressions, and Grav::redirect() accepts external URLs without origin validation. When a form blueprint defines a redirect target such as redirect: \"{{ form.value('next') }}\" using an attacker-controllable field, an unauthenticated form submitter can supply a value like https://evil.com to cause a 302 redirect to an arbitrary external site, enabling phishing.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69087",
     "publishedDate": "2026-08-03T14:16:29.103",
-    "lastModifiedDate": "2026-08-03T14:16:29.103",
+    "lastModifiedDate": "2026-08-03T16:16:31.527",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -411,7 +452,7 @@
     "description": "SiYuan versions before v3.7.3 fail to validate the avID parameter on all code branches in attribute-view read endpoints, allowing attackers to construct traversal paths that escape the storage directory. Authenticated users with RoleReader permissions or anonymous clients when publish authentication is disabled can read JSON files outside the attribute-view directory to disclose cross-scope database content.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69086",
     "publishedDate": "2026-08-03T14:16:28.960",
-    "lastModifiedDate": "2026-08-03T14:16:28.960",
+    "lastModifiedDate": "2026-08-03T17:16:45.207",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -440,7 +481,7 @@
     "description": "SiYuan before v3.7.3 contains a SQL injection vulnerability in the /api/filetree/searchDocs endpoint, where the caller-supplied keyword parameter is concatenated directly into SQL statements with no escaping or parameter binding. The endpoint is reachable by a publish RoleReader token, or unauthenticated when publish mode is enabled with Publish.Auth.Enable set to false. Because the statement executes on a read-write SQLite handle via a driver that supports stacked (semicolon-separated) statements, an attacker can read and modify database content across all cleartext (non-encrypted) notebooks on the instance.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69085",
     "publishedDate": "2026-08-03T14:16:28.820",
-    "lastModifiedDate": "2026-08-03T14:16:28.820",
+    "lastModifiedDate": "2026-08-03T15:16:21.480",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -498,7 +539,7 @@
     "description": "SiYuan versions before v3.7.3 contain SQL injection vulnerabilities in the fullTextSearchAssetContent endpoint reachable by unauthenticated users and publish RoleReader tokens. Attackers can execute arbitrary SQL on the read-write asset-content database via unescaped method parameters and REGEXP clauses to read, modify, or delete cross-notebook data.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-69083",
     "publishedDate": "2026-08-03T14:16:28.537",
-    "lastModifiedDate": "2026-08-03T14:16:28.537",
+    "lastModifiedDate": "2026-08-03T16:16:31.403",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -527,7 +568,7 @@
     "description": "SiYuan versions before v3.7.3 contain an information disclosure vulnerability in the getHeadingDeleteTransaction, getHeadingLevelTransaction, and getHeadingInsertTransaction endpoints that return rendered block DOM without publish-access checks. Anonymous readers or publish RoleReader tokens can supply a heading block ID to read full rendered content of publish-disabled documents that should be restricted.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-68587",
     "publishedDate": "2026-08-03T14:16:28.397",
-    "lastModifiedDate": "2026-08-03T14:16:28.397",
+    "lastModifiedDate": "2026-08-03T16:16:31.287",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -556,7 +597,7 @@
     "description": "SiYuan before v3.7.3 fails to apply publish-access filters to the getBacklinkDoc and getBackmentionDoc content endpoints (/api/ref/getBacklinkDoc and /api/ref/getBackmentionDoc). While the corresponding backlink list endpoints filter publish-forbidden documents, the content endpoints (gated only by CheckAuth) do not. A publish-mode reader — including an anonymous reader when publish Basic Auth is disabled — can call these endpoints directly with a publish-forbidden document's ID to retrieve its rendered DOM content and to determine whether the document references a given block (a reference-existence oracle).",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-68586",
     "publishedDate": "2026-08-03T14:16:28.237",
-    "lastModifiedDate": "2026-08-03T14:16:28.237",
+    "lastModifiedDate": "2026-08-03T17:16:44.597",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -577,104 +618,6 @@
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68585",
-    "description": "SiYuan versions before v3.7.3 contain a metadata disclosure vulnerability in the /api/block/getBlockInfo endpoint that returns document root metadata including title for publish-forbidden documents without publish-access checks. Anonymous readers or publish RoleReader tokens can supply a block ID to retrieve the title, notebook, path, root ID, and icon of documents administrators marked as excluded from publishing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68585",
-    "publishedDate": "2026-08-03T14:16:28.097",
-    "lastModifiedDate": "2026-08-03T14:16:28.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68584",
-    "description": "SiYuan versions before v3.7.3 contain an authentication bypass vulnerability in publish mode where content-returning endpoints getHeadingChildrenDOM, getHeading*Transaction, and getBacklinkDoc perform no password check despite protecting the primary getDoc endpoint. Anonymous attackers can retrieve full content of password-protected documents by obtaining internal block IDs from reader-accessible endpoints and calling unprotected content endpoints to bypass the password gate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68584",
-    "publishedDate": "2026-08-03T14:16:27.943",
-    "lastModifiedDate": "2026-08-03T14:16:27.943",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.2,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56609",
-    "description": "HCL iControl is affected by Weak SSL/TLS Version Supported vulnerability. It was observed that the application was using weak TLS versions such as TLS 1.0 and 1.1. These outdated protocols lack modern security features, making them vulnerable to known attacks and exposing sensitive information during data transmission.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56609",
-    "publishedDate": "2026-08-03T13:18:52.400",
-    "lastModifiedDate": "2026-08-03T14:16:26.500",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56608",
-    "description": "HCL iControl is affected by Missing Access Control vulnerability. The application failed to enforce proper granular access controls, allowing users to access or view administrator-level functionalities without appropriate authorization.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56608",
-    "publishedDate": "2026-08-03T13:18:52.257",
-    "lastModifiedDate": "2026-08-03T14:16:26.383",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
       }
     ]
   }
