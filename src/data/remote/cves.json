@@ -1,47 +1,67 @@
 [
   {
-    "id": "CVE-2026-47211",
-    "description": "Ouroboros is a local-first runtime for AI coding agents that records their actions and applies user-defined policies to constrain behavior. In versions prior to 0.39.0, if a user clones a malicious repository and runs Ouroboros commands within that directory, it can lead to arbitrary code execution and potential system takeover. The vulnerability stems from Ouroboros loading the .env file from the current working directory. Execution-affecting environment variables such as OUROBOROS_CLI_PATH, OPENCODE_CLI_PATH, and other backend selectors are accepted directly from this local .env. An attacker can include a malicious script in the repository and point the CLI path variable to it (e.g., OUROBOROS_CLI_PATH=./malicious_script.sh). When the user executes a command like ouroboros init or any command that instantiates the adapter, the malicious script is executed instead of the intended CLI. This issue has been fixed in version 0.39.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47211",
-    "publishedDate": "2026-08-03T20:17:24.030",
-    "lastModifiedDate": "2026-08-03T20:17:24.030",
+    "id": "CVE-2026-11835",
+    "description": "Time-of-check time-of-use (TOCTOU) vulnerability combined with missing input validation in Caliptra Core ROM (UpdateResetFlow::run()) in subsystem mode allows a compromised local attacker to silently bypass secure boot by supplying an AXI staging address that is not validated against the strap-configured SS_EXTERNAL_STAGING_AREA_BASE_ADDR, enabling firmware to be modified between verification and loading into ICCM. Attestation continues to report the originally verified image digest, masking the compromise. Exploitation requires a compromised MCU firmware with AXI manager access to unprotected SRAM reachable by Caliptra.\n\nThis issue affects Core ROM: 2.1.0 through 2.1.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11835",
+    "publishedDate": "2026-08-04T00:16:40.047",
+    "lastModifiedDate": "2026-08-04T00:16:40.047",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.4,
+        "score": 5.6,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:H/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "b01ddd03-5ef6-483b-b2c5-acba77f1a554"
       }
     ]
   },
   {
-    "id": "CVE-2026-18644",
-    "description": "A vulnerability was identified in danpros HTMLy up to 3.1.1. Affected by this issue is the function unlink of the file /system/htmly.php of the component Delete Username Endpoint. Such manipulation of the argument File leads to path traversal. The attack can be launched remotely. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18644",
-    "publishedDate": "2026-08-03T20:17:17.210",
-    "lastModifiedDate": "2026-08-03T20:17:17.210",
+    "id": "CVE-2026-11836",
+    "description": "Insufficient verification of data authenticity in Caliptra Core ROM and Core Firmware (validate_debug_unlock_token()) in subsystem mode allows an attacker with access to the integrator's debug unlock signing service to unlock production debug on an unintended device by presenting a valid token issued for a different device sharing the same debug unlock key hash. The 384-bit challenge nonce continues to prevent replay of previously issued tokens. Practical impact is limited to loss of per-device scope enforcement within a set of devices that share the same unlock authority by design; it does not enable debug unlock on devices outside that set.\n\nThis issue affects Core ROM: 2.0.0 through 2.0.2, 2.1.0 through 2.1.1; Core Firmware: 2.0.0 through 2.0.1, 2.1.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11836",
+    "publishedDate": "2026-08-04T00:16:40.203",
+    "lastModifiedDate": "2026-08-04T00:16:40.203",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
+        "score": 1.8,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:H/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "b01ddd03-5ef6-483b-b2c5-acba77f1a554"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18686",
+    "description": "A vulnerability was detected in GL.iNet GL-MT3000 up to 4.4.5. The affected element is the function nas-web.add_user of the file /cgi-bin/glc of the component nas-web RPC Wrapper. Performing a manipulation results in command injection. The attack can be initiated remotely. The exploit is now public and may be used. The vendor was contacted early about this disclosure and confirmed the existence of the vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18686",
+    "publishedDate": "2026-08-04T00:16:40.520",
+    "lastModifiedDate": "2026-08-04T00:16:40.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 2.1,
+        "score": 8.9,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -49,131 +69,278 @@
     ]
   },
   {
-    "id": "CVE-2026-68981",
-    "description": "Apache NiFi 1.5.0 through 2.10.0 support gzip-encoded HTTP requests for the application REST API using a Jersey encoding filter. The framework enforced a configurable maximum request size on the compressed payload rather than the decompressed output, allowing a malicious client to send crafted requests that could consume excessive amounts of memory. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, which relocates response compression to Jetty Server and disables decompression of gzip-encoded HTTP requests.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68981",
-    "publishedDate": "2026-08-03T20:17:29.280",
-    "lastModifiedDate": "2026-08-03T20:17:29.280",
+    "id": "CVE-2026-67978",
+    "description": "An issue in the SBN UDP interface of NASA cFS v7.0.1 allows attackers to cause a Denial of Service (DoS) via transmitting a crafted SBN frame.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67978",
+    "publishedDate": "2026-08-03T23:16:47.213",
+    "lastModifiedDate": "2026-08-03T23:16:47.213",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-67673",
+    "description": "A stack-based buffer overflow vulnerability exists in the cmd_edl function of OreSat Firmware v1.0. The vulnerability is triggered when processing the edl fw_flash command, where the <filename> argument is copied to a 64-byte stack buffer via memcpy without proper length validation. An attacker with physical access to the UART3 serial interface can exploit this vulnerability by sending a maliciously crafted command with an oversized filename parameter,",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67673",
+    "publishedDate": "2026-08-03T23:16:47.080",
+    "lastModifiedDate": "2026-08-03T23:16:47.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-48399",
+    "description": "Adobe Campaign Classic (ACC) is affected by a Violation of Secure Design Principles vulnerability that could result in a Security feature bypass. An attacker could leverage this vulnerability to bypass security measures and gain unauthorized read access. Exploitation of this issue does not require user interaction.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48399",
+    "publishedDate": "2026-08-03T23:16:46.693",
+    "lastModifiedDate": "2026-08-03T23:16:46.693",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48333",
+    "description": "Adobe Campaign Classic (ACC) is affected by an Incorrect Authorization vulnerability that could result in privilege escalation. An attacker could exploit this vulnerability to gain elevated privileges. Exploitation of this issue does not require user interaction.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48333",
+    "publishedDate": "2026-08-03T23:16:46.567",
+    "lastModifiedDate": "2026-08-03T23:16:46.567",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48331",
+    "description": "Adobe Campaign Classic (ACC) is affected by a Server-Side Request Forgery (SSRF) vulnerability that could result in privilege escalation. Exploitation of this issue does not require user interaction. Scope is changed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48331",
+    "publishedDate": "2026-08-03T23:16:46.443",
+    "lastModifiedDate": "2026-08-03T23:16:46.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48330",
+    "description": "Adobe Campaign Classic (ACC) is affected by an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary SQL commands, potentially gaining elevated access or control over the application. Exploitation of this issue does not require user interaction. Scope is changed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48330",
+    "publishedDate": "2026-08-03T23:16:46.317",
+    "lastModifiedDate": "2026-08-03T23:16:46.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48326",
+    "description": "Adobe Campaign Classic (ACC) is affected by an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48326",
+    "publishedDate": "2026-08-03T23:16:46.190",
+    "lastModifiedDate": "2026-08-03T23:16:46.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48323",
+    "description": "Adobe Campaign Classic (ACC) is affected by an Improper Neutralization of Special Elements Used in a Template Engine vulnerability that could result in arbitrary code execution in the context of the current user. An attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48323",
+    "publishedDate": "2026-08-03T23:16:46.063",
+    "lastModifiedDate": "2026-08-03T23:16:46.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48317",
+    "description": "Adobe Campaign Classic (ACC) is affected by an Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection') vulnerability that could result in arbitrary code execution in the context of the current user. A low-privileged attacker could exploit this vulnerability to execute arbitrary code. Exploitation of this issue does not require user interaction. Scope is changed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48317",
+    "publishedDate": "2026-08-03T23:16:45.930",
+    "lastModifiedDate": "2026-08-03T23:16:45.930",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 5.8,
+        "source": "psirt@adobe.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18684",
+    "description": "A weakness has been identified in GL.iNet GL-MT3000 up to 4.4.5. This issue affects the function remove_profile of the file /cgi-bin/glc of the component modem.so. This manipulation causes command injection. It is possible to initiate the attack remotely. The exploit has been made available to the public and could be used for attacks. The vendor was contacted early about this disclosure and confirmed the existence of the vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18684",
+    "publishedDate": "2026-08-03T23:16:45.750",
+    "lastModifiedDate": "2026-08-03T23:16:45.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 8.9,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18667",
+    "description": "A vulnerability in Tenable Sensor Proxy allows a remote attacker to execute code with elevated privileges by inducing an operator to connect the sensor to an attacker-controlled host.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18667",
+    "publishedDate": "2026-08-03T23:16:45.590",
+    "lastModifiedDate": "2026-08-03T23:16:45.590",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "vulnreport@tenable.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnreport@tenable.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18685",
+    "description": "A security vulnerability has been detected in GL.iNet GL-MT3000 up to 4.4.5. Impacted is the function set_upgrade of the file /cgi-bin/glc of the component modem.so. Such manipulation leads to command injection. It is possible to launch the attack remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure and confirmed the existence of the vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18685",
+    "publishedDate": "2026-08-04T00:16:40.350",
+    "lastModifiedDate": "2026-08-04T00:16:40.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 8.9,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62870",
+    "description": "Use after free in Microsoft Office Excel allows an unauthorized attacker to execute code over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62870",
+    "publishedDate": "2026-08-04T00:17:37.813",
+    "lastModifiedDate": "2026-08-04T00:17:37.813",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 8.8,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:P/AU:Y/R:U/V:C/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "secure@microsoft.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-69198",
-    "description": "ip-address is a library for parsing and manipulating IPv4 and IPv6 addresses in JavaScript. From 10.1.1 until 10.2.2, every special-use classification method is built on isInSubnet, which short-circuits to false whenever the address's own subnet mask is shorter than the reference range's mask. That mask comes verbatim from the CIDR suffix on the parsed input, so appending a suffix such as /0 suppresses classification entirely: isLoopback(), isPrivate(), isLinkLocal(), isCGNAT(), isMulticast(), isUnspecified(), isBroadcast(), isULA(), and getType() all report an internal address as unremarkable, while correctForm() and address still return the real internal target. An application that builds a network trust-boundary decision on these checks, for example a filter intended to block Server-Side Request Forgery, or SSRF, may therefore treat an internal target as external and allow the request. The underlying bit comparison is correct, and mask(n) already returns the first n bits of the full parsed address independently of subnetMask; the defect is solely that the containment guard sits in the classification path. This issue is fixed in version 10.2.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69198",
-    "publishedDate": "2026-08-03T20:17:30.107",
-    "lastModifiedDate": "2026-08-03T20:17:30.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68980",
-    "description": "Apache NiFi 2.0.0 through 2.10.0 support creating, reading, and deleting Assets associated with Parameter Contexts through the REST API. The framework authorizes asset deletion against the owning Parameter Context using the supplied Parameter Context Identifier and Asset Identifier. The framework performed authorized based on the supplied Parameter Context Identifier without verifying the requested Identifier against the stored Identifier. Apache NiFi installations that do not implement different levels of authorization across Parameter Contexts are not subject to this vulnerability, because the framework enforces write permissions as the security boundary. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, which verifies Parameter Context ownership of the requested Asset before deletion using the same strategy applied to Asset read operations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68980",
-    "publishedDate": "2026-08-03T20:17:29.127",
-    "lastModifiedDate": "2026-08-03T20:17:29.127",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Clear",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62354",
-    "description": "Authorization handling for Parameter Context validation requests in Apache NiFi 1.10.0 through 2.10.0 allows clients with read access to submit proposed Parameter values. The proposed values override current configuration, enabling users with read access to invoke predefined component validation methods with alternative settings. Apache NiFi installations that do not implement different levels of authorization for viewing and modifying Parameter Context configuration are not subject to this vulnerability. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, requiring write access to submit Parameter Context validation requests.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62354",
-    "publishedDate": "2026-08-03T20:17:25.530",
-    "lastModifiedDate": "2026-08-03T20:17:25.530",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:P/AU:Y/R:I/V:C/RE:L/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-69192",
-    "description": "ip-address is a library for parsing and manipulating IPv4 and IPv6 addresses in JavaScript. Prior to 10.3.1, Address4 accepts an octet written with a leading zero and decodes it as decimal, while the WHATWG URL host parser, inet_aton, and getaddrinfo all decode a leading zero as octal. The library and the network stack therefore disagree about which host a string names. new Address4('012.0.0.1') reports correctForm() of 12.0.0.1 and isPrivate() of false, but fetch('http://012.0.0.1/') connects to 10.0.0.1. An application that builds a network trust-boundary decision on these checks, for example a filter intended to block Server-Side Request Forgery, or SSRF, will classify an internal target as external and allow the request. The defect is in the parse gate rather than in any one classifier, so every consumer of Address4 inherits it: isPrivate(), isLoopback(), isLinkLocal(), isCGNAT(), isInSubnet(), isHostInSubnet(), and correctForm() are all computed from the mis-decoded octets. This issue is fixed in version 10.3.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69192",
-    "publishedDate": "2026-08-03T20:17:29.960",
-    "lastModifiedDate": "2026-08-03T20:17:29.960",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68979",
-    "description": "Apache NiFI 1.10.0 through 2.10.0 provide a Parameter Context update REST API method that does not enforce authorization checking on components referencing Parameter values. Updating a Parameter Context can change parameter values that affect referencing components, but framework authorization was limited to read and write privileges on the Parameter Context itself. As a result of the missing authorization, an authenticated user authorized to modify a Parameter Context, but not authorized on referencing components, could alter Parameter values affecting those components. In deployments where a Parameter value contains executable scripting content, updating a Parameter can result in code execution during automatic component validation, without starting the referencing component. The impact was limited to stopped components by existing verification checks, and the issue applies only to deployments that use component-level authorization policies. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, which aligns the Parameter Context update method authorization with other methods, adding authorization checking on affected components.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68979",
-    "publishedDate": "2026-08-03T20:17:28.977",
-    "lastModifiedDate": "2026-08-03T20:17:28.977",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:L/VI:H/VA:L/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:N/AU:Y/R:U/V:C/RE:L/U:Clear",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58139",
-    "description": "The DuckDB AWS extension for DuckDB contains a security policy bypass vulnerability that allows any database user with SQL execution permissions to extract plaintext AWS credentials by calling the load_aws_credentials function with the redact_secret parameter set to false, circumventing the database-wide allow_unredacted_secrets=false policy. Attackers can invoke this single function to retrieve the underlying AWS credential chain including access_key_id, secret_access_key, session_token, and region in plaintext, which are immediately valid against AWS APIs and particularly impactful in managed environments where pg_duckdb is preloaded and an AWS credential chain such as IMDSv2, IRSA, ECS task role, or EC2 instance role is reachable.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58139",
-    "publishedDate": "2026-08-03T20:17:25.220",
-    "lastModifiedDate": "2026-08-03T20:17:25.220",
+    "id": "CVE-2026-66326",
+    "description": "Missing authorization in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66326",
+    "publishedDate": "2026-08-04T00:17:39.847",
+    "lastModifiedDate": "2026-08-04T00:17:39.847",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -181,393 +348,170 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "secure@microsoft.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18641",
-    "description": "A vulnerability was determined in Sangfor Operation and Maintenance Security Management System up to 3.0.13. Affected by this vulnerability is the function com.sbr.fort.foreignDP.DpLoginController of the file /fort/portal_login of the component Login Endpoint. This manipulation causes os command injection. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18641",
-    "publishedDate": "2026-08-03T20:17:16.923",
-    "lastModifiedDate": "2026-08-03T20:17:16.923",
+    "id": "CVE-2026-66325",
+    "description": "Server-side request forgery (ssrf) in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66325",
+    "publishedDate": "2026-08-04T00:17:39.703",
+    "lastModifiedDate": "2026-08-04T00:17:39.703",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66322",
+    "description": "Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66322",
+    "publishedDate": "2026-08-04T00:17:39.577",
+    "lastModifiedDate": "2026-08-04T00:17:39.577",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "secure@microsoft.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18654",
-    "description": "Key exchange without entity authentication in the EMR SSH helper commands in Amazon AWS CLI before 1.45.28 and AWS CLI v2 before 2.35.3 might allow man-in-the-middle attackers to intercept SSHsessions and file transfers via network positioning between the client and the EMR cluster endpoint.\n\n\n\nTo remediate this issue, users should upgrade to AWS CLI v1 1.45.28 or later, or AWS CLI v2 2.35.3 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18654",
-    "publishedDate": "2026-08-03T20:17:17.383",
-    "lastModifiedDate": "2026-08-03T20:17:17.383",
+    "id": "CVE-2026-66317",
+    "description": "Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform tampering over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66317",
+    "publishedDate": "2026-08-04T00:17:39.183",
+    "lastModifiedDate": "2026-08-04T00:17:39.183",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.8,
+        "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66311",
+    "description": "Missing authorization in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform tampering locally.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66311",
+    "publishedDate": "2026-08-04T00:17:38.373",
+    "lastModifiedDate": "2026-08-04T00:17:38.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65804",
+    "description": "Improper control of generation of code ('code injection') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65804",
+    "publishedDate": "2026-08-04T00:17:38.100",
+    "lastModifiedDate": "2026-08-04T00:17:38.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65802",
+    "description": "External control of file name or path in Microsoft Edge for Android allows an unauthorized attacker to disclose information over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65802",
+    "publishedDate": "2026-08-04T00:17:37.967",
+    "lastModifiedDate": "2026-08-04T00:17:37.967",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 4,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+        "source": "secure@microsoft.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18632",
-    "description": "A security flaw has been discovered in langgenius dify up to 1.14.2. This issue affects the function jinja2.Template of the file api/core/helper/code_executor/jinja2/jinja2_transformer.py of the component Jinja2 Handler. The manipulation results in improper neutralization of special elements used in a template engine. The attack may be launched remotely. The exploit has been released to the public and may be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18632",
-    "publishedDate": "2026-08-03T20:17:16.757",
-    "lastModifiedDate": "2026-08-03T20:17:16.757",
+    "id": "CVE-2026-66316",
+    "description": "Origin validation error in Microsoft Edge (Chromium-based) allows an unauthorized attacker to perform spoofing over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66316",
+    "publishedDate": "2026-08-04T00:17:39.060",
+    "lastModifiedDate": "2026-08-04T00:17:39.060",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
+        "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "impactScore": 2.5,
+        "source": "secure@microsoft.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-59913",
-    "description": "Dell Display and Peripheral Manager (DDPM Mac), versions prior to 2.3.0.1005, contain a Missing Authentication for Critical Function vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Elevation of privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59913",
-    "publishedDate": "2026-08-03T19:16:48.193",
-    "lastModifiedDate": "2026-08-03T19:16:48.193",
+    "id": "CVE-2026-66315",
+    "description": "Use after free in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66315",
+    "publishedDate": "2026-08-04T00:17:38.927",
+    "lastModifiedDate": "2026-08-04T00:17:38.927",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.8,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
         "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59912",
-    "description": "Dell Display and Peripheral Manager (DDPM Mac), versions prior to 2.3.0.1005, contain an Improper Access Control vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Elevation of privileges and arbitrary code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59912",
-    "publishedDate": "2026-08-03T19:16:48.050",
-    "lastModifiedDate": "2026-08-03T19:16:48.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-38447",
-    "description": "osTicket 1.18.3 generates API keys using a predictable construction based on MD5 hashing. The use of MD5, combined with predictable inputs such as the current timestamp and client IP address, significantly reduces entropy. An attacker can approximate the key generation time and brute-force the key space within a feasible time window.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38447",
-    "publishedDate": "2026-08-03T19:16:46.917",
-    "lastModifiedDate": "2026-08-03T20:17:23.023",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-38446",
-    "description": "A stored cross-site scripting (XSS) vulnerability exists in osTicket 1.18.3 due to improper sanitization of the thread entry title field. User-controlled input in the title is stored without adequate HTML escaping and later rendered in multiple staff-facing templates without proper output encoding. An attacker can inject arbitrary JavaScript by submitting a crafted ticket reply or email with a malicious subject line.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38446",
-    "publishedDate": "2026-08-03T19:16:46.793",
-    "lastModifiedDate": "2026-08-03T20:17:22.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-38444",
-    "description": "osTicket v1.18.3 is vulnerable to Stored Cross-Site Scripting (XSS) via the email From-header display name. The value is extracted without sanitization in include/class.mailparse.php and stored raw in the poster field of ost_thread_entry. When an unauthenticated attacker sends a reply email to an existing ticket from an unregistered address with an XSS payload in the From display name.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38444",
-    "publishedDate": "2026-08-03T19:16:46.653",
-    "lastModifiedDate": "2026-08-03T20:17:22.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18616",
-    "description": "A vulnerability was identified in GL-iNet GL-MT3000 up to 4.4.5. The impacted element is the function server.set_peer of the file /cgi-bin/glc of the component wg-server.so Native Plugin. The manipulation of the argument public_key leads to command injection. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure and confirmed the existence of the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18616",
-    "publishedDate": "2026-08-03T19:16:45.557",
-    "lastModifiedDate": "2026-08-03T19:16:45.557",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18615",
-    "description": "A vulnerability was determined in GL-iNet GL-MT3000 up to 4.4.5. The affected element is the function wg-server.generate_publickey of the file /cgi-bin/glc of the component wg-server.so Native Plugin. Executing a manipulation of the argument private_key can lead to command injection. The attack may be launched remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure and confirmed the existence of the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18615",
-    "publishedDate": "2026-08-03T19:16:45.383",
-    "lastModifiedDate": "2026-08-03T19:16:45.383",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18614",
-    "description": "A vulnerability was found in GL-iNet GL-MT3000 up to 4.4.5. Impacted is the function s2s.enable_echo_server of the file /cgi-bin/glc of the component s2s.so Native Plugin. Performing a manipulation of the argument port results in command injection. The attack may be initiated remotely. The exploit has been made public and could be used. The vendor was contacted early about this disclosure and confirmed the existence of the vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18614",
-    "publishedDate": "2026-08-03T19:16:45.200",
-    "lastModifiedDate": "2026-08-03T19:16:45.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.9,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-15631",
-    "description": "A\ncryptographic weakness exists in affected Omada devices where site credentials\nare protected using a legacy hashing algorithm that does not provide sufficient\nprotection.\n\n\n\n\n\n\n\n\n\nAn attacker\nwho obtains access to stored credential data may be able to recover valid credentials\nto gain unauthorized access to affected devices or management environments.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15631",
-    "publishedDate": "2026-08-03T19:16:41.050",
-    "lastModifiedDate": "2026-08-03T19:16:41.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-15630",
-    "description": "A race\ncondition exists in the cloud-based Omada device adoption process when an\nattacker may be able to interact with the adoption workflow before a legitimate\ndevice completes registration, resulting in provisioning information being\ndelivered to an attacker.\n\n\n\n\n\n\n\n\n\nSuccessful\nexploitation may allow disclosure of provisioning information intended for a\nlegitimate device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15630",
-    "publishedDate": "2026-08-03T19:16:40.880",
-    "lastModifiedDate": "2026-08-03T19:16:40.880",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:A/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-15629",
-    "description": "A cryptographic\nweakness exists in the Omada adoption protocol where session encryption keys\nused to protect communications between controllers and managed devices may be\npredictable due to insufficient entropy in session key generation.\n\n\n\n\n\n\n\n\n\nAn attacker\nwho successfully intercepts adoption-related communications may be able to recover\nsession encryption keys and decrypt affected communications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15629",
-    "publishedDate": "2026-08-03T19:16:40.733",
-    "lastModifiedDate": "2026-08-03T19:16:40.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-15628",
-    "description": "Affected\nOmada devices rely on embedded certificates that are shared across deployments\nto establish trust between controllers and managed devices.\n\n\n\n\n\n\n\n\n\nAn attacker\nwho obtains the embedded certificates may be able to impersonate trusted\ncontrollers or devices and intercept affected communications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15628",
-    "publishedDate": "2026-08-03T19:16:40.567",
-    "lastModifiedDate": "2026-08-03T19:16:40.567",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-15627",
-    "description": "A cryptographic\nweakness exists in the Omada adoption protocol. \nThe protocol relies on hard-coded cryptographic keys to establish trust and\nprotect authentication exchanges between controllers and managed devices during\ndevice adoption.\n\n\n\n\n\n\n\n\n\nAn attacker may\nbe able to impersonate trusted controllers or managed devices and gain access\nto sensitive adoption-related communications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15627",
-    "publishedDate": "2026-08-03T19:16:40.407",
-    "lastModifiedDate": "2026-08-03T19:16:40.407",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
+        "source": "secure@microsoft.com"
       }
     ]
   }
