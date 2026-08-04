@@ -1,130 +1,30 @@
 [
   {
-    "id": "CVE-2026-66884",
-    "description": "Cross-Site Request Forgery vulnerability in Erlang Ecosystem Foundation oidcc_plug (Oidcc.Plug.AuthorizationCallback module) allows an attacker to make a victim's browser complete an authorization flow the victim never initiated.\n\nThis vulnerability is associated with program file lib/oidcc/plug/authorization_callback.ex and program routine Oidcc.Plug.AuthorizationCallback.call/2.\n\nA callback request that carries no Oidcc.Plug.Authorize session is processed with every security check disabled rather than being rejected. call/2 substitutes permissive defaults for the absent session, and each downstream check treats its value as nothing to compare and returns :ok, so the nonce, state, PKCE, peer IP and user agent checks are all skipped. A separate clause of check_state/2 also accepts a state-less request when a verifier is present.\n\nAn attacker obtains an authorization code for their own provider account, then induces the victim to visit the callback endpoint with that code and no state parameter. The application signs the victim in as the attacker, so the victim's subsequent actions occur in the attacker's account where the attacker can read them. Applications reusing one callback for both signing in and linking a provider account are further exposed to account takeover, the attacker's account becoming linked to the victim's.\n\nThe permissive fallback serves no conforming flow. Third-party-initiated login reaches a relying party at a separate login initiation endpoint and causes it to send a fresh authentication request, and this library implements no such endpoint. Oidcc.Plug.Authorize always sends a state parameter, which an authorization server must echo, so no legitimate callback lacks one.\n\nThis issue affects oidcc_plug: from 0.2.0-beta.1 before 0.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66884",
-    "publishedDate": "2026-08-04T12:16:36.373",
-    "lastModifiedDate": "2026-08-04T13:18:56.217",
+    "id": "CVE-2026-10032",
+    "description": "The openUrl function in @a2ui/web_core passes an agent-controlled URL directly to window.open() without validating the URI scheme. A malicious agent can supply a javascript: URI as the url argument of a Button component's functionCall action. When the user clicks the rendered button, arbitrary JavaScript executes in the victim application's browser origin, constituting a stored/reflected XSS with Critical severity. No non-default configuration is required; the Basic Catalog is enabled by default.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10032",
+    "publishedDate": "2026-08-04T16:16:20.983",
+    "lastModifiedDate": "2026-08-04T16:16:20.983",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-66883",
-    "description": "Improper Handling of Case Sensitivity vulnerability in Erlang Ecosystem Foundation oidcc_plug (Oidcc.Plug.Authorize module) renders the user agent session binding inert, removing a defense in depth control against replay of a stolen session.\n\nThis vulnerability is associated with program files lib/oidcc/plug/authorize.ex and lib/oidcc/plug/authorization_callback.ex, and program routines Oidcc.Plug.Authorize.call/2 and Oidcc.Plug.AuthorizationCallback.call/2.\n\nOidcc.Plug.Authorize.call/2 reads the initiating client's user agent with get_req_header(conn, \"User-Agent\"). Plug lowercases incoming header names, but get_req_header/2 matches the supplied key exactly and performs no normalization of its own, so the mixed-case lookup always returns an empty list and nil is written into the session. On the callback side, Oidcc.Plug.AuthorizationCallback treats a stored nil user agent as nothing to compare and returns :ok without inspecting the request. The two behaviours combine so that the check passes unconditionally on every request, including for deployments that explicitly opted in with check_useragent: true, and an authorization callback can be completed from a different user agent than the one that initiated the flow without detection. The check fails open silently, with no error and no log entry, so a deployment cannot tell the binding is absent.\n\nThe impact is limited to defense in depth. The inert check does not by itself allow an attacker to complete an authorization flow; it removes one layer that would otherwise hinder use of a stolen or leaked session, such as an exfiltrated session cookie replayed from a different client. The CSRF/state, nonce, and PKCE checks are unaffected and continue to function. Deployments that never enabled check_useragent are not affected in practice, since they never expected the binding. The corresponding lookup in Oidcc.Plug.AuthorizationCallback correctly uses the lowercase key and is not affected.\n\nThis issue affects oidcc_plug: from 0.1.0-alpha.3 before 0.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66883",
-    "publishedDate": "2026-08-04T12:16:36.163",
-    "lastModifiedDate": "2026-08-04T13:18:56.037",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
+        "score": 6.1,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+        "source": "cve-coordination@google.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-10050",
-    "description": "In Eclipse Jetty, the Digest authentication server-side component uses ISO-8859-1 to encode the password as bytes.\n\n\n\nThis was done because the initial specification for HTTP did not specify explicitly a charset, and it was assumed to be ISO-8859-1 for historical reasons.\n\n\n\nIf the password contains characters that cannot be represented in ISO-8859-1, they are silently replaced by `?`. This happens with passwords that contain Chinese, Cyrillic or Greek characters, for example: `αβ123` converts to `??123`.\n\n\n\nAn attacker can send a request with a digest `Authorization` header crafted with a password made of only `?` characters; the server would match any password of the same length that contains non-ISO-8859-1 characters.\n\n\n\nRecent HTTP Digest [RFC-7616](https://datatracker.ietf.org/doc/html/rfc7616) supports a `charset` parameters that defaults to UTF-8 that allows for correct encoding/decoding of passwords.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10050",
-    "publishedDate": "2026-08-04T11:22:43.883",
-    "lastModifiedDate": "2026-08-04T13:17:32.267",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "emo@eclipse.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18772",
-    "description": "Improper input validation vulnerability in Samsung Open Source rlottie allows Oversized Serialized Data Payloads.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18772",
-    "publishedDate": "2026-08-04T10:19:32.923",
-    "lastModifiedDate": "2026-08-04T10:19:32.923",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "PSIRT@samsung.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15721",
-    "description": "Cleartext storage of sensitive information vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows SQL Injection.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15721",
-    "publishedDate": "2026-08-04T10:19:32.667",
-    "lastModifiedDate": "2026-08-04T10:19:32.667",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14838",
-    "description": "Use of GET request method with sensitive query strings vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Session Hijacking.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14838",
-    "publishedDate": "2026-08-04T10:19:32.540",
-    "lastModifiedDate": "2026-08-04T13:17:36.027",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14804",
-    "description": "Use of hard-coded cryptographic key vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Read Sensitive Constants Within an Executable.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14804",
-    "publishedDate": "2026-08-04T10:19:32.417",
-    "lastModifiedDate": "2026-08-04T13:17:35.893",
+    "id": "CVE-2026-69110",
+    "description": "OpenCode Studio before 2.4.4 contains a missing authentication vulnerability that allows unauthenticated remote attackers to read arbitrary files within the temp and static/music directories by directly accessing the GET /api/tmp/:tmpFile and GET /api/music/:fileName endpoints. Attackers can retrieve intermediate audio, video artifacts, and subtitles belonging to other users' jobs, and additionally delete any video by ID through the unauthenticated DELETE /api/short-video/:videoId endpoint.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69110",
+    "publishedDate": "2026-08-04T16:16:28.483",
+    "lastModifiedDate": "2026-08-04T17:16:59.733",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -135,16 +35,134 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14465",
-    "description": "Insufficient session expiration vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Reusing Session IDs (aka Session Replay).\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14465",
-    "publishedDate": "2026-08-04T10:19:32.293",
-    "lastModifiedDate": "2026-08-04T13:17:35.780",
+    "id": "CVE-2026-69254",
+    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, executeJavaScriptCode() accepted caller-provided nodeVMOptions and merged them over the default NodeVM security settings in packages/components/src/utils.ts. An authenticated attacker reaching packages/server/src/routes/node-custom-functions/index.ts could run a custom function that imported flowise-components/dist/src/utils.js, called executeJavaScriptCode() again with nodeVMOptions.require.builtin set to allow all built-in modules, and then required child_process to execute arbitrary system commands as root on the Flowise server. This issue is fixed in version 3.1.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69254",
+    "publishedDate": "2026-08-04T16:16:29.243",
+    "lastModifiedDate": "2026-08-04T16:16:29.243",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-69100",
+    "description": "LAMP Rapid Development Platform through 5.6.2, fixed in commit 84b0c27, contains a remote code execution vulnerability in GlueFactory that executes unsandboxed Groovy scripts from database template fields without compilation restrictions or whitelisting. Attackers can write or influence the script field via message template endpoints to execute arbitrary Groovy code and OS commands on the backend server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69100",
+    "publishedDate": "2026-08-04T16:16:28.340",
+    "lastModifiedDate": "2026-08-04T17:16:59.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-69251",
+    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise record manager and agent memory nodes allowed users to set arbitrary TypeORM DataSource options through the additionalConfig input in packages/components/nodes/recordmanager/MySQLRecordManager/MySQLrecordManager.ts, packages/components/nodes/recordmanager/PostgresRecordManager/PostgresRecordManager.ts, packages/components/nodes/recordmanager/SQLiteRecordManager/SQLiteRecordManager.ts, packages/components/nodes/memory/AgentMemory/MySQLAgentMemory/MySQLAgentMemory.ts, and packages/components/nodes/memory/AgentMemory/AgentMemory.ts. TypeORM DataSource options such as entities, subscribers, and migrations can load local JavaScript files, allowing an authenticated user to execute arbitrary code on the server by uploading a JavaScript payload and referencing it from additionalConfig.entities. This issue is fixed in version 3.1.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69251",
+    "publishedDate": "2026-08-04T15:16:44.430",
+    "lastModifiedDate": "2026-08-04T16:16:28.847",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-69250",
+    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the OAuth2 token refresh endpoint POST /api/v1/oauth2-credential/refresh/:credentialId is unauthenticated by design and performs a server-side HTTP request to the credential-controlled accessTokenUrl without SSRF protections. Runtime validation confirmed that the endpoint was reachable without authentication, triggered outbound POST requests to an attacker-controlled server, reflected the full remote response body to the caller through tokenInfo, and sent client_id, client_secret, grant_type=refresh_token, and refresh_token in the request body. This issue is fixed in version 3.1.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69250",
+    "publishedDate": "2026-08-04T15:16:44.277",
+    "lastModifiedDate": "2026-08-04T15:16:44.277",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68494",
+    "description": "The fix released in jackson-core 2.18.6 and 2.21.1 for CVE-2026-18401 (GHSA-72hv-8253-57qq, number length constraint bypass in the non-blocking parser) is incomplete. This record covers the remaining bypass.\n\n\n\nThe earlier fix wired validateIntegerLength() into a new _setIntLength() helper and invoked it wherever the integer portion of a number is decided: a terminator byte arrives, a . or e/E is seen, or input ends inside a fully buffered value. It was not invoked on the attacker-relevant path where the parser runs out of input while still inside the MINOR_NUMBER_INTEGER_DIGITS minor state and returns NOT_AVAILABLE to the caller.\n\n\n\nAs a result, an attacker who streams JSON to a non-blocking parser in many small chunks, without ever sending a terminator byte, keeps the parser inside MINOR_NUMBER_INTEGER_DIGITS indefinitely. _textBuffer.expandCurrentSegment() grows the accumulator on every chunk while validateIntegerLength() is never called. The accumulator is bounded only by maxStringLength (20 MiB by default) rather than by maxNumberLength (1000 by default), an amplification of roughly 20,000x over the documented limit. Because Java char values occupy two bytes, a single connection can be driven to approximately 40 MiB of heap before the validator finally fires when the value completes.\n\n\n\nThe equivalent fraction-path code is correct: _finishFloatFraction() calls _setFractLength() before its NOT_AVAILABLE return. The missing call affects the integer-digit paths in _startPositiveNumber(), _startNegativeNumber() and _finishNumberIntegralPart() in NonBlockingUtf8JsonParserBase.\n\n\n\nImpact: reactive frameworks such as Spring WebFlux/Reactor, Quarkus, Helidon and Vert.x feed inbound HTTP or gRPC bytes to the async parser as they arrive, which is precisely the chunked-feed shape required. Operators who set StreamReadConstraints.maxNumberLength expecting it to cap memory per number value do not get that guarantee; memory accumulates per concurrent connection and attacker-controlled concurrency can exhaust the JVM heap. The synchronous parsers (UTF8StreamJsonParser, ReaderBasedJsonParser) and the async parser operating on complete input are not affected.\n\n\n\nExploitation requires only the ability to stream data to a parsing endpoint; no privileges or user interaction are needed.\n\n\n\nThis issue affects com.fasterxml.jackson.core:jackson-core from version 2.15.0 through 2.18.7, from 2.19.0 through 2.21.3, and from 2.22.0 through 2.22.0, and tools.jackson.core:jackson-core from 3.0.0 through 3.1.3 and from 3.2.0 through 3.2.0. Versions prior to 2.15.0 are not affected, because StreamReadConstraints -- which defines the maxNumberLength setting -- was first introduced in jackson-core 2.15.0, so no such constraint exists to be bypassed in earlier releases. Note that GHSA-r7wm-3cxj-wff9 states the affected 2.x range without a lower bound.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68494",
+    "publishedDate": "2026-08-04T15:16:41.443",
+    "lastModifiedDate": "2026-08-04T15:16:41.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "36c7be3b-2937-45df-85ea-ca7133ea542c"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67618",
+    "description": "marimo before 0.23.15 contains a configuration injection vulnerability that allows notebook authors to exfiltrate operator API keys by embedding a malicious base_url in PEP-723 inline script metadata, which is merged into session configuration with higher precedence than the operator's own settings due to insufficient sanitization in sanitize_pyproject_dict. When an operator opens the crafted notebook and makes an AI request, marimo resolves the attacker-controlled base_url from the notebook config while falling back to the operator's OPENAI_API_KEY environment variable for authentication, transmitting the API key to the attacker-controlled endpoint without requiring any cell execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67618",
+    "publishedDate": "2026-08-04T15:16:41.293",
+    "lastModifiedDate": "2026-08-04T16:16:27.920",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -155,56 +173,54 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "iletisim@usom.gov.tr"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14219",
-    "description": "URL redirection to untrusted site ('open redirect') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Phishing.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14219",
-    "publishedDate": "2026-08-04T10:19:32.173",
-    "lastModifiedDate": "2026-08-04T10:19:32.173",
+    "id": "CVE-2026-67200",
+    "description": "Perspective 5.0.0 contains a path traversal vulnerability that allows unauthenticated remote attackers to read arbitrary files from the server filesystem by including literal ../ segments in HTTP request URL paths. Attackers can bypass the insufficient query-string-stripping sanitization to traverse outside the configured asset root directory and retrieve sensitive files such as system credentials and application secrets, with results exposed cross-origin due to a wildcard Access-Control-Allow-Origin header set on all responses.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67200",
+    "publishedDate": "2026-08-04T15:16:40.717",
+    "lastModifiedDate": "2026-08-04T15:16:40.717",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
+        "score": 7.5,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14202",
-    "description": "Observable response discrepancy vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Account Footprinting.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14202",
-    "publishedDate": "2026-08-04T10:19:32.050",
-    "lastModifiedDate": "2026-08-04T13:17:35.660",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "iletisim@usom.gov.tr"
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14194",
-    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Path Traversal.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14194",
-    "publishedDate": "2026-08-04T10:19:31.927",
-    "lastModifiedDate": "2026-08-04T10:19:31.927",
+    "id": "CVE-2026-67199",
+    "description": "Perspective 5.0.0 contains a denial of service vulnerability that allows remote attackers to block the server event loop indefinitely by submitting a crafted expression containing unbounded for or while loop constructs in a TableMakeViewReq message. Attackers can embed an arbitrarily large iteration count in an expression column evaluated once per table row, causing the Tornado IOLoop to block without any iteration cap, deadline, or cancellation check, rendering the server unresponsive to all connected clients.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67199",
+    "publishedDate": "2026-08-04T15:16:40.570",
+    "lastModifiedDate": "2026-08-04T17:16:58.900",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -212,19 +228,57 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "iletisim@usom.gov.tr"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14192",
-    "description": "Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Stored XSS.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14192",
-    "publishedDate": "2026-08-04T10:19:31.810",
-    "lastModifiedDate": "2026-08-04T13:17:35.527",
+    "id": "CVE-2026-67198",
+    "description": "Perspective 5.0.0 contains a denial-of-service vulnerability in the VirtualServer protocol dispatcher that allows unauthenticated remote attackers to crash the server process by sending malformed or incomplete protobuf messages. Attackers can send well-formed requests such as ViewToArrowReq with no viewport set or MakeTableReq with no data field to trigger unwrap() calls on None values at nine distinct sites, causing the process to abort with SIGABRT.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67198",
+    "publishedDate": "2026-08-04T15:16:40.423",
+    "lastModifiedDate": "2026-08-04T17:16:58.467",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67196",
+    "description": "Perspective 5.0.0 contains a cross-site scripting vulnerability in the built-in Debug plugin that allows attackers to inject arbitrary HTML and JavaScript by writing table cell values containing unescaped HTML markup, which are interpolated directly into innerHTML during CSV serialization rendering. Attackers can craft table rows with payloads such as unquoted attribute injections containing event handler attributes that bypass RFC 4180 quoting, since angle brackets and event handler attributes are never escaped before assignment, causing malicious scripts to execute in the embedding page's origin.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67196",
+    "publishedDate": "2026-08-04T15:16:40.283",
+    "lastModifiedDate": "2026-08-04T15:16:40.283",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -235,16 +289,54 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
         "exploitabilityScore": 2.3,
         "impactScore": 2.7,
-        "source": "iletisim@usom.gov.tr"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-14175",
-    "description": "Unrestricted upload of file with dangerous type vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Upload a Web Shell to a Web Server.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14175",
-    "publishedDate": "2026-08-04T10:19:31.633",
-    "lastModifiedDate": "2026-08-04T10:19:31.633",
+    "id": "CVE-2026-67195",
+    "description": "Perspective 5.0.0 contains a remote code execution vulnerability that allows unauthenticated attackers to execute arbitrary operating system commands by submitting crafted expression strings to the PolarsVirtualServer backend, which passes client-supplied input directly to Python's eval() with only __builtins__={} cleared. Attackers can exploit Python object attribute traversal through the interpreter's loaded class list to reach subprocess.Popen via a TableValidateExprReq or TableMakeViewReq protobuf message, achieving arbitrary command execution in the Perspective host process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67195",
+    "publishedDate": "2026-08-04T15:16:40.130",
+    "lastModifiedDate": "2026-08-04T16:16:27.800",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61515",
+    "description": "Puwell IP Camera firmware versions 2.x through 4.x contains an unauthenticated command injection vulnerability that allows remote attackers to execute arbitrary operating system commands by sending a crafted JSON payload to the DebugShell interface exposed on TCP port 34567. Attackers can exploit the lack of authentication and input sanitization in the binary protocol service to pass arbitrary commands directly to the underlying operating system, achieving root-level code execution and complete device compromise.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61515",
+    "publishedDate": "2026-08-04T15:16:36.967",
+    "lastModifiedDate": "2026-08-04T15:16:36.967",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -255,56 +347,54 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "iletisim@usom.gov.tr"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-67243",
-    "description": "freo2 provided by refirio contains an unrestricted upload of file with dangerous type vulnerability. A user with the highest-level administrative privileges for the product may upload an executable file and execute arbitrary OS commands.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67243",
-    "publishedDate": "2026-08-04T08:16:35.240",
-    "lastModifiedDate": "2026-08-04T08:16:35.240",
+    "id": "CVE-2026-61514",
+    "description": "Puwell IP Camera firmware versions 2.x through 4.x contains an authentication bypass vulnerability that allows unauthenticated attackers to access device functions by sending protocol-conforming packets over TCP port 23456 without credentials. Attackers can exploit the unvalidated Session field in the proprietary control protocol header to access live video streams, control pan and tilt motors, activate audio functions, and remotely restart the device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61514",
+    "publishedDate": "2026-08-04T15:16:36.810",
+    "lastModifiedDate": "2026-08-04T17:16:57.310",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vultures@jpcert.or.jp"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18759",
-    "description": "The background service of ABP or AES runs as NT AUTHORITY\\SYSTEM and implements a file-based inter-process communication (IPC) mechanism protected by AES encryption. Because the encryption key file is readable by standard users and protected using DPAPI. Any authenticated local user can recover the key and forge valid IPC requests. Furthermore, the service does not check the identity of the requesting process and validates destination paths using an insufficient substring check. A local attacker can submit crafted encrypted requests containing directory traversal sequences to perform arbitrary file reads and arbitrary file writes as NT AUTHORITY\\SYSTEM, leading to full local privilege escalation.\nAffected products and versions include: ABP (ASUSTOR Backup Plan) 2.0.7.10171 and earlier as well as AES (ASUSTOR EZSync) 1.1.1.3113 and earlier.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18759",
-    "publishedDate": "2026-08-04T08:16:35.070",
-    "lastModifiedDate": "2026-08-04T11:22:44.110",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 8.5,
+        "score": 9.3,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@asustor.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18755",
-    "description": "A DLL hijacking vulnerability in GeoVision GV-ASManager allows a local attacker with write access to an unsafe search directory to execute arbitrary code. By placing a crafted dynamic-link library (DLL) file into the application search path prior to the legitimate library, the malicious code is loaded and executed under the security privileges of the GV-ASManager process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18755",
-    "publishedDate": "2026-08-04T08:16:34.930",
-    "lastModifiedDate": "2026-08-04T08:16:34.930",
+    "id": "CVE-2026-18770",
+    "description": "A vulnerability has been found in vibesurf-ai VibeSurf up to cd6e519d507cdd4d63061300bf60fb176e1f57e0. Impacted is an unknown function of the file /code of the component Python Validation Handler. The manipulation leads to code injection. Remote exploitation of the attack is possible. This product follows a rolling release approach for continuous delivery, so version details for affected or updated releases are not provided. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18770",
+    "publishedDate": "2026-08-04T15:16:34.043",
+    "lastModifiedDate": "2026-08-04T16:16:22.337",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -312,121 +402,218 @@
         "score": 7.3,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18766",
+    "description": "A flaw has been found in chetans9 core-php-admin-panel up to 90d07ed5aac5e0f09b6a5828d7bb2eb83010763f. This issue affects some unknown processing of the file /Applications/MAMP/htdocs/core-php-admin-panel-master/customers.php. Executing a manipulation of the argument filter_col can lead to sql injection. The attack may be launched remotely. The exploit has been published and may be used. This product operates on a rolling release basis, ensuring continuous delivery. Consequently, there are no version details for either affected or updated releases. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18766",
+    "publishedDate": "2026-08-04T15:16:33.850",
+    "lastModifiedDate": "2026-08-04T15:16:33.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18650",
+    "description": "Missing Authorization vulnerability in HAVELSAN Inc. Liman MYS allows Privilege Escalation.\n\nThis issue affects Liman MYS: from 2.2.3 before 2.3.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18650",
+    "publishedDate": "2026-08-04T15:16:31.410",
+    "lastModifiedDate": "2026-08-04T17:16:46.880",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "0df08a0e-a200-4957-9bb0-084f562506f9"
+        "source": "iletisim@usom.gov.tr"
       }
     ]
   },
   {
-    "id": "CVE-2026-18754",
-    "description": "The\nproduct firmware contains an embedded, static RSA private key utilized by the\nLighttpd web server for TLS termination. Exposure of this private key allows\nmalicious actors to breach the confidentiality and integrity of HTTPS\ncommunications, enabling traffic decryption and server spoofing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18754",
-    "publishedDate": "2026-08-04T08:16:34.803",
-    "lastModifiedDate": "2026-08-04T08:16:34.803",
+    "id": "CVE-2026-18401",
+    "description": "The non-blocking (asynchronous) JSON parser in jackson-core does not enforce the maxNumberLength constraint defined in StreamReadConstraints (default: 1000 characters). An attacker able to submit JSON to an application that uses the async parser API can supply a number token of arbitrary length, leading to excessive memory allocation and potential CPU exhaustion, resulting in a denial of service.\n\n\n\nThe synchronous parser enforces this limit correctly, so the constraint is applied inconsistently depending on which parsing API the application uses.\n\n\n\nRoot cause: the async parsing path in NonBlockingUtf8JsonParserBase and related classes never invokes the number length validation methods. Number parsing methods such as _finishNumberIntegralPart() accumulate digits into the TextBuffer without any length check, then call _valueComplete() to finalize the token. _valueComplete() does not call resetInt() or resetFloat(), which are the methods in ParserBase where validateIntegerLength() and validateFPLength() are performed. Because that validation step is skipped, maxNumberLength is never enforced on the async code path.\n\n\n\nImpact: an attacker sending a JSON document containing an arbitrarily long number to an application using the async parser (for example a Spring WebFlux or other reactive application) can cause unbounded allocation in the TextBuffer and an OutOfMemoryError. If the application subsequently calls getBigIntegerValue() or getDecimalValue(), the JVM may additionally be tied up in O(n^2) BigInteger parsing, causing CPU-based denial of service.\n\n\n\nNo privileges or user interaction beyond the ability to submit data for parsing are required.\n\n\n\nThis issue affects com.fasterxml.jackson.core:jackson-core from version 2.15.0 through 2.18.5 and from 2.19.0 through 2.21.0, and tools.jackson.core:jackson-core from 3.0.0 through 3.0.x.\n\n\n\nVersions prior to 2.15.0 are not affected, because StreamReadConstraints -- which defines the maxNumberLength setting -- was first introduced in jackson-core 2.15.0, so no such constraint exists to be bypassed in earlier releases. Note that GHSA-72hv-8253-57qq records the lower bound of the affected 2.x range as 2.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18401",
+    "publishedDate": "2026-08-04T15:16:29.900",
+    "lastModifiedDate": "2026-08-04T15:16:29.900",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "0df08a0e-a200-4957-9bb0-084f562506f9"
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "36c7be3b-2937-45df-85ea-ca7133ea542c"
       }
     ]
   },
   {
-    "id": "CVE-2026-18753",
-    "description": "The\nproduct firmware contains an embedded, static RSA private key utilized by the\nLighttpd web server for TLS termination. Exposure of this private key allows\nmalicious actors to breach the confidentiality and integrity of HTTPS\ncommunications, enabling traffic decryption and server spoofing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18753",
-    "publishedDate": "2026-08-04T08:16:34.640",
-    "lastModifiedDate": "2026-08-04T08:16:34.640",
+    "id": "CVE-2026-11368",
+    "description": "The Bluetooth host ATT layer (subsys/bluetooth/host/att.c) associates each in-flight ATT TX buffer with its owning channel via the static tx_meta_data_storage[] array (data->att_chan = chan). When a buffer's last reference is dropped, its net-buf destroy callback defers the completion handling to the system workqueue (att_tx_destroy -> att_tx_destroy_work_handler -> att_on_sent_cb -> bt_att_sent), where bt_att_sent dereferences the channel and its ATT context (sys_slist_get(&att->reqs)).\n\nWhen a peer disconnects while an ATT PDU (a server notification/indication or any response) is still in flight in the controller TX path, L2CAP tears the channel down in l2cap_chan_del(): it runs the disconnected callback and then the released callback (bt_att_released), which frees the channel slab slot. Because the in-flight buffer is held by the connection TX path rather than the channel's own queue, its deferred destroy work can run after the channel has been freed. The att_on_sent_cb guard intended to drop the stale callback itself dereferences meta->att_chan, which is now a dangling pointer into a freed (and possibly reused) slab slot.\n\nA remote peer with an ATT connection can drive this by disconnecting during routine ATT traffic; no pairing or user interaction is required to reach the ATT bearer. The result is a use-after-free read/write of freed channel memory, reliably crashing the Bluetooth host (denial of service) and, because the channel slab slot may be reused, potentially corrupting live memory.\n\nThe fix makes bt_att_released() NULL the att_chan field of every tx_meta_data_storage[] entry still referencing the channel before freeing it, so the deferred guard observes a NULL pointer and drops the callback. Teardown and the destroy work both run on the cooperative system workqueue, so the array update is serialized and needs no lock.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11368",
+    "publishedDate": "2026-08-04T15:16:24.843",
+    "lastModifiedDate": "2026-08-04T15:16:24.843",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 7.1,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "0df08a0e-a200-4957-9bb0-084f562506f9"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "vulnerabilities@zephyrproject.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-64565",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nInput: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()\n\nThe `ims_pcu_process_data()` processes incoming URB data byte by byte.\nHowever, it fails to check if the `read_pos` index exceeds\nIMS_PCU_BUF_SIZE.\n\nIf a malicious USB device sends a packet larger than IMS_PCU_BUF_SIZE,\n`read_pos` will increment indefinitely. Moreover, since `read_pos` is\nlocated immediately after `read_buf`, the attacker can overwrite\n`read_pos` itself to arbitrarily control the index.\n\nThis manipulated `read_pos` is subsequently used in\n`ims_pcu_handle_response()` to copy data into `cmd_buf`, leading to a\nheap buffer overflow.\n\nSpecifically, an attacker can overwrite the `cmd_done.wait.head` located\nat offset 136 relative to `cmd_buf` in the `ims_pcu_handle_response()`.\nConsequently, when the driver calls `complete(&pcu->cmd_done)`, it\ntriggers a control flow hijack by using the manipulated pointer.\n\nFix this by adding a bounds check for `read_pos` before writing to\n`read_buf`. If the packet is too long, discard it, log a warning,\nand reset the parser state.\n\n[dtor: factor out resetting packet state, reset checksum as well]",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64565",
-    "publishedDate": "2026-08-04T07:16:31.477",
-    "lastModifiedDate": "2026-08-04T07:16:31.477",
+    "id": "CVE-2026-69098",
+    "description": "kotaemon through 0.12.0 contains an insecure deserialization vulnerability in the check_connection endpoint that allows unauthenticated attackers to instantiate arbitrary Python classes by supplying crafted YAML/JSON input with a __type__ field. Attackers can exploit this to override the __type__ field with subprocess.check_output and arbitrary arguments, achieving remote code execution with application process privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69098",
+    "publishedDate": "2026-08-04T16:16:28.190",
+    "lastModifiedDate": "2026-08-04T16:16:28.190",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-64564",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsctp: don't free the ASCONF's own transport in DEL-IP processing\n\nsctp_process_asconf() caches the transport the ASCONF chunk is processed\nagainst in asconf->transport (== chunk->transport, set once in sctp_rcv()).\nFor an ASCONF located through its Address Parameter by\n__sctp_rcv_asconf_lookup(), that cached transport corresponds to the\nAddress Parameter, which need not be the packet's source address.\n\nsctp_process_asconf_param() rejects a DEL-IP for the packet source address\n(ADDIP D8, SCTP_ERROR_DEL_SRC_IP), but nothing protects asconf->transport.\nA single ASCONF can therefore carry, in order:\n\n    [Address Parameter L] [DEL-IP L] [DEL-IP 0.0.0.0]\n\nwhere L differs from the source. The DEL-IP for L passes the D8 check and\ncalls sctp_assoc_rm_peer() on the transport that asconf->transport still\npoints at, freeing it (RCU-deferred). The following wildcard DEL-IP then\nreuses the now-dangling asconf->transport in sctp_assoc_set_primary() and\nsctp_assoc_del_nonprimary_peers(): set_primary() dereferences the freed\ntransport (->ipaddr, ->state) and plants the dangling pointer into\nasoc->peer.primary_path / active_path, and del_nonprimary_peers(), keeping\nonly the pointer that is no longer on the list, removes every real\ntransport, leaving the association with a transport_count of 0 and\nprimary_path/active_path pointing at freed memory.\n\nReject a DEL-IP that targets the transport the ASCONF is being processed\nagainst, mirroring the existing source-address guard, so the wildcard\nbranch can never reuse a freed transport.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64564",
-    "publishedDate": "2026-08-04T07:16:31.340",
-    "lastModifiedDate": "2026-08-04T07:16:31.340",
+    "id": "CVE-2026-69253",
+    "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to version 3.1.3, several custom-tool components — AgentAsTool, ChatflowTool, and ExecuteFlow — ran code in the in-process  vm2  sandbox. To build that code, they inserted a user-controlled  baseURL  value straight into the JavaScript source, for example  const url = \"${baseURL}/...\"; . The only check on  baseURL  was  isValidURL , but a valid-looking URL can still contain characters that break out of a code string. An authenticated user could craft a  baseURL  that passed this check, closed the surrounding string, and injected their own JavaScript into the sandboxed script (code injection, CWE-94). The  vm2  sandbox runs in the same Node.js process as Flowise and exposes risky dependencies. As a result, the injected code could escape the sandbox and run arbitrary code on the Flowise server as the Flowise process user. Exploitation only requires an authenticated session. The issue is fixed in version 3.1.3, which passes the URL to the sandbox as data instead of inserting it into code and adds stricter URL validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69253",
+    "publishedDate": "2026-08-04T16:16:29.100",
+    "lastModifiedDate": "2026-08-04T16:16:29.100",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-64563",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrhashtable: clear stale iter->p on table restart\n\nrhashtable_walk_start_check() has two restart paths when resuming a walk.\nWhen iter->walker.tbl is valid, it re-validates iter->p against the table\nand sets iter->p = NULL if the object is gone.  When iter->walker.tbl is\nNULL (table was freed during resize), it resets slot and skip but forgets\nto clear iter->p.\n\nrhashtable_walk_next() then dereferences the stale iter->p, reading\nfreed memory.  This is a use-after-free.\n\nAny caller that does multi-fragment rhashtable walks across\nwalk_stop/walk_start boundaries is affected.  Concrete cases include\nnetlink_diag (__netlink_diag_dump in net/netlink/diag.c) and TIPC\n(tipc_nl_sk_walk in net/tipc/socket.c).\n\nCrash stack (netlink_diag):\n  BUG: KASAN: slab-use-after-free in rhashtable_walk_next+0x365/0x3c0\n  Read of size 8 at addr ffff88801a9d2438 (freed kmalloc-2k, offset 1080)\n  Call Trace:\n   rhashtable_walk_next+0x365/0x3c0 (lib/rhashtable.c:1016)\n   __netlink_diag_dump+0x160/0x760 (net/netlink/diag.c:122)\n   netlink_diag_dump+0xc2/0x240\n   netlink_dump+0x5bc/0x1270\n   netlink_recvmsg+0x7a3/0x980\n   sock_recvmsg+0x1bc/0x200\n   __sys_recvfrom+0x1d4/0x2c0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64563",
-    "publishedDate": "2026-08-04T07:16:31.220",
-    "lastModifiedDate": "2026-08-04T07:16:31.220",
+    "id": "CVE-2026-25292",
+    "description": "Memory Corruption when processing untrusted user input in the fastboot command handler for audio framework configuration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25292",
+    "publishedDate": "2026-08-04T16:16:25.183",
+    "lastModifiedDate": "2026-08-04T17:16:53.797",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 0.9,
+        "impactScore": 6,
+        "source": "product-security@qualcomm.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-64562",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: nVMX: Hide shadow VMCS right after VMCLEAR\n\nfree_nested() frees the shadow VMCS while vmcs01 still points to it. But\nbecause it is asynchronous with respect to loaded_vmcs_clear(), the vCPU\nmight migrate before the pointer is cleared and __loaded_vmcs_clear()\nmay then execute VMCLEAR.\n\nThe VMCS needs to stay attached until its explicit VMCLEAR completes, but\nthen it can be hidden and the page safely freed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64562",
-    "publishedDate": "2026-08-04T07:16:31.093",
-    "lastModifiedDate": "2026-08-04T07:16:31.093",
+    "id": "CVE-2026-25289",
+    "description": "Memory Corruption when processing Device Capability Extended attributes in certain NAN Service Discovery Frames with invalid length values.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25289",
+    "publishedDate": "2026-08-04T16:16:24.890",
+    "lastModifiedDate": "2026-08-04T17:16:53.313",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "product-security@qualcomm.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-64561",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: x86: Check for invalid/obsolete root *after* making MMU pages available\n\nCheck for a \"stale\" page fault, i.e. for an invalid and/or obsolete root,\nafter making MMU pages available for the shadow MMU.  If reclaiming shadow\npages zaps an in-use root, i.e. marks it invalid, then KVM will attempt to\nmap memory into an invalid root.  On its own, populating an invalid root is\n\"fine\", but because child shadow pages inherit their parent's role, any\nchildren created during the map/fetch will be created as invalid pages,\nthus violating KVM's invariant that invalid pages are never on the list of\nactive MMU pages.\n\nNote, the underlying flaw has existed since KVM first started tracking\ninvalid roots in 2008 (commit 2e53d63acba7, \"KVM: MMU: ignore zapped root\npagetables\"), but the true badness only came along in 2020 (Linux 5.9)\nwith the invariant that invalid shadow pages can't be on the list of\nactive pages.\n\nNote #2, inheriting role.invalid when creating child shadow pages is also\nfar from ideal; that flaw will be addressed separately.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64561",
-    "publishedDate": "2026-08-04T07:16:30.937",
-    "lastModifiedDate": "2026-08-04T07:16:30.937",
+    "id": "CVE-2026-25288",
+    "description": "Transient DOS when processing a short target wake time channel usage response frame with insufficient packet size.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-25288",
+    "publishedDate": "2026-08-04T16:16:24.693",
+    "lastModifiedDate": "2026-08-04T17:16:52.913",
     "vendors": [],
     "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16623",
-    "description": "The Create Block  WordPress plugin before 2.10.0 does not correctly escape user-supplied text before writing it into a generated PHP pattern file, allowing a multisite subsite administrator (who holds the capability gating this action but is denied the capability that normally gates PHP file editing) to inject and execute arbitrary PHP code on the server.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16623",
-    "publishedDate": "2026-08-04T07:16:30.817",
-    "lastModifiedDate": "2026-08-04T07:16:30.817",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16618",
-    "description": "The Improve SEO WordPress plugin through 2.0.11 does not properly validate uploaded files, checking only the file content type while writing the file with the attacker-supplied extension into a publicly accessible directory, allowing unauthenticated users to upload executable PHP files and achieve remote code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16618",
-    "publishedDate": "2026-08-04T07:16:30.707",
-    "lastModifiedDate": "2026-08-04T07:16:30.707",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4,
+        "source": "product-security@qualcomm.com"
+      }
+    ]
   }
 ]
