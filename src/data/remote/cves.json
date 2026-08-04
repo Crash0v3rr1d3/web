@@ -1,161 +1,61 @@
 [
   {
-    "id": "CVE-2026-14202",
-    "description": "Observable response discrepancy vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Account Footprinting.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14202",
-    "publishedDate": "2026-08-04T10:19:32.050",
-    "lastModifiedDate": "2026-08-04T10:19:32.050",
+    "id": "CVE-2026-66884",
+    "description": "Cross-Site Request Forgery vulnerability in Erlang Ecosystem Foundation oidcc_plug (Oidcc.Plug.AuthorizationCallback module) allows an attacker to make a victim's browser complete an authorization flow the victim never initiated.\n\nThis vulnerability is associated with program file lib/oidcc/plug/authorization_callback.ex and program routine Oidcc.Plug.AuthorizationCallback.call/2.\n\nA callback request that carries no Oidcc.Plug.Authorize session is processed with every security check disabled rather than being rejected. call/2 substitutes permissive defaults for the absent session, and each downstream check treats its value as nothing to compare and returns :ok, so the nonce, state, PKCE, peer IP and user agent checks are all skipped. A separate clause of check_state/2 also accepts a state-less request when a verifier is present.\n\nAn attacker obtains an authorization code for their own provider account, then induces the victim to visit the callback endpoint with that code and no state parameter. The application signs the victim in as the attacker, so the victim's subsequent actions occur in the attacker's account where the attacker can read them. Applications reusing one callback for both signing in and linking a provider account are further exposed to account takeover, the attacker's account becoming linked to the victim's.\n\nThe permissive fallback serves no conforming flow. Third-party-initiated login reaches a relying party at a separate login initiation endpoint and causes it to send a fresh authentication request, and this library implements no such endpoint. Oidcc.Plug.Authorize always sends a state parameter, which an authorization server must echo, so no legitimate callback lacks one.\n\nThis issue affects oidcc_plug: from 0.2.0-beta.1 before 0.5.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66884",
+    "publishedDate": "2026-08-04T12:16:36.373",
+    "lastModifiedDate": "2026-08-04T13:18:56.217",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "iletisim@usom.gov.tr"
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-14465",
-    "description": "Insufficient session expiration vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Reusing Session IDs (aka Session Replay).\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14465",
-    "publishedDate": "2026-08-04T10:19:32.293",
-    "lastModifiedDate": "2026-08-04T10:19:32.293",
+    "id": "CVE-2026-66883",
+    "description": "Improper Handling of Case Sensitivity vulnerability in Erlang Ecosystem Foundation oidcc_plug (Oidcc.Plug.Authorize module) renders the user agent session binding inert, removing a defense in depth control against replay of a stolen session.\n\nThis vulnerability is associated with program files lib/oidcc/plug/authorize.ex and lib/oidcc/plug/authorization_callback.ex, and program routines Oidcc.Plug.Authorize.call/2 and Oidcc.Plug.AuthorizationCallback.call/2.\n\nOidcc.Plug.Authorize.call/2 reads the initiating client's user agent with get_req_header(conn, \"User-Agent\"). Plug lowercases incoming header names, but get_req_header/2 matches the supplied key exactly and performs no normalization of its own, so the mixed-case lookup always returns an empty list and nil is written into the session. On the callback side, Oidcc.Plug.AuthorizationCallback treats a stored nil user agent as nothing to compare and returns :ok without inspecting the request. The two behaviours combine so that the check passes unconditionally on every request, including for deployments that explicitly opted in with check_useragent: true, and an authorization callback can be completed from a different user agent than the one that initiated the flow without detection. The check fails open silently, with no error and no log entry, so a deployment cannot tell the binding is absent.\n\nThe impact is limited to defense in depth. The inert check does not by itself allow an attacker to complete an authorization flow; it removes one layer that would otherwise hinder use of a stolen or leaked session, such as an exfiltrated session cookie replayed from a different client. The CSRF/state, nonce, and PKCE checks are unaffected and continue to function. Deployments that never enabled check_useragent are not affected in practice, since they never expected the binding. The corresponding lookup in Oidcc.Plug.AuthorizationCallback correctly uses the lowercase key and is not affected.\n\nThis issue affects oidcc_plug: from 0.1.0-alpha.3 before 0.5.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66883",
+    "publishedDate": "2026-08-04T12:16:36.163",
+    "lastModifiedDate": "2026-08-04T13:18:56.037",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
+        "score": 6.3,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "iletisim@usom.gov.tr"
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-14192",
-    "description": "Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Stored XSS.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14192",
-    "publishedDate": "2026-08-04T10:19:31.810",
-    "lastModifiedDate": "2026-08-04T10:19:31.810",
+    "id": "CVE-2026-10050",
+    "description": "In Eclipse Jetty, the Digest authentication server-side component uses ISO-8859-1 to encode the password as bytes.\n\n\n\nThis was done because the initial specification for HTTP did not specify explicitly a charset, and it was assumed to be ISO-8859-1 for historical reasons.\n\n\n\nIf the password contains characters that cannot be represented in ISO-8859-1, they are silently replaced by `?`. This happens with passwords that contain Chinese, Cyrillic or Greek characters, for example: `αβ123` converts to `??123`.\n\n\n\nAn attacker can send a request with a digest `Authorization` header crafted with a password made of only `?` characters; the server would match any password of the same length that contains non-ISO-8859-1 characters.\n\n\n\nRecent HTTP Digest [RFC-7616](https://datatracker.ietf.org/doc/html/rfc7616) supports a `charset` parameters that defaults to UTF-8 that allows for correct encoding/decoding of passwords.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10050",
+    "publishedDate": "2026-08-04T11:22:43.883",
+    "lastModifiedDate": "2026-08-04T13:17:32.267",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14838",
-    "description": "Use of GET request method with sensitive query strings vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Session Hijacking.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14838",
-    "publishedDate": "2026-08-04T10:19:32.540",
-    "lastModifiedDate": "2026-08-04T10:19:32.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
+        "score": 8.7,
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14804",
-    "description": "Use of hard-coded cryptographic key vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Read Sensitive Constants Within an Executable.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14804",
-    "publishedDate": "2026-08-04T10:19:32.417",
-    "lastModifiedDate": "2026-08-04T10:19:32.417",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14219",
-    "description": "URL redirection to untrusted site ('open redirect') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Phishing.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14219",
-    "publishedDate": "2026-08-04T10:19:32.173",
-    "lastModifiedDate": "2026-08-04T10:19:32.173",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14194",
-    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Path Traversal.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14194",
-    "publishedDate": "2026-08-04T10:19:31.927",
-    "lastModifiedDate": "2026-08-04T10:19:31.927",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14175",
-    "description": "Unrestricted upload of file with dangerous type vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Upload a Web Shell to a Web Server.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14175",
-    "publishedDate": "2026-08-04T10:19:31.633",
-    "lastModifiedDate": "2026-08-04T10:19:31.633",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "iletisim@usom.gov.tr"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "emo@eclipse.org"
       }
     ]
   },
@@ -200,6 +100,166 @@
     ]
   },
   {
+    "id": "CVE-2026-14838",
+    "description": "Use of GET request method with sensitive query strings vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Session Hijacking.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14838",
+    "publishedDate": "2026-08-04T10:19:32.540",
+    "lastModifiedDate": "2026-08-04T13:17:36.027",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14804",
+    "description": "Use of hard-coded cryptographic key vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Read Sensitive Constants Within an Executable.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14804",
+    "publishedDate": "2026-08-04T10:19:32.417",
+    "lastModifiedDate": "2026-08-04T13:17:35.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14465",
+    "description": "Insufficient session expiration vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Reusing Session IDs (aka Session Replay).\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14465",
+    "publishedDate": "2026-08-04T10:19:32.293",
+    "lastModifiedDate": "2026-08-04T13:17:35.780",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14219",
+    "description": "URL redirection to untrusted site ('open redirect') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Phishing.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14219",
+    "publishedDate": "2026-08-04T10:19:32.173",
+    "lastModifiedDate": "2026-08-04T10:19:32.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14202",
+    "description": "Observable response discrepancy vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Account Footprinting.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14202",
+    "publishedDate": "2026-08-04T10:19:32.050",
+    "lastModifiedDate": "2026-08-04T13:17:35.660",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14194",
+    "description": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Path Traversal.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14194",
+    "publishedDate": "2026-08-04T10:19:31.927",
+    "lastModifiedDate": "2026-08-04T10:19:31.927",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14192",
+    "description": "Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Stored XSS.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14192",
+    "publishedDate": "2026-08-04T10:19:31.810",
+    "lastModifiedDate": "2026-08-04T13:17:35.527",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14175",
+    "description": "Unrestricted upload of file with dangerous type vulnerability in Bilin Software and Informatics Consultancy Inc. HUMANIST Digital Human Resources allows Upload a Web Shell to a Web Server.\n\nThis issue affects HUMANIST Digital Human Resources: from 26.0 before 26.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14175",
+    "publishedDate": "2026-08-04T10:19:31.633",
+    "lastModifiedDate": "2026-08-04T10:19:31.633",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-67243",
     "description": "freo2 provided by refirio contains an unrestricted upload of file with dangerous type vulnerability. A user with the highest-level administrative privileges for the product may upload an executable file and execute arbitrary OS commands.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-67243",
@@ -224,7 +284,7 @@
     "description": "The background service of ABP or AES runs as NT AUTHORITY\\SYSTEM and implements a file-based inter-process communication (IPC) mechanism protected by AES encryption. Because the encryption key file is readable by standard users and protected using DPAPI. Any authenticated local user can recover the key and forge valid IPC requests. Furthermore, the service does not check the identity of the requesting process and validates destination paths using an insufficient substring check. A local attacker can submit crafted encrypted requests containing directory traversal sequences to perform arbitrary file reads and arbitrary file writes as NT AUTHORITY\\SYSTEM, leading to full local privilege escalation.\nAffected products and versions include: ABP (ASUSTOR Backup Plan) 2.0.7.10171 and earlier as well as AES (ASUSTOR EZSync) 1.1.1.3113 and earlier.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-18759",
     "publishedDate": "2026-08-04T08:16:35.070",
-    "lastModifiedDate": "2026-08-04T10:19:32.803",
+    "lastModifiedDate": "2026-08-04T11:22:44.110",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -365,36 +425,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-16618",
     "publishedDate": "2026-08-04T07:16:30.707",
     "lastModifiedDate": "2026-08-04T07:16:30.707",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16548",
-    "description": "The Chat Widget: Floating Customer Support Button for 30+ Channels, Supporting SMS, Calls, and Chat  WordPress plugin before 1.8.2 does not validate the type, extension, content, or size of files submitted to its public response endpoint and stores them under the uploads directory, so an unauthenticated user can upload arbitrary files. The original extension is discarded (files are stored under a bare UUID), so this does not yield code execution or stored XSS; impact is bounded to disk consumption and content hosting. The storing path requires the channel's response storage or mail-forwarding to be configured.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16548",
-    "publishedDate": "2026-08-04T07:16:30.593",
-    "lastModifiedDate": "2026-08-04T07:16:30.593",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16547",
-    "description": "The REST API Log WordPress plugin before 1.7.1 does not bind the token protecting its log download feature to the log entry being requested, nor does it check the capability of the requester, allowing unauthenticated users in possession of any such token to download the logged REST API requests and responses of any entry, which may contain sensitive data such as credentials, authentication tokens or private content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16547",
-    "publishedDate": "2026-08-04T07:16:30.487",
-    "lastModifiedDate": "2026-08-04T07:16:30.487",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-16546",
-    "description": "The Wired Impact Volunteer Management WordPress plugin before 2.8.2 does not have authorisation checks in one of its AJAX actions, and does not verify that the RSVP being removed belongs to the requesting user, allowing users with a role as low as Subscriber to remove arbitrary users' RSVPs from any volunteer opportunity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16546",
-    "publishedDate": "2026-08-04T07:16:30.370",
-    "lastModifiedDate": "2026-08-04T07:16:30.370",
     "vendors": [],
     "products": [],
     "cvssScores": []
