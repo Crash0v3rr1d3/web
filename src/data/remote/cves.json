@@ -1,18 +1,18 @@
 [
   {
-    "id": "CVE-2026-70476",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, several organization billing endpoints in packages/server/src/enterprise/routes/organization.route.ts and packages/server/src/enterprise/controllers/organization.controller.ts accept attacker-controlled Stripe subscriptionId values without verifying that the identifier belongs to the authenticated user's organization. An authenticated attacker can perform unauthorized Stripe subscription operations on other tenants, including changing subscription plans or modifying seat quantities, resulting in financial impact and service disruption. This issue is fixed in 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70476",
-    "publishedDate": "2026-08-04T20:16:54.330",
-    "lastModifiedDate": "2026-08-04T20:16:54.330",
+    "id": "CVE-2026-46334",
+    "description": "OpenSIPS is a Session Initiation Protocol (SIP) server implementation. Versions prior to 3.6.6 and 4.0.0-rc1 contain a denial of service vulnerability in the SDP bandwidth-line parsing logic. A SIP request with Content-Type: application/sdp and a malformed session-level SDP bandwidth line missing the required colon delimiter can corrupt parsed SDP bandwidth metadata. When a route or module subsequently clones the corrupted SDP state, as occurs with dialog and QoS processing, the OpenSIPS worker process crashes. An unauthenticated remote attacker can therefore trigger a crash in any configuration whose routing script parses attacker-controlled SDP and applies dialog/QoS processing. This issue has been fixed in versions 3.6.6 and 4.0.0-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46334",
+    "publishedDate": "2026-08-05T00:17:00.177",
+    "lastModifiedDate": "2026-08-05T00:17:00.177",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.3,
+        "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -20,19 +20,19 @@
     ]
   },
   {
-    "id": "CVE-2026-70475",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the PUT /api/v1/executions/:id endpoint in packages/server/src/routes/executions/index.ts lacks the checkAnyPermission() middleware that protects other execution endpoints. Any authenticated user, regardless of assigned permissions, can modify execution state, data, and metadata of any execution in their workspace, enabling privilege escalation and manipulation of workflow execution results. This issue is fixed in 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70475",
-    "publishedDate": "2026-08-04T20:16:54.170",
-    "lastModifiedDate": "2026-08-04T20:16:54.170",
+    "id": "CVE-2026-45809",
+    "description": "OpenSIPS is a Session Initiation Protocol (SIP) server implementation. Versions prior to 3.6.6 and 4.0.0-rc1 contain a denial of service vulnerability in the watcherinfo generation functionality. An attacker can create an oversized watcher entry by sending a SUBSCRIBE Event: presence request with a long From URI, and then trigger presence.winfo watcherinfo XML generation for the same presentity. OpenSIPS copies the stored watcher URI into a fixed-size stack buffer, overflowing it and crashing the process. A remote attacker can crash an OpenSIPS worker in deployments that expose handle_subscribe() and allow watcherinfo (presence.winfo) generation. The issue is configuration-dependent because the presence and presence_xml modules must be loaded and SUBSCRIBE routing must be reachable. This issue has been fixed in versions 3.6.6 and 4.0.0-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45809",
+    "publishedDate": "2026-08-05T00:17:00.030",
+    "lastModifiedDate": "2026-08-05T00:17:00.030",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -40,474 +40,11 @@
     ]
   },
   {
-    "id": "CVE-2026-70474",
-    "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to 3.1.3, Flowise has three OAuth2 credential endpoints that look up credentials by id alone with no workspaceId filter. The authorize, callback, and refresh handlers query the Credential table by id only; callback and refresh are whitelisted from authentication. This allows any authenticated user to initiate OAuth2 flows against credentials belonging to other workspaces, allows an unauthenticated attacker to forge OAuth2 callbacks to overwrite tokens in any credential, and allows an unauthenticated attacker to refresh tokens for any credential. The affected routes include /api/v1/oauth2-credential/authorize/<VICTIM_CREDENTIAL_UUID>, /api/v1/oauth2-credential/callback?code=ATTACKER_AUTH_CODE&state=<VICTIM_CREDENTIAL_UUID>, and /api/v1/oauth2-credential/refresh/<VICTIM_CREDENTIAL_UUID>. This issue is fixed in version 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70474",
-    "publishedDate": "2026-08-04T19:16:54.977",
-    "lastModifiedDate": "2026-08-04T19:16:54.977",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70473",
-    "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to 3.1.3, Flowise GET /api/v1/upsert-history returns the entire server-wide upsert history instead of being scoped to the requesting user, tenant, or workspace. The response can exceed 100MB and includes sensitive configuration data, including Vector Store settings such as Qdrant Server URL and collection name. The observed behavior indicates missing or insufficient authorization checks, workspace/project/tenant isolation, and pagination or limits, exposing integration parameters and infrastructure details that may enable further targeted attacks. This issue is fixed in version 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70473",
-    "publishedDate": "2026-08-04T19:16:54.830",
-    "lastModifiedDate": "2026-08-04T20:16:54.040",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:L/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70472",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise openai-assistants-vector-store endpoints accept a client-controlled credential parameter and load credentials by id without checking whether that credential belongs to the caller workspace. Route permissions assistants:* only check feature access. The controller passes req.query.credential straight to the service, and the service uses findOneBy({ id: credentialId }), decrypts the credential, and calls OpenAI APIs without a workspaceId check. If an attacker knows another workspace credentialId, the attacker can use that workspace OpenAI key, read, modify, or delete victim vector stores and files, cause billing impact on the victim OpenAI account, and violate multi-tenant boundaries. This issue is fixed in version 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70472",
-    "publishedDate": "2026-08-04T19:16:54.680",
-    "lastModifiedDate": "2026-08-04T19:16:54.680",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70471",
-    "description": "Flowise is a drag-and-drop user interface for building customized large language model (LLM) flows. Prior to 3.1.3, Flowise injects $vars into the code execution sandbox without requiring variables:view, bypassing the permission-protected Variables API. Variables for the active workspace are fetched at packages/components/src/utils.ts and runtime variables are resolved from server environment variables, while the official variables route enforces variables:view. A user or API key that is denied variables:view can call /api/v1/node-custom-function and receive $vars pre-populated with all variables for the workspace, including Variable.name to Variable.value static variables and Variable.name to process.env[Variable.name] runtime variables. This can expose secrets such as database passwords, JWT secrets, SMTP passwords, and cloud keys, depending on the workspace Variables configuration. This issue is fixed in version 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70471",
-    "publishedDate": "2026-08-04T19:16:54.540",
-    "lastModifiedDate": "2026-08-04T20:16:53.907",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-69704",
-    "description": "Atals-Livre contains a SQL injection vulnerability that allows attackers to manipulate database queries by passing unsanitized input through a GET parameter to the supp() deletion helper function. Attackers can inject malicious SQL syntax via the vulnerable GET parameter to perform unauthorized database operations including data deletion and extraction.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69704",
-    "publishedDate": "2026-08-04T19:16:54.280",
-    "lastModifiedDate": "2026-08-04T19:16:54.280",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-69703",
-    "description": "Atlas-Livre contains an improper access control vulnerability in the admin controllers under Espace_admin/controleur/ that allows unauthenticated attackers to bypass session-based authentication guards by sending raw HTTP requests that ignore redirects. Attackers can invoke destructive admin actions such as record deletion by requesting controller endpoints with GET parameters like supp, because the PHP header() redirect is never followed by an exit or die call, allowing all subsequent code including database operations to execute regardless of session state.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69703",
-    "publishedDate": "2026-08-04T19:16:54.130",
-    "lastModifiedDate": "2026-08-04T20:16:53.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-69702",
-    "description": "SnailJob 1.7.0 contains a denial of service vulnerability in the FuryUtil.deserialize helper that allows authenticated attackers to crash the server by supplying a crafted Zstandard-compressed payload with an inflated frame_content_size field in the frame header. Attackers can store a base64-encoded Zstandard payload declaring an arbitrarily large decompressed size in a retry task argument, causing the JVM to attempt an unbounded array allocation and triggering an unrecoverable java.lang.OutOfMemoryError when the task is dispatched through the retry-task pipeline.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69702",
-    "publishedDate": "2026-08-04T19:16:53.980",
-    "lastModifiedDate": "2026-08-04T19:16:53.980",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68743",
-    "description": "A flaw was found in SSSD. The extract_authtok_v1() function in the PAM responder does not validate the auth_token_length field against the remaining buffer size before processing. A local attacker can exploit this via a crafted protocol v1 request to the PAM responder socket, causing an out-of-bounds read and process crash, resulting in a denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68743",
-    "publishedDate": "2026-08-04T19:16:53.467",
-    "lastModifiedDate": "2026-08-04T20:16:52.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-66300",
-    "description": "SNOMED International Snowstorm contains a reflected XSS vulnerability within the \"Web Route\" redirection functionality. An attacker can inject arbitrary JavaScript which will execute upon a target user navigating to a crafted, malicious link. Fixed in 10.12.2 and 10.9.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66300",
-    "publishedDate": "2026-08-04T19:16:51.970",
-    "lastModifiedDate": "2026-08-04T20:16:52.437",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.4,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      },
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49435",
-    "description": "Keysight IxChariot Endpoint and associated products contain a stack-based buffer overflow. An unauthenticated remote attacker can send a specially crafted packet and execute arbitrary code with administrative privileges.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49435",
-    "publishedDate": "2026-08-04T19:16:51.810",
-    "lastModifiedDate": "2026-08-04T20:16:52.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47781",
-    "description": "PDM is a Python package and dependency manager. In versions up to and including 2.26.9, PDM automatically loads project-local plugins from a .pdm-plugins directory during initialization, allowing an attacker-controlled file in an untrusted repository checkout to execute arbitrary Python code before any command is parsed. This happens because load_plugins() runs during Core.init() and adds .pdm-plugins via site.addsitedir(), which processes .pth files and immediately executes any line beginning with import, so the code runs with the privileges of the user invoking pdm and even a benign command such as pdm --version triggers it (making the impact strongest in CI, automation, and privileged contexts). The issue is fixed in version 2.27.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47781",
-    "publishedDate": "2026-08-04T19:16:51.240",
-    "lastModifiedDate": "2026-08-04T19:16:51.240",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47764",
-    "description": "pdm is a Python package and dependency manager supporting the latest PEP standards. Versions prior to 2.27.0 are vulnerable to path traversal through write_to_fs. InstallDestination.write_to_fs() in src/pdm/installers/installers.py overrides the base class to add symlink/hardlink support but replaces the safe _path_with_destdir() (which validates via Path.resolve() + is_relative_to()) with a bare os.path.join() that performs no path validation. A malicious wheel with traversal entries can write arbitrary files. This issue has been fixed in version 2.27.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47764",
-    "publishedDate": "2026-08-04T19:16:51.093",
-    "lastModifiedDate": "2026-08-04T19:16:51.093",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13229",
-    "description": "Zammad 7.1.0 contains an authenticated improper authorization vulnerability in the ticket article attachment cloning endpoint.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13229",
-    "publishedDate": "2026-08-04T19:16:41.890",
-    "lastModifiedDate": "2026-08-04T19:16:41.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "help@fluidattacks.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-0163",
-    "description": "In multiple functions of vpu_ioctl.c, there is a possible use after free due to a use after free. This could lead to remote escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0163",
-    "publishedDate": "2026-08-04T19:16:39.213",
-    "lastModifiedDate": "2026-08-04T20:16:47.513",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2017-20242",
-    "description": "Keysight IxChariot Endpoint before 9.5.102 contains a stack-based buffer overflow. An unauthenticated remote attacker can send a specially crafted packet to crash the endpoint or potentially execute arbitrary code.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20242",
-    "publishedDate": "2026-08-04T19:16:38.963",
-    "lastModifiedDate": "2026-08-04T20:16:44.810",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2017-20241",
-    "description": "Keysight IxChariot Endpoint before 9.5.102 contains a heap-based buffer overflow. An unauthenticated remote attacker can send a specially crafted packet to crash the endpoint or potentially execute arbitrary code.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2017-20241",
-    "publishedDate": "2026-08-04T19:16:38.810",
-    "lastModifiedDate": "2026-08-04T20:16:43.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "9119a7d8-5eab-497f-8521-727c672e3725"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70470",
-    "description": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise validatePythonCodeForDataFrame in packages/components/src/pythonCodeValidator.ts can be bypassed with Unicode homoglyph identifiers, allowing arbitrary Python execution inside Pyodide and full OS command execution on the Flowise host via Pyodide js module interop. The validator gates pyodide.runPythonAsync in packages/components/nodes/agents/CSVAgent/CSVAgent.ts and packages/components/nodes/agents/AirtableAgent/AirtableAgent.ts with an ASCII word-boundary blacklist. JavaScript regex word boundaries are ASCII-only, while Python 3 NFKC-normalizes identifiers at parse time, so homoglyph forms such as __cl𝐚ss__, __subcl𝐚sses__, __b𝐚se__, and __b𝐮iltins__ bypass the blacklist and are parsed as their ASCII equivalents. This issue is fixed in version 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70470",
-    "publishedDate": "2026-08-04T18:16:57.930",
-    "lastModifiedDate": "2026-08-04T20:16:53.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.5,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-69264",
-    "description": "Prior to 3.1.3, Flowise CSVAgent interpolates an attacker-controlled segment of the csvFile data URI directly into a Python source-code template that is then executed by Pyodide. Because Pyodide is loaded with the default js bridge to globalThis, which on Node.js exposes eval and dynamic import, the attacker can break out of the Python string literal, hand a JavaScript string to js.eval, dynamically import Node built-in modules such as fs and child_process, and execute arbitrary file I/O or OS commands as the Flowise process. The two validator paths around this code, validatePythonCodeForDataFrame and validateCustomReadCSVFunction, are never applied to the bootstrap template. A workspace user with chatflows:create or agentflows/chatflows update permission can plant a CSV Agent node with a crafted csvFile; once the chatflow is exposed via POST /api/v1/prediction/:id, any unauthenticated request triggers host remote code execution. This issue is fixed in version 3.1.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69264",
-    "publishedDate": "2026-08-04T18:16:57.027",
-    "lastModifiedDate": "2026-08-04T19:16:53.850",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.4,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47763",
-    "description": "pdm is a Python package and dependency manager supporting the latest PEP standards. In versions prior to 2.27.0, pdm writes several project-local state or configuration files without symlink protection. If a malicious repository places those files as symlinks, local PDM operations can overwrite the symlink targets. This creates an arbitrary file clobber primitive relative to the privileges of the invoking user. Config.__init__() resolves the project-local pdm.toml path and _save_config() writes to the resolved target. If PROJECT_ROOT/pdm.toml is a symlink to another file, pdm config -l ... updates the target file instead of refusing the write.\nThe same general problem exists for other project-local persistence paths that are written directly with no lstat / O_NOFOLLOW protection. For the pdm.toml PoC specifically, the target file must already contain parseable TOML. Otherwise the load step fails before the write path is reached. That parser constraint does not apply to the .pdm-python or .python-version sinks. This issue has been fixed in version 2.27.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47763",
-    "publishedDate": "2026-08-04T18:16:52.107",
-    "lastModifiedDate": "2026-08-04T18:16:52.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47623",
-    "description": "NVIDIA Dynamo for Linux contains a vulnerability where an attacker could cause deserialization of untrusted data. A successful exploit of this vulnerability might lead to denial of service and data tampering.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47623",
-    "publishedDate": "2026-08-04T18:16:51.983",
-    "lastModifiedDate": "2026-08-04T19:16:50.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47622",
-    "description": "NVIDIA Dynamo for Linux contains a vulnerability where an attacker could cause the generation of error messages that contain sensitive information. A successful exploit of this vulnerability might lead to information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47622",
-    "publishedDate": "2026-08-04T18:16:51.860",
-    "lastModifiedDate": "2026-08-04T19:16:50.883",
+    "id": "CVE-2026-45705",
+    "description": "OpenSIPS is a Session Initiation Protocol (SIP) server implementation. In versions prior to 3.6.6 and 4.0.0-rc1, the find_line_delimiter() function in the multipart body parser performs an out-of-bounds read via strncmp() when searching for MIME boundary delimiters. After finding a -- pattern near the end of the body, the function compares delimiter.len bytes (typically 20-70) starting from a position at or past the logical end of the body buffer, reading past the body boundary. The bug triggers when a SIP message has Content-Type: multipart/mixed with a boundary parameter and its body contains -- within two to three bytes of the body's end without being followed by the actual boundary delimiter. This issue has been fixed in versions 3.6.6 and 4.0.0-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45705",
+    "publishedDate": "2026-08-05T00:16:59.890",
+    "lastModifiedDate": "2026-08-05T00:16:59.890",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -515,51 +52,484 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "psirt@nvidia.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47621",
-    "description": "NVIDIA Dynamo for Linux contains a vulnerability where an attacker could cause a race condition in the LoRA manager singleton initialization. A successful exploit of this vulnerability might lead to denial of service and data tampering.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47621",
-    "publishedDate": "2026-08-04T18:16:51.733",
-    "lastModifiedDate": "2026-08-04T19:16:50.777",
+    "id": "CVE-2026-18854",
+    "description": "A vulnerability has been found in Shandong Hoteam PDM Product Data Management System up to 8.3.10. The impacted element is the function GetStoredClassByFilter of the file /Base/BaseService.asmx/DataService. The manipulation of the argument FilterString leads to sql injection. Remote exploitation of the attack is possible. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18854",
+    "publishedDate": "2026-08-05T00:16:59.717",
+    "lastModifiedDate": "2026-08-05T00:16:59.717",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 7.3,
         "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "psirt@nvidia.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47620",
-    "description": "NVIDIA Dynamo for Linux contains a vulnerability where an attacker could cause a race condition in the LoRA manager singleton initialization. A successful exploit of this vulnerability might lead to data tampering and denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47620",
-    "publishedDate": "2026-08-04T18:16:51.610",
-    "lastModifiedDate": "2026-08-04T19:16:50.680",
+    "id": "CVE-2026-18853",
+    "description": "A security vulnerability has been detected in ZomboDroid Meme Generator App 4.6830 on Android. This issue affects the function t5.l.c of the component com.zombodroid.MemeGenerator. Such manipulation leads to path traversal. Local access is required to approach this attack. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18853",
+    "publishedDate": "2026-08-05T00:16:59.547",
+    "lastModifiedDate": "2026-08-05T00:16:59.547",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "psirt@nvidia.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
+  },
+  {
+    "id": "CVE-2026-18852",
+    "description": "A vulnerability has been found in epsilla-cloud vectordb up to 0.3.18/df5a5f5afb85a2376a0f2f316c79dea9b2c6ac7a. This impacts the function SplitTokens/ShuntingYard of the file engine/query/expr/expr.cpp of the component Filter Parser. Such manipulation leads to improper check for unusual conditions. The attack needs to be performed locally. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18852",
+    "publishedDate": "2026-08-05T00:16:59.370",
+    "lastModifiedDate": "2026-08-05T00:16:59.370",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18103",
+    "description": "A flaw was found in dhcp-server. A remote attacker with network access to the OMAPI (Open Management Application Programming Interface) port, especially if not secured with TSIG (Transaction Signature) key authentication, could send a specially crafted lease creation request. This request, containing an overly long InfiniBand MAC address, triggers a buffer overflow in the `print_hw_addr()` function. Successful exploitation leads to a persistent denial of service (DoS), causing the `dhcpd` service to crash and preventing it from restarting without manual intervention.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18103",
+    "publishedDate": "2026-08-05T00:16:59.110",
+    "lastModifiedDate": "2026-08-05T00:16:59.110",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-45537",
+    "description": "OpenSIPS is a Session Initiation Protocol (SIP) server implementation. In versions prior to 3.6.6 and 4.0.0-rc1, the construct_uri() function concatenates multiple URI components (protocol, username, domain, port, params) into a fixed 1024-byte global BSS buffer without any bounds checking. When a routing script calls construct_uri() with an attacker-controlled username, a combined component length exceeding 1024 bytes overflows the buffer, corrupting adjacent global data with attacker-controlled content. The overflow reaches disable_503_translation, a global flag controlling SIP 503 response handling, allowing an attacker to deterministically set the flag via the URI username and alter the server's routing behavior for subsequent messages. Because the same buffer is shared with contact_builder(), the overflow also corrupts that function's data, and without a memory sanitizer the adjacent globals are silently overwritten on every request containing a long username. This issue has been fixed in versions 3.6.6 and 4.0.0-rc1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-45537",
+    "publishedDate": "2026-08-04T23:16:51.687",
+    "lastModifiedDate": "2026-08-04T23:16:51.687",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18819",
+    "description": "A security vulnerability has been detected in RackTables up to 0.22.0/e5fff9f8aab339798ed47e8c6d7d977ed97a82bd. This vulnerability affects unknown code. The manipulation leads to cross-site request forgery. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used. The project maintainer confirms: \"[I]t seems plausible, in that RackTables does not at this time have any CSRF prevention. You may assign a CVE ID to this, but there is no guarantee it will be handled in urgent, or even timely, manner, or at all.\"",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18819",
+    "publishedDate": "2026-08-04T23:16:51.493",
+    "lastModifiedDate": "2026-08-04T23:16:51.493",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18818",
+    "description": "A weakness has been identified in Ehco1996 django-sspanel up to 2023.12.26. This affects the function TicketDetailView of the file apps/sspanel/views.py of the component Support Ticket Handler. Executing a manipulation can lead to authorization bypass. The attack can be executed remotely. The vendor was contacted early about this disclosure but did not respond in any way. This vulnerability only affects products that are no longer supported by the maintainer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18818",
+    "publishedDate": "2026-08-04T23:16:51.300",
+    "lastModifiedDate": "2026-08-04T23:16:51.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70620",
+    "description": "Odysseus before commit 87babb5 contains a server-side request forgery vulnerability that allows admin-privileged attackers to direct the server to probe internal network resources by supplying arbitrary URLs to the embedding endpoint configuration without scheme, host, IP range, or DNS rebind validation. Attackers can submit loopback addresses, RFC 1918 ranges, or link-local addresses through the embedding endpoint API to partially read responses from cloud instance metadata services, internal APIs, and other hosts reachable from the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70620",
+    "publishedDate": "2026-08-04T22:17:17.727",
+    "lastModifiedDate": "2026-08-04T22:17:17.727",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70619",
+    "description": "Odysseus before commit bf325f6 contains a missing authorization vulnerability that allows authenticated non-admin users to manage server-wide embedding backend configuration by invoking endpoint management routes that verify session authentication but omit the admin authorization guard. Attackers can supply an attacker-controlled URL to overwrite the embedding backend persisted in the endpoint configuration file and process environment, causing all subsequent embedding operations including chat messages, RAG queries, memory entries, and vault text to be transmitted in plaintext to the attacker-controlled destination, or delete the endpoint configuration to deny embedding service to all users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70619",
+    "publishedDate": "2026-08-04T22:17:17.573",
+    "lastModifiedDate": "2026-08-04T22:17:17.573",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70594",
+    "description": "Ghost is a Node.js content management system. From 2.2.0 until 6.54.1, Ghost Admin did not invalidate existing sessions on login which could have allowed for session fixation attacks. Successful exploitation would have required another vulnerability on the same domain where Ghost Admin was hosted. This issue is fixed in version 6.54.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70594",
+    "publishedDate": "2026-08-04T22:17:17.423",
+    "lastModifiedDate": "2026-08-04T22:17:17.423",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70593",
+    "description": "Ghost is a Node.js content management system. From 0.10.0 until 6.54.1, a vulnerability in custom themes allowed a staff user to write files outside of the uploads directory. This could be used to alter the behavior of the installation through custom theme upload path traversal in LocalStorageBase and theme storage name handling. This issue is fixed in version 6.54.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70593",
+    "publishedDate": "2026-08-04T22:17:17.290",
+    "lastModifiedDate": "2026-08-04T22:17:17.290",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:N/I:H/A:L",
+        "exploitabilityScore": 1.3,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70592",
+    "description": "Ghost is a Node.js content management system. From 1.20.1 until 6.54.1, an Administrator-level user could remotely overwrite certain files on the filesystem through the database backup filename, leading to integrity and availability issues. The database export endpoint failed to reject path separators in the caller-supplied filename. This issue is fixed in version 6.54.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70592",
+    "publishedDate": "2026-08-04T22:17:17.140",
+    "lastModifiedDate": "2026-08-04T22:17:17.140",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70591",
+    "description": "Ghost is a Node.js content management system. From 0.10.0 until 6.54.1, a Server-Side Request Forgery in Ghost Admin image fetching allowed any staff-level user to perform a blind HTTP GET request against internal hosts. No output was returned, but this could have been used to probe open ports on internal hosts. This issue is fixed in version 6.54.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70591",
+    "publishedDate": "2026-08-04T22:17:16.997",
+    "lastModifiedDate": "2026-08-04T22:17:16.997",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70590",
+    "description": "Ghost is a Node.js content management system. Prior to 6.54.1, any staff-level user was able to leak the hashed passwords of other staff users through the Ghost Admin API. An offline password-guessing attack against the hashes could lead to account takeover if successful, but Device Verification should have prevented an attacker from logging in with a recovered password. Depending on the database used, leaked hashes may not have had the correct casing for all characters, increasing the difficulty of a password-guessing attack. This issue is fixed in version 6.54.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70590",
+    "publishedDate": "2026-08-04T22:17:16.850",
+    "lastModifiedDate": "2026-08-04T22:17:16.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:U/C:L/I:H/A:N",
+        "exploitabilityScore": 0.5,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70589",
+    "description": "Ghost is a Node.js content management system. From 4.22.0 until 6.54.1, a missing validation check allowed users to redeem subscription offers that were no longer active. This issue is fixed in version 6.54.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70589",
+    "publishedDate": "2026-08-04T22:17:16.707",
+    "lastModifiedDate": "2026-08-04T22:17:16.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67862",
+    "description": "open62541 1.5.5 contains a buffer-overflow in the high-level attribute reading logic in src/client/ua_client_highlevel.c. This allows a remote attacker to cause a denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67862",
+    "publishedDate": "2026-08-04T22:17:16.597",
+    "lastModifiedDate": "2026-08-04T22:17:16.597",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-67861",
+    "description": "An issue in open62541 v.1.5.5 and before allows a remote attacker to cause a denial of service via the UA_Client_getRemoteDataTypes component",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67861",
+    "publishedDate": "2026-08-04T22:17:16.460",
+    "lastModifiedDate": "2026-08-04T22:17:16.460",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67860",
+    "description": "open62541 1.5.5 contains a heap-based buffer overflow in the default HistoryRead path when the default history database is used with the memory backend.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67860",
+    "publishedDate": "2026-08-04T22:17:16.357",
+    "lastModifiedDate": "2026-08-04T22:17:16.357",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-67859",
+    "description": "Buffer Overflow vulnerability in open62541 v1.5.5 allows a remote attacker to cause a denial of service via the Discovery/LDS handling.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67859",
+    "publishedDate": "2026-08-04T22:17:16.223",
+    "lastModifiedDate": "2026-08-04T22:17:16.223",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67858",
+    "description": "Buffer Overflow vulnerability exists in open62541 1.5.5 when the Local Discovery Server (LDS) is built with multicast discovery enabled through the MDNSD backend. An unauthenticated remote attacker can send a RegisterServer or RegisterServer2 request containing many unique discoveryUrls. This allows remote attackers to cause a denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67858",
+    "publishedDate": "2026-08-04T22:17:16.087",
+    "lastModifiedDate": "2026-08-04T22:17:16.087",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67857",
+    "description": "open62541 1.5.5 contains an out-of-bounds read in the client-side function responseReadNamespacesArray() in src/client/ua_client_connect.c.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67857",
+    "publishedDate": "2026-08-04T22:17:15.957",
+    "lastModifiedDate": "2026-08-04T22:17:15.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67856",
+    "description": "An issue in open62541 v.1.5.5 and before allows a remote attacker to cause a denial of service via crafted CreateSubscription, CreateMonitoredItems(Sampling), Publish, TransferSubscriptions, and DeleteSubscriptions requests",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67856",
+    "publishedDate": "2026-08-04T22:17:15.850",
+    "lastModifiedDate": "2026-08-04T22:17:15.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
