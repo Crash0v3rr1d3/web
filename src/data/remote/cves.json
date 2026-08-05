@@ -1,210 +1,126 @@
 [
   {
-    "id": "CVE-2026-9203",
-    "description": "A server-side request forgery vulnerability in Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an authenticated user with low-privileged roles to bypass protections for cloud instance metadata endpoints. Successful exploitation can disclose cloud credentials and compromise cloud resources accessible to the host instance.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9203",
-    "publishedDate": "2026-08-05T16:17:10.437",
-    "lastModifiedDate": "2026-08-05T16:17:10.437",
+    "id": "CVE-2026-70618",
+    "description": "Spacebar Server before commit 51da17c contains a missing authorization vulnerability that allows any authenticated user to enumerate complete guild membership by querying the GET /guilds/{guild_id}/roles/{role_id}/member-ids endpoint without guild membership verification. Attackers can exploit the unprotected route handler in the roles member-ids endpoint, which lacks permission checks present in sibling endpoints, to retrieve the full list of member user IDs for any guild on the instance using only a valid bearer token and a known guild ID.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70618",
+    "publishedDate": "2026-08-05T20:17:17.940",
+    "lastModifiedDate": "2026-08-05T20:17:17.940",
     "vendors": [],
     "products": [],
     "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70617",
+    "description": "Spacebar Server before commit dcfd910 contains a missing authorization vulnerability that allows any authenticated attacker to add themselves to arbitrary group DM channels by sending a PUT request to the channels recipient endpoint without membership verification. Attackers can exploit the unguarded PUT /channels/{channel_id}/recipients/{user_id} handler to join private group DMs, read complete message history, post messages as a participant, and force-add third-party users without their consent.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70617",
+    "publishedDate": "2026-08-05T20:17:17.770",
+    "lastModifiedDate": "2026-08-05T20:17:17.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70616",
+    "description": "boringproxy through 0.10.0 contains a resource exhaustion vulnerability that allows any authenticated user to permanently exhaust server file descriptors, goroutines, and memory by sending requests to the GET /loading endpoint with attacker-supplied id query parameter values. Because the handler performs no map-lookup validity check and receives on a nil channel that blocks forever, with no timeout, no context cancellation, and no server-side reclamation due to absent HTTP server timeouts, each malicious request permanently holds one goroutine, one file descriptor, and approximately 50 kB of memory until the server's file descriptor limit is reached and listener Accept calls fail, halting all tunnel traffic forwarding for all users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70616",
+    "publishedDate": "2026-08-05T20:17:17.600",
+    "lastModifiedDate": "2026-08-05T20:17:17.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70615",
+    "description": "boringproxy through 0.10.0 contains a newline injection vulnerability that allows authenticated low-privileged users with tunnel-creation permission to inject arbitrary lines into the server account's SSH authorized_keys file by supplying a percent-encoded newline character in the domain parameter of the tunnel creation endpoint. Attackers can insert an unrestricted public key entry into authorized_keys to gain persistent shell access, and subsequently read cleartext credentials from the database file including all user tokens, tunnel private keys, and TLS certificates.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70615",
+    "publishedDate": "2026-08-05T20:17:17.420",
+    "lastModifiedDate": "2026-08-05T20:17:17.420",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "disclosure@vulncheck.com"
+      },
       {
         "score": 8.5,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 6,
-        "source": "security@progress.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-9195",
-    "description": "A cross-site scripting vulnerability in the Query Console of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows a remote attacker who lures an authenticated administrator to a crafted URL to execute arbitrary JavaScript in the administrator's browser session, capture credentials, and perform privileged actions on the administrator's behalf.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9195",
-    "publishedDate": "2026-08-05T16:17:10.313",
-    "lastModifiedDate": "2026-08-05T16:17:10.313",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.8,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9193",
-    "description": "An improper privilege management vulnerability in the Hadoop integration of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an authenticated user with a low-privileged Hadoop role to escalate privileges and execute privileged operations against the Security database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9193",
-    "publishedDate": "2026-08-05T16:17:10.183",
-    "lastModifiedDate": "2026-08-05T16:17:10.183",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9192",
-    "description": "An authentication bypass vulnerability in the ODBC App Server of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an unauthenticated remote attacker to bypass password verification and execute queries with the privileges of any named user known to the server, including administrators.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9192",
-    "publishedDate": "2026-08-05T16:17:10.063",
-    "lastModifiedDate": "2026-08-05T16:17:10.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9190",
-    "description": "An HTTP request smuggling vulnerability in the HTTP App Server of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows a remote attacker to bypass authentication and authorization checks, hijack a legitimate user's session, or capture credentials. The vulnerability occurs when a crafted HTTP request containing both Content-Length and Transfer-Encoding headers causes a reverse proxy and MarkLogic Server to interpret request boundaries differently.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9190",
-    "publishedDate": "2026-08-05T16:17:09.940",
-    "lastModifiedDate": "2026-08-05T16:17:09.940",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8709",
-    "description": "An improper privilege management vulnerability in the REST API document patch operation of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an authenticated user with a low-privileged REST role to escalate privileges and execute privileged operations against the Security database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8709",
-    "publishedDate": "2026-08-05T16:17:09.820",
-    "lastModifiedDate": "2026-08-05T16:17:09.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-8400",
-    "description": "IBM WebSphere Application Server 8.5, and 9.0 and IBM WebSphere Application Server - Liberty Continuous delivery has a flaw in the ORB component in IBM SDK, Java Technology Edition, may allow a malicious IIOP server to induce loading and instantation of arbitrary classes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8400",
-    "publishedDate": "2026-08-05T16:17:09.657",
-    "lastModifiedDate": "2026-08-05T16:17:09.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7557",
-    "description": "An improper verification of cryptographic signature vulnerability in the SAML authentication module of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an unauthenticated remote attacker to bypass authentication and impersonate any user, including administrators. This vulnerability affects deployments with SAML single sign-on enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7557",
-    "publishedDate": "2026-08-05T16:17:09.437",
-    "lastModifiedDate": "2026-08-05T16:17:09.437",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7329",
-    "description": "An improper privilege management vulnerability in the SQL, SPARQL, and Optic REST query interfaces of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an authenticated user with a low-privileged REST role to escalate privileges to administrator. This enables execution of privileged operations and unauthorized data access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7329",
-    "publishedDate": "2026-08-05T16:17:09.200",
-    "lastModifiedDate": "2026-08-05T16:17:09.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7327",
-    "description": "An improper privilege management vulnerability in the REST API document processing pipeline of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows an authenticated user with an administrative REST role to escalate privileges. This can result in unauthorized disclosure of sensitive server-side data when it is accessed by a higher-privileged user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7327",
-    "publishedDate": "2026-08-05T16:17:09.077",
-    "lastModifiedDate": "2026-08-05T16:17:09.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 1.7,
-        "impactScore": 5.8,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-7326",
-    "description": "A cross-site request forgery vulnerability in the Admin UI of Progress MarkLogic Server before 11.3.6 and 12.0.3 allows a remote attacker who lures an authenticated administrator to a malicious web page to perform administrative actions on the administrator's behalf. This can result in unauthorized changes to security configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7326",
-    "publishedDate": "2026-08-05T16:17:08.930",
-    "lastModifiedDate": "2026-08-05T16:17:08.930",
+    "id": "CVE-2026-69111",
+    "description": "Milvus through 2.6.22 and 3.0.0 contains an unauthenticated denial of service vulnerability that allows remote attackers to terminate service components by sending a crafted HTTP GET request to the management server on port 9091. Attackers can exploit the unprotected /management/stop endpoint, which bypasses REST API authentication middleware, by supplying a 'role' parameter to shut down the proxy, datanode, or querynode components, resulting in denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69111",
+    "publishedDate": "2026-08-05T20:17:14.657",
+    "lastModifiedDate": "2026-08-05T20:17:14.657",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -212,119 +128,128 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70606",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 40.10.6, 41.9.1, 42.5.1, and 43.0.0, when a custom protocol handler returned a ProtocolResponse with a url and no session, Electron made the upstream request through defaultSession instead of the session that handled the protocol. A cached response could then be reused across otherwise isolated session partitions. Apps that use ProtocolResponse.url, omit ProtocolResponse.session, and rely on separate sessions to isolate content are affected. This issue is fixed in versions 40.10.6, 41.9.1, 42.5.1, and 43.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70606",
-    "publishedDate": "2026-08-05T16:17:04.953",
-    "lastModifiedDate": "2026-08-05T16:17:04.953",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70605",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3, when following HTTP redirects, net.fetch() and net.request() did not restrict which schemes a redirect could target. A remote server could redirect a request to a local resource, and if the app returns or forwards the response body, local file contents could be disclosed. Apps are only affected if they make net requests to attacker-influenced URLs with redirects followed and expose the response body. This issue is fixed in versions 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70605",
-    "publishedDate": "2026-08-05T16:17:04.800",
-    "lastModifiedDate": "2026-08-05T16:17:04.800",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70604",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.10, 40.9.3, 41.4.0, and 42.0.0, a custom scheme registered with supportFetchAPI: true but without corsEnabled: true was not subject to CORS enforcement. A page loaded from a remote origin could therefore fetch() or XMLHttpRequest that scheme cross-origin and read the full response body, rather than the read being blocked. Apps that serve sensitive data from such a scheme and load remote or untrusted content in a renderer are affected. This issue is fixed in versions 39.8.10, 40.9.3, 41.4.0, and 42.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70604",
-    "publishedDate": "2026-08-05T16:17:04.617",
-    "lastModifiedDate": "2026-08-05T16:17:04.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 7.4,
-        "version": "CVSS 3.1",
+        "score": 8.7,
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-70603",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.6, 40.9.0, 41.1.1, and 42.0.0-beta.1, shell.openPath() did not reject paths containing embedded null bytes. Apps that perform string-only validation of file paths, for example checking the file extension, before passing them to shell.openPath() could be bypassed, allowing an attacker-controlled path to open a different file than the one that passed validation. Apps are only affected if they pass paths derived from untrusted input to shell.openPath() and rely on string-based validation without a filesystem check. This issue is fixed in versions 39.8.6, 40.9.0, 41.1.1, and 42.0.0-beta.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70603",
-    "publishedDate": "2026-08-05T16:17:04.470",
-    "lastModifiedDate": "2026-08-05T16:17:04.470",
+    "id": "CVE-2026-68746",
+    "description": "Not Failing Securely ('Failing Open') vulnerability in livebook-dev livebook allows an unauthenticated network client to obtain full access to a Livebook server that enforces identity through Livebook Teams.\n\nA Livebook Agent or App Server connected to Livebook Teams caches the identifier of the deployment group it belongs to, and resolves that identifier against a locally cached list of deployment groups on every request in order to decide whether Teams identity enforcement is active. Livebook.Hubs.TeamClient.handle_call/3 in lib/livebook/hubs/team_client.ex does not distinguish a deployment group that could not be resolved from one that was resolved with identity enforcement switched off: the clause matches only the case where a group was found with enforcement enabled, and falls through to a catch-all that reports enforcement as switched off for everything else. The two neighbouring functions that decide user and application access resolve the same identifier and treat the same unresolved result as a denial.\n\nWhen the identity status is reported as switched off, Livebook.ZTA.LivebookTeams.authenticate/3 in lib/livebook/zta/livebook_teams.ex returns empty identity metadata and allows the request to continue instead of halting it. LivebookWeb.UserPlug.build_current_user/3 merges that empty metadata into a newly built user, whose access type defaults to full access, and LivebookWeb.AuthPlug.authorized?/1 grants access to any user holding full access.\n\nThe cached identifier becomes unresolvable when the deployment group it refers to is deleted while the agent is not connected to receive the change, most concretely when a deployment group is deleted during the window in which an agent is disconnected or reconnecting. The client removes the group from its cached list without clearing the identifier that refers to it. Any client able to reach the affected server over the network is then granted the same access as a fully privileged member of the organisation, including the ability to read notebooks and configured secrets, execute code on the server's runtime, and disrupt its operation.\n\nThis issue affects livebook: from 0.19.7 before 0.19.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68746",
+    "publishedDate": "2026-08-05T20:17:14.393",
+    "lastModifiedDate": "2026-08-05T20:17:14.393",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-70602",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3, extension tab and scripting APIs were not scoped to the extension's own session. A malicious or compromised extension loaded into one session could navigate, script, and read from windows belonging to a different session. Apps are only affected if they load Chrome extensions via session.loadExtension and rely on separate sessions to isolate that extension from other content. This issue is fixed in versions 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70602",
-    "publishedDate": "2026-08-05T16:17:04.333",
-    "lastModifiedDate": "2026-08-05T17:16:54.027",
+    "id": "CVE-2026-66885",
+    "description": "Cross-Site Request Forgery (CSRF) vulnerability in livebook-dev livebook allows an attacker to authenticate a victim's browser session under the attacker's own Livebook Teams identity.\n\nWhen Livebook is configured to use Livebook Teams for identity, Livebook.ZTA.LivebookTeams.handle_request/4 in lib/livebook/zta/livebook_teams.ex handles the OAuth-style callback carrying a teams_identity marker and a code parameter. The clause exchanges that code for an access token and writes the token into the browser session without verifying any value that ties the callback to the browser session that started the login. No state or nonce is generated when the flow is initiated: Livebook.Teams.Requests.create_auth_request/1 in lib/livebook/teams/requests.ex sends an empty request body, so no per-attempt value is ever registered, and the callback clause has nothing to compare against.\n\nAn attacker who holds membership in the same Livebook Teams organisation as the target instance can therefore begin the login flow themselves, retain the resulting authorization code without redeeming it, and induce a victim to open a crafted URL carrying that code. The victim's browser completes the exchange and the resulting session is bound to the attacker's identity rather than the victim's. The victim is not required to hold any particular privilege, and no credential belonging to the victim is involved. The vulnerability does not allow the attacker to authenticate as the victim.\n\nThe consequence is that a user believes they are working in their own authenticated session while they are in fact operating as another identity. Work performed in that session is attributed to the attacker's account, and secrets, uploaded data, or notebook results the victim produces are exposed to the attacker rather than kept in the victim's own account. The authorization code must be redeemed within a short window after the login flow begins, which constrains the timing of the attack but not its feasibility.\n\nThis issue affects livebook: from 0.15.0 before 0.18.7 and from 0.19.0 before 0.19.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66885",
+    "publishedDate": "2026-08-05T20:17:13.007",
+    "lastModifiedDate": "2026-08-05T20:17:13.007",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.6,
-        "version": "CVSS 3.1",
+        "score": 6.8,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 1.3,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-70601",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.9, 40.9.2, 41.2.2, and 42.0.0-beta.5, apps that expose Promise-returning functions to web content via contextBridge may be vulnerable to a context isolation bypass. Untrusted web content could obtain access to the isolated preload world and, through it, every capability the preload script has. In renderers without a sandbox, or with nodeIntegration enabled, this may escalate to Node.js access. Apps are affected if they expose Promise-returning functions via contextBridge, the standard pattern for wrapping ipcRenderer.invoke, in windows that load untrusted content. This issue is fixed in versions 39.8.9, 40.9.2, 41.2.2, and 42.0.0-beta.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70601",
-    "publishedDate": "2026-08-05T16:17:04.203",
-    "lastModifiedDate": "2026-08-05T16:17:04.203",
+    "id": "CVE-2026-66881",
+    "description": "Relative Path Traversal vulnerability in livebook-dev livebook allows an attacker-authored notebook to write a file with attacker-controlled content to an arbitrary path.\n\nA .livemd notebook can declare file_entries metadata, each entry carrying a name. Every path that creates a file entry through the user interface validates that name with Livebook.Notebook.validate_file_entry_name/2, which requires a flat filename of alphanumerics, dashes, underscores and dots, ending in an extension. The import path does not: Livebook.LiveMarkdown.Import.file_entry_metadata_to_attrs/1 in lib/livebook/live_markdown/import.ex takes the name verbatim from the notebook source.\n\nFor a URL-type file entry, Livebook.Session.file_entry_cache_file/2 in lib/livebook/session.ex resolves that name beneath the session's temporary directory without checking that the result stays inside it, and Livebook.FileSystem.Utils.resolve_unix_like_path/2 collapses parent-directory segments while clamping only at the filesystem root. When the entry's content is requested and no cached copy exists, Livebook fetches the entry's URL and writes the response body to the resolved path, creating parent directories as needed. The attacker therefore controls both the destination and the contents of the written file, which may land anywhere the Livebook process can write. The same missing containment check is present in Livebook.Session.to_attachment_file_entry/2.\n\nA victim who opens an attacker-supplied notebook and causes the entry to be fetched triggers the write within their own authenticated session; the attacker needs no account on the target instance. URL-type entries are also not placed under notebook stamping quarantine on import, so no warning is shown.\n\nThis issue affects livebook: from 0.11.0 before 0.18.7 and from 0.19.0 before 0.19.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66881",
+    "publishedDate": "2026-08-05T20:17:12.600",
+    "lastModifiedDate": "2026-08-05T20:17:12.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66298",
+    "description": "Origin Validation Error vulnerability in livebook-dev livebook allows untrusted notebook output JavaScript to trigger session-wide keyboard shortcuts, including forced evaluation of all cells and runtime restart.\n\nLivebook's JS-view feature renders notebook-defined JavaScript inside a sandboxed, cross-origin iframe specifically because that JavaScript is untrusted. The trusted iframe shell in iframe/priv/static/iframe/v5.html forwards every keydown event fired in its own window to the parent page without consulting Event.isTrusted, so an event synthesized by the untrusted script through window.dispatchEvent is forwarded exactly as a genuine keystroke would be. The parent-side relay in assets/js/hooks/js_view.js reconstructs and re-dispatches it on the live page with no further validation, and because assets/js/hooks/session.js registers the global shortcut handler on the document in the capture phase, that handler acts on the replicated event regardless of how it was produced.\n\nSandboxed output JavaScript can therefore drive Livebook's session-wide keyboard shortcuts. Two of them reach LivebookWeb.SessionLive and execute immediately with no confirmation: the shortcut for queueing full evaluation runs every cell in the notebook, and the shortcut for reconnecting the runtime disconnects and reconnects it, discarding in-memory state. A third shortcut deletes the focused cell behind a confirmation dialog that the user can permanently dismiss, after which it too executes silently.\n\nForced full evaluation is the significant consequence, because it causes the notebook's own Elixir code to run without the user choosing to evaluate anything. A user who merely opens a notebook obtained from a third party, or reached from published documentation, can have its code executed on their runtime. Livebook also mirrors cell outputs to every connected client, so a malicious output triggers in a collaborator's browser as soon as it renders.\n\nThis issue affects livebook: from 0.5.0 before 0.18.7 and from 0.19.0 before 0.19.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66298",
+    "publishedDate": "2026-08-05T20:17:12.203",
+    "lastModifiedDate": "2026-08-05T20:17:12.203",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66297",
+    "description": "Improper Neutralization of Special Elements used in an OS Command (OS Command Injection) vulnerability in livebook-dev livebook allows command injection into generated deployment setup commands.\n\nLivebookWeb.Hub.Teams.DeploymentGroupAgentComponent.docker_instructions/2 and LivebookWeb.Hub.Teams.DeploymentGroupAgentComponent.fly_instructions/4 in lib/livebook_web/live/hub/teams/deployment_group_agent_component.ex interpolate deployment group environment variable values into the generated Docker and Fly.io setup commands without shell escaping. The values originate from the deployment group configuration and reach the sinks through Livebook.Hubs.Dockerfile.online_docker_info/3.\n\nBoth sinks place the value inside a double-quoted shell word, so a value containing a command substitution such as $(...) or backticks is evaluated by the shell without any need to break out of the quoting, and a literal double quote terminates the quoted word and allows arbitrary further tokens. The generated command is displayed in the Livebook web interface with a copy button, so a user who copies it and runs it without reviewing it first executes the injected commands on their own machine, under their own account.\n\nAn attacker requires privileges sufficient to set deployment group environment variables, while the resulting code execution occurs on the machine of whoever runs the generated command. The Kubernetes instructions are not affected, because they render the same values into a YAML manifest with escaping rather than into a shell command.\n\nThis issue affects livebook: from 0.13.0 before 0.18.7 and from 0.19.0 before 0.19.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66297",
+    "publishedDate": "2026-08-05T20:17:11.743",
+    "lastModifiedDate": "2026-08-05T20:17:11.743",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:A/VC:N/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55524",
+    "description": "PraisonAI is a multi-agent teams system. In versions prior to 1.6.58, the web_crawl tool performs its SSRF check only on the initially supplied URL, allowing the protection to be bypassed so the tool connects to attacker-chosen internal destinations. The check resolves the hostname once with socket.gethostbyname and rejects private/loopback/link-local results, but then passes the URL to a fetcher using httpx.Client(follow_redirects=True) (or urllib.request.urlopen when httpx is absent, which also follows redirects) that re-resolves the hostname at connect time with no further validation. This validate-here/fetch-there gap is exploitable through both HTTP redirects and DNS rebinding. If an attacker can influence URLs passed to web_crawl(), directly or through an agent/tool workflow, they can cause the PraisonAI host to fetch loopback, private-network, or cloud metadata endpoints reachable from that host, with the response body returned in the web_crawl() result. This issue has been fixed in version 1.6.58.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55524",
+    "publishedDate": "2026-08-05T20:17:10.847",
+    "lastModifiedDate": "2026-08-05T20:17:10.847",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -340,143 +265,310 @@
     ]
   },
   {
-    "id": "CVE-2026-70600",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3, the native autofill popup could be positioned by a cross-origin iframe outside that iframe's bounds, over the embedding page's UI, enabling clickjacking or spoofing of trusted UI. Apps are only affected if they embed untrusted content in iframes within windows that also display trusted UI. Apps that do not embed untrusted third-party content are not affected. This issue is fixed in versions 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70600",
-    "publishedDate": "2026-08-05T16:17:04.067",
-    "lastModifiedDate": "2026-08-05T16:17:04.067",
+    "id": "CVE-2026-55523",
+    "description": "PraisonAI is a multi-agent teams system. In versions 1.5.128 through 1.6.57, the praisonaiagents.tools.web_crawl_tools.web_crawl() function is vulnerable to server-side request forgery. While it validates the initially supplied URL and blocks direct loopback and private destinations, its default httpx fallback uses httpx.Client(follow_redirects=True) and does not revalidate intermediate or final redirect targets. An attacker who can influence a URL passed to web_crawl(), directly or through an agent or tool workflow, can supply an attacker-controlled public URL that passes the initial host check and then redirects to loopback, private-network, or cloud metadata endpoints reachable from the host, with the redirected response body returned in the web_crawl() result. This constitutes an incomplete fix and patch bypass for the previously disclosed web_crawl SSRF class (GHSA-qq9r-63f6-v542 / CVE-2026-40160 and GHSA-8f4v-xfm9-3244), since the guard validates only the requested URL and not the destination actually fetched after redirection. This issue has been fixed in version 1.6.58.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55523",
+    "publishedDate": "2026-08-05T20:17:10.690",
+    "lastModifiedDate": "2026-08-05T20:17:10.690",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-70599",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.7, 40.9.0, 41.2.0, and 42.0.0-beta.1, serial-port and media permission checks made from an iframe passed the top-level frame origin to session.setPermissionCheckHandler instead of the requesting iframe origin. Origin-based handler logic could grant a cross-origin iframe device access intended only for the top-level origin. This issue is fixed in 39.8.7, 40.9.0, 41.2.0, and 42.0.0-beta.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70599",
-    "publishedDate": "2026-08-05T16:17:03.913",
-    "lastModifiedDate": "2026-08-05T16:17:03.913",
+    "id": "CVE-2026-55522",
+    "description": "PraisonAI is a multi-agent teams system. In versions 3.9.26 through 4.6.57 of praiseonai and 0.12.12 through 1.6.57 of praiseonaiagents, the workflow \"include\" feature is vulnerable to code execution. Workflow._execute_include() implicitly imports and runs an included recipe's tools.py via a raw importlib.util.spec_from_file_location() and spec.loader.exec_module() call, without honoring the PRAISONAI_ALLOW_TEMPLATE_TOOLS/PRAISONAI_ALLOW_LOCAL_TOOLS autoload opt-in gates or routing through the centralized safe loader that protects the other tools.py autoload paths. As a result, a workflow that includes an attacker-controlled local recipe directory executes arbitrary module-level Python code during include setup, before any child workflow parsing or model call, and the same sink is reachable through the higher-level praisonai.recipe.run() recipe API. An attacker who can cause a victim process to run a workflow or recipe that includes an untrusted local recipe achieves arbitrary Python code execution as the PraisonAI process user, a variant that bypasses the hardening applied to the previously disclosed automatic tools.py RCE advisory family. This issue has been fixed in version 4.6.58 of praisonai and 1.6.58 of praisonaiagents.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55522",
+    "publishedDate": "2026-08-05T20:17:10.453",
+    "lastModifiedDate": "2026-08-05T20:17:10.453",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21766",
+    "description": "The default login portlet in HCL Digital Experience and Digital Experience Compose insufficiently protects credentials.  Under certain very specific use cases and specific configurations, sensitive information may be written to web server logs.  This only affects applications using the default login portlet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21766",
+    "publishedDate": "2026-08-05T20:17:08.627",
+    "lastModifiedDate": "2026-08-05T20:17:08.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 1,
+        "impactScore": 4,
+        "source": "psirt@hcl.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-70598",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.10, 40.9.0, 41.2.1, and 42.0.0-beta.3, offscreen rendering frame data received from the GPU process was not fully validated by the main process. A compromised GPU process could cause the main process to read out-of-bounds memory while producing paint event images, disclosing memory or crashing the app. This issue is fixed in 39.8.10, 40.9.0, 41.2.1, and 42.0.0-beta.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70598",
-    "publishedDate": "2026-08-05T16:17:03.763",
-    "lastModifiedDate": "2026-08-05T16:17:03.763",
+    "id": "CVE-2026-18958",
+    "description": "A vulnerability was detected in imranrisal-dev Student-Management-System 18ea7904c339e0c7b0234724a79c939ce6191def/a8d43a29aaf267e7ca97171d6dbb44057bcd7f8c. Affected by this vulnerability is an unknown functionality of the file loginCheckTest.php of the component Login. The manipulation of the argument username/password results in sql injection. The attack can be launched remotely. The exploit is now public and may be used. This product does not use versioning. This is why information about affected and unaffected releases are unavailable. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18958",
+    "publishedDate": "2026-08-05T20:17:08.410",
+    "lastModifiedDate": "2026-08-05T20:17:08.410",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.9,
+        "score": 7.3,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:N/A:L",
-        "exploitabilityScore": 0.8,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-70597",
-    "description": "Electron is a framework for writing cross-platform desktop applications using JavaScript, HTML and CSS. Prior to 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3, the check Electron uses on macOS to confirm it was launched by a same-signed parent process could be bypassed by a local process. Apps that enable fuse-based hardening restricting ELECTRON_RUN_AS_NODE and NODE_OPTIONS to same-signed parents rely on this check, and a local attacker could bypass it and run code inside the signed app, inheriting its TCC permissions and keychain access. This issue is fixed in 39.8.8, 40.9.0, 41.2.1, and 42.0.0-beta.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70597",
-    "publishedDate": "2026-08-05T16:17:03.603",
-    "lastModifiedDate": "2026-08-05T16:17:03.603",
+    "id": "CVE-2026-18954",
+    "description": "Incorrect authorization in the aggregation pipeline tool in Amazon AWS Labs DocumentDB MCP Server before 1.0.12 might allow an authenticated MCP client to perform inappropriate write operations on the connected database via write-capable aggregation pipeline stages that bypass the read-only mode enforcement logic.\n\n\n\nTo remediate this issue, users should upgrade to version 1.0.12 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18954",
+    "publishedDate": "2026-08-05T20:17:08.233",
+    "lastModifiedDate": "2026-08-05T20:17:08.233",
     "vendors": [],
     "products": [],
     "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      },
+      {
+        "score": 5.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18953",
+    "description": "Improper limitation of a pathname to a restricted directory in the get_resource tool in Amazon awslabs.aws-transform-mcp-server 0.1.0 through 0.1.4 might allow a context-dependent actor to write arbitrary files outside the intended working directory via the savePath parameter.\n\n\n\nTo remediate this issue, users should upgrade to version 0.1.5 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18953",
+    "publishedDate": "2026-08-05T20:17:07.770",
+    "lastModifiedDate": "2026-08-05T20:17:07.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 6,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      },
       {
         "score": 6.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
       }
     ]
   },
   {
-    "id": "CVE-2026-70596",
-    "description": "Ghost is a Node.js content management system. From 4.9.0 until 6.54.1, an input validation issue allowed any staff user to create a post with content in feature_image_caption that could be used to hijack another staff user's Ghost Admin session, resulting in privilege escalation. This issue is fixed in 6.54.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70596",
-    "publishedDate": "2026-08-05T16:17:03.463",
-    "lastModifiedDate": "2026-08-05T16:17:03.463",
+    "id": "CVE-2026-17556",
+    "description": "A path traversal vulnerability was identified in GitHub Enterprise Server that allowed an unauthenticated attacker to delete arbitrary files and directories on the instance, including the entire user storage directory containing Git LFS objects, release assets, attachments, and avatars. The X-GitHub-Request-Id request header was used without sanitization as a filesystem path segment for the upload buffer directory, so a traversal value pointed the buffer at an arbitrary path and the deferred cleanup routine recursively removed the traversed target. Exploitation required only network reachability to the instance and no authentication, and it worked even when private mode was enabled. This vulnerability affected all versions of GitHub Enterprise Server prior to 3.22 and was fixed in versions 3.21.4, 3.20.6, 3.19.10, 3.18.13 and 3.17.19. This vulnerability was reported via the GitHub Bug Bounty program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17556",
+    "publishedDate": "2026-08-05T20:17:06.047",
+    "lastModifiedDate": "2026-08-05T20:17:06.047",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 0.9,
-        "impactScore": 3.4,
-        "source": "security-advisories@github.com"
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "product-cna@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-70595",
-    "description": "Ghost is a Node.js content management system. From 6.26.0 until 6.54.1, a validation issue allowed some functionality, such as Webmentions, to be abused by an unauthenticated user to make limited HTTP requests to hosts in the Ghost server's internal network. A successful attack would not result in any response data being returned. This vulnerability is fixed in 6.54.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70595",
-    "publishedDate": "2026-08-05T16:17:03.323",
-    "lastModifiedDate": "2026-08-05T16:17:03.323",
+    "id": "CVE-2026-9205",
+    "description": "IBM Langflow OSS contains a weak cryptographic key derivation vulnerability in the ensure_fernet_key() function.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9205",
+    "publishedDate": "2026-08-05T19:17:49.193",
+    "lastModifiedDate": "2026-08-05T19:17:49.193",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4,
+        "score": 7.4,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:N/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
+        "impactScore": 5.2,
+        "source": "psirt@us.ibm.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-60053",
-    "description": "Insufficient Session Expiration vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.1.\n\nAdministrative API keys remained usable after the owning administrator was demoted or the account was marked inactive, suspended, or deleted, allowing continued access until the keys were explicitly removed.\nUsers are recommended to upgrade to version 2.0.2, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60053",
-    "publishedDate": "2026-08-05T16:16:58.323",
-    "lastModifiedDate": "2026-08-05T17:16:53.933",
+    "id": "CVE-2026-9201",
+    "description": "IBM Langflow OSS 1.0.0 through 1.10.3 could allow an authenticated attacker to execute arbitrary code due to a cryptographic weakness in the custom component validation mechanism. When the optional hardening mode that restricts execution to trusted component templates is enabled, the application validates component code using a truncated SHA‑256 hash. Because the hash comparison relies on only a portion of the digest, an attacker can craft malicious component code that collides with a trusted template hash and bypasses validation. Successful exploitation allows the attacker to introduce and execute unauthorized Python code within the Langflow process, defeating the intended security control and potentially leading to full compromise of the affected instance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9201",
+    "publishedDate": "2026-08-05T19:17:48.657",
+    "lastModifiedDate": "2026-08-05T20:17:18.803",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-60023",
-    "description": "Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Answer.\n\nThis issue affects Apache Answer: through 2.0.1.\n\nDeleted or pending answers could be retrieved by unauthorized users through the single-answer read path when the parent question remained visible, exposing answer content that should not have been accessible.\nUsers are recommended to upgrade to version 2.0.2, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60023",
-    "publishedDate": "2026-08-05T16:16:58.203",
-    "lastModifiedDate": "2026-08-05T17:16:53.843",
+    "id": "CVE-2026-9196",
+    "description": "IBM Langflow OSS 1.0.0 through 1.10.3 could allow an authenticated attacker to execute unintended code during Agentic Assistant validation due to improper handling of LLM‑generated components. The application executes model‑generated Python code in the backend during validation prior to user approval, which may allow an attacker to trigger side effects such as outbound network access, file system interaction, or data exfiltration with the privileges of the Langflow backend process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9196",
+    "publishedDate": "2026-08-05T19:17:48.523",
+    "lastModifiedDate": "2026-08-05T19:17:48.523",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-9130",
+    "description": "IBM Langflow OSS 1.0.0 through 1.10.3 contain an authorization bypass vulnerability in the MemoryComponent that allows authenticated users to access chat history of other users via session_id collision. The MemoryComponent.retrieve_messages and store_message methods filter on session_id without validating flow_id or user_id ownership, enabling cross-user information disclosure through multiple authenticated API endpoints including /api/v1/run/*, /api/v1/responses, and /api/v2/workflow/*. This vulnerability only affects multi-user deployments with LANGFLOW_AUTO_LOGIN=False.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9130",
+    "publishedDate": "2026-08-05T19:17:46.797",
+    "lastModifiedDate": "2026-08-05T20:17:18.687",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8478",
+    "description": "IBM Langflow OSS 1.0.0 through 1.10.3 could allow a remote attacker to inject arbitrary code on the system, due to the improper control of user input code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8478",
+    "publishedDate": "2026-08-05T19:17:45.043",
+    "lastModifiedDate": "2026-08-05T20:17:18.573",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8470",
+    "description": "IBM Langflow OSS 1.0.0 through 1.10.3, 1.0.0 through 1.10.3, 1.0.0 through 1.10.3, and 1.0.0 through 1.10.3 use Python's non-cryptographic random module for generating Fernet encryption keys from user secrets under 32 characters. The deterministic Mersenne Twister PRNG produces identical keys for identical seeds, allowing attackers to reproduce encryption keys and decrypt stored API keys and authentication tokens.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8470",
+    "publishedDate": "2026-08-05T19:17:44.823",
+    "lastModifiedDate": "2026-08-05T20:17:18.450",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-8183",
+    "description": "IBM Langflow OSS 1.0.0 through 1.10.3, 1.0.0 through 1.10.3, 1.0.0 through 1.10.3, 1.0.0 through 1.10.3, 1.0.0 through 1.10.3, and 1.0.0 through 1.10.3 could allow a remote attacker to traverse directories on the system. An attacker could send a specially crafted URL request containing \"dot dot \" sequences ( /.. /) to v i ew arbitrary files on the system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-8183",
+    "publishedDate": "2026-08-05T19:17:43.943",
+    "lastModifiedDate": "2026-08-05T19:17:43.943",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "psirt@us.ibm.com"
+      }
+    ]
   }
 ]
