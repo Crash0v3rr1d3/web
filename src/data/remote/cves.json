@@ -1,175 +1,67 @@
 [
   {
-    "id": "CVE-2026-18412",
-    "description": "OpenCart extensions are uploaded as zip files with .ocmod.zip extensions. Upon installation, the OpenCart v4.2.0.0 extension installer extracts these zip files, but does not validate that the extracted paths stay inside the intended extraction directory. An attacker can craft a malicious extension containing file path traversal sequences, such as ../. With this vulnerability, an attacker can write files, such as a PHP web shell, into the webroot directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18412",
-    "publishedDate": "2026-08-10T15:17:42.467",
-    "lastModifiedDate": "2026-08-10T15:17:42.467",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-72761",
-    "description": "The webhook URL validator in `website/notifications/webhooks.py` uses\n`ip.is_global` to reject non-public addresses after DNS resolution. IPv6\ntransition addresses (NAT64 `64:ff9b::/96`, 6to4 `2002::/16`, Teredo\n`2001:0000::/32`) are classified as globally routable by IANA, so `is_global`\nreturns `True` even when the embedded IPv4 targets a private, loopback, or\ncloud metadata destination. An attacker can register a webhook pointing at a\nhostname that resolves to a transition address to bypass the SSRF guard and\nexfiltrate vulnerability data to an internal endpoint.\n\nThe vulnerability was introduced on a non-release version. The fix was already done on HEAD. It only affects\n\norganisation running the HEAD.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72761",
-    "publishedDate": "2026-08-10T15:17:44.783",
-    "lastModifiedDate": "2026-08-10T15:17:44.783",
+    "id": "CVE-2025-15683",
+    "description": "TBEA TLogger V2.1.0.0B0.0.0.0 contains multiple unauthenticated denial-of-service vulnerabilities in its web server. An unauthenticated remote attacker can invoke specific HTTP endpoints to reboot or reset the device, clear application data, or terminate the web server through a segmentation fault. In addition, multiple action endpoints process attacker-controlled parameters using unsafe string operations such as sprintf() and strcat() without adequate bounds checking, allowing crafted input to trigger buffer overflows and crash the web server. The affected endpoints include onRestart, onReset, ClearData, uploadInvFile, getIndiaRPData, YearCaparity, TotalfaultData, recordData, InvHistoryData, CollectHistoryData, InvFaultData, GetPortTableByParm, and UpdatePortConfig.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15683",
+    "publishedDate": "2026-08-10T20:17:25.420",
+    "lastModifiedDate": "2026-08-10T20:17:25.420",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
+        "score": 8.8,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+        "source": "office@cyberdanube.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-72760",
-    "description": "Affected versions of MISP cti-transmute disclose users' email addresses through the account following-list endpoint. When an authenticated user follows another account, get_following() includes the followed user's email field in the API response alongside their name, user ID, and follow date. Because the email address is not required for the functionality and other related user lists omit it, an authenticated attacker could systematically follow users and collect their email addresses. The fix removes user.email from the returned object.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72760",
-    "publishedDate": "2026-08-10T15:17:44.657",
-    "lastModifiedDate": "2026-08-10T15:17:44.657",
+    "id": "CVE-2026-72886",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). From 0.29.2 until 0.29.13, schedule.create and schedule.update in apps/dokploy/server/api/routers/schedule.ts derive serviceId from applicationId or composeId and execute the owner/admin host-schedule gate only in the alternative branch, allowing a member with access to one application to attach its applicationId to a dokploy-server schedule and run a supplied script as root through schedule.runManually. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72886",
+    "publishedDate": "2026-08-10T20:17:35.423",
+    "lastModifiedDate": "2026-08-10T20:17:35.423",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-72759",
-    "description": "In affected versions of MISP cti-transmute, the conversion-history details endpoint performs an incomplete authorization check. When a history record references a deleted conversion, the associated conversion lookup returns None. The previous logic only denied access when the conversion object existed and the visibility check failed. As a result, deleted conversions bypassed the authorization check and their retained history input/output could be disclosed to a user able to request the corresponding history entry. The July 22, 2026 commit changes the logic to deny access whenever the conversion is missing or the requester lacks permission",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72759",
-    "publishedDate": "2026-08-10T15:17:44.520",
-    "lastModifiedDate": "2026-08-10T15:17:44.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-72751",
-    "description": "CTI-Transmute is affected by a stored cross-site scripting (XSS) vulnerability in the conversion graph used to visualise converted MISP and STIX content.\n\nAttacker-controlled values originating from converted CTI data were passed to multiple HTML-parsing sinks in the graph user interface without sufficient neutralisation. In particular, node labels, node sublabels, edge labels, node properties, edge properties, and node types could contain crafted HTML or JavaScript content.\n\nThe Pivotick graph library renders some of these values through HTML-parsing operations. Consequently, a malicious value such as an HTML element containing an event handler could be interpreted as markup rather than displayed as plain text. The first remediation explicitly notes that Pivotick rendered node and edge labels as HTML and therefore introduced escaping before data was handed to the graph renderer.\n\nA separate vulnerable sink was present in the Open raw JSON functionality. The raw object associated with a graph node was inserted into a new document using document.write() and an interpolated HTML string. Crafted JSON content could therefore break out of the intended <pre> element and inject executable markup. The fix replaced this construction with DOM APIs and assigns the JSON using textContent.\n\nThe initial correction did not cover all Pivotick rendering paths. A subsequent patch addressed additional XSS vectors in the graph properties panel. Values derived from the original CTI object—including property names, property values, hash algorithm names, child attributes, edge properties, and STIX object types—could still reach Pivotick's HTML resolver. According to the patch, Pivotick's tryResolveHTMLElement processes string values using template.innerHTML, allowing malicious markup to execute when a graph node is hovered over or selected.\n\nThe complete remediation therefore:\n\n  *  HTML-escapes node labels, node sublabels, and edge labels before they are passed to Pivotick.\n  *  Restricts graph node type values to a safe identifier character set.\n  *  Wraps node and edge property values in DOM elements populated through textContent, preventing Pivotick from treating attacker-controlled strings as HTML.\n  *  Replaces the raw-JSON popup's interpolated document.write() with DOM construction and textContent.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72751",
-    "publishedDate": "2026-08-10T14:17:31.553",
-    "lastModifiedDate": "2026-08-10T14:17:31.553",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71959",
-    "description": "Bitwarden Server before 2026.7.2 does not verify that the caller is a member of the organization identified in a POST /collect request body, allowing any authenticated user to write forged, arbitrarily backdated entries into any organization's audit log.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71959",
-    "publishedDate": "2026-08-10T14:17:26.870",
-    "lastModifiedDate": "2026-08-10T14:17:26.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-63106",
-    "description": "ReadyEcommerce before 4.5.2 contains an unauthenticated SQL injection vulnerability in the product listing API where the rating parameter from the products endpoint is concatenated directly into a MySQL HAVING clause without parameterization in ProductController.php. Attackers can perform time-based blind SQL injection through the unsanitized rating parameter to extract the full database contents, including user credentials and administrator password hashes, with potential additional file system access due to the database connection running as root.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63106",
-    "publishedDate": "2026-08-10T14:17:25.633",
-    "lastModifiedDate": "2026-08-10T14:17:25.633",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
+        "score": 9.9,
         "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-63105",
-    "description": "ReadyEcommerce before 4.5.2 contains a stored cross-site scripting (XSS) vulnerability that allows authenticated customers to inject malicious HTML payloads through the chat and support ticket messaging systems by exploiting unsanitized rendering via the v-html directive in Messages.vue, RightChatSidebar.vue, SupportTicketMessages.vue, and SupportTicketDetails.vue. Attackers can submit crafted message content that executes arbitrary JavaScript in the browser of any shop owner or administrator who views the message, enabling session cookie theft and account takeover.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63105",
-    "publishedDate": "2026-08-10T14:17:25.477",
-    "lastModifiedDate": "2026-08-10T14:17:25.477",
+    "id": "CVE-2026-69116",
+    "description": "FlyEnv before 4.18.0 fails to sanitize HTML from markdown rendering and AI chat content passed to Vue v-html directives. Attackers can inject malicious scripts through markdown sources or chat messages that execute in the Electron renderer process with access to Node.js APIs and the filesystem.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69116",
+    "publishedDate": "2026-08-10T20:17:32.160",
+    "lastModifiedDate": "2026-08-10T20:17:32.160",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
+        "score": 6.1,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 2.7,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.1,
+        "score": 5.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -177,31 +69,169 @@
     ]
   },
   {
-    "id": "CVE-2026-59112",
-    "description": "Improper verification of cryptographic signature and Improper Check for Unusual or Exceptional Conditions vulnerability in Estonian Information System Authority (RIA) libdigidocpp, DigiDoc4, DigiDoc on Android, and DigiDoc on iOS. This issue affects libdigidocpp: from 4.1.0 before 4.2.1; DigiDoc4: from 4.7.0 before 4.8.2; DigiDoc on Android: from 2.7.0 before 2.7.2; DigiDoc on iOS: from 2.8.0 before 2.8.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59112",
-    "publishedDate": "2026-08-10T14:17:25.153",
-    "lastModifiedDate": "2026-08-10T14:17:25.153",
+    "id": "CVE-2025-15682",
+    "description": "TBEA TLogger V2.1.0.0B0.0.0.0 contains an unauthenticated resource exhaustion vulnerability in its web server. An unauthenticated remote attacker can send PUT requests to the /tmp/ endpoint, causing the web server to create persistent files containing attacker-controlled data under /opt/myapp/webserver/. The generated files are not removed because the web server attempts to move them into a non-existent directory. Repeated requests can therefore exhaust available storage and cause a denial-of-service condition.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15682",
+    "publishedDate": "2026-08-10T20:17:25.290",
+    "lastModifiedDate": "2026-08-10T20:17:25.290",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.4,
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+        "source": "office@cyberdanube.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18503",
-    "description": "Attacker-controlled CSV samples can trigger super-linear \nregular-expression work during dialect sniffing and consume significant \nCPU when applications pass unbounded input to csv.Sniffer.sniff().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18503",
-    "publishedDate": "2026-08-10T14:17:21.560",
-    "lastModifiedDate": "2026-08-10T15:17:42.617",
+    "id": "CVE-2026-72885",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, dockerContextPath accepted by apps/dokploy/components/dashboard/application/build/show.tsx flows through getDockerContextPath in packages/server/src/utils/filesystem/directory.ts into the unquoted cd command in packages/server/src/utils/builders/docker-file.ts before execution by execAsync, allowing an authenticated application editor to execute arbitrary commands on the Dokploy host. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72885",
+    "publishedDate": "2026-08-10T20:17:35.283",
+    "lastModifiedDate": "2026-08-10T20:17:35.283",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 0,
+        "version": "CVSS 4.0",
+        "severity": "NONE",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-15681",
+    "description": "TBEA TLogger V2.1.0.0B0.0.0.0 contains an authentication bypass in its web server. After a user has previously authenticated to the device, an unauthenticated attacker can directly access protected functionality through the /index.asp endpoint without providing valid credentials. This allows the attacker to access functionality intended for authenticated users and may expose or modify device configuration and data. Logging out from the bypassed state can additionally cause the web server to crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15681",
+    "publishedDate": "2026-08-10T20:17:25.157",
+    "lastModifiedDate": "2026-08-10T20:17:25.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72884",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, sanitizeCommand in packages/server/src/utils/builders/compose.ts only trims whitespace and strips surrounding quotes from compose.command before exportEnvCommand and docker command interpolation, allowing an authenticated user who can update a Compose service to inject shell metacharacters and execute arbitrary commands on the Dokploy host. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72884",
+    "publishedDate": "2026-08-10T20:17:35.140",
+    "lastModifiedDate": "2026-08-10T20:17:35.140",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-44401",
+    "description": "Typemill CMS version 2.x contains a persistent cross-site scripting vulnerability in the Markdown parser extension that allows authenticated users with theme-configuration access to inject malicious JavaScript URIs by supplying unsanitized href values in Markdown links. Attackers can craft Markdown links using the javascript: scheme through ParsedownExtension.php or TwigMarkdownExtension.php, storing a persistent payload that executes in the browser of every visitor who clicks the link, enabling session cookie theft, authenticated request forgery, and credential harvesting.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44401",
+    "publishedDate": "2026-08-10T20:17:30.870",
+    "lastModifiedDate": "2026-08-10T20:17:30.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 1.7,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 4.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:A/VC:N/VI:L/VA:L/SC:N/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-69114",
+    "description": "Spacebar Server before commit 8d126f4 contains a cross-channel message deletion vulnerability in the single-delete and bulk-delete message handlers that fail to scope message queries to the requested channel. Authenticated users with MANAGE_MESSAGES permission in any controlled channel can delete arbitrary messages in other channels by routing delete requests through their own channel.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69114",
+    "publishedDate": "2026-08-10T20:17:32.010",
+    "lastModifiedDate": "2026-08-10T20:17:32.010",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72883",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the WebSocket handlers in apps/dokploy/server/wss/terminal.ts, apps/dokploy/server/wss/docker-container-terminal.ts, apps/dokploy/server/wss/docker-container-logs.ts, and apps/dokploy/server/wss/docker-stats.ts validate organization membership but do not enforce checkServiceAccess, accessedServerIds, or accessedServices, allowing an authenticated organization member to obtain root terminal access and read logs or statistics for restricted servers and services. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72883",
+    "publishedDate": "2026-08-10T20:17:35.003",
+    "lastModifiedDate": "2026-08-10T20:17:35.003",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-15680",
+    "description": "TBEA TLogger V2.1.0.0B0.0.0.0 exposes a UART interface on the device's circuit board without sufficient protection. A physically proximate attacker can connect to the UART interface and observe the device boot process and runtime debug output. The disclosed information includes operating system details, software versions, network configuration, filesystem paths, and other implementation and debugging information that may assist an attacker in further compromising the device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-15680",
+    "publishedDate": "2026-08-10T20:17:25.010",
+    "lastModifiedDate": "2026-08-10T20:17:25.010",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -209,119 +239,139 @@
         "score": 2.4,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:P/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@python.org"
+        "source": "office@cyberdanube.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18478",
-    "description": "Magnolia CMS is vulnerable to Stored XSS in import functionality. An attacker with editor privileges can inject arbitrary HTML and JS into the name of uploaded image, which will be rendered/executed when opening uploaded image.\n\n\n\n\nThe issue was fixed in version 6.3.10",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18478",
-    "publishedDate": "2026-08-10T14:17:21.403",
-    "lastModifiedDate": "2026-08-10T14:17:21.403",
+    "id": "CVE-2026-72882",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). In 0.28.8 and earlier, an authenticated user who can create or update file mounts for a service can inject shell metacharacters into filePath, causing Dokploy to execute attacker-controlled commands on the configured remote managed server over SSH. In the default deployment model, this yields direct remote host RCE from the web interface.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72882",
+    "publishedDate": "2026-08-10T20:17:34.860",
+    "lastModifiedDate": "2026-08-10T20:17:34.860",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.1,
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-13294",
+    "description": "An unauthenticated SQL injection vulnerability exists in the web server of TBEA TLogger V2.1.0.0B0.0.0.0. Multiple HTTP endpoints incorporate attacker-controlled parameters directly into SQLite queries without sufficient validation or parameterization. A remote unauthenticated attacker can exploit these endpoints to read, modify, or delete data stored in the device's CCU.db database.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-13294",
+    "publishedDate": "2026-08-10T20:17:24.583",
+    "lastModifiedDate": "2026-08-10T20:17:24.583",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2025-13293",
+    "description": "A hard-coded or default root account credential in TBEA TLogger V2.1.0.0B0.0.0.0 allows an unauthenticated remote attacker to obtain root-level access to the device via the exposed SSH service. The root password can be recovered from the password hash stored in /etc/shadow and used to authenticate to the SSH service. Successful exploitation provides full administrative control of the affected device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2025-13293",
+    "publishedDate": "2026-08-10T20:17:23.493",
+    "lastModifiedDate": "2026-08-10T20:17:23.493",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "office@cyberdanube.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72881",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, database backup and restore command builders in packages/server/src/utils/backups/utils.ts and packages/server/src/utils/restore/utils.ts interpolate database names, usernames, and passwords into nested shell command strings passed to child_process.exec(). An authenticated administrator with permission to create databases and configure backups can use crafted database configuration fields to execute arbitrary commands inside PostgreSQL, MariaDB, MySQL, MongoDB, or LibSQL containers, exposing database data and credentials and potentially enabling escape when a container is overprivileged. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72881",
+    "publishedDate": "2026-08-10T20:17:34.707",
+    "lastModifiedDate": "2026-08-10T20:17:34.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cvd@cert.pl"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-16742",
-    "description": "systemd-homed contains a local privilege escalation bug via arbitrary system group addition to a local, logged in, homed-managed user",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16742",
-    "publishedDate": "2026-08-10T14:17:21.277",
-    "lastModifiedDate": "2026-08-10T16:19:29.157",
+    "id": "CVE-2026-72880",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the apiCreateCertificate schema in packages/server/src/db/schema/certificate.ts accepts a client-supplied certificatePath, and packages/server/src/services/certificate.ts joins that value to the certificate root without confinement. An authenticated user with certificate create or delete permission can use certificatePath to write attacker-controlled certificate content outside the intended directory or delete an out-of-root directory. This vulnerability is fixed in 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72880",
+    "publishedDate": "2026-08-10T20:17:34.560",
+    "lastModifiedDate": "2026-08-10T20:17:34.560",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.7,
+        "score": 9.9,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.9,
-        "source": "98a521c5-3a3e-4e2b-bc27-002067e0463c"
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15060",
-    "description": "When systemd-machined >= v259 (or v258 with a custom `polkit` policy that allows `register-machine` access) is running on a desktop system, an unprivileged user logged in a desktop graphical session can kill arbitrary processes, even privileged ones.\n\n- versions older than v259 are not affected, unless unprivileged access is granted for the `register-machine` polkit action via a local, custom policy config file\n- versions older than v258 are not affected\n- unrelated to the systemd service manager (pid 1 or user session managers)\n- systemd-machined is not typically installed by default, and is typically in an optional, separate package (e.g.: systemd-container)\n- terminal-only or remote sessions (e.g.: ssh) are not affected",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15060",
-    "publishedDate": "2026-08-10T14:17:21.130",
-    "lastModifiedDate": "2026-08-10T14:17:21.130",
+    "id": "CVE-2026-72872",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, application.saveBitbucketProvider stores bitbucketOwner and bitbucketRepository without validation and cloneBitbucketRepository in packages/server/src/utils/providers/bitbucket.ts interpolates those values into git clone commands executed through execAsync or execAsyncRemote, allowing a member with service deployment permission to execute arbitrary operating system commands on the Dokploy host or target server. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72872",
+    "publishedDate": "2026-08-10T19:17:36.177",
+    "lastModifiedDate": "2026-08-10T19:17:36.177",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.7,
+        "score": 9.9,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 3.6,
-        "source": "98a521c5-3a3e-4e2b-bc27-002067e0463c"
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15059",
-    "description": "Local unprivileged users can terminate arbitrary local processes via a systemd-oomd IPC API due to a missing path traversal validation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15059",
-    "publishedDate": "2026-08-10T14:17:20.760",
-    "lastModifiedDate": "2026-08-10T14:17:20.760",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "98a521c5-3a3e-4e2b-bc27-002067e0463c"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19433",
-    "description": "Authorization Bypass Through User-Controlled Key in the contact management component in Roskus Prospero Flow CRM before 5.4.8 allows authenticated users of any company to blindly overwrite the contact data of another company and to download that contact's personal data as a vCard via the contact's numeric identifier, because the save and export operations retrieve the record without constraining the query to the authenticated user's company.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19433",
-    "publishedDate": "2026-08-10T15:17:43.330",
-    "lastModifiedDate": "2026-08-10T15:17:43.330",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "4daa8cea-433a-44bd-9456-53b127fc289a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-72692",
-    "description": "A missing authorization vulnerability in OpenSignLabs opensignserver through 2.37.0 allows an unauthenticated remote attacker to irreversibly decline any in-flight document and forge the decline attribution to an arbitrary user via the declinedoc Parse cloud function. The function writes IsDeclined, DeclineReason, and a caller-supplied DeclineBy pointer without verifying the caller's identity, enabling workflow termination and evidentiary record falsification against any accessible document.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72692",
-    "publishedDate": "2026-08-10T13:20:39.470",
-    "lastModifiedDate": "2026-08-10T13:20:39.470",
+    "id": "CVE-2026-72871",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the unauthenticated /api/providers/github/setup route in apps/dokploy/pages/api/providers/github/setup.ts trusts gh_init organizationId and userId values from the state parameter and calls createGithub in packages/server/src/services/github.ts, allowing an attacker to insert a GitHub App provider containing client_secret, webhook_secret, and PEM private key material into another organization. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72871",
+    "publishedDate": "2026-08-10T19:17:36.033",
+    "lastModifiedDate": "2026-08-10T20:17:33.213",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -332,158 +382,148 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-72691",
-    "description": "An authentication bypass vulnerability in OpenSignLabs opensignserver through 2.37.0 allows an unauthenticated remote attacker to mint MASTER_KEY-signed file access tokens for arbitrary stored files via the getsignedurl Parse cloud function. The function skips its isAuthenticated check whenever any docId parameter is supplied, even one corresponding to no real document, allowing the authentication gate to be bypassed by supplying an arbitrary string as docId.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72691",
-    "publishedDate": "2026-08-10T13:20:39.350",
-    "lastModifiedDate": "2026-08-10T13:20:39.350",
+    "id": "CVE-2026-72870",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the buildRemoteDocker() function in packages/server/src/utils/providers/docker.ts interpolates the application-controlled dockerImage value directly into a docker pull shell command. An authenticated user with project access can set a crafted dockerImage through application.update and trigger application.deploy, causing execAsync() to execute arbitrary operating-system commands as the Dokploy server process. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72870",
+    "publishedDate": "2026-08-10T19:17:35.897",
+    "lastModifiedDate": "2026-08-10T19:17:35.897",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
-        "version": "CVSS 3.1",
+        "score": 8.7,
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-72690",
-    "description": "An improper authorization vulnerability in Attendize through commit 9289acb allows an authenticated remote attacker to inject persistent mandatory survey questions into another organizer's events via the POST /event/{event_id}/question/create endpoint. The postCreateEventQuestion method loads the target event without the tenant-isolation scope, enabling cross-tenant writes; the injected question cannot be removed by the victim because the victim's account-scoped delete path cannot resolve a question owned by another tenant.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72690",
-    "publishedDate": "2026-08-10T13:20:39.230",
-    "lastModifiedDate": "2026-08-10T13:20:39.230",
+    "id": "CVE-2026-72869",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the backup.restoreBackupWithLogs tRPC subscription passes the databaseName parameter to restore builders in packages/server/src/utils/restore/utils.ts, where PostgreSQL, MariaDB, MySQL, and MongoDB commands embed the value in nested shell text executed by Node.js exec. An authenticated user with backup:restore permission can supply a crafted databaseName that the host /bin/sh expands before docker exec, resulting in arbitrary commands running in the Docker-privileged host context. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72869",
+    "publishedDate": "2026-08-10T19:17:35.753",
+    "lastModifiedDate": "2026-08-10T19:17:35.753",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72868",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, apps/dokploy/server/api/routers/destination.ts interpolates the accessKey, secretAccessKey, region, endpoint, provider, and bucket fields from destination.testConnection into an rclone ls command executed through child_process.exec. The `withPermission(\"destination\", \"create\")` path permits a low-privileged organization member to reach the mutation, close a quoted argument with a crafted field, and execute arbitrary commands in the root Dokploy container, which has access to the host Docker socket. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72868",
+    "publishedDate": "2026-08-10T19:17:35.600",
+    "lastModifiedDate": "2026-08-10T19:17:35.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72867",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). From 0.29.3 until 0.29.13, the incomplete fix for CVE-2026-45628 leaves packages/server/src/db/schema/compose.ts branch fields without server-side validation, allowing a direct compose.update request to store a malicious customGitBranch, branch, gitlabBranch, bitbucketBranch, or giteaBranch. A low-privileged authenticated user can trigger compose.deploy, which passes the stored branch to shell-based Git clone commands in packages/server/src/utils/providers/git.ts, github.ts, gitlab.ts, bitbucket.ts, and gitea.ts, resulting in arbitrary host command execution. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72867",
+    "publishedDate": "2026-08-10T19:17:35.443",
+    "lastModifiedDate": "2026-08-10T19:17:35.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72866",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the WebSocket handler in apps/dokploy/server/wss/terminal.ts validates a session but does not authorize access to the requested server. An authenticated user can connect to /terminal?serverId=local, select the special serverId=local branch, and obtain an interactive terminal on the Dokploy host without an organization role or server-access check. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72866",
+    "publishedDate": "2026-08-10T19:17:35.303",
+    "lastModifiedDate": "2026-08-10T20:17:33.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-72689",
-    "description": "A broken object-level authorization vulnerability in OpenSignLabs opensignserver through 2.37.0 allows an unauthenticated remote attacker to read complete contract records via the getDocument Parse cloud function. The function fetches documents using useMasterKey, bypassing the object ACL, and returns full records including sender and signer PII and a pre-signed document download URL whenever the document's IsEnableOTP flag is unset, which is the default configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72689",
-    "publishedDate": "2026-08-10T13:20:39.103",
-    "lastModifiedDate": "2026-08-10T13:20:39.103",
+    "id": "CVE-2026-72865",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the compose.update operation stores an unvalidated composePath that packages/server/src/utils/builders/compose.ts and packages/server/src/services/compose.ts interpolate into docker compose -f, docker stack deploy -c, and touch shell commands executed through /bin/sh -c. An authenticated member with compose write and deploy permission can supply a crafted composePath, trigger compose.deploy or startCompose, and execute arbitrary operating-system commands in the Docker-privileged Dokploy host context. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72865",
+    "publishedDate": "2026-08-10T19:17:35.160",
+    "lastModifiedDate": "2026-08-10T19:17:35.160",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 9.9,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-72688",
-    "description": "A missing authentication vulnerability in OpenSignLabs opensignserver through 2.37.0 allows an unauthenticated remote attacker to read arbitrary stored documents via the fileupload Parse cloud function. The function mints MASTER_KEY-signed file access tokens for any caller-supplied URL without performing any session check, defeating the only access control protecting stored contract files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72688",
-    "publishedDate": "2026-08-10T13:20:38.987",
-    "lastModifiedDate": "2026-08-10T13:20:38.987",
+    "id": "CVE-2026-72864",
+    "description": "Dokploy is a free, self-hostable Platform as a Service (PaaS). Prior to 0.29.13, the local branch of /docker-container-terminal in apps/dokploy/server/wss/docker-container-terminal.ts authenticates with validateRequest but does not authorize the attacker-controlled containerId against the caller's role, organization, or service access before passing it to `docker exec`, allowing any authenticated member to obtain a root shell in arbitrary containers on a self-hosted instance. This issue is fixed in version 0.29.13.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72864",
+    "publishedDate": "2026-08-10T19:17:35.010",
+    "lastModifiedDate": "2026-08-10T19:17:35.010",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 9.9,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "309f9ea4-e3e9-4c6c-b79d-e8eb01244f2c"
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-6374",
-    "description": "Use of Hard-coded Credentials vulnerability in Zyxel Networks WAH7601 allows Read Sensitive Constants Within an Executable.\n\nThis issue affects WAH7601: through 20.07.2026.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6374",
-    "publishedDate": "2026-08-10T13:20:38.353",
-    "lastModifiedDate": "2026-08-10T13:20:38.353",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6373",
-    "description": "Exposure of sensitive system information to an unauthorized control sphere vulnerability in Zyxel Networks WAH7601 allows Web Application Fingerprinting.\n\nThis issue affects WAH7601: through 20072026.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6373",
-    "publishedDate": "2026-08-10T13:20:38.220",
-    "lastModifiedDate": "2026-08-10T13:20:38.220",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68428",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: x86/mmu: Fix use-after-free on vendor module reload\n\nmmu_destroy_caches() destroys pte_list_desc_cache and\nmmu_page_header_cache, but leaves both pointers unchanged.  The pointers\nlive in kvm.ko, and therefore survive when a vendor module is unloaded\nwhile kvm.ko remains loaded.\n\nIf creation of pte_list_desc_cache fails during a subsequent vendor\nmodule load, its assignment sets pte_list_desc_cache to NULL and the\nerror path calls mmu_destroy_caches().  mmu_page_header_cache still\npoints to the cache destroyed during the preceding vendor module\nunload.  Passing that stale pointer to kmem_cache_destroy() causes a\nslab use-after-free.\n\nReproduce the issue on a v7.1.3 kernel with CONFIG_KASAN=y,\nCONFIG_KASAN_GENERIC=y, CONFIG_KVM=m, and CONFIG_KVM_INTEL=m.  A\none-shot test hook forces pte_list_desc_cache to NULL on the second\ninvocation of kvm_mmu_vendor_module_init():\n\n  1. Load kvm.ko and kvm-intel.ko, creating both caches.\n  2. Unload only kvm_intel, leaving kvm.ko loaded.\n  3. Reload kvm_intel and force initialization through the -ENOMEM path.\n\nKASAN reports:\n\n  BUG: KASAN: slab-use-after-free in\n  kvm_mmu_vendor_module_init+0x5b/0x170 [kvm]\n  ...\n  kmem_cache_destroy+0x21/0x1d0\n  kvm_mmu_vendor_module_init+0x5b/0x170 [kvm]\n  ...\n  Allocated by task 16817:\n  __kmem_cache_create_args+0x12c/0x3b0\n  __kmem_cache_create.constprop.0+0xb6/0xf0 [kvm]\n  kvm_mmu_vendor_module_init+0x13b/0x170 [kvm]\n  ...\n  Freed by task 16820:\n  kmem_cache_destroy+0x117/0x1d0\n  kvm_mmu_vendor_module_exit+0x21/0x30 [kvm]\n\nClear both pointers immediately after destroying their caches so that\nthe stored state reflects the caches' lifetime and repeated cleanup is\nsafe.\n\nWith the fix applied, the same injected vendor module reload fails with\n-ENOMEM as expected and produces no KASAN report.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68428",
-    "publishedDate": "2026-08-10T13:20:36.770",
-    "lastModifiedDate": "2026-08-10T13:20:36.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-68427",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ngpu: host1x: Fix use-after-free in host1x_bo_clear_cached_mappings\n\n__host1x_bo_unpin() drops the last reference to the mapping and frees\nit, so we can't dereference mapping afterwards. The cache itself\noutlives the mapping, so use the cache local variable instead.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68427",
-    "publishedDate": "2026-08-10T13:20:36.653",
-    "lastModifiedDate": "2026-08-10T13:20:36.653",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-68426",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxfrm: fix stale skb->prev after async crypto steals a GSO segment\n\nskb_gso_segment() leaves the segment list head with ->prev pointing at\nthe last segment, an invariant validate_xmit_skb_list() relies on when\nit sets its tail pointer (tail = skb->prev).\n\nWhen validate_xmit_xfrm() walks a GSO list and some segments are stolen\nby async crypto (->xmit() returns -EINPROGRESS), those segments are\nunlinked from the list but the head ->prev is never updated.  If the\nlast segment is the one stolen, the returned head still has ->prev\npointing at it, even though it is now owned by the crypto engine and may\nbe freed.  validate_xmit_skb_list() later does tail->next = skb, writing\nthrough that stale pointer -- a use-after-free.\n\nRepoint skb->prev at the last retained segment before returning.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68426",
-    "publishedDate": "2026-08-10T13:20:36.540",
-    "lastModifiedDate": "2026-08-10T13:20:36.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
