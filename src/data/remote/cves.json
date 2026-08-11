@@ -1,312 +1,673 @@
 [
   {
-    "id": "CVE-2026-18860",
-    "description": "Velociraptor allows multi-tenant deployments named \"Orgs\".\n\nBy default Velociraptor, uses the ROOT org, but users can create child orgs for other tenants within the same deployment.\n\nUsers can have different permissions in each org. To manage Orgs, Velociraptor usually examines the ORG_ADMIN permission on the ROOT org.\n\nThis issue results from the Velociraptor server allowing for the deletion of Orgs by incorrectly checking the ORG_ADMIN permission of callers within the calling ORG instead of the ROOT org. However, Org admins of child orgs were able to add this permission to their ACL token within their own org. This allows an administrator in a child org, which is not also an administrator in the ROOT org, to delete other orgs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18860",
-    "publishedDate": "2026-08-11T15:17:28.887",
-    "lastModifiedDate": "2026-08-11T15:17:28.887",
+    "id": "CVE-2026-73228",
+    "description": "Django REST framework is a toolkit for building Web APIs. Prior to 3.17.2, Django REST Framework's request.data parsing in rest_framework/request.py Request._parse() passes the underlying HttpRequest stream to JSONParser and FormParser for application/json and application/x-www-form-urlencoded bodies, bypassing Django's DATA_UPLOAD_MAX_MEMORY_SIZE protection and allowing oversized request bodies to consume additional memory and CPU. This issue is fixed in version 3.17.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73228",
+    "publishedDate": "2026-08-11T19:18:52.603",
+    "lastModifiedDate": "2026-08-11T19:18:52.603",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.7,
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72742",
+    "description": "DSPy 3.3.0b1 contains a file exfiltration vulnerability in the Image and Audio output field adapters that allows attackers with influence over language model outputs to read arbitrary local files by injecting a filesystem path into the url field of a parsed Image or Audio typed output. The JSONAdapter and ChatAdapter parse untrusted language model completions through parse_value into TypeAdapter validation, which triggers encode_image or encode_audio to read and base64-encode any local file path via the os.path.isfile branch in image.py and audio.py, subsequently embedding the file contents into outgoing prompt messages sent to the attacker-controlled model endpoint.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72742",
+    "publishedDate": "2026-08-11T19:18:49.130",
+    "lastModifiedDate": "2026-08-11T19:18:49.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.8,
-        "source": "cve@rapid7.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73067",
-    "description": "Tesseract is an open source OCR engine. Prior to 5.5.3, a crafted .traineddata model loaded through TessBaseAPI::Init can cause SquishedDawg::read_squished_dawg in src/dict/dawg.cpp to accept an unterminated forward-edge run, after which SquishedDawg::Load calls num_forward_edges(0) and last_edge in src/dict/dawg.h reads beyond edges_, causing a heap out-of-bounds read and process crash before image processing. This issue is fixed in version 5.5.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73067",
-    "publishedDate": "2026-08-11T15:17:38.927",
-    "lastModifiedDate": "2026-08-11T16:17:37.840",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73066",
-    "description": "Tesseract is an open source OCR engine. Prior to 5.5.3, a crafted .traineddata LSTM model component loaded through Tesseract's deserializer can cause an unchecked signed integer multiplication in Convolve::DeSerialize in src/lstm/convolve.cpp to wrap the convolution output-channel count, undersizing the forward-pass output buffer while writes use the unwrapped element count and causing a heap out-of-bounds write during OCR recognition. This issue is fixed in version 5.5.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73066",
-    "publishedDate": "2026-08-11T15:17:38.777",
-    "lastModifiedDate": "2026-08-11T16:17:37.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-17535",
-    "description": "Velociraptor's NTFS parsing library mishandles several out of bound and memory exhaustion bugs which may be triggered by maliciously crafted NTFS images.\n\nTypically Velociraptor's NTFS parser is used on live NTFS filesystems, limiting the opportunity of attackers corrupting the filesystem. However, in some applications (e.g.  dead disk forensics https://docs.velociraptor.app/docs/forensic/deaddisk/ ) Velociraptor may be used on untrusted NTFS image files. \n\nIf an attacker is able to inject maliciously corrupted NTFS Volumes they can cause a crash and a Denial of Service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17535",
-    "publishedDate": "2026-08-11T15:17:27.927",
-    "lastModifiedDate": "2026-08-11T15:17:27.927",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.5,
-        "impactScore": 3.6,
-        "source": "cve@rapid7.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-72925",
-    "description": "SWC is a TypeScript / JavaScript compiler written in Rust. Prior to @swc/html 1.15.47-nightly-20260729.1 and swc_html_minifier 59.0.0, the minifyJson processing in crates/swc_html_minifier/src/lib.rs parsed and serialized attacker-controlled JSON in application/json and application/ld+json script elements without the escape_json_for_html_script behavior to re-escape less-than signs, allowing a closing script sequence to terminate the element early and execute script in the generated page's origin. This issue is fixed in @swc/html 1.15.47-nightly-20260729.1 and swc_html_minifier 59.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72925",
-    "publishedDate": "2026-08-11T15:17:38.497",
-    "lastModifiedDate": "2026-08-11T15:17:38.497",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18636",
-    "description": "The Velociraptor gRPC API has a VFSGetBuffer endpoint which allows reading files from the datastore. To prevent users from reading sensitive files or accessing other orgs, the requested path is prefix checked against a list of denied prefixes. This prefix check can be bypassed allowing a user to access usually denied files. If the user has read permission in the ROOT org, this allows access to other orgs, in which the user may not have permission.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18636",
-    "publishedDate": "2026-08-11T15:17:28.760",
-    "lastModifiedDate": "2026-08-11T15:17:28.760",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
         "impactScore": 4,
-        "source": "cve@rapid7.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2020-37265",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37265",
-    "publishedDate": "2026-08-11T15:17:22.610",
-    "lastModifiedDate": "2026-08-11T15:17:22.610",
+    "id": "CVE-2026-18712",
+    "description": "An issue in MongoDB Server's Queryable Encryption maintenance operations could allow an authenticated user with privileges on one encrypted collection to cause unauthorized modification or destruction of data belonging to a different collection. This is due to insufficient validation of certain internal metadata references before they are used to perform operations on other namespaces.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18712",
+    "publishedDate": "2026-08-11T19:17:29.360",
+    "lastModifiedDate": "2026-08-11T19:17:29.360",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37264",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37264",
-    "publishedDate": "2026-08-11T15:17:22.557",
-    "lastModifiedDate": "2026-08-11T15:17:22.557",
+    "id": "CVE-2026-18711",
+    "description": "An issue in MongoDB Server's query execution engine could allow an authenticated user with read and write privileges to cause an internal reference to be used after the underlying memory has been freed, when running certain queries against time-series collections. This could result in a server crash or disclosure of freed memory contents within query results.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18711",
+    "publishedDate": "2026-08-11T19:17:26.170",
+    "lastModifiedDate": "2026-08-11T19:17:26.170",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37263",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37263",
-    "publishedDate": "2026-08-11T15:17:22.493",
-    "lastModifiedDate": "2026-08-11T15:17:22.493",
+    "id": "CVE-2026-18709",
+    "description": "An issue in MongoDB Server could allow an authenticated user with direct network access to a shard to improperly commit or abort an in-progress prepared transaction, bypassing the intended transaction coordination process. This could result in cross-shard data inconsistency, cluster clock corruption, and violation of transaction atomicity guarantees.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18709",
+    "publishedDate": "2026-08-11T19:17:25.827",
+    "lastModifiedDate": "2026-08-11T19:17:25.827",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:H/AT:P/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37262",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37262",
-    "publishedDate": "2026-08-11T15:17:22.430",
-    "lastModifiedDate": "2026-08-11T15:17:22.430",
+    "id": "CVE-2026-18698",
+    "description": "An issue in MongoDB Server could allow an authenticated user with a limited database-scoped role to perform an action against protected system collections that should require more specific privileges. This could result in exposure of collection metadata and, on certain deployment configurations, unauthorized modification of system collection data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18698",
+    "publishedDate": "2026-08-11T19:17:24.120",
+    "lastModifiedDate": "2026-08-11T19:17:24.120",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37261",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37261",
-    "publishedDate": "2026-08-11T15:17:22.370",
-    "lastModifiedDate": "2026-08-11T15:17:22.370",
+    "id": "CVE-2026-18690",
+    "description": "An issue in MongoDB Server could allow an authenticated user with a limited database-scoped role to perform an action against protected system collections that their assigned privileges should not permit. This could result in critical system collections being dropped and recreated without proper authorization.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18690",
+    "publishedDate": "2026-08-11T19:17:22.757",
+    "lastModifiedDate": "2026-08-11T19:17:22.757",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37260",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37260",
-    "publishedDate": "2026-08-11T15:17:22.310",
-    "lastModifiedDate": "2026-08-11T15:17:22.310",
+    "id": "CVE-2026-18699",
+    "description": "An issue in MongoDB Server's query planner could allow an authenticated user with read-level privileges to cause the server process to terminate unexpectedly by submitting a specially formed query against a collection with a text index. This could result in a denial of service, affecting connected clients and in-flight operations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18699",
+    "publishedDate": "2026-08-11T19:17:24.270",
+    "lastModifiedDate": "2026-08-11T19:17:24.270",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37259",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37259",
-    "publishedDate": "2026-08-11T15:17:22.250",
-    "lastModifiedDate": "2026-08-11T15:17:22.250",
+    "id": "CVE-2026-18691",
+    "description": "An issue in MongoDB Server's intra-cluster connection setup could allow a party with suitable network access to influence which authentication mechanism is used when one replica set member connects to another. Under certain conditions, this could cause the cluster's shared internal credential to be transmitted in a less-protected form, potentially allowing that credential to be recovered. If recovered, the credential could be used to authenticate as the internal superuser to nodes in the deployment.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18691",
+    "publishedDate": "2026-08-11T19:17:22.903",
+    "lastModifiedDate": "2026-08-11T19:17:22.903",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 9,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37258",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37258",
-    "publishedDate": "2026-08-11T15:17:22.190",
-    "lastModifiedDate": "2026-08-11T15:17:22.190",
+    "id": "CVE-2026-73227",
+    "description": "electerm is an open-sourced terminal/ssh/sftp/telnet/serialport/RDP/VNC/Spice/ftp client. Prior to 3.15.120, electerm allows a malicious RDP server to write attacker-controlled content outside the selected save directory because the RDP clipboard download path in src/client/components/rdp/file-transfer.js passes the server-controlled CLIPRDR filename fileInfo.name to osResolve without sanitization. This issue is fixed in version 3.15.120.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73227",
+    "publishedDate": "2026-08-11T19:18:52.460",
+    "lastModifiedDate": "2026-08-11T19:18:52.460",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2020-37257",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2020-37257",
-    "publishedDate": "2026-08-11T15:17:21.503",
-    "lastModifiedDate": "2026-08-11T15:17:21.503",
+    "id": "CVE-2026-73226",
+    "description": "electerm is an open-sourced terminal/ssh/sftp/telnet/serialport/RDP/VNC/Spice/ftp client. Prior to 3.15.186, electerm allows an authenticated WebSocket client to invoke unintended internal functions through client-controlled func values in upgrade-func in src/app/server/dispatch-center.js and handleFs in src/app/server/fs.js, exposing Upgrade and fsExport methods that can execute commands, open files, mutate the filesystem, or terminate the process. This issue is fixed in version 3.15.186.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73226",
+    "publishedDate": "2026-08-11T19:18:52.320",
+    "lastModifiedDate": "2026-08-11T20:18:48.007",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54374",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54374",
-    "publishedDate": "2026-08-11T15:17:23.667",
-    "lastModifiedDate": "2026-08-11T15:17:23.667",
+    "id": "CVE-2026-18702",
+    "description": "An issue in MongoDB Server could allow an authenticated user with limited, database-scoped privileges to modify diagnostic logging settings that affect the entire server rather than just the intended database. This could allow suppression of diagnostic logging server-wide, potentially obscuring unauthorized activity, or degrade operational monitoring by causing excessive log volume.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18702",
+    "publishedDate": "2026-08-11T19:17:24.743",
+    "lastModifiedDate": "2026-08-11T19:17:24.743",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54373",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54373",
-    "publishedDate": "2026-08-11T15:17:23.607",
-    "lastModifiedDate": "2026-08-11T15:17:23.607",
+    "id": "CVE-2026-18694",
+    "description": "An issue in MongoDB Server's geospatial query processing could allow an authenticated user with write privileges to cause certain malformed geometry data to be stored and later processed without proper validation. Subsequent queries against this data could then result in the server accessing memory outside its intended bounds. This could result in a server crash (denial of service) and may expose a limited amount of server process memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18694",
+    "publishedDate": "2026-08-11T19:17:23.580",
+    "lastModifiedDate": "2026-08-11T19:17:23.580",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54372",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54372",
-    "publishedDate": "2026-08-11T15:17:23.553",
-    "lastModifiedDate": "2026-08-11T15:17:23.553",
+    "id": "CVE-2026-73225",
+    "description": "electerm is an open-sourced terminal/ssh/sftp/telnet/serialport/RDP/VNC/Spice/ftp client. Prior to 3.15.120, electerm allows a malicious FTP or SFTP server to write attacker-controlled content outside the selected download directory because recursive transfers in src/client/components/file-transfer/transfer.jsx pass server-supplied file.name and folder.name values to resolve without sanitization. This issue is fixed in version 3.15.120.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73225",
+    "publishedDate": "2026-08-11T19:18:52.177",
+    "lastModifiedDate": "2026-08-11T20:18:47.903",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54371",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54371",
-    "publishedDate": "2026-08-11T15:17:23.493",
-    "lastModifiedDate": "2026-08-11T15:17:23.493",
+    "id": "CVE-2026-18708",
+    "description": "An issue in MongoDB Server's JavaScript scripting engine could allow an authenticated user with write privileges to cause code they control to be executed within the query scope of other users, through a specially crafted stored value processed during an internal maintenance cycle. This could result in corruption of query results affecting other users and denial of service targeted at their operations on the same database. Impact is limited to the scripting engine's execution sandbox, which does not provide access to database, filesystem, or network resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18708",
+    "publishedDate": "2026-08-11T19:17:25.670",
+    "lastModifiedDate": "2026-08-11T19:17:25.670",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54370",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54370",
-    "publishedDate": "2026-08-11T15:17:23.437",
-    "lastModifiedDate": "2026-08-11T15:17:23.437",
+    "id": "CVE-2026-18696",
+    "description": "An issue in MongoDB Server's applyOps command could allow an authenticated user with specific non-default privileges to perform certain data-definition operations, such as dropping or modifying collections, against collections they do not have permission to manipulate. This is due to an inconsistency in how the target collection is determined between the authorization check and the actual operation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18696",
+    "publishedDate": "2026-08-11T19:17:23.853",
+    "lastModifiedDate": "2026-08-11T19:17:23.853",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54369",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54369",
-    "publishedDate": "2026-08-11T15:17:23.387",
-    "lastModifiedDate": "2026-08-11T15:17:23.387",
+    "id": "CVE-2026-18700",
+    "description": "An issue in MongoDB Server's geospatial validation could allow an authenticated user with write privileges to cause an internal reference to be used after the underlying memory has been freed, through concurrent operations against a collection using a certain type of validator. This could result in a server crash, leading to a denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18700",
+    "publishedDate": "2026-08-11T19:17:24.417",
+    "lastModifiedDate": "2026-08-11T19:17:24.417",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54368",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54368",
-    "publishedDate": "2026-08-11T15:17:23.330",
-    "lastModifiedDate": "2026-08-11T15:17:23.330",
+    "id": "CVE-2026-18701",
+    "description": "An issue in MongoDB Server's query subsystem could allow an authenticated user with read privileges to cause the server process to terminate unexpectedly by submitting a specially formed query filter. This could result in a denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18701",
+    "publishedDate": "2026-08-11T19:17:24.580",
+    "lastModifiedDate": "2026-08-11T19:17:24.580",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2023-54367",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2023-54367",
-    "publishedDate": "2026-08-11T15:17:23.260",
-    "lastModifiedDate": "2026-08-11T15:17:23.260",
+    "id": "CVE-2026-73224",
+    "description": "electerm is an open-sourced terminal/ssh/sftp/telnet/serialport/RDP/VNC/Spice/ftp client. Prior to 3.15.120, electerm allows a malicious FTP or SFTP server to execute arbitrary commands when a user downloads a crafted folder and invokes Properties and Calculate Size because calcLocal in src/client/components/sftp/file-info-modal.jsx inserts the server-controlled folder name into a du -sh shell command without safely escaping single quotes. This issue is fixed in version 3.15.120.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73224",
+    "publishedDate": "2026-08-11T19:18:52.030",
+    "lastModifiedDate": "2026-08-11T19:18:52.030",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2021-47995",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2021-47995",
-    "publishedDate": "2026-08-11T15:17:23.107",
-    "lastModifiedDate": "2026-08-11T15:17:23.107",
+    "id": "CVE-2026-18697",
+    "description": "An issue in MongoDB Server's aggregation framework could allow an unauthenticated party to cause a mongos (router) process to terminate unexpectedly by submitting a specially formed aggregation command. This could result in a denial of service, disrupting client connections routed through the affected mongos instance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18697",
+    "publishedDate": "2026-08-11T19:17:23.983",
+    "lastModifiedDate": "2026-08-11T19:17:23.983",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2021-47994",
-    "description": "Rejected reason: This CVE ID has been rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2021-47994",
-    "publishedDate": "2026-08-11T15:17:23.050",
-    "lastModifiedDate": "2026-08-11T15:17:23.050",
+    "id": "CVE-2026-18693",
+    "description": "An issue in MongoDB Server's handling of timeseries collections could allow an authenticated user with write privileges to cause an internal data structure to become inconsistent through certain document insertions. A subsequent insert into the affected bucket could then result in the server accessing memory outside its intended bounds, potentially causing a server crash (denial of service), exposure of limited memory contents, or memory corruption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18693",
+    "publishedDate": "2026-08-11T19:17:23.450",
+    "lastModifiedDate": "2026-08-11T19:17:23.450",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.7,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18705",
+    "description": "An issue in MongoDB Server's Atlas Vector Search feature could allow an authenticated user with read access to one view to retrieve documents from a different, protected view over the same underlying collection. This is due to insufficient handling of certain user-supplied fields when constructing an internal request forwarded to the search process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18705",
+    "publishedDate": "2026-08-11T19:17:25.207",
+    "lastModifiedDate": "2026-08-11T19:17:25.207",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73223",
+    "description": "electerm is an open-sourced terminal/ssh/sftp/telnet/serialport/RDP/VNC/Spice/ftp client. Prior to 3.15.120, electerm allows a malicious SFTP server to write attacker-controlled content outside the temporary directory because the server-controlled filename name used by editWithSystemEditor in src/client/components/sftp/file-item.jsx is interpolated into path.resolve without sanitization. This issue is fixed in version 3.15.120.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73223",
+    "publishedDate": "2026-08-11T19:18:51.880",
+    "lastModifiedDate": "2026-08-11T19:18:51.880",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18704",
+    "description": "An issue in MongoDB Server's aggregation framework could allow an authenticated user with only read privileges to perform write operations against collections they should not be able to modify. This is due to an internal-use aggregation stage being reachable by external clients without an appropriate authorization check on its embedded operations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18704",
+    "publishedDate": "2026-08-11T19:17:25.050",
+    "lastModifiedDate": "2026-08-11T19:17:25.050",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18692",
+    "description": "An issue in MongoDB Server's handling of timeseries bucket lifecycle could allow an authenticated user with write privileges to cause an internal reference to be used after the underlying memory has been freed. Subsequent operations could then result in a server crash or, potentially, execution of unintended code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18692",
+    "publishedDate": "2026-08-11T19:17:23.317",
+    "lastModifiedDate": "2026-08-11T19:17:23.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
   }
 ]
