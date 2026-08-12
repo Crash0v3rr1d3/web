@@ -1,20 +1,270 @@
 [
   {
-    "id": "CVE-2026-68868",
-    "description": "The Google Cloud Secret Manager secrets backend in Apache Airflow's Google provider never applied the team scope when resolving Connections and Variables: the caller's `team_name` was accepted by the backend but dropped at the internal call boundary, so every lookup resolved against the team-agnostic secret name. In a deployment running multi-team mode with this backend, a task or Dag belonging to one team resolved another team's Connection or Variable, obtaining its credentials in full. No unusual configuration is required beyond enabling multi-team mode and using this backend. Users are advised to upgrade to apache-airflow-providers-google 22.3.0 or later, which builds and applies the team-scoped secret name.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68868",
-    "publishedDate": "2026-08-12T11:17:10.063",
-    "lastModifiedDate": "2026-08-12T11:17:10.063",
+    "id": "CVE-2026-67260",
+    "description": "Apache Airflow 3.3.0 moved human-in-the-loop tasks from the triggerer to a new `awaiting_input` task state swept by the scheduler. That sweep deserializes the task instance's `next_kwargs` without an allow-list, so a Dag author — who controls that value through the task execution API — can cause an arbitrary module import and object instantiation inside the scheduler process, or terminate the scheduler job. No non-default configuration is required: the sweep runs unconditionally every 15 seconds, and the default `allowed_deserialization_classes` setting does not cover this code path. Versions before 3.3.0 are not affected, because human-in-the-loop tasks deferred onto the triggerer instead. This is a different code path from CVE-2026-58076, which covers the same unguarded exception-node deserialization reached elsewhere — deployments that applied that fix must upgrade for this issue as well. Users are advised to upgrade to apache-airflow 3.3.1 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67260",
+    "publishedDate": "2026-08-12T16:17:14.813",
+    "lastModifiedDate": "2026-08-12T16:17:14.813",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-67284",
-    "description": "Joomla Extension - tabaoca.org - Improper ACL implementation allows file operations in Cotton Cloud < 2.0.3 - Authenticated users could perform various file-related operations (read, delete, overwrite, re-assign permissions) on files owned by other users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67284",
-    "publishedDate": "2026-08-12T10:17:20.440",
-    "lastModifiedDate": "2026-08-12T10:17:20.440",
+    "id": "CVE-2026-67587",
+    "description": "Apache Airflow's Task SDK rebuilt a `Callback` object from serialized data by re-running its constructor, which imports the module named by the stored callback path. Because `SyncCallback` is itself an Airflow class it passes the default `allowed_deserialization_classes` allow-list, so tightening that setting does not help. A Dag author — who controls a task instance's `next_kwargs` through the task execution API — can therefore cause an arbitrary module to be imported inside the scheduler process, when the scheduler's `awaiting_input` timeout sweep deserializes that value. No non-default configuration is required; the sweep runs unconditionally. Versions before 3.3.0 are not affected: the class existed, but the scheduler sweep that reaches it did not. This is a separate code path from CVE-2026-58076 and CVE-2026-67260, which cover different gadgets reaching deserialization — applying either of those fixes does not address this one. Users are advised to upgrade to apache-airflow 3.3.1 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67587",
+    "publishedDate": "2026-08-12T16:17:15.090",
+    "lastModifiedDate": "2026-08-12T16:17:15.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-64639",
+    "description": "Incorrect database cloning process in Plesk from 18.0.52 before 18.0.79.6 and 18.0.80.2 allows a low-privileged user (customer, reseller) to execute arbitrary code on behalf of the database server administrator.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64639",
+    "publishedDate": "2026-08-12T16:17:12.280",
+    "lastModifiedDate": "2026-08-12T16:17:12.280",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "support@hackerone.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65017",
+    "description": "Apache Airflow's Config API did not mask team-scoped sensitive configuration values in multi-team deployments. When an administrator has enabled multi-team mode and exposed the Config API, an authenticated Viewer holding only configuration-read access — with no prior access to the secret — could read a team-scoped Celery broker URL, including its embedded credentials, in cleartext, while the equivalent global option was correctly masked. The secrets masker matched only base section and option names and did not normalize team-prefixed sections before the sensitivity check (CWE-200). This is a distinct masker bypass from CVE-2026-48828 and CVE-2026-48892: deployments that upgraded to apache-airflow 3.3.0 to address those issues remain affected by this team-scoped variant. Users are advised to upgrade to apache-airflow 3.3.1 or later, which normalizes team-scoped sections before masking.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65017",
+    "publishedDate": "2026-08-12T16:17:12.577",
+    "lastModifiedDate": "2026-08-12T16:17:12.577",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-68968",
+    "description": "Apache Airflow's Backfill API authorized a request against a Dag id supplied by the caller whenever the `backfill_id` path segment failed to parse. The authorization dependency parsed it with `int()` while the route handler parsed it as pydantic's `NonNegativeInt`, which accepts values `int()` rejects (`1.0` coerces to `1`); FastAPI resolves dependencies before endpoint validation, so the two acted on different Dags. An authenticated user holding edit permission on any single Dag could therefore read, pause and cancel backfills belonging to any other Dag, including moving another Dag's queued runs to `failed`. No non-default configuration is required and backfill ids are sequential, so finding a target is trivial. Users are advised to upgrade to apache-airflow 3.3.1 or later, which parses the backfill id with the same type the routes declare.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68968",
+    "publishedDate": "2026-08-12T16:17:19.607",
+    "lastModifiedDate": "2026-08-12T16:17:19.607",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-68969",
+    "description": "Apache Airflow wrote Variable values and Connection `extra` contents to the audit log in cleartext when they were submitted through the bulk endpoints (`PATCH /api/v2/variables` and `PATCH /api/v2/connections`). The audit-log masking recognised only top-level request fields, and a bulk request nests its entities two levels below, so no masking was applied to them. Any authenticated user with audit-log read access -- who need not hold Variables or Connections read at all -- could recover those secrets verbatim, and the Connection `extra` copy is stored unencrypted in the log while the connection table encrypts it. The Airflow UI's *Import Variables* action posts to this endpoint, so an ordinary operator import wrote every secret in the file to the log. This is a different code path from CVE-2026-50204: that fix shipped in 3.3.0 and covers the single-entity endpoints only, so deployments that upgraded in response to that advisory remain affected and must upgrade again. Users are advised to upgrade to apache-airflow 3.3.1 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68969",
+    "publishedDate": "2026-08-12T16:17:19.730",
+    "lastModifiedDate": "2026-08-12T16:17:19.730",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-68970",
+    "description": "Apache Airflow's Task SDK did not mask the contents of a Variable whose JSON value is a list, so secrets stored in that shape appeared in cleartext in task logs and in the Rendered Templates UI. Masking was applied only when the deserialized value was a string or a dict; a list at the top level matched neither and was returned unmasked. Any authenticated user able to read the logs or rendered templates of a task that references such a Variable could recover the values, with no special configuration required. This is the list-shaped counterpart of CVE-2026-59244, whose fix covered the dict case only, so deployments that upgraded in response to that advisory remain affected and must upgrade again. Users are advised to upgrade to apache-airflow 3.3.1 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68970",
+    "publishedDate": "2026-08-12T16:17:19.853",
+    "lastModifiedDate": "2026-08-12T16:17:19.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-68971",
+    "description": "Apache Airflow's asset materialization endpoint (`POST /api/v2/assets/{asset_id}/materialize`) and the XCom result check on `wait_dag_run_until_finished` authorized the target Dag without its team, unlike every other authorization site. A team-aware auth manager distinguishes a team-scoped Dag from a global one by that field -- the Keycloak auth manager, for example, checks the `DAG` resource instead of `DAG:<team>` -- so the team-scoped permission that should gate the request was never consulted. In a deployment running multi-team mode with a team-aware auth manager, an authenticated user in one team could trigger Dag runs belonging to another team, supplying their own `dag_run_id` and `conf`, and could read another team's XCom values. Deployments using the FAB auth manager are unaffected, as it has no multi-team support. Users are advised to upgrade to apache-airflow 3.3.1 or later, which resolves the Dag's team at both sites.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68971",
+    "publishedDate": "2026-08-12T16:17:19.970",
+    "lastModifiedDate": "2026-08-12T16:17:19.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-65941",
+    "description": "In WhatsUp Gold versions released before 2026.0.2, an unauthenticated remote attacker with network access to the affected service can execute arbitrary code in the context of the IIS application service account.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65941",
+    "publishedDate": "2026-08-12T16:17:14.050",
+    "lastModifiedDate": "2026-08-12T16:17:14.050",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@progress.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65940",
+    "description": "In WhatsUp Gold versions released before 2026.0.2, a privileged attacker can write arbitrary files to a web-accessible location on the host server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65940",
+    "publishedDate": "2026-08-12T16:17:13.927",
+    "lastModifiedDate": "2026-08-12T16:17:13.927",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.9,
+        "impactScore": 5.9,
+        "source": "security@progress.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68076",
+    "description": "Apache Airflow's environment-variable secrets backend resolved a team-scoped Connection or Variable from the wrong team's scope. The guard meant to prevent this only ran when no team scope was supplied, and its pattern could not match a team name containing an underscore, which team names are allowed to contain. When the guard did not apply, the lookup fell through to an unconditional global read that resolved the stored `AIRFLOW_CONN__<TEAM>___<ID>` variable regardless of which team asked. In multi-team mode an authenticated user of one team could therefore have `POST /api/v2/connections/test` resolve another team's Connection and authenticate outward with that team's credentials; the endpoint uses the credentials rather than returning them. Exploitation requires `[core] multi_team` enabled, `[core] test_connection` set to `Enabled` (it ships `Disabled`), team-scoped secrets provisioned as environment variables in the API-server process, and knowledge of the encoded identifier. Redirecting the test at an attacker-controlled host is separately blocked. Users are advised to upgrade to apache-airflow 3.3.1 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68076",
+    "publishedDate": "2026-08-12T16:17:15.223",
+    "lastModifiedDate": "2026-08-12T16:17:15.223",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-65939",
+    "description": "In WhatsUp Gold versions released before 2026.0.2, a privileged attacker can create a LogToFile action specifying an arbitrary file extension within the IIS web root.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65939",
+    "publishedDate": "2026-08-12T16:17:13.797",
+    "lastModifiedDate": "2026-08-12T16:17:13.797",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.9,
+        "impactScore": 5.9,
+        "source": "security@progress.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65938",
+    "description": "In WhatsUp Gold versions released before 2026.0.2, an improper authorization vulnerability in the Scheduled Reports API allows any authenticated user to invoke restricted actions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65938",
+    "publishedDate": "2026-08-12T16:17:13.667",
+    "lastModifiedDate": "2026-08-12T16:17:13.667",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security@progress.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-65937",
+    "description": "In WhatsUp Gold versions released before 2026.0.2, an authenticated attacker can bypass frontend controls and inject persistent script content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65937",
+    "publishedDate": "2026-08-12T16:17:13.527",
+    "lastModifiedDate": "2026-08-12T16:17:13.527",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.9,
+        "source": "security@progress.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-69105",
+    "description": "An unauthenticated attacker may cause untrusted package content to be cached under specific conditions, potentially affecting artifact integrity and availability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69105",
+    "publishedDate": "2026-08-12T16:17:20.093",
+    "lastModifiedDate": "2026-08-12T16:17:20.093",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "reefs@jfrog.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73432",
+    "description": "Vulnerability-Lookup contains a server-side request forgery (SSRF) vulnerability in the remote-instance synchronization functionality. Remote instance addresses were validated only for basic URL syntax before being stored, while the synchronization worker later dereferenced these addresses using requests.get() with automatic redirect handling and without enforcing network-boundary restrictions. \n\n\nAn authenticated administrator with the admin:access permission could configure a remote instance whose address points to an internal, loopback, link-local, or cloud metadata HTTP(S) service. When synchronization is performed, the Vulnerability-Lookup server would issue the request from its own network context. An attacker could also use a publicly accessible URL that redirects to an internal destination, because redirects were previously followed without revalidating the destination.\n\n\nSuccessful exploitation could allow a privileged attacker to probe or interact with services that are accessible from the Vulnerability-Lookup server but not directly reachable by the attacker, including private network services or cloud instance metadata endpoints. The exact confidentiality, integrity, or availability impact depends on the services reachable from the application server.\n\n\nThe patch introduces a shared outbound URL policy that restricts remote instances to HTTP(S), rejects non-public IP addresses, resolves hostnames at request time, and manually validates each redirect destination before following it.  The implementation explicitly blocks private, loopback, link-local, multicast, reserved, and unspecified addresses.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73432",
+    "publishedDate": "2026-08-12T15:18:33.617",
+    "lastModifiedDate": "2026-08-12T15:18:33.617",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73431",
+    "description": "Vulnerability-Lookup contains an \nauthentication weakness in its account activation and password-recovery \nmechanism. Activation and recovery links were generated using stateless \nsigned tokens containing only the user's login. Although the token \nsignature and age were validated, the application did not track whether a\n token had already been successfully used. As a result, a captured \nactivation or password-recovery link remained valid for the entire \nconfigured TOKEN_VALIDITY_PERIOD, even after the associated password had been changed. \n\n\nAn attacker who obtains a valid \nactivation or recovery token could therefore replay it multiple times \nduring its validity period to set a new password and repeatedly take \ncontrol of the affected account. In addition, tokens were not bound to a\n specific purpose, allowing the same token mechanism to be used across \nactivation and recovery workflows. The patch introduces purpose-bound \ntokens and a random nonce whose SHA-256 digest is stored with the user \naccount. The nonce is invalidated after a successful password change, \nmaking tokens single-use, while issuing a new token invalidates any \npreviously issued token.  The password-setting operation now explicitly consumes the token before committing the account change. \n\n\nSuccessful exploitation requires \nthe attacker to obtain a currently valid activation or recovery link, \nbut does not require knowledge of the victim's existing password or an \nauthenticated session.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73431",
+    "publishedDate": "2026-08-12T15:18:33.483",
+    "lastModifiedDate": "2026-08-12T15:18:33.483",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73405",
+    "description": "An authorization bypass vulnerability in Vulnerability-Lookup allowed inactive or unconfirmed accounts to subscribe to Server-Sent Events (SSE) streams through the /pubsub/subscribe/<topic> endpoint.\n\n\nThe token_required decorator used by the Pub/Sub interface authenticated requests solely by matching the X-API-KEY header against an existing user API key. Unlike the REST API authentication mechanism, it did not verify the account's is_active and is_confirmed state.\n\n\nBecause the self-registration process issues an API key before account confirmation is completed, an attacker could create an account and immediately use the resulting API key to access Pub/Sub topics that should only be available to active, confirmed users. This could expose stream events that would otherwise be inaccessible through the REST API, including newly submitted or not-yet-moderated data such as comments.\n\n\nThe vulnerability results from inconsistent authorization enforcement between the REST API and the SSE streaming interface.\n\n\nThe patch corrects the issue by requiring accounts to be both active and confirmed before permitting access to Pub/Sub streams, bringing the SSE authorization boundary in line with the REST API.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73405",
+    "publishedDate": "2026-08-12T15:18:33.343",
+    "lastModifiedDate": "2026-08-12T15:18:33.343",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -25,302 +275,76 @@
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@joomla.org"
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
       }
     ]
   },
   {
-    "id": "CVE-2026-64955",
-    "description": "When Microsoft Excel imports a CSV file, it executes cells beginning with certain characters as formulas, giving such CSV files arbitrary execution. \n\nVelociraptor fails to sanitize such cells when exporting to CSV from various places such as the GUI, offline collector or data exports.\n\nIt is not clear if the vulnerability is actually in Microsoft Excel treating a CSV data file as executable content, or if Velociraptor should be sanitizing the data to prevent Excel from executing it. However, since this is such a common use case for Velociraptor we decided to highlight it in an advisory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64955",
-    "publishedDate": "2026-08-12T10:17:20.310",
-    "lastModifiedDate": "2026-08-12T10:17:20.310",
+    "id": "CVE-2026-73374",
+    "description": "A stored cross-site scripting (XSS) vulnerability existed in Vulnerability-Lookup in the render_tag_badges Jinja filter used to display reference tags associated with vulnerability records.\n\nValues from containers.cna.references[].tags[] were directly interpolated into HTML badge elements and the resulting string was wrapped in markupsafe.Markup. Because Markup marks the generated content as safe, Jinja's automatic HTML escaping was bypassed.\n\nAn authenticated user with permissions to create or modify vulnerability records, such as a user holding the vulnerability:create or vulnerability:modify permission, could submit a crafted reference tag through the CNA API containing arbitrary HTML or JavaScript-capable markup.\n\nThe malicious value would subsequently be stored as part of the vulnerability record. When another user visited the corresponding public /cve/<id> or /vuln/<id> page, the crafted tag would be rendered as HTML in the viewer's browser. This could result in JavaScript execution in the security context of the Vulnerability-Lookup application.\n\nSuccessful exploitation could allow an attacker to perform actions in the context of a victim, access information available to the victim's browser session, or modify page content. As the affected vulnerability pages can be accessed publicly, exploitation may affect users who are not authenticated.\n\nThe issue was corrected by applying markupsafe.escape() to each reference tag before inserting it into the HTML badge markup, while retaining Markup only for the static HTML scaffolding.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73374",
+    "publishedDate": "2026-08-12T15:18:33.173",
+    "lastModifiedDate": "2026-08-12T15:18:33.173",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 6.1,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:N/A:N",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73291",
+    "description": "Seerr is an open-source media request and discovery manager for Jellyfin, Plex, and Emby. Prior to version 3.4.0, Seerr's ImageProxy in server/lib/imageproxy.ts uses the upstream ETag and Content-Type response headers to build a cache filename for the unauthenticated GET /avatarproxy/:jellyfinUserId route, allowing a malicious or compromised Jellyfin or Emby server, or a man-in-the-middle attacker on a plaintext media-server connection, to supply traversal sequences that path.join and fs.writeFile normalize outside the cache directory, overwrite /app/dist/index.js or other files, and execute code as the node user after a container restart. This issue is fixed in version 3.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73291",
+    "publishedDate": "2026-08-12T15:18:33.020",
+    "lastModifiedDate": "2026-08-12T15:18:33.020",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:H/A:H",
         "exploitabilityScore": 1.6,
-        "impactScore": 4,
-        "source": "cve@rapid7.com"
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-64952",
-    "description": "The hunt_delete() VQL function allows deleting hunts. \n\nVelociraptor misapplied the permission check requiring only COLLECT_CLIENT (usually assigned to the \"investigator\" role) instead of the \"DELETE_RESULTS\" permission (usually only assigned to \"administrators\").",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64952",
-    "publishedDate": "2026-08-12T10:17:20.193",
-    "lastModifiedDate": "2026-08-12T10:17:20.193",
+    "id": "CVE-2026-73290",
+    "description": "RustFS is a distributed object storage system built in Rust. Prior to 1.0.0-beta.12, an anonymous ListObjectVersions request in rustfs/src/storage/access.rs that lacks a direct bucket-policy grant falls back to an s3:ListBucket check and returns before the policy_allowed path applies deny_anonymous_table_data_plane_if_needed and RestrictPublicBuckets, so a bucket that permits anonymous listing can continue exposing version listings after an operator enables the public-access control. The bypass affects GET /<bucket>?versions= and can disclose object version metadata even though equivalent GetObject requests are denied. This issue is fixed in version 1.0.0-beta.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73290",
+    "publishedDate": "2026-08-12T15:18:32.883",
+    "lastModifiedDate": "2026-08-12T16:17:22.230",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "cve@rapid7.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-64951",
-    "description": "A rogue Velociraptor client can upload a malformed sparse file such that if the GUI attempts to expand the file, a panic occurs which may crash the server process.\n\nThe problem is a Divide by Zero bug in the ShouldPadFile() function.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64951",
-    "publishedDate": "2026-08-12T10:17:20.063",
-    "lastModifiedDate": "2026-08-12T10:17:20.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "cve@rapid7.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18663",
-    "description": "A flaw was found in 389-ds-base. The get_ldapmessage_controls_ext() function frees the parsed controls array on the Session Tracking critical-control rejection path without clearing the SLAPI_REQCONTROLS pblock slot. Operation teardown then frees the same pointer again, causing a double-free. An unauthenticated remote attacker can trigger this with a single BIND request carrying a critical Session Tracking control, resulting in heap corruption and potential denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18663",
-    "publishedDate": "2026-08-12T10:17:18.437",
-    "lastModifiedDate": "2026-08-12T10:17:18.437",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18652",
-    "description": "Velociraptor allows reading Stacked result sets from the GUI.  Velociraptor's multi-tenant design stores sub orgs within the datastore directory. The path requested by the GUI is not correctly checked against the prefix deny list, allowing result sets to read from denied prefixes.\n\nIn particular, a user with read access to the root org can access result sets from child orgs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18652",
-    "publishedDate": "2026-08-12T10:17:16.940",
-    "lastModifiedDate": "2026-08-12T10:17:16.940",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "cve@rapid7.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67283",
-    "description": "Joomla Extension - tabaoca.org - Improper ACL implementation allows file operations in Cotton Cloud < 2.0.2 - Unauthenticated users could perform various file-related operations (read, delete, overwrite, re-assign permissions) on every file managed within the extension.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67283",
-    "publishedDate": "2026-08-12T09:17:30.720",
-    "lastModifiedDate": "2026-08-12T09:17:30.720",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-67282",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated remote code execution in Fabrik < 4.6.8 - An unauthenticated attacker could execute arbitrary code by using the frontend listfilter model.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67282",
-    "publishedDate": "2026-08-12T09:17:30.590",
-    "lastModifiedDate": "2026-08-12T09:17:30.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19566",
-    "description": "Net::CIDR::Set versions before 0.23 for Perl allow memory exhaustion and malformed set ranges via unbounded IPv6 prefix lengths.\n\nThe _encode method accepts any prefix length matching `(0|[1-9][0-9]*)` and passes it to _width2bits(), which builds the mask as `'1' x ($width + 8)`, one character per bit. The _inc() method then unpacks the packed mask into a Perl array of one scalar per byte, so the prefix length alone sets the allocation size: `::/100000000` builds a 100 MB string and a 12.5 million element array. The value being tested is parsed, not just the configured ranges: contains() builds a set from its argument, and _guess_coder() tries the IPv4 coder and then the IPv6 coder, so an IPv4-only set expands an oversized IPv6 prefix length before the mixed address width check rejects it.\n\nAny caller that passes untrusted input to contains() or add() can exhaust process memory. A prefix length above 128 is also stored as a range that does not match the requested block: 2001:db8::/129 stringifies back unchanged, contains() of its own base address returns false, and removing it from a set drops the base address while the set still prints as covering it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19566",
-    "publishedDate": "2026-08-12T09:17:29.753",
-    "lastModifiedDate": "2026-08-12T09:17:29.753",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19426",
-    "description": "POS System developed by FitSoft has a Missing Authentication vulnerability. Unauthenticated remote attackers can directly access and operate the system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19426",
-    "publishedDate": "2026-08-12T08:17:17.493",
-    "lastModifiedDate": "2026-08-12T08:17:17.493",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "twcert@cert.org.tw"
-      },
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "twcert@cert.org.tw"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-41771",
-    "description": "An authenticated attacker with low privileges can access an endpoint in the controller’s web interface that is vulnerable to SQL injection. The vulnerability affects a SQLite database used only for storing notification messages. Therefore, the impact is limited to the system’s notification functionality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-41771",
-    "publishedDate": "2026-08-12T08:17:12.130",
-    "lastModifiedDate": "2026-08-12T08:17:12.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "info@cert.vde.com"
-      },
       {
         "score": 5.3,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "info@cert.vde.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-41770",
-    "description": "An unauthenticated denial-of-service vulnerability in the device's PLCnext Engineer communication interface allow an remote attacker to interrupt access via the client application. Successful exploitation prevents communication until the PLCnext service is manually restarted.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-41770",
-    "publishedDate": "2026-08-12T08:17:11.910",
-    "lastModifiedDate": "2026-08-12T08:17:11.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "info@cert.vde.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "info@cert.vde.com"
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2025-41769",
-    "description": "The device's PROFINET service is affected by a buffer overflow vulnerability that exists in the default configuration. An unauthenticated remote attacker could exploit this vulnerability to reboot the device or execute arbitrary code.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-41769",
-    "publishedDate": "2026-08-12T08:17:11.590",
-    "lastModifiedDate": "2026-08-12T08:17:11.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "info@cert.vde.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "info@cert.vde.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-66659",
-    "description": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Essekia Tablesome Table allows Blind SQL Injection.\n\nThis issue affects Tablesome Table: from n/a through 1.2.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66659",
-    "publishedDate": "2026-08-12T06:22:09.420",
-    "lastModifiedDate": "2026-08-12T06:22:09.420",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19594",
-    "description": "Insufficient input sanitization in Snowflake Python API (`snowflake.core`) versions prior to 1.13.0 allowed confused-deputy privilege escalation through two related weaknesses: path traversal (CWE-22) via unencoded `..` identifier path segments, and HTTP parameter pollution (CWE-141) via unencoded `&`/`#`/`=` characters in query string values. An attacker with access to a downstream application built on snowflake.core could exploit the path traversal by supplying `..` as an object name, causing `snowflake.core` to issue REST requests against a parent resource or exploit the parameter pollution by injecting `&`/`#`/`=` into a free-form name field to override constraints on swap, clone, or rename operations — all executed under the application's privileged session. Successful exploitation requires the attacker to control an identifier or object-name string in an application built on snowflake.core that passes it to `snowflake.core` under a higher-privileged Snowflake session (e.g., an EXECUTE AS OWNER stored procedure, Streamlit app, or Native App). The fix is available in Snowflake Python API version 1.13.0, which also addresses several additional security findings. Users must manually upgrade.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19594",
-    "publishedDate": "2026-08-12T06:21:57.223",
-    "lastModifiedDate": "2026-08-12T06:21:57.223",
+    "id": "CVE-2026-73289",
+    "description": "RustFS is a distributed object storage system built in Rust. Prior to 1.0.0-beta.12, RustFS evaluates the ForAllValues: and ForAnyValue: set qualifiers with the negated string operators StringNotEquals, StringNotEqualsIgnoreCase, StringNotLike, ArnNotEquals, and ArnNotLike using each other's semantics because crates/policy/src/policy/function/string.rs negates the aggregate result after eval or eval_like instead of negating each request-value predicate before quantification. Partially overlapping policy and request value sets can therefore make an Allow condition grant access to an excluded principal or make a Deny guardrail fail, including policies based on jwt:groups and jwt:roles; absent keys also receive the opposite ForAllValues: and ForAnyValue: behavior. This issue is fixed in version 1.0.0-beta.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73289",
+    "publishedDate": "2026-08-12T15:18:32.733",
+    "lastModifiedDate": "2026-08-12T15:18:32.733",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -328,101 +352,71 @@
         "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 5.2,
-        "source": "412d305a-227d-44f9-a262-a31ba44f2aea"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-19217",
-    "description": "The Royal Addons for Elementor  WordPress plugin before 1.7.1065 does not validate a widget setting used to build an HTML tag before outputting it, which could allow users with the Contributor role and above to perform Stored Cross-Site Scripting attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19217",
-    "publishedDate": "2026-08-12T06:21:47.283",
-    "lastModifiedDate": "2026-08-12T06:21:47.283",
+    "id": "CVE-2026-73288",
+    "description": "RustFS is a distributed object storage system built in Rust. Prior to 1.0.0-rc.1, RustFS Object Lock enforcement in crates/ecstore/src/bucket/object_lock/objectlock_sys.rs lets check_object_lock_for_deletion, delete_prefix, and lifecycle and scanner sweeps treat ConfigNotFound, unreadable .metadata.bin data, or unparseable metadata as no lock configuration, allowing objects under COMPLIANCE retention to be deleted or expired. This issue is fixed in version 1.0.0-rc.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73288",
+    "publishedDate": "2026-08-12T15:18:32.447",
+    "lastModifiedDate": "2026-08-12T15:18:32.447",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-19073",
-    "description": "The Order Sync with Zendesk for WooCommerce WordPress plugin before 2.2.3 does not perform any capability check on one of its REST API endpoints, and does not verify that the requester owns the account being queried, allowing unauthenticated attackers to retrieve the order history and purchase totals of any customer whose email address they know or can enumerate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19073",
-    "publishedDate": "2026-08-12T06:21:47.157",
-    "lastModifiedDate": "2026-08-12T06:21:47.157",
+    "id": "CVE-2026-73287",
+    "description": "RustFS is a distributed object storage system built in Rust. Prior to 1.0.0-beta.12, RustFS handles FTPS MKD in FtpsDriver::mkd in crates/protocols/src/ftps/driver.rs by calling storage.create_bucket without authorize_operation for S3Action::CreateBucket, allowing authenticated FTPS users denied s3:CreateBucket to create buckets. This issue is fixed in version 1.0.0-beta.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73287",
+    "publishedDate": "2026-08-12T15:18:32.237",
+    "lastModifiedDate": "2026-08-12T15:18:32.237",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-19052",
-    "description": "The ProSolution WP Client WordPress plugin before 2.0.9 does not perform capability checks on two administrative AJAX actions, and the nonce they rely on is published on its public frontend, allowing any authenticated user, such as a subscriber, to trigger an administrative data synchronisation and to clear the ProSolution WP Client WordPress plugin before 2.0.9's activity records.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19052",
-    "publishedDate": "2026-08-12T06:21:05.213",
-    "lastModifiedDate": "2026-08-12T06:21:05.213",
+    "id": "CVE-2026-73286",
+    "description": "RustFS is a distributed object storage system built in Rust. Prior to 1.0.0-beta.12, RustFS get_condition_values folds attacker-controlled request headers from HeaderMap into server-derived userid, username, principaltype, groups, versionid, signatureversion, jwt:, and ldap: condition keys, allowing authenticated callers to satisfy identity-based policy conditions. This issue is fixed in version 1.0.0-beta.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73286",
+    "publishedDate": "2026-08-12T15:18:32.060",
+    "lastModifiedDate": "2026-08-12T16:17:22.127",
     "vendors": [],
     "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19050",
-    "description": "The ProSolution WP Client WordPress plugin before 2.0.9 does not validate a user-supplied URL, and does not check the capability or nonce of the requester, before performing a server-side HTTP request with it, allowing any authenticated user, such as a subscriber, to make the site issue arbitrary requests to internal hosts and services, including requests with an attacker-chosen method, headers and body.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19050",
-    "publishedDate": "2026-08-12T06:20:55.603",
-    "lastModifiedDate": "2026-08-12T06:20:55.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18962",
-    "description": "The WP Photo Album Plus WordPress plugin before 9.2.09.002 does not check that the current user is allowed to upload into the album they target when it processes a front-end upload, allowing any authenticated user, such as a Subscriber, to upload files into albums owned by other users or by the administrator. Exploitation requires the WP Photo Album Plus WordPress plugin before 9.2.09.002's front-end user upload feature to be enabled, which is not the default.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18962",
-    "publishedDate": "2026-08-12T06:20:55.503",
-    "lastModifiedDate": "2026-08-12T06:20:55.503",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18943",
-    "description": "The WPC Admin Columns WordPress plugin before 2.3.4 does not have authorisation checks in one of its AJAX actions, allowing users with a role as low as subscriber to read arbitrary user, post and term metadata, including data belonging to administrators.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18943",
-    "publishedDate": "2026-08-12T06:20:46.903",
-    "lastModifiedDate": "2026-08-12T06:20:46.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18789",
-    "description": "The Ezoic WordPress plugin before 2.23.1 does not properly restrict access to some of its content export functionality, allowing unauthenticated attackers to trigger a server-side export of the site's database, including user password hashes and password reset tokens, as well as to persistently change some of its settings.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18789",
-    "publishedDate": "2026-08-12T06:20:22.817",
-    "lastModifiedDate": "2026-08-12T06:20:22.817",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18474",
-    "description": "The WP Directory Kit WordPress plugin before 1.5.6 does not sanitise and escape a parameter before using it in a SQL statement, leading to a SQL injection exploitable by unauthenticated users when a non-default search field type is configured.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18474",
-    "publishedDate": "2026-08-12T06:20:14.283",
-    "lastModifiedDate": "2026-08-12T06:20:14.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18391",
-    "description": "The WooCommerce Subscriptions WordPress plugin before 9.1.0 does not validate user input before unserializing it on stores with High-Performance Order Storage enabled, leading to a PHP Object Injection issue which unauthenticated users can escalate to Remote Code Execution via a gadget chain present in the bundled dependencies.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18391",
-    "publishedDate": "2026-08-12T06:20:14.167",
-    "lastModifiedDate": "2026-08-12T06:20:14.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   }
 ]
