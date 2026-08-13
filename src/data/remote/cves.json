@@ -1,21 +1,321 @@
 [
   {
-    "id": "CVE-2026-49473",
-    "description": "@cedar-policy/authorization-for-expressjs is an open-source Express.js middleware that integrates Cedar authorization into Express applications by mapping HTTP requests to Cedar actions and evaluating authorization policies before allowing requests to proceed. Versions prior to 0.3.0 have an issue where, under certain circumstances, the middleware matches incoming requests against Cedar action mappings using req.originalUrl, which includes the query string, while Express routes requests using only the path component. The middleware uses req.originalUrl to match incoming requests against Cedar action mappings. In Express, req.originalUrl includes the query string, while route matching uses only the path. This creates a divergence between what Cedar authorizes and what Express executes. When an application defines separate actions for overlapping path prefixes with different authorization requirements (for example, GET /users for listing all users with admin-only access, and GET /users/{id} for retrieving a single user with any authenticated user access), an actor can append a query string to bypass the more restrictive policy. Sending GET /users/?x=1 causes the middleware to match against /users/{id} (with id parameter set to ?x=1) and evaluate the less restrictive action, while Express routes the request to the /users list handler. This allows inappropriate access to the more restrictive endpoint. This issue has been addressed in version 0.30. Some workarounds are available. Validate and sanitize incoming request paths before they reach the authorization middleware. Ensure that applications do not rely solely on the middleware for authorization when defining multiple actions on overlapping path prefixes with different permission levels.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49473",
-    "publishedDate": "2026-08-13T00:17:32.587",
-    "lastModifiedDate": "2026-08-13T00:17:32.587",
+    "id": "CVE-2026-72506",
+    "description": "VoiceTra provided by National Institute of Information and Communications Technology (NICT) contains an incorrectly specified destination in a communication channel vulnerability. Users may be directed to a server (or service) controlled by an attacker, potentially resulting in the theft of input data or the display of incorrect results.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72506",
+    "publishedDate": "2026-08-13T05:17:26.553",
+    "lastModifiedDate": "2026-08-13T05:17:26.553",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vultures@jpcert.or.jp"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19182",
+    "description": "An incorrect authorization check in the v2 Alarm REST API in OpenNMS Meridian and Horizon allows a low-privileged authenticated user (ROLE_REST) to acknowledge, escalate, or clear alarms recorded as an arbitrary username, and, when also assigned ROLE_READONLY, to modify alarm state despite the read-only restriction. A credential check that should restrict these operations is guarded by an inverted condition, so it never executes for a real (non-blank) username. This can potentially allow an attacker to compromise the integrity of alarm state and audit records.\n\n\n\nThe solution is to upgrade to Meridian 2024.3.12, 2025.0.9 and Horizon 36.0.3 or newer. Meridian and Horizon installation instructions state that they are intended for installation within an organization's private networks and should not be directly accessible from the Internet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19182",
+    "publishedDate": "2026-08-13T05:17:22.893",
+    "lastModifiedDate": "2026-08-13T05:17:22.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
+        "impactScore": 1.4,
+        "source": "security@opennms.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19135",
+    "description": "A JEXL expression sandbox bypass exists in multiple versions of OpenNMS Meridian and Horizon. A low-privileged authenticated user can submit a crafted expression to the Measurements REST API that escapes the sandbox and loads arbitrary Java classes on the server. This can potentially allow an attacker to gain access to confidential information and compromise integrity.\n\nThe solution is to upgrade to Meridian 2024.3.12, 2025.0.9 and Horizon 36.0.3 or newer. Meridian and Horizon installation instructions state that they are intended for installation within an organization's private networks and should not be directly accessible from the Internet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19135",
+    "publishedDate": "2026-08-13T05:17:22.750",
+    "lastModifiedDate": "2026-08-13T05:17:22.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security@opennms.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18728",
+    "description": "A flaw was found in open-iscsi. An integer underflow vulnerability in the `iscsiuio` component, specifically during IPv4 Dynamic Host Configuration Protocol (DHCP) parsing, allows a remote attacker on the same local network segment to cause a denial of service. By sending a specially crafted IPv4/UDP DHCP reply, the attacker can trigger an out-of-bounds read, leading to the `iscsiuio` process crashing. This issue affects systems where `iscsiuio` is actively handling IPv4 DHCP traffic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18728",
+    "publishedDate": "2026-08-13T04:17:19.340",
+    "lastModifiedDate": "2026-08-13T04:17:19.340",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0301",
+    "description": "An information disclosure vulnerability in the URL Filtering feature of Palo Alto Networks PAN-OS® software enables an unauthenticated user with network access to obtain sensitive information.\n\nPanorama is not impacted by this vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0301",
+    "publishedDate": "2026-08-13T03:16:46.097",
+    "lastModifiedDate": "2026-08-13T03:16:46.097",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 1.7,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0299",
+    "description": "Local privilege escalation vulnerabilities in the Palo Alto Networks GlobalProtect™ app enable a local user to escalate their privileges to NT AUTHORITY\\SYSTEM on Windows, and root on macOS and Linux. This enables a non-administrative user to execute arbitrary commands with administrative privileges.\n\nThe GlobalProtect app on iOS, Android, and Chrome OS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0299",
+    "publishedDate": "2026-08-13T03:16:45.793",
+    "lastModifiedDate": "2026-08-13T05:17:20.757",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0298",
+    "description": "An improper input validation vulnerability exists in the Windows Pre-Logon Access Provider (PLAP) component of the Palo Alto Networks GlobalProtect™ app on Windows devices which enables a man-in-the-middle (MitM) attacker to execute arbitrary code with SYSTEM privileges on an affected client.\n\nThe GlobalProtect app on Linux, macOS, iOS, Android, and Chrome OS  is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0298",
+    "publishedDate": "2026-08-13T03:16:45.560",
+    "lastModifiedDate": "2026-08-13T05:17:20.537",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.2,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:L/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0297",
+    "description": "A buffer overflow vulnerability exists in the Palo Alto Networks GlobalProtect™ app that enables a man-in-the-middle (MitM) attacker or a rogue gateway to disrupt system processes and potentially execute arbitrary code with elevated privileges (SYSTEM privileges on Windows, and root privileges on macOS and Linux).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0297",
+    "publishedDate": "2026-08-13T03:16:45.077",
+    "lastModifiedDate": "2026-08-13T05:17:20.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.2,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0296",
+    "description": "Improper certificate validation vulnerabilities in Palo Alto Networks GlobalProtect™ app enable an unauthenticated attacker with man-in-the-middle (MitM) access to intercept and modify application communications. VPN tunnel traffic is not impacted.\n\nThe GlobalProtect app on iOS, Android, and Chrome OS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0296",
+    "publishedDate": "2026-08-13T03:16:44.703",
+    "lastModifiedDate": "2026-08-13T03:16:44.703",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0295",
+    "description": "A race condition in the Palo Alto Networks GlobalProtect™ client on macOS enables a locally authenticated low-privileged attacker to escalate their privileges to root.\n\nThe GlobalProtect app on Linux, Windows, iOS, Android, and Chrome OS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0295",
+    "publishedDate": "2026-08-13T03:16:44.493",
+    "lastModifiedDate": "2026-08-13T05:17:19.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0294",
+    "description": "A privilege escalation (PE) vulnerability in the Palo Alto Networks Prisma® Access Agent app on Windows and macOS devices enables a local user to execute code with elevated privileges. \n\nThe Prisma Access Agent on Linux, iOS, Android, and ChromeOS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0294",
+    "publishedDate": "2026-08-13T03:16:44.323",
+    "lastModifiedDate": "2026-08-13T03:16:44.323",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:C/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0293",
+    "description": "A vulnerability in Palo Alto Networks Prisma® Access Agent on Windows enables a local attacker with administrator privileges to bypass the anti-tamper protection, enabling unauthorized access to protected processes and files.\n\nThe Prisma Access Agent on Linux, macOS, iOS, Android, and Chrome OS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0293",
+    "publishedDate": "2026-08-13T03:16:44.160",
+    "lastModifiedDate": "2026-08-13T03:16:44.160",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:X/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0292",
+    "description": "An authentication bypass vulnerability in the network driver of Palo Alto Networks Prisma® Access Agent on Windows enables a local administrator to bypass security inspection, subsequently allowing them to  inject and intercept arbitrary network traffic.\n\nThe Prisma Access Agent on Linux, macOS, iOS, Android, and Chrome OS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0292",
+    "publishedDate": "2026-08-13T03:16:43.983",
+    "lastModifiedDate": "2026-08-13T03:16:43.983",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:N/VI:L/VA:L/SC:H/SI:H/SA:L/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:C/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0291",
+    "description": "An improper link resolution before file access vulnerability exists in the Palo Alto Networks Prisma® Access Agent on Linux platforms that enables a local low privileged user to delete system files in a limited scope and disable Prisma Access Agent.\n\nThe Prisma Access Agent on macOS, Windows, iOS, Android, and Chrome OS is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0291",
+    "publishedDate": "2026-08-13T03:16:43.800",
+    "lastModifiedDate": "2026-08-13T03:16:43.800",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 1.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0290",
+    "description": "An information disclosure vulnerability in the Account Protection feature of  Palo Alto Networks Prisma® Browser enables a local attacker to view sensitive data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0290",
+    "publishedDate": "2026-08-13T03:16:43.647",
+    "lastModifiedDate": "2026-08-13T03:16:43.647",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 0.5,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-0289",
+    "description": "A  security bypass vulnerability in the Account Protection feature of Palo Alto Networks Prisma® Browser enables a user to bypass intended security controls.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-0289",
+    "publishedDate": "2026-08-13T03:16:43.107",
+    "lastModifiedDate": "2026-08-13T03:16:43.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 0.5,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@paloaltonetworks.com"
       }
     ]
   },
@@ -40,136 +340,6 @@
     ]
   },
   {
-    "id": "CVE-2026-71194",
-    "description": "In OpenStack Designate before 22.0.2, the mDNS handler performs pool-blind lookups when resolving record queries and NOTIFY requests. When two zones with the same name exist across different pools, the lookup fails with a deterministic error, causing the handler to return REFUSED for all DNS queries through that path. The _handle_notify path is exploitable via a single unauthenticated UDP packet. This is independently reachable through the cross-tenant zone overlap described in a different recent CVE, and also affects legitimate same-tenant cross-pool configurations. BIND9 views do not mitigate this issue as mDNS is a shared service upstream of any view configuration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71194",
-    "publishedDate": "2026-08-12T23:17:22.170",
-    "lastModifiedDate": "2026-08-12T23:17:22.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71193",
-    "description": "In OpenStack Designate before 22.0.1, zone creation checks (_is_subzone, _is_superzone, and the duplicate-zone DB constraint) are scoped to the target pool only. An authenticated user can bypass these checks by scheduling a zone to a different pool via the AttributeFilter scheduler, creating an overlapping zone that conflicts with another tenant's zone. This enables cross-tenant DNS hijack (redirecting traffic to attacker-controlled IPs) and DNS denial of service (NODATA responses). Exploitation requires a multi-pool deployment with AttributeFilter enabled in scheduler_filters, which is a non-default but documented and supported configuration for self-service tiering.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71193",
-    "publishedDate": "2026-08-12T23:17:22.030",
-    "lastModifiedDate": "2026-08-12T23:17:22.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49481",
-    "description": "UpSnap is a wake on lan web app. Versions prior to 5.4.0 have an OS command injection vulnerability in the UpSnap’s device management functionality due to the presence of unsafe shell command template interpolation using the ip and the mac fields. User-controlled values can be inserted into the wake_cmd and shutdown_cmd templates and executed via /bin/sh -c (Linux) or cmd /C (Windows) without sanitization, resulting in an authenticated Remote Code Execution (RCE). A low-privileged user with permission to create or edit devices can execute arbitrary operating system commands on the UpSnap hosted server. Version 5.4.0 patches the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49481",
-    "publishedDate": "2026-08-12T23:17:21.363",
-    "lastModifiedDate": "2026-08-12T23:17:21.363",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47718",
-    "description": "FUXA is a web-based Process Visualization (SCADA/HMI/Dashboard) software. When `secureEnabled=true`, FUXA `1.3.0-2773` still allows guest and invalid-token requests to read project, alarms, and scheduler APIs. Version 1.3.1 fixes this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47718",
-    "publishedDate": "2026-08-12T23:17:20.783",
-    "lastModifiedDate": "2026-08-12T23:17:20.783",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47717",
-    "description": "FUXA is a web-based Process Visualization (SCADA/HMI/Dashboard) software. In fuxa-server version 1.3.0, the GET /api/project endpoint exposes sensitive project configuration data to guest-context requests even when secureEnabled is enabled. Version 1.3.1 fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47717",
-    "publishedDate": "2026-08-12T23:17:20.643",
-    "lastModifiedDate": "2026-08-12T23:17:20.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15424",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15424",
-    "publishedDate": "2026-08-12T23:17:20.107",
-    "lastModifiedDate": "2026-08-12T23:17:20.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-15141",
-    "description": "The web\ninterface of the affected\ndevice relies on the HTTP referrer header as part of\nrequest validation.  Requests containing empty Referer value, or omitting\nthe Referer header entirely, may be accepted and processed due to insufficient\nvalidation logic.\n\n\n\n\n\nSuccessful exploitation may allow an adjacent attacker with access to the web management\ninterface to obtain device configuration details and other sensitive\ninformation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15141",
-    "publishedDate": "2026-08-12T23:17:19.703",
-    "lastModifiedDate": "2026-08-12T23:17:19.703",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
     "id": "CVE-2026-49819",
     "description": "UpSnap is a wake on lan web app. Versions 4.4.1 through 5.3.5 are vulnerable to a missing-authentication / privilege-escalation chain in `pb.HandlerInitSuperuser` (`backend/pb/handlers.go:249`), reachable as `POST /api/upsnap/init-superuser`. The vulnerable code lacks any authentication, setup token, IP allow-list, or rate limit and is gated only by a `totalSuperusers > 0` count check — a condition that is false on every fresh install — allowing an unauthenticated network-adjacent attacker to register the initial superuser account, receive a long-lived JWT, and pivot to root remote code execution at `backend/networking/wake.go:43` (`exec.CommandContext(ctx, \"/bin/sh\", \"-c\", wake_cmd)`). Version 5.4.0 fixes the issue.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-49819",
@@ -190,11 +360,91 @@
     ]
   },
   {
+    "id": "CVE-2026-49473",
+    "description": "@cedar-policy/authorization-for-expressjs is an open-source Express.js middleware that integrates Cedar authorization into Express applications by mapping HTTP requests to Cedar actions and evaluating authorization policies before allowing requests to proceed. Versions prior to 0.3.0 have an issue where, under certain circumstances, the middleware matches incoming requests against Cedar action mappings using req.originalUrl, which includes the query string, while Express routes requests using only the path component. The middleware uses req.originalUrl to match incoming requests against Cedar action mappings. In Express, req.originalUrl includes the query string, while route matching uses only the path. This creates a divergence between what Cedar authorizes and what Express executes. When an application defines separate actions for overlapping path prefixes with different authorization requirements (for example, GET /users for listing all users with admin-only access, and GET /users/{id} for retrieving a single user with any authenticated user access), an actor can append a query string to bypass the more restrictive policy. Sending GET /users/?x=1 causes the middleware to match against /users/{id} (with id parameter set to ?x=1) and evaluate the less restrictive action, while Express routes the request to the /users list handler. This allows inappropriate access to the more restrictive endpoint. This issue has been addressed in version 0.30. Some workarounds are available. Validate and sanitize incoming request paths before they reach the authorization middleware. Ensure that applications do not rely solely on the middleware for authorization when defining multiple actions on overlapping path prefixes with different permission levels.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49473",
+    "publishedDate": "2026-08-13T00:17:32.587",
+    "lastModifiedDate": "2026-08-13T00:17:32.587",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48791",
+    "description": "sigstore-java is a sigstore java client for interacting with sigstore infrastructure. Version 2.0.0 erroneously removed verification of the integrated (Rekor entry) time) against the Fulcio certificate. Version 2.1.0 re-added this verification with enhancements that adhere to the Sigstore verification spec. The old sigstore-conformance test for this check was built incorrectly. This vulnerability impacts only users verifying bundles with `dev.sigstore:sigstore-java:2.0.0`. Older versions are not affected; it is fixed in `dev.sigstore:sigstore-java:2.1.0` A malicious actor may exploit this if they were able to access a users system and exfiltrate the temporary private key used during signing and then reuse an old fulcio certificate later without requiring direct access to the user's credentials. Users may protect themselves by re-verifying their artifacts using the newest sigstore-java or another current sigstore client. Transparency logs may also be audited for unauthorized signatures for a suspected reused identity.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48791",
+    "publishedDate": "2026-08-13T00:17:32.407",
+    "lastModifiedDate": "2026-08-13T00:17:32.407",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 0.6,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46688",
+    "description": "The Meeting Room Booking System (MRBS) is a PHP-based application for booking meeting rooms. Prior to version 1.12.2, an unauthenticated request can be made to redirect the user to a query-specified location. This allows an attacker to create a specially-crafted URL to an MRBS installation that will cause the user who clicks it to be redirected to the attacker-specified redirect URL, which could be a spoofed MRBS login page, for example. Version 1.12.2 contains a fix. No known workarounds are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46688",
+    "publishedDate": "2026-08-13T00:17:32.250",
+    "lastModifiedDate": "2026-08-13T00:17:32.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46382",
+    "description": "The Meeting Room Booking System (MRBS) is a PHP-based application for booking meeting rooms. Prior to version 1.12.2, a user-supplied private/local URI can be made to be fetched without checks. Version 1.12.2 contains a fix. No known workarounds are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46382",
+    "publishedDate": "2026-08-13T00:17:32.090",
+    "lastModifiedDate": "2026-08-13T00:17:32.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-17431",
     "description": "PDF::WebKit versions through 1.2 for Perl allow OS command injection via a 2-arg open() of the output path in to_pdf and of stylesheet paths in _style_tag_for.\n\nto_pdf reads the generated PDF back from its path argument, and _style_tag_for reads each entry of the stylesheets list, by assigning the path to a local @ARGV and reading it with the diamond operator, which opens each @ARGV element with Perl's 2-arg open(). A value that begins or ends with a pipe (\"| cmd\", \"cmd |\") is run as a command rather than opened as a file, and one that begins with a redirect (\"> path\", \">> path\") opens that path for write or append. to_file forwards its path argument to to_pdf and reaches the same read.\n\nAny caller that forwards untrusted input as the output path or as a stylesheets entry can run a command under the process UID; with the \"cmd |\" form the command's output is returned in place of the PDF, and with the \"> path\" form the named file is truncated. Stylesheets may only be added to an HTML source, so a URL or file source exposes the output path alone.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-17431",
     "publishedDate": "2026-08-13T00:17:31.917",
-    "lastModifiedDate": "2026-08-13T00:17:31.917",
+    "lastModifiedDate": "2026-08-13T04:17:18.167",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -204,277 +454,28 @@
     "description": "PDF::WebKit versions through 1.2 for Perl allow argument injection into wkhtmltopdf via meta tags in the source document.\n\nFor an HTML string or file source, the constructor collects every <meta name=\"pdf-webkit-KEY\" content=\"VALUE\"> element in the document head through _pdf_webkit_meta_tags and turns each one into a wkhtmltopdf command line option. KEY is normalized to an option name matching --[a-z0-9-]+ but is not checked against an allow list, VALUE is passed through unchanged as the argument that follows it, and a VALUE of \"yes\" emits the option as a bare flag. BUILD merges the meta derived options last, so they also override the module defaults and the options passed to new. Switches such as --enable-local-file-access and --cookie-jar are reachable this way. The renderer is executed with an argument list rather than a shell command, so this is argument injection and not shell injection.\n\nAny caller that renders untrusted HTML lets the document choose the renderer's options and override those set by the application, including options that read local files into the resulting PDF or write to a chosen path. A URL source is not scanned, and the scan is skipped when XML::LibXML, a recommended dependency, is not installed.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-16770",
     "publishedDate": "2026-08-13T00:17:31.763",
-    "lastModifiedDate": "2026-08-13T00:17:31.763",
+    "lastModifiedDate": "2026-08-13T04:17:15.670",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-7366",
-    "description": "IBM DataPower Gateway 11.0.0.0 through 11.0.0.1 and IBM DataPower Gateway 10.5.0.0 through 10.5.0.21 and IBM DataPower Gateway 10.6.0.0 through 10.6.0.9 allows a race condition that results in improper isolation of request state when handling the built‑in X‑Client‑IP header. Under concurrent request processing, X‑Client‑IP values may be contaminated across requests, enabling IP spoofing and disclosure of other clients’ IP addresses.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7366",
-    "publishedDate": "2026-08-12T22:17:17.780",
-    "lastModifiedDate": "2026-08-12T22:17:17.780",
+    "id": "CVE-2026-71194",
+    "description": "In OpenStack Designate before 22.0.2, the mDNS handler performs pool-blind lookups when resolving record queries and NOTIFY requests. When two zones with the same name exist across different pools, the lookup fails with a deterministic error, causing the handler to return REFUSED for all DNS queries through that path. The _handle_notify path is exploitable via a single unauthenticated UDP packet. This is independently reachable through the cross-tenant zone overlap described in a different recent CVE, and also affects legitimate same-tenant cross-pool configurations. BIND9 views do not mitigate this issue as mDNS is a shared service upstream of any view configuration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71194",
+    "publishedDate": "2026-08-12T23:17:22.170",
+    "lastModifiedDate": "2026-08-12T23:17:22.170",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.2,
+        "score": 6.8,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 2.5,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73519",
-    "description": "WolfStack before 25.9.2 contains a hard-coded cluster-authentication secret compiled into every build and published as a constant in src/auth/mod.rs, allowing remote unauthenticated attackers to bypass authentication by supplying this value in the X-WolfStack-Secret header to the require_auth() gate without any session, API key, or user account. Attackers can reach an affected node's management port to enumerate all Docker and LXC containers on the host and execute arbitrary commands as root inside any container via the POST /api/containers/{runtime}/{id}/exec endpoint.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73519",
-    "publishedDate": "2026-08-12T22:17:17.600",
-    "lastModifiedDate": "2026-08-12T22:17:17.600",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73501",
-    "description": "kin-openapi is a Go project for handling OpenAPI files. Prior to 0.144.0, ValidationHandler.Load() in openapi3filter/validation_handler.go silently replaces a nil AuthenticationFunc with NoopAuthenticationFunc, which returns nil without checking credentials. This substitution causes every OpenAPI security requirement to be satisfied for unauthenticated requests when an application relies on ValidationHandler as its enforcement middleware. The no-op callback prevents the fail-closed ErrAuthenticationServiceMissing path from being reached and forwards the request to protected handlers that may require an API key, OAuth token, or another security scheme. This issue is fixed in version 0.144.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73501",
-    "publishedDate": "2026-08-12T22:17:17.443",
-    "lastModifiedDate": "2026-08-12T22:17:17.443",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73500",
-    "description": "etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.5.33, 3.6.14, and 3.7.1, a network attacker who can reach an etcd TLS listener can open many TCP connections and never send a ClientHello. In client/pkg/transport/listener_tls.go, each connection handled by tlsListener.acceptLoop spawns a goroutine that blocks indefinitely inside tls.Conn.Handshake() and remains tracked in the pending map. Unbounded goroutine and map growth can exhaust memory in the etcd process, causing loss of availability for the cluster and, when etcd backs Kubernetes, the control plane. This issue is fixed in versions 3.5.33, 3.6.14, and 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73500",
-    "publishedDate": "2026-08-12T22:17:17.290",
-    "lastModifiedDate": "2026-08-12T22:17:17.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73499",
-    "description": "etcd is a distributed key-value store for the data of a distributed system. Prior to versions 3.5.33, 3.6.14, and 3.7.1, a user granted READ permission on a single exact key can use the Watch gRPC API with clientv3.WithFromKey() to receive watch events for every key lexicographically greater than or equal to the permitted key. In server/etcdserver/api/v3rpc/watch.go, the open-ended RangeEnd sentinel is rewritten before the RBAC permission check in server/auth/range_perm_cache.go function isRangeOpPermitted, causing the request to be treated as an exact-key watch. Range/Get and DeleteRange requests are not affected, and the issue affects only clusters with authentication enabled. This issue is fixed in versions 3.5.33, 3.6.14, and 3.7.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73499",
-    "publishedDate": "2026-08-12T22:17:17.130",
-    "lastModifiedDate": "2026-08-12T22:17:17.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73498",
-    "description": "MCP Atlassian is a Model Context Protocol (MCP) server for Atlassian products (Confluence and Jira). Prior to 0.22.0, confluence_upload_attachment passes its client-supplied file_path directly to open(file_path, \"rb\") in src/mcp_atlassian/confluence/attachments.py through _upload_attachment_direct() without calling validate_safe_path. An authenticated MCP client can read any file accessible to the server process and exfiltrate it to Confluence as an attachment. If an AI agent can be induced to call the tool through untrusted content, the same flaw can disclose server environment variables such as CONFLUENCE_API_TOKEN and other credentials. This issue is fixed in version 0.22.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73498",
-    "publishedDate": "2026-08-12T22:17:16.973",
-    "lastModifiedDate": "2026-08-12T22:17:16.973",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73495",
-    "description": "blaze is a Scala library for building asynchronous pipelines, with a focus on network IO. Prior to 0.23.18 and 1.0.0-M42, blaze-server can merge HTTP/1.1 chunked-body trailer fields into Request.headers. Because trailer fields are attacker-controlled, an unauthenticated remote client can inject arbitrary header names and values, including X-Forwarded-For and internal authorization headers, that a fronting proxy sanitized from the request-header section, bypassing header-based trust decisions in the application. Any http4s application using BlazeServerBuilder over HTTP/1.1 whose routes or middleware trust proxy-set headers, including X-Forwarded-For, X-Real-IP, and X-Forwarded-Host, is affected. If a fronting proxy strips or normalizes those headers but forwards chunked bodies with trailers intact, an attacker can spoof client IP for allow-lists, rate limits, or auditing, forge the https scheme, or inject internal authorization headers. A promoted Connection: close trailer is also honored, allowing attacker-controlled termination of pooled backend connections. This issue is fixed in versions 0.23.18 and 1.0.0-M42.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73495",
-    "publishedDate": "2026-08-12T22:17:16.820",
-    "lastModifiedDate": "2026-08-12T22:17:16.820",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:N/A:H",
         "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73493",
-    "description": "Http4s (http4s-blaze-server) is a minimal, idiomatic Scala interface for HTTP services. Prior to 0.23.18 and 1.0.0-M42, http4s-blaze-server aggregates fragments of an incoming WebSocket message with no limit on total size or fragment count. A client that completes a WebSocket handshake can send an unterminated fragmented message and drive unbounded heap growth in the server JVM, resulting in denial of service through OutOfMemoryError. Any http4s application serving WebSocket routes over BlazeServerBuilder is affected, no non-default configuration is required, and maxWebSocketBufferSize does not bound the aggregate because it bounds only individual frames. A single connection sending continuation frames that never set FIN forces the server to buffer every fragment until the heap is exhausted, terminating the JVM with OutOfMemoryError on the blaze selector thread. Small fragments amplify the cost through per-frame object overhead, so a modest volume of wire bytes is sufficient. This issue is fixed in versions 0.23.18 and 1.0.0-M42.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73493",
-    "publishedDate": "2026-08-12T22:17:16.673",
-    "lastModifiedDate": "2026-08-12T22:17:16.673",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73492",
-    "description": "Loofah is a general library for manipulating and transforming HTML/XML documents and fragments, built on top of Nokogiri. From 2.25.0 until 2.25.2, Loofah::HTML5::Scrub.allowed_uri? does not reject javascript: or vbscript: URIs whose scheme is split by semicolon-less numeric character references such as &#58, &#9, &#10, or &#13. CGI.unescapeHTML leaves these references encoded, so allowed_uri? reports the URL safe even though a browser decodes an encoded colon or strips encoded whitespace and executes the resulting URI scheme. This issue affects only callers that pass HTML-encoded strings directly to allowed_uri?; Loofah's default sanitize() path is not affected. This issue is fixed in version 2.25.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73492",
-    "publishedDate": "2026-08-12T22:17:16.527",
-    "lastModifiedDate": "2026-08-12T22:17:16.527",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71846",
-    "description": "A flaw was found in insights-client. The component's ServiceAccount is bound to a ClusterRole granting cluster-wide secrets get, list, and watch permissions, while the code only requires access to a single specific Secret. This excessive privilege means that a compromise of the insights-client pod or ServiceAccount token would grant an attacker read access to all Secrets across the hub cluster, including managed-cluster kubeconfigs and other sensitive credentials.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71846",
-    "publishedDate": "2026-08-12T22:17:16.143",
-    "lastModifiedDate": "2026-08-12T22:17:16.143",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 2,
         "impactScore": 4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71473",
-    "description": "A flaw was found in the `search-v2-operator` component. A user with specific administrative permissions on a managed cluster can exploit a vulnerability that allows them to inject arbitrary configuration data. This manipulation can override critical settings, leading to the replacement of container images. This ultimately results in container image injection on the managed cluster, potentially compromising its integrity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71473",
-    "publishedDate": "2026-08-12T22:17:16.020",
-    "lastModifiedDate": "2026-08-12T22:17:16.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4.7,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71471",
-    "description": "A flaw was found in acm-search-v2-rhel9. An attacker with administrative privileges on the hub cluster, specifically with patch access to the Search Custom Resource (CR), could exploit a vulnerability in the `Collector.ImageOverride` field. This allows the attacker to deploy an arbitrary container image across all managed clusters. The consequence is remote code execution (RCE), enabling the attacker to execute commands and potentially access sensitive information across the entire fleet of managed clusters.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71471",
-    "publishedDate": "2026-08-12T22:17:15.890",
-    "lastModifiedDate": "2026-08-12T22:17:15.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71469",
-    "description": "A flaw was found in search-v2-api. An unauthenticated attacker can exploit this by sending requests with unique random bearer tokens. Each unique token creates a permanent entry in the unbounded tokenReviews cache, which is not properly cleared. This can lead to memory exhaustion of the search-api pod, resulting in a Denial of Service (DoS).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71469",
-    "publishedDate": "2026-08-12T22:17:15.760",
-    "lastModifiedDate": "2026-08-12T22:17:15.760",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
+        "source": "cve@mitre.org"
       }
     ]
   }
