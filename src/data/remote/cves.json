@@ -1,39 +1,150 @@
 [
   {
-    "id": "CVE-2026-73629",
-    "description": "Serendipity before 2.6.0 contains a server-side request forgery vulnerability in the serendipity_url_allowed() filter that fails to block hex-encoded IPv4 addresses, IPv6 literals, and link-local ranges. Authenticated users with adminImagesAdd permission can bypass the filter using alternate address formats to request internal services and retrieve response bodies through the public uploads directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73629",
-    "publishedDate": "2026-08-13T12:17:28.330",
-    "lastModifiedDate": "2026-08-13T12:17:28.330",
+    "id": "CVE-2026-73558",
+    "description": "vLLM is an inference and serving engine for large language models. Prior to 0.27.0, an integer overflow in blockIdx.x * 2 * d in activation_kernels.cu can cause act_and_mul_kernel to consume another batched user's input, allowing a request processed in the same inference batch to receive a partial or complete copy of another user's inference result. This issue is fixed in version 0.27.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73558",
+    "publishedDate": "2026-08-13T15:20:18.220",
+    "lastModifiedDate": "2026-08-13T16:19:05.760",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.5,
+        "score": 5.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-73628",
-    "description": "Serendipity versions >= 2.3.5 and <= 2.6.0 contain a reflected cross-site scripting vulnerability in the search clean-URL route (/search/<term>). In include/functions_routing.inc.php serveSearch(), the sanitisation pipeline runs urldecode() after HTML-encoding, so a single URL-encoded HTML payload survives strip_tags() and htmlspecialchars() and is then decoded back into live HTML in the page. A crafted search link can execute arbitrary JavaScript in the victim's browser. Fixed in 2.6.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73628",
-    "publishedDate": "2026-08-13T12:17:28.183",
-    "lastModifiedDate": "2026-08-13T12:17:28.183",
+    "id": "CVE-2026-73557",
+    "description": "vLLM is an inference and serving engine for large language models. From 0.20.2rc0 until 0.26.0, safe_load_prompt_embeds in vllm/renderers/embed_utils.py uses torch.sparse.check_sparse_tensor_invariants, whose process-global save, enable, and restore state can be raced by concurrent prompt_embeds parts submitted to POST /v1/chat/completions through AsyncMultiModalItemTracker.resolve_items, asyncio.gather, and the default executor, allowing an invalid sparse tensor to reach tensor.to_dense despite the CVE-2025-62164 guard when enable_prompt_embeds is enabled. This issue is fixed in version 0.26.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73557",
+    "publishedDate": "2026-08-13T15:20:18.080",
+    "lastModifiedDate": "2026-08-13T15:20:18.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73556",
+    "description": "vLLM is an inference and serving engine for large language models. Prior to 0.26.0, the structured_outputs.regex parameter in vllm/v1/structured_output/backend_lm_format_enforcer.py is passed to lmformatenforcer.RegexParser without compile_regex_with_timeout or validation in validate_structured_output_request_lm_format_enforcer, allowing an unauthenticated /v1/completions request against the lm-format-enforcer backend to consume a CPU core and stall the structured-output engine path with a catastrophic regular expression. This issue is fixed in version 0.26.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73556",
+    "publishedDate": "2026-08-13T15:20:17.927",
+    "lastModifiedDate": "2026-08-13T15:20:17.927",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73555",
+    "description": "vLLM is an inference and serving engine for large language models. Prior to 0.26.0, the validation_exception_handler in vllm/entrypoints/openai/server_utils.py converts FastAPI RequestValidationError objects with str(exc), and sanitize_message in vllm/entrypoints/utils.py does not remove traceback-style file paths, allowing unauthenticated malformed JSON requests to /v1/chat/completions, /v1/completions, /tokenize, and /detokenize to disclose the OS username, home and virtual-environment paths, Python version, internal package structure, line numbers, and endpoint handler names. This issue is fixed in version 0.26.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73555",
+    "publishedDate": "2026-08-13T15:20:17.773",
+    "lastModifiedDate": "2026-08-13T15:20:17.773",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73509",
+    "description": "OpenList a file list program that supports multiple storage. Prior to 4.2.4, the authenticated /api/fs/batch_rename handler in server/handles/fsbatch.go authorizes only the source directory produced by user.JoinPath(req.SrcDir) and validates renameObject.NewName with checkRelativePath, but does not validate attacker-controlled renameObject.SrcName, supplied as src_name, before concatenating it with the authorized path and passing the result to fs.Rename. A user with rename permission can use traversal segments in src_name to make path normalization select a file outside the authorized directory and configured base path, resulting in cross-user file integrity loss, limited availability impact, and file-existence disclosure through success or error responses. This issue is fixed in version 4.2.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73509",
+    "publishedDate": "2026-08-13T15:20:17.623",
+    "lastModifiedDate": "2026-08-13T16:19:05.083",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73508",
+    "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.1.136.Final and 4.2.16.Final, io.netty.handler.codec.dns.AbstractDnsRecord, io.netty.handler.codec.dns.DefaultDnsRecordDecoder.decodeRecord(), and io.netty.handler.codec.dns.DnsCodecUtil.decompressDomainName() failed to release retained or newly allocated ByteBuf objects when IDN.toASCII() or encodeDomainName() rejected a malformed domain name, allowing unauthenticated remote DNS packets to leak direct memory incrementally until denial of service. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73508",
+    "publishedDate": "2026-08-13T15:20:17.463",
+    "lastModifiedDate": "2026-08-13T15:20:17.463",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73507",
+    "description": "Netty is an asynchronous, event-driven network application framework. Prior to 4.1.136.Final and 4.2.16.Final, io.netty.handler.codec.xml.XmlFrameDecoder.decode() failed to preserve closing-tag parser state across invocations, so an unauthenticated remote attacker could trickle-feed repeated </ sequences that repeatedly rescanned the accumulated buffer and exhausted an EventLoop thread's CPU, causing denial of service with a maxFrameLength of 1 MB. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73507",
+    "publishedDate": "2026-08-13T15:20:17.287",
+    "lastModifiedDate": "2026-08-13T15:20:17.287",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73506",
+    "description": "Oh My Posh is the most customisable and low-latency cross platform/shell prompt renderer. Prior to 29.35.1, write(s rune) in src/terminal/writer.go emitted attacker-controlled current directory names and Git metadata, including Commit.Subject, Commit.Author.Name, Commit.Author.Email, and RawUpstreamURL, without removing C0/C1 terminal control characters such as ESC, BEL, CSI, and OSC, allowing terminal escape sequence injection during prompt rendering that could overwrite the clipboard, spoof the prompt or screen, manipulate the window title, or disrupt the terminal. This issue is fixed in version 29.35.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73506",
+    "publishedDate": "2026-08-13T15:20:17.133",
+    "lastModifiedDate": "2026-08-13T15:20:17.133",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -41,135 +152,39 @@
         "score": 6.1,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.7,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-73627",
-    "description": "JupyterLab (pip package 'jupyterlab') versions >=4.1.0,<=4.5.9 and >=4.6.0,<=4.6.1 contain a plugin manager lock-rule enforcement bypass. Two server-side enforcement gaps allow an authenticated user to circumvent administrator lock rules by making direct requests to the /lab/api/plugins endpoint, enabling or disabling plugins that were locked — including child plugins of multi-plugin extensions and plugins locked via the 'lock all' mechanism. This can impact data integrity and bypass hardening or restrictions (e.g., download/upload limits) implemented through locked plugins. Fixed in versions 4.6.2 and 4.5.10.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73627",
-    "publishedDate": "2026-08-13T12:17:28.043",
-    "lastModifiedDate": "2026-08-13T12:17:28.043",
+    "id": "CVE-2026-73505",
+    "description": "Oh My Posh is the most customisable and low-latency cross platform/shell prompt renderer. Prior to 29.35.1, the setStyle() function in src/segments/path.go passed pt.Path, which includes raw folder names, to template.Render, whose function map exposes cmd, so an attacker-controlled directory name containing a Go template expression could execute arbitrary operating system commands as the current user whenever the prompt rendered inside that directory or a descendant. This issue is fixed in version 29.35.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73505",
+    "publishedDate": "2026-08-13T15:20:16.943",
+    "lastModifiedDate": "2026-08-13T16:19:04.977",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73626",
-    "description": "JupyterLab versions >=4.6.0,<=4.6.1 and <=4.5.9 contain an allowlist/blocklist enforcement gap in PyPIExtensionManager.install(). A missing 'await' caused the is_install_allowed coroutine to never execute, so the extension allowlist/blocklist check was not enforced for direct callers of install(). The stock JupyterLab HTTP API and Extension Manager UI are not affected, as they perform a separate, correctly awaited check. The issue affects only deployments where a custom extension or downstream integration imports PyPIExtensionManager and calls install() directly with a package name influenced by untrusted input, an allowlist/blocklist is configured, the PyPI Extension Manager is enabled, and kernels and terminals are disabled or delegated to remote hosts. Fixed in JupyterLab 4.6.2 and 4.5.10.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73626",
-    "publishedDate": "2026-08-13T12:17:27.897",
-    "lastModifiedDate": "2026-08-13T12:17:27.897",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 0,
-        "version": "CVSS 3.1",
-        "severity": "NONE",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 0,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 0,
-        "version": "CVSS 4.0",
-        "severity": "NONE",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73625",
-    "description": "GitPython versions before 3.1.54 contain a remote code execution vulnerability in the check_unsafe_options guard that can be bypassed by smuggling git options inside single-character kwarg values. Attackers can supply crafted option dictionaries to clone_from, fetch, pull, push, ls_remote, iter_commits, blame, or archive methods to execute arbitrary OS commands via the --upload-pack parameter.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73625",
-    "publishedDate": "2026-08-13T12:17:27.753",
-    "lastModifiedDate": "2026-08-13T12:17:27.753",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
+        "score": 7.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
         "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-73624",
-    "description": "GitPython versions before 3.1.54 contain an arbitrary file overwrite vulnerability in the Diffable.diff method that fails to validate git options passed through kwargs. Attackers can supply the --output argument via the other parameter or output kwarg to write patch content to attacker-chosen file paths at process privilege level.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73624",
-    "publishedDate": "2026-08-13T12:17:27.617",
-    "lastModifiedDate": "2026-08-13T12:17:27.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73623",
-    "description": "GitPython before 3.1.54 contains an incomplete denylist in unsafe_git_clone_options that omits --template, allowing attackers to achieve arbitrary command execution during clone operations. Attackers can supply --template pointing to a directory containing malicious post-checkout hooks that execute when git clones the repository.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73623",
-    "publishedDate": "2026-08-13T12:17:27.477",
-    "lastModifiedDate": "2026-08-13T12:17:27.477",
+    "id": "CVE-2026-70464",
+    "description": "rsync daemon 2.0.0 before 3.5.0 contains a denial of service vulnerability that allows unauthenticated remote attackers to exhaust daemon connection slots by stalling the handshake process before or after module selection without triggering the I/O timeout. Attackers can open many simultaneous connections and trickle data at the minimum rate to avoid timeout, or stall entirely before module selection where no timeout applies, consuming all available connection slots and denying service to legitimate clients.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70464",
+    "publishedDate": "2026-08-13T15:20:01.667",
+    "lastModifiedDate": "2026-08-13T15:20:01.667",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -177,36 +192,7 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73622",
-    "description": "GitPython before 3.1.55 fails to disable environment variable expansion in Remote.create() and Submodule.add() URL handling, allowing attackers to exfiltrate secrets by supplying URLs containing variable references. Attackers can craft URLs with environment variable tokens that are expanded into .git/config and .gitmodules, then transmitted to attacker-controlled hosts during fetch or pull operations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73622",
-    "publishedDate": "2026-08-13T12:17:27.337",
-    "lastModifiedDate": "2026-08-13T12:17:27.337",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
         "source": "disclosure@vulncheck.com"
@@ -215,7 +201,7 @@
         "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -223,272 +209,11 @@
     ]
   },
   {
-    "id": "CVE-2026-73621",
-    "description": "GitPython before 3.1.56 contains an argument injection vulnerability in the Commit.count() method, which forwards keyword arguments to 'git rev-list' without the check_unsafe_options guard present in the sibling iter_items method. An attacker who can control options passed to Commit.count (e.g., via an application that forwards a user-supplied options dict) can supply output=<path>, causing 'git rev-list --output=<path>' to open and truncate the target file to zero bytes before revision parsing. This allows destruction/blanking of an arbitrary file at the process's privilege level (no content control, 0-byte truncation).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73621",
-    "publishedDate": "2026-08-13T12:17:27.200",
-    "lastModifiedDate": "2026-08-13T12:17:27.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73620",
-    "description": "GitPython before 3.1.57 fails to guard git option forwarding in IndexFile.checkout() and TagReference.create(), allowing attackers to pass unsafe options via kwargs. Attackers can use --prefix to overwrite arbitrary files with repository content or -F to read arbitrary files returned in-band.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73620",
-    "publishedDate": "2026-08-13T12:17:27.057",
-    "lastModifiedDate": "2026-08-13T12:17:27.057",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73619",
-    "description": "GitPython before 3.1.57 contains an incomplete denylist in the unsafe_git_archive_options guard that omits --add-file and --add-virtual-file options. Attackers can supply these options to Repo.archive() to read arbitrary files from the filesystem and include them in the returned archive.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73619",
-    "publishedDate": "2026-08-13T12:17:26.913",
-    "lastModifiedDate": "2026-08-13T12:17:26.913",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73618",
-    "description": "Budibase Server before 3.40.0 contains a NoSQL injection vulnerability in the MongoDB query execution endpoint where user-supplied parameters are interpolated into JSON query templates without proper sanitization of JSON metacharacters. Attackers with query write permission can inject JSON structural characters to alter MongoDB queries, bypassing filters to read, modify, or delete arbitrary documents.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73618",
-    "publishedDate": "2026-08-13T12:17:26.770",
-    "lastModifiedDate": "2026-08-13T12:17:26.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73617",
-    "description": "Budibase before 3.40.0 contains a NoSQL injection vulnerability in the MongoDB datasource integration where user-supplied parameters are enriched with handlebars using noEscaping: true and parsed without operator filtering. Attackers can inject MongoDB operators through query parameters to bypass per-user access controls, read arbitrary documents, execute JavaScript via $where operators, or modify collections through update and delete operations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73617",
-    "publishedDate": "2026-08-13T12:17:26.627",
-    "lastModifiedDate": "2026-08-13T12:17:26.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73616",
-    "description": "OpenRemote notification deletion endpoints fail to enforce realm boundaries, allowing any realm administrator to delete notifications belonging to other realms. Attackers with write:admin role in one realm can send DELETE requests to remove notifications from the master realm or other tenants without authorization checks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73616",
-    "publishedDate": "2026-08-13T12:17:26.480",
-    "lastModifiedDate": "2026-08-13T12:17:26.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73615",
-    "description": "Network-AI versions before 5.15.1 contain a security matcher bypass vulnerability where SandboxPolicy evaluates raw command strings with quotes preserved while the executor tokenizes commands by stripping quotes before execution. Attackers can craft quoted commands that evade blocklist checks and approval gates while the executor runs the identical unquoted dangerous argv.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73615",
-    "publishedDate": "2026-08-13T12:17:26.337",
-    "lastModifiedDate": "2026-08-13T12:17:26.337",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73614",
-    "description": "Network-AI ClaudeHookBridge before 5.15.1 truncates the target string to 500 characters before evaluating denyPatterns, while Claude Code executes the full untruncated command. Attackers can position dangerous content past byte 500 in a Bash command field to bypass the operator's hard-deny list and execute arbitrary commands.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73614",
-    "publishedDate": "2026-08-13T12:17:26.197",
-    "lastModifiedDate": "2026-08-13T12:17:26.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73613",
-    "description": "filebrowser versions before 2.63.19 contain an out-of-scope file deletion vulnerability in the TUS upload cache eviction mechanism that allows authenticated users with only Create permission to delete arbitrary files outside their scope. Attackers can swap an ancestor directory with a symlink during the cache TTL window to redirect the raw os.Remove call to an out-of-scope target, bypassing ScopedFs scope guards and Perm.Delete checks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73613",
-    "publishedDate": "2026-08-13T12:17:26.043",
-    "lastModifiedDate": "2026-08-13T12:17:26.043",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:N/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.8,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73612",
-    "description": "File Browser before v2.63.22 fails to validate access rules for descendants during recursive copy, rename, and delete operations, allowing authenticated users to bypass path-based access controls. Attackers can copy, rename, or delete denied files by operating on their allowed parent directory, defeating rule-based isolation for confidentiality and integrity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73612",
-    "publishedDate": "2026-08-13T12:17:25.897",
-    "lastModifiedDate": "2026-08-13T12:17:25.897",
+    "id": "CVE-2026-70463",
+    "description": "rsync 3.1.0 before 3.5.0 contains an authorization bypass in auth users directive parsing. The auth users parser uses comma-only tokenization when splitting the user list, which fails to correctly handle entries of the form @Group Name where the group name contains a space. The space within the group name causes the parser to split the entry at the space boundary, discarding the deny rule associated with the group. An authenticated user whose username or group membership would be denied by an @Group Name auth users entry can connect to a restricted module because the deny rule is silently discarded during parsing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70463",
+    "publishedDate": "2026-08-13T15:20:01.513",
+    "lastModifiedDate": "2026-08-13T15:20:01.513",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -513,28 +238,28 @@
     ]
   },
   {
-    "id": "CVE-2026-73611",
-    "description": "File Browser versions from 2.50.0 through 2.63.21 fail to validate JWT expiration when proxy authentication is configured with a non-default logout page. Attackers with a previously valid token can access protected routes and administrative endpoints indefinitely, and exchange expired tokens for fresh ones via the renewal endpoint.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73611",
-    "publishedDate": "2026-08-13T12:17:25.747",
-    "lastModifiedDate": "2026-08-13T12:17:25.747",
+    "id": "CVE-2026-70462",
+    "description": "rsync 3.1.0 before 3.5.0 contains a signed integer overflow vulnerability in the I/O timeout implementation that allows attackers to permanently disable connection timeouts by injecting MSG_IO_TIMEOUT messages carrying non-positive (zero or negative) values. Attackers can craft malicious MSG_IO_TIMEOUT messages that cause the timeout variable to wrap to a non-positive value, preventing the timeout check from firing and enabling idle or stalled connections to hold daemon slots indefinitely, leading to resource exhaustion.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70462",
+    "publishedDate": "2026-08-13T15:20:00.267",
+    "lastModifiedDate": "2026-08-13T16:19:01.687",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.8,
+        "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 7.6,
+        "score": 7.1,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -542,86 +267,57 @@
     ]
   },
   {
-    "id": "CVE-2026-73610",
-    "description": "SiYuan before v3.7.4 contains an information disclosure vulnerability in the local storage filter that returns the administrator's entire storage map with only three keys sanitized. Unauthenticated attackers or publish readers can retrieve closed-tab history, search keywords, private document identifiers, and expanded folder paths by calling the getLocalStorage endpoint.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73610",
-    "publishedDate": "2026-08-13T12:17:25.607",
-    "lastModifiedDate": "2026-08-13T12:17:25.607",
+    "id": "CVE-2026-70461",
+    "description": "rsync 3.2.5 before 3.5.0 contains a heap out-of-bounds write vulnerability that allows remote unauthenticated attackers to write one attacker-controlled byte past the end of a heap allocation by supplying a crafted files-from entry. Attackers can trigger the vulnerability against a read-only rsync daemon module by providing a files-from entry containing both an interior and trailing backslash, causing the add_implied_include() function to under-count the trailing backslash when sizing the destination buffer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70461",
+    "publishedDate": "2026-08-13T15:20:00.117",
+    "lastModifiedDate": "2026-08-13T15:20:00.117",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73609",
-    "description": "SiYuan versions before v3.7.4 contain an information disclosure vulnerability in the getBookmarkLabels endpoint that returns all bookmark labels in the workspace without publish-access filtering. Anonymous readers and publish-mode readers can obtain the complete bookmark vocabulary across the workspace, disclosing subject matter and organizational information from inaccessible documents.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73609",
-    "publishedDate": "2026-08-13T12:17:25.463",
-    "lastModifiedDate": "2026-08-13T12:17:25.463",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-73608",
-    "description": "SiYuan's development branch (endpoint introduced by commit 9b8e8956f, not present in v3.7.3 or master, patched in v3.7.4) contains a missing-authorization vulnerability in the /api/av/getAttributeViewSearchTarget endpoint. The route is registered with CheckAuth only and performs no authorization checks (no CheckReadonly, no publish-access or encrypted-notebook gating). Given a database identifier taken from a published page and a keyword, an anonymous reader can query the endpoint to retrieve matching database row content, including rows that publish filters (FilterAttributeViewByPublishAccess) would otherwise withhold. No released stable version is affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73608",
-    "publishedDate": "2026-08-13T12:17:25.323",
-    "lastModifiedDate": "2026-08-13T12:17:25.323",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
+        "score": 8.2,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 4,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70460",
+    "description": "rsync 2.3.3 before 3.5.0 contains a path traversal vulnerability that allows a malicious sender to escape the module root by exploiting symlinks within the module file tree when using --partial-dir or --backup-dir options. Attackers with write access to place a symlink under the module root, or who can exploit a pre-existing trusted symlink, can direct file writes to locations outside the intended module root, achieving arbitrary file write relative to the module root parent.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70460",
+    "publishedDate": "2026-08-13T15:19:59.957",
+    "lastModifiedDate": "2026-08-13T15:19:59.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
         "source": "disclosure@vulncheck.com"
       },
       {
         "score": 9.2,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -629,19 +325,19 @@
     ]
   },
   {
-    "id": "CVE-2026-73607",
-    "description": "SiYuan versions before v3.7.4 contain an information disclosure vulnerability in the /api/storage/getOutlineStorage endpoint that performs no authorization checks. Attackers can retrieve outline state including heading identifiers for any document by supplying its identifier, even for documents forbidden to the requester.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73607",
-    "publishedDate": "2026-08-13T12:17:25.183",
-    "lastModifiedDate": "2026-08-13T12:17:25.183",
+    "id": "CVE-2026-70459",
+    "description": "rsync 3.0.0 before 3.5.0 contains a null pointer dereference vulnerability in the daemon child process that allows remote attackers to crash the daemon by sending a file list whose first entry is a dot entry not typed as a directory. The daemon dereferences the first file list entry as a directory structure pointer without verifying the entry type, resulting in an invalid or uninitialized pointer dereference that terminates the client connection.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70459",
+    "publishedDate": "2026-08-13T15:19:59.813",
+    "lastModifiedDate": "2026-08-13T15:19:59.813",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.8,
+        "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
         "source": "disclosure@vulncheck.com"
@@ -650,7 +346,7 @@
         "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -658,28 +354,28 @@
     ]
   },
   {
-    "id": "CVE-2026-73606",
-    "description": "SiYuan versions before v3.7.4 contain an information disclosure vulnerability in the /api/block/getRefIDs endpoint that fails to check password-protected document tiers. Unauthenticated readers can discover that password-protected documents reference specific blocks and obtain block identifiers without entering the document password.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73606",
-    "publishedDate": "2026-08-13T12:17:25.043",
-    "lastModifiedDate": "2026-08-13T12:17:25.043",
+    "id": "CVE-2026-70458",
+    "description": "rsync 3.0.0 before 3.5.0 contains an out-of-bounds write vulnerability that allows attackers to corrupt memory by triggering HLINK_BUMP processing on file entries with the FLAG_HLINKED flag set while the hard-link preservation option is inactive. Attackers can exploit the missing F_SUM field in the file_struct layout to access memory past the end of the allocated structure, corrupting adjacent heap or stack data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70458",
+    "publishedDate": "2026-08-13T15:19:59.663",
+    "lastModifiedDate": "2026-08-13T16:19:01.513",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.8,
+        "score": 8.2,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
+        "impactScore": 4.2,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.9,
+        "score": 8.8,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -687,32 +383,226 @@
     ]
   },
   {
-    "id": "CVE-2026-73605",
-    "description": "SiYuan versions before v3.7.4 contain a path traversal vulnerability in the getUniqueFilename endpoint that allows anonymous readers to probe filesystem existence without validation or confinement. Attackers can supply arbitrary absolute paths to determine whether files and directories exist on the host, enabling reconnaissance of the filesystem layout and installed software.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73605",
-    "publishedDate": "2026-08-13T12:17:24.897",
-    "lastModifiedDate": "2026-08-13T12:17:24.897",
+    "id": "CVE-2026-70457",
+    "description": "rsync 3.2.3 before 3.5.0 contains an out-of-bounds write in parse_size_arg() where the return value of snprintf() is used directly as an index into a .bss-segment array without bounds checking. When snprintf truncates the formatted size string, the return value equals the number of characters that would have been written including the truncated portion, and this value may exceed the array length. The subsequent indexed write targets memory outside the intended array bounds, corrupting .bss memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70457",
+    "publishedDate": "2026-08-13T15:19:59.490",
+    "lastModifiedDate": "2026-08-13T15:19:59.490",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.8,
+        "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4.2,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.9,
+        "score": 8.3,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
       }
     ]
+  },
+  {
+    "id": "CVE-2026-70456",
+    "description": "rsync 3.0.1 before 3.5.0 contains an out-of-bounds write vulnerability in the read_args() function that allows a malicious sender to corrupt adjacent heap memory by sending a crafted argument list. When the argument count causes the argv allocation to be exactly full, the trailing NULL terminator is written one slot beyond the allocation boundary, corrupting adjacent heap memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70456",
+    "publishedDate": "2026-08-13T15:19:59.343",
+    "lastModifiedDate": "2026-08-13T15:19:59.343",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70455",
+    "description": "rsync 3.4.2 before 3.5.0 contains a denial of service vulnerability that allows a remote sender to exhaust system resources by specifying the --zt short alias for --compress-threads, which bypasses the refuse options directive's string matching on long option names. Attackers can specify --zt=N with a large value to spawn an unbounded number of Zstandard worker threads on the receiver, exhausting available thread and memory resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70455",
+    "publishedDate": "2026-08-13T15:19:59.197",
+    "lastModifiedDate": "2026-08-13T15:19:59.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70454",
+    "description": "rsync 3.2.0 through 3.2.3 (openssl mode) and rsync-ssl through 3.4.4 (stunnel mode) contain a TLS certificate validation vulnerability that allows on-path attackers to intercept encrypted sessions by presenting self-signed or otherwise invalid certificates. Attackers can exploit the failure to validate server TLS certificates against a trusted CA or verify certificate hostname matching to decrypt or tamper with rsync session content without detection by the client.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70454",
+    "publishedDate": "2026-08-13T15:19:59.047",
+    "lastModifiedDate": "2026-08-13T16:19:01.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.8,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70453",
+    "description": "rsync before 3.5.0 contains an algorithmic complexity vulnerability in the hash_search() function that allows a remote attacker to cause a denial of service by delivering a carefully constructed file list. A sender can exploit the quadratic-time worst-case behavior in hash lookups to exhaust receiver CPU resources with a modest number of crafted entries, causing a sustained denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70453",
+    "publishedDate": "2026-08-13T15:19:58.893",
+    "lastModifiedDate": "2026-08-13T15:19:58.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-70452",
+    "description": "rsync 3.1.0 before 3.5.0 contains an access control bypass vulnerability that allows remote attackers to circumvent hosts deny rules by inducing DNS resolution failures during hostname-based access control evaluation. When a DNS lookup for a hostname-based deny rule fails, the daemon skips the rule rather than defaulting to a deny decision, enabling attackers who can trigger DNS failures to bypass module-level IP access controls and gain unauthorized access to restricted module file trees.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70452",
+    "publishedDate": "2026-08-13T15:19:58.740",
+    "lastModifiedDate": "2026-08-13T15:19:58.740",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.1,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-6387",
+    "description": "A potential authentication bypass vulnerability was reported in Lenovo System Update that could allow a local authenticated user to execute arbitrary code with elevated privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6387",
+    "publishedDate": "2026-08-13T15:19:58.590",
+    "lastModifiedDate": "2026-08-13T16:18:56.283",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 5.9,
+        "source": "psirt@lenovo.com"
+      },
+      {
+        "score": 7.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "psirt@lenovo.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68454",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: s390: pci: Fix handling of AIF enable without AISB\n\nWhen a guest seeks to register IRQs without a summary bit specified,\nensure that the associated GAITE then stores 0 for the guest AISB\nlocation instead of virt_to_phys(page_address(NULL)).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68454",
+    "publishedDate": "2026-08-13T15:19:58.210",
+    "lastModifiedDate": "2026-08-13T15:19:58.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-68453",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ns390/zcrypt: Fix buffer over-read in cca_cipher2protkey\n\nAdd validation of both the actual key buffer size and token length\nfields in all the cca_check_sec*token() functions. Additionally check\nin cca_gencipherkey() for possible underflow with returned key size.\n\nThe CCA token structures contain user-controlled len fields that\nwere used in operations without proper validation against both the\nactual buffer size and minimum token structure size. An attacker\ncould set this field larger than the actual buffer size, leading to\nreading beyond buffer boundaries. This may result in a kernel crash or\nexposure of memory via sending this as part of a request down to the\ncrypto card. Also an attacker could have used a very small len value\nand thus enforce a buffer under-run which may produce similar effects\nas a over-read.\n\nSo now a key must\n- key buf length must be at least sizeof the token struct\n- the key len field inside the token must fit into the range of\n  sizeof key token struct ... key buf length",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68453",
+    "publishedDate": "2026-08-13T15:19:58.093",
+    "lastModifiedDate": "2026-08-13T15:19:58.093",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
