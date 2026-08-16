@@ -604,7 +604,7 @@
     "description": "Net::OAuth versions before 0.32 for Perl allow memory exhaustion via unbounded caching of failed module loads in smart_require.\n\nsmart_require stores results in a process-global hash with no bound and no eviction, and keeps an entry for every class name it is asked about, including names that failed to load, because the return value of the failed eval is stored before the error is checked. The key comes off the wire on the server side: _signature_method_class builds the class name from the signature_method parameter of the incoming message, and verify resolves it before any signature is checked.\n\nA remote client chooses both how many entries are created and how long each key is. In a persistent server the hash grows for the life of the worker process until it exhausts memory. Header size limits bound the key length on the Authorization header path, but not on a POST body.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-72888",
     "publishedDate": "2026-08-16T14:16:54.970",
-    "lastModifiedDate": "2026-08-16T14:16:54.970",
+    "lastModifiedDate": "2026-08-16T17:17:41.670",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -614,7 +614,7 @@
     "description": "Net::OAuth::Client versions before 0.32 for Perl allow the service provider to silently downgrade OAuth 1.0a to OAuth 1.0 in get_request_token.\n\nPassing a callback to the constructor selects OAuth 1.0a. get_request_token then revokes that choice when the request token response omits oauth_callback_confirmed, with no exception, no warning and no option to require 1.0a. The access token request is built from the OAuth 1.0 message class, which has no verifier parameter, so oauth_verifier is dropped from the request even when get_access_token was passed one.\n\noauth_verifier is the binding that OAuth 1.0a added between the authorization step and the token exchange. An application that asked for 1.0a and gets 1.0 is open to OAuth 1.0 session fixation, where an attacker obtains a request token, has the victim authorize it, and then completes the exchange themselves, linking the victim's provider account to a session the attacker controls. No attacker action sets up the downgrade: a provider that does not confirm the callback is enough.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-72887",
     "publishedDate": "2026-08-16T14:16:54.860",
-    "lastModifiedDate": "2026-08-16T14:16:54.860",
+    "lastModifiedDate": "2026-08-16T17:17:41.493",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -624,7 +624,7 @@
     "description": "Lemonldap::NG::Portal versions from 2.0.0 before 2.16.9, from 2.17.0 before 2.21.5, from 2.22.0 before 2.23.3 for Perl allow authentication bypass via an OAuth2 state parameter stored as an SSO session in the GitHub and LinkedIn backends.\n\nBefore redirecting to the identity provider, extractFormInfo() creates the state session with the positional call `getApacheSession( undef, 1, 0, 'GitHubState' )`. getApacheSession() takes a session id followed by a named argument hash, so the trailing arguments become that hash, `kind` defaults to SSO, and the state is written to the global session storage as a regular SSO session. Its identifier is handed to the unauthenticated visitor as the state parameter of the redirection URL.\n\nAny visitor who reaches the GitHub or LinkedIn endpoint can replay that identifier as a session cookie and obtain a valid SSO session without authenticating. The session holds neither _user nor authenticationLevel, which the shipped bootstrap configuration accepts because it grants virtual hosts a \"default => accept\" access rule; deployments whose rules test the user or require an authentication level are less exposed. Only configurations with the GitHub or LinkedIn authentication module enabled are affected.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-19349",
     "publishedDate": "2026-08-16T14:16:54.720",
-    "lastModifiedDate": "2026-08-16T14:16:54.720",
+    "lastModifiedDate": "2026-08-16T17:17:04.427",
     "vendors": [],
     "products": [],
     "cvssScores": []
