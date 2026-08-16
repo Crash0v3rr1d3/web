@@ -1,20 +1,436 @@
 [
   {
-    "id": "CVE-2026-74578",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: algif_skcipher - force synchronous processing on trees without ctx->state\n\nThe AIO/async path in skcipher_recvmsg() passes the socket-wide ctx->iv\ndirectly into the skcipher request. After io_submit() the socket lock is\ndropped and the request is processed asynchronously, so a concurrent\nsendmsg(ALG_SET_IV) can overwrite ctx->iv and make the in-flight request\nrun under an attacker-controlled IV. For CTR/stream modes this is\nIV/keystream reuse and lets an unprivileged user recover the plaintext of\na concurrent operation.\n\nSnapshotting ctx->iv into per-request storage for the async path is not\nsufficient. For ciphers with statesize == 0 - which includes cbc and ctr -\nthe MSG_MORE inter-chunk IV chaining is carried solely by the in-place\nreq->iv writeback, which a snapshot redirects into per-request memory that\naf_alg_free_resources() releases on completion, silently producing wrong\noutput. Writing the IV back from the completion callback instead is not\npossible either: that would require lock_sock() there, but the callback can\nrun in softirq/atomic context, so it must not sleep.\n\nMake the operation synchronous instead, which removes both the IV race and\nany writeback race. This is equivalent to the upstream resolution, commit\nfcc77d33a34c (\"net: Remove support for AIO on sockets\"), which removed the\nAIO socket path across net/ entirely and so produces the same end state for\nthis file. This patch deviates from that commit deliberately: rather than\nremoving AIO socket support tree-wide, which would be far too invasive for\nstable, it removes only the AIO branch in crypto/algif_skcipher.c.\nio_submit() now completes synchronously; AF_ALG async is rarely used in\npractice.\n\nThe -EIOCBQUEUED check in skcipher_recvmsg() is now dead but harmless,\nand is left alone to keep the fix minimal.\n\nTested on 6.6.y: attacker IV injection dropped from 2296/200000 to 0/200000\nafter the change; MSG_MORE chunked CTR output bit-identical to single-shot.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74578",
-    "publishedDate": "2026-08-16T09:16:21.653",
-    "lastModifiedDate": "2026-08-16T09:16:21.653",
+    "id": "CVE-2026-74797",
+    "description": "OpenTofu versions before 1.11.4 contain a denial of service vulnerability in the tofu init command when processing maliciously-crafted .zip archives for provider or module packages. Attackers can cause excessive CPU usage by controlling .zip archive content served during dependency installation, degrading system performance and preventing timely completion of the init process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74797",
+    "publishedDate": "2026-08-16T14:16:57.930",
+    "lastModifiedDate": "2026-08-16T14:16:57.930",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2024-13784",
-    "description": "The Contact Form, Survey, Quiz & Popup Form Builder – ARForms plugin for WordPress is vulnerable to PHP Object Injection in all versions up to, and including, 1.8.5 via deserialization of untrusted input from form submissions. This makes it possible for unauthenticated attackers to inject a PHP Object. No known POP chain is present in the vulnerable software, which means this vulnerability has no impact unless another plugin or theme containing a POP chain is installed on the site. If a POP chain is present via an additional plugin or theme installed on the target system, it may allow the attacker to perform actions like delete arbitrary files, retrieve sensitive data, or execute code depending on the POP chain present.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2024-13784",
-    "publishedDate": "2026-08-16T09:16:19.900",
-    "lastModifiedDate": "2026-08-16T09:16:19.900",
+    "id": "CVE-2026-74796",
+    "description": "OpenTofu before 1.11.7 fails to validate existing symlinks in the provider cache directory during initialization. Attackers can place a malicious symlink in a trusted working directory to cause tofu init to write provider package contents to arbitrary filesystem locations outside the working tree.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74796",
+    "publishedDate": "2026-08-16T14:16:57.727",
+    "lastModifiedDate": "2026-08-16T14:16:57.727",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:N/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74795",
+    "description": "Scriban before 6.6.0 contains an uncontrolled recursion vulnerability in its recursive-descent parser. The parser does not enforce a default expression depth limit (the ExpressionDepthLimit property in ParserOptions defaults to null/disabled), so an attacker who controls template input can supply a deeply nested template (e.g., thousands of nested parentheses or blocks) that exhausts thread stack space and raises a StackOverflowException. Because a StackOverflowException cannot be caught in .NET, this causes immediate, unrecoverable termination of the hosting process, resulting in a denial of service. Applications that process untrusted or user-supplied templates can be exploited remotely without authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74795",
+    "publishedDate": "2026-08-16T14:16:57.590",
+    "lastModifiedDate": "2026-08-16T14:16:57.590",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74794",
+    "description": "Scriban before 6.6.0 contains an infinite recursion vulnerability in object rendering when the ObjectRecursionLimit property defaults to unlimited. Attackers can supply circular reference objects to the template context, exhausting stack space and triggering an uncatchable StackOverflowException that terminates the hosting process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74794",
+    "publishedDate": "2026-08-16T14:16:57.450",
+    "lastModifiedDate": "2026-08-16T14:16:57.450",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74792",
+    "description": "Scriban before 7.0.0 (affected versions <= 6.6.0) contains a stack overflow vulnerability in nested array initializer parsing. Deeply nested array initializers recurse through a path (ParseArrayInitializer → ParseExpression → ParseArrayInitializer) that is not covered by the ExpressionDepthLimit counter added in the fix for GHSA-wgh7-7m3c-fx25. An attacker who can supply untrusted input to Template.Parse can trigger an uncatchable StackOverflowException that immediately terminates the process, even with the default ExpressionDepthLimit enabled.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74792",
+    "publishedDate": "2026-08-16T14:16:57.317",
+    "lastModifiedDate": "2026-08-16T14:16:57.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74791",
+    "description": "Scriban before 7.0.0 fails to clear the CachedTemplates dictionary when TemplateContext.Reset() is called, allowing cached templates to persist across reused contexts. Attackers can exploit request-dependent ITemplateLoader implementations to access previously authorized template content from earlier renders without triggering TemplateLoader.Load() again.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74791",
+    "publishedDate": "2026-08-16T14:16:57.183",
+    "lastModifiedDate": "2026-08-16T14:16:57.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74790",
+    "description": "Scriban before 7.0.0 caches TypedObjectAccessor by Type only without considering MemberFilter changes, allowing reused TemplateContext instances to expose members that should be hidden. Attackers can access filtered properties and fields by reusing a TemplateContext after tightening its MemberFilter, bypassing sandbox policies across requests or tenants.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74790",
+    "publishedDate": "2026-08-16T14:16:57.050",
+    "lastModifiedDate": "2026-08-16T14:16:57.050",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74789",
+    "description": "Scriban before 7.0.0 (affected <= 6.6.0) applies its LoopLimit constraint only to script loop statements and not to expensive iteration performed inside built-in operators and functions. As a result, a single expression such as {{ 1..1000000 | array.size }} — or a memory-amplification expression such as {{ 'A' * 200000000 }} — can force large CPU or memory consumption even when LoopLimit is configured to a very small value, resulting in denial of service. Applications that render attacker-controlled templates and rely on LoopLimit for safe execution are affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74789",
+    "publishedDate": "2026-08-16T14:16:56.917",
+    "lastModifiedDate": "2026-08-16T14:16:56.917",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74788",
+    "description": "Scriban before 7.0.0 (affected versions <= 6.6.0) contains an uncontrolled memory allocation vulnerability in the string.pad_left and string.pad_right template functions, which perform no validation on the width parameter before delegating to .NET's String.PadLeft/PadRight. When an application exposes Scriban to untrusted template input, an attacker can supply an arbitrarily large width value (e.g., 500,000,000) to trigger ~1GB memory allocations in a single call, resulting in OutOfMemoryException and denial of service. The TemplateContext.LimitToString limit does not prevent this because it is only enforced after the string has been fully allocated.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74788",
+    "publishedDate": "2026-08-16T14:16:56.787",
+    "lastModifiedDate": "2026-08-16T14:16:56.787",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74787",
+    "description": "Scriban before 7.0.0 contains an uncontrolled recursion vulnerability in the object.to_json builtin function that lacks depth limits and circular reference detection. Attackers can craft templates with self-referencing objects to trigger unbounded recursion, causing a StackOverflowException that fatally terminates the hosting .NET process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74787",
+    "publishedDate": "2026-08-16T14:16:56.653",
+    "lastModifiedDate": "2026-08-16T14:16:56.653",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74786",
+    "description": "Scriban before 7.0.0 (affected versions <= 6.6.0) contains a denial-of-service vulnerability in which the LimitToString safety limit (default 1MB) can be bypassed because ObjectToString resets the per-call length counter (_currentToStringLength) on every top-level call and StringBuilderOutput enforces no cumulative output-size limit. An attacker who can supply a template can render a near-limit string repeatedly in a loop, allocating approximately 1GB of memory and causing an out-of-memory condition that crashes the host application.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74786",
+    "publishedDate": "2026-08-16T14:16:56.523",
+    "lastModifiedDate": "2026-08-16T14:16:56.523",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74785",
+    "description": "Scriban before 7.0.0 contains three distinct denial-of-service vulnerabilities in expression evaluation that bypass existing safety controls through unbounded string multiplication, uncontrolled BigInteger shift operations, and LoopLimit bypass via range enumeration in builtin functions. Attackers who can supply templates can cause out-of-memory exceptions or CPU exhaustion, typically terminating the entire host process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74785",
+    "publishedDate": "2026-08-16T14:16:56.390",
+    "lastModifiedDate": "2026-08-16T14:16:56.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74784",
+    "description": "Scriban before 7.2.0 contains a denial of service vulnerability in the array.insert_at function that allocates unbounded null entries without respecting LoopLimit or LimitToString constraints. Attackers can supply a large index parameter to trigger OutOfMemoryException and crash the host process in under a second.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74784",
+    "publishedDate": "2026-08-16T14:16:56.263",
+    "lastModifiedDate": "2026-08-16T14:16:56.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-74783",
+    "description": "Scriban versions 6.6.0 through 7.2.0 contain a non-enforcing ExpressionDepthLimit guard that fails to stop recursive descent parsing of deeply nested expressions. Attackers can supply templates with deeply nested parentheses, array initializers, object initializers, or unary operators to trigger an uncatchable StackOverflowException that immediately terminates the host process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74783",
+    "publishedDate": "2026-08-16T14:16:56.133",
+    "lastModifiedDate": "2026-08-16T14:16:56.133",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73062",
+    "description": "Scriban versions 3.0.0 through 7.2.0 contain a denial of service vulnerability in the array multiplication operator that allocates memory without enforcing LoopLimit or overflow-safe arithmetic checks. Attackers can supply a large integer multiplier in a template to force multi-gigabyte memory allocations, causing resource exhaustion and availability degradation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73062",
+    "publishedDate": "2026-08-16T14:16:55.903",
+    "lastModifiedDate": "2026-08-16T14:16:55.903",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73061",
+    "description": "Scriban before 7.2.2 contains an access-modifier bypass vulnerability in TypedObjectAccessor that allows template code to write CLR object properties without setter-visibility checks. Attackers can modify properties with private, internal, or init-only setters, and perform mass assignment on public-setter properties, permanently altering live host objects after template rendering.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73061",
+    "publishedDate": "2026-08-16T14:16:55.770",
+    "lastModifiedDate": "2026-08-16T14:16:55.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -25,116 +441,25 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2497",
-    "description": "The Gallery by BestWebSoft plugin for WordPress is vulnerable to SQL Injection via the '_gallery_order_{post_id}' parameter array keys in all versions up to, and including, 4.7.9. This is due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. The `gllr_save_postdata()` function stores unsanitized array keys from `$_POST` directly into post meta, which are later used in SQL queries without prepared statements. This makes it possible for authenticated attackers, with Editor-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2497",
-    "publishedDate": "2026-08-16T07:16:31.030",
-    "lastModifiedDate": "2026-08-16T07:16:31.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-2357",
-    "description": "The Bold Page Builder plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the plugin's 'bt_bb_shortcode' shortcode in all versions up to, and including, 5.6.8 due to insufficient input sanitization and output escaping on user supplied attributes. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2357",
-    "publishedDate": "2026-08-16T07:16:30.910",
-    "lastModifiedDate": "2026-08-16T07:16:30.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18347",
-    "description": "The Kirki – Freeform Page Builder, Website Builder & Customizer plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 6.1.1. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with custom-level access and above, to read arbitrary user metadata and sensitive user record fields — including email address, assigned roles, registration date, and any user_meta values — belonging to any WordPress user including administrators, by supplying a target user ID with a user-type context to the frontend collection endpoint.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18347",
-    "publishedDate": "2026-08-16T07:16:30.787",
-    "lastModifiedDate": "2026-08-16T07:16:30.787",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-17608",
-    "description": "The WP Compress – Instant Performance & Speed Optimization plugin for WordPress is vulnerable to Cross-Site Request Forgery in all versions up to, and including, 7.10.09. This is due to missing or incorrect nonce validation on the (top-level template code) function. This makes it possible for unauthenticated attackers to delete arbitrary WordPress options, including critical ones such as siteurl, home, active_plugins, template, and stylesheet, causing site outage or a full plugin and theme reset via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17608",
-    "publishedDate": "2026-08-16T07:16:30.663",
-    "lastModifiedDate": "2026-08-16T07:16:30.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-17604",
-    "description": "The Kirki – Freeform Page Builder, Website Builder & Customizer plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 6.1.1 via the 'data' parameter parameter. This makes it possible for authenticated attackers, with editor-level access and above, to read the contents of arbitrary files on the server, which can contain sensitive information. The intended strpos()-based guard against leaving the uploads directory is bypassed by crafting a URL that includes the uploads base path as a substring while embedding directory traversal sequences, such as /wp-content/uploads/../../wp-config.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17604",
-    "publishedDate": "2026-08-16T07:16:30.547",
-    "lastModifiedDate": "2026-08-16T07:16:30.547",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-17087",
-    "description": "The WP Travel Engine – Tour Booking Plugin – Tour Operator Software plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 6.8.4. This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for unauthenticated attackers to view private booking billing details — including the victim customer's first name, last name, email address, street address, city, and phone number — rendered as default values in checkout form fields by binding an arbitrary booking ID to the attacker's session. The only access control on the endpoint is a frontend nonce that is publicly emitted to all visitors via the wteL10n global on trip pages, meaning it provides CSRF protection only and does not restrict unauthenticated access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17087",
-    "publishedDate": "2026-08-16T07:16:30.423",
-    "lastModifiedDate": "2026-08-16T07:16:30.423",
+    "id": "CVE-2026-73060",
+    "description": "Scriban versions from 3.0.0 through 7.2.5 contain a denial of service vulnerability in the ScriptRange.Multiply operator that bypasses LoopLimit when the left operand is a lazy sequence. Attackers can supply templates with array multiplication on lazy sequences to execute billions of uncharged iterations, pinning CPU cores and exhausting garbage collection resources even when LoopLimit is set to 1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73060",
+    "publishedDate": "2026-08-16T14:16:55.640",
+    "lastModifiedDate": "2026-08-16T14:16:55.640",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -142,79 +467,28 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13424",
-    "description": "The Online Scheduling and Appointment Booking System – Bookly plugin for WordPress is vulnerable to Stored Cross-Site Scripting via bookly_speed_up_update_addons AJAX action in all versions up to, and including, 27.7 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The injection point is the bookly_speed_up_update_addons AJAX action, which is registered as wp_ajax_nopriv_* and therefore reachable without authentication; the payload is stored verbatim in the bookly_log.details column when a request is submitted without a valid signature, and executes when an administrator later views the Diagnostics → Logs page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13424",
-    "publishedDate": "2026-08-16T07:16:30.300",
-    "lastModifiedDate": "2026-08-16T07:16:30.300",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 7.2,
-        "version": "CVSS 3.1",
+        "score": 8.7,
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-12998",
-    "description": "The Forminator Forms – Contact Form, Payment Form & Custom Form Builder plugin for WordPress is vulnerable to Insecure Direct Object Reference in all versions up to, and including, 1.55.0.2 via the 'draft' parameter due to missing validation on a user controlled key. This makes it possible for unauthenticated attackers to enumerate sequential integer entry IDs via the 'draft' parameter and read other users' saved draft form data, including names, email addresses, phone numbers, addresses, and free-form message content. This is only exploitable on forms that have the 'Save and Continue' feature enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12998",
-    "publishedDate": "2026-08-16T07:16:30.173",
-    "lastModifiedDate": "2026-08-16T07:16:30.173",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-10734",
-    "description": "The Infility Global plugin for WordPress is vulnerable to Stored Cross-Site Scripting via /cf7_record Log Endpoint in all versions up to, and including, 2.15.21 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The /cf7_records viewer is accessible to any authenticated user including those with Subscriber-level access, meaning the injected payload executes for any logged-in user who visits the records page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10734",
-    "publishedDate": "2026-08-16T07:16:30.043",
-    "lastModifiedDate": "2026-08-16T07:16:30.043",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9767",
-    "description": "The The School Management – Education & Learning ERP plugin for WordPress is vulnerable to generic SQL Injection via 'order[0][dir]' Parameter in all versions up to, and including, 5.4 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with custom-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. This vulnerability is replicated across seven or more AJAX handlers including wlsm-fetch-staff-classes, wlsm-fetch-notices, wlsm-fetch-subjects, wlsm-fetch-inquiries, wlsm-fetch-staff-employee, and wlsm-fetch-payments, and the missing nonce verification on several of these handlers also enables CSRF-chained exploitation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9767",
-    "publishedDate": "2026-08-16T06:16:55.133",
-    "lastModifiedDate": "2026-08-16T06:16:55.133",
+    "id": "CVE-2026-73059",
+    "description": "stoatchat before 0.15.0 contains a permission bypass vulnerability in the message_fetch route that checks only ViewChannel permission instead of requiring ReadMessageHistory. Attackers with ViewChannel access but ReadMessageHistory denied can retrieve individual message content by ID, bypassing the intended history restriction enforced by bulk read routes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73059",
+    "publishedDate": "2026-08-16T14:16:55.507",
+    "lastModifiedDate": "2026-08-16T14:16:55.507",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -225,186 +499,162 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-2283",
-    "description": "The User Login History plugin for WordPress is vulnerable to SQL Injection via the 'blog_id' parameter in all versions up to, and including, 2.1.7. This is due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with Administrator-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. This is only exploitable on multisite installations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2283",
-    "publishedDate": "2026-08-16T06:16:53.003",
-    "lastModifiedDate": "2026-08-16T06:16:53.003",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19934",
-    "description": "A vulnerability has been found in itsourcecode Hospital Management System 1.0. This impacts an unknown function of the file /vieworder.php. The manipulation of the argument delid leads to sql injection. The attack is possible to be carried out remotely. The exploit has been disclosed to the public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19934",
-    "publishedDate": "2026-08-16T06:16:52.773",
-    "lastModifiedDate": "2026-08-16T06:16:52.773",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 2.1,
+        "score": 7.1,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-19728",
-    "description": "The Extra Product Options Builder for WooCommerce WordPress plugin before 1.2.176 does not verify that the requester is entitled to a customer-uploaded file before serving it, allowing unauthenticated users who obtain a file's stored name to retrieve it.\n\nThe Extra Product Options Builder for WooCommerce WordPress plugin before 1.2.176 writes a deny-all rule into its upload directories, so the disclosure only crosses a boundary on web servers that honour it, such as Apache. Where it is ignored, as on a default nginx setup, the same files are already served at their direct URL and the endpoint exposes nothing further.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19728",
-    "publishedDate": "2026-08-16T06:16:52.673",
-    "lastModifiedDate": "2026-08-16T06:16:52.673",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19726",
-    "description": "The Visualizer  WordPress plugin before 4.0.7 does not properly authorise access to the configuration of its charts, allowing users with the Contributor role and above to read the full configuration of any chart on the site, including charts the Visualizer  WordPress plugin before 4.0.7's own interface denies them, and to retrieve every chart's configuration in a single request. The disclosed configuration can include the credentials of a remote data source a chart reads from.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19726",
-    "publishedDate": "2026-08-16T06:16:52.580",
-    "lastModifiedDate": "2026-08-16T06:16:52.580",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19725",
-    "description": "The WPvivid — Backup, Migration & Staging WordPress plugin before 0.9.131 does not sanitise a value taken from an unauthenticated request before using it to build a log file path, allowing an attacker holding a site to site transfer key to create a log file in any existing writable directory of the site, including the web root.\n\nThe file name always carries a fixed suffix and the contents are always the WPvivid — Backup, Migration & Staging WordPress plugin before 0.9.131's own log header, so only the location of the file is attacker controlled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19725",
-    "publishedDate": "2026-08-16T06:16:52.487",
-    "lastModifiedDate": "2026-08-16T06:16:52.487",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19717",
-    "description": "The CatFolders Document Gallery & PDF Library WordPress plugin before 2.0.7 does not have authorisation checks in some of its REST API endpoints, allowing unauthenticated users to retrieve the title, type, size and URL of the media attachments assigned to any of its folders, including folders which are not published in any gallery on the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19717",
-    "publishedDate": "2026-08-16T06:16:52.390",
-    "lastModifiedDate": "2026-08-16T06:16:52.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19714",
-    "description": "The Simple JWT Login  WordPress plugin before 3.6.8 does not validate the audience of the Google identity tokens it accepts, allowing unauthenticated users to authenticate as any user whose email address such a token carries, up to and including an administrator. Every site with the Simple JWT Login  WordPress plugin before 3.6.8's Google sign-in enabled is affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19714",
-    "publishedDate": "2026-08-16T06:16:52.300",
-    "lastModifiedDate": "2026-08-16T06:16:52.300",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19712",
-    "description": "The Masteriyo LMS  WordPress plugin before 2.3.3 does not sanitise and escape a quiz field before outputting it back in a page, and grants its instructor role the ability to store unfiltered HTML, allowing such users to perform Stored Cross-Site Scripting attacks against any visitor of the affected page, including administrators.\nThis affects default single-site installations. Sites running multisite, or defining DISALLOW_UNFILTERED_HTML, are not affected as the capability is not granted there.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19712",
-    "publishedDate": "2026-08-16T06:16:52.207",
-    "lastModifiedDate": "2026-08-16T06:16:52.207",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19711",
-    "description": "The Premium Packages  WordPress plugin before 7.0.7 does not validate a withdrawal request against the requesting user's actual earned balance, allowing any authenticated user, including a subscriber with no sales at all, to submit a payout request for an arbitrary amount, which an administrator may then approve and pay out.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19711",
-    "publishedDate": "2026-08-16T06:16:52.120",
-    "lastModifiedDate": "2026-08-16T06:16:52.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19613",
-    "description": "The ECS  WordPress plugin before 4.3.10 does not perform ownership or post-status checks when one of its dynamic repeater data sources reads custom field values from a user-supplied post identifier, allowing users with a contributor-level account or above to read custom field values and post metadata from posts they do not own, including private and draft ones.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19613",
-    "publishedDate": "2026-08-16T06:16:52.023",
-    "lastModifiedDate": "2026-08-16T06:16:52.023",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18653",
-    "description": "The WP Directory Kit WordPress plugin before 1.5.7 does not sanitise and escape a parameter before using it in a SQL statement, allowing administrators to perform SQL injection attacks. On a multisite installation this lets an administrator of a single site read data belonging to the entire network, which they are not otherwise able to reach.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18653",
-    "publishedDate": "2026-08-16T06:16:51.927",
-    "lastModifiedDate": "2026-08-16T06:16:51.927",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18402",
-    "description": "The SureDash – Community, Courses & Member Dashboard plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'draweropenverposition' Block/Shortcode Attribute in all versions up to, and including, 1.10.3 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The injected payload is stored inside the block-delimiter HTML comment's JSON, which wp_kses_post does not neutralize on save, and is only interpolated into the rendered style attribute at display time without esc_attr() escaping, allowing a double-quote to break out of the attribute and introduce arbitrary HTML event handlers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18402",
-    "publishedDate": "2026-08-16T06:16:51.807",
-    "lastModifiedDate": "2026-08-16T06:16:51.807",
+    "id": "CVE-2026-73058",
+    "description": "stoatchat versions before 0.15.0 fail to block the IPv6 unspecified address (::) in the SSRF blocklist, allowing unauthenticated attackers to bypass protections via the /proxy and /embed endpoints. Attackers can craft requests using IPv6 literal syntax to access services on the loopback interface and retrieve sensitive internal content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73058",
+    "publishedDate": "2026-08-16T14:16:55.370",
+    "lastModifiedDate": "2026-08-16T14:16:55.370",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.4,
+        "score": 5.8,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18316",
-    "description": "The Solace Extra plugin for WordPress is vulnerable to unauthorized modification and loss of data due to a missing capability check on the import_zip() function in versions up to, and including, 1.6.0. The handler is registered on both wp_ajax_action-import-zip and wp_ajax_nopriv_action-import-zip and only verifies the 'ajax-nonce' nonce, which is emitted on every admin page via wp_localize_script (unrestricted admin_enqueue_scripts hook) and is therefore accessible to any authenticated user including Subscribers. This makes it possible for authenticated attackers, with Subscriber-level access and above, to wipe navigation menus, sidebar widgets (via update_option('sidebars_widgets', array())), all theme mods (via remove_theme_mods()), and Elementor templates, as well as trigger arbitrary demo-content imports.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18316",
-    "publishedDate": "2026-08-16T06:16:51.683",
-    "lastModifiedDate": "2026-08-16T06:16:51.683",
+    "id": "CVE-2026-73057",
+    "description": "stoatchat before 0.15.0 fails to validate SVG viewBox dimensions in the proxy endpoint, allowing attackers to cause denial of service by memory exhaustion. Attackers can host malicious SVGs with extremely large width and height values and trigger concurrent requests to exhaust available memory across proxy replicas.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73057",
+    "publishedDate": "2026-08-16T14:16:55.230",
+    "lastModifiedDate": "2026-08-16T14:16:55.230",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-73056",
+    "description": "SiYuan kernel versions before 3.7.4 contain an improper restriction of excessive authentication attempts vulnerability in the CheckAuth() middleware. The middleware accepts the API token (Conf.Api.Token) via an Authorization header (Token/Bearer) or a ?token= query parameter, and neither path is protected by the application's CAPTCHA/lockout mechanism (NeedCaptcha/WrongAuthCount). As a result, an unauthenticated remote attacker can perform unlimited automated guesses of the API token, particularly when a short or weak custom token has been configured, and upon success gains full RoleAdministrator access enabling arbitrary file operations and SQL queries.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73056",
+    "publishedDate": "2026-08-16T14:16:55.083",
+    "lastModifiedDate": "2026-08-16T14:16:55.083",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
         "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "security@wordfence.com"
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-72888",
+    "description": "Net::OAuth versions before 0.32 for Perl allow memory exhaustion via unbounded caching of failed module loads in smart_require.\n\nsmart_require stores results in a process-global hash with no bound and no eviction, and keeps an entry for every class name it is asked about, including names that failed to load, because the return value of the failed eval is stored before the error is checked. The key comes off the wire on the server side: _signature_method_class builds the class name from the signature_method parameter of the incoming message, and verify resolves it before any signature is checked.\n\nA remote client chooses both how many entries are created and how long each key is. In a persistent server the hash grows for the life of the worker process until it exhausts memory. Header size limits bound the key length on the Authorization header path, but not on a POST body.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72888",
+    "publishedDate": "2026-08-16T14:16:54.970",
+    "lastModifiedDate": "2026-08-16T14:16:54.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-72887",
+    "description": "Net::OAuth::Client versions before 0.32 for Perl allow the service provider to silently downgrade OAuth 1.0a to OAuth 1.0 in get_request_token.\n\nPassing a callback to the constructor selects OAuth 1.0a. get_request_token then revokes that choice when the request token response omits oauth_callback_confirmed, with no exception, no warning and no option to require 1.0a. The access token request is built from the OAuth 1.0 message class, which has no verifier parameter, so oauth_verifier is dropped from the request even when get_access_token was passed one.\n\noauth_verifier is the binding that OAuth 1.0a added between the authorization step and the token exchange. An application that asked for 1.0a and gets 1.0 is open to OAuth 1.0 session fixation, where an attacker obtains a request token, has the victim authorize it, and then completes the exchange themselves, linking the victim's provider account to a session the attacker controls. No attacker action sets up the downgrade: a provider that does not confirm the callback is enough.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-72887",
+    "publishedDate": "2026-08-16T14:16:54.860",
+    "lastModifiedDate": "2026-08-16T14:16:54.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-19349",
+    "description": "Lemonldap::NG::Portal versions from 2.0.0 before 2.16.9, from 2.17.0 before 2.21.5, from 2.22.0 before 2.23.3 for Perl allow authentication bypass via an OAuth2 state parameter stored as an SSO session in the GitHub and LinkedIn backends.\n\nBefore redirecting to the identity provider, extractFormInfo() creates the state session with the positional call `getApacheSession( undef, 1, 0, 'GitHubState' )`. getApacheSession() takes a session id followed by a named argument hash, so the trailing arguments become that hash, `kind` defaults to SSO, and the state is written to the global session storage as a regular SSO session. Its identifier is handed to the unauthenticated visitor as the state parameter of the redirection URL.\n\nAny visitor who reaches the GitHub or LinkedIn endpoint can replay that identifier as a session cookie and obtain a valid SSO session without authenticating. The session holds neither _user nor authenticationLevel, which the shipped bootstrap configuration accepts because it grants virtual hosts a \"default => accept\" access rule; deployments whose rules test the user or require an authentication level are less exposed. Only configurations with the GitHub or LinkedIn authentication module enabled are affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19349",
+    "publishedDate": "2026-08-16T14:16:54.720",
+    "lastModifiedDate": "2026-08-16T14:16:54.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-58375",
+    "description": "OpenTofu versions 1.8.0 through 1.8.2 do not properly restrict sensitive variables and locals when users have opted into static evaluation of module sources, versions, and backend configurations. As a result, values marked as sensitive may be exposed through these configuration elements instead of producing an error. This is fixed in OpenTofu 1.8.3, which adds explicit errors to prevent the use of sensitive values in these contexts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-58375",
+    "publishedDate": "2026-08-16T14:16:53.627",
+    "lastModifiedDate": "2026-08-16T14:16:53.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   }
