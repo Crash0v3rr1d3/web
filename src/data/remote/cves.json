@@ -1,238 +1,10 @@
 [
   {
-    "id": "CVE-2026-73103",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73103",
-    "publishedDate": "2026-08-18T20:17:25.650",
-    "lastModifiedDate": "2026-08-18T20:17:25.650",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-12520",
-    "description": "The Sierra Wireless HL7800 cellular modem driver (drivers/modem/vendor_standalone/hl7800.c, located at drivers/modem/hl7800.c in v4.4.0 and earlier) parses AT responses with roughly twenty handlers that call net_buf_linearize(value, sizeof(value), *buf, 0, len) into a 128-byte stack buffer and then write value[out_len] = 0. Because net_buf_linearize() (lib/net_buf/buf.c) can return a count equal to its destination-length argument, a field that exactly fills the buffer makes the terminating NUL land one byte past the end, a single-byte out-of-bounds write into adjacent stack memory.\n\nThe +KCELLMEAS cell-measurement handler on_cmd_atcmdinfo_rssi() is worse: it passed the wire length len as the destination size (net_buf_linearize(value, len, *buf, 0, len)), so a response line longer than 128 bytes overflows the value stack buffer with attacker-influenceable content. The line length comes from net_buf_findcrlf(), which accumulates bytes across the whole net_buf fragment chain and is not bounded to 128, so an over-long line reaches the defect.\n\nThe data originates from the cellular modem over UART, driven by the network: operator-scan results, +CGCONTRDP IP/DNS info, socket indications, and +KCELLMEAS neighbour-cell reports. An attacker able to shape what the modem emits — a rogue base station, a compromised modem baseband, or a remote peer feeding oversized response framing — can drive a line past 128 bytes. The handlers run in the driver's RX thread in kernel context, so the corruption is kernel-side.\n\nThe +KCELLMEAS path is a full stack buffer overflow whose worst case is code execution in kernel context and whose floor is a reliable crash; the remaining sites are single-byte NUL out-of-bounds writes. Exploitation requires the modem to emit an over-long AT response line, giving high attack complexity over an adjacent (cellular radio) vector. The fix passes sizeof(dst) - 1 (and correct explicit bounds for the IMSI and +KCELLMEAS sites) so the terminator always stays in bounds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12520",
-    "publishedDate": "2026-08-18T20:17:11.660",
-    "lastModifiedDate": "2026-08-18T20:17:11.660",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.7,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75936",
-    "description": "Improper handling of highly compressed data in the GZIP auto-decompression handler in Amazon ion-java before 1.12.0 might allow remote actors to cause a denial of service via a crafted compressed Ion document that expands to an arbitrarily large size upon decompression.\n\n\n\nTo remediate this issue, users should upgrade to version 1.12.0 and configure withGzipDecompressionEnabled(false) and/or set an explicit withMaximumBufferSize() when parsing untrusted input.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75936",
-    "publishedDate": "2026-08-18T20:17:34.317",
-    "lastModifiedDate": "2026-08-18T20:17:34.317",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75935",
-    "description": "Uncontrolled memory allocation in the binary Ion stream cursor in Amazon ion-java before 1.12.0 might allow remote actors to cause a denial of service via a crafted Ion binary document containing a declared-length field that causes excessive heap preallocation.\n\n\n\nTo remediate this issue, users should upgrade to version 1.12.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75935",
-    "publishedDate": "2026-08-18T20:17:34.130",
-    "lastModifiedDate": "2026-08-18T20:17:34.130",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52829",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, an unauthenticated IPv4 peer can deterministically terminate a synced Zebra node using the default Linux dual-stack listener configuration. The handshake path canonicalized an IPv4-mapped IPv6 PeerSocketAddr such as ::ffff:127.0.0.1 to plain IPv4 before storing it through MetaAddr::new_connected, but the mempool misbehavior path forwarded the raw transient address to MetaAddrChange::UpdateMisbehavior. In zebra-network/src/meta_addr.rs, apply_to_meta_addr then compared the canonical address-book entry with the raw update address and reached its unexpected address mismatch assertion. After the misbehavior batch flush, panic equals abort terminated zebrad; the peer only needed to complete a P2P handshake and advertise an invalid mempool transaction. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52829",
-    "publishedDate": "2026-08-18T20:17:18.330",
-    "lastModifiedDate": "2026-08-18T20:17:18.330",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52736",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, a remote unauthenticated P2P peer can stall a Zebra node by racing an invalid block body against the valid canonical body for the same block header hash. ZIP-244 permits the attacker to mutate coinbase scriptSig authentication data while retaining the transaction identifiers, merkle root, and block header hash, so the poisoned body fails later commitment validation but shares the canonical hash. In zebra-state/src/service.rs, queue_and_commit_to_non_finalized_state recorded the hash in non_finalized_block_write_sent_hashes before contextual validation completed and did not remove it when the write task rejected the body. When the honest body later arrived, the cached hash caused KnownBlock::WriteChannel duplicate handling to suppress it, leaving the node stuck one height behind until restart or reorganization. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52736",
-    "publishedDate": "2026-08-18T20:17:17.400",
-    "lastModifiedDate": "2026-08-18T20:17:17.400",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52732",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, one unauthenticated P2P peer can monopolize all 25 MAX_INBOUND_CONCURRENCY slots in Zebra's inbound mempool download and verification pipeline. In zebrad/src/components/mempool/downloads.rs, the bounded queue was shared globally without per-peer accounting, while peer identity was not carried through Gossip and FullQueue responses were mapped to Response::Nil instead of reaching overload disconnection handling. An attacker can advertise fake transaction identifiers and remain silent so each task holds a slot until TRANSACTION_DOWNLOAD_TIMEOUT, then periodically refill the queue as slots expire. While saturated, honest peer transactions and local sendrawtransaction requests are rejected with MempoolError::FullQueue, although block validation and synchronization continue. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52732",
-    "publishedDate": "2026-08-18T20:17:16.710",
-    "lastModifiedDate": "2026-08-18T20:17:16.710",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52731",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, an attacker authenticated to an enabled Zebra RPC endpoint can terminate zebrad by supplying a getblocktemplate LongPollId containing multi-byte UTF-8 characters. In zebra-rpc/src/methods/types/long_poll.rs, LongPollId::from_str originally checked the input byte length and then sliced fixed byte ranges to parse encoded fields. A slice boundary can land inside a multi-byte character and trigger Rust's byte index is not a char boundary panic. Zebra release builds use panic equals abort, so one malformed authenticated RPC request terminates the entire node process and can be repeated after restart. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52731",
-    "publishedDate": "2026-08-18T20:17:16.510",
-    "lastModifiedDate": "2026-08-18T20:17:16.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52733",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, a natural or attacker-influenced chain fork can leave stale Sapling and Orchard note-commitment subtree roots in Zebra state. In zebra-state/src/service/non_finalized_state/chain.rs, Chain::pop_tip removed a reverted tip block but did not remove subtree entries whose end_height belonged to that block, unlike the cleanup performed by pop_root. When the winning fork later finalized, the abandoned branch's stale subtree data could be written to RocksDB and survive node restarts. The corrupted history can cause z_getsubtreesbyindex consumers such as lightwalletd and light wallets to receive incorrect subtree roots, producing wallet synchronization failures or incorrect wallet state and requiring a full state rebuild for recovery. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52733",
-    "publishedDate": "2026-08-18T20:17:16.920",
-    "lastModifiedDate": "2026-08-18T20:17:16.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52738",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, a consensus-valid block containing a long chain of transparent self-spends to one address can permanently halt Zebra nodes. In zebra-state/src/service/finalized_state/zebra_db/transparent.rs, the finalized-state writer originally applied every newly created output as a credit before applying any spent-output debit from the same block. That credit-first ordering can make the intermediate per-address balance exceed MAX_MONEY even though the final net balance is valid, causing an expect-based panic under the panic equals abort release profile. Because zcashd accepts the triggering block and Zebra encounters it again after every restart, the halt persists until patched software is deployed; exploitation requires mining the specially constructed block and temporarily committing sufficient ZEC to the self-spend chain. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52738",
-    "publishedDate": "2026-08-18T20:17:17.953",
-    "lastModifiedDate": "2026-08-18T20:17:17.953",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52735",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, Zebra can accept a block that zcashd rejects because the P2SH signature-operation counter undercounts redeem scripts containing a disabled opcode followed by signature opcodes. In zebra-script/src/lib.rs, p2sh_input_sigop_count used the pure-Rust script::Code::sig_op_count path, whose try_fold parser stops at disabled opcodes such as OP_CODESEPARATOR and returns only the partial count accumulated before the error. The zcashd reference implementation continues static signature-operation counting through disabled opcodes, so an attacker can broadcast P2SH spends that Zebra counts below MAX_BLOCK_SIGOPS while zcashd counts above the 20,000-operation limit. If a Zebra miner includes those transactions, Zebra validators accept the block while zcashd validators reject it, creating a consensus chain split that affects network integrity and availability without requiring the attacker to produce a block. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52735",
-    "publishedDate": "2026-08-18T20:17:17.227",
-    "lastModifiedDate": "2026-08-18T20:17:17.227",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52739",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, a malicious block producer can terminate zebrad by placing the same shielded transaction in a non-finalized parent block and its child. In zebra-state/src/service/non_finalized_state/chain.rs, Chain::push originally inserted the transaction hash into tx_loc_by_hash and asserted uniqueness before updating shielded data and running the duplicate Sprout, Sapling, or Orchard nullifier checks. The repeated transaction therefore reached the transactions must be unique within a single chain assertion before contextual validation could reject it cleanly. Zebra release builds use panic equals abort, so the reachable assertion terminates the entire process; exploitation requires either two consecutive attacker-mined blocks or an attacker-mined child immediately after an honest block includes the attacker's shielded transaction. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52739",
-    "publishedDate": "2026-08-18T20:17:18.127",
-    "lastModifiedDate": "2026-08-18T20:17:18.127",
+    "id": "CVE-2026-27365",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in PublishPress PublishPress Series allows Stored XSS.\n\nThis issue affects PublishPress Series: from n/a through 2.17.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-27365",
+    "publishedDate": "2026-08-18T23:16:35.803",
+    "lastModifiedDate": "2026-08-18T23:16:35.803",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -240,199 +12,39 @@
         "score": 5.9,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 1.7,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-52734",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, an unauthenticated P2P peer can cause the mempool download pipeline to retain transactions after verification reaches the outer RATE_LIMIT_DELAY timeout. In zebrad/src/components/mempool/downloads.rs, Downloads::poll_next removed cancel_handles entries after success and ordinary verification errors, but tokio::time::error::Elapsed did not carry the UnminedTxId needed to remove the timed-out entry. Each retained cancel_handles entry could hold a full Gossip::Tx(UnminedTx), while normal mined-transaction cleanup could not match attacker transactions and no periodic garbage collection or count cap existed. Sustained traffic therefore caused monotonic memory growth until swap pressure degraded the node or the operating system terminated the zebrad process for exhausting memory. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52734",
-    "publishedDate": "2026-08-18T20:17:17.080",
-    "lastModifiedDate": "2026-08-18T20:17:17.080",
+    "id": "CVE-2026-66589",
+    "description": "Missing Authorization vulnerability in Kings Plugins B2BKing allows Exploiting Incorrectly Configured Access Control Security Levels.\n\nThis issue affects B2BKing: from n/a through 5.2.30.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66589",
+    "publishedDate": "2026-08-18T23:17:04.787",
+    "lastModifiedDate": "2026-08-18T23:17:04.787",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-52737",
-    "description": "ZEBRA is a Zcash node written entirely in Rust. Prior to 4.5.0, a malicious unauthenticated P2P peer can answer Zebra's outbound getblocks or FindBlocks request with a small two-hash inventory and then serve a syntactically valid block whose coinbase height is far above the local chain tip. In zebrad/src/components/sync/downloads.rs, BlockDownloadVerifyError::AboveLookaheadHeightLimit originally carried only the block height and hash, so handle_block_response could not attribute the failure to the advertising peer. The error then reached the restart-worthy default path in zebrad/src/components/sync.rs, cancelling all in-flight downloads from honest peers and imposing a 67-second sync restart delay on mainnet. Because the peer was neither scored nor disconnected, the peer could repeat the cycle indefinitely with minimal bandwidth and significantly degrade synchronization without corrupting state. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52737",
-    "publishedDate": "2026-08-18T20:17:17.750",
-    "lastModifiedDate": "2026-08-18T20:17:17.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-70667",
-    "description": "Lemur manages TLS certificate creation. Prior to 1.9.3, _validate_revocation_url in lemur/certificates/verify.py checked the original CRL or OCSP URL but the later request could reach a different destination. The CRL requests.get call followed HTTP redirects without validating each Location target, so a public attacker-controlled URL could redirect to loopback, RFC1918, link-local, or instance-metadata addresses. Validation and connection also performed separate DNS resolutions, creating a time-of-check time-of-use window for DNS rebinding on both CRL and OCSP paths. An operator uploading a certificate through POST /api/1/certificates/upload could therefore induce blind internal requests despite the earlier mitigation. The fix disables redirects and pins validated addresses while preserving the correct Host value. This issue is fixed in version 1.9.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70667",
-    "publishedDate": "2026-08-18T19:17:03.293",
-    "lastModifiedDate": "2026-08-18T19:17:03.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-65959",
-    "description": "Vitess is a database clustering system for horizontal scaling of MySQL. In 24.0.2 and earlier, the /debug/vrlog endpoint registered by addHttpEndpoint() in go/vt/vttablet/tabletmanager/vreplication/vrlog.go invokes vrlogStatsHandler() without acl.CheckAccessHTTP(r, acl.DEBUGGING), unlike comparable debug endpoints. A remote caller who can reach the vttablet debug HTTP port can bypass the configured security policy and stream VrLogStats data produced from NewVrLogStats().Send(), including literal SQL statements and bound application values from MoveTables, Reshard, Materialize, and vitess-strategy Online DDL workflows",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65959",
-    "publishedDate": "2026-08-18T19:17:00.223",
-    "lastModifiedDate": "2026-08-18T19:17:00.223",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55166",
-    "description": "Lemur manages TLS certificate creation. Prior to 1.9.2, authenticated users could influence an ACME authority acme_url without an effective server-side destination restriction and trigger AcmeHandler.setup_acme_client to make backend requests. An attacker could target cloud instance metadata or internal services from Lemur network context, potentially obtaining credentials available to the host. The advisory also identifies creator-equality authorization behavior that could preserve access to certificate key material after ownership or role changes, with insufficient export_private_key audit context to distinguish that access path. Together, the acme_url server-side request forgery and authorization weakness could expose cloud credentials and long-lived PKI private-key access. The fix adds ACME_DIRECTORY_HOST_ALLOWLIST validation and enriches key-export audit events with creator and current-owner context. This issue is fixed in version 1.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55166",
-    "publishedDate": "2026-08-18T19:16:58.783",
-    "lastModifiedDate": "2026-08-18T20:17:19.073",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55165",
-    "description": "Lemur manages TLS certificate creation. Prior to 1.9.2, the JWT verifier in lemur/auth/service.py:130-137 used fetch_token_header to read header_data[\"alg\"] from an unverified token and passed that attacker-controlled value to decode_with_multiple_secrets. PyJWT 2.x rejects alg=none with the configured key, so the flaw is a defense-in-depth gap rather than a direct authentication bypass in the shipped configuration. The unpinned algorithm can become exploitable after an asymmetric-signing migration through algorithm confusion, and it weakens algorithm-based anomaly detection because the token chooses the recorded value. A separate disclosure of LEMUR_TOKEN_SECRET would also permit forged HS256 tokens, although that disclosure is an independent prerequisite. The fix introduces the server-controlled LEMUR_TOKEN_ALGORITHMS allowlist and defaults it to HS256. This issue is fixed in version 1.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55165",
-    "publishedDate": "2026-08-18T19:16:58.647",
-    "lastModifiedDate": "2026-08-18T20:17:18.960",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.2,
         "impactScore": 2.5,
-        "source": "security-advisories@github.com"
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-55164",
-    "description": "Lemur manages TLS certificate creation. Prior to 1.9.2, lemur.users.service.update assigned a replacement password directly to users.password, while lemur/users/models.py registered User.hash_password only for the before_insert event. Because no before_update listener ran, administrator-initiated password changes through PUT /api/1/users/ were committed as plaintext. The affected user could no longer authenticate normally because bcrypt verification received an unhashed value. A database, backup, replica, query-log, or administrative read compromise exposed immediately usable credentials without offline cracking. The fix registers hashing for before_update and avoids rehashing values that already have a bcrypt prefix. This issue is fixed in version 1.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55164",
-    "publishedDate": "2026-08-18T19:16:58.493",
-    "lastModifiedDate": "2026-08-18T20:17:18.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55163",
-    "description": "Lemur manages TLS certificate creation. Prior to 1.9.2, PUT /api/1/roles/ in lemur/roles/views.py:298 authorized updates with RoleMemberPermission(role_id), which allowed either an administrator or any existing member of the target role. The handler passed data[\"users\"] and data[\"name\"] to service.update, allowing a non-admin member to add or remove other users and rename the role. This enabled lateral privilege grants within roles that control certificate and authority access and could deny access by removing legitimate members. The DELETE handler already required admin_permission, confirming that the weaker PUT authorization was inconsistent. The fix applies the same administrator-only requirement to the PUT handler. This issue is fixed in version 1.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55163",
-    "publishedDate": "2026-08-18T19:16:58.357",
-    "lastModifiedDate": "2026-08-18T19:16:58.357",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55162",
-    "description": "Lemur manages TLS certificate creation. Prior to 1.9.2, lemur/certificates/verify.py accepted CRL Distribution Point and OCSP responder URLs from uploaded certificate extensions and used them in crl_verify and ocsp_verify without adequate destination validation. An authenticated operator could submit a certificate through POST /api/1/certificates/upload and cause verify_string to reach loopback, RFC1918, link-local, or instance-metadata destinations such as 169.254.169.254. The requests could probe internal services and create side effects from the Lemur host network position. The CRL path also used an unbounded cache, allowing attacker-controlled entries to persist and consume memory. The fix validates destinations, supports explicit trusted-host allowlists, and bounds the CRL cache. This issue is fixed in version 1.9.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55162",
-    "publishedDate": "2026-08-18T19:16:58.217",
-    "lastModifiedDate": "2026-08-18T19:16:58.217",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47630",
-    "description": "NVIDIA Triton Inference Server for Linux contains a vulnerability where an attacker could cause an absolute path traversal. A successful exploit might lead to code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47630",
-    "publishedDate": "2026-08-18T19:16:52.650",
-    "lastModifiedDate": "2026-08-18T19:16:52.650",
+    "id": "CVE-2026-73974",
+    "description": "linuxfabrik-lib provides Python modules for database access, caching, shell execution, and API integrations, and Linuxfabrik Monitoring Plugins uses its shared testing helper across check plugins. Prior to linuxfabrik-lib 6.1.0 and Linuxfabrik Monitoring Plugins 7.0.0, lib.lftest.test() treated the first or second element of a --test CSV argument as a filesystem path and returned the file contents as simulated standard output or standard error without path confinement. The hidden but production-accessible --test argument was accepted by sudo-authorized plugins, so an attacker controlling the nagios or icinga account could use check-plugins/deb-updates/deb-updates with its default QUERY=1 to disclose every line of a root-readable file. Approximately 22 other plugins exposed filtered content or a root file existence and readability oracle through the same helper, while check-plugins/network-bonding/network-bonding and check-plugins/openstack-swift-stat/openstack-swift-stat had direct read paths that bypassed the helper. The library fix confines fixture reads to the invoking plugin's unit-test directory and refuses unsafe anchors, and the plugin fix routes the two bypasses through that helper. These issues are fixed in linuxfabrik-lib 6.1.0 and Linuxfabrik Monitoring Plugins 7.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73974",
+    "publishedDate": "2026-08-18T22:17:33.840",
+    "lastModifiedDate": "2026-08-18T22:17:33.840",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -443,67 +55,447 @@
         "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 1.8,
         "impactScore": 3.6,
-        "source": "psirt@nvidia.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-47629",
-    "description": "NVIDIA Triton Inference Server for Linux contains a vulnerability where an attacker could cause improper input validation. A successful exploit might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47629",
-    "publishedDate": "2026-08-18T19:16:52.217",
-    "lastModifiedDate": "2026-08-18T19:16:52.217",
+    "id": "CVE-2026-73973",
+    "description": "Linuxfabrik Monitoring Plugins provides monitoring plugins for Icinga, Nagios, and related systems. Prior to version 7.0.0, check-plugins/logfile/logfile accepted a free-form --filename path and opened it as root when invoked through the shipped nagios or icinga sudoers allowlist, without confining the resolved path to /var/log. An attacker who controls the monitoring account can select a root-readable file such as /etc/shadow and use --warning-regex . while leaving SUPPRESS_OUTPUT false, causing each nonempty line to be collected in warn_matches and returned through lib.base.oao(). The vulnerable flow passes the expanded scan_path directly to open(), and neither real-path containment nor an allowlist protects the sink. The same fix also confines mysql-logfile and openvpn-client-list paths, allows only documented log roots, and resolves symlinks and parent-directory traversal before checking containment. This issue is fixed in version 7.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73973",
+    "publishedDate": "2026-08-18T22:17:33.667",
+    "lastModifiedDate": "2026-08-18T22:17:33.667",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66603",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in David Artiss Draft List simple-draft-list allows Stored XSS.\n\nThis issue affects Draft List: from n/a through 2.6.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66603",
+    "publishedDate": "2026-08-18T22:17:25.313",
+    "lastModifiedDate": "2026-08-18T22:17:25.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66602",
+    "description": "Cross-Site Request Forgery (CSRF) vulnerability in DevItems HashBar – WordPress Notification Bar allows Cross Site Request Forgery.\n\nThis issue affects HashBar – WordPress Notification Bar: from n/a through 2.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66602",
+    "publishedDate": "2026-08-18T22:17:25.173",
+    "lastModifiedDate": "2026-08-18T22:17:25.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47628",
-    "description": "NVIDIA Triton Inference Server for Linux contains a vulnerability where an attacker could cause an allocation of resources without limits. A successful exploit might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47628",
-    "publishedDate": "2026-08-18T19:16:51.740",
-    "lastModifiedDate": "2026-08-18T19:16:51.740",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "psirt@nvidia.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47627",
-    "description": "NVIDIA Triton Inference Server for Linux contains a vulnerability where an attacker could cause path traversal. A successful exploit might lead to denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47627",
-    "publishedDate": "2026-08-18T19:16:51.290",
-    "lastModifiedDate": "2026-08-18T19:16:51.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "psirt@nvidia.com"
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62377",
+    "description": "libheif is a HEIF and AVIF file format decoder and encoder. In 1.23.0 and earlier, a crafted HEIF sequence accepted by heif_context_read_from_memory() can leave the context with no registered sequence tracks and crash when heif_context_get_track(ctx, 0) is called. HeifContext::get_track() in libheif/context.cc executes assert(has_sequence()) before its normal error handling, so assert-enabled builds abort instead of allowing the public wrapper in libheif/api/libheif/heif_sequences.cc to return null. In release builds, removing the assertion lets the track_id zero path dereference m_tracks.begin()->second on an empty map, which is undefined behavior and typically crashes. The issue is reachable through documented public APIs after parsing attacker-controlled bytes. This issue is fixed in version 1.23.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62377",
+    "publishedDate": "2026-08-18T22:17:03.167",
+    "lastModifiedDate": "2026-08-18T22:17:03.167",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62292",
+    "description": "libheif is a HEIF and AVIF file format decoder and encoder. From 1.19.0 until 1.23.1, a crafted uncompressed HEIF image using generic zlib unci full-item compression can crash an application that decodes an advertised tile with heif_image_handle_decode_image_tile(). In libheif/codecs/uncompressed/unc_decoder.cc, unc_decoder::fetch_tile_data() computes a large tile offset and unc_decoder::get_compressed_image_data_uncompressed() validates it with range_start_offset plus range_size. For the last advertised tile (4095, 4095), the addition can wrap to zero, bypass the bounds check, and pass an invalid source pointer and a one-terabyte length to memcpy. The observed result is an out-of-bounds read and process crash; opening the file alone does not trigger the issue because tile decoding is required. This issue is fixed in version 1.23.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62292",
+    "publishedDate": "2026-08-18T22:17:03.023",
+    "lastModifiedDate": "2026-08-18T22:17:03.023",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62291",
+    "description": "libheif is a HEIF and AVIF file format decoder and encoder. In 1.23.0 and earlier, a crafted image sequence with a 2x2 primary plane and a 256x256 auxiliary alpha plane can cause attacker-controlled heap corruption during a normal decode and re-encode workflow. Track_Visual::decode_next_image_sample() calls transfer_channel_from_image_as() without checking that the auxiliary alpha dimensions match the main frame. The resulting inconsistent image reaches heif_track_decode_next_image() and then heif_context_encode_image(). In unc_encoder::encode(), unc_encoder_component_interleave::encode_tile() sizes its buffer with compute_tile_data_size_bytes() using the primary dimensions but copies each component using its actual plane dimensions. The oversized alpha plane is therefore copied beyond the allocation, causing an out-of-bounds write; the inverse size mismatch can also produce an out-of-bounds read. This issue is fixed in version 1.23.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62291",
+    "publishedDate": "2026-08-18T22:17:02.877",
+    "lastModifiedDate": "2026-08-18T22:17:02.877",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62289",
+    "description": "libheif is a HEIF and AVIF file format decoder and encoder. In 1.23.0 and earlier, a crafted HEIF or AVIF file containing a clean aperture box can reduce an image dimension to zero and crash or corrupt tiling results when heif_image_handle_get_image_tiling(handle, 1, &tiling) is called. ImageItem::get_heif_image_tiling() returns already transformed dimensions, and process_image_transformations_on_tiling() applies the clean aperture transformation again. The second application passes zero to Box_clap::left_rounded(0), where image_width minus one underflows and constructs Fraction(0xFFFFFFFF, 2). Debug builds reach an assertion and abort, while release builds can return a corrupt crop and zero-width tiling result. The affected implementation spans libheif/image-items/image_item.cc, libheif/context.cc, and libheif/box.cc. This issue is fixed in version 1.23.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62289",
+    "publishedDate": "2026-08-18T22:17:02.720",
+    "lastModifiedDate": "2026-08-18T22:17:02.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53959",
+    "description": "4gaBoards is a boards system for realtime project management. Prior to 3.3.9, 4gaBoards allows any authenticated user to enumerate account information for every user through GET /api/users and retrieve arbitrary accounts through GET /api/users/:id. The users/index and users/show actions rely only on the default is-authenticated policy in server/config/policies.js, and server/api/controllers/users/index.js returns the result of sails.helpers.users.getMany() without requester-specific authorization or response sanitization. Responses expose email, phone, organization, name, isAdmin, ssoGoogleEmail, ssoGithubEmail, and other SSO-linked email fields, including data for administrators. This enables instance-wide user enumeration, privacy loss, and targeted phishing reconnaissance. This issue is fixed in version 3.3.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53959",
+    "publishedDate": "2026-08-18T22:16:54.907",
+    "lastModifiedDate": "2026-08-18T22:16:54.907",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53958",
+    "description": "4gaBoards is a boards system for realtime project management. Prior to 3.3.9, 4gaBoards allows an authenticated user to modify ssoGoogleId, ssoGoogleEmail, ssoGithubId, ssoGithubUsername, ssoGithubEmail, ssoMicrosoftId, ssoMicrosoftEmail, ssoOidcId, and ssoOidcEmail through PATCH /api/users/:id. The whitelist in server/api/controllers/users/update.js mass assigns these backend-managed identity attributes from user input. An attacker can place a victim's provider identifier on an attacker-controlled account, causing the default lookup in helpers such as server/api/helpers/users/get-create-one-for-github-sso.js to match the victim's first SSO login to the attacker's account before the email-linkage flow runs. The victim is logged into the attacker-controlled account, and projects, boards, or data the victim creates remain accessible through the attacker's original local credentials. This issue is fixed in version 3.3.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53958",
+    "publishedDate": "2026-08-18T22:16:54.717",
+    "lastModifiedDate": "2026-08-18T22:16:54.717",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52877",
+    "description": "Streambert is a cross-platform Electron Desktop App to stream and download video content. Prior to version 2.6.0, the open-external IPC handler in src/ipc/downloads.js passes a renderer-supplied url directly to Electron's shell.openExternal without validating its protocol. A compromised renderer can submit file: URIs or operating-system-specific custom schemes, causing the host to open local files, access remote resources through registered handlers, or launch scripts and applications supported by those handlers. This issue is fixed in version 2.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52877",
+    "publishedDate": "2026-08-18T22:16:54.520",
+    "lastModifiedDate": "2026-08-18T22:16:54.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52876",
+    "description": "Streambert is a cross-platform Electron Desktop App to stream and download video content. Prior to version 2.6.0, the open-path-at-time IPC handler in src/ipc/player.js accepts a renderer-controlled filePath without validating its type or location. If the mpv or VLC launch attempts are skipped or fail, the handler passes filePath to Electron's shell.openPath. A compromised renderer can provide the path of a local executable, script, shortcut, or other file with an executing default handler, causing the operating system to launch it with the privileges of the StreamBERT process and enabling escape from the renderer sandbox. This issue is fixed in version 2.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52876",
+    "publishedDate": "2026-08-18T22:16:54.173",
+    "lastModifiedDate": "2026-08-18T22:16:54.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52875",
+    "description": "Streambert is a cross-platform Electron Desktop App to stream and download video content. Prior to 2.6.0, the perform-scheduled-backup IPC handler in src/ipc/storage.js takes settings.path from a renderer-supplied object and uses the resulting directory for fs.mkdirSync, fs.writeFileSync, fs.readdirSync, and fs.unlinkSync operations without checking that it is inside an authorized backup location. A compromised renderer can choose an absolute path or a relative traversal path to create directories and write a streambert-backup-[timestamp].json file containing renderer-controlled data. The pruning loop can also delete files in that directory whose names begin with streambert-backup- and end with .json. This vulnerability is fixed in 2.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52875",
+    "publishedDate": "2026-08-18T22:16:54.003",
+    "lastModifiedDate": "2026-08-18T22:16:54.003",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:H/SC:L/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52873",
+    "description": "Streambert is a cross-platform Electron Desktop App to stream and download video content. From version 2.5.0 until version 2.6.0, the wyzie-open-redeem IPC handler in index.js creates the partition:wyzie-redeem Electron session and registers an onHeadersReceived hook that removes the Content-Security-Policy header from every response in that session. The redeem window also lacks a setWindowOpenHandler restriction, so script injection in sub.wyzie.io, a loaded third-party resource, or a site reached through navigation executes without CSP constraints and can affect additional windows and persistent session storage. A user must open the Wyzie API key redemption window, and exploitation requires attacker-controlled script content in a loaded page. The resulting renderer script can invoke renderer-exposed application functionality and can be chained with other vulnerabilities to access internal services or sensitive data. This issue is fixed in version 2.6.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52873",
+    "publishedDate": "2026-08-18T22:16:53.830",
+    "lastModifiedDate": "2026-08-18T22:16:53.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52872",
+    "description": "Streambert is a cross-platform Electron Desktop App to stream and download video content. Prior to 2.5.0, the downloadSubtitleFile utility in src/ipc/downloads.js, reached through the run-download IPC channel, accepts a renderer-supplied subtitle url using the file: URI scheme and passes its decoded pathname to fs.copyFileSync. The renderer also controls downloadPath, which determines the destination path. A compromised renderer can therefore copy any file readable by the StreamBERT process into an attacker-chosen writable location, exposing sensitive local data, and can overwrite existing writable files. This vulnerability is fixed in 2.5.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52872",
+    "publishedDate": "2026-08-18T22:16:53.650",
+    "lastModifiedDate": "2026-08-18T22:16:53.650",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-52854",
+    "description": "Maps is a MediaWiki extension that enables visualization of geographic data through dynamic embedded maps. Prior to version 12.1.3, the display_map parser function in the Leaflet service accepts attacker-controlled HTML in the overlays parameter, and resources/leaflet/jquery.leaflet.js uses the overlay name as a Leaflet layer-control label without escaping it. A wiki user with the edit permission can store malicious wikitext that causes script execution when another user previews or views the affected map. The script executes in the viewing user's browser session and can access data or perform actions available to that user. This issue is fixed in version 12.1.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-52854",
+    "publishedDate": "2026-08-18T22:16:53.470",
+    "lastModifiedDate": "2026-08-18T22:16:53.470",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50191",
+    "description": "4gaBoards is a boards system for realtime project management. Prior to 3.3.8, 4gaBoards is vulnerable to pre-account takeover when registrationEnabled, localRegistrationEnabled, and ssoRegistrationEnabled are enabled and Google, GitHub, Microsoft, or OIDC SSO is configured. The POST /api/register endpoint permits creation of an unverified local account with a victim's email address, and POST /api/access-tokens permits that account to authenticate while isVerified is false. During the victim's first SSO login, server/api/helpers/users/get-create-one-for-github-sso.js, server/api/helpers/users/get-create-one-for-google-sso.js, server/api/helpers/users/get-create-one-for-microsoft-sso.js, and server/api/helpers/users/get-create-one-for-oidc-sso.js find the attacker-controlled account by email and link the verified SSO identity without confirming ownership of the local account. The attacker can retain local-password access to the linked account and obtain the victim's projects, data, and permissions. This issue is fixed in version 3.3.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50191",
+    "publishedDate": "2026-08-18T22:16:52.930",
+    "lastModifiedDate": "2026-08-18T22:16:52.930",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50186",
+    "description": "4gaBoards is a boards system for realtime project management. Prior to 3.3.8, 4gaBoards allows an authenticated project manager to supply traversal sequences in the filename parameter of GET /exports/:id/:filename. In server/api/controllers/boards/download.js, the decoded inputs.filename value is passed to path.join() beneath private/exports/<user_id>/ without containment validation. A crafted value such as ../ can select an arbitrary file readable by the server process, and the file is returned to the attacker. The fileStream close handler then passes the same path to fs.unlink(), deleting the selected file and potentially causing data loss or denial of service. This issue is fixed in version 3.3.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50186",
+    "publishedDate": "2026-08-18T22:16:52.783",
+    "lastModifiedDate": "2026-08-18T22:16:52.783",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50142",
+    "description": "libheif is a HEIF and AVIF file format decoder and encoder. From 1.19.0 until 1.23.0, a crafted HEIF sequence accepted by heif_context_read_from_memory() with the msf1 sequence brand can cause unbounded heap allocation. In libheif/sequences/seq_boxes.cc, Box_stsz::parse() applies max_sequence_frames only to variable-size samples, so fixed-size mode accepts an attacker-controlled sample_count without a bound. In libheif/sequences/track.cc, Track::load() also adds current_sample_idx and samples_per_chunk in 32-bit arithmetic, allowing the consistency check to be bypassed by wraparound. The resulting values reach the Chunk::Chunk() allocation path, which can consume gigabytes of memory and crash or stall the process through memory exhaustion. This issue is fixed in version 1.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50142",
+    "publishedDate": "2026-08-18T22:16:52.633",
+    "lastModifiedDate": "2026-08-18T22:16:52.633",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48796",
+    "description": "CefSharp provides .NET bindings for the Chromium Embedded Framework for Windows Forms and Windows Presentation Foundation applications. Prior to version 148.0.90, CefSharp/SchemeHandler/FolderSchemeHandlerFactory.cs used filePath.StartsWith(rootFolder, StringComparison.OrdinalIgnoreCase) to decide whether a decoded and canonicalized request path remained inside rootFolder. That raw prefix test did not enforce a directory boundary, so a request such as ..%2fwww2/secret.txt could escape a configured www directory into a sibling www2 directory whose path shared the same string prefix. Applications that register FolderSchemeHandlerFactory for a custom scheme or an HTTP or HTTPS scheme can therefore serve local files outside the intended root when an attacker can cause the embedded browser to request the crafted URL. The issue affects both Unix-style paths such as /tmp/app/www2 and Windows paths such as C:\\app\\www2, and the fix appends a directory separator to the normalized root before comparison while rejecting null bytes and alternate data stream syntax. This issue is fixed in version 148.0.90.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48796",
+    "publishedDate": "2026-08-18T22:16:52.280",
+    "lastModifiedDate": "2026-08-18T22:16:52.280",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47699",
+    "description": "Confidential Containers Guest Components provides guest tools and components for confidential container workloads. From 0.16.0 until 0.20.0, a crafted OCI image layer can make image_rs::stream::unpack::unpack() create a hardlink outside its destination directory. In image-rs/src/stream/unpack.rs, try_hardlink_fallback() validates the hardlink source but computes the destination with destination.join(&entry_rel). Rust Path::join replaces the base when entry_rel is an absolute tar entry path, so fs::hard_link(&src_canon, &dst_entry_abs) can write attacker-controlled content to an arbitrary absolute path. In Confidential Containers the workload owner already controls trusted image content, so the issue is a workload-owner escape into the pod virtual machine rather than a crossing of the image trust boundary, but it may enable access to pod virtual machine capabilities and attestation abuse. This issue is fixed in version 0.20.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47699",
+    "publishedDate": "2026-08-18T22:16:52.127",
+    "lastModifiedDate": "2026-08-18T22:16:52.127",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21584",
+    "description": "This High severity Improper Authorization vulnerability was introduced in versions 10.0.0, 10.1.0, 10.2.0, 11.0.0, 12.0.0, and 12.1.0 of Bamboo Data Center. \n\t\n\tThis Improper Authorization vulnerability, with a CVSS Score of 7.6, allows an authenticated attacker to gain unintended access and can lead to the exposure of resources or functionality, possibly providing attackers with sensitive information or even execute arbitrary code. \n\t\n\tAtlassian recommends that Bamboo Data Center customers upgrade to latest version, if you are unable to do so, upgrade your instance to one of the specified supported fixed versions:\n\t\t\n\t\t* Bamboo Data Center 10.2: Upgrade to a release greater than or equal to 10.2.22\n\t\t\n\t\t* Bamboo Data Center 12.1: Upgrade to a release greater than or equal to 12.1.10\n\t\t\n\t\t\n\t\n\tSee the release notes (https://confluence.atlassian.com/bambooreleases/bamboo-release-notes-1189793869.html). You can download the latest version of Bamboo Data Center from the download center (https://www.atlassian.com/software/bamboo/download-archives). \n\t\n\tThis vulnerability was reported via our Penetration Testing program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21584",
+    "publishedDate": "2026-08-18T22:16:50.460",
+    "lastModifiedDate": "2026-08-18T22:16:50.460",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@atlassian.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-21582",
+    "description": "This High severity BASM (Broken Authentication & Session Management) vulnerability known as CVE-2026-21582 was introduced in version 7.2.1 of Crowd Data Center.\r\n\r\nThis BASM (Broken Authentication & Session Management) vulnerability, with a CVSS Score of 8.8, allows an unauthenticated attacker to perform actions as another user.\r\n\t\r\n\tAtlassian recommends that Crowd Data Center customers upgrade to latest version, if you are unable to do so, upgrade your instance to one of the specified supported fixed versions:\r\n\t\t\r\n\t\tCrowd Data Center 7.2: Upgrade to a release greater than or equal to 7.2.2\r\n\t\t\r\n\t\t\r\n\t\r\n\tSee the release notes (https://confluence.atlassian.com/crowd/crowd-release-notes-199094.html). You can download the latest version of Crowd Data Center from the download center (https://www.atlassian.com/software/crowd/download-archive). \r\n\t\r\n\tThis vulnerability was reported via our Penetration Testing program.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-21582",
+    "publishedDate": "2026-08-18T22:16:50.340",
+    "lastModifiedDate": "2026-08-18T22:16:50.340",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@atlassian.com"
       }
     ]
   }
