@@ -1,146 +1,10 @@
 [
   {
-    "id": "CVE-2026-77759",
-    "description": "Authorization Bypass Through User-Controlled Key in the transaction API in Roskus Prospero\nFlow CRM 5.0.0 through 5.3.5 allows an authenticated user to read the transactions of other\ncompanies on the same instance via an incremented identifier in GET /api/transaction/{id},\nwhich is resolved without company scoping and without any permission check.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77759",
-    "publishedDate": "2026-08-21T12:16:36.533",
-    "lastModifiedDate": "2026-08-21T12:16:36.533",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "4daa8cea-433a-44bd-9456-53b127fc289a"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77776",
-    "description": "Headroom's LLM proxy derives the memory owner from the x-headroom-user-id request header. The header is read directly at several points in headroom/proxy/handlers/openai.py, including the chat completion and websocket paths, and nothing binds the value to the caller. A client can therefore name another user's identifier and read or write that user's stored LLM memory. The fix introduces a single resolve_memory_identity seam in headroom/proxy/identity.py that honors the header only for loopback or allowlisted callers and otherwise binds the identity to the proxy-token fingerprint or the operating system user. The pip console script binds 127.0.0.1 by default, but the reference docker-compose.yml ships --host 0.0.0.0 with published ports and no required HEADROOM_PROXY_TOKEN, which the server itself warns about at startup, so a deployment following the shipped compose exposes the affected data-plane routes to the network without authentication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77776",
-    "publishedDate": "2026-08-21T12:16:36.967",
-    "lastModifiedDate": "2026-08-21T12:16:36.967",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77775",
-    "description": "Headroom's LLM proxy lets a client choose the upstream destination with the x-headroom-base-url request header. _resolve_openai_upstream_base in headroom/proxy/handlers/openai.py accepts the header value, requires only that it parse with an http or https scheme and a hostname, and returns it for use as the upstream base; _select_passthrough_base_url in headroom/providers/proxy_routes.py reads the same header for the passthrough routes. No check rejects loopback, link-local, or RFC 1918 destinations, and because the component is a proxy the upstream response is returned to the caller, so the request reaches internal services and cloud metadata addresses and their responses are disclosed. The Authorization header accompanying the request is forwarded unchanged to the caller-designated host. The pip console script binds 127.0.0.1 by default, but the reference docker-compose.yml ships --host 0.0.0.0 with published ports and no required HEADROOM_PROXY_TOKEN, which the server itself warns about at startup, so a deployment following the shipped compose exposes the affected data-plane routes to the network without authentication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77775",
-    "publishedDate": "2026-08-21T12:16:36.813",
-    "lastModifiedDate": "2026-08-21T12:16:36.813",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77769",
-    "description": "The report.list procedure in packages/trpc/src/routers/report.ts accepted a projectId and a dashboardId and returned getReportsByDashboardId(dashboardId). The enforceAccess middleware in packages/trpc/src/trpc.ts verified membership for the supplied projectId, but nothing verified that the supplied dashboardId belonged to that project, and getReportsByDashboardId in packages/db/src/services/reports.service.ts selects reports by dashboardId alone with no project scoping. An authenticated user could therefore pair a projectId from their own organization, which satisfies the middleware, with a dashboardId belonging to another organization and receive every report in that dashboard. A correctly scoped helper, listReportsCore, already existed in the same service file and resolves the dashboard through getDashboardById(dashboardId, projectId) before returning reports, but the router did not use it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77769",
-    "publishedDate": "2026-08-21T11:17:07.430",
-    "lastModifiedDate": "2026-08-21T11:17:07.430",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77768",
-    "description": "The report.get procedure in packages/trpc/src/routers/report.ts accepted only a reportId and returned getReportById(reportId) directly. The enforceAccess middleware in packages/trpc/src/trpc.ts evaluates membership only when the input carries a projectId or organizationId key, so an input consisting of a reportId alone passed through unchecked, and getReportById in packages/db/src/services/reports.service.ts performs a findUnique on the report id with no project scoping. Any authenticated user could therefore read the full configuration of any saved report on the instance, including the owning projectId, event series, filters, breakdowns and formulas, by supplying its identifier. The adjacent update, delete and duplicate procedures resolve the report first and check getProjectAccess against the report's own projectId, so the omission was specific to this procedure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77768",
-    "publishedDate": "2026-08-21T11:17:07.283",
-    "lastModifiedDate": "2026-08-21T11:17:07.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77767",
-    "description": "Reconmap's API applies a fallback authorization policy in apps/api/app/Program.cs that requires an authenticated user holding the administrator role, so controllers without their own attribute reject anonymous callers. The report preview action in apps/api/app/Controllers/ReportsController.cs carries [AllowAnonymous] and therefore opts out of that policy. PreviewReport loads the Project row named by the id path segment, loads the linked Organisation through the project's ClientId, and renders both into default-report-template.html, which prints the project name and description together with the client organisation's name, address and URL. No authentication, project membership or role check is performed. Because the id is the auto-increment primary key of the project table, an unauthenticated remote caller can walk sequential ids to retrieve the engagement details and client organisation of every project on the instance, and the 404 returned for a missing id reveals which project ids exist. Reconmap stores penetration-testing engagements, so the disclosed descriptions and client records are sensitive by nature.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77767",
-    "publishedDate": "2026-08-21T11:17:07.107",
-    "lastModifiedDate": "2026-08-21T11:17:07.107",
+    "id": "CVE-2026-77815",
+    "description": "to_abs_path in scripts/iib/tool.py normalised the requested path with os.path.normpath, which collapses dot segments but does not resolve symbolic links. A symlink placed inside a scanned directory therefore satisfies the containment comparison performed by is_path_trusted in scripts/iib/api.py while pointing outside that directory, and FileResponse follows the link when serving the response, so a link created in an image directory and targeting a file such as /etc/passwd discloses that file. Whether the check applies depends on get_enable_access_control in scripts/iib/tool.py: it returns true when IIB_ACCESS_CONTROL is set to enable, false when set to disable, and otherwise true when the host Stable Diffusion WebUI was started with share, ngrok, listen or server_name, falling back to false. Confinement is therefore active in the network-exposed WebUI deployments that rely on it, while a standalone run with no such option serves every readable file regardless of this flaw. The fix resolves the path with os.path.realpath.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77815",
+    "publishedDate": "2026-08-21T15:16:47.883",
+    "lastModifiedDate": "2026-08-21T15:16:47.883",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -165,11 +29,69 @@
     ]
   },
   {
-    "id": "CVE-2026-77763",
-    "description": "The filestore backend in pkg/object/file.go, used for file:// stores and as a common juicefs sync destination, derived every operation's target from path(key), which returned either filepath.Join(d.root, key) or filepath.Clean(d.root + key) with no check that the result stayed beneath the root. Put, Get, Head, Delete, Chmod, Chown, Symlink and Readlink all consumed that value directly. Object keys enumerated from a source object store during a sync are not constrained the way local filesystem names are, so a key containing traversal segments causes juicefs to write attacker-supplied content to a path outside the intended local destination, and no error is returned. An operator syncing from a bucket whose contents they do not fully control, such as a shared or public bucket or one an attacker can write to, is therefore exposed to a file write at an attacker-influenced location. The fix changes path() to return an error and rejects any key whose resolved path escapes the root.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77763",
-    "publishedDate": "2026-08-21T11:17:06.937",
-    "lastModifiedDate": "2026-08-21T11:17:06.937",
+    "id": "CVE-2026-77814",
+    "description": "is_path_trusted in scripts/iib/api.py compares the requested path against each allowed parent directory with path.startswith(parent_path), without appending a path separator. A directory whose name merely begins with an allowed path therefore satisfies the comparison, so where /data/images is allowed a request for /data/images_private/secret.txt is treated as trusted and served by FileResponse, disclosing files the confinement was meant to exclude. Whether the check applies depends on get_enable_access_control in scripts/iib/tool.py: it returns true when IIB_ACCESS_CONTROL is set to enable, false when set to disable, and otherwise true when the host Stable Diffusion WebUI was started with share, ngrok, listen or server_name, falling back to false. Confinement is therefore active in the network-exposed WebUI deployments that rely on it, while a standalone run with no such option serves every readable file regardless of this flaw. The fix compares against parent_path joined with os.sep.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77814",
+    "publishedDate": "2026-08-21T15:16:47.733",
+    "lastModifiedDate": "2026-08-21T15:16:47.733",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77087",
+    "description": "Paperclip before 0.3.1 in default local_trusted mode fails to validate Host headers, allowing attackers to execute arbitrary commands via DNS rebinding. An attacker can craft a malicious webpage that, when visited by a developer running Paperclip locally, uses DNS rebinding to make authenticated API requests and execute commands through the process adapter.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77087",
+    "publishedDate": "2026-08-21T15:16:47.290",
+    "lastModifiedDate": "2026-08-21T16:18:21.993",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50278",
+    "description": "iccDEV provides a set of libraries and tools for working with ICC color management profiles. Versions prior to 2.3.2.1 have a `CIccEmbedIO::Read8()` size_t underflow. The issue arises due to an embedded-profile read defect when parsing ICC profiles containing `icSigEmbeddedV5ProfileTag` data with `icSigEmbeddedProfileType` payloads. Version 2.3.2.1 patches the issue. No known workarounds are available.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50278",
+    "publishedDate": "2026-08-21T15:16:41.603",
+    "lastModifiedDate": "2026-08-21T15:16:41.603",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -177,77 +99,19 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-77761",
-    "description": "A parser state isolation vulnerability in misp-stix could cause data from a previously processed STIX document to be retained and incorporated into the MISP event generated from a subsequent document when the same parser instance is reused.\n\nSeveral STIX 1 and STIX 2 parser components maintained per-document state that was not completely cleared between conversions. In the STIX 2 parser, galaxy and galaxy-cluster information, including custom galaxy clusters, could survive a parser reset and subsequently be associated with objects from another bundle.\n\nThe STIX 1 parsers were affected by the same underlying state-management issue. Depending on the parser type, retained information could include galaxies, references, passive DNS bookkeeping, package titles, dates, and timestamps. As a result, parsing a second STIX package with an already-used parser could produce a MISP event containing information that was present only in the previously processed package. For example, a generated event could inherit passive DNS records from an earlier document, reference unrelated galaxy information, combine titles from different packages, or use timestamps originating from another conversion.\n\nThe issue primarily affects applications using the misp-stix API directly and reusing parser instances across independent STIX documents. Normal conversion entry points that instantiate a new parser for each file are not affected by this particular reuse scenario.\n\nAn attacker able to influence documents processed by such a long-lived parser could potentially cause information from one conversion to contaminate a subsequent MISP event. This can affect the integrity of generated threat intelligence, resulting in incorrect associations, misleading contextual information, or unrelated indicators being attributed to an event. In environments where consecutive documents have different access controls or distribution scopes, the retained state could additionally result in limited disclosure of information from a previously processed document.\n\nSuccessful exploitation depends on the consuming application reusing the same parser instance and on the ordering of processed documents, which increases attack complexity. No direct availability impact or code execution is involved.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77761",
-    "publishedDate": "2026-08-21T11:17:06.787",
-    "lastModifiedDate": "2026-08-21T12:16:36.673",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77686",
-    "description": "A weakness has been identified in Dolibarr up to 23.0.4. This affects an unknown part of the file htdocs/user/card.php of the component Account Handler. This manipulation of the argument ID causes improper authorization. The attack may be initiated remotely. The exploit has been made available to the public and could be used for attacks. Upgrading to version 24.0.0 is able to mitigate this issue. Patch name: b2a2c995537cb6282383b5e903cb5ffa29b823e6. The affected component should be upgraded.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77686",
-    "publishedDate": "2026-08-21T11:17:06.620",
-    "lastModifiedDate": "2026-08-21T11:17:06.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77683",
-    "description": "A security flaw has been discovered in Comfast CF-N1-S 2.6.0.1. Affected by this issue is the function system of the file /cgi-bin/mbox-config?method=SET&section=ntp_timezone. The manipulation of the argument timestr results in command injection. The attack can be launched remotely. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77683",
-    "publishedDate": "2026-08-21T11:17:06.457",
-    "lastModifiedDate": "2026-08-21T11:17:06.457",
+    "id": "CVE-2026-63343",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.3.0, a malicious image containing a `metadata.yaml` symlink pointing to an arbitrary host path allows an authenticated Incus user to read or overwrite any file on the host as root via the instance metadata API. The `exec-output` and `templates/` paths were patched in a prior release using `Lstat` rejection and `os.OpenRoot` confinement; `metadata.yaml` was not included in either patch and remains exploitable. Version 7.3.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63343",
+    "publishedDate": "2026-08-21T15:16:46.577",
+    "lastModifiedDate": "2026-08-21T15:16:46.577",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -258,325 +122,398 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
         "exploitabilityScore": 3.1,
         "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-77086",
-    "description": "SiYuan before v3.7.4 fails to validate the packageName parameter in Bazaar install and uninstall endpoints, allowing authenticated administrators to perform path traversal via directory traversal sequences. Attackers with admin access can write arbitrary files to any location via install operations or recursively delete directories via uninstall operations by supplying crafted packageName values.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77086",
-    "publishedDate": "2026-08-21T11:17:06.063",
-    "lastModifiedDate": "2026-08-21T12:16:36.273",
+    "id": "CVE-2026-63125",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.3.0, an unprivileged, project-confined Incus user (a non-admin TLS/RBAC identity with `can_create_images` and `can_create_instances`) can execute arbitrary code as root on the host. A crafted image ships `backup.yaml` as a symlink to a host file. When the root daemon writes the instance's backup file, it follows the symlink. Version 7.3.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63125",
+    "publishedDate": "2026-08-21T15:16:46.427",
+    "lastModifiedDate": "2026-08-21T15:16:46.427",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 9.9,
         "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
         "impactScore": 6,
-        "source": "disclosure@vulncheck.com"
-      },
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62941",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.3.0, when copying an instance across projects, the project restriction check (`AllowInstanceCreation`) runs BEFORE the source instance's configuration is merged into the request. Dangerous configuration keys (including `security.privileged`, `raw.lxc`, `raw.apparmor`) from the source instance are merged AFTER the check passes, bypassing all project restrictions on the target project. Version 7.3.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62941",
+    "publishedDate": "2026-08-21T15:16:46.287",
+    "lastModifiedDate": "2026-08-21T15:16:46.287",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
       {
-        "score": 9.4,
-        "version": "CVSS 4.0",
+        "score": 9.9,
+        "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-59296",
-    "description": "Using untrusted, non-normalized input as-is for metrics data (such as metric names, tag keys, or tag values) is a dangerous antipattern that general-purpose instrumentation should never perform. When such unsafe instrumentation is used, the application becomes vulnerable to injection and spoofing attacks because micrometer-registry-statsd and micrometer-core do not sanitize newline characters (\\n, \\r) by default prior to this fix.\n\n  *  For the StatsD registry in micrometer-registry-statsd (when using the Datadog or Etsy flavor), because the StatsD protocol is newline-delimited, this allows for line-protocol injection (cross-metric spoofing).\n  *  For LoggingMeterRegistry in micrometer-core, because metric output is printed line-by-line to log files, this allows for both metric spoofing (if downstream log-metrics scrapers or parsers ingest the log lines as separate metrics) and general log spoofing.\n\n\n\n\nSpecifically, an application is vulnerable when all the following are true:\n\n  *  The application uses a vulnerable version of io.micrometer:micrometer-registry-statsd or io.micrometer:micrometer-core.\n  *  The application uses the Datadog or Etsy flavor of the StatsD registry, or uses LoggingMeterRegistry.\n  *  The application instruments meters using user-controlled, unvalidated input for metric names, tag keys, or tag values.\n\n\n\n\nWhen vulnerable, an attacker can break out of the current metric or log line by injecting line terminators. This allows them to spoof arbitrary metrics (e.g., system load, standard JVM metrics, or other business metrics) across the metrics registry namespace (either directly via StatsD protocol or via downstream log-metric scrapers/parsers), as well as inject arbitrary log entries to spoof general log records.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59296",
-    "publishedDate": "2026-08-21T11:17:05.780",
-    "lastModifiedDate": "2026-08-21T12:16:30.140",
+    "id": "CVE-2026-62940",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.3.0, when migrating an instance to another cluster member, user-supplied configuration overrides (including security-critical keys like `security.privileged` and `raw.lxc`) are applied without any project restriction enforcement, allowing a restricted project user to escalate to a privileged container and escape to the host. Version 7.3.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62940",
+    "publishedDate": "2026-08-21T15:16:46.147",
+    "lastModifiedDate": "2026-08-21T16:17:52.780",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
+        "score": 9.9,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security@vmware.com"
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-15576",
-    "description": "Improper authentication in the agent receiver of Checkmk <2.5.0p10 allows an unauthenticated remote attacker to bypass mutual TLS client certificate verification of relay endpoints by supplying a fixed placeholder identity in the request URL, resulting in limited impact on integrity and availability. Only the Cloud, Ultimate and Ultimate MT editions are affected, as other editions do not expose relay endpoints.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15576",
-    "publishedDate": "2026-08-21T11:17:04.463",
-    "lastModifiedDate": "2026-08-21T12:16:23.090",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@checkmk.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-14208",
-    "description": "Remote Utilities Host <=7.7.3.0 sets insecure ACLs on all DLL files in the installation directory (C:\\Program Files (x86)\\Remote Utilities - Host\\), granting FULL CONTROL (F) to the built-in Everyone group (BUILTIN\\Everyone, S-1-1-0). A Windows service running as NT AUTHORITY\\SYSTEM loads DLLs from this directory. The DLLs are file-locked at runtime, but a race window exists when the service is stopped (e.g. during a software update or following a crash), during which a local unprivileged attacker can replace a DLL with a malicious payload. Upon service restart, the payload executes as NT AUTHORITY\\SYSTEM. The DLL confirmed as actively loaded during testing is libasset32.dll. Additional DLLs in the same directory (eventmsg.dll, libcodec32.dll, vp8encoder.dll, vp8decoder.dll, webmvorbisdecoder.dll, webmvorbisencoder.dll, webmmux.dll) share identical insecure permissions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14208",
-    "publishedDate": "2026-08-21T11:17:04.287",
-    "lastModifiedDate": "2026-08-21T12:16:22.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77755",
-    "description": "A denial-of-service vulnerability was identified in misp-stix when processing attacker-controlled STIX 1 or STIX 2 documents.\n\nThe STIX import code used sys.exit() to handle several parsing and loading failures. Because SystemExit inherits from BaseException rather than Exception, these failures bypassed the exception handlers used by callers of the library. As a result, a malformed STIX document could terminate a long-running importer process instead of returning a recoverable parsing error.\n\nAdditionally, no limit was imposed on the size of STIX documents before parsing. A submitted document was therefore read and materialised in memory before its validity or type was evaluated. Depending on the document and parsing path, processing could consume approximately two to seven times the input size in memory, allowing a sufficiently large STIX document to cause excessive memory and CPU consumption and potentially terminate or severely degrade the importing service.\n\nAn attacker able to provide STIX content to a MISP-STIX import workflow could exploit either condition to affect availability. A malformed document could cause abnormal process termination through an uncaught SystemExit, while a large document could exhaust resources during deserialisation and conversion.\n\nThe fixes replace process-terminating sys.exit() calls with catchable exceptions such as STIXLoadingError and MissingSTIXContentError, and extend exception handling around the complete STIX detection and conversion process. The importer also now enforces an input-size limit before parsing. The default maximum is 100 MB, can be adjusted by callers, and can explicitly be disabled when required. STIX 1 inputs are additionally checked for the expected root element before the complete XML tree is constructed.\n\nImpactSuccessful exploitation can cause:\n\n  *  termination of a long-running MISP-STIX importer;\n  *  excessive memory allocation;\n  *  excessive CPU consumption;\n  *  degradation or temporary unavailability of services relying on the converter;\n  *  interruption of batch or automated STIX ingestion workflows.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77755",
-    "publishedDate": "2026-08-21T10:16:39.363",
-    "lastModifiedDate": "2026-08-21T12:16:36.393",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77751",
-    "description": "A path traversal vulnerability existed in the handling of MISP object template names during STIX 2 import and MISP-to-STIX 2 export.\n\nMISP object names are passed to PyMISP's object-template resolution mechanism, which constructs a filesystem path by joining the configured MISP object-template directory, the object name, and definition.json. An object name originating from untrusted STIX or MISP content was not sufficiently restricted before being used in this filesystem path.\n\nAn attacker able to supply a crafted object name containing path separators or traversal sequences such as ../ could therefore cause template resolution to escape the expected template directory and attempt to load a definition.json file from another location accessible to the process.\n\nDuring STIX 2 import, an attacker-controlled x_misp_name from a custom STIX object could directly reach this template-resolution mechanism.\n\nThe issue could also become persistent. A malicious object name stored in a MISP event could later be processed again during STIX 2 export. Consequently, content originally introduced in one security context could trigger filesystem access later when the event is exported by a process operating with different or greater privileges.\n\nIf a suitable definition.json file exists outside the intended template directory, its contents may be interpreted as a MISP object template and fields from that file copied into the converted object. This can result in unintended disclosure of locally accessible data represented by the template file and modification of the resulting object's metadata or semantics.\n\nThe patches introduce strict validation of object-template names. Valid names are restricted to a single path component containing letters, digits, hyphens, or underscores. Names that do not meet these requirements are replaced with the generic unknown-template name before reaching PyMISP template resolution. The original rejected name is preserved in the object's comment and a warning is generated, preventing traversal while retaining the source information.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77751",
-    "publishedDate": "2026-08-21T10:16:39.210",
-    "lastModifiedDate": "2026-08-21T10:16:39.210",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77681",
-    "description": "A vulnerability was identified in CodeAstro Online Job Portal 1.0. Affected by this vulnerability is an unknown functionality of the file /users/update-profile.php. The manipulation of the argument Name leads to unrestricted upload. The attack can be initiated remotely. The exploit is publicly available and might be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77681",
-    "publishedDate": "2026-08-21T10:16:39.047",
-    "lastModifiedDate": "2026-08-21T10:16:39.047",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-59323",
-    "description": "An application using Micrometer Tracing with W3C baggage propagation in the Brave bridge is vulnerable to denial of service (DoS) due to unbounded object allocation when extracting incoming baggage headers.\n\n\n\nSpecifically, an application is vulnerable when all the following are true:\n\n  *  The application uses a vulnerable version of io.micrometer:micrometer-tracing-bridge-brave.\n  *  W3C propagation is active (either configured manually or active by default, such as in Spring Boot 3.x+).\n  *  Baggage propagation is enabled (which is the default in Spring Boot 3.x+) and a baggage manager (such as BraveBaggageManager) is configured to handle baggage fields.\n  *  The application processes requests or messages from untrusted sources with baggage headers which it normally should not, see:  https://www.w3.org/TR/trace-context/#security-considerations .\n  *  Network components including the (HTTP) server that receives the request do not limit the header size or the limit is high enough to cause issues.\n\n\n\n\nThe last two points are very important: normally this should not affect applications because they should not receive untrusted and unlimited input for baggage.\n\n  *  The application processes requests or messages from untrusted sources with baggage headers.\n\n\n\n\nWhen extracting baggage from the W3C baggage header, incoming entries are parsed without enforcing limits on the number of entries or header size as mandated by the W3C Baggage specification. An attacker can send requests or messages with artificially inflated baggage headers containing many key-value pairs, causing unconditional BaggageField allocations per entry. This leads to garbage collection pressure, high CPU usage, and potential application crash via OutOfMemoryError.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59323",
-    "publishedDate": "2026-08-21T10:16:38.910",
-    "lastModifiedDate": "2026-08-21T12:16:30.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-48590",
-    "description": "XML Injection vulnerability in joshnuss xml_builder (XmlBuilder module) allows Content Spoofing, XML Injection.\n\nThis vulnerability is associated with program files lib/xml_builder.ex and program routines XmlBuilder.generate/1, XmlBuilder.generate/2, XmlBuilder.element/1, XmlBuilder.element/2, XmlBuilder.element/3.\n\nElement names, attribute names, and doctype identifiers are interpolated verbatim into the serialized XML output without validation or escaping of structural characters (<, >, \", ', &). An attacker who can influence a name argument (for example, an element name derived from a JSON object key or an HTTP form field name) can inject arbitrary XML markup including extra elements, comments, and event-handler attributes into the output document.\n\nThis issue affects xml_builder: from 0.0.1 before 2.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48590",
-    "publishedDate": "2026-08-21T10:16:38.767",
-    "lastModifiedDate": "2026-08-21T10:16:38.767",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47827",
-    "description": "Command Injection in BOSH CLI tool on windows in Cloud Foundry allows a remote attacker to execute arbitrary shell commands via command injection vulnerabilities",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47827",
-    "publishedDate": "2026-08-21T10:16:38.647",
-    "lastModifiedDate": "2026-08-21T10:16:38.647",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47080",
-    "description": "XML Injection vulnerability in joshnuss xml_builder (XmlBuilder module) allows Content Spoofing, XML Injection.\n\nThis vulnerability is associated with program files lib/xml_builder.ex and program routines XmlBuilder.generate/1, XmlBuilder.generate/2, XmlBuilder.escape/1.\n\nThe escape/1 clause for {:cdata, data} in lib/xml_builder.ex concatenates data verbatim between the CDATA opener <![CDATA[ and closer ]]> without rewriting or splitting on the embedded ]]> sequence. Because CDATA sections have no internal escape mechanism, the only safe way to embed arbitrary bytes is to split on ]]> and emit adjacent CDATA sections. An attacker who can supply input containing ]]> closes the CDATA section early; any bytes that follow are parsed as ordinary XML markup by downstream consumers, allowing injection of arbitrary elements, text, or entity references into the output document.\n\nThis issue affects xml_builder: from 0.0.7 before 2.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47080",
-    "publishedDate": "2026-08-21T10:16:38.497",
-    "lastModifiedDate": "2026-08-21T10:16:38.497",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47079",
-    "description": "Inappropriate Encoding for Output Context vulnerability in joshnuss xml_builder (XmlBuilder module) allows Content Spoofing, Cross-site Scripting.\n\nThis vulnerability is associated with program files lib/xml_builder.ex and program routines XmlBuilder.generate/1, XmlBuilder.generate/2, XmlBuilder.escape_string/1, XmlBuilder.escape_entity/1.\n\nXmlBuilder.generate/1 does not escape literal & characters in text or attribute values when they are followed by an entity-like token (lt;, gt;, amp;, quot;, apos;). As a result, attacker-supplied input such as &lt;script&gt; is emitted verbatim into the serialized XML rather than being escaped to &amp;lt;script&amp;gt;. When a downstream XML parser later reads the document, it decodes the entity sequences into the literal characters <script>, promoting inert-looking text into real markup. This allows an attacker to bypass upstream filters that block raw < and > characters, injecting markup into any downstream consumer that parses the produced XML and renders the text content in a markup-sensitive context (HTML, SVG, RSS/Atom feeds). Both element text and attribute values are affected.\n\nThis issue affects xml_builder: from 0.0.6 before 2.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47079",
-    "publishedDate": "2026-08-21T10:16:38.167",
-    "lastModifiedDate": "2026-08-21T10:16:38.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77710",
-    "description": "A vulnerability in misp-stix could allow a crafted STIX document to influence security-sensitive MISP attribute metadata during import.\n\nThe STIX import logic automatically selected between the internal MISP parser and the external STIX parser based on metadata contained in the STIX document itself. For STIX2, the presence of MISP-specific tool labels could cause a document to be classified as originating from MISP; similarly, STIX1 relied on the document title. These classification indicators are fully controlled by the STIX producer and therefore cannot constitute a trusted indication of the document's origin. The accompanying fix explicitly notes that the parser choice was previously based solely on labels or header titles that any producer could write, and introduces an explicit classification parameter allowing callers to override this detection.\n\nWhen STIX2 content was handled as an internal MISP export, attributes contained in an x-misp-object were converted by copying the complete x_misp_attributes dictionary and passing it directly to misp_object.add_attribute(). Consequently, a crafted STIX bundle could supply fields that were not part of the expected STIX-to-MISP round-trip format, including security-sensitive properties such as distribution, sharing_group_id, tags, or other MISP attribute fields.\n\nAn attacker able to provide a STIX document for import could therefore spoof the markers used to identify MISP-generated content and inject additional attribute properties. This could alter the distribution, sharing restrictions, classification, or semantic metadata of imported attributes, potentially causing information to be shared contrary to the importing organization's policy or influencing downstream processing and automation based on attacker-controlled tags or metadata.\n\nThe vulnerability results from dynamically assigning externally supplied object properties without restricting them to an expected set of attributes, matching CWE-915. MITRE specifically describes this weakness as accepting externally influenced fields without controlling which object attributes may be modified and recommends an allow-list, which is the approach implemented by the patch. The parser-selection issue additionally corresponds to CWE-807, because an untrusted value was used to make a security-relevant trust/classification decision.\n\nThe attack is also consistent with CAPEC-153 (Input Data Manipulation), in which an attacker controls the structure or flags of supplied data so that the target selects a different processing path or interprets the content differently than intended.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77710",
-    "publishedDate": "2026-08-21T09:16:41.027",
-    "lastModifiedDate": "2026-08-21T09:16:41.027",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-74866",
-    "description": "@fastify/busboy is a multipart form-data parser for Node.js. Its multipart part-header parser splits header lines only on the two-byte carriage-return line-feed sequence, so a lone carriage return or line feed embedded in a part header is not treated as a line break and is carried verbatim into the parsed Content-Disposition filename and field name handed to the application. An attacker who uploads a file whose filename or field name contains a bare carriage return or line feed can inject control characters into consumers that trust the parser to return clean values, enabling filesystem filename pollution, log forging, or header injection when the value is forwarded to a carriage-return-sensitive sink. All versions of @fastify/busboy up to and including 3.2.1 are affected. The issue is fixed in version 3.2.2, which rejects any header line that still contains a bare carriage return or line feed. Users should upgrade to 3.2.2, and consumers such as @fastify/multipart should bump their @fastify/busboy dependency to pull in the fix.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74866",
-    "publishedDate": "2026-08-21T09:16:40.890",
-    "lastModifiedDate": "2026-08-21T09:16:40.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68745",
-    "description": "Certificate validation failures in SAML authentication in Apache CloudStack 4.20.3.0 and 4.22.1.0 on all platforms allow a malicious agent to forge a SAML response to the management server. The agent will have to spoof the ip address of the IdP or get an url of its own choosing registered in the management server, after which it can allow logging on with forged signatures.\n\nUsers are recommended to upgrade to versions 4.20.3.1 or 4.22.1.1 and above, which fix this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68745",
-    "publishedDate": "2026-08-21T09:16:40.697",
-    "lastModifiedDate": "2026-08-21T09:16:40.697",
+    "id": "CVE-2026-75501",
+    "description": "A vulnerability in the Calix EXOS firmware for the GS7 XGS (GS5239XG) residential router allows unauthenticated remote attackers to modify NAT port‑forwarding rules via the UPnP WANIPConnection service. The device exposes the MiniUPnPd control endpoint on the WAN interface on TCP port 5000 without access controls. A remote attacker can send crafted SOAP requests to add, delete, or enumerate port mappings, or to query the external IP address, without authentication. Successful exploitation may enable bypass of the firewall/NAT boundary and exposure of internal LAN services to the public internet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75501",
+    "publishedDate": "2026-08-21T15:16:47.070",
+    "lastModifiedDate": "2026-08-21T16:18:17.470",
     "vendors": [],
     "products": [],
     "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-62867",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.3.0, improper validation of user-provided `block.create_options` in storage volume configuration leads to argument injection in the constructed filesystem creation command line. This allows a project-scoped user to inject arbitrary arguments into the binary executed as root. Version 7.3.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62867",
+    "publishedDate": "2026-08-21T15:16:46.003",
+    "lastModifiedDate": "2026-08-21T15:16:46.003",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62313",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.3.0, project-level enforcement of `restricted.containers.privilege=isolated` can be trivially bypassed, allowing a user to create a non-isolated (shared host idmap) container in a project that is configured to forbid them. The restriction only rejects an explicitly set `security.idmap.isolated=false` (or empty) and fails to enforce anything when the key is omitted entirely. Because an unset `security.idmap.isolated` defaults to `false` (non-isolation), a user simply leaves the key out and obtains exactly the container state the restriction is meant to forbid. This defeats the tenant-isolation guarantee the restriction exists to provide. Containers in the project share the host uid/gid map instead of receiving unique, non-overlapping ranges, weakening the isolation boundary between co-tenant containers and the host. Version 7.3.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62313",
+    "publishedDate": "2026-08-21T15:16:45.867",
+    "lastModifiedDate": "2026-08-21T15:16:45.867",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55622",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, missing authorization checks exist for instance copying where an attacker knowing the name of a project that they don't have access to and the name of an instance in that project can copy the instance to a new project. This issue could allow an attacker to access secrets in instances they are not authorized to access. Version 7.2.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55622",
+    "publishedDate": "2026-08-21T15:16:42.003",
+    "lastModifiedDate": "2026-08-21T16:17:19.623",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55621",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, missing authorization checks exist for custom volume copying where an attacker knowing the name of a project that they don't have access to and the name of a custom volume in that project can copy the custom volume to a new project. This issue could allow an attacker to access secrets in custom volumes they are not authorized to access. Version 7.2.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55621",
+    "publishedDate": "2026-08-21T15:16:41.863",
+    "lastModifiedDate": "2026-08-21T15:16:41.863",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48769",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, an arbitrary file write exists in the Incus client when a malicious image server returns a crafted `Incus-Image-Hash` header. This can lead to arbitrary command execution as root on the server. Version 7.2.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48769",
+    "publishedDate": "2026-08-21T15:16:41.347",
+    "lastModifiedDate": "2026-08-21T16:17:17.757",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48755",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.1.0, improper validation of user-provided backup compression algorithm leads to argument injection in the constructed command line. This leads to an arbitrary file write on the host, possibly leading to arbitrary command execution. Version 7.1.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48755",
+    "publishedDate": "2026-08-21T15:16:41.077",
+    "lastModifiedDate": "2026-08-21T15:16:41.077",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48754",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.1.0, `(*backend).createDependentVolumesFromBackup` in `internal/server/storage/backend.go` contains a cluster of unguarded pointer derefs on every dependent-volume entry's `VolumeSnapshots[i]`, `Volume`, and `Pool` sub-fields. An authenticated user with `can_create_instances` permission on any project can crash the `incusd` daemon by uploading an instance backup tarball whose `dependent_volumes[*]` block contains a nil snapshot pointer (or omits `volume:` / `pool:`). This is a sibling-field variant of the 2026-05-04 batch fix `d768f81c0a1d985f35ae56219519822b080bf5e3` (\"Properly check dependent volumes on import\"). That commit added `if disk == nil` at the top of the outer loop, but did not guard the four sub-pointer fields the loop body dereferences naked. Version 7.1.0 contains an updated patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48754",
+    "publishedDate": "2026-08-21T15:16:40.943",
+    "lastModifiedDate": "2026-08-21T15:16:40.943",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48753",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.1.0, the S3 protocol upload endpoint is vulnerable to path traversal and allows creation of arbitrary files on the host. This behavior could lead to arbitrary command execution. Version 7.1.0 fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48753",
+    "publishedDate": "2026-08-21T15:16:40.800",
+    "lastModifiedDate": "2026-08-21T16:17:17.647",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48752",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, a specially crafted image or instance backup can be used to read or create/write arbitrary files on the host; possibly leading to arbitrary command execution. Version 7.2.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48752",
+    "publishedDate": "2026-08-21T15:16:40.667",
+    "lastModifiedDate": "2026-08-21T15:16:40.667",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48751",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, instance snapshots ignore the `restricted.containers.lowlevel=block` setting; allowing for arbitrary command execution on the Incus server by abusing lowlevel hooks such as `raw.lxc` and `raw.qemu`. Version 7.2.0 patches the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48751",
+    "publishedDate": "2026-08-21T15:16:40.527",
+    "lastModifiedDate": "2026-08-21T16:17:17.533",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48750",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, the `record-output` parameter of the `/instances/$name/exec` endpoint stores the output of the command in the `exec-output` directory of the instance. If `exec-output` is a symlink, file named `exec_UUID.stdout` and `exec_UUID.stderr` can be written to an arbitrary location where the `.stdout` file will contain arbitrary content. This behavior can be abused for arbitrary command execution. Version 7.2.0 contains a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48750",
+    "publishedDate": "2026-08-21T15:16:40.390",
+    "lastModifiedDate": "2026-08-21T15:16:40.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48749",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.2.0, a specially crafted image can be used to read or create/write arbitrary files on the host; possibly leading to arbitrary command execution. Version 7.2.0 fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48749",
+    "publishedDate": "2026-08-21T15:16:40.247",
+    "lastModifiedDate": "2026-08-21T16:17:17.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77806",
+    "description": "SPIP before 4.4.21 allows unauthenticated remote attackers to execute arbitrary code, as exploited in the wild in August 2026. This is related to code injection via an X-Spip-Filtre HTTP request header that is mishandled by analyse_resultat_skel.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77806",
+    "publishedDate": "2026-08-21T14:16:53.903",
+    "lastModifiedDate": "2026-08-21T14:16:53.903",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-75946",
+    "description": "A potential security vulnerability has been identified in the OMEN Gaming Hub for versions prior to 1101.2608.0.0. The vulnerability could potentially allow a local attacker to escalate privileges due to insufficient access controls.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75946",
+    "publishedDate": "2026-08-21T14:16:52.773",
+    "lastModifiedDate": "2026-08-21T16:18:18.020",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "hp-security-alert@hp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-15580",
+    "description": "vault token disclosure via unvalidated postMessage vulnerability in N-able PassPortal allows Authentication Abuse.\n\nThis issue affects the PassPortal browser extension: before 3.49.6.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15580",
+    "publishedDate": "2026-08-21T14:16:48.587",
+    "lastModifiedDate": "2026-08-21T16:17:01.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "a5532a13-c4dd-4202-bef1-e0b8f2f8d12b"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47753",
+    "description": "Incus is a system container and virtual machine manager. Prior to version 7.1.0, `(*backend).CreateInstanceFromBackup` in `internal/server/storage/backend.go` contains a nil-pointer dereference that an authenticated user with permission to create instances in any project can trigger remotely by uploading a crafted backup tarball. The Incus daemon panics and the process crashes, causing denial of service to every project on that cluster member. This is a sibling of `GHSA-fwj8-62r8-8p8m`, `GHSA-r7w7-mmxr-47r9`, and `GHSA-x5r6-jr56-89pv` (all assigned 2026-05-04). Those patches added guards on adjacent fields of the same `backup/config.Config` struct; the `Volume` field on the instance-import path was missed. Version 7.1.0 contains an updated patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47753",
+    "publishedDate": "2026-08-21T15:16:40.067",
+    "lastModifiedDate": "2026-08-21T15:16:40.067",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   }
 ]
