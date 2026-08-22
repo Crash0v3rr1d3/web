@@ -1,470 +1,252 @@
 [
   {
-    "id": "CVE-2026-74584",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRDMA/bnxt_re: zero shared page before exposing to userspace\n\nbnxt_re_alloc_ucontext() allocates uctx->shpg via\n__get_free_page(GFP_KERNEL). The buddy allocator does not zero pages\nwithout __GFP_ZERO, so the page contains stale kernel data from\nwhatever object most recently freed it.\n\nThe page is then mapped into userspace via vm_insert_page() under\nBNXT_RE_MMAP_SH_PAGE in bnxt_re_mmap(). The driver only ever writes\n4 bytes (a u32 AVID) at offset BNXT_RE_AVID_OFFT (0x10) inside\nbnxt_re_create_ah(); the remaining 4092 bytes of the page are exposed\nto userspace unsanitised, leaking kernel memory contents.\n\nAny user with access to /dev/infiniband/uverbsX on a host with a\nbnxt_re device (typically rdma group membership) can read this data\nvia a single mmap() at pgoff 0 after IB_USER_VERBS_CMD_GET_CONTEXT.\n\nOther shared pages in the same file already use get_zeroed_page()\ncorrectly:\n\n  drivers/infiniband/hw/bnxt_re/ib_verbs.c\n      srq->uctx_srq_page = (void *)get_zeroed_page(GFP_KERNEL);\n      cq->uctx_cq_page  = (void *)get_zeroed_page(GFP_KERNEL);\n\nuctx->shpg is the only outlier. Bring it in line with the existing\nconvention by switching to get_zeroed_page().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74584",
-    "publishedDate": "2026-08-22T15:16:21.230",
-    "lastModifiedDate": "2026-08-22T15:16:21.230",
+    "id": "CVE-2026-74733",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ngpio: pca953x: fix pca953x_irq_bus_sync_unlock regmap lock\n\nLocking is disabled in the regmap config as this driver uses its own\nlock. This means that all calls to regmap functions (read or write) must\nhold the i2c_lock. The function pca953x_irq_bus_sync_unlock() did not do\nthis, and it was therefore possible that multiple threads could cause an\nincorrect register to be read/written.\n\nA previous patch partly fixed this, but only protected the write to the\ninterrupt mask register, and not the read from the direction register.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74733",
+    "publishedDate": "2026-08-22T16:16:48.463",
+    "lastModifiedDate": "2026-08-22T16:16:48.463",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-76606",
-    "description": "Joomla Extension - fabrikar.com - Path Traversal via image element in Fabrik < 4.7.3 - ???.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76606",
-    "publishedDate": "2026-08-22T15:16:22.680",
-    "lastModifiedDate": "2026-08-22T15:16:22.680",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77027",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated stored XSS in Fabrik < 4.7.2 - The handling of user supplied input in the jsactions feature leads to an stored XSS vector.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77027",
-    "publishedDate": "2026-08-22T15:16:23.150",
-    "lastModifiedDate": "2026-08-22T15:16:23.150",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76602",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated SQL injection in ORDER BY in Fabrik < 4.7.3 - The order parameter in list models is used in queries without validation, allowing read SQLi vectors.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76602",
-    "publishedDate": "2026-08-22T15:16:22.200",
-    "lastModifiedDate": "2026-08-22T15:16:22.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76603",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated row disclosure via form.inlineedit in Fabrik < 4.7.3 - The inineedit form controller does not perform any access checks, disclosing items to unauthorized users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76603",
-    "publishedDate": "2026-08-22T15:16:22.320",
-    "lastModifiedDate": "2026-08-22T15:16:22.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76571",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated SQL injection in list filter condition parameter in Fabrik < 4.7.3 - The condition parameter passed to a list filter is concatenated verbatim into the WHERE clause built by getFilterQuery(). An unauthenticated attacker can supply arbitrary SQL through the filter condition, giving full read of the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76571",
-    "publishedDate": "2026-08-22T15:16:21.383",
-    "lastModifiedDate": "2026-08-22T15:16:21.383",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76597",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated arbitrary file upload to web root via list email plugin in Fabrik < 4.7.2 - The list email plugin controller allows to upload non-executable files to the webroot.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76597",
-    "publishedDate": "2026-08-22T15:16:21.620",
-    "lastModifiedDate": "2026-08-22T15:16:21.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76598",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated arbitrary directory listing via onAjax_getFolders in Fabrik < 4.7.2 - The onAjax_getFolders method of the elements model allows arbitrary directory listings.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76598",
-    "publishedDate": "2026-08-22T15:16:21.733",
-    "lastModifiedDate": "2026-08-22T15:16:21.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76605",
-    "description": "Joomla Extension - fabrikar.com - Remote code execution via image element in Fabrik < 4.7.3 - ???.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76605",
-    "publishedDate": "2026-08-22T15:16:22.563",
-    "lastModifiedDate": "2026-08-22T15:16:22.563",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76596",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated table truncation via list.doempty in Fabrik < 4.7.2- The list controllers doemtpy endpoints lacks ACL gates, a plain GET empties the target list's table",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76596",
-    "publishedDate": "2026-08-22T15:16:21.500",
-    "lastModifiedDate": "2026-08-22T15:16:21.500",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77992",
-    "description": "Joomla Extension - fabrikar.com - heredoc terminator breakout in the calc element in Fabrik < 4.7.2 - The onUpdateComment endpoint did not perform any access checks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77992",
-    "publishedDate": "2026-08-22T15:16:23.293",
-    "lastModifiedDate": "2026-08-22T15:16:23.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.5,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6258",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6258",
-    "publishedDate": "2026-08-22T15:16:21.033",
-    "lastModifiedDate": "2026-08-22T15:16:21.033",
+    "id": "CVE-2026-74732",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/amd/display: Check for tg ops in dce110_set_avmute\n\nSome older DCE timing generators do not implement is_tg_enabled in\ntheir ops table. Calling it unconditionally when waiting for AV mute\nframes causes a NULL pointer dereference on Southern Islands dGPUs\nwhen turning the display off over HDMI.\n\nCheck that tg and the required ops exist before waiting for frames.\n\n(cherry picked from commit 2686a0c0aaa07bec2e24131835cf27b5fd4935a5)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74732",
+    "publishedDate": "2026-08-22T16:16:48.360",
+    "lastModifiedDate": "2026-08-22T16:16:48.360",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-76600",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated deletion of any comment in Fabrik < 4.7.2 - The DeleteComment endpoint did not perform any access checks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76600",
-    "publishedDate": "2026-08-22T15:16:21.970",
-    "lastModifiedDate": "2026-08-22T15:16:21.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-76604",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated remote code execution via PHP form element in Fabrik < 4.7.3 - The PHP form element is vulnerable to the execution of user provided codes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76604",
-    "publishedDate": "2026-08-22T15:16:22.440",
-    "lastModifiedDate": "2026-08-22T15:16:22.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75870",
-    "description": "Punk versions before 0.18 for Perl allow session cookie forgery via an empty default HMAC key when a session is declared without a secret.\n\nThe session keyword freezes its options onto the application as given: it does not require a secret, warn, or refuse to start when one is absent. The cookie read and the write-back both default that key to the empty string, so a declaration with no secret option, or with an undefined or empty one, signs and verifies with a zero-length HMAC-SHA256 key.\n\nAn attacker who knows the cookie format can then mint one offline carrying any contents the session holds, such as a user identifier or a role. Nothing marks the misconfiguration at runtime: cookies are well formed and sessions round-trip as expected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75870",
-    "publishedDate": "2026-08-22T14:16:33.813",
-    "lastModifiedDate": "2026-08-22T14:16:33.813",
+    "id": "CVE-2026-74731",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsched_ext: Skip sub-disable teardown for never-linked sub-schedulers\n\nA sub-scheduler enable can fail before scx_link_sched() links the sched into\nthe hierarchy, e.g. when the parent is already being disabled, and cleanup\nstill runs the full scx_sub_disable().\n\nThat is racy against root disable: drain_descendants() is the only ordering\nbetween a sub's disable-time task walk and root disable's all-task teardown,\nand an unlinked sub is invisible to it. Root's teardown can thus run between\nthe never-linked sub's drain and its walk, exiting every task to no\nscheduler.\n\nThe walk then trips the membership WARN and re-homes the exited tasks onto\nthe dying hierarchy, a use-after-free.\n\nSkip the cgroup ownership reset and the task walk if @sch was never linked,\nindicated by the empty ->sibling as unlinking only happens later in the same\nfunction. The membership WARN remains valid: a linked sub is always waited\non by an ancestor's drain.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74731",
+    "publishedDate": "2026-08-22T16:16:48.257",
+    "lastModifiedDate": "2026-08-22T16:16:48.257",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-75866",
-    "description": "Punk::OAuth2::Server versions through 0.03 for Perl issue access tokens outside a client's registered scopes and grant types because no authorization path reads them.\n\nPunk::OAuth2::Server::Store registers scopes and grant_types per client and documents both as client registration. token dispatches on the grant_type in the request body, so a client registered for authorization_code alone can ask for client_credentials, and that arm passes the requested scope straight to the minter, which signs it into the at+jwt access token. authorize copies the query scope into the authorization code record without comparing it against the registration, leaving the optional consent hook as the only check between an arbitrary scope and the issued code. redirect_uris on the same client row is read and enforced.\n\nA registered client can obtain a correctly signed token carrying any scope it names, and a resource server running Punk::OAuth2::Checker accepts that token and honours the scope. A client registered without a secret authenticates on its client_id alone, so anyone who knows that identifier can request one.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75866",
-    "publishedDate": "2026-08-22T14:16:33.700",
-    "lastModifiedDate": "2026-08-22T14:16:33.700",
+    "id": "CVE-2026-74730",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nNFS: Pin the 'struct nfs_server' during a FREE_STATEID call\n\nDan Aloni reports that he was able to hit a use-after-free bug if a\nFREE_STATEID operation gets delayed for whatever reason. Fix this by\nbumping the refcount of the 'struct nfs_server' object for the duration\nof the FREE_STATEID so it doesn't get cleaned up from underneath us\nwhile operations are still in flight.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74730",
+    "publishedDate": "2026-08-22T16:16:48.137",
+    "lastModifiedDate": "2026-08-22T16:16:48.137",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-71514",
-    "description": "NLTK 3.9.4 through 3.10.2 contains a path traversal vulnerability in CrubadanCorpusReader. _load_lang_ngrams joins the corpus root with crubadan_code, the column-0 value read from the corpus table.txt mapping file, and opens the result with the builtin open() rather than the pathsec-validated opener, so os.path.join discards the root when that value is absolute and the read escapes the corpus directory without the containment check nltk.pathsec applies when ENFORCE is set. An attacker who controls a corpus package can disclose file contents outside the corpus root through lang_freq, limited to paths ending in -3grams.txt whose contents parse as token count lines.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71514",
-    "publishedDate": "2026-08-22T14:16:33.560",
-    "lastModifiedDate": "2026-08-22T14:16:33.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 2,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71513",
-    "description": "NLTK before 3.10.3 contains a remote code execution vulnerability in AllowlistUnpickler that validates only the pickle module string and not the global name, allowing attackers to resolve dotted names by attribute traversal to callables outside the allowlisted namespace. Attackers can craft untrusted transition-parser models that execute arbitrary commands when TransitionParser.parse loads the model through allowlisted_pickle_load.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71513",
-    "publishedDate": "2026-08-22T14:16:33.417",
-    "lastModifiedDate": "2026-08-22T14:16:33.417",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68769",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68769",
-    "publishedDate": "2026-08-22T14:16:33.343",
-    "lastModifiedDate": "2026-08-22T14:16:33.343",
+    "id": "CVE-2026-74729",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsoc: aspeed: lpc-snoop: Fix usercopy overflow in snoop_file_read\n\nput_fifo_with_discard() acts as both producer and consumer on the kfifo:\nit calls kfifo_skip() (advances out) and kfifo_put() (advances in) from\nthe IRQ handler without synchronizing with snoop_file_read(), which also\nconsumes via kfifo_to_user(). On SMP systems this concurrent access can\nleave (in - out) larger than the ring buffer, so __kfifo_to_user()'s clamp\nto (in - out) is ineffective and kfifo_copy_to_user() can attempt a\ncopy_to_user() past the kmalloc-2k backing store:\n\n  usercopy: Kernel memory exposure attempt detected from SLUB object\n  'kmalloc-2k' (offset 0, size 2049)!\n  kernel BUG at mm/usercopy.c!\n  Call trace:\n   usercopy_abort\n   __check_heap_object\n   __check_object_size\n   kfifo_copy_to_user\n   __kfifo_to_user\n   snoop_file_read\n   vfs_read\n\nSerialize kfifo access with a per-channel spinlock shared between the\nIRQ handler (producer) and the file reader (consumer).  Annotate @fifo\nwith __guarded_by(&lock) and opt the driver into context analysis so the\ncompiler enforces that all fifo access holds the lock.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74729",
+    "publishedDate": "2026-08-22T16:16:48.033",
+    "lastModifiedDate": "2026-08-22T16:16:48.033",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-5093",
-    "description": "The GreenShift – Animation and Page Builder Blocks plugin for WordPress is vulnerable to unauthorized modification of data in versions up to, and including, 12.8.9. This is due to a missing capability check on the 'gspb_update_global_wp_settings' function that only verifies the 'edit_posts' capability instead of requiring administrative privileges. This makes it possible for authenticated attackers, with contributor-level access and above, to modify global WordPress theme color settings site-wide, leading to site defacement.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-5093",
-    "publishedDate": "2026-08-22T14:16:33.210",
-    "lastModifiedDate": "2026-08-22T14:16:33.210",
+    "id": "CVE-2026-74728",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxfs: handle NULL b_addr in xfs_buf_free\n\nWhen xfs_buf_alloc_backing_mem() fails, xfs_buf_free() is called with\nbp->b_addr still NULL.  The code falls through to the folio_put path\nwhich calls virt_to_folio(NULL), dereferencing an invalid address and\ncausing a kernel crash.\n\n Call Trace:\n  xfs_buf_free+0x25f/0x510\n  xfs_buf_alloc+0xc98/0x19b0\n  xfs_buf_find_insert+0x55/0x14d0\n  xfs_buf_get_map+0x122b/0x17c0\n  xfbtree_init_leaf_block+0x11c/0x4a0\n  xfbtree_init+0x1bb/0x460\n  xrep_rmap_setup_scan+0x100/0x1f0\n  xrep_rmapbt+0x41/0xc0\n\nFix this by skipping folio_put() when bp->b_addr is NULL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74728",
+    "publishedDate": "2026-08-22T16:16:47.930",
+    "lastModifiedDate": "2026-08-22T16:16:47.930",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-4561",
-    "description": "The MC4WP: Mailchimp for WordPress plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the form response message post meta fields (e.g., 'text_subscribed', 'text_error') in all versions up to, and including, 4.12.0 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Author-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4561",
-    "publishedDate": "2026-08-22T14:16:33.080",
-    "lastModifiedDate": "2026-08-22T14:16:33.080",
+    "id": "CVE-2026-74727",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\novpn: skip rehash for peers already removed from by_id\n\novpn_nl_peer_set_doit() resolves the target peer via\novpn_peer_get_by_id() before taking ovpn->lock. In the window between\nthe lookup (which only takes a refcount) and the subsequent\nspin_lock_bh(&ovpn->lock), a concurrent OVPN_CMD_PEER_DEL, keepalive\nexpiry, or socket teardown can take ovpn->lock first, run\novpn_peer_remove() to unhash the peer from all four tables (by_id,\nby_vpn_addr4/6, by_transp_addr) and release the lock. set_doit then\nacquires ovpn->lock and calls ovpn_peer_hash_vpn_ip(), which\nre-inserts the now-removed peer back into the rehashing tables.\n\nThe same race affects the float path: ovpn_peer_endpoints_update()\nholds only a refcount and acquires ovpn->lock very late (after async\nAEAD decrypt and a netlink notification), then rehashes the peer\nin the by_transp_addr table.\n\nThe resurrected peer becomes reachable again from the RX lookup\n(ovpn_peer_get_by_transp_addr) and the TX VPN-IP lookup, even though\nuserspace believes it is gone. Once the data-path refcount drops the\npeer is freed via call_rcu while the hash entries embedded in it\nremain linked, opening a UAF window.\n\nBail out of the rehash when hash_entry_id is unhashed, mirroring\nthe sentinel already used by ovpn_peer_remove() to detect the\nalready-removed state. The check is safe under ovpn->lock, which\nserializes every mutation of hash_entry_id, and is a no-op for the\nadd path because ovpn_peer_add_mp() inserts hash_entry_id before\ncalling ovpn_peer_hash_vpn_ip().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74727",
+    "publishedDate": "2026-08-22T16:16:47.813",
+    "lastModifiedDate": "2026-08-22T16:16:47.813",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-4559",
-    "description": "The Image Photo Gallery Final Tiles Grid plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'delay' shortcode attribute in all versions up to, and including, 3.6.12 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-4559",
-    "publishedDate": "2026-08-22T14:16:32.947",
-    "lastModifiedDate": "2026-08-22T14:16:32.947",
+    "id": "CVE-2026-74726",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbonding: alb: re-check primary_is_promisc under RTNL in bond_alb_monitor\n\nbond_alb_monitor() reads primary_is_promisc under RCU, then drops RCU and\ntakes RTNL via rtnl_trylock() before undoing the promiscuity it set on the\nactive slave. In that window the active slave can change under RTNL\n(RTM_DELLINK -> __bond_release_one() -> bond_alb_handle_active_change()),\nwhich already drops the promiscuity and clears primary_is_promisc. The\nmonitor still acts on the stale decision: if the slave was removed with no\nfailover, curr_active_slave is now NULL and the deref faults; if it failed\nover, the stale dev_set_promiscuity(-1) underflows the new slave's\npromiscuity counter and pins it in IFF_PROMISC.\n\n  Oops: general protection fault, probably for non-canonical address ...\n  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]\n  Workqueue: b42 bond_alb_monitor\n  RIP: 0010:bond_alb_monitor (drivers/net/bonding/bond_alb.c:1600)\n   process_one_work (kernel/workqueue.c:3322)\n   worker_thread (kernel/workqueue.c:3486)\n   kthread (kernel/kthread.c:436)\n   ret_from_fork (arch/x86/kernel/process.c:158)\n  Kernel panic - not syncing: Fatal exception\n\nRe-check primary_is_promisc (and curr_active_slave) after taking RTNL so\nthe monitor only undoes an increment it still owns. The other bonding\nmonitors already re-read state under RTNL in their commit phase\n(bond_miimon_commit/bond_ab_arp_commit); bond_alb_monitor() was the only\none acting on the pre-trylock decision.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74726",
+    "publishedDate": "2026-08-22T16:16:47.673",
+    "lastModifiedDate": "2026-08-22T16:16:47.673",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-2996",
-    "description": "The Advanced Product Fields (Product Addons) for WooCommerce plugin for WordPress is vulnerable to Improper Input Validation in all versions up to, and including, 1.6.21. This is due to a logic flaw in the 'validate_cart_data' function. This makes it possible for unauthenticated attackers to bypass required paid addons and complete purchases at the base product price only, effectively stealing products by paying a fraction of the intended total. The vulnerability was partially patched in version 1.6.19.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-2996",
-    "publishedDate": "2026-08-22T14:16:32.807",
-    "lastModifiedDate": "2026-08-22T14:16:32.807",
+    "id": "CVE-2026-74725",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nenic: fix tx_hang_reset use-after-free on device removal\n\nenic_remove() cancels the reset and change_mtu_work items but does not\ncancel tx_hang_reset. A TX timeout that fires while the device is being\nremoved can schedule enic_tx_hang_reset() so that it runs after\nfree_netdev(), resulting in a use-after-free.\n\ncancel_work_sync() alone is not sufficient here: the still-live watchdog\nand notify paths can re-schedule these work items in the window between\nthe cancel and unregister_netdev(). Use disable_work_sync(), which\ncancels the work and blocks any subsequent schedule_work() from\nrequeuing it, and apply it to the reset and change_mtu_work items as\nwell so the same requeue race is closed for all teardown work.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74725",
+    "publishedDate": "2026-08-22T16:16:47.567",
+    "lastModifiedDate": "2026-08-22T16:16:47.567",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-76607",
-    "description": "Joomla Extension - fabrikar.com - Missing ACL check in download element in Fabrik < 4.7.3 - ???.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76607",
-    "publishedDate": "2026-08-22T15:16:22.797",
-    "lastModifiedDate": "2026-08-22T15:16:22.797",
+    "id": "CVE-2026-74724",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipvs: avoid out-of-bounds write in ip_vs_nat_icmp\n\nSashiko warns that local attacker can modify the packet\nwhile it is processed by IPVS. Some places read the\nIP ihl field multiple times which can cause out-of-bounds\naccess. One such place is ip_vs_nat_icmp where we\ncan write after the validated area.\n\nFix it by providing ciph argument just like it is done for\nIPv6 and use ciph->len as offset to the embedded transport\nheader.\n\nModify some IPv4 header checks by reading the ihl field\nonly once.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74724",
+    "publishedDate": "2026-08-22T16:16:47.450",
+    "lastModifiedDate": "2026-08-22T16:16:47.450",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-76609",
-    "description": "Joomla Extension - fabrikar.com - Unauthenticated modification of any comment in Fabrik < 4.7.2 - The onUpdateComment endpoint did not perform any access checks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76609",
-    "publishedDate": "2026-08-22T15:16:23.030",
-    "lastModifiedDate": "2026-08-22T15:16:23.030",
+    "id": "CVE-2026-74723",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbtrfs: lzo: reject inline extents without valid headers\n\n[BUG]\nFor a crafted btrfs image, the following KASAN can be triggered when\nreading an inline lzo compressed file extent:\n\n  BUG: KASAN: slab-out-of-bounds in lzo_decompress+0x57d/0x700\n  Read of size 4 at addr ffff888006f2e644 by task btrfs_lzo_inlin/77\n\n  Call Trace:\n   <TASK>\n   dump_stack_lvl+0x5b/0x70\n   print_report+0xd1/0x610\n   kasan_report+0xe0/0x110\n   __asan_report_load_n_noabort+0x13/0x20\n   lzo_decompress+0x57d/0x700\n   btrfs_decompress+0x140/0x1c0\n   uncompress_inline+0x147/0x1b0\n   btrfs_get_extent+0xb23/0x10a0\n   btrfs_do_readpage.constprop.0+0x538/0x1ac0\n   btrfs_readahead+0x32f/0x5f0\n   read_pages+0x16f/0x850\n   page_cache_ra_unbounded+0x296/0x490\n   do_page_cache_ra+0xd9/0x130\n   page_cache_sync_ra+0x3ee/0x6f0\n   filemap_get_pages+0x306/0x15c0\n   filemap_read+0x329/0xd00\n   btrfs_file_read_iter+0x1f8/0x2b0\n   vfs_read+0x4ef/0x720\n   ksys_read+0xf8/0x1d0\n   __x64_sys_read+0x71/0xb0\n   x64_sys_call+0x1ab0/0x1b70\n   do_syscall_64+0x61/0x470\n   entry_SYSCALL_64_after_hwframe+0x4b/0x53\n   </TASK>\n\n[CAUSE]\nFor an inline lzo compressed file extent, there should always be one lzo\nheader, recording the total length of the compressed data, followed by\none segment header, recording the compressed lzo payload.\n\nBut if a crafted inline lzo compressed file extent contains only an lzo\nheader, without the segment header or payload, lzo_decompress() will\nstill try to read the segment header, causing a read beyond the item\nboundary.\n\nFurthermore if the inline lzo compressed file extent is the first item\nof the leaf, it will be at the extent buffer boundary. The above\nout-of-boundary read will go beyond the extent buffer boundary,\ntriggering the above KASAN report.\n\n[FIX]\nValidate the total length of the inlined lzo compressed file extent, to\nmake sure there is at least one LZO header and one segment header, and a\nnon-zero payload.\n\n[ Rework the commit message to remove slop ]",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74723",
+    "publishedDate": "2026-08-22T16:16:47.323",
+    "lastModifiedDate": "2026-08-22T16:16:47.323",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@joomla.org"
-      }
-    ]
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74722",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbtrfs: fix memory leak in btrfs_do_encoded_write()\n\nLocal fuzzing of 6.12.94 has found the following memory leak:\n\nUnreferenced object 0xffff888018050a80 (size 64):\n  comm \"syz.0.17\", pid 10297, jiffies 4294953601\n  hex dump (first 32 bytes):\n    00 10 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................\n    10 0a 05 18 80 88 ff ff 10 0a 05 18 80 88 ff ff  ................\n  backtrace (crc a8a6fc29):\n    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]\n    slab_post_alloc_hook mm/slub.c:4152 [inline]\n    slab_alloc_node mm/slub.c:4197 [inline]\n    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358\n    kmalloc_noprof include/linux/slab.h:878 [inline]\n    extent_changeset_alloc fs/btrfs/extent_io.h:207 [inline]\n    qgroup_reserve_data+0x1c5/0x7d0 fs/btrfs/qgroup.c:4305\n    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355\n    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746\n    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]\n    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507\n    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738\n    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1\n    vfs_ioctl fs/ioctl.c:51 [inline]\n    __do_sys_ioctl fs/ioctl.c:906 [inline]\n    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892\n    do_syscall_x64 arch/x86/entry/common.c:47 [inline]\n    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78\n    entry_SYSCALL_64_after_hwframe+0x77/0x7f\n\nUnreferenced object 0xffff888018050a00 (size 64):\n  comm \"syz.0.17\", pid 10297, jiffies 4294953601\n  hex dump (first 32 bytes):\n    00 00 00 00 00 00 00 00 ff 0f 00 00 00 00 00 00  ................\n    90 0a 05 18 80 88 ff ff 90 0a 05 18 80 88 ff ff  ................\n  backtrace (crc cb5c9580):\n    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]\n    slab_post_alloc_hook mm/slub.c:4152 [inline]\n    slab_alloc_node mm/slub.c:4197 [inline]\n    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358\n    kmalloc_noprof include/linux/slab.h:878 [inline]\n    kzalloc_noprof include/linux/slab.h:1014 [inline]\n    ulist_prealloc+0x9c/0x110 fs/btrfs/ulist.c:114\n    extent_changeset_prealloc fs/btrfs/extent_io.h:217 [inline]\n    __set_extent_bit+0x16b/0x1a70 fs/btrfs/extent-io-tree.c:1086\n    set_record_extent_bits+0x50/0x90 fs/btrfs/extent-io-tree.c:1821\n    qgroup_reserve_data+0x274/0x7d0 fs/btrfs/qgroup.c:4312\n    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355\n    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746\n    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]\n    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507\n    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738\n    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1\n    vfs_ioctl fs/ioctl.c:51 [inline]\n    __do_sys_ioctl fs/ioctl.c:906 [inline]\n    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892\n    do_syscall_x64 arch/x86/entry/common.c:47 [inline]\n    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78\n    entry_SYSCALL_64_after_hwframe+0x77/0x7f\n\nFix this by freeing an extent changeset before returning from\nbtrfs_do_encoded_write().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74722",
+    "publishedDate": "2026-08-22T16:16:47.183",
+    "lastModifiedDate": "2026-08-22T16:16:47.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74721",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\naccel/amxdna: Fix page-insertion errors in amdxdna_insert_pages()\n\nTwo error paths in amdxdna_insert_pages() called vma->vm_ops->close(vma)\nbefore returning an error code to the caller.  This is incorrect:\namdxdna_gem_obj_mmap() registers an HMM interval notifier before calling\namdxdna_insert_pages(), and on a hard error it jumps to hmm_unreg to undo\nthat registration.  Calling vm_ops->close() manually — which drops the\nshmem pages_pin_count and the GEM object reference that backs the VMA —\nbefore the mmap syscall has even returned causes those resources to be\nreleased while the VMA is still alive.  The kernel VMA teardown will call\nvm_ops->close() a second time when the process later unmaps the range,\nproducing a reference count underflow.\n\nReplace both hard-error returns with a deferred-fault approach that keeps\nthe VMA alive and retries page insertion through the HMM range-fault path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74721",
+    "publishedDate": "2026-08-22T16:16:47.080",
+    "lastModifiedDate": "2026-08-22T16:16:47.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74720",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Preserve pointer state for commuted arithmetic\n\nWhen scalar += pointer is handled in adjust_ptr_min_max_vals(), the\ndestination register inherits the pointer state from the source pointer.\nCopying only selected fields is fragile because pointer provenance is\ntracked by several bpf_reg_state fields.\n\nUse the caller's temporary offset register to preserve the scalar operand\nwhile replacing the destination with the full pointer state. This preserves\nthe frame number for PTR_TO_STACK registers and keeps parent identity\nfields consistent.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74720",
+    "publishedDate": "2026-08-22T16:16:46.957",
+    "lastModifiedDate": "2026-08-22T16:16:46.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74719",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/smc: fix qentry overwrite for CONFIRM_LINK and ADD_LINK_CONT in smc_llc_event_handler()\n\nThe SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT branch in\nsmc_llc_event_handler() stores an incoming qentry into the local LLC flow\nwithout first checking whether a qentry is already pending. If a malicious or\nbuggy peer sends a second CONFIRM_LINK or ADD_LINK_CONT request while a flow is\nactive and flow->qentry is already set, smc_llc_flow_qentry_set() overwrites the\npointer without freeing the previous allocation, leaking one kmalloc-96 object\nper spurious message.\n\nThe sibling SMC_LLC_DELETE_LINK branch already has the correct !flow->qentry\nguard. Apply the same guard to the CONFIRM_LINK/ADD_LINK_CONT branch so that a\nduplicate message when qentry is already occupied falls through to break and is\nfreed by the kfree(qentry) at the out: label, rather than silently leaking the\nexisting allocation.\n\nThe response direction (smc_llc_rx_response()) is unaffected: it already guards\nwith flow->qentry at the equivalent site and drops duplicate responses\ncorrectly.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74719",
+    "publishedDate": "2026-08-22T16:16:46.830",
+    "lastModifiedDate": "2026-08-22T16:16:46.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74718",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndevlink: fix net namespace reference leak in reload\n\ndevlink_nl_reload_doit() calls devlink_netns_get(), which returns a net\nwith a held reference. When the requested namespace differs from the\ncurrent one and the reload action is not DRIVER_REINIT, the function\nreturns -EOPNOTSUPP without releasing the reference. Add the missing\nput_net() on this error path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74718",
+    "publishedDate": "2026-08-22T16:16:46.710",
+    "lastModifiedDate": "2026-08-22T16:16:46.710",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74717",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/mlx5: fw_tracer, return NULL on create error\n\nTracer creation can fail by returning either NULL or ERR_PTR.\nThe return value is stored without a check on the device, and users\ntreat ERR_PTR and NULL the same way.\nThis also causes a crash in the core dump logic, which is missing the\nERR_PTR check and ends up dereferencing it, as shown in the trace below.\n\nSwitch tracer creation to return NULL on failure only, so callers only\nneed a single NULL check.\n\n  Internal error: Oops: 0000000096000006 [#1]  SMP\n  Modules linked in: mlx5_ib ib_uverbs ib_core ipv6 mlx5_core\n  CPU: 1 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted 6.19.7 #1 PREEMPT(none)\n  Workqueue: mlx5_health0001:01:00.0 mlx5_fw_reporter_err_work [mlx5_core]\n  pstate: a3400009 (NzCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)\n  pc : mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core]\n  lr : mlx5_fw_tracer_trigger_core_dump_general+0x40/0xe0 [mlx5_core]\n  sp : ffff800081cf3c40\n  x29: ffff800081cf3c90 x28: 0000000000000000 x27: 0000000000000000\n  x26: ffff000080018828 x25: 0000000000000000 x24: ffff000080304a05\n  x23: ffff800081cf3d80 x22: ffff0000847e01a0 x21: 0000000000000000\n  x20: ffff0000847e01a0 x19: ffffffffffffffa1 x18: ffff80008310bbf0\n  x17: ffff800080119650 x16: ffff80008010df54 x15: ffff80008010d4ac\n  x14: ffff800079c202e4 x13: ffff80008002fe60 x12: ffff800080119650\n  x11: ffff80008010df54 x10: ffff80008010d4ac x9 : ffff800079c203d8\n  x8 : ffff800081cf3c88 x7 : 0000000000000000 x6 : 0000000000000000\n  x5 : 0000000000000000 x4 : 0000000000000008 x3 : 0000000000000030\n  x2 : 0000000000000008 x1 : 0000000000000000 x0 : 00000000c5c4000e\n  Call trace:\n   mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core] (P)\n   mlx5_fw_reporter_dump+0x30/0x2e0 [mlx5_core]\n   devlink_health_do_dump+0x9c/0x160\n   devlink_health_report+0x1c0/0x288\n   mlx5_fw_reporter_err_work+0xac/0xc0 [mlx5_core]\n   process_one_work+0x15c/0x3d8\n   worker_thread+0x18c/0x320\n   kthread+0x148/0x228\n   ret_from_fork+0x10/0x20\n  Code: b9400000 5ac00800 7a401800 540003ca (3940a260)\n  ---[ end trace 0000000000000000 ]---\n  Kernel panic - not syncing: Oops: Fatal exception\n  SMP: stopping secondary CPUs\n  Kernel Offset: disabled\n  CPU features: 0x000000,00078031,75fce5a1,35fffe67\n  Memory Limit: none\n  ---[ end Kernel panic - not syncing: Oops: Fatal exception ]---",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74717",
+    "publishedDate": "2026-08-22T16:16:46.570",
+    "lastModifiedDate": "2026-08-22T16:16:46.570",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74716",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\naccel/amdxdna: Fix locally exploitable BUG_ON in amdxdna_insert_pages()\n\nIn amdxdna_insert_pages(), vm_flags_mod() sets VM_MIXEDMAP and clears\nVM_PFNMAP. If an unprivileged userspace process mmaps a non-imported GEM\nobject and then calls madvise(MADV_DONTNEED), the PTEs will be\nsuccessfully cleared because VM_MIXEDMAP allows this (unlike VM_PFNMAP).\n\nWhen userspace subsequently accesses the memory, drm_gem_shmem_fault()\nhandles the page fault and attempts to map the backing shmem page via\nvmf_insert_pfn() which calls vmf_insert_pfn_prot(). Because the backing\nshmem page is normal system memory (pfn_valid(pfn) is true) and the VMA\nnow has VM_MIXEDMAP set, won't this predictably trigger the explicit\nassertion BUG_ON((vma->vm_flags & VM_MIXEDMAP) && pfn_valid(pfn))\n\nFix by removing the vm_flags_mod() call and replacing the vm_insert_pages()\npre-population with the handle_mm_fault() loop that was already used for\nthe import (dma-buf) path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74716",
+    "publishedDate": "2026-08-22T16:16:46.443",
+    "lastModifiedDate": "2026-08-22T16:16:46.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74715",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Fix netns reference imbalance in conntrack kfuncs\n\nThe opts argument of the BPF conntrack kfuncs can point to a shared\nmap value.  __bpf_nf_ct_lookup() and __bpf_nf_ct_alloc_entry() read\nopts->netns_id separately when acquiring and releasing the network\nnamespace reference.\n\nThe reference imbalance can occur as follows:\n\n  CPU 0                                  CPU 1\n  read opts->netns_id (-1)\n  skip get_net_ns_by_id()\n                                         write opts->netns_id (id)\n  read opts->netns_id (id)\n  put_net(net) /* no matching get */\n\nThe reverse transition leaks the reference.  Repeating the unmatched put\ncan destroy a live namespace and crash later users.\n\nThe kernel reported:\n\n  Oops: general protection fault, probably for non-canonical address\n  KASAN: null-ptr-deref in range [0x00000000000000e8-0x00000000000000ef]\n  RIP: 0010:bpf_prog_test_run_xdp+0x52c/0x1700\n  Call Trace:\n   __sys_bpf+0x1662/0x50c0\n   __x64_sys_bpf+0x73/0xb0\n   do_syscall_64+0xf9/0x540\n   entry_SYSCALL_64_after_hwframe+0x77/0x7f\n  Kernel panic - not syncing: Fatal exception\n\nSnapshot every input field of opts with READ_ONCE() before validating or\nusing it.  The netns_id snapshot keeps the namespace get/put pair\nbalanced, while the other snapshots keep the remaining options from\nchanging partway through an invocation.  The individual reads can still\nobserve an inconsistent combination during a concurrent update, but each\nselected field value remains stable for that invocation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74715",
+    "publishedDate": "2026-08-22T16:16:46.313",
+    "lastModifiedDate": "2026-08-22T16:16:46.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74714",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: tcp: Fix use-after-free in bpf_iter_tcp_established_batch()\n\nreqsk_queue_hash_req() publishes a TCP_NEW_SYN_RECV request_sock onto\nthe ehash chain, drops the bucket lock, and only afterwards sets\nrsk_refcnt to 3.\n\nLockless readers such as __inet_lookup_established() handle this with\nrefcount_inc_not_zero(), but bpf_iter_tcp_established_batch() uses plain\nsock_hold() while holding the bucket lock, on the assumption that the\nlock guarantees sk_refcnt > 0. That assumption does not hold for\nrequest_sock:\n\n  CPU 0                                CPU 1\n  -----                                -----\n  tcp_conn_request()\n   reqsk_queue_hash_req()\n    inet_ehash_insert(req)\n     spin_lock(bucket)\n     __sk_nulls_add_node_rcu(req)      // rsk_refcnt == 0\n     spin_unlock(bucket)\n                                       bpf_iter_tcp_established_batch()\n                                        spin_lock(bucket)\n                                        sock_hold(req)   <-- addition on 0\n                                        spin_unlock(bucket)\n    refcount_set(&req->rsk_refcnt, 3)  // clobbers saturated value\n\nwhich surfaces as:\n\n  refcount_t: addition on 0; use-after-free.\n  WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x48/0x90, CPU#1\n  Call Trace:\n   bpf_iter_tcp_established_batch+0x14e/0x170\n   bpf_iter_tcp_batch+0x53/0x200\n   bpf_iter_tcp_seq_next+0x27/0x70\n   bpf_seq_read+0x107/0x410\n   vfs_read+0xb9/0x380\n\nThe iterator's stolen reference is lost when the publishing CPU's\nrefcount_set() overwrites the count, leaving the socket one reference\nshort. When the last legitimate owner drops its reference the reqsk is\nfreed while still reachable, leading to use-after-free.\n\nThis reproduces in seconds with tcp_syncookies=0, a handful of threads\ndoing connect()/close() to a local listener while others read an\niter/tcp link in a tight loop.\n\nUse refcount_inc_not_zero() and skip the socket on failure. A skipped\nsocket is still part of the bucket, so keep counting it in expected.\nThe reallocations are sized from expected, and a request sock whose\nrefcount gets published while the lock is held across the last realloc\nmust already have room.\n\nA skipped socket is counted in expected but never batched, so end_sk\ncan be short of expected on a batch that is actually complete. Decide\ncompleteness by whether the walk left any socket behind instead. The\nWARN after the locked realloc checks the same, replacing an\nend_sk == expected check that could not hold on that path since\ncommit cdec67a489d4 (\"bpf: tcp: Make sure iter->batch always\ncontains a full bucket snapshot\").\n\nIf every matching socket in a bucket is mid-init (refcount 0), end_sk\nstays 0. Advance to the next bucket rather than returning a batch entry\nthat was never filled this round.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74714",
+    "publishedDate": "2026-08-22T16:16:46.170",
+    "lastModifiedDate": "2026-08-22T16:16:46.170",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74713",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nvhost_iotlb: bound map allocation in add_range\n\nvhost_iotlb_add_range_ctx() only retires an old entry when the table\nhas a non-zero limit, has exactly reached that limit and has\nVHOST_IOTLB_FLAG_RETIRE set. Non-retiring tables can keep allocating\nentries after reaching their configured limit.\n\nExisting vhost devices allocate their IOTLB with max_iotlb_entries from\nvhost.c, which defaults to 2048 and is tunable by module parameter. Use\nthe caller-provided limit at the allocation point instead of adding a\nseparate default in the common IOTLB helper, and reject non-positive\nvalues in vhost paths that can report an error.\n\nOther vhost IOTLB users should not create zero-limit tables when entries\ncan be populated from userspace or guest-controlled requests. Add\ncaller-side max_iotlb_entries parameters for mlx5 vDPA, VDUSE and\nvhost-vDPA. Reject non-positive VDUSE and vhost-vDPA values, and require\nat least two entries for vdpa_sim and mlx5 vDPA paths that install\nfull-range mappings, since those mappings are split into two IOTLB\nentries.\n\nHandle full-range mappings in the common helper by checking that the\nIOTLB can hold both split entries before inserting the first half. This\navoids returning an error after leaving a half mapping behind.\n\nWhen the table is full, keep the existing retire behavior for retiring\ntables and return -ENOSPC for non-retiring tables. Reuse the retired map\nnode instead of freeing it and allocating a replacement, so a stream of\nIOTLB updates cannot keep forcing GFP_ATOMIC allocations after the table\nhas reached its limit. If a zero-limit IOTLB still reaches the common\nhelper, treat it as a configuration error and return -EINVAL.\n\nI found this bug myself, though the patch was written with AI assistance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74713",
+    "publishedDate": "2026-08-22T16:16:46.063",
+    "lastModifiedDate": "2026-08-22T16:16:46.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74712",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nvdpa/mlx5: Fix buffer length in create_direct_keys()\n\nWe have seen in our CI the following KASAN message:\nBUG: KASAN: slab-out-of-bounds in cmd_exec+0x550/0xca0 [mlx5_core]\nRead of size 272 at addr 0000000176795020 by task qemu-system-s39/82764\n[...]\n[<000011388ab3a7a0>] cmd_exec+0x550/0xca0 [mlx5_core]\n[<000011388ab3b61c>] mlx5_cmd_exec_cb+0x25c/0x4f0 [mlx5_core]\n[<000011388b21e82e>] mlx5_vdpa_exec_async_cmds+0x22e/0x5e0 [mlx5_vdpa]\n[<000011388b21fd44>] create_direct_keys+0x954/0xef0 [mlx5_vdpa]\n[...]\nThe buggy address is located 4128 bytes inside of\nallocated 4384-byte region [0000000176794000, 0000000176795120)\n\nSo in essence we read 16 bytes beyond 4384-byte allocation.\ncreate_direct_keys calculates the pointer and length for in and out\nbuffers.\nThe size calculation for in includes the entire structure\nsize (out + in + mtt[]) but the pointer passed to cmd_exec points only\nto the 'in' field, skipping the 'out' field.\n\nThis causes mlx5_copy_to_msg() to read beyond the allocated buffer\nby sizeof(out) bytes when copying command data.\n\nProperly calculate the input size to match the pointer and allocation size.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74712",
+    "publishedDate": "2026-08-22T16:16:45.957",
+    "lastModifiedDate": "2026-08-22T16:16:45.957",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74711",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nhwmon: (pmbus) Fix type confusion in notification logic\n\nSashiko reports:\n\nAt the start of the loop in pmbus_notify(), the code unconditionally casts\nevery attribute to a struct sensor_device_attribute:\n\ndrivers/hwmon/pmbus/pmbus_core.c:pmbus_notify() {\n    for (i = 0; i < data->num_attributes; i++) {\n        struct device_attribute *da = to_dev_attr(data->group.attrs[i]);\n        struct sensor_device_attribute *attr = to_sensor_dev_attr(da);\n        int index = attr->index;\n...\n}\n\nHowever, data->group.attrs can contain other types like struct\npmbus_samples_reg or struct pmbus_sensor, which only embed a base\nstruct device_attribute.\n\nIf da is a struct pmbus_samples_reg, dev_attr is the last member. Casting\nit to struct sensor_device_attribute and reading the index field appears\nto access memory past the end of the allocation, which might trigger a\nslab-out-of-bounds read.\n\nAdditionally, if da is a struct pmbus_sensor, casting it causes the index\nfield to overlap with the page, phase, and reg fields. Could this produce\na garbage mask on little-endian systems that spuriously matches the target\nreg, page, and flags during an alert?\n\nFix the problem by using struct sensor_device_attr in struct pmbus_sensor\nand struct pmbus_label. Since those attributes never trigger a\nnotification, set the value of attr->index to -1 for them. Use this value\nto distinguish from boolean attributes which _can_ trigger a notification\nand use the index field to encode mask, page, and register values.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74711",
+    "publishedDate": "2026-08-22T16:16:45.853",
+    "lastModifiedDate": "2026-08-22T16:16:45.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74710",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxsk: require at least 16 bytes of TX metadata\n\nAF_XDP accepts a TX metadata length as small as eight bytes, but every\nsupported request needs the flags plus at least one eight-byte request\nfield. Such short metadata also lets the kernel read beyond the registered\narea.\n\nRequire 16 bytes rather than sizeof(struct xsk_tx_metadata) to preserve\ncompatibility with applications that do not use launch-time metadata.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74710",
+    "publishedDate": "2026-08-22T16:16:45.743",
+    "lastModifiedDate": "2026-08-22T16:16:45.743",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-74709",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxsk: clear metadata pointer when no timestamp is requested\n\nUser space can change metadata flags after request processing. Rereading\nthem during completion can therefore make the kernel write a timestamp\nthat was not requested when the packet was submitted.\n\nClear the metadata pointer during request processing unless timestamp\ncompletion is requested. Completion handling can then use the pointer\nitself instead of rereading the flags.\n\nOn the mlx5 multi-packet WQE path metadata is evaluated per batch:\nxsk_tx_metadata_request() runs only for the descriptor that starts a\nsession, just like the checksum offload that is applied once through the\nshared WQE. Only that descriptor's pointer is reset, so completion\nhandling can record a timestamp for the other descriptors of the session\nregardless of their own XDP_TXMD_FLAGS_TIMESTAMP bit. The write stays\ninside the metadata area; the single-WQE, other zero-copy, and generic\npaths reset the pointer per descriptor and are unaffected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74709",
+    "publishedDate": "2026-08-22T16:16:45.640",
+    "lastModifiedDate": "2026-08-22T16:16:45.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
