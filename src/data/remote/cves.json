@@ -1,5 +1,84 @@
 [
   {
+    "id": "CVE-2026-78049",
+    "description": "A vulnerability has been found in Systerel S2OPC up to 1.7.3. Impacted is the function SOPC_NodeMgtHelperInternal_AddVariableNodeAttributes of the file src/ClientServer/address_space/internal/sopc_node_mgt_helper_internal.c of the component AddNodes Service. The manipulation of the argument UserAccessLevel leads to out-of-bounds read. It is possible to initiate the attack remotely. A high degree of complexity is needed for the attack. The exploitability is considered difficult. The exploit has been disclosed to the public and may be used. The identifier of the patch is aafbd37d381b618312ebdf5ddf57027f62c14fdd. It is suggested to install a patch to address this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78049",
+    "publishedDate": "2026-08-22T23:16:22.723",
+    "lastModifiedDate": "2026-08-22T23:16:22.723",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19684",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19684",
+    "publishedDate": "2026-08-22T23:16:22.130",
+    "lastModifiedDate": "2026-08-22T23:16:22.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-47895",
+    "description": "In strongSwan before 6.0.7, identity parsing/cloning is mishandled. Parsed EAP-Identities that result in an empty but non-NULL encoding are not correctly cloned and trigger a double-free once the duplicates are destroyed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47895",
+    "publishedDate": "2026-08-22T22:16:28.153",
+    "lastModifiedDate": "2026-08-22T22:16:28.153",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-12999",
+    "description": "The Infineon Airoc Wi-Fi driver's transmit callback airoc_mgmt_send() in drivers/wifi/infineon/airoc_wifi.c allocates a net_buf from the fixed airoc_pool for every outbound packet. When whd_network_send_ethernet_data() returns a synchronous failure, the underlying WHD library does not take ownership of the buffer, but the pre-fix driver returned -EIO without releasing it. Each failed transmit therefore permanently leaks one buffer from the pool.\n\nairoc_pool is small and fixed (AIROC_WIFI_TX_PACKET_POOL_COUNT + AIROC_WIFI_RX_PACKET_POOL_COUNT, default 20 buffers) and is shared by WHD's whd_host_buffer_get callback for both transmit and receive. Once enough send failures have leaked the pool dry, airoc_wifi_host_buffer_get() returns WHD_BUFFER_ALLOC_FAIL for all subsequent allocations, so both transmit and the WHD-driven receive path fail and Wi-Fi connectivity is lost until the device is rebooted.\n\nThe leak occurs only on the transmit error path. A Wi-Fi-adjacent attacker can influence the conditions that cause synchronous send failures (for example by deauthenticating/disassociating the station while the local stack continues to attempt transmits), and ordinary transient failures over the device's lifetime accumulate toward the same state. Reliable on-demand triggering is of high complexity and the impact is availability-only, but the resulting denial of service is permanent and non-recoverable without a reboot.\n\nThe fix releases the buffer with airoc_wifi_buffer_release() on the failure branch, returning it to the pool. The commit also removes a redundant k_sem_give() in airoc_mgmt_disconnect(); because data->sema_common is a binary semaphore (limit 1) the duplicate give merely saturated at 1 and had no security impact.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12999",
+    "publishedDate": "2026-08-22T21:16:48.747",
+    "lastModifiedDate": "2026-08-22T21:16:48.747",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-74733",
     "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ngpio: pca953x: fix pca953x_irq_bus_sync_unlock regmap lock\n\nLocking is disabled in the regmap config as this driver uses its own\nlock. This means that all calls to regmap functions (read or write) must\nhold the i2c_lock. The function pca953x_irq_bus_sync_unlock() did not do\nthis, and it was therefore possible that multiple threads could cause an\nincorrect register to be read/written.\n\nA previous patch partly fixed this, but only protected the write to the\ninterrupt mask register, and not the read from the direction register.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-74733",
@@ -205,46 +284,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-74713",
     "publishedDate": "2026-08-22T16:16:46.063",
     "lastModifiedDate": "2026-08-22T16:16:46.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-74712",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nvdpa/mlx5: Fix buffer length in create_direct_keys()\n\nWe have seen in our CI the following KASAN message:\nBUG: KASAN: slab-out-of-bounds in cmd_exec+0x550/0xca0 [mlx5_core]\nRead of size 272 at addr 0000000176795020 by task qemu-system-s39/82764\n[...]\n[<000011388ab3a7a0>] cmd_exec+0x550/0xca0 [mlx5_core]\n[<000011388ab3b61c>] mlx5_cmd_exec_cb+0x25c/0x4f0 [mlx5_core]\n[<000011388b21e82e>] mlx5_vdpa_exec_async_cmds+0x22e/0x5e0 [mlx5_vdpa]\n[<000011388b21fd44>] create_direct_keys+0x954/0xef0 [mlx5_vdpa]\n[...]\nThe buggy address is located 4128 bytes inside of\nallocated 4384-byte region [0000000176794000, 0000000176795120)\n\nSo in essence we read 16 bytes beyond 4384-byte allocation.\ncreate_direct_keys calculates the pointer and length for in and out\nbuffers.\nThe size calculation for in includes the entire structure\nsize (out + in + mtt[]) but the pointer passed to cmd_exec points only\nto the 'in' field, skipping the 'out' field.\n\nThis causes mlx5_copy_to_msg() to read beyond the allocated buffer\nby sizeof(out) bytes when copying command data.\n\nProperly calculate the input size to match the pointer and allocation size.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74712",
-    "publishedDate": "2026-08-22T16:16:45.957",
-    "lastModifiedDate": "2026-08-22T16:16:45.957",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-74711",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nhwmon: (pmbus) Fix type confusion in notification logic\n\nSashiko reports:\n\nAt the start of the loop in pmbus_notify(), the code unconditionally casts\nevery attribute to a struct sensor_device_attribute:\n\ndrivers/hwmon/pmbus/pmbus_core.c:pmbus_notify() {\n    for (i = 0; i < data->num_attributes; i++) {\n        struct device_attribute *da = to_dev_attr(data->group.attrs[i]);\n        struct sensor_device_attribute *attr = to_sensor_dev_attr(da);\n        int index = attr->index;\n...\n}\n\nHowever, data->group.attrs can contain other types like struct\npmbus_samples_reg or struct pmbus_sensor, which only embed a base\nstruct device_attribute.\n\nIf da is a struct pmbus_samples_reg, dev_attr is the last member. Casting\nit to struct sensor_device_attribute and reading the index field appears\nto access memory past the end of the allocation, which might trigger a\nslab-out-of-bounds read.\n\nAdditionally, if da is a struct pmbus_sensor, casting it causes the index\nfield to overlap with the page, phase, and reg fields. Could this produce\na garbage mask on little-endian systems that spuriously matches the target\nreg, page, and flags during an alert?\n\nFix the problem by using struct sensor_device_attr in struct pmbus_sensor\nand struct pmbus_label. Since those attributes never trigger a\nnotification, set the value of attr->index to -1 for them. Use this value\nto distinguish from boolean attributes which _can_ trigger a notification\nand use the index field to encode mask, page, and register values.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74711",
-    "publishedDate": "2026-08-22T16:16:45.853",
-    "lastModifiedDate": "2026-08-22T16:16:45.853",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-74710",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxsk: require at least 16 bytes of TX metadata\n\nAF_XDP accepts a TX metadata length as small as eight bytes, but every\nsupported request needs the flags plus at least one eight-byte request\nfield. Such short metadata also lets the kernel read beyond the registered\narea.\n\nRequire 16 bytes rather than sizeof(struct xsk_tx_metadata) to preserve\ncompatibility with applications that do not use launch-time metadata.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74710",
-    "publishedDate": "2026-08-22T16:16:45.743",
-    "lastModifiedDate": "2026-08-22T16:16:45.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-74709",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxsk: clear metadata pointer when no timestamp is requested\n\nUser space can change metadata flags after request processing. Rereading\nthem during completion can therefore make the kernel write a timestamp\nthat was not requested when the packet was submitted.\n\nClear the metadata pointer during request processing unless timestamp\ncompletion is requested. Completion handling can then use the pointer\nitself instead of rereading the flags.\n\nOn the mlx5 multi-packet WQE path metadata is evaluated per batch:\nxsk_tx_metadata_request() runs only for the descriptor that starts a\nsession, just like the checksum offload that is applied once through the\nshared WQE. Only that descriptor's pointer is reset, so completion\nhandling can record a timestamp for the other descriptors of the session\nregardless of their own XDP_TXMD_FLAGS_TIMESTAMP bit. The write stays\ninside the metadata area; the single-WQE, other zero-copy, and generic\npaths reset the pointer per descriptor and are unaffected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74709",
-    "publishedDate": "2026-08-22T16:16:45.640",
-    "lastModifiedDate": "2026-08-22T16:16:45.640",
     "vendors": [],
     "products": [],
     "cvssScores": []
