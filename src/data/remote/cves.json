@@ -1,150 +1,200 @@
 [
   {
-    "id": "CVE-2026-79939",
-    "description": "Dell PowerProtect Cyber Recovery, versions Prior to 20.3, contain an UNIX Symbolic Link (Symlink) Following vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Script injection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-79939",
-    "publishedDate": "2026-08-26T20:18:14.263",
-    "lastModifiedDate": "2026-08-26T20:18:14.263",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 1,
-        "impactScore": 4.7,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-79938",
-    "description": "Dell PowerProtect Cyber Recovery, versions prior to 20.3, contain an Improper Authentication vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Unauthorized access.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-79938",
-    "publishedDate": "2026-08-26T20:18:14.140",
-    "lastModifiedDate": "2026-08-26T20:18:14.140",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77652",
-    "description": "A heap-based buffer overflow vulnerability exists in the Dia diagram editor WPG file format importer.\n\nIn plug-ins/wpg/wpg-import.c, the WPG import renderer allocates a fixed palette with:\n\n    ren->pPal = g_new0(WPGColorRGB, 256);\n\nWhen handling a WPG_COLORMAP record, the parser reads a start index (i16) and number of colors (iNum16) from the file and reads palette data with:\n\n    bRet &= (iNum16 == (int)fread(&ren->pPal[i16], sizeof(WPGColorRGB), iNum16, f));\n\nThe only bounds-related check is `if (i16 >= 0 && i16 <= iSize)`, where iSize is the WPG record size—not the palette capacity. There is no validation that i16 is less than 256 or that i16 + iNum16 does not exceed 256.\n\nA malicious WPG file can supply i16=256 and iNum16=264. That causes fread() to write 792 bytes starting at &pPal[256], while the palette buffer is only 768 bytes (256 entries × 3 bytes). This overflows into adjacent heap metadata and can crash Dia (SIGABRT / malloc corruption errors) or, depending on heap layout and exploit primitives, potentially lead to arbitrary code execution.\n\nExploitation requires convincing a user to open a crafted WPG file via Dia's file dialog, command line, or file association. No special privileges are required to deliver the file to the victim.\n\nAffected component: WPG parser (plug-ins/wpg/wpg-import.c).\nAffected versions: all Dia versions containing this code path (reporter tested Dia 0.98+git20260221-1; issue present on upstream master as of 2026-08-21).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77652",
-    "publishedDate": "2026-08-26T20:18:02.160",
-    "lastModifiedDate": "2026-08-26T20:18:02.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "patrick@puiterwijk.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77508",
-    "description": "Weblate is a web based localization tool. Prior to 2026.8, an authenticated user can change the account's primary email through PUT or PATCH requests to /api/users/{username}/ without verifying the new address, allowing a later team invitation for that address to be accepted without access to the intended recipient's mailbox. This issue is fixed in version 2026.8.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77508",
-    "publishedDate": "2026-08-26T20:18:01.843",
-    "lastModifiedDate": "2026-08-26T20:18:01.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75601",
-    "description": "Static Web Server (SWS) is a production-ready web server suitable for static web files or assets. Through 2.43.0, instances with both basic-auth and metrics features enabled process the /metrics endpoint before the basic-auth check in src/handler.rs, allowing an unauthenticated remote attacker to retrieve Prometheus metrics that disclose virtual host names, request volumes, error rates, latency distributions, and active connections. This issue is fixed in version 2.44.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75601",
-    "publishedDate": "2026-08-26T20:18:00.160",
-    "lastModifiedDate": "2026-08-26T20:18:00.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75334",
-    "description": "The report module in the backend of smart-web2 v1.3.1 is vulnerable to arbitrary SQL execution. The sqlResource.sql parameter is stored in the t_report_sql_resource table through the ReportController.save() interface and directly embedded into Hibernate native queries without any parameterization or filtering.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75334",
-    "publishedDate": "2026-08-26T20:17:59.847",
-    "lastModifiedDate": "2026-08-26T20:17:59.847",
+    "id": "CVE-2026-78333",
+    "description": "The 12 Step Meeting List WordPress plugin before 3.19.17 does not sanitise and escape a value submitted by unauthenticated users before storing it in its activity log and outputting it back in an admin area page, leading to a Stored Cross-Site Scripting issue which could be used against high privilege users such as admin.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78333",
+    "publishedDate": "2026-08-27T06:17:29.897",
+    "lastModifiedDate": "2026-08-27T06:17:29.897",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-75327",
-    "description": "In DocSys-master V2.02.85, the uploadMarkdownPic interface in src/com/DocSystem/controller/DocController.java has an arbitrary file upload vulnerability:",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75327",
-    "publishedDate": "2026-08-26T20:17:59.723",
-    "lastModifiedDate": "2026-08-26T20:17:59.723",
+    "id": "CVE-2026-78139",
+    "description": "The Notifima  WordPress plugin before 3.1.4 does not verify that the caller owns the subscription being modified on one of its REST endpoints in all versions up to, and including, 3.1.3, allowing authenticated attackers with Subscriber-level access to unsubscribe arbitrary customers from product stock-alert notifications.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78139",
+    "publishedDate": "2026-08-27T06:17:29.707",
+    "lastModifiedDate": "2026-08-27T06:17:29.707",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-74774",
-    "description": "Dell PowerProtect One, versions 20.1.0.0 and below, contain an Improper Certificate Validation vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Protection mechanism bypass.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74774",
-    "publishedDate": "2026-08-26T20:17:59.603",
-    "lastModifiedDate": "2026-08-26T20:17:59.603",
+    "id": "CVE-2026-78138",
+    "description": "The Finale Lite  WordPress plugin before 2.21.0 does not perform a capability check on an AJAX action that returns a sales-campaign's configuration for an arbitrary post ID, allowing any authenticated user (Subscriber and above) to read the Finale Lite  WordPress plugin before 2.21.0's campaign configuration and scheduling data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78138",
+    "publishedDate": "2026-08-27T06:17:29.497",
+    "lastModifiedDate": "2026-08-27T06:17:29.497",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-78137",
+    "description": "The StoreGrowth  WordPress plugin before 2.1.2 does not validate a browser-supplied product price on two of its unauthenticated actions, allowing unauthenticated attackers to add a product to the cart at an arbitrary, attacker-chosen price that carries through to the checkout total when the BOGO offer feature is enabled.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78137",
+    "publishedDate": "2026-08-27T06:17:29.313",
+    "lastModifiedDate": "2026-08-27T06:17:29.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-78125",
+    "description": "The LearnPress  WordPress plugin before 4.0.3 does not perform any authorization check on one of its REST endpoints in all versions up to, and including, 4.0.2, allowing unauthenticated attackers to disclose the payment status of arbitrary orders by enumerating order identifiers.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78125",
+    "publishedDate": "2026-08-27T06:17:29.157",
+    "lastModifiedDate": "2026-08-27T06:17:29.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-77991",
+    "description": "Joomla Extension - joomlaeventmanager.net - Privileged remote code execution in Joomla Event Manager < 5.0.1 - The administrator source model allows to write dangerous file type incl. PHP, leading to remote code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77991",
+    "publishedDate": "2026-08-27T06:17:28.970",
+    "lastModifiedDate": "2026-08-27T06:17:28.970",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-74771",
-    "description": "Dell PowerProtect One, versions 20.1.0.0 and below, contain an Authorization Bypass Through User-Controlled Key vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Information tampering.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74771",
-    "publishedDate": "2026-08-26T20:17:59.480",
-    "lastModifiedDate": "2026-08-26T20:17:59.480",
+    "id": "CVE-2026-77990",
+    "description": "Joomla Extension - joomlaeventmanager.net - Attendee lists readable by any logged-in user in Joomla Event Manager < 5.0.1 - A non-manager can therefore read attendee names, usernames, registration dates and statuses for events they do not manage, including lists belonging to unpublished events.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77990",
+    "publishedDate": "2026-08-27T06:17:28.673",
+    "lastModifiedDate": "2026-08-27T06:17:28.673",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77989",
+    "description": "Joomla Extension - joomlaeventmanager.net - Reflected XSS via the PDF export link in Joomla Events Manager < 5.0.1 - buildCurrentPdfLink copies the current request query string into the PDF button URL, and pdfbutton() echoes it unescaped, leading to an reflected XSS vector.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77989",
+    "publishedDate": "2026-08-27T06:17:28.413",
+    "lastModifiedDate": "2026-08-27T06:17:28.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77035",
+    "description": "Joomla Extension - joomlaeventmanager.net - Cross-user event and venue takeover through forged form fields in Joomla Event Manager < 5.0.1 - A registered user with edit-own rights (the eventowner=1 setting or core.edit.own) can POST another user's record id together with their own id as created_by and take over that record.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77035",
+    "publishedDate": "2026-08-27T06:17:28.120",
+    "lastModifiedDate": "2026-08-27T06:17:28.120",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77034",
+    "description": "Joomla Extension - joomlaeventmanager.net - Unauthenticated article overwrite and force-publish in Joomla Event Manager < 5.0.1 - Any visitor holding their own session token can republish and overwrite an article associated with an event.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77034",
+    "publishedDate": "2026-08-27T06:17:27.720",
+    "lastModifiedDate": "2026-08-27T06:17:27.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77018",
+    "description": "The Workeera  WordPress plugin before 1.0.6 does not restrict which profile values a candidate may submit, nor validate the type of the file it subsequently writes into a publicly reachable directory, allowing users with a role as low as subscriber to upload arbitrary files and achieve remote code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77018",
+    "publishedDate": "2026-08-27T06:17:27.500",
+    "lastModifiedDate": "2026-08-27T06:17:27.500",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-77017",
+    "description": "The Workeera  WordPress plugin before 1.0.6 does not restrict which profile values a candidate may submit, nor confine the stored file location to an allowed directory before serving it, allowing users with a role as low as subscriber to read arbitrary files on the server, including its configuration file and authentication secrets.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77017",
+    "publishedDate": "2026-08-27T06:17:27.307",
+    "lastModifiedDate": "2026-08-27T06:17:27.307",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-77016",
+    "description": "The Workeera  WordPress plugin before 1.0.6 does not restrict which values may be written to a user's own candidate profile, and does not validate or contain the stored file path before deleting it, allowing users with a role as low as subscriber to delete arbitrary files on the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77016",
+    "publishedDate": "2026-08-27T06:17:27.057",
+    "lastModifiedDate": "2026-08-27T06:17:27.057",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-76549",
+    "description": "The UpdraftPlus: WP Backup & Migration Plugin WordPress plugin before 1.26.7 does not have CSRF checks in one of its backup management actions, which could allow attackers to make a logged in admin restore an existing backup, reverting the site's database and files to an earlier state, via a crafted link.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76549",
+    "publishedDate": "2026-08-27T06:17:26.837",
+    "lastModifiedDate": "2026-08-27T06:17:26.837",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-59278",
+    "description": "JsonKafkaHeaderMapper and DefaultKafkaHeaderMapper include java.net in their default trusted packages list. When these mappers are used — which is the default configuration for all @KafkaListener consumers — an external Kafka producer can inject a java.net.InetAddress type via the spring_json_header_types message header.\nSpring for Apache Kafka 4.1.0\nSpring for Apache Kafka 4.0.0 - 4.0.6\nSpring for Apache Kafka 3.0.0 - 3.3.16\nSpring for Apache Kafka 2.9.0 - 2.9.14\nSpring for Apache Kafka 2.8.12 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59278",
+    "publishedDate": "2026-08-27T06:17:22.403",
+    "lastModifiedDate": "2026-08-27T06:17:22.403",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -152,321 +202,161 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-74770",
-    "description": "Dell PowerProtect One, versions 20.1.0.0 and below, contain an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-74770",
-    "publishedDate": "2026-08-26T20:17:59.353",
-    "lastModifiedDate": "2026-08-26T20:17:59.353",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71172",
-    "description": "Dell Cloud Disaster Recovery, versions 20.2 and prior, contain a Server-Side Request Forgery (SSRF) vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Server-side request forgery.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71172",
-    "publishedDate": "2026-08-26T20:17:59.120",
-    "lastModifiedDate": "2026-08-26T20:17:59.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71054",
-    "description": "Vulnerability in Oracle Java SE (component: 2D).  Supported versions that are affected are Oracle Java SE: 7u511. Easily exploitable vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise Oracle Java SE.  Successful attacks of this vulnerability can result in unauthorized ability to cause a hang or frequently repeatable crash (complete DOS) of Oracle Java SE. Note: This vulnerability can be exploited by using APIs in the specified Component, e.g., through a web service which supplies data to the APIs. This vulnerability also applies to Java deployments, typically in clients running sandboxed Java Web Start applications or sandboxed Java applets, that load and run untrusted code (e.g., code that comes from the internet) and rely on the Java sandbox for security. CVSS 3.1 Base Score 6.5 (Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71054",
-    "publishedDate": "2026-08-26T20:17:58.897",
-    "lastModifiedDate": "2026-08-26T21:16:40.420",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 2.5,
-        "source": "secalert_us@oracle.com"
+        "source": "security@vmware.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-68863",
-    "description": "Dell PowerProtect One, versions 20.1.0.0 and below, contain a Stack-based Buffer Overflow vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68863",
-    "publishedDate": "2026-08-26T20:17:57.833",
-    "lastModifiedDate": "2026-08-26T20:17:57.833",
+    "id": "CVE-2026-59275",
+    "description": "A single hostile AMQP message can terminate the entire consumer JVM (System.exit(99)), not just the listener thread — full availability loss for every workload co-located in that process.\nSpring AMQP 4.1.0\nSpring AMQP 4.0.0 - 4.0.4\nSpring AMQP 3.2.0 - 3.2.12\nSpring AMQP 2.4.18 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59275",
+    "publishedDate": "2026-08-27T06:17:22.073",
+    "lastModifiedDate": "2026-08-27T06:17:22.073",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 6.6,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-68861",
-    "description": "Dell PowerProtect One, versions 20.1.0.0 and below, contain an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Remote execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68861",
-    "publishedDate": "2026-08-26T20:17:57.710",
-    "lastModifiedDate": "2026-08-26T20:17:57.710",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.7,
         "impactScore": 5.9,
-        "source": "security_alert@emc.com"
+        "source": "security@vmware.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-68000",
-    "description": "The front-end interface /cms/category/list of MCMS <=6.2.0 is vulnerable to SQL injection. The size parameter is directly concatenated into the LIMIT clause of SQL through FreeMarker ${size} without being parameterized and bound. The built-in SqlInjectionUtil employs regular expression blacklist filtering, yet keywords like CREATE/TABLE/SET/PREPARE/EXECUTE are not included in the list, allowing for bypassing. Attackers can execute stacked SQL statements without logging in.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68000",
-    "publishedDate": "2026-08-26T20:17:57.397",
-    "lastModifiedDate": "2026-08-26T20:17:57.397",
+    "id": "CVE-2026-59274",
+    "description": "The UnZipTransformer does not limit decompressed entry size or entry count when processing archives. Consequently, an attacker can send a zip archive that can exhaust JVM heap memory, causing a denial-of-service outage.\nSpring Integration 7.1.0\nSpring Integration 7.0.0 - 7.0.5\nSpring Integration 6.5.0 - 6.5.10\nSpring Integration 6.4.0 - 6.4.12",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59274",
+    "publishedDate": "2026-08-27T06:17:21.820",
+    "lastModifiedDate": "2026-08-27T06:17:21.820",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59271",
+    "description": "When the RabbitMQ management aliveness check fails, the configured admin password is embedded in cleartext in the thrown exception message.\nSpring AMQP 4.1.0\nSpring AMQP 4.0.0 - 4.0.4\nSpring AMQP 3.2.0 - 3.2.12\nSpring AMQP 2.4.18 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59271",
+    "publishedDate": "2026-08-27T06:17:21.510",
+    "lastModifiedDate": "2026-08-27T06:17:21.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-59270",
+    "description": "Spring Security's embedded UnboundID LDAP server (UnboundIdContainer) unconditionally registers an administrative credential and binds its listener to all available network interfaces.\nSpring Security 7.1.0\nSpring Security 7.0.0 - 7.0.6\nSpring Security 6.5.0 - 6.5.11\nSpring Security 6.4.0 - 6.4.18\nSpring Security 5.8.0 - 5.8.27\nSpring Security 5.7.0 - 5.7.25",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59270",
+    "publishedDate": "2026-08-27T06:17:21.223",
+    "lastModifiedDate": "2026-08-27T06:17:21.223",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.5,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47894",
+    "description": "Spring Cloud Config Server native environment repository allows exposure of configuration files outside of the configured repository path.\nSpring Cloud Config 5.0.0 - 5.0.4\nSpring Cloud Config 4.3.0 - 4.3.4\nSpring Cloud Config 4.0.0 - 4.2.8\nSpring Cloud Config 3.1.14 and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47894",
+    "publishedDate": "2026-08-27T06:17:20.930",
+    "lastModifiedDate": "2026-08-27T06:17:20.930",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.6,
+        "source": "security@vmware.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47893",
+    "description": "A Spring WebFlux application that supports WebSocket connections may expose indirectly sensitive user information by including request headers in an exception reason.\nSpring Framework 7.0.0 - 7.0.8\nSpring Framework 6.2.0 - 6.2.19\nSpring Framework 6.1.0 - 6.1.28\nSpring Framework 6.0.0 - 6.0.30\nSpring Framework 5.3.0 - 5.3.49\nSpring Framework 5.2.25.RELEASE and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47893",
+    "publishedDate": "2026-08-27T06:17:20.687",
+    "lastModifiedDate": "2026-08-27T06:17:20.687",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-67275",
-    "description": "Dell PowerProtect One, versions 20.1.0.0 and below, contain a Reliance on Insufficiently Trustworthy Component vulnerability. An unauthenticated attacker with remote access could potentially exploit this vulnerability, leading to Cache poisoning.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67275",
-    "publishedDate": "2026-08-26T20:17:57.267",
-    "lastModifiedDate": "2026-08-26T20:17:57.267",
+    "id": "CVE-2026-47892",
+    "description": "A WebFlux application using functional endpoints and deployed with DispatcherServlet may be vulnerable to a header predicate bypass in a pre-flight request.\nSpring Framework 7.0.0 - 7.0.8\nSpring Framework 6.2.0 - 6.2.19\nSpring Framework 6.1.0 - 6.1.28\nSpring Framework 6.0.0 - 6.0.30\nSpring Framework 5.3.0 - 5.3.49\nSpring Framework 5.2.5.RELEASE - 5.2.25.RELEASE",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47892",
+    "publishedDate": "2026-08-27T06:17:20.470",
+    "lastModifiedDate": "2026-08-27T06:17:20.470",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-66003",
-    "description": "Frappe is a full-stack web application framework written in Python and JavaScript. Prior to version 15.115.0, an access control bypass in the REST API allows a user to read data from Linked DocTypes that they are not authorized to access. When a document references another document through a Link field, the framework does not consistently enforce the linked DocType's own permissions when the record is retrieved through the REST API, so a low-privileged authenticated user can obtain fields from linked records outside their permitted scope. This issue is fixed in version 15.115.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66003",
-    "publishedDate": "2026-08-26T20:17:56.920",
-    "lastModifiedDate": "2026-08-26T20:17:56.920",
+    "id": "CVE-2026-47891",
+    "description": "A Spring WebFlux application that relies on the Aalto XML processor to parse XML input does not correctly enforce the maxInMemorySize limit.\nSpring Framework 7.0.0 - 7.0.8\nSpring Framework 6.2.0 - 6.2.19\nSpring Framework 6.1.0 - 6.1.28\nSpring Framework 6.0.0 - 6.0.30\nSpring Framework 5.3.0 - 5.3.49\nSpring Framework 5.2.25.RELEASE and earlier",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47891",
+    "publishedDate": "2026-08-27T06:17:20.287",
+    "lastModifiedDate": "2026-08-27T06:17:20.287",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-60004",
-    "description": "Gitea before 1.27.1 allows remote code execution via the diffpatch API through Git hook installation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60004",
-    "publishedDate": "2026-08-26T20:17:56.010",
-    "lastModifiedDate": "2026-08-26T21:16:38.890",
+    "id": "CVE-2026-47890",
+    "description": "Spring MVC and WebFlux applications are vulnerable to stream corruption when using Server-Sent Events (SSE) with view fragments.\nSpring Framework 7.0.0 - 7.0.8\nSpring Framework 6.2.0 - 6.2.19",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47890",
+    "publishedDate": "2026-08-27T06:17:20.120",
+    "lastModifiedDate": "2026-08-27T06:17:20.120",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "cve@mitre.org"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-56547",
-    "description": "The Apple profile generated for the Apple built-in Mail, Calendar and Contacts account to synchronize with HCL Traveler requires the Logon Name and Mail Address to be embedded in them.  The values cannot be changed later on, so the Apple profile generation page asks for those values and reflects them back in the generated Apple profile.  The Apple profile is not usable without additional information and only allows the attacker to attack their own device, but HCL Traveler could at least check that the values submitted and reflected back in the Apple profile are found in the Domino directory entry for the already authenticated user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56547",
-    "publishedDate": "2026-08-26T20:17:54.190",
-    "lastModifiedDate": "2026-08-26T20:17:54.190",
+    "id": "CVE-2026-47889",
+    "description": "A WebFlux application running on the Jetty 12 Core reactive adapter serializes response cookies without the sameSite attribute.\nSpring Framework 7.0.0 - 7.0.8\nSpring Framework 6.2.0 - 6.2.19",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47889",
+    "publishedDate": "2026-08-27T06:17:19.867",
+    "lastModifiedDate": "2026-08-27T06:17:19.867",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54245",
-    "description": "Fleet is an open-source device management platform built on osquery. In versions prior to 4.86.2, the Okta conditional access integration in Fleet Premium is vulnerable to SQL injection through a host-supplied value that is used in a database query without proper parameterization, allowing an attacker who controls a single enrolled host to read or modify arbitrary data in the Fleet database. The value is reported by the host's own agent and stored verbatim, then used on an unauthenticated request path that supports the conditional access integration, so any party controlling one enrolled host, the lowest-privilege position in the product, can influence the query. By disclosing arbitrary database contents an attacker can extract stored session tokens and replay them to act as a global administrator, and on a managed fleet that administrator access enables running scripts on enrolled hosts, leading to remote code execution. The issue requires Fleet Premium with the Okta conditional access integration enabled and does not affect instances where it is not configured. This issue is fixed in version 4.86.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54245",
-    "publishedDate": "2026-08-26T20:17:53.057",
-    "lastModifiedDate": "2026-08-26T20:17:53.057",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-49809",
-    "description": "Dell PowerProtect Cyber Recovery, versions 20.2 and prior, contain an Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49809",
-    "publishedDate": "2026-08-26T20:17:52.440",
-    "lastModifiedDate": "2026-08-26T20:17:52.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47848",
-    "description": "In specific scenarios involving WebSocket handshake redirects to a different origin, the Reactor Netty WebSocket client may leak credentials. In order for this to happen, the HTTP client must have been explicitly configured to follow redirects.\nReactor Netty 1.3.0 - 1.3.6\nReactor Netty 1.1.0 - 1.2.18\nReactor Netty 1.0.52 and earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47848",
-    "publishedDate": "2026-08-26T20:17:27.070",
-    "lastModifiedDate": "2026-08-26T20:17:27.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47844",
-    "description": "In specific scenarios, the Reactor Netty HTTP Server may leak exception details across unrelated requests. In order for this to happen, the server must be configured with Brave Tracing.\nReactor Netty 1.3.0 - 1.3.6\nReactor Netty 1.1.0 - 1.2.18\nReactor Netty 1.0.52 and earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47844",
-    "publishedDate": "2026-08-26T20:17:26.637",
-    "lastModifiedDate": "2026-08-26T20:17:26.637",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47843",
-    "description": "In specific scenarios involving multiple clients with different DNS resolver configurations, Reactor Netty may incorrectly reuse a previously configured DNS resolver.\nReactor Netty 1.3.0 - 1.3.6\nReactor Netty 1.1.0 - 1.2.18\nReactor Netty 1.0.52 and earlier",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47843",
-    "publishedDate": "2026-08-26T20:17:26.193",
-    "lastModifiedDate": "2026-08-26T20:17:26.193",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security@vmware.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-47842",
-    "description": "Applications using AesBytesEncryptor with the two-argument constructor or when passing a null IV generator and CBC as the encryption mode encrypt data with AES/CBC using a null (all-zero) initialization vector.\nSpring Security 7.1.0\nSpring Security 7.0.0 - 7.0.6\nSpring Security 6.5.0 - 6.5.11\nSpring Security 6.4.0 - 6.4.18\nSpring Security 5.8.0 - 5.8.27\nSpring Security 5.7.0 - 5.7.25",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47842",
-    "publishedDate": "2026-08-26T20:17:25.753",
-    "lastModifiedDate": "2026-08-26T20:17:25.753",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@vmware.com"
-      }
-    ]
+    "cvssScores": []
   }
 ]
