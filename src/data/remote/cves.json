@@ -1,10 +1,10 @@
 [
   {
-    "id": "CVE-2026-81827",
-    "description": "Affected versions of Flowintel incorrectly attempted to validate login email addresses by calling Email(email). That does not perform WTForms field validation; it merely constructs a validator object.\n\n\nConsequently, malformed attacker-controlled email input could continue through the login process and be written to security-relevant logs. The vulnerable code inserted the supplied email into both a warning log and the custom audit logger. Since CR/LF characters were not escaped, an unauthenticated attacker could potentially inject additional physical log lines or forge misleading log entries.\n\nThe patch corrects the validation call to Email()(form, form.email), changes the standard logging call to parameterized logging, and introduces _sanitize_log_fragment() so carriage returns and line feeds are encoded instead of creating new records.\n\nVersion impacted >=3.3.0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81827",
-    "publishedDate": "2026-08-27T17:21:05.910",
-    "lastModifiedDate": "2026-08-27T17:21:05.910",
+    "id": "CVE-2026-78618",
+    "description": "A business logic flaw in WatchGuard Dimension allows an authenticated administrator to trigger multiple backend operations within a single logical flow by sending a specially crafted request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78618",
+    "publishedDate": "2026-08-28T02:16:24.580",
+    "lastModifiedDate": "2026-08-28T02:16:24.580",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -12,79 +12,79 @@
         "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-81826",
-    "description": "Affected versions of Flowintel do not revoke existing authenticated sessions when a user’s password is changed.\n\n\nThis means that if an attacker already possesses a valid session—for example, from prior access or a stolen session token—the victim changing their password does not terminate that attacker’s access. The session remains usable until it expires naturally. The upstream commit describes this directly as:\n\n\n“session keeps working until it expires.”\n\nThe fix detects password changes and explicitly invokes _invalidate_user_sessions(user.id) after the database update. This is applied in both edit_user_core() and admin_edit_user_core().\n\nVersion impacted >=3.3.0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81826",
-    "publishedDate": "2026-08-27T17:21:05.770",
-    "lastModifiedDate": "2026-08-27T17:21:05.770",
+    "id": "CVE-2026-78617",
+    "description": "WatchGuard Dimension's web login endpoint does not enforce effective rate-limiting or account lockout by default allowing a remote attacker to perform automated password guessing against user accounts. If the account lockout setting is enabled, brute-force attempts are blocked after a defined number of failed attempts, but this setting is not enabled by default.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78617",
+    "publishedDate": "2026-08-28T02:16:24.450",
+    "lastModifiedDate": "2026-08-28T02:16:24.450",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81820",
-    "description": "Affected versions of Flowintel construct timeline HTML using attacker-controllable MISP object fields such as:\n\n\n\n  *  \nobject UUID;\n\n\n  *  \nobject name;\n\n\n  *  \nattribute value;\n\n\n  *  \nattribute type;\n\n\n  *  \ncomment;\n\n\n  *  \nfirst/last seen values;\n\n\n  *  \nIDS flag.\n\n\n\n\n\nThose values were concatenated directly into HTML strings before rendering. The upstream commit explicitly states that DOMPurify removed XSS vectors but still allowed other HTML elements, such as forms, through.\n\nThe fix replaces direct string interpolation with DOM construction via document.createElement() and assigns all attacker-controlled values using textContent. The headline is similarly converted to escaped HTML through a temporary element.\n\nVersion impacted =>3.3.0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81820",
-    "publishedDate": "2026-08-27T17:21:05.630",
-    "lastModifiedDate": "2026-08-27T17:21:05.630",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
+        "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-81819",
-    "description": "Affected versions of Flowintel expose the /my_assignment/user API endpoint to any authenticated API user. The endpoint accepts a user_id parameter identifying the user whose assignments should be returned, but previously had no role restriction beyond general API authentication.\n\n\nAs a result, a lower-privileged authenticated user could potentially query another user’s assignment information by supplying that user’s identifier.\n\n\nThe fix changes:\n\n\nmethod_decorators = [api_required]\n\n\nto:\n\n\nmethod_decorators = [admin_or_org_admin_required, api_required]\n\nso only administrators or organization administrators can perform cross-user assignment queries.\n\nVersion impacted =>3.3.0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81819",
-    "publishedDate": "2026-08-27T17:21:05.477",
-    "lastModifiedDate": "2026-08-27T17:21:05.477",
+    "id": "CVE-2026-78616",
+    "description": "A Stored Cross-Site Scripting (XSS) vulnerability in WatchGuard Dimension's Trusted CA certificate configuration allows an authenticated administrator to execute arbitrary JavaScript in another authenticated administrator's web browser by saving a carefully crafted certificate.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78616",
+    "publishedDate": "2026-08-28T02:16:24.317",
+    "lastModifiedDate": "2026-08-28T02:16:24.317",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 4.8,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-81818",
-    "description": "Affected versions of Flowintel contain an authorization flaw in the administrative user-edit API.\n\n\nThe existing authorization check correctly prevented an organization administrator from editing users in another organization, but it did not prevent them from editing a full administrator within their own organization. As a result, an org admin could modify that full administrator account, including changing its password. The upstream commit explicitly describes the issue as:\n\n\n“Org admin can change the password of a full admin in the same organization.”\n\n\nThe fix adds a higher-privilege boundary check:\n\n\nif user_to_edit.is_admin(): return ... 403\n\nso organization administrators can no longer modify full administrator accounts.\n\nVersion impacted >=3.3.0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81818",
-    "publishedDate": "2026-08-27T17:21:05.340",
-    "lastModifiedDate": "2026-08-27T17:21:05.340",
+    "id": "CVE-2026-78615",
+    "description": "A Reflected Cross-Site Scripting (XSS) vulnerability in WatchGuard Dimension's report detail page allows an attacker to execute arbitrary JavaScript in a authenticated user's browser with a specially crafted URL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78615",
+    "publishedDate": "2026-08-28T02:16:24.190",
+    "lastModifiedDate": "2026-08-28T02:16:24.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78614",
+    "description": "WatchGuard Dimension contains an authenticated SQL injection vulnerability in the audit report feature which allows an authenticated user with report administration permissions gain arbitrary command execution as the Dimension WebUI process user by sending specially crafted requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78614",
+    "publishedDate": "2026-08-28T02:16:24.070",
+    "lastModifiedDate": "2026-08-28T02:16:24.070",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -92,68 +92,379 @@
         "score": 8.6,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-81817",
-    "description": "Affected versions of Flowintel contain an insecure direct object reference / broken object-level authorization issue across numerous task endpoints.\n\n\nThe routes generally received both a case identifier and a task identifier, but previously they did not enforce that the task actually belonged to the supplied case. As a result, an authenticated user with editor-level access to one case could potentially substitute the ID of a task from another case and invoke operations against that foreign task.\n\n\nThe patch introduces task_case_bound_required, which loads both objects and returns 404 unless the task belongs to the requested case. This protection is applied to edit, delete, note, assignment, status, file, export, MISP-linking, subtask, external-reference, and other task-related endpoints.\n\nThe fix also adds explicit checks that a requested note_id belongs to the current task before returning or exporting it, closing related cross-object access paths.\n\nVersion impacted =>3.3.0",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81817",
-    "publishedDate": "2026-08-27T17:21:05.207",
-    "lastModifiedDate": "2026-08-27T17:21:05.207",
+    "id": "CVE-2026-78613",
+    "description": "WatchGuard Dimension contains an authenticated SQL injection vulnerability in the log viewer feature which allows an authenticated user with report administration permissions gain arbitrary command execution as the Dimension WebUI process user by sending specially crafted requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78613",
+    "publishedDate": "2026-08-28T02:16:23.943",
+    "lastModifiedDate": "2026-08-28T02:16:23.943",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.2,
+        "score": 8.6,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-81735",
-    "description": "startServer.ts in the mcp-http-server package of UI-TARS-desktop defaulted its listen address to '::' when no host was given, so startSseAndStreamableHttpMcpServer bound the Streamable HTTP and SSE MCP transports to every interface, and its authentication middleware was optional: middlewares are applied only when a caller supplies them. The @agent-infra/mcp-server-commands and @agent-infra/mcp-server-filesystem entry points call startSseAndStreamableHttpMcpServer with a host and port alone and pass no middleware, so neither server required a credential. The commands server exposes a run_command tool that hands its caller-supplied command string to promisify(child_process.exec), so any unauthenticated client able to reach the port could run arbitrary commands as the user running the server, and the filesystem server exposed its file read and write tools on the same terms. The listen default became 127.0.0.1 in commit c2ad42e3eb9b27830db41a3e6f51ca7179d9b168; the package version stayed at 1.2.4 across that change, so the boundary is the commit rather than a release.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81735",
-    "publishedDate": "2026-08-27T17:21:03.677",
-    "lastModifiedDate": "2026-08-27T17:21:03.677",
+    "id": "CVE-2026-78612",
+    "description": "WatchGuard Dimension contains an authenticated SQL injection vulnerability in the scheduled report feature which allows an authenticated user with report administration permissions gain arbitrary command execution as the Dimension WebUI process user by sending specially crafted requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78612",
+    "publishedDate": "2026-08-28T02:16:23.807",
+    "lastModifiedDate": "2026-08-28T02:16:23.807",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 10,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 10,
+        "score": 8.6,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
       }
     ]
   },
   {
-    "id": "CVE-2026-81727",
-    "description": "NLTK versions before 3.10.3 contain a filesystem containment bypass vulnerability in the Downloader.download and Downloader.incr_download methods that allows attackers to overwrite files outside the install root through pre-existing hardlinks. Attackers with write access to a shared downloader directory can create hardlinks pointing to outside-root files that are then overwritten during normal package extraction, mutating files outside the intended install tree.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81727",
-    "publishedDate": "2026-08-27T17:21:03.533",
-    "lastModifiedDate": "2026-08-27T17:21:03.533",
+    "id": "CVE-2026-78610",
+    "description": "WatchGuard Dimension's Web UI exposes an administrator passphrase change action that lacks CSRF protection. An attacker who can induce an authenticated global administrator's browser to visit a crafted link or page can change that administrator's passphrase to an attacker-chosen value without the administrator's consent.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78610",
+    "publishedDate": "2026-08-28T02:16:23.687",
+    "lastModifiedDate": "2026-08-28T02:16:23.687",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78500",
+    "description": "A blind server-side request forgery (SSRF) vulnerability WatchGuard Dimension Database Server Test configuration allows an authenticated privileged attacker to enumerate exposed network services on adjacent network systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78500",
+    "publishedDate": "2026-08-28T02:16:23.560",
+    "lastModifiedDate": "2026-08-28T02:16:23.560",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78499",
+    "description": "A server-side request forgery (SSRF) vulnerability WatchGuard Dimension FTP Server Test configuration allows an authenticated privileged attacker to enumerate exposed network services on adjacent network systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78499",
+    "publishedDate": "2026-08-28T02:16:23.443",
+    "lastModifiedDate": "2026-08-28T02:16:23.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78498",
+    "description": "A server-side request forgery (SSRF) vulnerability WatchGuard Dimension Email Server Test configuration allows an authenticated privileged attacker to enumerate exposed network services on adjacent network systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78498",
+    "publishedDate": "2026-08-28T02:16:23.317",
+    "lastModifiedDate": "2026-08-28T02:16:23.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78495",
+    "description": "A server-side request forgery (SSRF) vulnerability WatchGuard Dimension Remote Backup Connection Test configuration allows an authenticated privileged attacker to enumerate exposed network services on adjacent network systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78495",
+    "publishedDate": "2026-08-28T02:16:23.197",
+    "lastModifiedDate": "2026-08-28T02:16:23.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78195",
+    "description": "A Cross-Site Scripting (XSS) vulnerability in the WatchGuard Dimension Backup Historical Data feature allows an authenticated administrator user to execute arbitrary JavaScript in another user's browser.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78195",
+    "publishedDate": "2026-08-28T02:16:23.080",
+    "lastModifiedDate": "2026-08-28T02:16:23.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78174",
+    "description": "WatchGuard Dimension records unredacted session identifiers for logged-in users in its web UI diagnostic log. A low-privileged Dimension Administrator can retrieve this log and extract a Super Administrator's session token while that administrator is logged in, enabling account takeover.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78174",
+    "publishedDate": "2026-08-28T02:16:22.950",
+    "lastModifiedDate": "2026-08-28T02:16:22.950",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78103",
+    "description": "WatchGuard Dimension provides a client-side lock/unlock UI control for management changes. The server-side configuration endpoint does not enforce this lock/unlock workflow state, allowing an authenticated administrator to submit configuration changes directly to the endpoint without first completing the UI unlock step. This allows an authenticated read-write administrator session to bypass the intended editing workflow and overwrite configuration changes being made by another concurrent administrator session.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78103",
+    "publishedDate": "2026-08-28T02:16:22.830",
+    "lastModifiedDate": "2026-08-28T02:16:22.830",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78047",
+    "description": "A stored cross-site scripting (XSS) vulnerability in WatchGuard Dimension's task scheduling feature allows a low-privileged authenticated administrator to inject arbitrary HTML/JavaScript into these fields, which then executes in the browser session of any other user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78047",
+    "publishedDate": "2026-08-28T02:16:22.697",
+    "lastModifiedDate": "2026-08-28T02:16:22.697",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78011",
+    "description": "An integer underflow vulnerability in the WatchGuard Fireware OS iked process allows a remote unauthenticated attacker to create a Denial of Service (DoS) condition in VPN processing by sending specially crafted network traffic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78011",
+    "publishedDate": "2026-08-28T02:16:22.563",
+    "lastModifiedDate": "2026-08-28T02:16:22.563",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78010",
+    "description": "A stack-based buffer overflow vulnerability in the WatchGuard Fireware OS iked process iallows a remote unauthenticated attacker to create a Denial of Service (DoS) condition in VPN processing by sending specially crafted network traffic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78010",
+    "publishedDate": "2026-08-28T02:16:22.417",
+    "lastModifiedDate": "2026-08-28T02:16:22.417",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78009",
+    "description": "An out-of-bounds read vulnerability in the WatchGuard Fireware OS iked process allows a remote unauthenticated attacker to create a Denial of Service (DoS) condition in VPN processing by sending specially crafted network traffic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78009",
+    "publishedDate": "2026-08-28T02:16:22.293",
+    "lastModifiedDate": "2026-08-28T02:16:22.293",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-78008",
+    "description": "A buffer overflow vulnerability in the WatchGuard Fireware OS Management Web UI allows an authenticated administrator with network access to cause a denial of service (DoS) condition or potentially execute arbitrary code by sending specially crafted network traffic.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78008",
+    "publishedDate": "2026-08-28T02:16:22.167",
+    "lastModifiedDate": "2026-08-28T02:16:22.167",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "5d1c2695-1a31-4499-88ae-e847036fd7e3"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61802",
+    "description": "Wazuh is an open-source security platform providing unified XDR and SIEM protection for endpoints and cloud workloads. In versions 4.14.0 through 4.14.6, a low-privilege API user can read the cleartext cluster key from a configuration endpoint that fails to redact it. The REST API provides a masking control, mask_sensitive_config, that redacts sensitive fields such as authd.pass and cluster.key from configuration responses for users who lack update-config permission, and every config-read endpoint carries this decorator except GET /cluster/local/config. That endpoint, backed by read_config_wrapper, is gated only by cluster:read and returns the local node's cluster configuration including the cleartext key, whereas its siblings return the same value masked. As a result, any account with the default readonly or cluster_readonly role, which is explicitly denied update-config precisely so it cannot view secrets, receives the real cluster key. Because the cluster key authenticates and encrypts traffic between cluster nodes, disclosing it to an unprivileged account provides the authentication precondition for the cluster-peer remote code execution chains established by prior advisories. This issue is fixed in version 4.14.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61802",
+    "publishedDate": "2026-08-28T02:16:21.907",
+    "lastModifiedDate": "2026-08-28T02:16:21.907",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61800",
+    "description": "Wazuh is an open-source security platform providing unified XDR and SIEM protection for endpoints and cloud workloads. In versions 4.4.0 through 4.14.6, a party holding the cluster key can write, overwrite, or delete arbitrary files under /var/ossec on worker nodes, leading to remote code execution as root. During cluster file synchronization, the non-merged branch of update_master_files_in_worker() moves each staged file to a destination derived only from safe_join(), which confines the path to /var/ossec but never verifies that the file lands in the directory declared by its cluster_item_key. Because the destination check present on the primary node and on the worker's merged branch was not applied, a peer can place files at attacker-chosen locations under /var/ossec, including paths that are executed as root, and the delete branch has the same gap. This is an incomplete fix for CVE-2026-30893, which addressed traversal outside /var/ossec but left this path able to redirect files anywhere within it. This issue is fixed in version 4.14.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61800",
+    "publishedDate": "2026-08-28T02:16:21.767",
+    "lastModifiedDate": "2026-08-28T02:16:21.767",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-38822",
+    "description": "In openNDS before 11.0.0, the client_params.sh script, invoked by the openNDS daemon to serve the authenticated client status page, is vulnerable to OS command injection through crafted HTTP GET query parameter keys. An authenticated captive portal user can inject arbitrary shell commands by embedding semicolons in a URL query parameter name.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38822",
+    "publishedDate": "2026-08-28T02:16:21.620",
+    "lastModifiedDate": "2026-08-28T02:16:21.620",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.5,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-38821",
+    "description": "A heap-based buffer overflow vulnerability exists in openNDS before 11.0.0 that allows an unauthenticated attacker on the captive portal network to crash the openNDS daemon (denial of service) and potentially achieve remote code execution. This is in http_microhttpd.c.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38821",
+    "publishedDate": "2026-08-28T02:16:21.490",
+    "lastModifiedDate": "2026-08-28T02:16:21.490",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -161,512 +472,30 @@
         "score": 7.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.5,
+        "source": "cve@mitre.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-81726",
-    "description": "NLTK through 3.10.3 contains a path traversal vulnerability in model-artifact APIs that bypass pathsec enforcement by using raw file operations on caller-controlled paths. Attackers can read or write files outside allowed sandbox roots through TransitionParser, AveragedPerceptron, PerceptronTagger, and maxent parameter APIs when pathsec is enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81726",
-    "publishedDate": "2026-08-27T17:21:03.387",
-    "lastModifiedDate": "2026-08-27T17:21:03.387",
+    "id": "CVE-2026-38820",
+    "description": "openNDS before 11.0.0 is susceptible to unauthenticated OS command execution via shell command injection through the fas query parameter on the /opennds_preauth/ endpoint because of libopennds.sh.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-38820",
+    "publishedDate": "2026-08-28T02:16:21.350",
+    "lastModifiedDate": "2026-08-28T02:16:21.350",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
       {
         "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81725",
-    "description": "NLTK before 3.10.3 contains a regular expression denial of service vulnerability in Pl196xCorpusReader that allows attackers to cause quadratic CPU consumption by supplying malformed TEI blocks with many unmatched opening tags. Attackers can exploit lazy regex patterns in the read_block method through public APIs like words() and tagged_words() to force repeated rescans and achieve near-quadratic runtime growth.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81725",
-    "publishedDate": "2026-08-27T17:21:03.247",
-    "lastModifiedDate": "2026-08-27T17:21:03.247",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81724",
-    "description": "NLTK before 3.10.3 contains an uncontrolled recursion vulnerability in nltk.featstruct.FeatStructReader that allows unauthenticated attackers to cause a denial of service by supplying deeply nested feature-structure input. Attackers can craft trivial payloads with nested brackets that exceed Python's recursion limit and raise an unhandled RecursionError, crashing applications that parse user-supplied feature structures or feature grammars.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81724",
-    "publishedDate": "2026-08-27T17:21:03.100",
-    "lastModifiedDate": "2026-08-27T17:21:03.100",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81723",
-    "description": "NLTK versions before 3.10.3 contain a quadratic CPU exhaustion vulnerability in XMLCorpusView._read_xml_fragment() that rescans accumulated XML fragments on every 1 KiB block read. Attackers can provide malformed XML corpus files to cause severe CPU consumption and denial of service through affected readers like BNCCorpusReader.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81723",
-    "publishedDate": "2026-08-27T17:21:02.957",
-    "lastModifiedDate": "2026-08-27T17:21:02.957",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81722",
-    "description": "nltk PorterStemmer in versions <= 3.10.2 (fixed in 3.10.3) contains an inefficient-algorithmic-complexity denial of service in PorterStemmer.stem(). The _is_consonant() helper walks backward over the entire run of trailing 'y' characters on every call, and _measure() invokes it for each stem position, causing O(n^2) behavior. A single ~20-50 KB untrusted token consisting of a long run of the letter 'y' followed by a matching suffix (e.g., 'ness') can pin a CPU core for seconds to minutes, causing availability impact.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81722",
-    "publishedDate": "2026-08-27T17:21:02.800",
-    "lastModifiedDate": "2026-08-27T17:21:02.800",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81721",
-    "description": "openssl_encrypt before 1.4.9 fails to validate KDF cost parameters in encrypted file metadata and keystore headers, allowing attackers to trigger unbounded memory allocation. Attackers can craft malicious encrypted files declaring arbitrarily large Argon2, scrypt, or balloon KDF parameters to exhaust system memory and crash the process without authentication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81721",
-    "publishedDate": "2026-08-27T17:21:02.650",
-    "lastModifiedDate": "2026-08-27T17:21:02.650",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81720",
-    "description": "openssl_encrypt before 1.4.9 fails to validate the memory_cost parameter from identity file protection blocks, allowing attackers to trigger out-of-memory conditions during key derivation. Attackers with write access to local identity stores can craft malicious identity files with excessive memory_cost values that cause the host to crash when unlocking identities before authentication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81720",
-    "publishedDate": "2026-08-27T17:21:02.477",
-    "lastModifiedDate": "2026-08-27T17:21:02.477",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.5,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81719",
-    "description": "openssl_encrypt before 1.4.9 executes untrusted third-party plugins with insufficient controls: the plugin signature policy defaulted to WARN, so an unsigned/unverifiable non-built-in plugin was compiled and executed in the host process at import time, before the runtime sandbox is installed. The only default gate was an incomplete, bypassable AST denylist. If a user is induced to load an attacker's plugin, this results in arbitrary code execution with the privileges of the user running openssl_encrypt. Fixed in 1.4.9 by defaulting the signature policy to ENFORCE for non-built-in plugins.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81719",
-    "publishedDate": "2026-08-27T17:21:02.320",
-    "lastModifiedDate": "2026-08-27T17:21:02.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81718",
-    "description": "openssl_encrypt versions before 1.4.9 use under-parameterized PBKDF2-HMAC-SHA256 with only 100,000 iterations to protect PQC keyfile private keys and 10,000 iterations for dual-encryption file-password verification. Attackers who obtain keyfiles or encrypted files can brute-force wrapping passwords offline using GPU or ASIC acceleration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81718",
-    "publishedDate": "2026-08-27T17:21:02.180",
-    "lastModifiedDate": "2026-08-27T17:21:02.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81717",
-    "description": "openssl_encrypt (pip package openssl-encrypt) before 1.4.9 contains two weaknesses in the portable USB drive feature, whose threat model treats the removable drive as untrusted (attacker with physical write access). USBDriveCreator._verify_integrity_file only validates files listed in the manifest, so files added to the drive — including a root-level autorun payload — are not detected and integrity verification still passes. Additionally, a globally constant, source-embedded KDF salt (_LEGACY_FIXED_SALT) is used to derive the drive encryption key for any drive lacking a per-drive salt file, defeating precomputation resistance and enabling an offline rainbow-table attack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81717",
-    "publishedDate": "2026-08-27T17:21:02.033",
-    "lastModifiedDate": "2026-08-27T17:21:02.033",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 0.9,
-        "impactScore": 2.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81716",
-    "description": "openssl_encrypt (pip: openssl-encrypt) versions before 1.4.9 contain a path traversal flaw in PluginSandbox._is_safe_path, which authorized file access using a bare string-prefix match. A sandboxed plugin without the READ_FILES permission could read or write another plugin's directory that merely shares a name prefix (e.g., .../plugins/foobar matching allowed .../plugins/foo), breaking per-plugin isolation within the same user. Fixed by matching each allowed directory exactly or with a trailing path separator.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81716",
-    "publishedDate": "2026-08-27T17:21:01.877",
-    "lastModifiedDate": "2026-08-27T17:21:01.877",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81715",
-    "description": "openssl_encrypt (pip package openssl-encrypt) versions <= 1.4.8 do not redact the keyserver bearer token passed as the positional argument to 'keyserver set-token' in the --debug argv dump, because sanitize_argv_for_debug fails to sanitize it. As a result the token is printed in cleartext to stderr under --debug (even without --unsafe-show-secrets), persisting the credential in logs and terminal history. Fixed in 1.4.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81715",
-    "publishedDate": "2026-08-27T17:21:01.733",
-    "lastModifiedDate": "2026-08-27T17:21:01.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.3,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81714",
-    "description": "openssl_encrypt (pip: openssl-encrypt) versions <= 1.4.8 use suffix-tolerant fingerprint matching in enroll_trust_key when binding a plugin-signing trust anchor. An operator who confirms a short (forgeable, ~32-bit) GPG key id could unknowingly enroll an attacker's colliding key as a trusted anchor, which then vouches for malicious plugins under the ENFORCE signature policy. Version 1.4.9 fixes this by requiring the confirmed value to exactly match the full primary-key fingerprint (case-insensitive, whitespace-stripped).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81714",
-    "publishedDate": "2026-08-27T17:21:01.590",
-    "lastModifiedDate": "2026-08-27T17:21:01.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81707",
-    "description": "openssl_encrypt before 1.4.9 fails to sanitize the email field of imported identity documents, allowing attackers to inject ANSI escape sequences that forge the fingerprint verification line displayed to users. Attackers can deliver a crafted identity bundle through normal contact-exchange flows or keyserver responses to manipulate terminal output and display a fraudulent fingerprint, bypassing the out-of-band verification mechanism that protects against key substitution attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81707",
-    "publishedDate": "2026-08-27T17:21:01.440",
-    "lastModifiedDate": "2026-08-27T17:21:01.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81706",
-    "description": "openssl_encrypt before 1.4.9 fails to prevent namespace collisions between own identities and contacts in IdentityStore, allowing attackers to create shadowed contact entries invisible until the corresponding own identity is deleted. When the own identity is deleted, the shadowed contact becomes visible and resolves to the attacker's keys, enabling silent key substitution for encrypted files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81706",
-    "publishedDate": "2026-08-27T17:21:01.293",
-    "lastModifiedDate": "2026-08-27T17:21:01.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81705",
-    "description": "openssl-encrypt before 1.4.9 fails to redact the file password in its --debug argv dump when the password is supplied via bundled short-option spellings (e.g. -apHunter2) or abbreviated long-option spellings (e.g. --passw). The sanitizer only recognized exact option names, --option=value forms, and tokens starting with -p, so these spellings bypass the redaction chokepoint and the cleartext password is written to stderr. Anyone with access to that output (terminal scrollback, merged 2>&1 output, CI job logs, or the GUI's persistent debug log) can recover the password.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81705",
-    "publishedDate": "2026-08-27T17:21:01.147",
-    "lastModifiedDate": "2026-08-27T17:21:01.147",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81704",
-    "description": "openssl_encrypt versions before 1.4.9 contain a weak key derivation vulnerability in the D-Bus CryptoService.EncryptFile handler that uses unstretched SHA-256 instead of Argon2id. Attackers can perform offline password guessing against encrypted files roughly six to seven orders of magnitude faster than documented protection by exploiting the missing key stretching and hash rounds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81704",
-    "publishedDate": "2026-08-27T17:21:00.993",
-    "lastModifiedDate": "2026-08-27T17:21:00.993",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.5,
+        "source": "cve@mitre.org"
       }
     ]
   }
