@@ -1,574 +1,252 @@
 [
   {
-    "id": "CVE-2026-55867",
-    "description": "Graylog is a free and open log management platform. From 6.2.0 until 6.3.12, 7.0.7, and 7.1.2, the DELETE /users/{userId}/tokens/{idOrToken} endpoint implemented by UsersResource.revokeToken() in graylog2-server/src/main/java/org/graylog2/rest/resources/users/UsersResource.java checks USERS_TOKENREMOVE permission against the attacker-controlled userId path parameter before resolving the token selected by idOrToken. An authenticated user can provide an authorized userId while accessTokenService.loadById() or accessTokenService.load() resolves a token belonging to another user, including a service account or administrator, after which accessTokenService.destroy() deletes that token without checking AccessToken.getUserName(). The issue does not expose token contents, but unauthorized deletion causes integrity impact and can disrupt access-token-based integrations. This issue is fixed in versions 6.3.12, 7.0.7, and 7.1.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55867",
-    "publishedDate": "2026-08-28T23:17:09.300",
-    "lastModifiedDate": "2026-08-28T23:17:09.300",
+    "id": "CVE-2026-80725",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: gro: properly validate BIG TCP aggregation criteria\n\nWhen GRO attempts to aggregate packets beyond GRO_LEGACY_MAX_SIZE (64KB),\nBIG TCP should only be permitted for plain IPv4 TCP and plain IPv6 TCP\n(with sufficient MAC header room to insert the temporary HBH jumbo header).\n\nHowever, commit b1a78b9b9886 (\"net: add support for ipv4 big tcp\")\nloosened the check in skb_gro_receive(), leading to several issues:\n\n1. skb_gro_receive() checked skb_headroom(p) instead of the actual space\n   before the MAC header (p->mac_header). Because skb_headroom(p) includes\n   mac_len, crafted frames (e.g. injected via AF_PACKET) can pass the check\n   with p->mac_header < 8 bytes. When ipv6_gro_complete() inserts the\n   temporary HBH jumbo header, the memmove() starts before skb->head,\n   causing an out-of-bounds write and wrapping skb->mac_header.\n2. It allowed non-IP protocols such as software VLAN (ETH_P_8021Q /\n   ETH_P_8021AD) to aggregate beyond 64KB because\n   p->protocol != ETH_P_IPV6 was true.\n3. It checked p->encapsulation instead of NAPI_GRO_CB(skb)->encap_mark,\n   allowing encapsulated flows (e.g. SIT / IPv6-in-IPv4) to aggregate\n   beyond 64KB.\n\nFix skb_gro_receive() to strictly enforce:\n- NAPI_GRO_CB(skb)->proto == IPPROTO_TCP\n- Not encapsulated (!NAPI_GRO_CB(skb)->encap_mark && !p->encapsulation)\n- Protocol must be either ETH_P_IP or ETH_P_IPV6\n- If ETH_P_IPV6, p->mac_header must be at least\n  sizeof(struct hop_jumbo_hdr)\n\nReturning -E2BIG from skb_gro_receive() ensures that packets which cannot\nbecome BIG TCP are cleanly flushed at <= 64KB and delivered intact without\ndropping.\n\nThis issue does not exist in mainline (7.0+) because the subsystem was\nrewritten in commit 81be30c1f5f2 (\"net/ipv6: Drop HBH for BIG TCP on RX\nside\"), making this fix relevant only for older stable branches like\n6.18.y.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80725",
+    "publishedDate": "2026-08-29T07:16:54.573",
+    "lastModifiedDate": "2026-08-29T07:16:54.573",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55860",
-    "description": "MariaDB Connector/R2DBC is a non-blocking MariaDB and MySQL client implemented in Java. Prior to 1.4.1, org.mariadb:r2dbc-mariadb does not gate clear-text password authentication plugins on transport encryption because the AuthenticationPlugin interface has no capability for a plugin to require a secure connection. A hostile or man-in-the-middle MariaDB server can send an AuthSwitchRequest naming mysql_clear_password or dialog (PAM) over a plain-TCP unencrypted connection, and AuthenticationFlow permits ClearPasswordPluginFlow or PamPluginFlow to return the user's password as cleartext bytes on the wire. The disclosed credentials can subsequently be used to authenticate directly to the database server. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55860",
-    "publishedDate": "2026-08-28T23:17:09.153",
-    "lastModifiedDate": "2026-08-28T23:17:09.153",
+    "id": "CVE-2026-81346",
+    "description": "The Frontend Admin by DynamiApps WordPress plugin before 3.29.11 does not perform a capability check on one of its AJAX actions, allowing any authenticated user, such as a subscriber, to delete arbitrary membership plans.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81346",
+    "publishedDate": "2026-08-29T06:18:02.633",
+    "lastModifiedDate": "2026-08-29T06:18:02.633",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55859",
-    "description": "MariaDB Connector/R2DBC is a non-blocking MariaDB and MySQL client implemented in Java. Prior to 1.4.1, org.mariadb:r2dbc-mariadb encodes and decodes all character data under the assumption that the connection character set is UTF-8. A server can announce a mid-session change to character_set_client through the OK-packet session-state-tracking mechanism, including through SET NAMES executed by a stored routine or trigger, server configuration, or a hostile or man-in-the-middle server. If the new character set is not UTF-8, the driver continues to exchange UTF-8 while the server interprets the same bytes under a different encoding, causing silent data corruption and a client/server charset-confusion mismatch that can defeat byte-wise quoting or escaping. The fix accepts only utf8, utf8mb3, or utf8mb4 after initialization; any other value raises R2dbcNonTransientResourceException with SQLState 08000 and closes the connection. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55859",
-    "publishedDate": "2026-08-28T23:17:09.007",
-    "lastModifiedDate": "2026-08-28T23:17:09.007",
+    "id": "CVE-2026-81342",
+    "description": "The MasterStudy LMS WordPress Plugin  WordPress plugin before 3.7.43 does not validate a redirect parameter supplied during user registration before using it, allowing unauthenticated attackers to redirect users to arbitrary external URLs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81342",
+    "publishedDate": "2026-08-29T06:17:58.700",
+    "lastModifiedDate": "2026-08-29T06:17:58.700",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55858",
-    "description": "MariaDB Connector/J is used to connect applications developed in Java to MariaDB and MySQL databases. Prior to 2.7.14, 3.3.5, 3.4.3, and 3.5.9, the connector encodes and decodes protocol text and performs client-side escaping under the assumption that the connection character set is UTF-8. The server can report a mid-session change to character_set_client through OK-packet session-state tracking, including a change caused by SET NAMES, a stored routine or trigger, server configuration, or a hostile server. If character_set_client changes to a non-UTF-8 value, the driver continues to read and write UTF-8 while the server interprets the same bytes under another encoding, causing silent data corruption and a client/server charset-confusion mismatch that can defeat byte-wise quoting or escaping. The fix accepts only utf8, utf8mb3, or utf8mb4 after initialization; any other value causes SQLException with SQLState 08000 and closes the connection. This issue is fixed in versions 2.7.14, 3.3.5, 3.4.3, and 3.5.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55858",
-    "publishedDate": "2026-08-28T23:17:08.827",
-    "lastModifiedDate": "2026-08-28T23:17:08.827",
+    "id": "CVE-2026-81200",
+    "description": "The MasterStudy LMS WordPress Plugin  WordPress plugin before 3.7.42 does not correctly restrict access to order information, allowing any user with the instructor role to read other users' order billing details, including name, email address, phone number and postal address, by enumerating order IDs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81200",
+    "publishedDate": "2026-08-29T06:17:58.587",
+    "lastModifiedDate": "2026-08-29T06:17:58.587",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55857",
-    "description": "MariaDB Connector/J is used to connect applications developed in Java to MariaDB and MySQL databases. Prior to 2.7.14, 3.3.5, 3.4.3, and 3.5.9, PAM dialog authentication can be coerced into transmitting the account password over an insecure connection. The mysql_clear_password plugin is gated behind a secure transport, but the sibling PAM handler SendPamAuthPacketFactory, named dialog by the server, does not declare that requirement and inherits the default secure-required value false; older branches implement the same affected behavior in SendPamAuthPacket. A hostile or man-in-the-middle server can send an Authentication Switch Request for dialog over plain TCP, causing the driver to return the user's password in cleartext when sslMode=DISABLE and restrictedAuth=null, which is the default configuration. Properly verified TLS and local Unix sockets are not exposed to this transport vector. This issue is fixed in versions 2.7.14, 3.3.5, 3.4.3, and 3.5.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55857",
-    "publishedDate": "2026-08-28T23:17:08.680",
-    "lastModifiedDate": "2026-08-28T23:17:08.680",
+    "id": "CVE-2026-81026",
+    "description": "The MasterStudy LMS WordPress Plugin  WordPress plugin before 3.7.40 does not verify the amount, receiver, currency or status of a payment notification before marking the corresponding order completed, allowing unauthenticated users to complete full-price orders and gain access to paid content by paying only a token amount.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81026",
+    "publishedDate": "2026-08-29T06:17:55.990",
+    "lastModifiedDate": "2026-08-29T06:17:55.990",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55856",
-    "description": "MariaDB Connector/J is used to connect applications developed in Java to MariaDB and MySQL databases. Prior to 2.7.14, 3.3.5, 3.4.3, and 3.5.9, when a Java application connects with sslMode=verify-full or sslMode=verify-ca, supplies a password, and does not configure serverSslCert or trustStore, Connector/J can accept an untrusted self-signed certificate through the fallbackToSystemTrustStore=true ephemeral trust manager and record its certFingerprint for later identity binding. The OK-packet and authentication-switch paths enforce the certificate fingerprint, but the initial-handshake path does not. HandshakeResponse.encode() can therefore build and send a mysql_clear_password response before checking certFingerprint != null && !isMitMProof(), sslMode, or whether the authentication plugin is resistant to a man-in-the-middle, and the initial path also bypasses restrictedAuth. An active man-in-the-middle or hostile server can present a self-signed certificate, claim to be MariaDB, select mysql_clear_password as the initial authentication plugin, and receive the full database password before the connection is rejected. This issue is fixed in versions 2.7.14, 3.3.5, 3.4.3, and 3.5.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55856",
-    "publishedDate": "2026-08-28T23:17:08.513",
-    "lastModifiedDate": "2026-08-28T23:17:08.513",
+    "id": "CVE-2026-80488",
+    "description": "The WP Ultimate CSV Importer  WordPress plugin before 9.0 does not properly sanitise and escape imported field values before using them in a SQL statement, which could allow high privilege users such as admin to perform SQL injection attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80488",
+    "publishedDate": "2026-08-29T06:17:49.663",
+    "lastModifiedDate": "2026-08-29T06:17:49.663",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55855",
-    "description": "MariaDB Connector/Node.js is used to connect applications developed on Node.js to MariaDB and MySQL databases. Prior to 3.2.4, 3.3.3, 3.4.6, and 3.5.3, MariaDB Connector/Node.js permits SQL injection when attacker-controlled Buffer parameters are escaped client-side under the big5, gbk, sjis, cp932, or gb18030 client character sets. PacketOutputStream.writeBufferEscape in lib/io/packet-output-stream.js escaped bytes without the charset-aware getMbRecognizer logic in lib/misc/charset-mb.js. The server SQL lexer runs my_ismbchar before escape processing, so an attacker-controlled lead byte can consume the inserted 0x5C backslash as a multibyte trail byte and leave the following 0x27 quote unescaped, terminating the string literal and allowing arbitrary SQL. The default utf8mb4 character set and parameters sent through the execute binary prepared-statement path are not affected. Successful exploitation can expose or modify data available to the database account. This issue is fixed in versions 3.2.4, 3.3.3, 3.4.6, and 3.5.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55855",
-    "publishedDate": "2026-08-28T23:17:08.353",
-    "lastModifiedDate": "2026-08-28T23:17:08.353",
+    "id": "CVE-2026-80311",
+    "description": "The Stripe Payment Forms by WP Full Pay  WordPress plugin before 8.5.5 does not verify that a subscription belongs to the customer bound to the requesting customer-portal session before cancelling it, allowing a user with a confirmed portal session to cancel subscriptions belonging to other customers.\n\nExploitation requires the attacker to know the target subscription's identifier, which is high-entropy and not enumerable through the Stripe Payment Forms by WP Full Pay  WordPress plugin before 8.5.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80311",
+    "publishedDate": "2026-08-29T06:17:49.560",
+    "lastModifiedDate": "2026-08-29T06:17:49.560",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55854",
-    "description": "MariaDB Connector/Node.js is used to connect applications developed on Node.js to MariaDB and MySQL databases. Prior to 3.2.4, 3.3.3, 3.4.6, and 3.5.3, MariaDB Connector/Node.js can disclose an account password when PAM dialog authentication is negotiated over an insecure transport. In lib/cmd/handshake/auth/pam-password-auth.js and lib/cmd/handshake/authentication.js, the SendPamAuthPacketFactory behavior for the server-side plugin dialog lacked the secure-transport gate applied to mysql_clear_password. With the default sslMode=DISABLE and restrictedAuth=null settings, a hostile or on-path server can send an Authentication Switch Request for dialog over plain TCP, causing the connector to return the account password in cleartext. Properly verified TLS and a local Unix socket prevent this path, while fingerprint-only server identity validation is not sufficient. This issue is fixed in versions 3.2.4, 3.3.3, 3.4.6, and 3.5.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55854",
-    "publishedDate": "2026-08-28T23:17:08.203",
-    "lastModifiedDate": "2026-08-28T23:17:08.203",
+    "id": "CVE-2026-77786",
+    "description": "The Rank Math SEO  WordPress plugin before 1.0.277 does not check that the user requesting an automated SEO fix holds the capability WordPress itself requires for the settings being changed, allowing users with the Editor role to modify site-wide core WordPress settings that are reserved to administrators.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77786",
+    "publishedDate": "2026-08-29T06:17:44.250",
+    "lastModifiedDate": "2026-08-29T06:17:44.250",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55848",
-    "description": "mapfish-print is a component of MapFish for printing templated cartographic maps. Prior to 3.28.30, 3.30.32, 3.31.24, 3.33.16, and 4.0.5, MapFish Print accepts an attacker-controlled GML layer url in requests to the /api/print3/print endpoint and fetches XML parsed by core/src/main/java/org/mapfish/print/map/geotools/GmlLayer.java without disabling external entities and external DTDs. A remote XML document and DTD can expand a local file entity, and the resulting content can be exposed through the GML parsing and error path. This allows unauthenticated attackers to read files such as operating-system account data, Kubernetes service-account tokens, and certificates. Replacing the file entity target with an internal HTTP endpoint also permits server-side request forgery. This issue is fixed in versions 3.28.30, 3.30.32, 3.31.24, 3.33.16, and 4.0.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55848",
-    "publishedDate": "2026-08-28T23:17:08.013",
-    "lastModifiedDate": "2026-08-28T23:17:08.013",
+    "id": "CVE-2026-77704",
+    "description": "The Booking for Appointments and Events Calendar  WordPress plugin before 2.4.9 does not check that a user holds the required capability before letting them change an appointment's status, allowing customers to set arbitrary statuses on appointments they are booked on, including approving their own bookings that were left awaiting approval and overwriting another customer's booking status on a shared appointment.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77704",
+    "publishedDate": "2026-08-29T06:17:44.150",
+    "lastModifiedDate": "2026-08-29T06:17:44.150",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 8.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55841",
-    "description": "Graylog is a free and open log management platform. Prior to Graylog Server versions 6.3.12, 7.0.7, and 7.1.2 and Graylog Forwarder version 7.3, the FortiGate key-value syslog parser in graylog2-server/src/main/java/org/graylog2/inputs/codecs/GLFortiGateSyslogEvent.java and graylog2-server/src/main/java/org/graylog2/inputs/codecs/SyslogCodec.java mishandles field-like text inside quoted values. GLFortiGateSyslogEvent.getFields() uses KV_PATTERN and QUOTED_KV_PATTERN, while SyslogCodec.parse() invokes the FortiGateSyslogEvent parser; crafted values containing = or backslash-escaped quotes can cause embedded keys such as srcip, dstip, date, time, and tz to remove or overwrite original top-level fields or produce an invalid message that Graylog discards. An unauthenticated network sender who can submit syslog messages can therefore manipulate security-log fields or evade logging to obscure malicious activity. This issue is fixed in Graylog Server versions 6.3.12, 7.0.7, and 7.1.2 and Graylog Forwarder version 7.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55841",
-    "publishedDate": "2026-08-28T23:17:07.840",
-    "lastModifiedDate": "2026-08-28T23:17:07.840",
+    "id": "CVE-2026-77012",
+    "description": "The 爱采集数据采集和发布插件 WordPress plugin through 1.0.0 does not require a per-install secret for one of its unauthenticated endpoints, relying on a hardcoded default, and does not validate the URLs or destination paths it is given, allowing unauthenticated attackers to read arbitrary files from the server, force it to issue arbitrary requests and retrieve the responses, and write attacker-supplied content outside the uploads directory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77012",
+    "publishedDate": "2026-08-29T06:17:44.040",
+    "lastModifiedDate": "2026-08-29T06:17:44.040",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55785",
-    "description": "free5GC is an open-source implementation of the 5G core network. Prior to 1.4.5, the AUSF component performs cryptographic authentication comparisons in internal/sbi/processor/ue_authentication.go with ordinary equality helpers. Auth5gAkaComfirmRequestProcedure compares RES* and XRES* with strings.EqualFold and logs the expected XRES* value at INFO level before comparison. EapAuthComfirmRequestProcedure compares AT_MAC and XMAC with bytes.Equal and evaluates XRES == RES with ordinary string equality. These comparisons can return at mismatch-dependent times, although testing did not demonstrate a practical remote timing oracle because of HTTP/SBI timing noise. The INFO log exposes authentication material to operators, log collectors, sidecars, or processes able to read AUSF logs. This issue is fixed in version 1.4.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55785",
-    "publishedDate": "2026-08-28T23:17:07.697",
-    "lastModifiedDate": "2026-08-28T23:17:07.697",
+    "id": "CVE-2026-77010",
+    "description": "The HEL Online Classroom: AI-powered Online Classrooms WordPress plugin through 1.0.3 does not perform authorisation checks on its REST API routes and does not consistently enforce the per-class access code, allowing unauthenticated users to obtain a signed meeting join link for any classroom, including one protected by an access code, and to join it with moderator privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77010",
+    "publishedDate": "2026-08-29T06:17:39.037",
+    "lastModifiedDate": "2026-08-29T06:17:39.037",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55784",
-    "description": "free5GC is an open-source implementation of the 5G core network. In version 1.4.4 and earlier, the AUSF component stores per-subscriber authentication state in a global sync.Map named AUSFContext.UePool in internal/context/context.go, keyed only by SUPI. Every request handled by internal/sbi/processor/ue_authentication.go creates an AusfUeContext, and AddAusfUeContextToPool executes ausfContext.UePool.Store(ausfUeContext.Supi, ausfUeContext), unconditionally replacing the active context for that SUPI. An attacker with access to the AUSF SBI/N12 interface can send concurrent POST /nausf-auth/v1/ue-authentications requests for the same target SUPI, causing all attempts to share one logical authentication context URL while K_aut, XRES, and EapID are repeatedly overwritten. A valid EAP-AKA' response for an earlier challenge is then checked against the latest context, causing AT_MAC verification to fail and denying authentication to the selected subscriber while the request flood continues. No fixed version is available as of this review.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55784",
-    "publishedDate": "2026-08-28T23:17:07.517",
-    "lastModifiedDate": "2026-08-28T23:17:07.517",
+    "id": "CVE-2026-77008",
+    "description": "The HEL Online Classroom: AI-powered Online Classrooms WordPress plugin through 1.0.3 does not have any authorisation or authentication check when saving its settings, allowing unauthenticated users to overwrite them and repoint every online classroom, along with the shared secret those sessions are signed with, at infrastructure of their choosing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77008",
+    "publishedDate": "2026-08-29T06:17:38.927",
+    "lastModifiedDate": "2026-08-29T06:17:38.927",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55779",
-    "description": "Silverstripe Versioned provides versioning for Silverstripe models. Prior to 3.2.1, RestoreAction::getRestoreMessage() in src/RestoreAction.php builds ArchiveAdmin restore notifications rendered as CAST_HTML and inserts $restoredItem->Title, $restoredItem->URLSegment, $restoredItem->CMSEditLink(), and $changedProperty['value'] without applying Convert::raw2xml(). When an administrator restores an archived page containing a crafted title or URL segment, the generated restoration message can execute stored JavaScript in the administrator's browser, compromising the confidentiality and integrity of the CMS session. This issue is fixed in version 3.2.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55779",
-    "publishedDate": "2026-08-28T23:17:07.357",
-    "lastModifiedDate": "2026-08-28T23:17:07.357",
+    "id": "CVE-2026-77007",
+    "description": "The HEL Online Classroom: AI-powered Online Classrooms WordPress plugin through 1.0.3 does not perform any authorisation check on one of its REST API routes, allowing unauthenticated users to retrieve its stored settings, including the shared secret used to sign API requests to the connected BigBlueButton server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77007",
+    "publishedDate": "2026-08-29T06:17:34.453",
+    "lastModifiedDate": "2026-08-29T06:17:34.453",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-55764",
-    "description": "Klever-Go is the Go implementation of the Klever blockchain protocol. Prior to 1.7.19, Klever-Go allows a mint-role holder to bypass a finite per-nonce MaxSupply on the semi-fungible token add-quantity path. In core/kapp/systemAccount/systemAcount.go, SFTAddCirculation performed meta.Circulation += amount before evaluating whether Circulation exceeded MaxSupply, without checking for signed int64 overflow. A large positive raw Amount supplied through processSemiFungibleAddQuantity in core/kapp/kda/mint.go can wrap Circulation negative, causing the signed maximum-supply comparison to pass and crediting approximately MaxInt64 units while corrupting the on-chain counter. The fungible path is not affected because its MintedValue <= 0 guard detects the overflow. The correction uses the consensus activation flag FixMarketBuyOverflow. This issue is fixed in version 1.7.19.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55764",
-    "publishedDate": "2026-08-28T23:17:07.220",
-    "lastModifiedDate": "2026-08-28T23:17:07.220",
+    "id": "CVE-2026-76586",
+    "description": "The Appointment Booking Calendar Plugin and Scheduling Plugin  WordPress plugin before 1.6.3 does not verify the amount actually paid against the server-side price staged for a booking when confirming an online payment, allowing unauthenticated users to have a paid appointment approved for a fraction of its price.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76586",
+    "publishedDate": "2026-08-29T06:17:34.353",
+    "lastModifiedDate": "2026-08-29T06:17:34.353",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-82333",
-    "description": "multer is a middleware for handling multipart/form-data in Node.js. A small multipart request with two specially crafted text field names can make multer's field parser synchronously iterate a maximum-length sparse array, blocking the event loop so the process cannot handle other requests. A large numeric array index in the first field allocates a maximum-length sparse array, and a second field with a non-numeric key then triggers a full-length iteration inside the append-field dependency. All versions before 2.3.0 are affected, and this is a remotely triggerable denial of service. multer 2.3.0 adds an opt-in fieldArrayIndexLimit option that rejects oversized array indexes. Upgrade to multer 2.3.0 and set limits.fieldArrayIndexLimit to the largest array index your application needs to remediate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82333",
-    "publishedDate": "2026-08-28T22:16:57.037",
-    "lastModifiedDate": "2026-08-28T22:16:57.037",
+    "id": "CVE-2026-76548",
+    "description": "The User Profile Builder  WordPress plugin before 4.0.1 does not properly restrict its front-end file upload feature, granting unauthenticated visitors capabilities reserved to privileged roles. This allows them to list the site's media library and to modify unpublished posts, pages and media items belonging to other users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76548",
+    "publishedDate": "2026-08-29T06:17:29.450",
+    "lastModifiedDate": "2026-08-29T06:17:29.450",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-82018",
-    "description": "IGEL OS 12 before 12.9.0, 12.8.3 LTS and IGEL OS 11 before 11.11.150 contain a secure boot bypass vulnerability in the GRUB boot stage that allows physically present attackers to gain unauthorized root access by placing an unsigned empty file named igel.conf on a partition. Attackers can exploit GRUB's fail-open signature verification behavior to drop into an interactive GRUB prompt, then boot the device's own kernel with additional command-line arguments to obtain a root shell with the disk unlocked while leaving TPM PCR values unaltered.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82018",
-    "publishedDate": "2026-08-28T22:16:55.217",
-    "lastModifiedDate": "2026-08-28T22:16:55.217",
+    "id": "CVE-2026-76547",
+    "description": "The User Profile Builder  WordPress plugin before 4.0.1 does not validate the type of data being deserialized when importing a configuration file, allowing high privilege users such as administrators to conduct PHP Object Injection. The affected feature is a free add-on which is disabled by default, and no POP chain is present in the User Profile Builder  WordPress plugin before 4.0.1 itself, so further impact requires a suitable gadget from another installed User Profile Builder  WordPress plugin before 4.0.1 or .",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76547",
+    "publishedDate": "2026-08-29T06:17:29.343",
+    "lastModifiedDate": "2026-08-29T06:17:29.343",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-82017",
-    "description": "IGEL OS 12 before 12.7.6 and IGEL OS 11 before 11.11.150 contain a boot registry parameter injection vulnerability that allows attackers with physical access to execute arbitrary Linux loader parameters by writing to an unencrypted and unsigned configuration area read by the signed bootloader. Attackers can inject malicious kernel command line parameters that execute with boot environment privileges without triggering TPM PCR measurement failures, as the attack does not modify the measured boot code.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82017",
-    "publishedDate": "2026-08-28T22:16:55.067",
-    "lastModifiedDate": "2026-08-28T22:16:55.067",
+    "id": "CVE-2026-76546",
+    "description": "The User Profile Builder  WordPress plugin before 4.0.1 does not escape the output of one of its optional shortcodes, allowing users with a role as low as contributor to perform Stored Cross-Site Scripting attacks against any user viewing the affected content, including administrators. The shortcode is not enabled by default.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-76546",
+    "publishedDate": "2026-08-29T06:17:24.977",
+    "lastModifiedDate": "2026-08-29T06:17:24.977",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-81533",
-    "description": "An application using the MongoDB BI Connector ODBC Driver may encounter a memory-safety issue when a submitted SQL statement contains an unusually long run of digits following a LIMIT clause. The issue occurs only on connections where the driver's optional prefetch setting is enabled, and stems from the driver copying the digit sequence into a fixed-size internal buffer without checking its length. A user able to influence the numeric portion of a LIMIT clause could cause the hosting application process to terminate unexpectedly or corrupt adjacent memory in that process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81533",
-    "publishedDate": "2026-08-28T22:16:54.930",
-    "lastModifiedDate": "2026-08-28T22:16:54.930",
+    "id": "CVE-2026-19430",
+    "description": "The Catfolders Document Gallery Pro WordPress plugin before 2.0.7 does not authorise some of its REST API routes, and the token identifying the requested content is forgeable client side, allowing unauthenticated users to list and download the contents of folders that were never published on the site.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19430",
+    "publishedDate": "2026-08-29T06:17:24.857",
+    "lastModifiedDate": "2026-08-29T06:17:24.857",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "cna@mongodb.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@mongodb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-81532",
-    "description": "A user able to submit SQL through an application using the MongoDB Connector for BI ODBC driver can supply a positioned-cursor statement whose cursor name exceeds the size of an internal fixed-length buffer. Because the name length is not bounded before the driver builds its diagnostic message, memory adjacent to that buffer is overwritten with user-supplied content. This can terminate the hosting application process and may allow unintended code to run within it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81532",
-    "publishedDate": "2026-08-28T22:16:54.793",
-    "lastModifiedDate": "2026-08-28T22:16:54.793",
+    "id": "CVE-2026-18234",
+    "description": "The MStore API  WordPress plugin before 4.21.1 does not verify that the order targeted by its wallet payment handling belongs to the requester, and does not deduct the wallet balance for most payment methods, allowing any authenticated user, including Subscribers, to mark arbitrary orders as paid without any payment being taken.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18234",
+    "publishedDate": "2026-08-29T06:17:20.960",
+    "lastModifiedDate": "2026-08-29T06:17:20.960",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "cna@mongodb.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@mongodb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-81520",
-    "description": "A network-reachable client that has not yet authenticated can hold a MongoDB Connector for BI authentication session open indefinitely by beginning a SASL-based login exchange and then declining to complete it. Because the negotiation loop had no overall time bound and the read from the client had no deadline, each such session retains a worker, a client connection slot, and its associated backend database connections until the process is restarted. Repeated use of this behavior can consume the configured connection capacity and prevent legitimate users from establishing new sessions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81520",
-    "publishedDate": "2026-08-28T22:16:54.650",
-    "lastModifiedDate": "2026-08-28T22:16:54.650",
+    "id": "CVE-2026-18233",
+    "description": "The MStore API  WordPress plugin before 4.21.1 does not verify that the order targeted by one of its delivery endpoints belongs to the requester, allowing any authenticated user, including Subscribers, to mark arbitrary orders as completed and paid without any payment being made.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18233",
+    "publishedDate": "2026-08-29T06:17:16.007",
+    "lastModifiedDate": "2026-08-29T06:17:16.007",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "cna@mongodb.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@mongodb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-81518",
-    "description": "When mongosqld is configured with a client certificate authority file, the listener requests a client certificate during the TLS handshake but does not require one, so a client that presents no certificate is still accepted. In deployments that rely on client certificates as the sole means of identifying users, a remote party with network access to the listener can therefore establish a session and read the MongoDB data exposed through the connector.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81518",
-    "publishedDate": "2026-08-28T22:16:54.510",
-    "lastModifiedDate": "2026-08-28T22:16:54.510",
+    "id": "CVE-2026-17522",
+    "description": "The Newsletters WordPress plugin before 4.17 does not perform any nonce or capability check when saving one of its settings screens, and writes every submitted parameter into its own options, allowing attackers to make a logged in administrator overwrite arbitrary Newsletters WordPress plugin before 4.17 settings, including the credential protecting its API, via a Cross-Site Request Forgery attack.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17522",
+    "publishedDate": "2026-08-29T06:17:12.290",
+    "lastModifiedDate": "2026-08-29T06:17:12.290",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "cna@mongodb.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@mongodb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-81517",
-    "description": "An unauthenticated party able to reach the port of a MongoDB Connector for BI (mongosqld) instance may generate enough routine connection log activity to exhaust the storage backing the configured log path. When a log write or log rotation operation subsequently fails, the resulting error is not handled and the shared mongosqld process ends, ending service for all connected SQL clients. The process continues to end on startup until an operator restores available storage, and the diagnostic message explaining the condition is not recorded.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81517",
-    "publishedDate": "2026-08-28T22:16:54.383",
-    "lastModifiedDate": "2026-08-28T22:16:54.383",
+    "id": "CVE-2026-17520",
+    "description": "The Newsletters WordPress plugin before 4.17 does not generate its API key using a sufficiently random source, deriving it from a publicly known value, allowing unauthenticated attackers to compute the key and perform privileged actions such as adding and deleting subscribers and sending emails, when the optional API has been enabled.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17520",
+    "publishedDate": "2026-08-29T06:17:12.177",
+    "lastModifiedDate": "2026-08-29T06:17:12.177",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "cna@mongodb.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@mongodb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-81490",
-    "description": "A database user able to create a view in a namespace that MongoDB Connector for BI samples can cause the schema-sampling routine to stop functioning by defining a view whose evaluation reliably fails. The sampling logic classifies the resulting server message as transient and, after the configured retries are exhausted, proceeds without a valid result, ending the schema refresh routine. The mongosqld process continues running without a usable schema, so SQL clients are unable to obtain results until an operator removes the view or excludes its namespace from sampling.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81490",
-    "publishedDate": "2026-08-28T22:16:54.247",
-    "lastModifiedDate": "2026-08-28T22:16:54.247",
+    "id": "CVE-2026-16947",
+    "description": "The Total processing card payments for WooCommerce WordPress plugin through 7.3 does not validate a user-supplied path before using it to build a server-side verification request, and does not verify the authenticity of the response, allowing unauthenticated attackers to redirect that request to an arbitrary host (disclosing the merchant's payment-gateway credentials) and to forge a success response that marks arbitrary WooCommerce orders as paid.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16947",
+    "publishedDate": "2026-08-29T06:17:05.583",
+    "lastModifiedDate": "2026-08-29T06:17:05.583",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "cna@mongodb.com"
-      },
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@mongodb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-77078",
-    "description": "multer is a middleware for handling multipart/form-data in Node.js. A small multipart request containing two specially crafted text field names can cause an uncaught RangeError (Invalid array length) that terminates the Node.js process. The first field uses a very large numeric array index to allocate a maximum-length sparse array, and a second field then pushes past that length, which throws inside the append-field dependency and is not caught by multer. All versions before 2.3.0 are affected, and the issue is a remotely triggerable denial of service. The issue is fixed in multer 2.3.0. Upgrade to multer 2.3.0 to remediate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77078",
-    "publishedDate": "2026-08-28T22:16:53.883",
-    "lastModifiedDate": "2026-08-28T22:16:53.883",
+    "id": "CVE-2026-16600",
+    "description": "The SmartAIPress WordPress plugin through 1.2.0 does not perform a capability check on one of its AJAX actions and does not validate a user-supplied URL before fetching it server-side, allowing users with subscriber-level access and above to make the site retrieve arbitrary internal or external URLs and read the response, resulting in a full-read Server-Side Request Forgery.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16600",
+    "publishedDate": "2026-08-29T06:17:05.443",
+    "lastModifiedDate": "2026-08-29T06:17:05.443",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-77063",
-    "description": "multer is a middleware for handling multipart/form-data in Node.js. When an application uses an asynchronous fileFilter together with the fileSize limit, a race condition in multer's file stream handling can allow a file that exceeds the configured size limit to bypass the size-limit rejection. All versions before 2.3.0 are affected. The impact is limited because the underlying multipart parser still truncates the stream at the size limit, so this is a bypass of the limit rejection rather than uncontrolled resource consumption. The issue is fixed in multer 2.3.0. Upgrade to multer 2.3.0 to remediate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77063",
-    "publishedDate": "2026-08-28T22:16:53.760",
-    "lastModifiedDate": "2026-08-28T22:16:53.760",
+    "id": "CVE-2026-16259",
+    "description": "The Uix UserCenter WordPress plugin through 1.0.3 does not verify that the account being modified through an unauthenticated profile-update action belongs to the requester, and it authenticates that action with a token whose signing key is hardcoded and identical across every install, allowing unauthenticated attackers to forge a token for any user, overwrite an administrator's email and password, and take over the account.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16259",
+    "publishedDate": "2026-08-29T06:17:00.360",
+    "lastModifiedDate": "2026-08-29T06:17:00.360",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
+    "cvssScores": []
   }
 ]
