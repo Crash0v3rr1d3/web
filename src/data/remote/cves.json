@@ -1,727 +1,272 @@
 [
   {
-    "id": "CVE-2026-85700",
-    "description": "Onyx 4.6.6 fails to properly restrict access to custom tool credentials stored in custom_headers, allowing any authenticated user to read admin-defined API keys. Attackers with basic authentication can call GET /tool/{tool_id} or GET /tool endpoints to retrieve plaintext authorization headers and third-party API credentials, then use them to directly access upstream APIs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85700",
-    "publishedDate": "2026-09-04T15:17:49.110",
-    "lastModifiedDate": "2026-09-04T15:17:49.110",
+    "id": "CVE-2026-84947",
+    "description": "undici's dump interceptor reads and discards a response body up to a configurable maximum size. When a response declares a Content-Length that exceeds the maximum, the interceptor aborts cleanly, but when a response has no Content-Length and is chunked, the interceptor instead signals completion early once the accumulated size reaches the maximum, without pausing or aborting the request. Because the underlying parser keeps delivering body bytes, a second completion signal fires and trips an internal assertion, which aborts the request and tears down the connection. The application is left observing a misleading successful status with an empty or truncated body while the connection has actually been disconnected. This affects undici versions from 7.1.0 up to 7.29.1 and from 8.0.0 up to 8.10.2. Users should upgrade to undici 7.29.1 or 8.10.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84947",
+    "publishedDate": "2026-09-04T17:17:02.103",
+    "lastModifiedDate": "2026-09-04T17:17:02.103",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 3.7,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85699",
-    "description": "jina-ai reader contains a server-side request forgery vulnerability where URL validation is performed only on the initial request but not re-applied to subsequent redirect hops. Attackers can craft a public URL that redirects to internal network addresses or cloud metadata endpoints, allowing the server to fetch and return the target's response body to the attacker.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85699",
-    "publishedDate": "2026-09-04T15:17:48.967",
-    "lastModifiedDate": "2026-09-04T15:17:48.967",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85698",
-    "description": "Turso through 0.8.0-pre.8 contains an out-of-bounds read vulnerability in the table-leaf page reader that uses an attacker-controlled cell-count field without bounds validation. Attackers can craft a malicious database file with a modified cell count value to trigger an index-out-of-bounds panic when querying, causing denial of service in any application that opens untrusted database files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85698",
-    "publishedDate": "2026-09-04T15:17:48.817",
-    "lastModifiedDate": "2026-09-04T15:17:48.817",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85697",
-    "description": "Documenso 2.17.0 contains an access control vulnerability in the PDF-serving endpoint that fails to validate document visibility settings. Attackers with low privileges can read restricted documents within their team or cross-tenant by leveraging missing ownership validation on document data identifiers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85697",
-    "publishedDate": "2026-09-04T15:17:48.670",
-    "lastModifiedDate": "2026-09-04T15:17:48.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85696",
-    "description": "SadTalker contains an OS command injection vulnerability in the video muxing process where uploaded audio filenames are interpolated into ffmpeg commands without proper escaping. Attackers can upload audio files with shell metacharacters in the filename to break out of quoted arguments and execute arbitrary system commands when video generation occurs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85696",
-    "publishedDate": "2026-09-04T15:17:48.523",
-    "lastModifiedDate": "2026-09-04T15:17:48.523",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85695",
-    "description": "FastChat contains an authentication bypass vulnerability in the /register_worker endpoint that allows unauthenticated attackers to register arbitrary worker addresses and perform server-side request forgery. Attackers can register malicious workers under victim model names to intercept user prompts, images, and responses, or probe internal network ports across the worker mesh.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85695",
-    "publishedDate": "2026-09-04T15:17:47.690",
-    "lastModifiedDate": "2026-09-04T15:17:47.690",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.4,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85694",
-    "description": "LaVague 0.2.35 contains a remote code execution vulnerability in PythonFromMarkdownExtractor.extract_as_object that evaluates untrusted language model output derived from web page content. Attackers can inject malicious Python code through web pages using indirect prompt injection to execute arbitrary code on the operator's host without review.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85694",
-    "publishedDate": "2026-09-04T15:17:47.540",
-    "lastModifiedDate": "2026-09-04T15:17:47.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.2,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85693",
-    "description": "Chatbot UI contains an authorization bypass vulnerability in the retrieval endpoint that allows authenticated attackers to access private file content belonging to other users by supplying arbitrary file UUIDs. The endpoint uses a service-role Supabase client that bypasses row-level security and fails to validate file ownership, enabling attackers to retrieve indexed content chunks from victim files through crafted POST requests.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85693",
-    "publishedDate": "2026-09-04T15:17:47.397",
-    "lastModifiedDate": "2026-09-04T15:17:47.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85692",
-    "description": "Nightingale (n9e), as of commit 8362cbe (main branch, confirmed 2026-08-27), contains a server-side request forgery vulnerability in the isPublicIP function in aiagent/tools/http.go, the SSRF guard for the http_fetch AI-agent tool. The function only unwraps standard IPv4-mapped (::ffff:a.b.c.d) IPv6 addresses before checking them against the forbidden-range list, and does not classify 6to4 (2002::/16), NAT64 (64:ff9b::/96, 64:ff9b:1::/48), or deprecated site-local (fec0::/10) addresses. On a dual-stack or NAT64-enabled host, an attacker able to supply a URL to the http_fetch tool can bypass the guard by encoding a forbidden IPv4 address (such as the cloud instance-metadata endpoint 169.254.169.254) in one of these IPv6 forms to reach internal or metadata services.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85692",
-    "publishedDate": "2026-09-04T15:17:47.243",
-    "lastModifiedDate": "2026-09-04T15:17:47.243",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85691",
-    "description": "MegaParse 0.0.55 contains an unauthenticated server-side request forgery vulnerability in the POST /v1/url endpoint that fetches caller-supplied URLs server-side. Attackers can supply internal service URLs or metadata endpoints without authentication to read their responses directly from the JSON response.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85691",
-    "publishedDate": "2026-09-04T15:17:47.097",
-    "lastModifiedDate": "2026-09-04T15:17:47.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85690",
-    "description": "Plandex 2.2.1 contains a path traversal vulnerability in the ApplyFiles function that allows attackers to write files outside the project directory. Attackers can influence model output through poisoned repository files or attacker-controlled context to write to arbitrary locations like shell rc or cron files, achieving code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85690",
-    "publishedDate": "2026-09-04T15:17:46.947",
-    "lastModifiedDate": "2026-09-04T15:17:46.947",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85689",
-    "description": "llmware 0.4.6 contains an SQL injection vulnerability in the collection-database layer (llmware/resources.py) where filter and lookup values are directly string-interpolated into SQL WHERE clauses without parameterization or escaping, in both the SQLite and PostgreSQL backends. The filter validator only checks keys against an allow-list and never sanitizes values. Attacker-controlled filter values reaching the public API via Library.block_lookup and Query.text_query_with_custom_filter / text_query_by_author_or_speaker can neutralize the intended filter to disclose rows the caller was scoped out of (cross-document/cross-collection disclosure); on PostgreSQL the flaw permits boolean- and UNION-based SQL injection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85689",
-    "publishedDate": "2026-09-04T15:17:46.803",
-    "lastModifiedDate": "2026-09-04T15:17:46.803",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85688",
-    "description": "TEN Framework 0.11.71 contains unauthenticated arbitrary file read and write vulnerabilities in the TMAN Designer file-content API endpoints. Attackers can submit POST and PUT requests to the /api/designer/v1/file-content endpoints to read arbitrary files or write malicious content to system paths, enabling code execution through authorized_keys, cron files, or executable graph files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85688",
-    "publishedDate": "2026-09-04T15:17:46.657",
-    "lastModifiedDate": "2026-09-04T15:17:46.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85687",
-    "description": "surya 0.22.1 screenshot server contains an unauthenticated arbitrary file read vulnerability in the /info, /page, and /process routes that accept raw file_path parameters. Attackers can read any image or PDF file on the host by supplying arbitrary file paths to Image.open or pypdfium2.PdfDocument, obtaining rendered contents as base64 and using /info as an existence oracle.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85687",
-    "publishedDate": "2026-09-04T15:17:46.507",
-    "lastModifiedDate": "2026-09-04T15:17:46.507",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85686",
-    "description": "ms-swift 4.5.2 contains a server-side request forgery vulnerability in the swift deploy OpenAI-compatible API that fetches multimodal media URLs without validation or redirect filtering. Unauthenticated attackers can supply arbitrary image_url, audio_url, or video_url parameters to make the server issue requests to internal services and cloud metadata endpoints.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85686",
-    "publishedDate": "2026-09-04T15:17:46.360",
-    "lastModifiedDate": "2026-09-04T15:17:46.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85685",
-    "description": "AgentScope through 2.0.7.post1 contains a path traversal vulnerability in LocalWorkspace.add_skill that copies arbitrary server directories into the agent workspace via an unconfined source path parameter. Attackers can supply any directory path in the skill_path request parameter to copy files into the skills directory, making them accessible through the workspace skill listing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85685",
-    "publishedDate": "2026-09-04T15:17:46.220",
-    "lastModifiedDate": "2026-09-04T15:17:46.220",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85684",
-    "description": "marker through 2.0.0 contains a path traversal vulnerability in the FastAPI /marker/upload handler that fails to sanitize the file.filename parameter. Unauthenticated attackers can supply filenames containing directory traversal sequences to write arbitrary files to any location or delete existing files on the system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85684",
-    "publishedDate": "2026-09-04T15:17:46.077",
-    "lastModifiedDate": "2026-09-04T15:17:46.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85676",
-    "description": "Dub contains an open redirect vulnerability in the redir_url query parameter that is accepted on every short link without validation or domain allowlist enforcement. Attackers can append the redir_url parameter to any short link to redirect visitors to arbitrary external URLs through the trusted Dub domain, bypassing destination blacklists and potentially enabling phishing attacks with link cloaking enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85676",
-    "publishedDate": "2026-09-04T15:17:45.923",
-    "lastModifiedDate": "2026-09-04T15:17:45.923",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
         "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
       }
     ]
   },
   {
-    "id": "CVE-2026-85675",
-    "description": "OWL's DocumentProcessingToolkit contains a server-side request forgery vulnerability in the extract_document_content tool that fetches caller-supplied URLs with no scheme, host, or IP filtering. Attackers can inject malicious URLs through prompt injection to make the server fetch internal resources, with responses returned to the agent context.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85675",
-    "publishedDate": "2026-09-04T15:17:45.763",
-    "lastModifiedDate": "2026-09-04T15:17:45.763",
+    "id": "CVE-2026-80886",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nserial: msm: Disable DMA for kernel console UART\n\nAt the moment, concurrent writes from userspace and the kernel to the\nconsole can trigger a race condition that results in an infinite loop of\nthe same messages printed over and over again. This is most likely to\nhappen during system startup or shutdown when the init system starts/stops\na large number of system services that interact with various kernel code.\n\nWhen userspace writes to the TTY device, the driver initiates an\nasynchronous DMA transfer and releases the port lock. At the same moment,\nthe kernel printk path might grab the port lock and re-configure the UART\ncontroller for PIO, without waiting for the DMA operation to complete. It\nseems like this collision results in zero progress being reported for the\nDMA engine, so the same text is printed to the console over and over again.\n\nFor the kernel console, we want a reliable output path that will be\nfunctional even during crashes etc. So rather than implementing complex\ncode to synchronize the kernel console write routines with the userspace\nDMA write routines, simply disable DMA for the console UART instance.\n\nSimilar checks exist in many other serial drivers, e.g. 8250_port.c,\nimx.c, sh-sci.c etc.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80886",
+    "publishedDate": "2026-09-04T17:17:01.310",
+    "lastModifiedDate": "2026-09-04T17:17:01.310",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80885",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nafs: Fix uncancelled rxrpc OOB message handler\n\nFix AFS to cancel its OOB message processing (typically to respond to\nsecurity challenges).  Also move OOB message processing to afs_wq so that\nit's also waited for and make the OOB handler just return if the net\nnamespace is no longer live.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80885",
+    "publishedDate": "2026-09-04T17:17:01.207",
+    "lastModifiedDate": "2026-09-04T17:17:01.207",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80884",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nntb: Store original DMA address for future release\n\nThe DMA API requires that dma_free_attrs receive the exact dma_handle\noriginally returned by the allocation function. Do not modify it.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80884",
+    "publishedDate": "2026-09-04T17:17:01.103",
+    "lastModifiedDate": "2026-09-04T17:17:01.103",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80883",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/tegra: gr2d/gr3d: Initialize address register map before HOST1X client is registered\n\nThe host1x_client_register() function is called just prior to register map\ninitialization loop, making the device available to userspace. This may\nresult in userspace attempting to submits a job before the register map is\ninitialized. Address this by moving register initialization before host1x\nclient registration.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80883",
+    "publishedDate": "2026-09-04T17:17:00.983",
+    "lastModifiedDate": "2026-09-04T17:17:00.983",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80882",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: tegra - Return ENOMEM when input buffer allocation fails for ccm\n\nEnsure the ENOMEM error value is set when the input buffer allocation\nfails in tegra_ccm_do_one_req.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80882",
+    "publishedDate": "2026-09-04T17:17:00.657",
+    "lastModifiedDate": "2026-09-04T17:17:00.657",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80881",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nocfs2: fix buffer head management in ocfs2_read_blocks()\n\nIn ocfs2_read_blocks(), caller should't assume that buffer head returned\nby 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops\nb_count from 1 to 0.  If it is not so, buffer head remains on hold and\nlikely to be returned by the next call to 'sb_getblk()' unchanged - that\nis, with BH_Uptodate bit set even if it has failed validation previously,\nthus allowing to insert that buffer head into OCFS2 metadata cache and\nsubmit it to upper layers.  To avoid such a scenario, BH_Uptodate should\nbe cleared immediately after 'validate()' callback has detected some data\ninconsistency.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80881",
+    "publishedDate": "2026-09-04T17:17:00.390",
+    "lastModifiedDate": "2026-09-04T17:17:00.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80880",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nIB/mlx5: Properly support implicit ODP rereg_mr\n\nDue to all the child mkeys in the implicit ODP configuration we cannot\nchange anything in place for the parent mkey. Instead the whole thing\nneeds to be rebuilt if any change is requested. If the user does not\nspecify a translation then force the implicit values which will then fall\nthrough the logic into mlx5_ib_reg_user_mr() to allocate a completely new\nMR.\n\nSince implicit children were also touching the mr->pd, this removes\nanother case where the access was racy.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80880",
+    "publishedDate": "2026-09-04T17:17:00.250",
+    "lastModifiedDate": "2026-09-04T17:17:00.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80879",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nocfs2: fix circular locking dependency in ocfs2_dio_end_io_write\n\nA circular locking dependency involves INODE_ALLOC_SYSTEM_INODE,\nEXTENT_ALLOC_SYSTEM_INODE, and ORPHAN_DIR_SYSTEM_INODE.\n\n1. ocfs2_mknod() acquires INODE_ALLOC then EXTENT_ALLOC.\n\n2. ocfs2_dio_end_io_write() acquires EXTENT_ALLOC for unwritten\n   extents, then ORPHAN_DIR via ocfs2_del_inode_from_orphan() while still\n   holding EXTENT_ALLOC.\n\n3. ocfs2_wipe_inode() acquires ORPHAN_DIR then INODE_ALLOC via\n   ocfs2_remove_inode.\n\nBreak the cycle in ocfs2_dio_end_io_write() by freeing the allocation\ncontexts (releasing EXTENT_ALLOC) before acquiring ORPHAN_DIR.\n\nWARNING: possible circular locking dependency detected\n------------------------------------------------------\nis trying to acquire lock:\nffff8881e78b33a0\n(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}, at:\nocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299\n\nbut task is already holding lock:\nffff8881e78b4fa0\n(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}, at:\nocfs2_evict_inode+0xe97/0x43b0 fs/ocfs2/inode.c:1299\n\nthe existing dependency chain (in reverse order) is:\n\n-> #2 (&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}:\n       inode_lock include/linux/fs.h:1029 [inline]\n       ocfs2_del_inode_from_orphan+0x12e/0x7a0 fs/ocfs2/namei.c:2728\n       ocfs2_dio_end_io+0xf9c/0x1370 fs/ocfs2/aops.c:2418\n       dio_complete+0x25b/0x790 fs/direct-io.c:281\n\n-> #1 (&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:\n       inode_lock include/linux/fs.h:1029 [inline]\n       ocfs2_reserve_suballoc_bits+0x16d/0x4840 fs/ocfs2/suballoc.c:882\n       ocfs2_reserve_new_metadata_blocks+0x415/0x9a0\n       fs/ocfs2/suballoc.c:1078\n       ocfs2_mknod+0x10f3/0x2260 fs/ocfs2/namei.c:351\n\n-> #0 (&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:\n       __lock_acquire+0x15a5/0x2cf0 kernel/locking/lockdep.c:5237\n       lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5868\n       down_write+0x96/0x200 kernel/locking/rwsem.c:1625\n       inode_lock include/linux/fs.h:1029 [inline]\n       ocfs2_remove_inode fs/ocfs2/inode.c:733 [inline]\n       ocfs2_wipe_inode fs/ocfs2/inode.c:896 [inline]\n       ocfs2_delete_inode fs/ocfs2/inode.c:1157 [inline]\n       ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299\n\nChain exists of:\n  &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] -->\n  &ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE] -->\n  &ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]\n\n Possible unsafe locking scenario:\n\n       CPU0                    CPU1\n       ----                    ----\n  lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);\n                               lock(&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]);\n                               lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);\n  lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);\n\n *** DEADLOCK ***",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80879",
+    "publishedDate": "2026-09-04T17:17:00.080",
+    "lastModifiedDate": "2026-09-04T17:17:00.080",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80878",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nafs: Fix leak of ungot volume\n\nFix afs_lookup_volume_rcu() so that it doesn't leak a dying volume if\nafs_try_get_volume() fails.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80878",
+    "publishedDate": "2026-09-04T17:16:59.923",
+    "lastModifiedDate": "2026-09-04T17:16:59.923",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80877",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nafs: Fix vllist leak\n\nFix a leak of the new vllist in afs_update_cell() in the event that it is an\nempty list (nr_servers == 0), in which case the old list isn't displaced\nunless the old list is also empty.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80877",
+    "publishedDate": "2026-09-04T17:16:59.790",
+    "lastModifiedDate": "2026-09-04T17:16:59.790",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80876",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nring-buffer: Fix event length with forced 8-byte alignment\n\nWhen RB_FORCE_8BYTE_ALIGNMENT is true, rb_calculate_event_length()\nreserves the space of event->array[0] for placing the data length and\nrb_update_event() stores the data length in event->array[0]\naccordingly. As a result the whole event length will add extra 4 bytes\nfor sizeof(event.array[0]) unconditionally.\n\nBut ring_buffer_event_length() only subtracts the\nsizeof(event->array[0]) for events larger than RB_MAX_SMALL_DATA +\nsizeof(event->array[0]). As a result, small events on architectures\nwith RB_FORCE_8BYTE_ALIGNMENT=true report a data length that is 4\nbytes larger than expected.\n\nTo fix it, add the RB_FORCE_8BYTE_ALIGNMENT as a condition to subtract\nthe size of that length field whenever RB_FORCE_8BYTE_ALIGNMENT is\ntrue.\n\nThis issue is observed in a riscv64 kernel with\nCONFIG_HAVE_64BIT_ALIGNED_ACCESS set to y, when we run ftrace selftest\ntrace_marker_raw.tc, we get the weird log: for cases where the id is\n1..100, the number of data field is 8*N, but once id exceeds 100, the\nnumber of data field becomes 8*N+4:\n # 1 buf: 58 00 00 00 80 5e d1 63 (number of data field is 8*1)\n ...\n # a buf: 58 ...                  (number of data field is 8*2)\n ...\n # 64 buf: 58 ...                 (number of data field is 8*13)\n # 65 buf: 58 ...                 (number of data field is 8*13+4)\n\nAfter applying this change, the number of data field keeps being 8*N+4\nconsistently.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80876",
+    "publishedDate": "2026-09-04T17:16:59.640",
+    "lastModifiedDate": "2026-09-04T17:16:59.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80875",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipvs: use parsed transport offset in TCP state lookup\n\nTCP state handling reparses the skb to find the TCP header. For IPv6 it\nuses sizeof(struct ipv6hdr), while the surrounding IPVS code already\nparsed the packet with ip_vs_fill_iph_skb() and has the real\ntransport-header offset in iph.len.\n\nThis makes TCP state handling look at the wrong bytes when an IPv6\npacket carries extension headers. Use the parsed transport offset passed\ndown from ip_vs_set_state() when reading the TCP header.\n\nFor IPv4 and for IPv6 packets without extension headers, the passed\noffset matches the previous value.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80875",
+    "publishedDate": "2026-09-04T17:16:59.507",
+    "lastModifiedDate": "2026-09-04T17:16:59.507",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80874",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\narm64: dts: renesas: ironhide: Describe inline ECC carveouts\n\nThe DBSC5 DRAM controller protects DRAM content using inline ECC.\nThe inline ECC utilizes areas of DRAM for its operation, which are\nin the DRAM address range, but must not be accessed or modified.\nDescribe the inline ECC carveout areas used by the DBSC5 controller\non this hardware as reserved-memory, which must not be accessed.\nInclude DRAM areas which are unprotected by ECC as well, those are\nparts of the DRAM which directly precede the ECC carveout.\n\nIn case of high DRAM utilization, unless the inline ECC carveouts\nare properly reserved, Linux may use and corrupt the memory used\nby the DBSC5 DRAM controller for inline ECC, which would lead to\nthe system becoming unstable.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80874",
+    "publishedDate": "2026-09-04T17:16:59.390",
+    "lastModifiedDate": "2026-09-04T17:16:59.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80873",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: arm64: nv: Write ESR_EL2 for injected nested SError exceptions\n\nkvm_inject_el2_exception() writes ESR_EL2 for synchronous exceptions\nbut not for SError. enter_exception64() does not write ESR_ELx for any\nexception type, so the constructed syndrome is dropped. A guest L2\nhypervisor taking a nested SError observes stale ESR_EL2.\n\nThis affects both kvm_inject_nested_serror() and the EASE path in\nkvm_inject_nested_sea().\n\nWrite ESR_EL2 for except_type_serror, matching except_type_sync.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80873",
+    "publishedDate": "2026-09-04T17:16:59.273",
+    "lastModifiedDate": "2026-09-04T17:16:59.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80872",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nALSA: hda/tas2781: Cancel async firmware request at unbind\n\nTAS2781 HDA I2C and SPI queue RCA firmware loading from component\nbind with request_firmware_nowait(). The firmware loader keeps the\ncallback module pinned and holds a device reference, but the callback\nstill uses driver-private HDA state.\n\nComponent unbind removes controls and DSP state immediately. Later\ndevice removal tears down the TAS2781 private data, including\ncodec_lock. If the async firmware callback runs after unbind has\nstarted, it can operate on state that is being torn down.\n\nCancel or synchronize the async firmware request before removing\ncontrols and DSP state. A queued callback is cancelled, and an\nalready-running callback is allowed to finish before unbind continues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80872",
+    "publishedDate": "2026-09-04T17:16:59.160",
+    "lastModifiedDate": "2026-09-04T17:16:59.160",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80871",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: xilinx-trng - Remove crypto_rng interface\n\nImplementing the crypto_rng interface has no purpose, as it isn't used\nin practice.  It's being removed from other drivers too.  Just remove\nit.  This leaves hwrng, which is actually used.\n\nTagging with 'Cc stable' due to the bugs that this removes:\n\n  - xtrng_trng_generate() sometimes returned success even when it didn't\n    fill in all the bytes.\n\n  - It was possible for xtrng_trng_generate() and\n    xtrng_hwrng_trng_read() to run concurrently and interfere with each\n    other, as the locking code in xtrng_hwrng_trng_read() was broken.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80871",
+    "publishedDate": "2026-09-04T17:16:59.027",
+    "lastModifiedDate": "2026-09-04T17:16:59.027",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80870",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/amdkfd: Validate CRIU-restored IDs before idr_alloc\n\nThe KFD CRIU restore flow restores previously saved object IDs from\nuserspace.\n\nFor event restore:\n\n  kfd_criu_restore_event()\n      -> create_signal_event() / create_other_event()\n          -> allocate_event_notification_slot()\n              -> idr_alloc(..., *restore_id, *restore_id + 1, ...)\n\nFor BO restore:\n\n  criu_restore_memory_of_gpu()\n      -> idr_alloc(..., bo_priv->idr_handle, ...)\n\nIn both cases, the restored ID comes from userspace-provided CRIU data.\n\nidr_alloc() expects the ID range values to fit within signed int\nlimits. If a restored ID is larger than INT_MAX, it can trigger a WARN\nin the IDR layer.\n\nA kernel WARN is undesirable because it prints a warning trace and may\ncause a panic or reboot on systems with panic_on_warn enabled.\n\nSmatch reported these paths as allowing unchecked userspace values to\nreach idr_alloc().\n\nAdd INT_MAX validation before using restored IDs in:\n\n- kfd_criu_restore_event()\n- criu_restore_memory_of_gpu()\n\nIf the restored ID is invalid, return -EINVAL.\n\nThis prevents invalid restore data from reaching the IDR layer and\navoids WARN-triggering paths, while keeping valid restore behavior\nunchanged.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80870",
+    "publishedDate": "2026-09-04T17:16:58.860",
+    "lastModifiedDate": "2026-09-04T17:16:58.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80869",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nntfs: bound the attribute-list entry in ntfs_read_inode_mount()\n\nThe $MFT attribute-list walk in ntfs_read_inode_mount() validates each\nentry only with \"(u8 *)al_entry + 6 > al_end\" and\n\"(u8 *)al_entry + le16_to_cpu(al_entry->length) > al_end\", but then reads\nal_entry->lowest_vcn (an __le64 at offset 8) and al_entry->mft_reference\n(offset 16) -- fields beyond the 6 bytes proven in range. al_entry->length\nis attacker-controlled and only required non-zero, so a short entry (e.g.\nlength 8) placed at the tail passes both checks while the lowest_vcn /\nmft_reference reads fall past al_end.\n\nal_end is ni->attr_list + attr_list_size (the on-disk size); the buffer is\nkvzalloc(round_up(attr_list_size, SECTOR_SIZE)), so the sector rounding\nusually absorbs the over-read -- but when attr_list_size is a multiple of\nSECTOR_SIZE there is no slack and a crafted $MFT attribute list produces an\nout-of-bounds read at mount time.\n\nValidate the entry with ntfs_attr_list_entry_is_valid() (added in patch\n1/3) before dereferencing it, matching the bound the other attribute-list\nwalks now use. The validator already requires the length to cover the fixed\nheader, which makes the separate \"!al_entry->length\" check redundant, so\ndrop it too.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80869",
+    "publishedDate": "2026-09-04T17:16:58.750",
+    "lastModifiedDate": "2026-09-04T17:16:58.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80868",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nntfs3: Allocate iomap inline_data using alloc_page\n\nThis fixes a BUG reported in iomap_write_end_inline:\niomap_inline_data_valid checks that the inline_data fits within\na page. If the inline_data is allocated with kmemdup there's no\nguarantee that it's page-aligned, so the check sometimes fails.\nAllocate it with alloc_page to ensure it's page-aligned.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80868",
+    "publishedDate": "2026-09-04T17:16:58.643",
+    "lastModifiedDate": "2026-09-04T17:16:58.643",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80867",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nalpha/PCI: Add security_locked_down() check to pci_mmap_resource()\n\nCurrently, Alpha's pci_mmap_resource() does not check\nsecurity_locked_down(LOCKDOWN_PCI_ACCESS) before allowing userspace to mmap\nPCI BARs.\n\nThe generic version has had this check since commit eb627e17727e (\"PCI:\nLock down BAR access when the kernel is locked down\") to prevent DMA\nattacks when the kernel is locked down.\n\nAdd the same check to Alpha's pci_mmap_resource().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80867",
+    "publishedDate": "2026-09-04T17:16:58.510",
+    "lastModifiedDate": "2026-09-04T17:16:58.510",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80866",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntipc: avoid busy looping in tipc_exit_net()\n\nBlamed commit introduced a busy-wait loop in tipc_exit_net()\nto wait for pending UDP bearer cleanup works to complete:\n\n       while (atomic_read(&tn->wq_count))\n               cond_resched();\n\nThis loop can busy-wait for a long time if cond_resched() is a NOP. This\ntypically happens if the netns exit is executed by a high priority task,\nor under kernels configured without preemption (CONFIG_PREEMPT_NONE). In\nsuch cases, it wastes CPU cycles and can lead to soft lockups.\n\nFix this by replacing the busy loop with wait_var_event(), allowing the\nthread to sleep properly until the work queue count reaches zero.\n\nAccordingly, update cleanup_bearer() to use atomic_dec_and_test() and\nwake_up_var() to wake up the waiter when the count drops to zero.\n\nThis uses the global wait queue hash table, avoiding the need to bloat\nstruct tipc_net with a wait_queue_head_t. The atomic_dec_and_test()\nprovides the necessary memory barrier to ensure the wakeup is not missed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80866",
+    "publishedDate": "2026-09-04T17:16:58.390",
+    "lastModifiedDate": "2026-09-04T17:16:58.390",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-80865",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Add missing access_ok call to copy_user_syms\n\nAs reported by sashiko we use __get_user without prior access_ok call on the\nuser space pointer. Adding the missing call for the whole pointer array.\n\nPlus removing the err check in the error path, because it's not needed and\nalso we can return -ENOMEM directly from the first kvmalloc_array fail path.\n\n[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80865",
+    "publishedDate": "2026-09-04T17:16:58.267",
+    "lastModifiedDate": "2026-09-04T17:16:58.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-84961",
+    "description": "undici's BalancedPool constructor passes its entire options object through an internal deep-clone that serializes and reparses the value as JSON. Because JSON cannot represent functions, any function-valued TLS option, such as a caller-supplied checkServerIdentity callback or a custom connector inside the connect option, is silently discarded before it reaches the TLS layer. As a result a peer whose certificate the application's custom checkServerIdentity was written to reject, but which still passes Node's default hostname and chain checks, is accepted when reached through BalancedPool. The Client, Pool, and Agent dispatchers are not affected because they extract the connect and tls options before cloning. This affects undici versions from 7.24.1 up to 7.29.1 and from 8.0.0 up to 8.10.2, and only when the application supplies a function-valued connect or tls option to BalancedPool. Users should upgrade to undici 7.29.1 or 8.10.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84961",
+    "publishedDate": "2026-09-04T17:17:02.227",
+    "lastModifiedDate": "2026-09-04T17:17:02.227",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
       }
     ]
   },
   {
-    "id": "CVE-2026-85674",
-    "description": "aider (aider-chat) automatically loads a .aider.conf.yml configuration file from the root of the git repository it is launched in. A crafted repository can set test-cmd (executed at startup) or lint-cmd (executed on the first file edit), which aider runs through a shell (subprocess with shell=True) without any user confirmation, LLM interaction, or API key. Consequently, a user who clones and runs aider inside an attacker-supplied repository achieves arbitrary command execution on their machine. The behavior is long-standing and was confirmed on 0.86.3.dev (current main).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85674",
-    "publishedDate": "2026-09-04T15:17:45.597",
-    "lastModifiedDate": "2026-09-04T15:17:45.597",
+    "id": "CVE-2026-13297",
+    "description": "IBM Verify Identity Access Advanced Access Control may be vulnerable to an information disclosure attack.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13297",
+    "publishedDate": "2026-09-04T17:16:51.573",
+    "lastModifiedDate": "2026-09-04T17:16:51.573",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85673",
-    "description": "LLaMA-Factory contains a server-side request forgery vulnerability in the OpenAI-compatible API multimodal media URL handler that allows unauthenticated attackers to bypass SSRF validation. The check_ssrf_url guard validates URLs once but requests.get follows redirects and re-resolves DNS without re-validation, enabling attackers to use HTTP redirects or DNS rebinding to access internal addresses and cloud metadata endpoints.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85673",
-    "publishedDate": "2026-09-04T15:17:45.440",
-    "lastModifiedDate": "2026-09-04T15:17:45.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85672",
-    "description": "zerox 1.1.20 contains an OS command injection vulnerability in the file download mechanism where the temporary file extension derived from document URLs is interpolated unsanitized into shell commands executed by poppler utilities. Attackers can craft document URLs with malicious file extensions containing command substitution syntax to execute arbitrary OS commands before document processing occurs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85672",
-    "publishedDate": "2026-09-04T15:17:45.293",
-    "lastModifiedDate": "2026-09-04T15:17:45.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85671",
-    "description": "QAnything 2.0.0 contains an authentication bypass vulnerability in the /api/local_doc_qa/get_file_base64 and /api/local_doc_qa/get_doc endpoints that allows unauthenticated attackers to access any uploaded file or document. Attackers can enumerate file identifiers through unauthenticated endpoints and retrieve base64-encoded files or parsed document chunks without ownership verification to disclose cross-tenant knowledge base content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85671",
-    "publishedDate": "2026-09-04T15:17:45.150",
-    "lastModifiedDate": "2026-09-04T15:17:45.150",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85670",
-    "description": "tokenizers (Hugging Face) is affected by an out-of-bounds buffer access in BpeBuilder::build (tokenizers/src/models/bpe/model.rs). When loading a tokenizer.json via Tokenizer::from_file/from_str, the builder sizes a scratch buffer to the longest vocabulary key, then writes each concatenated merge rule into it. A merge whose concatenated token exceeds the longest vocabulary key overruns the buffer, which Rust turns into a panic that aborts the process in Rust and FFI embeddings. This occurs at load time with no encoding required, so an attacker who supplies a crafted tokenizer.json can cause a denial of service. A secondary defect at the same location can cause a usize underflow (panic in debug, potential memory corruption in release) when continuing_subword_prefix is set and a merge token is shorter than the prefix. Observed in version 0.23.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85670",
-    "publishedDate": "2026-09-04T15:17:44.993",
-    "lastModifiedDate": "2026-09-04T15:17:44.993",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85669",
-    "description": "potpie through 2.0.0 fails to verify user ownership on the POST /conversations/{conversation_id}/code-changes/sync endpoint. Authenticated attackers can write arbitrary file changes into other users' conversations by supplying their conversation IDs, allowing unauthorized modification of pending changes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85669",
-    "publishedDate": "2026-09-04T15:17:44.847",
-    "lastModifiedDate": "2026-09-04T15:17:44.847",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   }
 ]
