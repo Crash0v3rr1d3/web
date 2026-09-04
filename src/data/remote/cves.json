@@ -1,272 +1,513 @@
 [
   {
-    "id": "CVE-2026-84947",
-    "description": "undici's dump interceptor reads and discards a response body up to a configurable maximum size. When a response declares a Content-Length that exceeds the maximum, the interceptor aborts cleanly, but when a response has no Content-Length and is chunked, the interceptor instead signals completion early once the accumulated size reaches the maximum, without pausing or aborting the request. Because the underlying parser keeps delivering body bytes, a second completion signal fires and trips an internal assertion, which aborts the request and tears down the connection. The application is left observing a misleading successful status with an empty or truncated body while the connection has actually been disconnected. This affects undici versions from 7.1.0 up to 7.29.1 and from 8.0.0 up to 8.10.2. Users should upgrade to undici 7.29.1 or 8.10.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84947",
-    "publishedDate": "2026-09-04T17:17:02.103",
-    "lastModifiedDate": "2026-09-04T17:17:02.103",
+    "id": "CVE-2026-85703",
+    "description": "A flaw has been found in ramon-victor freegpt-webui up to 098db3dfeb41555c2ca9269df0f13e10ec1c35dc. Affected by this issue is the function getJailbreak of the file server/backend.py of the component Jailbreak Mode. Executing a manipulation can lead to allocation of resources. The attack can be executed remotely. The exploit has been published and may be used. This product implements a rolling release for ongoing delivery, which means version information for affected or updated releases is unavailable. This vulnerability only affects products that are no longer supported by the maintainer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85703",
+    "publishedDate": "2026-09-04T21:17:26.667",
+    "lastModifiedDate": "2026-09-04T21:17:26.667",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.7,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-80886",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nserial: msm: Disable DMA for kernel console UART\n\nAt the moment, concurrent writes from userspace and the kernel to the\nconsole can trigger a race condition that results in an infinite loop of\nthe same messages printed over and over again. This is most likely to\nhappen during system startup or shutdown when the init system starts/stops\na large number of system services that interact with various kernel code.\n\nWhen userspace writes to the TTY device, the driver initiates an\nasynchronous DMA transfer and releases the port lock. At the same moment,\nthe kernel printk path might grab the port lock and re-configure the UART\ncontroller for PIO, without waiting for the DMA operation to complete. It\nseems like this collision results in zero progress being reported for the\nDMA engine, so the same text is printed to the console over and over again.\n\nFor the kernel console, we want a reliable output path that will be\nfunctional even during crashes etc. So rather than implementing complex\ncode to synchronize the kernel console write routines with the userspace\nDMA write routines, simply disable DMA for the console UART instance.\n\nSimilar checks exist in many other serial drivers, e.g. 8250_port.c,\nimx.c, sh-sci.c etc.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80886",
-    "publishedDate": "2026-09-04T17:17:01.310",
-    "lastModifiedDate": "2026-09-04T17:17:01.310",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80885",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nafs: Fix uncancelled rxrpc OOB message handler\n\nFix AFS to cancel its OOB message processing (typically to respond to\nsecurity challenges).  Also move OOB message processing to afs_wq so that\nit's also waited for and make the OOB handler just return if the net\nnamespace is no longer live.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80885",
-    "publishedDate": "2026-09-04T17:17:01.207",
-    "lastModifiedDate": "2026-09-04T17:17:01.207",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80884",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nntb: Store original DMA address for future release\n\nThe DMA API requires that dma_free_attrs receive the exact dma_handle\noriginally returned by the allocation function. Do not modify it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80884",
-    "publishedDate": "2026-09-04T17:17:01.103",
-    "lastModifiedDate": "2026-09-04T17:17:01.103",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80883",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/tegra: gr2d/gr3d: Initialize address register map before HOST1X client is registered\n\nThe host1x_client_register() function is called just prior to register map\ninitialization loop, making the device available to userspace. This may\nresult in userspace attempting to submits a job before the register map is\ninitialized. Address this by moving register initialization before host1x\nclient registration.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80883",
-    "publishedDate": "2026-09-04T17:17:00.983",
-    "lastModifiedDate": "2026-09-04T17:17:00.983",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80882",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: tegra - Return ENOMEM when input buffer allocation fails for ccm\n\nEnsure the ENOMEM error value is set when the input buffer allocation\nfails in tegra_ccm_do_one_req.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80882",
-    "publishedDate": "2026-09-04T17:17:00.657",
-    "lastModifiedDate": "2026-09-04T17:17:00.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80881",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nocfs2: fix buffer head management in ocfs2_read_blocks()\n\nIn ocfs2_read_blocks(), caller should't assume that buffer head returned\nby 'sb_getblk()' is exclusively owned and so 'put_bh()' always drops\nb_count from 1 to 0.  If it is not so, buffer head remains on hold and\nlikely to be returned by the next call to 'sb_getblk()' unchanged - that\nis, with BH_Uptodate bit set even if it has failed validation previously,\nthus allowing to insert that buffer head into OCFS2 metadata cache and\nsubmit it to upper layers.  To avoid such a scenario, BH_Uptodate should\nbe cleared immediately after 'validate()' callback has detected some data\ninconsistency.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80881",
-    "publishedDate": "2026-09-04T17:17:00.390",
-    "lastModifiedDate": "2026-09-04T17:17:00.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80880",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nIB/mlx5: Properly support implicit ODP rereg_mr\n\nDue to all the child mkeys in the implicit ODP configuration we cannot\nchange anything in place for the parent mkey. Instead the whole thing\nneeds to be rebuilt if any change is requested. If the user does not\nspecify a translation then force the implicit values which will then fall\nthrough the logic into mlx5_ib_reg_user_mr() to allocate a completely new\nMR.\n\nSince implicit children were also touching the mr->pd, this removes\nanother case where the access was racy.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80880",
-    "publishedDate": "2026-09-04T17:17:00.250",
-    "lastModifiedDate": "2026-09-04T17:17:00.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80879",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nocfs2: fix circular locking dependency in ocfs2_dio_end_io_write\n\nA circular locking dependency involves INODE_ALLOC_SYSTEM_INODE,\nEXTENT_ALLOC_SYSTEM_INODE, and ORPHAN_DIR_SYSTEM_INODE.\n\n1. ocfs2_mknod() acquires INODE_ALLOC then EXTENT_ALLOC.\n\n2. ocfs2_dio_end_io_write() acquires EXTENT_ALLOC for unwritten\n   extents, then ORPHAN_DIR via ocfs2_del_inode_from_orphan() while still\n   holding EXTENT_ALLOC.\n\n3. ocfs2_wipe_inode() acquires ORPHAN_DIR then INODE_ALLOC via\n   ocfs2_remove_inode.\n\nBreak the cycle in ocfs2_dio_end_io_write() by freeing the allocation\ncontexts (releasing EXTENT_ALLOC) before acquiring ORPHAN_DIR.\n\nWARNING: possible circular locking dependency detected\n------------------------------------------------------\nis trying to acquire lock:\nffff8881e78b33a0\n(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}, at:\nocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299\n\nbut task is already holding lock:\nffff8881e78b4fa0\n(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}, at:\nocfs2_evict_inode+0xe97/0x43b0 fs/ocfs2/inode.c:1299\n\nthe existing dependency chain (in reverse order) is:\n\n-> #2 (&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]){+.+.}-{4:4}:\n       inode_lock include/linux/fs.h:1029 [inline]\n       ocfs2_del_inode_from_orphan+0x12e/0x7a0 fs/ocfs2/namei.c:2728\n       ocfs2_dio_end_io+0xf9c/0x1370 fs/ocfs2/aops.c:2418\n       dio_complete+0x25b/0x790 fs/direct-io.c:281\n\n-> #1 (&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:\n       inode_lock include/linux/fs.h:1029 [inline]\n       ocfs2_reserve_suballoc_bits+0x16d/0x4840 fs/ocfs2/suballoc.c:882\n       ocfs2_reserve_new_metadata_blocks+0x415/0x9a0\n       fs/ocfs2/suballoc.c:1078\n       ocfs2_mknod+0x10f3/0x2260 fs/ocfs2/namei.c:351\n\n-> #0 (&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]){+.+.}-{4:4}:\n       __lock_acquire+0x15a5/0x2cf0 kernel/locking/lockdep.c:5237\n       lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5868\n       down_write+0x96/0x200 kernel/locking/rwsem.c:1625\n       inode_lock include/linux/fs.h:1029 [inline]\n       ocfs2_remove_inode fs/ocfs2/inode.c:733 [inline]\n       ocfs2_wipe_inode fs/ocfs2/inode.c:896 [inline]\n       ocfs2_delete_inode fs/ocfs2/inode.c:1157 [inline]\n       ocfs2_evict_inode+0x1539/0x43b0 fs/ocfs2/inode.c:1299\n\nChain exists of:\n  &ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE] -->\n  &ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE] -->\n  &ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]\n\n Possible unsafe locking scenario:\n\n       CPU0                    CPU1\n       ----                    ----\n  lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);\n                               lock(&ocfs2_sysfile_lock_key[EXTENT_ALLOC_SYSTEM_INODE]);\n                               lock(&ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE]);\n  lock(&ocfs2_sysfile_lock_key[INODE_ALLOC_SYSTEM_INODE]);\n\n *** DEADLOCK ***",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80879",
-    "publishedDate": "2026-09-04T17:17:00.080",
-    "lastModifiedDate": "2026-09-04T17:17:00.080",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80878",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nafs: Fix leak of ungot volume\n\nFix afs_lookup_volume_rcu() so that it doesn't leak a dying volume if\nafs_try_get_volume() fails.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80878",
-    "publishedDate": "2026-09-04T17:16:59.923",
-    "lastModifiedDate": "2026-09-04T17:16:59.923",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80877",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nafs: Fix vllist leak\n\nFix a leak of the new vllist in afs_update_cell() in the event that it is an\nempty list (nr_servers == 0), in which case the old list isn't displaced\nunless the old list is also empty.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80877",
-    "publishedDate": "2026-09-04T17:16:59.790",
-    "lastModifiedDate": "2026-09-04T17:16:59.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80876",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nring-buffer: Fix event length with forced 8-byte alignment\n\nWhen RB_FORCE_8BYTE_ALIGNMENT is true, rb_calculate_event_length()\nreserves the space of event->array[0] for placing the data length and\nrb_update_event() stores the data length in event->array[0]\naccordingly. As a result the whole event length will add extra 4 bytes\nfor sizeof(event.array[0]) unconditionally.\n\nBut ring_buffer_event_length() only subtracts the\nsizeof(event->array[0]) for events larger than RB_MAX_SMALL_DATA +\nsizeof(event->array[0]). As a result, small events on architectures\nwith RB_FORCE_8BYTE_ALIGNMENT=true report a data length that is 4\nbytes larger than expected.\n\nTo fix it, add the RB_FORCE_8BYTE_ALIGNMENT as a condition to subtract\nthe size of that length field whenever RB_FORCE_8BYTE_ALIGNMENT is\ntrue.\n\nThis issue is observed in a riscv64 kernel with\nCONFIG_HAVE_64BIT_ALIGNED_ACCESS set to y, when we run ftrace selftest\ntrace_marker_raw.tc, we get the weird log: for cases where the id is\n1..100, the number of data field is 8*N, but once id exceeds 100, the\nnumber of data field becomes 8*N+4:\n # 1 buf: 58 00 00 00 80 5e d1 63 (number of data field is 8*1)\n ...\n # a buf: 58 ...                  (number of data field is 8*2)\n ...\n # 64 buf: 58 ...                 (number of data field is 8*13)\n # 65 buf: 58 ...                 (number of data field is 8*13+4)\n\nAfter applying this change, the number of data field keeps being 8*N+4\nconsistently.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80876",
-    "publishedDate": "2026-09-04T17:16:59.640",
-    "lastModifiedDate": "2026-09-04T17:16:59.640",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80875",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipvs: use parsed transport offset in TCP state lookup\n\nTCP state handling reparses the skb to find the TCP header. For IPv6 it\nuses sizeof(struct ipv6hdr), while the surrounding IPVS code already\nparsed the packet with ip_vs_fill_iph_skb() and has the real\ntransport-header offset in iph.len.\n\nThis makes TCP state handling look at the wrong bytes when an IPv6\npacket carries extension headers. Use the parsed transport offset passed\ndown from ip_vs_set_state() when reading the TCP header.\n\nFor IPv4 and for IPv6 packets without extension headers, the passed\noffset matches the previous value.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80875",
-    "publishedDate": "2026-09-04T17:16:59.507",
-    "lastModifiedDate": "2026-09-04T17:16:59.507",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80874",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\narm64: dts: renesas: ironhide: Describe inline ECC carveouts\n\nThe DBSC5 DRAM controller protects DRAM content using inline ECC.\nThe inline ECC utilizes areas of DRAM for its operation, which are\nin the DRAM address range, but must not be accessed or modified.\nDescribe the inline ECC carveout areas used by the DBSC5 controller\non this hardware as reserved-memory, which must not be accessed.\nInclude DRAM areas which are unprotected by ECC as well, those are\nparts of the DRAM which directly precede the ECC carveout.\n\nIn case of high DRAM utilization, unless the inline ECC carveouts\nare properly reserved, Linux may use and corrupt the memory used\nby the DBSC5 DRAM controller for inline ECC, which would lead to\nthe system becoming unstable.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80874",
-    "publishedDate": "2026-09-04T17:16:59.390",
-    "lastModifiedDate": "2026-09-04T17:16:59.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80873",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: arm64: nv: Write ESR_EL2 for injected nested SError exceptions\n\nkvm_inject_el2_exception() writes ESR_EL2 for synchronous exceptions\nbut not for SError. enter_exception64() does not write ESR_ELx for any\nexception type, so the constructed syndrome is dropped. A guest L2\nhypervisor taking a nested SError observes stale ESR_EL2.\n\nThis affects both kvm_inject_nested_serror() and the EASE path in\nkvm_inject_nested_sea().\n\nWrite ESR_EL2 for except_type_serror, matching except_type_sync.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80873",
-    "publishedDate": "2026-09-04T17:16:59.273",
-    "lastModifiedDate": "2026-09-04T17:16:59.273",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80872",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nALSA: hda/tas2781: Cancel async firmware request at unbind\n\nTAS2781 HDA I2C and SPI queue RCA firmware loading from component\nbind with request_firmware_nowait(). The firmware loader keeps the\ncallback module pinned and holds a device reference, but the callback\nstill uses driver-private HDA state.\n\nComponent unbind removes controls and DSP state immediately. Later\ndevice removal tears down the TAS2781 private data, including\ncodec_lock. If the async firmware callback runs after unbind has\nstarted, it can operate on state that is being torn down.\n\nCancel or synchronize the async firmware request before removing\ncontrols and DSP state. A queued callback is cancelled, and an\nalready-running callback is allowed to finish before unbind continues.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80872",
-    "publishedDate": "2026-09-04T17:16:59.160",
-    "lastModifiedDate": "2026-09-04T17:16:59.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80871",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: xilinx-trng - Remove crypto_rng interface\n\nImplementing the crypto_rng interface has no purpose, as it isn't used\nin practice.  It's being removed from other drivers too.  Just remove\nit.  This leaves hwrng, which is actually used.\n\nTagging with 'Cc stable' due to the bugs that this removes:\n\n  - xtrng_trng_generate() sometimes returned success even when it didn't\n    fill in all the bytes.\n\n  - It was possible for xtrng_trng_generate() and\n    xtrng_hwrng_trng_read() to run concurrently and interfere with each\n    other, as the locking code in xtrng_hwrng_trng_read() was broken.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80871",
-    "publishedDate": "2026-09-04T17:16:59.027",
-    "lastModifiedDate": "2026-09-04T17:16:59.027",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80870",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/amdkfd: Validate CRIU-restored IDs before idr_alloc\n\nThe KFD CRIU restore flow restores previously saved object IDs from\nuserspace.\n\nFor event restore:\n\n  kfd_criu_restore_event()\n      -> create_signal_event() / create_other_event()\n          -> allocate_event_notification_slot()\n              -> idr_alloc(..., *restore_id, *restore_id + 1, ...)\n\nFor BO restore:\n\n  criu_restore_memory_of_gpu()\n      -> idr_alloc(..., bo_priv->idr_handle, ...)\n\nIn both cases, the restored ID comes from userspace-provided CRIU data.\n\nidr_alloc() expects the ID range values to fit within signed int\nlimits. If a restored ID is larger than INT_MAX, it can trigger a WARN\nin the IDR layer.\n\nA kernel WARN is undesirable because it prints a warning trace and may\ncause a panic or reboot on systems with panic_on_warn enabled.\n\nSmatch reported these paths as allowing unchecked userspace values to\nreach idr_alloc().\n\nAdd INT_MAX validation before using restored IDs in:\n\n- kfd_criu_restore_event()\n- criu_restore_memory_of_gpu()\n\nIf the restored ID is invalid, return -EINVAL.\n\nThis prevents invalid restore data from reaching the IDR layer and\navoids WARN-triggering paths, while keeping valid restore behavior\nunchanged.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80870",
-    "publishedDate": "2026-09-04T17:16:58.860",
-    "lastModifiedDate": "2026-09-04T17:16:58.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80869",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nntfs: bound the attribute-list entry in ntfs_read_inode_mount()\n\nThe $MFT attribute-list walk in ntfs_read_inode_mount() validates each\nentry only with \"(u8 *)al_entry + 6 > al_end\" and\n\"(u8 *)al_entry + le16_to_cpu(al_entry->length) > al_end\", but then reads\nal_entry->lowest_vcn (an __le64 at offset 8) and al_entry->mft_reference\n(offset 16) -- fields beyond the 6 bytes proven in range. al_entry->length\nis attacker-controlled and only required non-zero, so a short entry (e.g.\nlength 8) placed at the tail passes both checks while the lowest_vcn /\nmft_reference reads fall past al_end.\n\nal_end is ni->attr_list + attr_list_size (the on-disk size); the buffer is\nkvzalloc(round_up(attr_list_size, SECTOR_SIZE)), so the sector rounding\nusually absorbs the over-read -- but when attr_list_size is a multiple of\nSECTOR_SIZE there is no slack and a crafted $MFT attribute list produces an\nout-of-bounds read at mount time.\n\nValidate the entry with ntfs_attr_list_entry_is_valid() (added in patch\n1/3) before dereferencing it, matching the bound the other attribute-list\nwalks now use. The validator already requires the length to cover the fixed\nheader, which makes the separate \"!al_entry->length\" check redundant, so\ndrop it too.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80869",
-    "publishedDate": "2026-09-04T17:16:58.750",
-    "lastModifiedDate": "2026-09-04T17:16:58.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80868",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nntfs3: Allocate iomap inline_data using alloc_page\n\nThis fixes a BUG reported in iomap_write_end_inline:\niomap_inline_data_valid checks that the inline_data fits within\na page. If the inline_data is allocated with kmemdup there's no\nguarantee that it's page-aligned, so the check sometimes fails.\nAllocate it with alloc_page to ensure it's page-aligned.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80868",
-    "publishedDate": "2026-09-04T17:16:58.643",
-    "lastModifiedDate": "2026-09-04T17:16:58.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80867",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nalpha/PCI: Add security_locked_down() check to pci_mmap_resource()\n\nCurrently, Alpha's pci_mmap_resource() does not check\nsecurity_locked_down(LOCKDOWN_PCI_ACCESS) before allowing userspace to mmap\nPCI BARs.\n\nThe generic version has had this check since commit eb627e17727e (\"PCI:\nLock down BAR access when the kernel is locked down\") to prevent DMA\nattacks when the kernel is locked down.\n\nAdd the same check to Alpha's pci_mmap_resource().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80867",
-    "publishedDate": "2026-09-04T17:16:58.510",
-    "lastModifiedDate": "2026-09-04T17:16:58.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80866",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntipc: avoid busy looping in tipc_exit_net()\n\nBlamed commit introduced a busy-wait loop in tipc_exit_net()\nto wait for pending UDP bearer cleanup works to complete:\n\n       while (atomic_read(&tn->wq_count))\n               cond_resched();\n\nThis loop can busy-wait for a long time if cond_resched() is a NOP. This\ntypically happens if the netns exit is executed by a high priority task,\nor under kernels configured without preemption (CONFIG_PREEMPT_NONE). In\nsuch cases, it wastes CPU cycles and can lead to soft lockups.\n\nFix this by replacing the busy loop with wait_var_event(), allowing the\nthread to sleep properly until the work queue count reaches zero.\n\nAccordingly, update cleanup_bearer() to use atomic_dec_and_test() and\nwake_up_var() to wake up the waiter when the count drops to zero.\n\nThis uses the global wait queue hash table, avoiding the need to bloat\nstruct tipc_net with a wait_queue_head_t. The atomic_dec_and_test()\nprovides the necessary memory barrier to ensure the wakeup is not missed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80866",
-    "publishedDate": "2026-09-04T17:16:58.390",
-    "lastModifiedDate": "2026-09-04T17:16:58.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-80865",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Add missing access_ok call to copy_user_syms\n\nAs reported by sashiko we use __get_user without prior access_ok call on the\nuser space pointer. Adding the missing call for the whole pointer array.\n\nPlus removing the err check in the error path, because it's not needed and\nalso we can return -ENOMEM directly from the first kvmalloc_array fail path.\n\n[1] https://lore.kernel.org/bpf/20260611115503.AC16D1F00893@smtp.kernel.org/",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-80865",
-    "publishedDate": "2026-09-04T17:16:58.267",
-    "lastModifiedDate": "2026-09-04T17:16:58.267",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-84961",
-    "description": "undici's BalancedPool constructor passes its entire options object through an internal deep-clone that serializes and reparses the value as JSON. Because JSON cannot represent functions, any function-valued TLS option, such as a caller-supplied checkServerIdentity callback or a custom connector inside the connect option, is silently discarded before it reaches the TLS layer. As a result a peer whose certificate the application's custom checkServerIdentity was written to reject, but which still passes Node's default hostname and chain checks, is accepted when reached through BalancedPool. The Client, Pool, and Agent dispatchers are not affected because they extract the connect and tls options before cloning. This affects undici versions from 7.24.1 up to 7.29.1 and from 8.0.0 up to 8.10.2, and only when the application supplies a function-valued connect or tls option to BalancedPool. Users should upgrade to undici 7.29.1 or 8.10.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84961",
-    "publishedDate": "2026-09-04T17:17:02.227",
-    "lastModifiedDate": "2026-09-04T17:17:02.227",
+    "id": "CVE-2026-85702",
+    "description": "A security vulnerability has been detected in ramon-victor freegpt-webui up to 098db3dfeb41555c2ca9269df0f13e10ec1c35dc. Affected is the function _conversation of the file server/backend.py of the component Backend Conversation API. Such manipulation of the argument model leads to missing authentication. The attack may be launched remotely. The exploit has been disclosed publicly and may be used. This product operates on a rolling release basis, ensuring continuous delivery. Consequently, there are no version details for either affected or updated releases. This vulnerability only affects products that are no longer supported by the maintainer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85702",
+    "publishedDate": "2026-09-04T21:17:26.480",
+    "lastModifiedDate": "2026-09-04T21:17:26.480",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.4,
+        "score": 7.3,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-13297",
-    "description": "IBM Verify Identity Access Advanced Access Control may be vulnerable to an information disclosure attack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13297",
-    "publishedDate": "2026-09-04T17:16:51.573",
-    "lastModifiedDate": "2026-09-04T17:16:51.573",
+    "id": "CVE-2026-85786",
+    "description": "Improper handling of highly compressed data in Amazon ion-java before 1.12.1 might allow remote attackers to cause a denial of service via a crafted compressed Ion document that expands to an arbitrarily large size upon decompression due to insufficient coverage of the GZIP auto-decompression opt-out introduced for CVE-2026-75936.\n\n\n\nTo remediate this issue, users should upgrade to version 1.12.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85786",
+    "publishedDate": "2026-09-04T20:17:33.153",
+    "lastModifiedDate": "2026-09-04T20:17:33.153",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85643",
+    "description": "A flaw has been found in code-projects Online Shopping System 1.0. Impacted is the function mysqli_query of the file admin/adduser.php. Executing a manipulation of the argument mobile can lead to sql injection. The attack may be performed from remote. The exploit has been published and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85643",
+    "publishedDate": "2026-09-04T20:17:32.853",
+    "lastModifiedDate": "2026-09-04T20:17:32.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-79391",
+    "description": "No authentication exists in the MQTT service of Trueview 6.0.23.4. The MQTT broker accepts client connections on TCP port 1883 without requiring authentication, allowing a remote attacker with network access to establish an MQTT session and perform unauthorized publish or subscribe operations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-79391",
+    "publishedDate": "2026-09-04T20:17:28.363",
+    "lastModifiedDate": "2026-09-04T20:17:28.363",
     "vendors": [],
     "products": [],
     "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-79390",
+    "description": "Trueview TI8161 6.0.23.4 is vulnerable to information disclosure due to the transmission of MQTT communications in plaintext over TCP port 1883. An unauthenticated attacker with access to the same network segment can intercept MQTT traffic and obtain sensitive device information and operational data, including device identifiers, message metadata, and control-related information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-79390",
+    "publishedDate": "2026-09-04T20:17:28.257",
+    "lastModifiedDate": "2026-09-04T20:17:28.257",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-79389",
+    "description": "Trueview T18161 S 6.0.23.4 contains an improper verification in MQTT command processing. An attacker with network access can replay or modify captured MQTT messages, including security-related nonce, timestamp, and signature fields, and the device accepts the modified messages and executes the associated commands.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-79389",
+    "publishedDate": "2026-09-04T20:17:28.133",
+    "lastModifiedDate": "2026-09-04T20:17:28.133",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-71626",
+    "description": "An issue in Invoice Ninja v5.13.24 allows a remote attacker to obtain sensitive information via the StoreWebhookRequest.php, UpdateWebhookRequest.php, and WebhookSingle.php components",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71626",
+    "publishedDate": "2026-09-04T20:17:26.413",
+    "lastModifiedDate": "2026-09-04T20:17:26.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-71625",
+    "description": "An issue in slimkit plus ThinkSNS+ v.2.4 allows a remote attacker to escalate privileges via the ResetPasswordController.php component",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71625",
+    "publishedDate": "2026-09-04T20:17:26.293",
+    "lastModifiedDate": "2026-09-04T20:17:26.293",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-71624",
+    "description": "An issue in esoTalk v.1.0.0g4 allows a remote attacker to execute arbitrary code via the core/models/ETMemberModel.class.php, core/controllers/ETMemberController.class.php, and core/lib/ET.class.php components",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71624",
+    "publishedDate": "2026-09-04T20:17:26.183",
+    "lastModifiedDate": "2026-09-04T20:17:26.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-71622",
+    "description": "SQL injection vulnerability in Zhao-github APiAdmin v.5.0.1 allows a remote attacker to obtain sensitive information via the User.php component",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71622",
+    "publishedDate": "2026-09-04T20:17:26.053",
+    "lastModifiedDate": "2026-09-04T20:17:26.053",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-63464",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. From version 0.6.0 to before version 0.7.2, non-admin operators (role user) can set allow_private: true on their own managed webhook subscription (POST/PATCH /api/v1/webhook-subscriptions). No admin check exists on this field. At delivery time, allow_private switches the dispatcher to an unguarded HTTP client, bypassing the private/loopback/link-local SSRF guard — letting a low-privilege operator make the server request internal addresses. This issue has been patched in version 0.7.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63464",
+    "publishedDate": "2026-09-04T20:17:24.730",
+    "lastModifiedDate": "2026-09-04T20:17:24.730",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61699",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. Prior to version 0.7.1, revocation is the only in-band mechanism that isolates a compromised/offboarded host from a Nebula mesh. Because the blocklist never reaches any peer's config.yml, a Blocked host retains full overlay reachability to every peer under its CA (and internal services on the mesh) for up to 30d (agent) / 365d (mobile). An attacker who exfiltrates host.key+host.crt can run stock slackhq/nebula directly, ignore the agent's 403/410 poll responses, and stay connected after the operator revokes the host. Operator-visible state (UI shows blocked, audit log records it) is misleading. This issue has been patched in version 0.7.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61699",
+    "publishedDate": "2026-09-04T20:17:24.347",
+    "lastModifiedDate": "2026-09-04T20:17:24.347",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55513",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. From version 0.3.0 to before version 0.5.0, the nebula-mgmt Web UI host-creation path ignores both the server-wide enrollment_token_ttl security setting and per-network network_config.enrollment_token_ttl overrides. API host creation and token-regeneration paths use the configured TTL resolver, but POST /ui/hosts hardcodes now.Add(24 * time.Hour) for newly minted agent enrollment tokens. In deployments that intentionally reduce enrollment-token lifetime, any authenticated operator who can create a host through the Web UI can still mint a bearer enrollment token valid for about 24 hours. This issue has been patched in version 0.5.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55513",
+    "publishedDate": "2026-09-04T20:17:23.857",
+    "lastModifiedDate": "2026-09-04T20:17:23.857",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55512",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. From version 0.2.0 to before version 0.5.0, when OIDC is enabled, GET /ui/oidc/login is reachable without authentication and is registered outside the Web UI rate-limited auth routes. Every request creates a fresh random OIDC state value and stores it in an in-memory map for 10m. Expired states are swept lazily, but there is no rate limit or maximum live-state cap on the allocation path. An unauthenticated remote client can therefore grow OIDC.states for the full state TTL, bounded by request throughput rather than by configured auth rate limits. This issue has been patched in version 0.5.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55512",
+    "publishedDate": "2026-09-04T20:17:23.717",
+    "lastModifiedDate": "2026-09-04T20:17:23.717",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53932",
+    "description": "laravel-backup-restore restores database backups made with spatie/laravel-backup. Prior to version 1.9.4, a crafted backup archive can trigger OS command injection during database restore. This issue has been patched in version 1.9.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53932",
+    "publishedDate": "2026-09-04T20:17:23.570",
+    "lastModifiedDate": "2026-09-04T20:17:23.570",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53604",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. Prior to version 0.3.8, the web handler renderMobileBundle passes the real *pki.CAResolver directly into mobilebundle.Build. Inside Build, resolver.LoadByID decrypts the CA's ed25519 private key into a *pki.CAManager, but Build never calls CAManager.Wipe() on any return path. As a result, when a mobile-bundle request goes through the web UI and Build returns — especially on error (missing network, invalid prefix, DB error, signing failure) — the plaintext CA private key remains on the Go heap, unwiped, until garbage collection. An attacker able to read process memory (core dump, swap, memory-scraping) can recover the CA signing key, which would allow minting arbitrary host certificates for the mesh. The API handler already does this correctly: it loads the CAManager, defer caMgr.Wipe(), and wraps it in caManagerResolver. Only the web path is affected. This issue has been patched in version 0.3.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53604",
+    "publishedDate": "2026-09-04T20:17:23.437",
+    "lastModifiedDate": "2026-09-04T20:17:23.437",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53603",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. Prior to version 0.3.8, Operator session tokens are stored in plaintext in the operator_sessions table (the token column is the PRIMARY KEY). The session token is a 32-byte random hex value sent directly in a cookie and valid for 24 hours. Anyone who can read the database (backup, snapshot, file copy, or SQL-level disclosure) obtains every active session token and can hijack operator sessions directly, with no further authentication. This issue has been patched in version 0.3.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53603",
+    "publishedDate": "2026-09-04T20:17:23.287",
+    "lastModifiedDate": "2026-09-04T20:17:23.287",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53602",
+    "description": "nebula-mesh is a self-hosted control plane for Slack Nebula mesh VPN. Prior to version 0.3.7, two related authorization gaps let a host that should no longer be trusted obtain a fresh, valid Nebula certificate, because nebula-mgmt does not re-evaluate revocation/authorization state at certificate issuance time — only at poll time. Firstly, the blocklist is not enforced at sign / re-enroll time. internal/api/enroll.go:128 calls caMgr.Sign(...) without consulting the blocklist. The blocklist is only checked in the poll path (internal/api/updates.go:57, fingerprintInBlocklist). The blocklist is keyed by certificate fingerprint (internal/store/sqlite.go), so a re-enrollment produces a new fingerprint that is not in the blocklist. Secondly, renewal does not re-validate operator / CA status. Auto-renewal at poll time (internal/api/updates.go:285-319, signHostCert) reads host.Name, host.Groups, host.NebulaIPs from the DB and re-signs without checking whether the owning operator is still active or the CA still valid. DisableOperator (internal/store/sqlite_operators.go) revokes sessions and API keys but does not retire the operator's CAs, and pki/signer.go checks only CA cert time-expiry, not operator/CA status. This issue has been patched in version 0.3.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53602",
+    "publishedDate": "2026-09-04T20:17:23.130",
+    "lastModifiedDate": "2026-09-04T20:17:23.130",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85701",
+    "description": "A vulnerability has been found in ramon-victor freegpt-webui up to 098db3dfeb41555c2ca9269df0f13e10ec1c35dc. This issue affects the function ChatCompletion.create of the file g4f/__init__.py of the component Authentication Check. Such manipulation leads to missing authentication. The attack may be performed from remote. The exploit has been disclosed to the public and may be used. This product utilizes a rolling release system for continuous delivery, and as such, version information for affected or updated releases is not disclosed. This vulnerability only affects products that are no longer supported by the maintainer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85701",
+    "publishedDate": "2026-09-04T21:17:26.260",
+    "lastModifiedDate": "2026-09-04T21:17:26.260",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85787",
+    "description": "An incomplete list of disallowed inputs in the SQL validation component in Amazon awslabs postgres-mcp-server before  version 1.1.7 might allow an unauthenticated actor to modify data beyond the read-only scope by placing crafted SQL into the content that is submitted when an authenticated user interacts with the MCP server.\n\n\n\nTo remediate this issue, users should upgrade to version 1.1.7 or above.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85787",
+    "publishedDate": "2026-09-04T21:17:27.057",
+    "lastModifiedDate": "2026-09-04T21:17:27.057",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53769",
+    "description": "Avo is a framework to create admin panels for Ruby on Rails apps. From version 2.28.0 to before version 3.32.0, Avo's direct attachment upload endpoint lacks server-side upload authorization and bypasses the documented field-level upload policy methods such as upload_{FIELD_ID}?. An authenticated Avo user who can reach the Avo attachment upload endpoint can replace or add attachment content, including binary content, filename, and content-type metadata, on a resolved record even when both update? and upload_<field>? policies deny the operation. This primarily affects multi-role Avo Pro/Advanced-style deployments where non-administrator or restricted operator users can reach Avo and per-record or per-field operations are expected to be enforced by policies. This issue has been patched in version 3.32.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53769",
+    "publishedDate": "2026-09-04T21:17:25.300",
+    "lastModifiedDate": "2026-09-04T21:17:25.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85781",
+    "description": "Unverified ownership of a storage access point in the volume deletion component of the Amazon EFS CSI Driver before v3.4.1 might allow an authenticated Kubernetes user with PersistentVolume creation privileges to cause recursive deletion of directories on an EFS filesystem they are not authorized to access, via a crafted PersistentVolume volumeHandle that pairs an access point from one filesystem with a different target filesystem.\n\n\n\nTo remediate this issue, users should upgrade to version v3.4.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85781",
+    "publishedDate": "2026-09-04T19:17:34.157",
+    "lastModifiedDate": "2026-09-04T20:17:33.030",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 5.8,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:N/VI:N/VA:N/SC:N/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85639",
+    "description": "A security vulnerability has been detected in jofpin trape 2.0. This vulnerability affects unknown code of the file core/user.py of the component Telemetry Endpoint. Such manipulation of the argument vId leads to race condition. The attack can be executed remotely. Attacks of this nature are highly complex. It is stated that the exploitability is difficult. The exploit has been disclosed publicly and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85639",
+    "publishedDate": "2026-09-04T19:17:33.600",
+    "lastModifiedDate": "2026-09-04T19:17:33.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85638",
+    "description": "A weakness has been identified in jofpin trape 2.0. This affects an unknown part of the file core/user.py. This manipulation of the argument vId/id causes authorization bypass. Remote exploitation of the attack is possible. The exploit has been made available to the public and could be used for attacks. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85638",
+    "publishedDate": "2026-09-04T19:17:33.430",
+    "lastModifiedDate": "2026-09-04T19:17:33.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   }
 ]
