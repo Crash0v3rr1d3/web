@@ -1,470 +1,501 @@
 [
   {
-    "id": "CVE-2026-78620",
-    "description": "The Okta Access Gateway Kerberos configuration handler does not validate file paths specified in event payloads before writing file contents. The path from the event payload is used directly as the write destination, resulting in files being written to unintended locations on the appliance filesystem.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78620",
-    "publishedDate": "2026-09-08T20:18:36.777",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-53939",
+    "description": "OpenIDC/cjose is a C library implementing the Javascript Object Signing and Encryption (JOSE). In versions 0.6.1 through 0.6.2.5, when cjose encrypts a JWE using an AES-CBC-HMAC content-encryption algorithm (`A128CBC-HS256`, `A192CBC-HS384`, or `A256CBC-HS512`) together with any key-management algorithm that generates a fresh content-encryption key (CEK), the CEK is all zero bytes instead of being randomly generated. The resulting JWE is therefore encrypted and authenticated under a fixed, publicly known key, so anyone who obtains the JWE can recover the plaintext and forge or modify the content. This is fixed in version 0.6.2.6 by `_cjose_jwe_set_cek_aes_cbc()` generating the CEK from `RAND_bytes`. A regression test asserts that the `encrypted_key` differs across two encryptions for each AES-CBC-HMAC variant. Until upgrading, for data encrypted with cjose, three options are available. Use an AES-GCM `enc` (`A128GCM` / `A192GCM` / `A256GCM`) instead of an AES-CBC-HMAC `enc`,  use `alg=dir` with a caller-supplied CEK, or avoid using cjose for JWE encryption with the affected algorithm pair. These are mitigations for new ciphertexts only; data already encrypted under the zero key remains compromised and should be re-encrypted (and any secrets it contained rotated).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53939",
+    "publishedDate": "2026-09-09T00:17:31.700",
+    "lastModifiedDate": "2026-09-09T00:17:31.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53938",
+    "description": "OpenIDC/cjose is a C library implementing the Javascript Object Signing and Encryption (JOSE). Prior to version 0.6.2.5, cjose's JWE decryption path for the AES Key Wrap key-management algorithms (`alg` = `A128KW`, `A192KW`, `A256KW`) does not validate the length of the attacker-supplied `encrypted_key` (JWE Encrypted Key) before unwrapping it into a fixed-size, heap-allocated Content Encryption Key (CEK) buffer. A remote, unauthenticated attacker who can submit a crafted JWE to an application that decrypts it with an AES-KW symmetric key can trigger an out-of-bounds heap write, corrupting the heap. This leads at minimum to a crash (denial of service) and, depending on the heap layout and allocator, may be leverageable for further memory-corruption impact. `cjose_jwe_import()` / `cjose_jwe_decrypt()` are pre-authentication entry points: they parse and process fully attacker-controlled input. Upgrade to cjose 0.6.2.5 to receive a patch. If upgrading is not immediately possible, reject the AES Key Wrap algorithms (`A128KW`/`A192KW`/`A256KW`) for untrusted JWEs at the application layer.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53938",
+    "publishedDate": "2026-09-09T00:17:31.557",
+    "lastModifiedDate": "2026-09-09T00:17:31.557",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53937",
+    "description": "MCP Kotlin SDK is the Kotlin Multiplatform software development kit for the Model Context Protocol. In versions 0.7.0 through 0.12.0, `ReadBuffer.append` in `kotlin-sdk-core/src/commonMain/kotlin/io/modelcontextprotocol/kotlin/sdk/shared/ReadBuffer.kt` writes every chunk of bytes received from the stdio transport into a `kotlinx.io.Buffer` with no size cap. Frames are extracted from that buffer only when a `\\n` (0x0a) byte is observed. A peer that streams bytes without ever sending a newline causes the internal buffer to grow indefinitely until the JVM (or the surrounding host process) is OOM-killed. The leak is amplified by `StdioServerTransport` and `StdioClientTransport`, which both queue raw chunks through a `kotlinx.coroutines.channels.Channel<ByteArray>(Channel.UNLIMITED)` and then call `readBuffer.append(chunk)` without backpressure or size guard. This is a remote-pre-auth denial of service whenever an SDK stdio server's stdin is fed by an untrusted or attacker-controlled producer (for example: a host program that exec's the MCP server as a subprocess and pipes through bytes received from a network peer, or a sidecar wrapper that proxies bytes from an HTTP endpoint to the stdio transport). Version 0.13.0 fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53937",
+    "publishedDate": "2026-09-09T00:17:31.407",
+    "lastModifiedDate": "2026-09-09T00:17:31.407",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.5,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19201",
+    "description": "An uncontrolled recursion vulnerability in the Windows SIPA event log parser of Google go-attestation versions up to and including 0.6.1 allows an attacker to cause a denial of service (DoS). The (*WinEvents).readELAMAggregation function recurses for every nested elamAggregation sub-event without enforcing a maximum recursion depth limit, while the size guard is bypassed on recursive execution paths. By submitting a crafted Windows event log containing deeply nested elamAggregation headers, an attacker can exhaust the goroutine call stack, triggering an unrecoverable fatal runtime error (stack overflow) that immediately crashes the verifier application.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19201",
+    "publishedDate": "2026-09-09T00:17:30.993",
+    "lastModifiedDate": "2026-09-09T00:17:30.993",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cve-coordination@google.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86564",
+    "description": "A flaw was found in DPDK lib/vhost. Missing length validation before reading command_data in the virtio-net control-queue handler can cause an out-of-bounds read and a host process crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86564",
+    "publishedDate": "2026-09-08T23:17:30.083",
+    "lastModifiedDate": "2026-09-08T23:17:30.083",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55250",
+    "description": "Maravel, a PHP framework oriented towards dependency injection, prior to version 10.74.0 has a high-severity Token Replay Vulnerability arising from a structural lifecycle mismatch between stateless token validation engines and high-performance relational caching layers. Any application with low cache memory that causes premature eviction to free up memory and applications running macropay-solutions/maravel-framework that utilize tymon/jwt-auth for API token authentication and blacklist management or any other package that does the same may be affected. This architectural risk might also impact native Laravel applications utilizing cache tags under specific volatile or eviction-capped environments. tymon/jwt-auth automatically probes for cache tag support. If found, it forcefully wraps 14-day token blacklist entries (jti) inside a relational tymon.jwt tag. In environments where the O(1) Atomic Lazy Eviction model is active — either natively inside Maravel-Framework v20.x or manually backported into v10.x via the explicit DI container singletons provided in PR #104 (App\\Cache\\TaggedCache and App\\Cache\\TagSet) — a strict global tracking ceiling (Container::TAGGED_CACHE_TTL_CAP_SECONDS) of 7,200 seconds (2 hours) is enforced to secure the system against memory index bloat. This ceiling forcefully truncates the 14-day blacklist lifespan down to a maximum of 2 hours, after which individual tracking keys naturally expire and disappear from the active cache window. Furthermore, because the optimized engine implements a generational version matrix to achieve O(1) flush speeds, any programmatic or manual invocation of a tag flush or reset (e.g., Cache::tags([...])->flush()) instantly bumps the internal atomic master version pointer. This shifts the computed cryptographic composite hash (sha1($this->tags->getNamespace())) for all overlapping components, rendering the entire existing index immediately unreachable. Consequently, through either natural 2-hour expiration or an intervening tag flush execution (like the cache naturally cleaning old values to free up memory), the invalidation state records are entirely wiped out. Because the tokens' physical cryptographic signatures remain structurally valid for up to 14 days, stolen, hijacked, or legitimately logged-out tokens are instantly and silently resurrected across the entire API gateway, leaving the application critically vulnerable to widespread Token Replay Attacks. Because this issue is caused by an upstream architectural assumption within the tymon/jwt-auth package rather than a core defect inside the framework, there is no direct framework version upgrade that can safely bypass this lifecycle collision without breaking business cache recycling bounds. Maravel version 10.74.0 introduced a way to backport the new fixed tagged cache from 20.x into 10.x by resolving TagSet and TaggedCache from DI, which is how this latent architectural lifecycle vulnerability was discovered. Users must apply the decoupled configuration workaround outlined below. As a workaround, make sure that cache memory size does not generate early natural evictions from cache to free up space, deleting blacklisted jwt ids before they expire. Applications must decouple flat authentication vectors from the relational tagging subsystem. This forces token identifiers to write directly to the primary cache keyspace as flat, un-tagged key-value pairs where they securely retain their unclipped 14-day lifecycle.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55250",
+    "publishedDate": "2026-09-08T23:17:25.573",
+    "lastModifiedDate": "2026-09-08T23:17:25.573",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53639",
+    "description": "Sylius is an Open Source eCommerce Framework on Symfony. Starting in version 2.0.0 and prior to version 2.0.18, 2.1.15, and 2.2.6, the `GET /api/v2/shop/payment-requests/{hash}` and `PUT /api/v2/shop/payment-requests/{hash}` endpoints look up the payment request solely by the hash from the URL. No ownership check is performed against the authenticated customer or the underlying order. An attacker who obtains a payment request hash can read the payment request and, through the `payment` IRI in the response, recover the underlying order's `tokenValue` (which itself grants access to the full order, items, addresses, customer email, totals); and/or update the payment request payload (e.g. `target_path`, `after_path`). These fields are used by the front-end controller to redirect the user after the payment, so an attacker can flip them to an attacker-controlled URL and intercept the buyer. The hash is a UUID, so it has to be obtained out-of-band (logs, shared links, referrer headers, a co-located client), but once it is known no other credential is required, neither authentication nor knowledge of the order token. The creation endpoint `POST /api/v2/shop/orders/{tokenValue}/payment-requests` shares the same flaw: it resolves the target order solely from the `tokenValue` in the URL without verifying that the caller owns the order. The issue is fixed in versions 2.0.18, 2.1.15, and 2.2.6. As a workaround, add a query extension that filters the `GET` operation; decorate the `PUT` state provider, guard the `POST` creation endpoint with a command-bus middleware, and wire the services.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53639",
+    "publishedDate": "2026-09-08T23:17:24.987",
+    "lastModifiedDate": "2026-09-08T23:17:24.987",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53638",
+    "description": "Sylius is an Open Source eCommerce Framework on Symfony. Starting in version 2.0.0 and prior to version 2.0.18, 2.1.15, and 2.2.6, an authorization bypass vulnerability exists in the shop account API. The `PATCH /api/v2/shop/account/orders/{tokenValue}/payments/{paymentId}` endpoint, used by an authenticated shop customer to change the payment method of an order that has been placed but not yet paid (state `STATE_NEW`), does not validate that the chosen payment method is enabled for the order's channel. The equivalent checkout endpoint (`PATCH /api/v2/shop/orders/{tokenValue}/payments/{paymentId}`) correctly rejects out-of-channel payment methods with `HTTP 422`; the account endpoint silently accepts them and returns `HTTP 200`. An authenticated customer can therefore assign any globally enabled payment method to their own placed order, including methods that the store operator has explicitly excluded from that channel. The issue is fixed in versions: 2.0.18, 2.1.15, 2.2.6 and above. As a workaround, decorate the `Sylius\\Bundle\\ApiBundle\\Changer\\PaymentMethodChangerInterface` service in the application.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53638",
+    "publishedDate": "2026-09-08T23:17:24.840",
+    "lastModifiedDate": "2026-09-08T23:17:24.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53637",
+    "description": "Sylius is an Open Source eCommerce Framework on Symfony. Versions 2.0.0 through 2.0.17, 2.1.0 through 2.1.14, and 2.2.0 through 2.2.5 contain an improper workflow enforcement vulnerability in the cart `FormComponent`. When an order is completed while its cart page remains open, the stale LiveComponent does not detect the order’s changed state and continues to permit cart actions, allowing an authenticated customer to modify or permanently delete an already completed order. Versions 2.0.18, 2.1.15, and 2.2.6 contain a patch. As a workaround, deployments can copy the patched `FormComponent` into the application's `src/` directory and override the `sylius_shop.twig.component.cart.form` service definition to use that class.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53637",
+    "publishedDate": "2026-09-08T23:17:24.697",
+    "lastModifiedDate": "2026-09-08T23:17:24.697",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53581",
+    "description": "OPNsense is a FreeBSD based firewall and routing platform. Prior to version 26.1.9 of opnsense/core and version 26.4_20 of BE/opnsense/core, a path traversal vulnerability in the NTP configuration module allows an attacker to overwrite arbitrary files on the system as the root user. By manipulating the GPS or PPS serial port parameter, an attacker with access to the NTP configuration can escape the intended directory and force the system to write user-controlled data to any file on the filesystem. Version 26.1.9 of opnsense/core and version 26.4_20 of BE/opnsense/core patch the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53581",
+    "publishedDate": "2026-09-08T23:17:24.550",
+    "lastModifiedDate": "2026-09-08T23:17:24.550",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:L/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-47680",
+    "description": "The source-controller is a Kubernetes operator, specialised in artifacts acquisition from external sources such as Git, OCI, Helm repositories and S3-compatible buckets. In versions 0.0.17 through 1.8.4, an actor with the ability to influence the contents of a bucket referenced by a `Bucket` resource can cause source-controller to write fetched object data to paths outside the per-reconciliation working directory. The corruption surface is bounded by source-controller's own and downstream Flux controllers' digest verification: source-controller verifies stored artifact digests during reconciliation and rebuilds on divergence; consumers (kustomize-controller, helm-controller) verify the digest of fetched artifacts and reject mismatches. These checks prevent a manipulated artifact from reaching the cluster, but an attacker can still write files anywhere the source-controller pod has permission to write. Separately, a user with permission to create or update `GitRepository` resources can cause source-controller to test for the existence of paths outside the cloned repository. Because the result is exposed via the resource's status, this allows limited enumeration of file paths on the controller pod. This surface exists only on source-controller v1.6.0 and later, where the sparse-checkout feature was introduced. This vulnerability was fixed in source-controller v1.8.5. There is no in-product workaround. Users should upgrade to a patched version. As a defense-in-depth measure for the GitRepository sparse-checkout surface, a `ValidatingAdmissionPolicy` (or a third-party policy engine such as Kyverno or OPA Gatekeeper) can be deployed to reject `GitRepository` resources whose `.spec.sparseCheckout` entries contain `..` or absolute path segments.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47680",
+    "publishedDate": "2026-09-08T23:17:24.400",
+    "lastModifiedDate": "2026-09-08T23:17:24.400",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-18090",
+    "description": "A flaw was found in gdk-pixbuf. This vulnerability allows a remote attacker to cause a heap out-of-bounds read by providing a specially crafted Apple Icon Image (.icns) file. The uncompress() function, which handles RLE-encoded ICNS icon data, fails to validate the source buffer's boundaries during decompression. This can lead to a denial of service, where the application crashes, or to information disclosure, potentially revealing sensitive data from adjacent memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18090",
+    "publishedDate": "2026-09-08T23:17:22.760",
+    "lastModifiedDate": "2026-09-08T23:17:22.760",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 4.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86996",
+    "description": "n8n is an open source workflow automation platform. Prior to 2.37.7 and 2.38.2, the workflow setting named This workflow can be called by was enforced by the Execute Workflow node but not when a workflow was attached to an Agent as a tool. A user able to build an Agent could invoke a restricted workflow and read its returned data. The affected path is packages/cli/src/modules/agents/tools/workflow-tool-factory.ts, where executeWorkflow omitted SubworkflowPolicyChecker.checkForProject. This issue is fixed in versions 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86996",
+    "publishedDate": "2026-09-08T22:19:18.240",
+    "lastModifiedDate": "2026-09-08T22:19:18.240",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86995",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the Git node validated the repository parameter for fetch or pull, but setUpstream wrote a branch..remote value into repository configuration without validating it. A later fetch or pull resolved the remote from that configuration instead of the checked parameter. An authenticated workflow editor could therefore point Git at any local repository readable by the n8n process and receive its contents through packages/nodes-base/nodes/Git/GenericFunctions.ts. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86995",
+    "publishedDate": "2026-09-08T22:19:18.103",
+    "lastModifiedDate": "2026-09-08T22:19:18.103",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86994",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the /rest/active-workflows endpoint returned every active workflow ID on the instance to any member regardless of sharing. Workflow activation, deactivation, and publication push events were also broadcast to clients that could not access the affected workflow, disclosing workflow IDs, version IDs, and activation error details. The affected paths include packages/cli/src/services/active-workflows.service.ts and packages/cli/src/workflows/workflow-push-notifier.service.ts. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86994",
+    "publishedDate": "2026-09-08T22:19:17.960",
+    "lastModifiedDate": "2026-09-08T22:19:17.960",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86993",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, a Log Streaming event destination could reference a generic HTTP credential and decrypt whichever credential ID it named without an ownership check. A user with a custom global role carrying Log Streaming scopes could select a credential belonging to another project and send its decrypted secret to an attacker-controlled endpoint. The affected authorization boundary is packages/cli/src/modules/log-streaming.ee/destinations/destination-credentials-access.ts and the credential:read scope. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86993",
+    "publishedDate": "2026-09-08T22:19:17.810",
+    "lastModifiedDate": "2026-09-08T22:19:17.810",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.9,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 0.7,
-        "impactScore": 5.2,
-        "source": "psirt@okta.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-78579",
-    "description": "The Okta Access Gateway does not sanitize SAML assertion attribute values before interpolating them into LDAP search filters in the LDAP datastore configuration. The raw values are substituted directly into the filter string and passed to the LDAP search operation, resulting in modification of the intended query logic.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78579",
-    "publishedDate": "2026-09-08T20:18:36.590",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86085",
+    "description": "n8n is an open source workflow automation platform. Prior to 2.37.7 and 2.38.2, the /rest/roles/:slug/assignments and /rest/roles/:slug/assignments/:projectId/members endpoints checked only whether the caller could manage the role type. A caller with role:manageProject could name a project the caller could not list and obtain member names and email addresses. The affected controller is packages/cli/src/controllers/role.controller.ts, which omitted the project:list scope check. This issue is fixed in versions 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86085",
+    "publishedDate": "2026-09-08T22:19:17.670",
+    "lastModifiedDate": "2026-09-08T22:19:17.670",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.8,
-        "version": "CVSS 3.1",
+        "score": 5.1,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "psirt@okta.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-78627",
-    "description": "The Okta Hyperdrive Integration installer does not mask the OAuth client secret when passed as an MSI property. The credential is recorded in plaintext in the installer log, the Application Event Log, and the process command line, all of which are readable by an authenticated local user on the workstation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78627",
-    "publishedDate": "2026-09-08T20:18:38.440",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2,
-        "impactScore": 4.7,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78574",
-    "description": "The Okta Hyperdrive Integration plugin resolves a required assembly using a registry path within the current user's hive without integrity verification. The referenced path is loaded via Assembly.LoadFrom without signature validation, resulting in an unverified assembly executing within the context of the host process or elevated installer.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78574",
-    "publishedDate": "2026-09-08T20:18:36.417",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 1.1,
-        "impactScore": 5.8,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78626",
-    "description": "The Okta Access Gateway improperly handles input sanitization and regular expression evaluation within its Protected Rule authorization check, resulting in an authorization bypass when an administrator has explicitly configured a Protected Rule policy on one or more application resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78626",
-    "publishedDate": "2026-09-08T20:18:38.070",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78625",
-    "description": "The Okta Access Gateway does not sanitize dashboard label values before writing them into generated PHP configuration files. The generated file is automatically included during authentication requests, resulting in execution with the privileges of the web server process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78625",
-    "publishedDate": "2026-09-08T20:18:37.647",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.9,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78624",
-    "description": "The Okta Access Gateway backup restore function does not validate the filename embedded in an encrypted backup payload. This results in writing file contents to unintended locations on the appliance filesystem.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78624",
-    "publishedDate": "2026-09-08T20:18:37.397",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78560",
-    "description": "The Okta Access Gateway includes an optional pass-through authentication source that accepts user identity from a client-supplied HTTP header without cryptographic validation. In architectures where this optional source is enabled without an upstream reverse proxy or firewall configured to sanitize and enforce client headers, an unauthenticated user can supply an arbitrary identity value to initiate a session.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78560",
-    "publishedDate": "2026-09-08T20:18:36.220",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85630",
-    "description": "HTML::FormHandler versions before 0.410002 for Perl render field attributes into HTML without escaping using the process_attrs method.\n\nAny application with fields or field labels where some attributes are built from data rather than literals allows attacker-influenced text in an attribute value that can override the field attributes or embed JavaScript in rendered pages.\n\nFor example, the RadioGroup widget uses the process_attrs method via the render_option and wrap_radio methods.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85630",
-    "publishedDate": "2026-09-08T20:18:51.663",
-    "lastModifiedDate": "2026-09-08T20:18:51.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-85485",
-    "description": "HTML::FormHandler versions before 0.410002 for Perl render some error messages into HTML without escaping.\n\nThe Table form layout and the Bootstrap 2 and 3 wrappers splice each error string straight into the surrounding markup. Version 0.410000, the fix for CVE-2026-19872, escaped the equivalent values in the other layouts and wrappers, and 0.410002 extended that to these three.\n\nError messages that contain attacker-influenced content such as rejected field values could embed JavaScript in rendered pages.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85485",
-    "publishedDate": "2026-09-08T20:18:51.560",
-    "lastModifiedDate": "2026-09-08T20:18:51.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-78552",
-    "description": "The Okta Access Gateway does not apply its Lua directive restriction to the application-level custom configuration field. The field is interpolated directly into the nginx server block without inspection, resulting in execution of injected directives.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78552",
-    "publishedDate": "2026-09-08T20:18:36.073",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86084",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the public OIDC login and callback endpoints completed authentication even when OIDC was not the enabled active authentication method. An Enterprise administrator who had configured and later disabled an identity provider still exposed a working route that could issue valid sessions. The affected logic is packages/cli/src/modules/sso-oidc/oidc.service.ee.ts, including generateLoginUrl and the callback flow that lacked assertOidcLoginEnabled. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86084",
+    "publishedDate": "2026-09-08T22:19:17.527",
+    "lastModifiedDate": "2026-09-08T22:19:17.527",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 6,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:H/A:L",
-        "exploitabilityScore": 1.2,
-        "impactScore": 4.7,
-        "source": "psirt@okta.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-85484",
-    "description": "HTML::FormHandler versions before 0.410002 for Perl render option group labels and radio button labels into HTML without escaping.\n\nThe Select, RadioGroup, CheckboxGroup and HorizCheckboxGroup widgets render a group label unescaped, Select into a label attribute and the other three into element content. RadioGroup also renders each radio button's own label unescaped.\n\nAny application whose option list is built from data rather than literals, using options_from, an options_fieldname method, or the DBIC model, allows attacker-influenced text in a label that can override the options or embed JavaScript in rendered pages.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85484",
-    "publishedDate": "2026-09-08T20:18:51.453",
-    "lastModifiedDate": "2026-09-08T20:18:51.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19872",
-    "description": "HTML::FormHandler versions before 0.410000 for Perl allow cross-site scripting via a submitted value rendered unescaped in an error message.\n\nThe wrappers and renderers that emit a form's errors interpolate the error string straight into HTML with no escaping. Two of the library's own messages, no_match and not_allowed, splice the submitted value into that string, and a failing type constraint puts the rejected value into the message it builds, which _apply_actions hands to add_error.\n\nA field declared with a check regexp, a check list or a type constraint reaches those messages, with no custom validator and no non-default configuration. Errors rendered through an application's own escaping template layer rather than the library's rendering roles are not affected.\n\nA request over the network that submits markup to such a field gets it back live inside the error span, running script in the victim's origin. Re-rendering a rejected value later gives the stored variant.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19872",
-    "publishedDate": "2026-09-08T20:17:29.850",
-    "lastModifiedDate": "2026-09-08T20:17:29.850",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-78623",
-    "description": "The Okta Access Gateway does not sanitize SAML assertion values before interpolating them into database queries in the advanced mode datastore configuration. The unsanitized values are substituted directly into the query string prior to preparation, resulting in unintended SQL execution against the configured backend database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78623",
-    "publishedDate": "2026-09-08T20:18:37.050",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86083",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the legacy expression engine generated source text by calling the mutable global JSON.stringify while printing synthetic string literals and interpolating timezone data. An expression could replace JSON.stringify and cause later generated source to contain executable attacker-controlled code. The affected code-generation paths include packages/@n8n/expression-runtime/src/bridge/isolated-vm-bridge.ts and packages/@n8n/tournament/src/ExpressionBuilder.ts, and the issue does not affect the vm expression engine. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86083",
+    "publishedDate": "2026-09-08T22:19:17.383",
+    "lastModifiedDate": "2026-09-08T22:19:17.383",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:L/A:L",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.3,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78550",
-    "description": "The Okta Access Gateway management console passes user-supplied input to eval() without sanitization during an authenticated administrator SSH session. As a result, the unsanitized input is executed directly, leading to code execution with the privileges of the management console.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78550",
-    "publishedDate": "2026-09-08T20:18:35.937",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.7,
-        "impactScore": 5.9,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78545",
-    "description": "The Okta Access Gateway does not sanitize the application label field before including it in the generated nginx configuration file. The unsanitized value is interpolated into an nginx server block directive, resulting in execution of injected directives.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78545",
-    "publishedDate": "2026-09-08T20:18:35.727",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.7,
-        "impactScore": 5.9,
-        "source": "psirt@okta.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-84197",
-    "description": "In Eclipse Ditto's Node.js JavaScript client, all released versions of @eclipse-ditto/ditto-javascript-client-node from 2.0.0 to 3.9.0 and of its predecessor package @eclipse-ditto/ditto-javascript-client-node_1.0 from 1.0.0 to 2.1.0, the WebSocket transport hard-codes rejectUnauthorized: false when creating the underlying ws WebSocket. Certificate chain and hostname validation are therefore disabled for every wss:// connection, and no builder option, constructor argument or environment variable lets an application turn validation back on. An attacker in a position to intercept the connection can present an arbitrary certificate, complete the TLS handshake, read the credentials that the configured authentication provider sends in the Authorization header of the WebSocket upgrade request, and read, alter or inject Ditto Protocol messages for the lifetime of the connection. The Java client, the browser/DOM JavaScript client and the HTTP transport of the Node.js client are not affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84197",
-    "publishedDate": "2026-09-08T20:18:51.007",
-    "lastModifiedDate": "2026-09-08T20:18:51.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.2,
         "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "emo@eclipse.org"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-86810",
-    "description": "A vulnerability was detected in Open-Web-Analytics up to 1.9.1. The impacted element is the function checkCapabilityAndAuthenticateUser of the file Core/Controller.php of the component Controller. Performing a manipulation results in improper authentication. The attack may be initiated remotely. Upgrading to version 1.10.0 is sufficient to resolve this issue. The patch is named 6fc91c49eebdb8bfdfeed71cb50a5d97eac70f24. It is advisable to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86810",
-    "publishedDate": "2026-09-08T20:18:54.453",
-    "lastModifiedDate": "2026-09-08T20:18:54.453",
+    "id": "CVE-2026-86082",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the OpenAI Chat Model node enforced credential allowed-domain restrictions for normal calls but not for the model-search dropdown. A workflow editor could set options.baseURL to an arbitrary host and make the searchModels path send the openAiApi credential there. The affected implementation is packages/@n8n/nodes-langchain/nodes/llms/LMChatOpenAi/methods/loadModels.ts, which omitted assertOpenAiCredentialAllowsUrl. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86082",
+    "publishedDate": "2026-09-08T22:19:17.240",
+    "lastModifiedDate": "2026-09-08T22:19:17.240",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 6.9,
+        "score": 7.1,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-71357",
-    "description": "Adobe Experience Manager is affected by a DOM-based Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this issue by manipulating the DOM environment to execute malicious JavaScript within the context of the victim's browser. Exploitation of this issue requires user interaction in that a victim must visit a crafted webpage. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71357",
-    "publishedDate": "2026-09-08T20:17:58.560",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86081",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the Git node clone operation matched an attacker-controlled destination path against the default N8N_BLOCK_FILE_PATTERNS regular expression. The pattern ^(./).git(/.)$ allowed catastrophic backtracking and ran synchronously in the main n8n process. An authenticated workflow editor could therefore freeze the instance with one workflow execution; the affected default is declared in packages/@n8n/config/src/configs/security.config.ts. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86081",
+    "publishedDate": "2026-09-08T22:19:17.093",
+    "lastModifiedDate": "2026-09-08T22:19:17.093",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-75678",
-    "description": "Adobe Experience Manager is affected by a DOM-based Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this issue by manipulating the DOM environment to execute malicious JavaScript within the context of the victim's browser. Exploitation of this issue requires user interaction in that a victim must visit a crafted webpage. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75678",
-    "publishedDate": "2026-09-08T20:18:15.977",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86080",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the GitHub Trigger generated a webhook secret but discarded it when GitHub returned HTTP 422 and the node reused an existing webhook. Workflow static data then retained webhookId without webhookSecret, and X-Hub-Signature-256 verification accepted deliveries without a stored secret. The affected logic includes packages/nodes-base/nodes/Github/GithubTriggerHelpers.ts and the 422 webhook reuse path. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86080",
+    "publishedDate": "2026-09-08T22:19:16.953",
+    "lastModifiedDate": "2026-09-08T22:19:16.953",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
-        "version": "CVSS 3.1",
+        "score": 6.3,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-71565",
-    "description": "Adobe Experience Manager is affected by a DOM-based Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this issue by manipulating the DOM environment to execute malicious JavaScript within the context of the victim's browser. Exploitation of this issue requires user interaction in that a victim must visit a crafted webpage. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71565",
-    "publishedDate": "2026-09-08T20:17:59.960",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86079",
+    "description": "n8n is an open source workflow automation platform. Prior to 1.123.76, 2.37.7, and 2.38.2, the Elasticsearch and ElasticSecurity nodes interpolated workflow-controlled index and document identifiers directly into REST request paths. An identifier containing path separators or dot segments could select another index or a cluster administration endpoint under the stored Elasticsearch credential. The affected request construction includes packages/nodes-base/nodes/Elastic/Elasticsearch/GenericFunctions.ts and the missing toPathSegment encoding. This issue is fixed in versions 1.123.76, 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86079",
+    "publishedDate": "2026-09-08T22:19:16.813",
+    "lastModifiedDate": "2026-09-08T22:19:16.813",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
-        "version": "CVSS 3.1",
+        "score": 6.3,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-75687",
-    "description": "Adobe Experience Manager is affected by a DOM-based Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this issue by manipulating the DOM environment to execute malicious JavaScript within the context of the victim's browser. Exploitation of this issue requires user interaction in that a victim must visit a crafted webpage. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75687",
-    "publishedDate": "2026-09-08T20:18:16.670",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86078",
+    "description": "n8n is an open source workflow automation platform. Prior to 2.37.7 and 2.38.2, the Instance AI workflow summary used node names and connection keys from stored workflows as ordinary object keys. A workflow submitted through the REST API could contain __proto__ or constructor, causing nested writes to reach Object.prototype in the main n8n process and disrupt later requests. The affected function is summarizeWorkflowStructure in packages/@n8n/instance-ai/src/tools/workflows/summarize-workflow.ts. This issue is fixed in versions 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86078",
+    "publishedDate": "2026-09-08T22:19:16.677",
+    "lastModifiedDate": "2026-09-08T22:19:16.677",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
-        "version": "CVSS 3.1",
+        "score": 6,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-75672",
-    "description": "Adobe Experience Manager is affected by a DOM-based Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this issue by manipulating the DOM environment to execute malicious JavaScript within the context of the victim's browser. Exploitation of this issue requires user interaction in that a victim must visit a crafted webpage. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75672",
-    "publishedDate": "2026-09-08T20:18:15.513",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
+    "id": "CVE-2026-86077",
+    "description": "n8n is an open source workflow automation platform. Prior to 2.37.7 and 2.38.2, the /chat WebSocket route accepted a resumeToken and resumed a paused execution without checking that the target node supported chat messages. An anonymous form submitter who received that token could reuse it on the chat route to release a Send-and-Wait, non-chat HITL, or Wait approval gate. The affected authorization logic is packages/cli/src/chat/chat-execution-manager.ts, where canResumeOverChat did not gate the resume target. This issue is fixed in versions 2.37.7 and 2.38.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86077",
+    "publishedDate": "2026-09-08T22:19:16.533",
+    "lastModifiedDate": "2026-09-08T22:19:16.533",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.4,
-        "version": "CVSS 3.1",
+        "score": 6.3,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75734",
-    "description": "Adobe Experience Manager is affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by a low-privileged attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim's browser when they browse to the page containing the vulnerable field. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75734",
-    "publishedDate": "2026-09-08T20:18:21.083",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75706",
-    "description": "Adobe Experience Manager is affected by a DOM-based Cross-Site Scripting (XSS) vulnerability. An attacker could exploit this issue by manipulating the DOM environment to execute malicious JavaScript within the context of the victim's browser. Exploitation of this issue requires user interaction in that a victim must visit a crafted webpage. Scope is changed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75706",
-    "publishedDate": "2026-09-08T20:18:18.240",
-    "lastModifiedDate": "2026-09-08T21:13:32.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "psirt@adobe.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   }
