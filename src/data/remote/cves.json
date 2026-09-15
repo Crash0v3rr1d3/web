@@ -1,76 +1,87 @@
 [
   {
-    "id": "CVE-2026-91091",
-    "description": "A vulnerability was identified in GPAC up to f1219cde. The impacted element is the function gf_node_list_insert_child of the file scenegraph/base_scenegraph.c of the component Node Insertion. Such manipulation leads to memory corruption. The attack can be launched remotely. The exploit is publicly available and might be used. Upgrading to version abi-16.23 is sufficient to resolve this issue. The name of the patch is 49dee5cad329cfed310c1682703df7daa47df31a. It is suggested to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91091",
-    "publishedDate": "2026-09-15T08:17:07.000",
-    "lastModifiedDate": "2026-09-15T08:17:07.000",
+    "id": "CVE-2026-77179",
+    "description": "On macOS, the virtio-fs host server used by Docker Sandboxes improperly follows symlinks when reopening an unlinked file from a stored path. A malicious guest can replace a parent directory with a symlink, escape the shared workspace, and read or modify arbitrary host files as the VMM user, potentially achieving host code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77179",
+    "publishedDate": "2026-09-15T14:17:11.273",
+    "lastModifiedDate": "2026-09-15T15:17:21.570",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@docker.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16141",
+    "description": "OpenBMC's IPMI implementation, phosphor-net-ipmid, contains a logic flaw in which an unauthenticated client can force the RAKP Message 1 handler to return before it overwrites the authentication object's constructor defaults. The IPMI service then accepts a RAKP Message 3 whose HMAC is computed with the constant 20-byte 'userKey' initialized from the string '0penBmc' and an often-predictable 'bmcRandomNum'. Several downstream vendors implement phosphor-net-ipmid as their IPMI stack, such as NVIDIA and H3C.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16141",
+    "publishedDate": "2026-09-15T14:16:50.430",
+    "lastModifiedDate": "2026-09-15T15:17:13.377",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "44488dab-36db-4358-99f9-bc116477f914"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-16140",
+    "description": "OpenBMC's IPMI implementation, phosphor-net-ipmid, is vulnerable to a logic flaw where the authorization context of an existing session can be replaced with a target account while still maintaining the original integrity and encryption keys. Several downstream vendors implement phosphor-net-ipmid as their IPMI stack, such as NVIDIA and H3C. This issue effectively allows for privilege escalation without re-authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16140",
+    "publishedDate": "2026-09-15T14:16:50.290",
+    "lastModifiedDate": "2026-09-15T15:17:13.270",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "impactScore": 5.9,
+        "source": "44488dab-36db-4358-99f9-bc116477f914"
       }
     ]
   },
   {
-    "id": "CVE-2026-91819",
-    "description": "Affected versions of MISP rely on CakePHP request-method override processing in a way that can disable CSRF and form-security validation.\n\nCakePHP honors a _method field or X-HTTP-Method-Override header by rewriting the effective request method. For override values outside the normal write verbs POST, PUT, PATCH, and DELETE, CakePHP also clears the parsed request body. MISP’s security component then determines whether to perform _validatePost() and _validateCsrf() based on whether request data remains. With a value such as:\n\n\n_method=GET\n\nthe body becomes empty before those checks run, so both protections are skipped. A cross-site form containing only that override can therefore reach actions whose parameters are taken from the URL rather than the request body\n\nVersion affected: ≤2.5.45",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91819",
-    "publishedDate": "2026-09-15T08:17:07.333",
-    "lastModifiedDate": "2026-09-15T08:17:07.333",
+    "id": "CVE-2026-91835",
+    "description": "A vulnerability was detected in OpenClaw ClawScan up to 0.1.6. The impacted element is the function IsBinaryFile of the file internal/runner/static_scanner.go of the component File Classifier. The manipulation results in interpretation conflict. Attacking locally is a requirement. The exploit is now public and may be used. Upgrading to version 0.1.7 is sufficient to resolve this issue. The patch is identified as 04401337b3adb9343bd338b21e5e258bf49ca9c8. You should upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91835",
+    "publishedDate": "2026-09-15T15:17:32.567",
+    "lastModifiedDate": "2026-09-15T15:17:32.567",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "5a6e4751-2f3f-4070-9419-94fb35b644e8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91090",
-    "description": "A vulnerability was determined in GPAC up to f1219cde. The affected element is the function gf_node_activate_ex of the file scenegraph/base_scenegraph.c. This manipulation causes stack-based buffer overflow. It is possible to launch the attack on the local host. The exploit has been publicly disclosed and may be utilized. Upgrading to version abi-16.23 is sufficient to fix this issue. Patch name: 9eb40df4448b88d6a6ce3454657c06f47eff0b24. The affected component should be upgraded.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91090",
-    "publishedDate": "2026-09-15T08:17:06.807",
-    "lastModifiedDate": "2026-09-15T08:17:06.807",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.9,
+        "score": 2.8,
         "version": "CVSS 3.1",
         "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:L",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 1.3,
-        "impactScore": 2.5,
+        "impactScore": 1.4,
         "source": "cna@vuldb.com"
       },
       {
         "score": 0.9,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -78,167 +89,11 @@
     ]
   },
   {
-    "id": "CVE-2026-91088",
-    "description": "A vulnerability has been found in GPAC up to f1219cde. This issue affects the function gf_url_concatenate_ex of the file utils/url.c of the component URL Handler. The manipulation leads to heap-based buffer overflow. An attack has to be approached locally. Upgrading to version abi-16.23 is capable of addressing this issue. The identifier of the patch is afca1f1181668d85941d51ed1adf647807d5d975. It is advisable to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91088",
-    "publishedDate": "2026-09-15T07:16:34.423",
-    "lastModifiedDate": "2026-09-15T07:16:34.423",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 1.3,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.4,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91087",
-    "description": "A flaw has been found in GPAC up to f1219cde. This vulnerability affects the function gf_mo_get_od_id of the file compositor/media_object.c of the component Compositor. Executing a manipulation can lead to use after free. The attack may be performed from remote. The exploit has been published and may be used. Upgrading to version abi-16.24 is able to resolve this issue. This patch is called e34f4ba349d55cd1849f0bcf4cf46552732e2db7. Upgrading the affected component is advised.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91087",
-    "publishedDate": "2026-09-15T07:16:34.237",
-    "lastModifiedDate": "2026-09-15T07:16:34.237",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91086",
-    "description": "A security vulnerability has been detected in GPAC up to f1219cde. Affected by this issue is the function mpgviddmx_process of the file filters/reframe_mpgvid.c of the component MPEG Video Reframer. Such manipulation leads to heap-based buffer overflow. The attack can be executed remotely. The exploit has been disclosed publicly and may be used. Upgrading to version abi-16.23 can resolve this issue. The name of the patch is afca1f1181668d85941d51ed1adf647807d5d975. Upgrading the affected component is recommended.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91086",
-    "publishedDate": "2026-09-15T07:16:34.050",
-    "lastModifiedDate": "2026-09-15T07:16:34.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91005",
-    "description": "A vulnerability was found in SourceCodester Online Faculty Clearance System 1.0. This affects the function move_uploaded_file of the file production/edit_picture.php of the component Profile Picture Upload. Performing a manipulation of the argument File results in unrestricted upload. The attack is possible to be carried out remotely. The exploit has been made public and could be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91005",
-    "publishedDate": "2026-09-15T07:16:33.830",
-    "lastModifiedDate": "2026-09-15T07:16:33.830",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-90711",
-    "description": "proxy-addr is a Node.js module that determines a request's client address behind trusted reverse proxies, and it backs Express req.ip and req.ips. In versions 1.1.0 through 2.0.7, a trust subnet written in IPv4-mapped IPv6 notation with an IPv4-sized prefix, such as ::ffff:10.0.0.0/8 instead of the correct ::ffff:10.0.0.0/104, is accepted without error but trusts every IPv4 address on the internet rather than the block it names. Because the socket peer then becomes trusted at hop 0, any unauthenticated client can supply an arbitrary X-Forwarded-For header and control the address the application reads, which defeats IP-based access control, rate limiting, geolocation, and audit logging. This is a fail-open regression introduced in version 1.1.0. The issue is fixed in proxy-addr 2.0.8, and users should upgrade to 2.0.8 or later. As a workaround, ensure any IPv4-mapped IPv6 trust subnet uses a prefix length of at least 97, or express the range in plain IPv4 notation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90711",
-    "publishedDate": "2026-09-15T07:16:33.683",
-    "lastModifiedDate": "2026-09-15T07:16:33.683",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-89141",
-    "description": "The AI Engine – The Chatbot, AI Framework & MCP for WordPress plugin for WordPress is vulnerable to Insecure Direct Object Reference in all versions up to, and including, 3.7.7 via the 'mediaId' parameter due to missing validation on a user controlled key. This makes it possible for authenticated attackers, with subscriber-level access and above, to access and retrieve the transcribed contents of private audio attachments belonging to other users, including Administrators, via a supplied attachment ID. This vulnerability requires the Public API module to be enabled in the plugin settings; when disabled, the REST route is absent and the endpoint returns HTTP 404.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-89141",
-    "publishedDate": "2026-09-15T07:16:31.460",
-    "lastModifiedDate": "2026-09-15T07:16:31.460",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-75983",
-    "description": "The Eventin – Event Calendar, Tickets, Registration, Booking & WooCommerce plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 4.1.23. This is due to the `PermissionManager::manage_permissions()` function being registered as a callback on WordPress core's `map_meta_cap` filter and unconditionally returning the always-true `'exist'` primitive for every capability check whenever the evaluated user ID is 1, without scoping this behavior to plugin-specific capabilities. This makes it possible for authenticated attackers whose account is user ID 1, even subscribers, to pass every WordPress capability check, including `manage_options`, `edit_plugins`, `edit_themes`, `promote_users`, and `update_core`, thereby elevating their privileges to administrator-equivalent power and achieving full site takeover, including remote code execution via the plugin and theme editors. Exploitation is only impactful when user ID 1 has been deliberately demoted to a lower-privilege role as a common administrator-account hardening practice; on default installations where user ID 1 retains the administrator role, no incremental privilege gain occurs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75983",
-    "publishedDate": "2026-09-15T07:16:29.743",
-    "lastModifiedDate": "2026-09-15T07:16:29.743",
+    "id": "CVE-2026-89025",
+    "description": "Hirschmann HiOS Switch Platform devices contain a denial-of-service vulnerability in the integrated web server due to missing validation of HTTP(S) content. A remote unauthenticated attacker can send a specially crafted HTTP(S) request to a specific endpoint that is processed incorrectly, causing the device to perform an unintended reboot and resulting in a temporary denial-of-service condition. This vulnerability has been addressed in versions 07.1.12, 08.7.10, 09.0.13, 09.3.03, 10.3.08, and 10.5.00.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-89025",
+    "publishedDate": "2026-09-15T15:17:26.720",
+    "lastModifiedDate": "2026-09-15T15:17:26.720",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -246,244 +101,48 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-18063",
-    "description": "The Job Postings plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'position_button' parameter in all versions up to, and including, 2.8.1 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18063",
-    "publishedDate": "2026-09-15T07:16:26.757",
-    "lastModifiedDate": "2026-09-15T07:16:26.757",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-15402",
-    "description": "The Eventin – Event Calendar, Event Registration, Tickets & Booking (AI Powered) plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'etn_shedule_objective' schedule_slot Parameter in all versions up to, and including, 4.1.23 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-15402",
-    "publishedDate": "2026-09-15T07:16:26.583",
-    "lastModifiedDate": "2026-09-15T07:16:26.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91089",
-    "description": "A vulnerability was found in GPAC up to f1219cde. Impacted is the function gf_node_get_name_and_id of the file scenegraph/base_scenegraph.c. The manipulation results in use after free. It is possible to launch the attack remotely. The exploit has been made public and could be used. Upgrading to version abi-16.23 is recommended to address this issue. The patch is identified as 49dee5cad329cfed310c1682703df7daa47df31a. You should upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91089",
-    "publishedDate": "2026-09-15T08:17:06.617",
-    "lastModifiedDate": "2026-09-15T08:17:06.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91778",
-    "description": "In affected versions of Octopus Server, users with certain scoped permission sets could execute arbitrary scripts on a worker (including the Octopus Server built-in worker). Incorrect permission validation during script execution would allow the script to execute without the user possessing the required authorisation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91778",
-    "publishedDate": "2026-09-15T08:17:07.180",
-    "lastModifiedDate": "2026-09-15T08:17:07.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@octopus.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91004",
-    "description": "A vulnerability has been found in SourceCodester Online Faculty Clearance System 1.0. The impacted element is an unknown function of the file /delete_faculty1.php. Such manipulation of the argument ID leads to sql injection. The attack can be executed remotely. The exploit has been disclosed to the public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91004",
-    "publishedDate": "2026-09-15T06:17:01.910",
-    "lastModifiedDate": "2026-09-15T06:17:01.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91003",
-    "description": "A flaw has been found in D-Link DI-8300 16.07. The affected element is the function rzgl_asp of the file /rzgl.asp of the component CGI Service. This manipulation of the argument redirct_url causes stack-based buffer overflow. Remote exploitation of the attack is possible. The exploit has been published and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91003",
-    "publishedDate": "2026-09-15T06:17:01.387",
-    "lastModifiedDate": "2026-09-15T06:17:01.387",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.5,
+        "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-91002",
-    "description": "A weakness has been identified in stamparm maltrail up to 3.0.1. This vulnerability affects the function _blacklist of the file core/httpd.py of the component Blacklist Endpoint. Executing a manipulation can lead to missing authentication. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks. Upgrading to version 3.1 is able to resolve this issue. This patch is called d95868dff3da4d3bd4f942837a26cb7c73a797ae. It is suggested to upgrade the affected component. The vendor fixed the issue the same day it was reported, in version 3.1, by gating the endpoint on an authenticated session or the new Blacklist_ALLOWLIST option.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91002",
-    "publishedDate": "2026-09-15T06:17:00.643",
-    "lastModifiedDate": "2026-09-15T06:17:00.643",
+    "id": "CVE-2026-46495",
+    "description": "OpenDJ is an LDAPv3 compliant directory service. Prior to 5.1.1, the JMX RMI connector in opendj-server-legacy/src/main/java/org/opends/server/protocols/jmx/RmiConnector.java processes attacker-controlled credential objects before authentication without a restrictive jmx.remote.rmi.server.credentials.filter.pattern, and RmiAuthenticator.authenticate in opendj-server-legacy/src/main/java/org/opends/server/protocols/jmx/RmiAuthenticator.java accepts an unconstrained Object array rather than a two-element String[]. When the JMX Connection Handler is enabled and its TCP listener is reachable, an unauthenticated remote attacker can submit a crafted serialized Java object and achieve code execution in the OpenDJ server process. The handler is disabled by default, and successful exploitation depends on the runtime classpath and Java version; remote code execution was demonstrated against OpenDJ 4.4.15 on JDK 11 with Jackson 2.12.6.1. This issue is fixed in 5.1.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46495",
+    "publishedDate": "2026-09-15T15:17:15.493",
+    "lastModifiedDate": "2026-09-15T15:17:15.493",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
+        "score": 9.2,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91001",
-    "description": "A security flaw has been discovered in D-Link DI-8400 16.07. This affects the function ddns_asp of the file /ddns.asp of the component DDNS Configuration. Performing a manipulation of the argument serv/user/host/wild/mx/bmx/cust/ip results in stack-based buffer overflow. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91001",
-    "publishedDate": "2026-09-15T06:16:59.970",
-    "lastModifiedDate": "2026-09-15T06:16:59.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-86701",
-    "description": "Android application \"ManabiPocket for Parents\" contains an improper access control vulnerability in one of its components. A malicious application installed on the user's Android device may exploit the affected component via an Intent, potentially allowing the malicious application to obtain sensitive information from the affected application.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86701",
-    "publishedDate": "2026-09-15T06:16:59.200",
-    "lastModifiedDate": "2026-09-15T06:16:59.200",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.8,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vultures@jpcert.or.jp"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-81320",
-    "description": "A flaw was found in hawtio-operator. When a custom Route TLS secret is configured and the operator runs at debug log level 1 or higher, the entire Route object — including the TLS private key in PEM format — is serialized to JSON and written to the operator's standard output. Operator logs are typically forwarded to centralized logging systems and readable by anyone with pods/log access in the openshift-operators namespace. Debug level 1 is a low threshold commonly enabled during troubleshooting.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81320",
-    "publishedDate": "2026-09-15T06:16:58.800",
-    "lastModifiedDate": "2026-09-15T06:16:58.800",
+    "id": "CVE-2026-48722",
+    "description": "Nextflow is a DSL for data-driven computational pipelines. From 25.09.2-edge until 25.10.6 and 26.04.3, nextflow auth login writes Seqera Platform OIDC bearer tokens to ${NXF_HOME:-~/.nextflow}/seqera-auth.config through AuthCommandImpl.writeConfig in plugins/nf-tower/src/main/io/seqera/tower/plugin/auth/AuthCommandImpl.groovy without setting restrictive file permissions, allowing the default umask 022 to create the file with mode 0644. On a multi-user POSIX host, a local user who can traverse the victim's home directory can read seqera-auth.config and impersonate the victim against Seqera Platform within the token's scope. Single-user systems and headless CI runners that do not use the interactive login flow are not affected. This issue is fixed in 25.10.6 and 26.04.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48722",
+    "publishedDate": "2026-09-15T15:17:16.020",
+    "lastModifiedDate": "2026-09-15T15:17:16.020",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -494,76 +153,236 @@
         "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 1.8,
         "impactScore": 3.6,
-        "source": "secalert@redhat.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-81303",
-    "description": "A flaw was found in hawtio-operator. The operator holds routes/custom-host:create permission cluster-wide and writes the tenant-supplied spec.routeHostName value from the Hawtio custom resource directly into the Route spec without validation or authorization checks. A namespace edit user, who normally cannot set custom Route hostnames, can use the operator as a confused deputy to claim arbitrary externally-routable hostnames, enabling subdomain takeover and, in combination with the auto-grant OAuthClient, OAuth redirect hijack.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-81303",
-    "publishedDate": "2026-09-15T06:16:58.167",
-    "lastModifiedDate": "2026-09-15T06:16:58.167",
+    "id": "CVE-2026-49254",
+    "description": "Dragonfly is an open source P2P-based file distribution and image acceleration system. Prior to 2.4.4, manager/router/router.go registers GET /api/v1/oauth and GET /api/v1/oauth/:id without jwt.MiddlewareFunc() or RBAC(), while manager/handlers/oauth.go returns models.Oauth records and manager/models/oauth.go exposes Oauth.ClientSecret as client_secret in JSON. When an administrator has configured a GitHub or Google OAuth provider, an unauthenticated network client can reach GetOauth or GetOauths, load the stored models.Oauth record, and obtain the provider's client secret, client identifier, and redirect URL. The earlier GHSA-j8hf-cp34-g4j7 remediation protected the /jobs group only and did not protect these OAuth GET handlers. Disclosure of client_secret can enable abuse of the configured identity-provider integration, subject to the provider's redirect URI restrictions. This issue is fixed in 2.4.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49254",
+    "publishedDate": "2026-09-15T15:17:16.577",
+    "lastModifiedDate": "2026-09-15T15:17:16.577",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54637",
+    "description": "Dragonfly is an open source P2P-based file distribution and image acceleration system. Prior to 2.4.4-rc.3, the scheduler's default unauthenticated v1 gRPC flow accepts attacker-controlled PeerHost.Ip and PeerHost.DownPort values through RegisterPeerTask and ReportPeerResult, storeHost copies those values into resource.Host, and handlePeerSuccess invokes Peer.DownloadTinyFile() for a TINY task. DownloadTinyFile() in scheduler/resource/standard/peer.go builds an HTTP GET request from the supplied address without destination validation, allowing a remote attacker to probe loopback, link-local, and private services and place up to TinyFileSize, 128 bytes, of a response in Task.DirectPiece for later retrieval. PeerHost.DownPort is restricted to ports 1024 through 65534, and the issue provides read SSRF rather than remote code execution. The remediation blocks loopback and link-local targets, while RFC1918 destinations remain reachable because IsGlobalUnicast accepts private ranges. This issue is fixed in 2.4.4-rc.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54637",
+    "publishedDate": "2026-09-15T15:17:18.443",
+    "lastModifiedDate": "2026-09-15T15:17:18.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-92082",
+    "description": "By default, Payara Server does not limit the number of failed login attempts, which can leave it vulnerable to brute force login attacks. To mitigate this, Payara Server includes built-in automatic attack protection. For configuration details, see  https://docs.azul.com/payara/technical-documentation/payara-server-documentation/security-guide/administering-system-security.html .",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92082",
+    "publishedDate": "2026-09-15T15:17:33.317",
+    "lastModifiedDate": "2026-09-15T15:17:33.317",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 6.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 4.2,
-        "source": "secalert@redhat.com"
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:C/RE:L/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "769c9ae7-73c3-4e47-ae19-903170fc3eb8"
       }
     ]
   },
   {
-    "id": "CVE-2026-18232",
-    "description": "The WP Directory Kit WordPress plugin through 1.5.7 does not check the status or ownership of a listing before returning its content through one of its public AJAX actions, allowing unauthenticated attackers to read draft and unapproved listings belonging to other users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18232",
-    "publishedDate": "2026-09-15T06:16:57.953",
-    "lastModifiedDate": "2026-09-15T06:16:57.953",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-17495",
-    "description": "moment is a JavaScript date library for parsing, validating, manipulating, and formatting dates. In versions 2.29.2 through 2.30.1, a specially crafted non-string object passed to moment.locale() can bypass the locale-name path-traversal guard. The guard assumes the input is a string, so an object whose match() method satisfies the check while its toString() returns a traversal path reaches an internal require() call with attacker-controlled path segments. This is an incomplete fix for CVE-2022-24785 and primarily affects npm (server-side) users that pass user-provided input directly to moment.locale(). The issue is fixed in moment 2.31.0, and users should upgrade to 2.31.0 or later. As a workaround, validate that any user-supplied input is a string before passing it to moment.locale().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-17495",
-    "publishedDate": "2026-09-15T06:16:57.597",
-    "lastModifiedDate": "2026-09-15T06:16:57.597",
+    "id": "CVE-2026-90650",
+    "description": "The MotoPress Hotel Booking plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the Stripe Webhook event object 'id' in all versions up to, and including, 6.2.4 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The premium Stripe webhook listener only verifies the webhook signature when an optional Stripe signing secret has been configured; because that secret is empty by default, a forged webhook is accepted without cryptographic verification, and the attacker-controlled event object 'id' (e.g. a forged 'refund.created' refund id) is written unescaped into the payment log and later echoed unsanitized when an administrator views the payment. An attacker must know a valid Stripe PaymentIntent ID for an existing payment to route the forged webhook to a payment record. Note: The vulnerable webhook handler (webhook-listener.php) is part of the premium Stripe gateway integration and is not present in the lite plugin directory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90650",
+    "publishedDate": "2026-09-15T15:17:29.117",
+    "lastModifiedDate": "2026-09-15T15:17:29.117",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.9,
+        "score": 7.2,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-16593",
-    "description": "The WP Directory Kit WordPress plugin through 1.5.7 does not sanitize and escape some widget settings before using them in a SQL statement, allowing authenticated users with access to the page builder (Editor and above) to perform SQL injection attacks that execute when the affected page is rendered.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16593",
-    "publishedDate": "2026-09-15T06:16:57.370",
-    "lastModifiedDate": "2026-09-15T06:16:57.370",
+    "id": "CVE-2026-92079",
+    "description": "Mitigation bypass in the Widget: Win32 component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92079",
+    "publishedDate": "2026-09-15T13:17:03.560",
+    "lastModifiedDate": "2026-09-15T13:17:03.560",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-16592",
-    "description": "The WP Directory Kit WordPress plugin through 1.5.7 does not check authorization or listing visibility in one of its shortcodes, allowing users with a role as low as Contributor to disclose non-public listing content, including password-protected and hidden fields, belonging to other users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16592",
-    "publishedDate": "2026-09-15T06:16:57.127",
-    "lastModifiedDate": "2026-09-15T06:16:57.127",
+    "id": "CVE-2026-92078",
+    "description": "Denial-of-service in the Security component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92078",
+    "publishedDate": "2026-09-15T13:17:03.440",
+    "lastModifiedDate": "2026-09-15T13:17:03.440",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92077",
+    "description": "Denial-of-service in the SVG component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92077",
+    "publishedDate": "2026-09-15T13:17:03.323",
+    "lastModifiedDate": "2026-09-15T13:17:03.323",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92076",
+    "description": "Incorrect boundary conditions in the Networking component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92076",
+    "publishedDate": "2026-09-15T13:17:03.180",
+    "lastModifiedDate": "2026-09-15T13:17:03.180",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92075",
+    "description": "Mitigation bypass in the Networking component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92075",
+    "publishedDate": "2026-09-15T13:17:03.040",
+    "lastModifiedDate": "2026-09-15T13:17:03.040",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92074",
+    "description": "Mitigation bypass in the Popup Blocker component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92074",
+    "publishedDate": "2026-09-15T13:17:02.877",
+    "lastModifiedDate": "2026-09-15T13:17:02.877",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92073",
+    "description": "Privilege escalation in the Enterprise Policies component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92073",
+    "publishedDate": "2026-09-15T13:17:02.153",
+    "lastModifiedDate": "2026-09-15T14:18:02.630",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-92072",
+    "description": "Incorrect boundary conditions in the Safe Browsing component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92072",
+    "publishedDate": "2026-09-15T13:17:02.003",
+    "lastModifiedDate": "2026-09-15T13:17:02.003",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92071",
+    "description": "Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92071",
+    "publishedDate": "2026-09-15T13:17:01.860",
+    "lastModifiedDate": "2026-09-15T13:17:01.860",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92070",
+    "description": "Information disclosure in the Networking component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92070",
+    "publishedDate": "2026-09-15T13:17:01.747",
+    "lastModifiedDate": "2026-09-15T13:17:01.747",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92069",
+    "description": "Spoofing issue in the DOM: Navigation component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92069",
+    "publishedDate": "2026-09-15T13:17:01.620",
+    "lastModifiedDate": "2026-09-15T13:17:01.620",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92068",
+    "description": "Site isolation issue in the Reader Mode component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92068",
+    "publishedDate": "2026-09-15T13:17:01.513",
+    "lastModifiedDate": "2026-09-15T13:17:01.513",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92067",
+    "description": "Use-after-free in the Widget: Gtk component. This vulnerability was fixed in Firefox 156 and Firefox ESR 153.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92067",
+    "publishedDate": "2026-09-15T13:17:01.403",
+    "lastModifiedDate": "2026-09-15T13:17:01.403",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-92066",
+    "description": "Sandbox escape in the Profile Backup component. This vulnerability was fixed in Firefox 156.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92066",
+    "publishedDate": "2026-09-15T13:17:01.283",
+    "lastModifiedDate": "2026-09-15T13:17:01.283",
     "vendors": [],
     "products": [],
     "cvssScores": []

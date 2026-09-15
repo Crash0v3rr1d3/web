@@ -1,5 +1,35 @@
 [
   {
+    "id": "1370989037",
+    "cve_id": "CVE-2026-76461",
+    "name": "CVE-2026-76461",
+    "owner": "HORKimhab",
+    "full_name": "HORKimhab/CVE-2026-76461",
+    "html_url": "https://github.com/HORKimhab/CVE-2026-76461",
+    "description": "CVE-2026-76461 - Draft or TODO",
+    "stargazers_count": "0",
+    "vuln_description": null,
+    "created_at": "2026-09-15 15:13:37",
+    "updated_at": "2026-09-15 15:13:45",
+    "pushed_at": "2026-09-15 15:13:41",
+    "inserted_at": "2026-09-15 22:37:28"
+  },
+  {
+    "id": "1370980995",
+    "cve_id": "CVE-2026-24733",
+    "name": "CVE-2026-24733",
+    "owner": "Darabium",
+    "full_name": "Darabium/CVE-2026-24733",
+    "html_url": "https://github.com/Darabium/CVE-2026-24733",
+    "description": "## What is CVE-2026-24733?  Apache Tomcat incorrectly handled an HTTP/0.9-style `HEAD` request under certain security-constraint configurations.",
+    "stargazers_count": "0",
+    "vuln_description": "Improper Input Validation vulnerability in Apache Tomcat.\n\n\nTomcat did not limit HTTP/0.9 requests to the GET method. If a security \nconstraint was configured to allow HEAD requests to a URI but deny GET \nrequests, the user could bypass that constraint on GET requests by \nsending a (specification invalid) HEAD request using HTTP/0.9.\n\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.14, from 10.1.0-M1 through 10.1.49, from 9.0.0.M1 through 9.0.112.\n\n\nOlder, EOL versions are also affected.\n\nUsers are recommended to upgrade to version 11.0.15 or later, 10.1.50 or later or 9.0.113 or later, which fixes the issue.",
+    "created_at": "2026-09-15 15:05:17",
+    "updated_at": "2026-09-15 15:27:23",
+    "pushed_at": "2026-09-15 15:27:19",
+    "inserted_at": "2026-09-15 22:37:27"
+  },
+  {
     "id": "1370672766",
     "cve_id": "CVE-2014-0160",
     "name": "heartbleed-vulnerability-exploitation",
@@ -208,6 +238,21 @@
     "updated_at": "2026-09-14 20:37:39",
     "pushed_at": "2026-09-14 20:37:35",
     "inserted_at": "2026-09-15 04:37:27"
+  },
+  {
+    "id": "1369724073",
+    "cve_id": "CVE-2026-52910",
+    "name": "cve-2026-52910-poc",
+    "owner": "yolkfull",
+    "full_name": "yolkfull/cve-2026-52910-poc",
+    "html_url": "https://github.com/yolkfull/cve-2026-52910-poc",
+    "description": "POC of cve-2026-52910",
+    "stargazers_count": "0",
+    "vuln_description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf: Free reuseport cBPF prog after RCU grace period.\n\nEulgyu Kim reported the splat below with a repro. [0]\n\nThe repro sets up a UDP reuseport group with a cBPF prog and\nreplaces it with a new one while another thread is sending\na UDP packet to the group.\n\nThe reuseport prog is freed by sk_reuseport_prog_free().\nbpf_prog_put() is called for \"e\"BPF prog to destruct through\nmultiple stages while cBPF prog is freed immediately by\nbpf_release_orig_filter() and bpf_prog_free().\n\nIf a reuseport prog is detached from the setsockopt() path\n(reuseport_attach_prog() or reuseport_detach_prog()),\nsk_reuseport_prog_free() is called without waiting for RCU\nreaders to complete, resulting in various bugs.\n\nLet's defer freeing the reuseport cBPF prog after one RCU\ngrace period.\n\nNote \"e\"BPF prog is safe as is unless the fast path starts\nto touch fields destroyed in bpf_prog_put_deferred() and\n__bpf_prog_put_noref().\n\n[0]:\nBUG: KASAN: vmalloc-out-of-bounds i",
+    "created_at": "2026-09-14 19:21:31",
+    "updated_at": "2026-09-15 10:53:58",
+    "pushed_at": "2026-09-15 10:53:54",
+    "inserted_at": "2026-09-15 22:37:28"
   },
   {
     "id": "1369689309",
@@ -2953,50 +2998,5 @@
     "updated_at": "2026-09-07 18:32:02",
     "pushed_at": "2026-09-07 20:07:19",
     "inserted_at": "2026-09-08 04:37:21"
-  },
-  {
-    "id": "1359928127",
-    "cve_id": "CVE-2026-13181",
-    "name": "CVE-2026-13181-CVE-2026-13182-CVE-2026-13183-CVE-2026-13184",
-    "owner": "HORKimhab",
-    "full_name": "HORKimhab/CVE-2026-13181-CVE-2026-13182-CVE-2026-13183-CVE-2026-13184",
-    "html_url": "https://github.com/HORKimhab/CVE-2026-13181-CVE-2026-13182-CVE-2026-13183-CVE-2026-13184",
-    "description": "CVE-2026-13181, CVE-2026-13182, CVE-2026-13183, CVE-2026-13184",
-    "stargazers_count": "0",
-    "vuln_description": null,
-    "created_at": "2026-09-07 16:51:12",
-    "updated_at": "2026-09-07 16:56:41",
-    "pushed_at": "2026-09-07 16:56:28",
-    "inserted_at": "2026-09-08 04:37:21"
-  },
-  {
-    "id": "1359876281",
-    "cve_id": "CVE-2026-67276",
-    "name": "exploit-mikrotik-2026",
-    "owner": "BlackHatExploitation",
-    "full_name": "BlackHatExploitation/exploit-mikrotik-2026",
-    "html_url": "https://github.com/BlackHatExploitation/exploit-mikrotik-2026",
-    "description": "CVE-2026-67276 MikroTik RouterOS SSH Authentication Bypass Exploit",
-    "stargazers_count": "0",
-    "vuln_description": null,
-    "created_at": "2026-09-07 15:56:34",
-    "updated_at": "2026-09-07 15:59:10",
-    "pushed_at": "2026-09-07 15:59:07",
-    "inserted_at": "2026-09-07 22:37:22"
-  },
-  {
-    "id": "1359852520",
-    "cve_id": "CVE-2026-45132",
-    "name": "gha-lab-8aba6b05dc",
-    "owner": "pvharmo2",
-    "full_name": "pvharmo2/gha-lab-8aba6b05dc",
-    "html_url": "https://github.com/pvharmo2/gha-lab-8aba6b05dc",
-    "description": "Security-research lab reproducing CVE-2026-45132 (pwn request via pull_request_target chart-name injection in generate-schema.yaml) — snapshot of CloudPirates-io/helm-charts @ 9f5a7186",
-    "stargazers_count": "0",
-    "vuln_description": "CloudPirates Open Source Helm Charts is a collection of Helm charts. Prior to commit fcf9302, a GitHub Actions workflow (generate-schema.yaml) exposes sensitive credentials (Personal Access Token and SSH signing key) to fork-controlled code due to unsafe checkout and credential handling practices. This issue has been patched via commit fcf9302.",
-    "created_at": "2026-09-07 15:33:01",
-    "updated_at": "2026-09-07 15:34:11",
-    "pushed_at": "2026-09-07 16:21:35",
-    "inserted_at": "2026-09-07 22:37:22"
   }
 ]
