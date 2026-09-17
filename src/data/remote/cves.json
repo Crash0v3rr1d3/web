@@ -1,284 +1,150 @@
 [
   {
-    "id": "CVE-2026-85789",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85789",
-    "publishedDate": "2026-09-16T23:16:54.250",
-    "lastModifiedDate": "2026-09-16T23:16:54.250",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-65388",
-    "description": "A remote attacker who controls a container registry may be able to direct a client's token request to a host of the attacker's choice, and disclose the victim's registry credentials to that host. This vulnerability is addressed in containerization version 0.41.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-65388",
-    "publishedDate": "2026-09-16T23:16:54.147",
-    "lastModifiedDate": "2026-09-16T23:16:54.147",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-61599",
-    "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, the djust live transport resolves the LiveView to mount from a client-supplied dotted path by calling `__import__(module_path, ...)`. The module is imported — running its top-level code (import side effects) — before the framework checks that the resolved object is a `LiveView` subclass and before any per-view authentication. The `LIVEVIEW_ALLOWED_MODULES` allowlist that should contain this is fail-open (`if allowed_modules:` — skipped when the setting is unset, the framework default) and uses loose `startswith` matching. An unauthenticated WebSocket client (the WS handshake does not require auth; per-view auth runs only after import + instantiate) can therefore send a `mount` / `live_redirect_mount` / `url_change` frame (or an SSE mount) with `view = \"<any.importable.module>.AnyName\"` and cause the server to import — and execute the top-level code of — any importable Python module by name. Version 1.0.7 fixes the issue with a fail-closed resolution gate (`djust._view_resolution.is_view_import_allowed`): a client view path resolves only if (a) its module is already loaded (`sys.modules` — so resolving runs no new code; URL-routed views loaded by URLconf at startup keep working with zero config) or (b) it matches `LIVEVIEW_ALLOWED_MODULES` on a module-segment boundary (explicit opt-in for lazily-imported views). The gate runs before `__import__` at all three sinks (+ defense-in-depth inside `_instantiate_view`). As a workaround, set `LIVEVIEW_ALLOWED_MODULES` to the narrow list of modules that contain your mountable LiveView classes. (Note: pre-patch the allowlist is `startswith`-matched and the import still precedes the subclass check, so this is mitigation, not a complete fix.)",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61599",
-    "publishedDate": "2026-09-16T23:16:54.010",
-    "lastModifiedDate": "2026-09-16T23:16:54.010",
+    "id": "CVE-2026-87831",
+    "description": "The Checkout Field Manager (Checkout Manager) for WooCommerce WordPress plugin before 7.9.7 does not properly validate the ownership of an attachment before deleting it, allowing any authenticated user such as a customer to delete arbitrary media attachments belonging to other users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87831",
+    "publishedDate": "2026-09-17T08:17:02.493",
+    "lastModifiedDate": "2026-09-17T08:17:02.493",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61596",
-    "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, djust's per-object authorization (`get_object` + `has_object_permission`, ADR-017) was enforced on the WebSocket mount and event paths but not on three other render entry points: (a) the initial HTTP GET render, (b) SPA `url_change` navigation, and (c) `{% live_render %}` embedded child views. An authenticated user could therefore view (and on some paths act on) an object they are not authorized for by loading the page directly, navigating to it via SPA url-change, or composing it as an embedded child — a classic IDOR / broken object-level access control on object-scoped views. This is fixed in djust 1.0.7. All render entry points now route through a shared `enforce_object_permission` chokepoint: HTTP GET returns 403, `url_change` emits a `permission_denied` frame and skips the render, and `{% live_render %}` (eager + lazy) refuses the embed. Views without a custom `get_object` are unaffected (no-op). No reliable workaround short of upgrading. Do not expose object-scoped views through the HTTP-GET / url_change / live_render paths until patched.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61596",
-    "publishedDate": "2026-09-16T23:16:53.860",
-    "lastModifiedDate": "2026-09-16T23:16:53.860",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61589",
-    "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, the WebSocket `handle_mount` and `ViewRuntime._build_request` rebuild an `HttpRequest` via `RequestFactory().get(...)` with no `HTTP_HOST`, so `request.get_host()` defaulted to `\"testserver\"` on the live path. Host/subdomain/domain `TenantResolver`s then misresolved the tenant — `None` on the live path while the HTTP path resolved correctly. With `STRICT_MODE=False` the tenant-scoped managers returned unscoped rows (cross-tenant disclosure); with the default they returned an empty queryset (broken tenancy). This is fixed in djust 1.0.7. The handshake Host is extracted from the ASGI scope, validated against `ALLOWED_HOSTS` (the same logic as the CSWSH Origin gate, parsed with Django's `split_domain_port` so malformed Hosts are rejected at the boundary), and propagated — with the TLS scheme — into the reconstructed request, so live-path tenant resolution matches HTTP exactly. There is no known workaround on the live path short of upgrading. Users are most exposed when combined with `STRICT_MODE=False`.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61589",
-    "publishedDate": "2026-09-16T23:16:53.717",
-    "lastModifiedDate": "2026-09-16T23:16:53.717",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "contact@wpscan.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-87829",
+    "description": "The Checkout Field Manager (Checkout Manager) for WooCommerce WordPress plugin before 7.9.7 does not properly validate the ownership of an attachment before deleting it, allowing any authenticated user such as a customer to delete arbitrary media attachments belonging to other users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87829",
+    "publishedDate": "2026-09-17T08:17:02.363",
+    "lastModifiedDate": "2026-09-17T08:17:02.363",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "contact@wpscan.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50605",
+    "description": "A vulnerability has been identified in the Acer Agent Service component included with NitroSense and PredatorSense. Insufficient access controls within a privileged service may allow an authenticated local user to perform unauthorized registry operations. In certain situations, this could lead to privilege escalation or compromise of the affected system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50605",
+    "publishedDate": "2026-09-17T08:17:01.010",
+    "lastModifiedDate": "2026-09-17T08:17:01.010",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:U/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "8fc372e3-d9c5-46e4-9410-38469745c639"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86320",
+    "description": "A flaw was found in flatpak-builder where Git hooks are not disabled when applying patch sources with use-git-am: true. An attacker who can provide a malicious source containing a Git post-applypatch hook can cause the hook to execute on the host during the build process, resulting in arbitrary code execution with the privileges of the user running flatpak-builder.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86320",
+    "publishedDate": "2026-09-17T08:17:02.200",
+    "lastModifiedDate": "2026-09-17T08:17:02.200",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-91017",
+    "description": "The Robokassa payment gateway for Woocommerce WordPress plugin before 1.8.9 does not verify the authenticity of incoming payment notifications when its non-default deferred-payment feature is enabled, allowing unauthenticated attackers to forge a notification and mark arbitrary WooCommerce orders as paid or on-hold without payment or a valid signature.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91017",
+    "publishedDate": "2026-09-17T07:16:28.773",
+    "lastModifiedDate": "2026-09-17T07:16:28.773",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "contact@wpscan.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-90982",
+    "description": "@fastify/static is a Fastify plugin that serves static files from a configured root directory. In versions before 10.1.4, on a case-insensitive filesystem such as Windows or the default macOS volume, a route guard or allowedPath restriction can be bypassed by altering the letter case of a path segment. The route matcher is case-sensitive while the filesystem is not, so a request that changes the case of a protected segment does not match the guarded route and falls through to the static handler, yet the filesystem resolves it to the same protected file. As a result, an unauthenticated request can read a file that a route guard or allowedPath was configured to protect. The issue does not affect case-sensitive filesystems and is not a directory traversal, since nothing is served from outside the configured root. The issue is fixed in @fastify/static 10.1.4, which validates the requested path against its actual on-disk spelling and rejects case-aliased paths before authorization. As a workaround, serve static files from a case-sensitive filesystem, or ensure route guards and allowedPath rules account for every letter-case variant of the protected paths.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90982",
+    "publishedDate": "2026-09-17T07:16:28.647",
+    "lastModifiedDate": "2026-09-17T07:16:28.647",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-87963",
+    "description": "The Yo WordPress plugin from 1.1 through 1.3.1 does not sanitize or parameterize the username request parameter before using it in a SQL query, and reads it before WordPress applies its request escaping, allowing unauthenticated attackers to perform SQL injection and read arbitrary database contents including administrator password hashes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87963",
+    "publishedDate": "2026-09-17T07:16:28.533",
+    "lastModifiedDate": "2026-09-17T07:16:28.533",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
         "impactScore": 4,
-        "source": "security-advisories@github.com"
+        "source": "contact@wpscan.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-61588",
-    "description": "djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. Prior to version 1.0.7, when a Django `Model` instance is assigned to a public view attribute, djust serialized it to the client with no sensitive-field denylist — sending fields such as `password` (the hash), privilege flags (e.g. `is_staff` / `is_superuser`), tokens, and other PII to the browser. Because exposing model objects to templates is a normal djust pattern, this could leak credentials/PII without the developer realizing the full object crossed the wire. This is fixed in djust 1.0.7. Model serialization applies a secure-by-default sensitive-field denylist (password/hash/token/secret-style fields and known privilege flags are withheld) with an identity-subset fallback. As a workaround, keep `Model` instances on `_private` attributes and expose only the specific fields needed, until patched.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61588",
-    "publishedDate": "2026-09-16T23:16:52.630",
-    "lastModifiedDate": "2026-09-16T23:16:52.630",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92599",
-    "description": "joi (npm package `joi`, hapi.js) versions >=17.2.0 <17.13.7 and >=18.0.0 <18.2.6 are vulnerable to regular expression denial of service in the `Joi.string().isoDate()` validation rule. One of the regular expressions the rule applies to the input is unanchored, so a valid ISO date followed by a long run of fractional-second digits causes the regex engine to restart its search from every position in the string, yielding time proportional to the square of the input length (about 1.4 s for 64 KB of digits and about 22 s for 256 KB). A remote attacker who can supply a string to an isoDate validation can stall the application with a single request. Fixed in 17.13.7 and 18.2.6; as a workaround, cap the length of the string before it reaches joi.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92599",
-    "publishedDate": "2026-09-16T22:18:30.980",
-    "lastModifiedDate": "2026-09-16T22:18:30.980",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92598",
-    "description": "Nodemailer before 9.1.0 fails to apply UTS-46 normalization when encoding international domain names, causing the domain resolver to compute a different Punycode A-label than standards-compliant parsers. Attackers can craft recipient addresses with invisible characters or compatibility mappings that pass domain allow-list checks but are delivered to attacker-controlled domains via SMTP.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92598",
-    "publishedDate": "2026-09-16T22:18:30.840",
-    "lastModifiedDate": "2026-09-16T22:18:30.840",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92597",
-    "description": "Nodemailer versions >= 6.9.16 and < 9.1.0 mis-parse RFC 5322 comments in email addresses: in lib/addressparser, a comment closed immediately before a non-break character causes the tokenizer to concatenate the atoms surrounding the comment instead of treating the comment as folding whitespace that terminates the domain. A recipient address such as user@good-corp.com(x)evil.com is therefore read by Nodemailer as the single domain good-corp.comevil.com (registrable domain comevil.com, which an attacker can register) and used for both the SMTP envelope (RCPT TO) and the emitted To:/From: headers, while a conformant RFC 5322 parser terminates the domain at the comment and reads good-corp.com. An application that validates the recipient domain with a strict RFC 5322 parser (without inspecting parse defects) or a naive prefix/substring allow-list and then hands the raw address to Nodemailer can be induced to deliver mail to a domain the attacker controls. Fixed in 9.1.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92597",
-    "publishedDate": "2026-09-16T22:18:30.700",
-    "lastModifiedDate": "2026-09-16T22:18:30.700",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92596",
-    "description": "Nodemailer before 9.1.0 contains a quadratic time complexity vulnerability in the addressparser component that allows remote attackers to cause denial of service by supplying a crafted comma-separated address list. Attackers can send a single email with a large number of addresses to block the Node.js event loop for extended periods, consuming 100% CPU and freezing the process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92596",
-    "publishedDate": "2026-09-16T22:18:30.557",
-    "lastModifiedDate": "2026-09-16T22:18:30.557",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92595",
-    "description": "Nodemailer (npm package `nodemailer`) versions 9.1.0 and earlier do not honor the `disableFileAccess` and `disableUrlAccess` sandbox options when message content is resolved through the public plugin API `MailMessage.resolveContent()` using the documented legacy three-argument signature `resolveContent(data, key, callback)`. Because `shared.resolveContent()` normalizes the missing `options` argument to an empty object, the message-level flags copied into `mail.data` by the MailMessage constructor are discarded, and `resolveContentValue()` skips both access-control checks, reaching `nmfetch(url)` or `fs.createReadStream(path)`. As a result, plugin or application code that resolves untrusted message content (html, text, attachment `path` or `href`) via this API can be induced to read arbitrary local files or issue outbound HTTP(S) requests (server-side request forgery), bypassing the sandbox the application enabled. The internal paths used by `transporter.sendMail()` (`resolveAll()`, `_convertDataImages()`, and the MIME streaming path) are not affected. Fixed in version 9.1.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92595",
-    "publishedDate": "2026-09-16T22:18:30.417",
-    "lastModifiedDate": "2026-09-16T22:18:30.417",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92594",
-    "description": "Craft CMS 5.0.0-RC1 through versions before 5.11.0 incorrectly authorize the GraphQL draftCreator and revisionCreator fields: instead of requiring the user-data scope enforced by Gql::canQueryUsers() (usergroups.*:read), these fields are gated only on the elements.drafts:read / elements.revisions:read scopes, and their resolver returns a raw User element whose email, username, fullName, and addresses fields have no per-field authorization. A client holding only the drafts or revisions scope — including an unauthenticated client when the operator has enabled the public GraphQL schema with those scopes — can therefore harvest the email addresses, usernames, full names, and postal addresses of all draft/revision creators (typically site editors and administrators). The issue is fixed in 5.11.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92594",
-    "publishedDate": "2026-09-16T22:18:30.283",
-    "lastModifiedDate": "2026-09-16T22:18:30.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92593",
-    "description": "Craft CMS versions 5.10.0 through 5.10.12 contain an incomplete fix for CVE-2026-55794: the Controller::getPostedRedirectUrl() -> View::renderObjectTemplate() sink remained unsandboxed, and the same fix commit added a self-signing oracle in Cp::elementLabelHtml(). Because Craft/Yii HMAC tokens are not bound to a parameter name, an authenticated low-privilege control panel user with edit rights on a single element type can mint a token over attacker-controlled Twig for the returnUrl parameter and replay it as the redirect POST parameter, reaching the unsandboxed sink and achieving server-side template injection that executes arbitrary PHP code (full server compromise). The issue is fixed in 5.10.13.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92593",
-    "publishedDate": "2026-09-16T22:18:30.150",
-    "lastModifiedDate": "2026-09-16T22:18:30.150",
+    "id": "CVE-2026-86801",
+    "description": "The To Do List Member WordPress plugin from 1.4 through 1.6 ships a file upload endpoint that does not load WordPress and therefore applies no authentication, capability or nonce check of any kind, and validates only the name of an uploaded file rather than its content, allowing unauthenticated users to store active content served from the site's own origin, and to list and delete the files already staged there.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86801",
+    "publishedDate": "2026-09-17T07:16:28.413",
+    "lastModifiedDate": "2026-09-17T07:16:28.413",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -286,368 +152,191 @@
         "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "contact@wpscan.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-92592",
-    "description": "Craft CMS 4.8.0 through 4.18.5 and 5.0.0 through 5.10.12 sign an authenticated user's attacker-controlled license-shun cookie with the same key and format used to validate signed redirect parameters, because the HMAC signature is not bound to its purpose (Yii's cookieValidationKey is derived from the same Craft securityKey used for signed request parameters). An authenticated, non-administrator user (Control Panel access is not required) can set the cookie via the license-shun endpoint and transplant the signed envelope into the redirect parameter; on a successful login, Craft validates the signature and renders the authenticated bytes as an unsandboxed Twig template, where Twig's map filter accepts a string callback and allows PHP system() to execute arbitrary operating-system commands as the web-server user. Exploitation requires an account using password authentication without active 2FA, the default request configuration, and availability of PHP system(). The issue is fixed in 4.18.6 and 5.10.13.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92592",
-    "publishedDate": "2026-09-16T22:18:30.013",
-    "lastModifiedDate": "2026-09-16T22:18:30.013",
+    "id": "CVE-2026-44940",
+    "description": "The rancher-extension-stackstate extension in SUSE Observability exposes service tokens in plain configuration or insecure locations rather than managing them securely. An attacker with minimal access could obtain the token to gain unauthorized access or escalate privileges within the observability environment.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44940",
+    "publishedDate": "2026-09-17T07:16:28.167",
+    "lastModifiedDate": "2026-09-17T07:16:28.167",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-92591",
-    "description": "Craft CMS 5.0.0 through 5.10.12 treats a database connection failure as meaning that Craft is not installed, which makes anonymous installer actions — including install/validate-site — reachable on an installed production site whenever PHP remains available but the configured MySQL endpoint does not. The action accepts a site name, serializes it through Site::getName(), and expands ${NAME} expressions using App::env(). An unauthenticated attacker who obtained a guest session cookie and matching CSRF token before the outage and whose session remains valid during it can submit a predictable variable name (for example Craft's conventional CRAFT_SECURITY_KEY) and receive its value, disclosing Craft secrets, process environment variables, $_SERVER entries, or PHP constants such as the security key, database credentials, or API keys. The issue requires an independently occurring database outage; the vulnerability itself provides no way to induce it. Fixed in 5.10.13.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92591",
-    "publishedDate": "2026-09-16T22:18:29.873",
-    "lastModifiedDate": "2026-09-16T22:18:29.873",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
+        "score": 5.7,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.1,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "meissner@suse.de"
       }
     ]
   },
   {
-    "id": "CVE-2026-92590",
-    "description": "Craft CMS versions from 5.7.0 before 5.10.13 contain a stored cross-site scripting vulnerability in the Generated Fields feature that disables Twig autoescaping and fails to encode cached values. Content editors can inject malicious JavaScript through editable fields that executes in authenticated Control Panel sessions of higher-privileged users viewing element indexes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92590",
-    "publishedDate": "2026-09-16T22:18:29.730",
-    "lastModifiedDate": "2026-09-16T22:18:29.730",
+    "id": "CVE-2026-91019",
+    "description": "The Event Booking Manager for WooCommerce  WordPress plugin before 5.6.0 does not restrict who can view its stored payment gateway configuration, allowing users with Contributor-level access and above to read the site's PayPal and Stripe credentials, including their secret keys.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91019",
+    "publishedDate": "2026-09-17T06:16:53.310",
+    "lastModifiedDate": "2026-09-17T06:16:53.310",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92589",
-    "description": "Craft CMS 5.0.0 through 5.10.12 (fixed in 5.10.13) contains a broken access control flaw in the nested-elements reorder endpoint. When an authenticated control panel user with viewEntries and viewPeerEntries (but without savePeerEntries) opens another author's entry in read-only mode, Craft unconditionally grants that session a `manageNestedElements::<ownerId>::field:<handle>` authorization flag for the entry's Matrix/Address fields. Unlike the corresponding delete endpoint, actions/nested-elements/reorder trusts this session flag alone and never rechecks the caller's save permission for the owner element. As a result, a view-only user can POST to actions/nested-elements/reorder using the ownerElementType, ownerId, ownerSiteId, attribute, elementIds, and offset parameters present in the read-only page source and rewrite the sort order of Matrix blocks or Addresses belonging to content they are explicitly denied save access to.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92589",
-    "publishedDate": "2026-09-16T22:18:29.583",
-    "lastModifiedDate": "2026-09-16T22:18:29.583",
+    "id": "CVE-2026-91016",
+    "description": "The Motors  WordPress plugin before 1.4.121 does not verify that a request is authorized to view a user's non-published listings before returning them, allowing unauthenticated attackers to read any author's draft, pending and private car listings - including titles, prices, media URLs and seller notes - by supplying only the target's numeric user id.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91016",
+    "publishedDate": "2026-09-17T06:16:53.203",
+    "lastModifiedDate": "2026-09-17T06:16:53.203",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92588",
-    "description": "n8n is a workflow automation platform. In n8n versions before 1.123.76, 2.37.7, and 2.38.2, the source control push endpoint derived the set of files to push from the file paths and status supplied in the client request payload instead of from the server-side status computed for the requesting user. An authenticated project-scoped user (e.g., a project admin) could therefore reference files belonging to projects they have no access to and push a deletion of those projects' workflows and credentials, resulting in cross-project data destruction. Exploitation requires the Source Control (Environments) enterprise feature to be licensed, enabled, and connected to a remote repository. The issue is fixed in 1.123.76, 2.37.7, and 2.38.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92588",
-    "publishedDate": "2026-09-16T22:18:29.447",
-    "lastModifiedDate": "2026-09-16T22:18:29.447",
+    "id": "CVE-2026-91015",
+    "description": "The Master Addons for Elementor  WordPress plugin before 3.1.9 does not perform an authorization check on the AJAX action that deactivates its Popup Builder popups, relying only on a nonce that is publicly output to every visitor, allowing unauthenticated attackers to permanently disable any popup on the site.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91015",
+    "publishedDate": "2026-09-17T06:16:53.090",
+    "lastModifiedDate": "2026-09-17T06:16:53.090",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 0.7,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92587",
-    "description": "n8n is a workflow automation platform. In versions before 1.123.76, 2.37.7, and 2.38.2, the Git node validated a relative remote URL against the configured repositoryPath but then invoked git with that path as its working directory; git walked up to the enclosing repository's top level and resolved the same relative URL from there. An authenticated user (member) who nested the repository one level below the configured path could therefore make an identical URL string pass the file-access check while git resolved it outside the sandbox. A subsequent fetch or pull read a git repository outside N8N_RESTRICT_FILE_ACCESS_TO and merged its objects into the user's own repository, where their contents could be read back. The issue is fixed in n8n 1.123.76, 2.37.7, and 2.38.2, which resolve the remote reference from the directory git actually operates in before applying the sandbox check. As a workaround, the Git node can be disabled by adding n8n-nodes-base.git to NODES_EXCLUDE.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92587",
-    "publishedDate": "2026-09-16T22:18:29.293",
-    "lastModifiedDate": "2026-09-16T22:18:29.293",
+    "id": "CVE-2026-91014",
+    "description": "The Realtyna Organic IDX plugin + WPL Real Estate WordPress plugin before 5.4.2 does not sanitise and escape some of its parameters before reflecting them back in the page, allowing unauthenticated attackers to run arbitrary web scripts in a visitor's browser if they can trick the visitor into following a crafted link (reflected XSS).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91014",
+    "publishedDate": "2026-09-17T06:16:52.977",
+    "lastModifiedDate": "2026-09-17T06:16:52.977",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:L/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92586",
-    "description": "AVideo through 29.0 (commit c3edcc274c389816d434acadac07ee78eaf330c1) fails to verify video access permissions in the set_api_comment function, allowing authenticated users to post comments on password-protected and group-restricted videos. Attackers can submit POST requests to the comment API endpoint with arbitrary video IDs to write comments on videos they cannot watch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92586",
-    "publishedDate": "2026-09-16T22:18:29.157",
-    "lastModifiedDate": "2026-09-16T22:18:29.157",
+    "id": "CVE-2026-91011",
+    "description": "The EWWW Image Optimizer WordPress plugin before 8.7.7 does not properly escape image attribute values when it rewrites page output, allowing authenticated users with author-level access and above to inject arbitrary JavaScript that is stored in published content and executes in the browser of any user who later views the affected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91011",
+    "publishedDate": "2026-09-17T06:16:52.857",
+    "lastModifiedDate": "2026-09-17T06:16:52.857",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92585",
-    "description": "AVideo through 29.0 (commit c3edcc274c389816d434acadac07ee78eaf330c1) fails to validate video access permissions in the API like endpoint, allowing logged-in users to vote on password-protected and group-restricted videos. Attackers can submit like and dislike requests to increment vote counters on videos they cannot watch by calling the set.json.php endpoint with APIName parameters.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92585",
-    "publishedDate": "2026-09-16T22:18:29.027",
-    "lastModifiedDate": "2026-09-16T22:18:29.027",
+    "id": "CVE-2026-91010",
+    "description": "The Invisible Anti-Spam & CAPTCHA — reCAPTCHA Alternative for All Forms WordPress plugin before 5.1.1 does not check the user's capabilities in its message deletion AJAX action, and only tests that a nonce parameter is present rather than validating it, allowing any authenticated user, such as a subscriber, to permanently delete every form submission the Invisible Anti-Spam & CAPTCHA — reCAPTCHA Alternative for All Forms WordPress plugin before 5.1.1 has stored.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91010",
+    "publishedDate": "2026-09-17T06:16:52.750",
+    "lastModifiedDate": "2026-09-17T06:16:52.750",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92584",
-    "description": "AVideo through 29.0 (current revision e01e41ecc) contains a stored cross-site scripting vulnerability. The unauthenticated view-counter endpoint objects/videoAddViewCount.json.php reaches VideoStatistic::save(), which writes the caller's User-Agent (via getUserAgentInfo(), which returns unrecognized agent strings verbatim) directly into the `app` column of the videos_statistics table without invoking the sanitizing setter setApp(); normalizeApp() only truncates the value to 45 characters. The video owner's and administrator's statistics page (view/videoViewsInfo.php) renders this field in a DataTables 1.12.1 column with an unescaped renderer, and DataTables assigns cell content using innerHTML, so attacker-supplied HTML is parsed and executed in the privileged user's authenticated session when the statistics page is viewed. No patched version was available at the time of the advisory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92584",
-    "publishedDate": "2026-09-16T22:18:28.890",
-    "lastModifiedDate": "2026-09-16T22:18:28.890",
+    "id": "CVE-2026-91009",
+    "description": "The Active Woot Products Tables for WooCommerce. 100% FREE  WordPress plugin before 2.1.3 does not have authorisation and CSRF checks in some of its AJAX actions, allowing any authenticated users, such as subscriber, to change the title of arbitrary posts, pages and products.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91009",
+    "publishedDate": "2026-09-17T06:16:52.640",
+    "lastModifiedDate": "2026-09-17T06:16:52.640",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92583",
-    "description": "AVideo through 29.0 contains a race condition in the enforceRateLimit() function that fails to atomically increment rate limit counters, allowing attackers to bypass all rate limits including login brute-force protection by issuing concurrent requests. Attackers can submit parallel credential attempts to exceed the documented 30-attempts-per-5-minutes login limit by an arbitrary factor determined only by their connection concurrency.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92583",
-    "publishedDate": "2026-09-16T22:18:28.747",
-    "lastModifiedDate": "2026-09-16T22:18:28.747",
+    "id": "CVE-2026-91008",
+    "description": "The Event Booking Manager for WooCommerce  WordPress plugin before 5.3.8 does not perform an ownership or authorization check before rendering booking confirmation details, allowing unauthenticated attackers to retrieve registered attendees' personal information (full name, email address, phone number, and custom registration fields) by supplying an enumerable booking reference. Exploitation is limited to sites configured to use the Event Booking Manager for WooCommerce  WordPress plugin before 5.3.8's native (non-WooCommerce) checkout, which is not the default.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91008",
+    "publishedDate": "2026-09-17T06:16:52.537",
+    "lastModifiedDate": "2026-09-17T06:16:52.537",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92582",
-    "description": "AVideo (WWBN/AVideo) through 29.0 (commit e01e41ecc) is vulnerable to cross-site request forgery. objects/videoAddNew.json.php disables AVideo's automatic CSRF guard ($global['skipAutoCSRFCheck']) and the untrusted-request check ($global['bypassSameDomainCheck']) merely because 'user' and 'pass' parameters are present in the request; the values are never validated and are read from $_REQUEST, so an attacker can supply them in the query string of a cross-site request. Because User::loginFromRequestIfNotLogged() returns immediately when a session already exists, a victim who is authenticated by cookie satisfies the check while the attacker-supplied credentials are discarded. An attacker who lures an authenticated user with upload rights to visit a crafted page can therefore submit cross-origin requests that modify video records — including ownership transfer (setUsers_id), deletion of user-group access restrictions, can_download, can_share, only_for_paid, video_password, rating, status, creation date, and view count. For a victim with administrator or Permissions::canAdminVideos() rights, any video on the site can be altered, including removing group restrictions from private content. No patched version was available at the time of the advisory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92582",
-    "publishedDate": "2026-09-16T22:18:28.600",
-    "lastModifiedDate": "2026-09-16T22:18:28.600",
+    "id": "CVE-2026-90923",
+    "description": "The Autopay WordPress plugin before 5.0.1 does not enforce the signature on one of its payment callbacks, allowing unauthenticated users to disclose and delete the stored payment parameters of other customers' orders.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90923",
+    "publishedDate": "2026-09-17T06:16:52.423",
+    "lastModifiedDate": "2026-09-17T06:16:52.423",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-92581",
-    "description": "In AVideo through 29.0, Like::__construct() performs counter arithmetic on raw request values before validation, allowing array-typed parameters to desynchronize stored votes from counters. Authenticated attackers can send array-typed like parameters followed by ordinary requests to drive video like counts arbitrarily negative, with the corruption persisting in the denormalized counter until manual repair.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92581",
-    "publishedDate": "2026-09-16T22:18:28.470",
-    "lastModifiedDate": "2026-09-16T22:18:28.470",
+    "id": "CVE-2026-90922",
+    "description": "The Paid Membership Subscriptions  WordPress plugin before 3.0.9 does not verify that the amount and currency reported by the payment provider match the pending payment before completing it, allowing unauthenticated users to obtain a paid membership by paying an arbitrary lower amount.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90922",
+    "publishedDate": "2026-09-17T06:16:52.320",
+    "lastModifiedDate": "2026-09-17T06:16:52.320",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-88904",
+    "description": "The PuppyFW WordPress plugin through 0.4.4 does not have proper authorisation on one of its REST routes, which tests the caller against a capability taken from the request itself, allowing any authenticated user, including subscribers, to add, modify and delete arbitrary blog options and thereby escalate their privileges.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88904",
+    "publishedDate": "2026-09-17T06:16:52.203",
+    "lastModifiedDate": "2026-09-17T06:16:52.203",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-88795",
+    "description": "The wpShopGermany IT-RECHT KANZLEI WordPress plugin before 2.4 does not generate its API authentication token securely, deriving it from data the requester controls and creating it as a side effect of the check that is supposed to validate it, allowing unauthenticated attackers to predict the token and use the access it grants to write arbitrary files, leading to remote code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88795",
+    "publishedDate": "2026-09-17T06:16:52.097",
+    "lastModifiedDate": "2026-09-17T06:16:52.097",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-88792",
+    "description": "The Dictionary WordPress plugin through 1.0 does not have authorisation, sanitisation or escaping in place when adding or updating dictionary entries, allowing unauthenticated users to store arbitrary web scripts which will execute when a user views an affected entry.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88792",
+    "publishedDate": "2026-09-17T06:16:51.990",
+    "lastModifiedDate": "2026-09-17T06:16:51.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-87836",
+    "description": "The Comments Import & Export WordPress plugin before 2.5.4 does not restrict its comment export to users able to moderate comments, nor scope the export to content owned by the requesting user, allowing users with the Author role and above to retrieve every comment on the site, including commenter email addresses, IP addresses, unapproved comment content and comment meta.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87836",
+    "publishedDate": "2026-09-17T06:16:51.880",
+    "lastModifiedDate": "2026-09-17T06:16:51.880",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-87786",
+    "description": "The Dewa Kirim  WordPress plugin through 1.0.0 does not escape delivery coordinates submitted at checkout before outputting them inside an inline script, allowing unauthenticated users to store JavaScript that runs in the session of an administrator who later opens the order.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87786",
+    "publishedDate": "2026-09-17T06:16:51.773",
+    "lastModifiedDate": "2026-09-17T06:16:51.773",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-86824",
+    "description": "The Newsletter  WordPress plugin before 9.3.8 does not generate its email tracking signing key with sufficient entropy and signs its tracking links with an unkeyed hash, allowing an unauthenticated attacker who recovers that key offline to forge tracking links, obtain any subscriber's session token, and read and modify that subscriber's stored personal data.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86824",
+    "publishedDate": "2026-09-17T06:16:51.663",
+    "lastModifiedDate": "2026-09-17T06:16:51.663",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
