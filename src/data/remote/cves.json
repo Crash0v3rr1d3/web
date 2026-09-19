@@ -1,5 +1,95 @@
 [
   {
+    "id": "CVE-2026-82672",
+    "description": "Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling') vulnerability in elixir-mint mint allows a malicious HTTP/1 server to desynchronize a strict intermediary and the Mint client on a pooled connection, enabling response-queue poisoning against subsequent requests that share the connection.\n\nMint.HTTP1.Parse.chunk_size/1 in lib/mint/http1/parse.ex stops at the first non-hexadecimal byte of a chunked response's chunk-size line and returns the remainder unexamined. Mint.HTTP1.decode_body/5 in lib/mint/http1.ex then discards every byte up to the CRLF with Parse.ignore_until_crlf/1, so the accepted grammar is a run of hex digits followed by arbitrary bytes, where RFC 9112 permits only a ;-introduced chunk extension. Lines such as 5ZZZZZ and 5 9 are accepted as chunk size 5, and 0ZZZZ is accepted as the terminating chunk that ends the message body. An RFC-strict intermediary rejects such a line while Mint accepts it, so the two disagree on chunk boundaries and on where the response ends.\n\nThis issue affects mint: from 0.1.0 before 1.10.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82672",
+    "publishedDate": "2026-09-19T17:16:35.710",
+    "lastModifiedDate": "2026-09-19T17:16:35.710",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-82560",
+    "description": "Pod::Text versions before 6.1.1 for Perl allow CPU and memory exhaustion formatting a POD document whose =over nesting drives the margin to the output width.\n\nEach =over adds its indent to the margin, which wrap() subtracts from the output width to get the space available for text. When that space reaches zero, the line-splitting substitution matches the empty string, and the loop consumes no input while appending the margin padding on every pass.\n\nFormatting an attacker-supplied POD document never returns, and the output grows until memory is exhausted.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82560",
+    "publishedDate": "2026-09-19T16:16:32.140",
+    "lastModifiedDate": "2026-09-19T16:16:32.140",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-94001",
+    "description": "A flaw was found in the Admin REST API of Keycloak, an open-source identity and access management solution. The endpoint used for deleting user credentials does not correctly check for fine-grained reset-password permissions. This allows a delegated administrator, who should be restricted from resetting passwords, to delete a user's password credentials, resulting in the user being unable to log in.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94001",
+    "publishedDate": "2026-09-19T15:17:08.903",
+    "lastModifiedDate": "2026-09-19T15:17:08.903",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94000",
+    "description": "A flaw was found in the Admin REST API of Keycloak, an open-source identity and access management solution. The issue occurs in the group-membership endpoints where the system fails to check if a group grants administrative privileges before allowing a user to be added. This allows a delegated administrator with limited permissions to add themselves to a high-privilege group, potentially gaining full control over the entire realm.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94000",
+    "publishedDate": "2026-09-19T15:17:08.763",
+    "lastModifiedDate": "2026-09-19T15:17:08.763",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.6,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.7,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-93999",
+    "description": "A flaw was found in the OIDC protocol implementation of Keycloak, an open-source identity and access management solution. The issue occurs during the token refresh process when the server restores requested audiences from stored client IDs. Keycloak fails to verify if the target audience client is still enabled before issuing a new access token. This allows an application with an existing refresh token to continue obtaining valid access tokens for a disabled client, potentially bypassing administrative access controls for resource servers that rely on offline JWT validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-93999",
+    "publishedDate": "2026-09-19T15:17:08.627",
+    "lastModifiedDate": "2026-09-19T15:17:08.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-93987",
     "description": "rclone versions 1.56.0 through 1.75.0 contain a path traversal vulnerability in the `rclone serve docker` volume plugin. newVolume() in cmd/serve/docker/volume.go computes a volume's mountpoint as filepath.Join(drv.root, name) from the attacker-supplied `name` field of a Docker VolumeDriver.Create request without verifying that the result stays within drv.root (default /var/lib/docker-volumes/rclone), and checkMountpoint() then creates that directory with file.MkdirAll before mounting. A volume name containing enough `..` components (e.g. \"../../../../../../etc\") therefore resolves outside the base directory, allowing anyone able to submit a VolumeDriver.Create request to the plugin socket — normally the Docker daemon, or a workload that can request named volumes in a multi-tenant orchestration setup — to make the privileged rclone plugin process create a directory and mount a remote filesystem specified in the same request at an arbitrary host path, shadowing or disrupting system directories. The advisory notes Volume.restoreState() had the same missing validation when reloading persisted volume state. Fixed in 1.75.1.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-93987",
@@ -207,7 +297,7 @@
     "description": "DBI versions before 1.653 for Perl load arbitrary modules via unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM.\n\nDBD::DBM passes the dbm_type and dbm_mldbm connect attributes to require without checking that the value names a module. require treats a path-shaped string as a literal filename and does not consult @INC, so the attribute chooses the file that Perl loads and runs.\n\nThe MLDBM::Serializer:: prefix that DBD::DBM prepends to dbm_mldbm is not a boundary: only the :: separators are rewritten to /, so a value containing / traverses out of the serializer directory. The value is also assigned to $MLDBM::Serializer, which MLDBM requires the same way when it ties the table.\n\nA caller that lets an untrusted party influence either attribute, for example through a DSN fragment or a parameter that selects a storage backend, runs the file-scope code of whatever module the value names.\n\nFor example,\n\n    my $dsn = \"dbi:DBM:f_dir=/var/db;dbm_type=../../Untrusted.pm\"\n    my $dbh = DBI->connect( $dsn );\n\nNote that DBD::Gofer forwards connect attributes to the server side, and DBI::ProxyServer checks only that a DSN starts with a driver prefix.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-78030",
     "publishedDate": "2026-09-19T11:16:37.667",
-    "lastModifiedDate": "2026-09-19T11:16:37.667",
+    "lastModifiedDate": "2026-09-19T18:16:49.733",
     "vendors": [],
     "products": [],
     "cvssScores": []
@@ -457,106 +547,6 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9832",
-    "description": "The Payment Gateway of Stripe for WooCommerce plugin for WordPress is vulnerable to Improper Verification of Cryptographic Signature in all versions up to, and including, 5.0.8. This is due to the publicly accessible `woocommerce_api_wt_stripe` webhook endpoint (`EH_Stripe_Webhook_Handler::handle()`) wrapping the only call to `\\Stripe\\Webhook::constructEvent()` inside an `if (!empty($endpoint_secret))` guard that is never entered on default installations — because the `eh_stripe_webhook_secret` option is empty after a fresh plugin install — causing the raw, attacker-controlled POST body to be decoded and processed as a fully trusted Stripe event without any signature verification, authentication, or authorization. This makes it possible for unauthenticated attackers to send forged Stripe webhook events to manipulate WooCommerce order statuses, including marking unpaid orders as paid or completed via `payment_complete()`, forcing legitimate orders into a failed state, fabricating dispute notifications, and injecting forged refund events. This vulnerability is only exploitable when the Stripe webhook signing secret has not been configured by an administrator; once a valid signing secret is saved, `\\Stripe\\Webhook::constructEvent()` is enforced and forged requests are rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9832",
-    "publishedDate": "2026-09-19T08:16:55.340",
-    "lastModifiedDate": "2026-09-19T14:17:06.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9615",
-    "description": "The Flex Import plugin for WordPress is vulnerable to Missing Authorization in all versions up to, and including, 3.0. This is due to the license_activate_fleximp() and license_deactivate_fleximp() functions, hooked to the wp_ajax_license_activate_fleximp and wp_ajax_license_deactivate_fleximp AJAX actions, lacking both a capability check (current_user_can()) and nonce verification (the client-side script sends a 'wpnonce' value but the handlers never validate it). This makes it possible for authenticated attackers, with subscriber-level access and above, to activate an arbitrary/fraudulent license key (persisting it via update_option('fleximp_is_premium') and toggling validation, suspension, and bundle status options) or deactivate the site's legitimate license (deleting the stored key and setting fleximp_validation_status to false), thereby disrupting the plugin's premium functionality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9615",
-    "publishedDate": "2026-09-19T08:16:55.193",
-    "lastModifiedDate": "2026-09-19T14:17:06.593",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-9232",
-    "description": "The Easy Appointments plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 3.12.27 via the handle_customers_ajax. This makes it possible for authenticated attackers, with contributor-level access and above, to extract the full customer dataset from the ea_customers table, including personally identifiable information such as names, email addresses, mobile numbers, dates of birth, and physical addresses.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-9232",
-    "publishedDate": "2026-09-19T08:16:55.053",
-    "lastModifiedDate": "2026-09-19T14:17:06.240",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-87917",
-    "description": "The MC4WP: Mailchimp for WordPress plugin for WordPress is vulnerable to Reflected Cross-Site Scripting via 'data' Dynamic Content Tag in all versions up to, and including, 4.14.0 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that execute if they can successfully trick a user into performing an action such as clicking on a link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87917",
-    "publishedDate": "2026-09-19T08:16:54.917",
-    "lastModifiedDate": "2026-09-19T14:17:02.057",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85658",
-    "description": "The Paid Membership Plugin, Ecommerce, User Registration Form, Login Form, User Profile & Restrict Content – ProfilePress plugin for WordPress is vulnerable to arbitrary shortcode execution in all versions up to, and including, 4.17.2 This is due to the software allowing users to execute an action that does not properly validate a value before running do_shortcode. This makes it possible for authenticated attackers, with subscriber-level access and above, to execute arbitrary shortcodes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85658",
-    "publishedDate": "2026-09-19T08:16:54.770",
-    "lastModifiedDate": "2026-09-19T14:17:00.627",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
         "source": "security@wordfence.com"
       }
     ]
