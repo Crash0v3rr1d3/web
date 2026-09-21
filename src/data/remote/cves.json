@@ -1,130 +1,30 @@
 [
   {
-    "id": "CVE-2026-63416",
-    "description": "draw.io is a configurable diagramming and whiteboarding application. Prior to version 30.2.7, src/main/java/com/mxgraph/online/ExportProxyServlet.java uses request.getPathInfo() to build a proxyPath and appends it directly to EXPORT_URL without rejecting dot segments or confirming that the normalized destination remains under the configured export path. An unauthenticated request containing traversal segments can therefore address unintended routes on the internal export server, and the servlet forwards all request headers and the request body to that destination, allowing arbitrary header injection. Depending on the export service configuration, exploitation can expose administration, debugging, health, or configuration endpoints and can permit unintended internal actions. This issue is fixed in version 30.2.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63416",
-    "publishedDate": "2026-09-21T17:17:39.503",
-    "lastModifiedDate": "2026-09-21T17:17:39.503",
+    "id": "CVE-2026-61852",
+    "description": "Chartbrew is an open-source web application that can connect directly to databases and APIs and use the data to create charts. Prior to 5.2.2, Chartbrew's runQuery() implementation in server/modules/ai/orchestrator/tools/runQuery.js interpolates the AI tool's row_limit parameter into a SQL LIMIT clause without runtime integer validation. The read-only keyword check runs before this value is appended, so an authenticated user who can influence a model-generated non-integer row_limit can add SQL that bypasses the earlier check. Successful exploitation can execute arbitrary statements against the connected database, including reading or changing data and, where database permissions permit, accessing files or executing operating-system commands. This issue is fixed in version 5.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61852",
+    "publishedDate": "2026-09-21T22:16:58.163",
+    "lastModifiedDate": "2026-09-21T22:16:58.163",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-88978",
-    "description": "Hatchet is a platform for orchestrating background tasks, AI agents, and durable workflows at scale. Prior to 0.106.1, the WorkerStatus gRPC polling path in pkg/repository/durable_events.go passes caller-supplied durable task, node, and branch identifiers to ListSatisfiedEntries without a tenant filter, allowing an authenticated tenant worker that knows another tenant's durable-task UUID to retrieve matching durable event-log records. The UUIDv4 requirement makes exploitation unlikely, and single-tenant deployments are unaffected in practice. This issue is fixed in version 0.106.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88978",
-    "publishedDate": "2026-09-21T16:17:26.010",
-    "lastModifiedDate": "2026-09-21T16:17:26.010",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
+        "score": 5.8,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:N/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-85751",
-    "description": "Mailu is a mail server distributed as a set of Docker images. From Mailu 2.0 until 2024.06.55 and prior to Mailu helm-charts 2.7.3, deployments with PROXY_AUTH_WHITELIST configured but REAL_IP_HEADER unset trusted a client-controlled X-Forwarded-By header for header-based proxy authentication. The proxy_hide_header directive in the nginx template at core/nginx/conf/proxy.conf hid the header from upstream responses but did not overwrite the incoming request value in this configuration. An unauthenticated remote attacker could therefore spoof the trusted proxy identity and bypass authentication. This issue is fixed in Mailu 2024.06.55 and Mailu helm-charts 2.7.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85751",
-    "publishedDate": "2026-09-21T16:17:25.070",
-    "lastModifiedDate": "2026-09-21T16:17:25.070",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-84298",
-    "description": "Hatchet is a platform for orchestrating background tasks, AI agents, and durable workflows at scale. Prior to 0.95.3, the V1 DurableTask stream handler stores worker-supplied task_external_id values in the durableInvocations routing map before tenant ownership is verified, and callback delivery resolves that map by task UUID without tenant identity. An authenticated tenant worker that knows another tenant's durable task UUID and keeps a stream open on the same dispatcher process can receive that task's durable callback result payload. UUIDv4 values are not enumerable, and single-tenant deployments are unaffected in practice. This issue is fixed in version 0.95.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84298",
-    "publishedDate": "2026-09-21T16:17:24.803",
-    "lastModifiedDate": "2026-09-21T16:17:24.803",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-82412",
-    "description": "ntopng is a web-based network traffic monitoring application. Prior to 6.7.260717, the vulnerability-scan endpoints scripts/lua/rest/v2/add/host/to_scan.lua and scripts/lua/rest/v2/exec/host/schedule_vulnerability_scan.lua accept the scan_ports parameter without an administrator gate and pass it through validateSingleWord, which permits shell metacharacters. scripts/lua/modules/vulnerability_scan/vs_utils.lua then concatenates scan_ports into an nmap command in nmap_scan_host and executes the command through ntop.execCmd or ntop.execCmdAsync and popen. Any authenticated non-admin user can execute operating-system commands as the ntopng process account when nmap is available. Because the endpoints accept GET requests while ntopng's CSRF validation applies to POST request bodies, an attacker can also trigger the command through a logged-in user's browser without possessing ntopng credentials. This issue is fixed in version 6.7.260717.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82412",
-    "publishedDate": "2026-09-21T16:17:24.503",
-    "lastModifiedDate": "2026-09-21T16:17:24.503",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-77166",
-    "description": "The emoji field in the page emoji update endpoint does not properly validate user input. By injecting long text and line breaks, the sidebar layout becomes broken and can hide other items.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77166",
-    "publishedDate": "2026-09-21T16:17:24.013",
-    "lastModifiedDate": "2026-09-21T16:17:24.013",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-77165",
-    "description": "File owners were unable to unlock TYPE_TOKEN locks placed by other users, leaving files permanently locked with no recovery path outside of the database.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77165",
-    "publishedDate": "2026-09-21T16:17:23.863",
-    "lastModifiedDate": "2026-09-21T16:17:23.863",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-63342",
-    "description": "Hatchet is a platform for orchestrating background tasks, AI agents, and durable workflows at scale. Prior to 0.91.1, api-contracts/openapi/paths/v1/workflow-runs/workflow_run.yaml defines the GET /api/v1/stable/durable-tasks/{durable-task} endpoint implemented by listDurableEventLog without requiring the target tenant as a parent resource, allowing an authenticated user who obtains another tenant's durable task UUID to read that task's event log. Disclosed data can include task display names, workflow identifiers, user messages, wait conditions, branching logic, and timing information. This issue is fixed in version 0.91.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-63342",
-    "publishedDate": "2026-09-21T16:17:10.737",
-    "lastModifiedDate": "2026-09-21T16:17:10.737",
+    "id": "CVE-2026-61743",
+    "description": "Chartbrew is an open-source web application that can connect directly to databases and APIs and use the data to create charts. Prior to 5.2.2, Chartbrew's server/modules/safeRequest.js calls validateOutboundUrl() to resolve and validate a target hostname, but request-promise performs a separate DNS resolution for the actual connection. An authenticated user who can create or test API connections and controls the target DNS name can return a public address during validation and a private address during the request, bypassing the protections implemented by server/modules/outboundTargetPolicy.js. This DNS rebinding condition can expose internal services, localhost resources, or cloud metadata endpoints. This issue is fixed in version 5.2.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61743",
+    "publishedDate": "2026-09-21T22:16:57.823",
+    "lastModifiedDate": "2026-09-21T22:16:57.823",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -140,11 +40,40 @@
     ]
   },
   {
-    "id": "CVE-2026-61687",
-    "description": "Hatchet is a platform for orchestrating background tasks, AI agents, and durable workflows at scale. Prior to 0.91.1, ValidateOAuthState clears the oauth_state_ session value to an empty string after a successful OAuth callback and later accepts an empty state parameter as equal, allowing an unauthenticated attacker to bind a victim's Hatchet session to an attacker-controlled OAuth identity. Exploitation requires the victim to have completed an OAuth flow in the current session and the deployment to enable auth.google.enabled, auth.github.enabled, or the Slack integration. This issue is fixed in version 0.91.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61687",
-    "publishedDate": "2026-09-21T16:17:09.997",
-    "lastModifiedDate": "2026-09-21T16:17:09.997",
+    "id": "CVE-2026-94536",
+    "description": "lamp-cloud through 5.10.0 fails to validate the employeeId parameter in the /anyone/visible/resource endpoint, allowing authenticated users to read any employee's roles and permissions. Attackers can supply arbitrary employeeId values to enumerate other employees' role codes, permission codes, and complete front-end router trees without authorization checks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94536",
+    "publishedDate": "2026-09-21T22:17:00.640",
+    "lastModifiedDate": "2026-09-21T22:17:00.640",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94535",
+    "description": "lamp-cloud through 5.10.0 contains an authorization bypass vulnerability in the deleteMyNotice endpoint that allows authenticated users to delete other users' notifications. Attackers can call the DELETE /anyone/extendNotice/deleteMyNotice endpoint with arbitrary notice IDs to permanently remove notifications belonging to other users without recipient validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94535",
+    "publishedDate": "2026-09-21T22:17:00.487",
+    "lastModifiedDate": "2026-09-21T22:17:00.487",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -152,47 +81,152 @@
         "score": 7.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
         "exploitabilityScore": 2.8,
         "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61681",
-    "description": "Hatchet is a platform for orchestrating background tasks, AI agents, and durable workflows at scale. Prior to 0.91.1, the SNS UnsubscribeConfirmation handler in internal/integrations/ingestors/sns/sns.go calls http.Get() on payload.UnsubscribeURL after VerifyPayload() even though BuildSignature() excludes UnsubscribeURL, allowing an authenticated Hatchet tenant to replace that field in an otherwise valid AWS-signed message with an internal URL. The server-side request can reach EC2 Instance Metadata Service, internal services, and internal HTTP APIs, potentially exposing IAM credentials or network-accessible data and functionality. This issue is fixed in version 0.91.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61681",
-    "publishedDate": "2026-09-21T16:17:09.823",
-    "lastModifiedDate": "2026-09-21T16:17:09.823",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 4.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-55563",
-    "description": "Feast is the open source feature store for AI and machine learning. Prior to 0.65.0, .github/workflows/pr_integration_tests.yml uses pull_request_target with the synchronize event and preserves ok-to-test, approved, or lgtm labels across newly pushed commits, allowing a fork contributor to obtain approval for a benign revision and then run changed code from refs/pull/${{ github.event.pull_request.number }}/merge through privileged make targets. The job exposes GCP, AWS, and Snowflake credentials to that code, enabling runner code execution, credential disclosure, and possible access to downstream cloud resources. An external label-removal integration could mitigate the condition, but no repository workflow provided that protection. This issue is fixed in version 0.65.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55563",
-    "publishedDate": "2026-09-21T16:17:09.390",
-    "lastModifiedDate": "2026-09-21T16:17:09.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.9,
+        "score": 7.1,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94534",
+    "description": "lamp-cloud through 5.10.0 fails to validate user identity in PUT /anyone/baseInfo and PUT /anyone/avatar endpoints, allowing authenticated attackers to modify arbitrary user profiles. Attackers can supply target user IDs in request bodies to rewrite profile fields including nickname, ID card, sex, nation, education, work description, and avatar attachments of other users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94534",
+    "publishedDate": "2026-09-21T22:17:00.327",
+    "lastModifiedDate": "2026-09-21T22:17:00.327",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94533",
+    "description": "lamp-cloud through 5.10.0 contains an authorization bypass vulnerability in FileAnyoneController that allows authenticated users to download arbitrary attachments. Attackers can retrieve other users' stored files by supplying valid attachment identifiers to the /anyone/file/down and /anyone/file/download endpoints, as the application never validates file ownership against the created_by column.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94533",
+    "publishedDate": "2026-09-21T22:17:00.173",
+    "lastModifiedDate": "2026-09-21T22:17:00.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94532",
+    "description": "lamp-cloud through 5.10.0 contains an authorization bypass vulnerability in the getUserInfoById endpoint that allows authenticated users to read any other user's full profile. Attackers can iterate the userId parameter to harvest sensitive user information including mobile numbers, email addresses, national identity card numbers, and WeChat and DingTalk OpenIDs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94532",
+    "publishedDate": "2026-09-21T22:17:00.010",
+    "lastModifiedDate": "2026-09-21T22:17:00.010",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-93340",
+    "description": "Gladys Assistant before 5.1.0 contains a password reset link poisoning vulnerability that allows unauthenticated remote attackers to obtain valid password reset tokens for any account by exploiting the client-supplied origin parameter in the forgot_password endpoint without server-side validation. Attackers can send a crafted request specifying an attacker-controlled origin, causing the victim to receive a poisoned reset link that discloses the session token to the attacker, enabling full account takeover including administrator accounts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-93340",
+    "publishedDate": "2026-09-21T22:16:59.547",
+    "lastModifiedDate": "2026-09-21T22:16:59.547",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:A/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-61541",
+    "description": "Zapros, a Python HTTP client, prior to version 0.14.0 is vulnerable to denial of service when an application requests content from an untrusted server, or follows a redirect to one, because a malicious response containing an excessive number of chained `Content-Encoding` values causes Zapros to construct a deeply nested decompression chain that consumes excessive resources. Version 0.14.0 patches the vulnerability by limiting responses to five content-encoding layers and raising `DecodingError` when that limit is exceeded. As a workaround, applications can add response middleware that inspects the `Content-Encoding` header and rejects responses containing more than a safe number of encoding layers.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61541",
+    "publishedDate": "2026-09-21T22:16:57.527",
+    "lastModifiedDate": "2026-09-21T22:16:57.527",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -200,11 +234,91 @@
     ]
   },
   {
-    "id": "CVE-2026-53940",
-    "description": "Conda is a system-level binary package and environment manager that runs on major operating systems and platforms. Prior to 26.5.2, parse_entry_point_def in conda/common/path/python.py accepted an unvalidated entry-point command from a noarch:python package's info/link.json metadata. CreatePythonEntryPointAction in conda/core/path_actions.py interpolated that command into target_short_path, and PrefixPathAction.target_full_path joined it to the installation prefix without verifying that the result remained under the intended bin or Scripts directory. create_python_entry_point in conda/gateways/disk/create.py then wrote an executable wrapper to the resulting path. A malicious package could use path separators, traversal segments, or an absolute command path to write outside the prefix or overwrite another in-prefix entry point during default install and environment transactions. Out-of-prefix writes require the target parent directory to exist, while an overwritten entry point can execute attacker-controlled Python when later invoked with the installing user's privileges. This issue is fixed in version 26.5.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53940",
-    "publishedDate": "2026-09-21T16:17:09.010",
-    "lastModifiedDate": "2026-09-21T16:17:09.010",
+    "id": "CVE-2026-59830",
+    "description": "Discourse is an open-source discussion platform. Prior to 2026.7.0, the post action component failed to escape user-controlled display names before interpolating them into an HTML string passed to trustHTML. A user who could choose a crafted display name could persist markup in post action descriptions. Viewing the affected user activity streams could execute attacker-controlled script in another user's browser. This issue is fixed in version 2026.7.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59830",
+    "publishedDate": "2026-09-21T22:16:57.353",
+    "lastModifiedDate": "2026-09-21T22:16:57.353",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94588",
+    "description": "In Proxmox pmg-api, an argument injection vulnerability exists in the package changelog retrieval functionality. This is caused by improper handling of user-supplied input passed to the underlying apt-get command when fetching package changelogs. It requires authentication but can be exploited in a CSRF-style attack.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94588",
+    "publishedDate": "2026-09-21T21:17:22.343",
+    "lastModifiedDate": "2026-09-21T21:17:22.343",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 1.3,
+        "impactScore": 2.7,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94572",
+    "description": "In OpenStack Octavia before 18.0.1, the Amphora provider driver did not validate the listener and pool tls_ciphers field for control characters. The value is written verbatim into the HAProxy configuration generated on the amphora, and thus an authenticated project member who owns a TLS-enabled load balancer can embed a newline and inject arbitrary HAProxy configuration directives. Only deployments using the Amphora provider are affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94572",
+    "publishedDate": "2026-09-21T21:17:22.150",
+    "lastModifiedDate": "2026-09-21T21:17:22.150",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94571",
+    "description": "In OpenStack Octavia before 18.0.1, the Amphora provider driver did not reject control characters in the L7 policy redirect_url and redirect_prefix fields. The RFC 3986 URL validator percent-encodes control characters before validating, and thus newlines passed structural checks, but Octavia stored and wrote the raw unencoded value directly into the HAProxy configuration generated on the amphora. An authenticated project member who owns a load balancer can therefore inject arbitrary HAProxy directives through a REDIRECT_TO_URL L7 policy. Only deployments using the Amphora provider are affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94571",
+    "publishedDate": "2026-09-21T21:17:21.970",
+    "lastModifiedDate": "2026-09-21T21:17:21.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94424",
+    "description": "A vulnerability has been found in Moore Threads MTT S80 Driver Package up to 340.150. Impacted is the function sub_140001000 in the library mtdispkm64.sys of the component IOCTL Handler. The manipulation leads to heap-based buffer overflow. An attack has to be approached locally. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94424",
+    "publishedDate": "2026-09-21T21:17:21.793",
+    "lastModifiedDate": "2026-09-21T21:17:21.793",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -212,169 +326,138 @@
         "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-36472",
-    "description": "CuteNews v.2.1.2 is vulnerable to Cross Site Scripting (XSS). Improper neutralization of the __referer value 2.0.1 allows a remote attacker to execute arbitrary JavaScript in the context of an authenticated user's session via a javascript: URI rendered as an unsanitized clickable link on the msg_info page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36472",
-    "publishedDate": "2026-09-21T16:17:08.210",
-    "lastModifiedDate": "2026-09-21T16:17:08.210",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 6,
+        "source": "cna@vuldb.com"
+      },
       {
-        "score": 5.2,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 1,
-        "impactScore": 3.7,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-36471",
-    "description": "Deserialization of Untrusted Data of the __post_data parameter in cn_parse_url() in CuteNews v.2.1.2 allows a remote attacker to inject arbitrary values into internal request variables (including __referer) via a crafted base64-encoded serialized PHP payload submitted as a POST parameter.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36471",
-    "publishedDate": "2026-09-21T16:17:08.090",
-    "lastModifiedDate": "2026-09-21T16:17:08.090",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-36470",
-    "description": "CuteNews v.2.1.2 is vulnerable to Cross Site Scripting (XSS) in index.php. The value of the \"Referer\" header is copied into the response HTML unmodified/unescaped during POST messages to index.php.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36470",
-    "publishedDate": "2026-09-21T16:17:07.970",
-    "lastModifiedDate": "2026-09-21T16:17:07.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-36469",
-    "description": "CuteNews v.2.1.2 is vulnerable to Server-Side Request Forgery (SSRF) in core/modules/media.php -- upload_from_inet (Media Manager's \"Upload by URL\" functionality).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36469",
-    "publishedDate": "2026-09-21T16:17:07.843",
-    "lastModifiedDate": "2026-09-21T16:17:07.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-36468",
-    "description": "Cross-site Scripting (XSS) in index.php in CuteNews v.2.1.2 allows remote unauthenticated attackers to supply an arbitrarily named URL parameter key, with part of its name containing any URL-encoded common XSS payload (such as \"><script>alert(1)</script>).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36468",
-    "publishedDate": "2026-09-21T16:17:07.710",
-    "lastModifiedDate": "2026-09-21T17:17:34.720",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-36467",
-    "description": "Unrestricted Upload of File with Dangerous Type in core/modules/media.php in CuteNews v.2.1.2 allows remote authenticated users with access to the Media Manager panel to execute arbitrary code in the context of the web application, leading to remote server access by triggering a reverse shell.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-36467",
-    "publishedDate": "2026-09-21T16:17:07.470",
-    "lastModifiedDate": "2026-09-21T16:17:07.470",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.9,
-        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58504",
-    "description": "draw.io is a configurable diagramming and whiteboarding application. Prior to version 30.2.5, opening or importing a crafted .drawio file can execute attacker-controlled JavaScript in the draw.io origin when selected cells are processed by TextFormatPanel.addFont() in src/main/webapp/js/grapheditor/Format.js. An HTML sibling cell keeps the formatted-label path enabled while an editable=0 plain-text sibling is excluded from the merged selection style but remains in the iteration set. graph.cellRenderer.getLabelValue() returns that plain-text label without HTML encoding, and mxUtils.canConvertHtmlToSvg() parses it as HTML, bypassing the earlier CVE-2026-46642 remediation. Successful exploitation can expose diagram data, browser storage, non-HttpOnly cookies, and same-origin actions available to the victim. This issue is fixed in version 30.2.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58504",
-    "publishedDate": "2026-09-21T17:17:36.077",
-    "lastModifiedDate": "2026-09-21T17:17:36.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62987",
-    "description": "Fabio is an HTTP(S) and TCP router for deploying applications managed by consul. From 1.6.6 until 1.7.2, the CVE-2025-48865 fix in proxy/http_headers.go uses protectHeaders for a hardcoded set of forwarded headers but omits the operator-configured ClientIPHeader, TLSHeader, and RequestID names. In proxy/http_proxy.go, HTTPProxy.ServeHTTP calls addHeaders to set these trust headers before Go ReverseProxy processes the inbound Connection header, allowing an unauthenticated client to name and remove the configured headers before the request reaches the backend. Deployments that enable the corresponding proxy.header options can therefore lose client-IP, TLS-termination, or request-correlation signals used by backend authorization and auditing; the options are empty by default, and the hardcoded protected forwarded headers are unaffected. This issue is fixed in version 1.7.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62987",
-    "publishedDate": "2026-09-21T17:17:38.340",
-    "lastModifiedDate": "2026-09-21T17:17:38.340",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-61674",
-    "description": "Fluent Bit is a fast and lightweight logs, metrics, and traces processor for Linux, BSD, macOS, and Windows. From 0.11.0 until 5.0.8, plugins/out_forward/forward.c secure_forward_pong copies the server-controlled PONG[2] reason into the 32-byte stack buffer msg with memcpy without checking its MessagePack type or length. An attacker who controls or can impersonate an out_forward Secure Forward destination configured with Shared_Key or Empty_Shared_Key can send an oversized reason during the first handshake and overwrite stack control data. Protected builds reliably terminate, while builds without a stack canary or with a disclosure can allow remote code execution as the Fluent Bit process user. When the opt-in --supervisor mode is used, fork-only respawns preserve the canary and address layout, allowing repeated crash-or-survive probes to support code execution on a hardened build; ordinary exec-based or service-manager restarts do not preserve that state. This issue is fixed in version 5.0.8.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61674",
-    "publishedDate": "2026-09-21T17:17:36.663",
-    "lastModifiedDate": "2026-09-21T17:17:36.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.2,
+        "score": 9.3,
         "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-84990",
-    "description": "ntopng is a web-based network traffic monitoring application. Prior to 6.7.260718, scripts/lua/rest/v2/get/system/configurations/list_available_backups.lua and scripts/lua/rest/v2/get/system/configurations/download_backup.lua allow any authenticated non-admin user to list and download system-configuration backups without an administrator check. The download path reaches backup_config.export_backup, and prefs_dump_utils.build_prefs_dump_table includes the ntopng.user.* Redis key space in the backup. A downloaded backup can therefore disclose password hashes for local users and, when configured, API tokens, TOTP secrets, and WebAuthn credential data, enabling account compromise through usable or recoverable credentials. This issue is fixed in version 6.7.260718.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84990",
-    "publishedDate": "2026-09-21T17:19:13.340",
-    "lastModifiedDate": "2026-09-21T17:19:13.340",
+    "id": "CVE-2026-93433",
+    "description": "A flaw was found in libstoragemgmt. An attacker with control over a local or virtual storage device could provide specially crafted SCSI (Small Computer System Interface) Vital Product Data (VPD) page 0x80 data. This malformed data, specifically an untrusted page length field, can lead to a stack buffer overflow in the `_sg_parse_vpd_80()` function during serial number parsing. Successful exploitation could result in a denial of service by crashing or destabilizing the process querying the serial number.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-93433",
+    "publishedDate": "2026-09-21T21:17:17.847",
+    "lastModifiedDate": "2026-09-21T21:17:17.847",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-88746",
+    "description": "idccms V1.70 is vulnerable to Cross Site Scripting (XSS) in /admin/makeDiy_deal.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88746",
+    "publishedDate": "2026-09-21T21:17:15.893",
+    "lastModifiedDate": "2026-09-21T21:17:15.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-88745",
+    "description": "EMLOG-Pro 2.6.29 contains a XSS vulnerability that enables attackers to upload a malicious shell.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88745",
+    "publishedDate": "2026-09-21T21:17:15.777",
+    "lastModifiedDate": "2026-09-21T21:17:15.777",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-88467",
+    "description": "CRMEB Knowledge-Paid System crmeb_zzff_class 1.4.4 has a backend verification function that returns the wrong type of value, causing errors and leaking sensitive information.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88467",
+    "publishedDate": "2026-09-21T21:17:15.650",
+    "lastModifiedDate": "2026-09-21T21:17:15.650",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-88412",
+    "description": "An integer overflow in the _BulkInsert_ReadProperty component (/bulk_insert.c) of FalkorDB (Redis module) v4.20.1 allows attackers to cause a Denial of Service (DoS) via a crafted input.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88412",
+    "publishedDate": "2026-09-21T21:17:15.513",
+    "lastModifiedDate": "2026-09-21T21:17:15.513",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-88411",
+    "description": "Improper error handling in the GRAPH.EFFECT component (/effects/effects_apply.c) of FalkorDB (Redis module) v4.20.1 leads to a Denial of Service (DoS) within the application.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88411",
+    "publishedDate": "2026-09-21T21:17:15.380",
+    "lastModifiedDate": "2026-09-21T21:17:15.380",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-88410",
+    "description": "The graph.UDF in FalkorDB (Redis module) v4.20.1 to v4.20.4 is not registered as a write command, leading to unexpected behavior within the application.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88410",
+    "publishedDate": "2026-09-21T21:17:15.247",
+    "lastModifiedDate": "2026-09-21T21:17:15.247",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-88409",
+    "description": "FalkorDB (Redis module) v4.20.1 to v4.20.4 was discovered to contain a buffer overflow in the _Decode_GrB_Matrix function (/v19/decode_matrix.c). This vulnerability allows attackers to cause a Denial of Service (DoS) via a crafted input.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88409",
+    "publishedDate": "2026-09-21T21:17:15.120",
+    "lastModifiedDate": "2026-09-21T21:17:15.120",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -385,67 +468,67 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "security-advisories@github.com"
+        "source": "cve@mitre.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-83621",
-    "description": "ntopng is a web-based network traffic monitoring application. Prior to 6.7.260717, POST /lua/rest/v2/edit/system/edit_blacklist.lua in scripts/lua/rest/v2/edit/system/edit_blacklist.lua lacks an administrator check and calls lists_utils.editList for any authenticated user. The list_name, list_enabled, url, and list_update parameters allow a non-admin user to redirect threat-intelligence downloads to attacker-controlled content, disable blocklists, or prevent scheduled updates. The changes are persisted through Redis and reloaded without a lower-level authorization guard, undermining the integrity and availability of ntopng's threat-intelligence monitoring. This issue is fixed in version 6.7.260717.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-83621",
-    "publishedDate": "2026-09-21T17:19:08.590",
-    "lastModifiedDate": "2026-09-21T17:19:08.590",
+    "id": "CVE-2026-88408",
+    "description": "FalkorDB (Redis module) v4.20.1 to v4.20.4 was discovered to contain a stack overflow in the _GetGroup() function (/ops/op_aggregate.c). This vulnerability allows attackers to cause a Denial of Service (DoS) via a crafted input.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88408",
+    "publishedDate": "2026-09-21T21:17:14.990",
+    "lastModifiedDate": "2026-09-21T21:17:14.990",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.1,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-94301",
-    "description": "The fix for CVE-2026-47065/ZDRES-232 (\"resolveProxyClass Not Overridden - acceptMatchers Filter Bypass via java.lang.reflect.Proxy\"), released on 2026-06-02 and announced as \"Fully addressed\" in MINA 2.2.8, 2.1.13 and 2.0.29, was committed to the\n 2.2.X branch only. The 2.0.X and 2.1.X maintenance branches never received the resolveProxyClass() override, so the 2.0.29 and 2.1.13 artifacts listed as fixed -- and every later release on those lines, up to and including the current 2.0.30 and 2.1.14 -- remain vulnerable to the exact allow-list bypass that CVE-2026-47065 was meant to close.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94301",
-    "publishedDate": "2026-09-21T15:17:38.903",
-    "lastModifiedDate": "2026-09-21T16:17:29.677",
+    "id": "CVE-2026-88407",
+    "description": "An out-of-bounds read in the node_token_count/relation_token_count component of FalkorDB (Redis module) v4.20.1 to v4.20.4 allows attackers to cause a Denial of Service (DoS) via a crafted input.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88407",
+    "publishedDate": "2026-09-21T21:17:14.860",
+    "lastModifiedDate": "2026-09-21T21:17:14.860",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@apache.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-94184",
-    "description": "A stack-based buffer overflow flaw was found in fetchmail when built with NTLM support. A malicious or compromised mail server advertising NTLM authentication can send a crafted Type 2 challenge that causes fetchmail to write past a fixed stack buffer while building the NTLM authenticate response. This may lead to remote code execution depending on stack-frame layout, or to authentication failure or process termination under memory hardening.\n\nAffects v5.0.8 through v6.6.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94184",
-    "publishedDate": "2026-09-21T15:17:38.547",
-    "lastModifiedDate": "2026-09-21T17:19:19.970",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "secalert@redhat.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-88406",
+    "description": "FalkorDB (Redis module) v4.20.1 to v4.20.4 was discovered to contain a stack overflow in the _ValidateUnion_Clauses function (/ast/ast_validations.c). This vulnerability allows attackers to cause a Denial of Service (DoS) via a crafted input.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88406",
+    "publishedDate": "2026-09-21T21:17:14.733",
+    "lastModifiedDate": "2026-09-21T21:17:14.733",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "cve@mitre.org"
       }
     ]
   }
