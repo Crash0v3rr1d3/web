@@ -1,10 +1,177 @@
 [
   {
-    "id": "CVE-2026-105182",
-    "description": "A security flaw has been discovered in SourceCodester Online Reviewer Management System 1.0. Impacted is an unknown function of the file /reviewer_0/admins/assessments/activities/btn_functions.php?action=update. The manipulation of the argument Title results in sql injection. The attack may be performed from remote. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105182",
-    "publishedDate": "2026-10-05T03:16:38.543",
-    "lastModifiedDate": "2026-10-05T03:16:38.543",
+    "id": "CVE-2026-97071",
+    "description": "Incorrect Calculation vulnerability in VillaTheme CURCY woo-multi-currency allows Integer Attacks.This issue affects CURCY: from n/a through 2.2.17.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97071",
+    "publishedDate": "2026-10-05T09:17:13.887",
+    "lastModifiedDate": "2026-10-05T09:17:13.887",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39721",
+    "description": "Missing Authorization vulnerability in Brainstorm Force Starter Templates astra-sites allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Starter Templates: from n/a through 4.7.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39721",
+    "publishedDate": "2026-10-05T09:17:13.227",
+    "lastModifiedDate": "2026-10-05T09:17:13.227",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19185",
+    "description": "The system-call verifier for i3c_do_ccc() in drivers/i3c/i3c_handlers.c validated the outer struct i3c_ccc_payload, the broadcast ccc.data buffer and the targets.payloads[] array, but did not validate the per-target data buffers those array elements point at. Each struct i3c_ccc_target_payload carries its own data pointer and data_len, and neither was passed through K_SYSCALL_MEMORY() before the payload was handed to z_impl_i3c_do_ccc() and on to the controller driver. The verifier also operated on the caller's live structure rather than a snapshot, so validated fields could be changed by a second user thread between the check and the driver's use — unlike the sibling z_vrfy_i3c_transfer(), which has always copied its message array first.\n\nThe defect is only present in CONFIG_USERSPACE builds, where drivers/i3c/i3c_handlers.c is compiled. An unprivileged user-mode thread that has been granted access to the I3C controller device object — the ordinary way an application lets a user thread talk to I3C peripherals — can issue a direct CCC whose target payload data pointer names an arbitrary kernel address. Controller drivers dereference that pointer directly (for example drivers/i3c/i3c_mcux.c, drivers/i3c/i3c_cdns.c, drivers/i3c/i3c_stm32.c, drivers/i3c/i3c_npcx.c), using rnw to decide direction.\n\nA read CCC therefore causes the kernel-mode driver to write bus-received bytes into an attacker-chosen kernel address for an attacker-chosen length, and a write CCC transmits kernel memory out onto the I3C bus. The result is an out-of-bounds kernel write plus a kernel memory disclosure, i.e. escalation from a user-mode thread to supervisor privilege, defeating the isolation CONFIG_USERSPACE is meant to provide.\n\nThe fix introduces copy_ccc_and_do(), which snapshots the payload, copies the target array into kernel memory with k_usermode_alloc_from_copy() (bounding num_targets to fewer than 32), validates each per-target buffer with K_SYSCALL_MEMORY() according to rnw, and copies the driver-written num_xfer and err fields back to the caller.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19185",
+    "publishedDate": "2026-10-05T09:17:13.077",
+    "lastModifiedDate": "2026-10-05T09:17:13.077",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19184",
+    "description": "The NXP GAU ADC driver (drivers/adc/adc_mcux_gau_adc.c) validated the caller-supplied sequence->buffer_size, which is expressed in bytes, against the number of active channels, which is a sample count. It then stored that byte count directly in data->results_length and used it in mcux_gau_adc_read_samples() as the number of uint16_t slots available. Because each conversion result occupies sizeof(uint16_t) bytes, a buffer that was accepted as \"large enough\" could be written with up to twice its size in bytes, so every sample past the buffer's midpoint was written out of bounds.\n\nadc_read() and adc_read_async() are Zephyr system calls. The syscall verifier in drivers/adc/adc_handlers.c only confirms that the caller owns buffer_size writable bytes (K_SYSCALL_MEMORY_WRITE); deciding whether that size is sufficient for the requested channels and extra_samplings is delegated entirely to the driver. On a build with CONFIG_USERSPACE=y, a user-mode thread that has been granted the ADC device object could therefore submit a deliberately half-sized buffer and cause the driver's work-queue handler — which runs in supervisor mode, outside the caller's MPU restrictions — to write ADC conversion results past the end of that buffer, at an address and for a length of the caller's choosing.\n\nThe overrun is bounded by the requested sequence: with sequence->options->extra_samplings set, the sampling loop walks the buffer pointer forward across every sampling, so the total overrun can reach the full size of the supplied buffer (kilobytes for a large extra_samplings). The written words are 16-bit ADC conversion results, so the content is only partially attacker-influenced (via the selected analog input, gain and resolution), but the destination and length are fully controlled — sufficient for kernel memory corruption, a crash, or a userspace-to-kernel privilege escalation. Builds without CONFIG_USERSPACE, or on SoCs other than NXP RW61x with the GAU ADC node enabled, are not exposed to the privilege boundary; there the same defect only causes a silent overflow when the application itself passes an undersized buffer.\n\nThe fix replaces the ad-hoc check with the shared adc_sequence_validate_buffer() helper (validating against num_channels * sizeof(uint16_t)), stores buffer_size / sizeof(uint16_t) in results_length, and corrects the loop bound to a post-decrement so exactly the available number of slots may be written.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19184",
+    "publishedDate": "2026-10-05T09:17:12.907",
+    "lastModifiedDate": "2026-10-05T09:17:12.907",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+        "exploitabilityScore": 2,
+        "impactScore": 5.8,
+        "source": "vulnerabilities@zephyrproject.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105284",
+    "description": "A weakness has been identified in Totolink A3002MU 1.0.0-B20230403.1455. The impacted element is the function sub_40FCFC of the file /bin/boa of the component Authentication Check. Executing a manipulation can lead to improper authorization. The attack may be launched remotely. The exploit has been made available to the public and could be used for attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105284",
+    "publishedDate": "2026-10-05T09:17:12.350",
+    "lastModifiedDate": "2026-10-05T09:17:12.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105263",
+    "description": "A security flaw has been discovered in Shaarli up to 0.16.3. The affected element is the function MetadataController of the file application/front/controller/admin/MetadataController.php of the component Admin Metadata Endpoint. Performing a manipulation of the argument url results in server-side request forgery. The attack may be initiated remotely. Upgrading to version 0.16.4 is sufficient to fix this issue. The patch is named 8ca4de8e7c932a684481f5fbb1229fe16de1f4d2. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105263",
+    "publishedDate": "2026-10-05T09:17:12.130",
+    "lastModifiedDate": "2026-10-05T09:17:12.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105254",
+    "description": "A vulnerability was identified in itsourcecode Online Admission System 1.0. Impacted is an unknown function of the file /admin/schoolyear.php. Such manipulation of the argument sy leads to sql injection. The attack can be launched remotely. The exploit is publicly available and might be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105254",
+    "publishedDate": "2026-10-05T09:17:11.947",
+    "lastModifiedDate": "2026-10-05T09:17:11.947",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105253",
+    "description": "A vulnerability was determined in itsourcecode Online Admission System Project 1.0. This issue affects some unknown processing of the file /admin/login1.php. This manipulation of the argument User causes sql injection. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105253",
+    "publishedDate": "2026-10-05T09:17:11.753",
+    "lastModifiedDate": "2026-10-05T09:17:11.753",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -29,243 +196,352 @@
     ]
   },
   {
-    "id": "CVE-2026-20589",
-    "description": "In venc, there is a possible out of bounds write due to type confusion. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11383899; Issue ID: MSV-9606.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20589",
-    "publishedDate": "2026-10-05T02:16:54.150",
-    "lastModifiedDate": "2026-10-05T02:16:54.150",
+    "id": "CVE-2026-105251",
+    "description": "A vulnerability was detected in vgmstream up to r2117. Affected by this vulnerability is the function ps_find_padding of the file src/coding/psx_decoder.c of the component VAG File Handler. Performing a manipulation results in out-of-bounds read. The attack is possible to be carried out remotely. The patch is named 4b8316652a30d40f99ad43310bed273fd1f8a7a3. It is suggested to install a patch to address this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105251",
+    "publishedDate": "2026-10-05T09:17:11.563",
+    "lastModifiedDate": "2026-10-05T09:17:11.563",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20588",
-    "description": "In mtee, there is a possible escalation of privilege due to a missing bounds check. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11383899; Issue ID: MSV-9607.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20588",
-    "publishedDate": "2026-10-05T02:16:54.033",
-    "lastModifiedDate": "2026-10-05T02:16:54.033",
+    "id": "CVE-2026-105069",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Nikki Blight QR Redirector qr-redirector allows Stored XSS.This issue affects QR Redirector: from n/a through 2.0.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105069",
+    "publishedDate": "2026-10-05T09:17:11.423",
+    "lastModifiedDate": "2026-10-05T09:17:11.423",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20587",
-    "description": "In mtee, there is a possible escalation of privilege due to type confusion. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11383899; Issue ID: MSV-9608.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20587",
-    "publishedDate": "2026-10-05T02:16:53.913",
-    "lastModifiedDate": "2026-10-05T02:16:53.913",
+    "id": "CVE-2026-105068",
+    "description": "Insertion of Sensitive Information Into Sent Data vulnerability in Pixelite Events Manager events-manager allows Retrieve Embedded Sensitive Data.This issue affects Events Manager: from n/a through 7.4.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105068",
+    "publishedDate": "2026-10-05T09:17:11.280",
+    "lastModifiedDate": "2026-10-05T09:17:11.280",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20586",
-    "description": "In vdec, there is a possible out of bounds write due to a missing bounds check. This could lead to remote escalation of privilege with no additional execution privileges needed. User interaction is needed for exploitation. Patch ID: ALPS11383899; Issue ID: MSV-9614.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20586",
-    "publishedDate": "2026-10-05T02:16:53.803",
-    "lastModifiedDate": "2026-10-05T02:16:53.803",
+    "id": "CVE-2026-105064",
+    "description": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in Unlimited Elements Unlimited Elements For Elementor (Free Widgets, Addons, Templates) unlimited-elements-for-elementor allows Parameter Injection.This issue affects Unlimited Elements For Elementor (Free Widgets, Addons, Templates): from n/a through 2.0.22.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105064",
+    "publishedDate": "2026-10-05T09:17:11.140",
+    "lastModifiedDate": "2026-10-05T09:17:11.140",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20579",
-    "description": "In vdec, there is a possible out of bounds write due to type confusion. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11383899; Issue ID: MSV-9800.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20579",
-    "publishedDate": "2026-10-05T02:16:53.683",
-    "lastModifiedDate": "2026-10-05T02:16:53.683",
+    "id": "CVE-2026-105062",
+    "description": "Missing Authorization vulnerability in Brandtoss WP Admin Audit wp-admin-audit allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WP Admin Audit: from n/a through 1.2.17.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105062",
+    "publishedDate": "2026-10-05T09:17:11.000",
+    "lastModifiedDate": "2026-10-05T09:17:11.000",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20544",
-    "description": "In meta, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege, if an attacker has physical access to the device, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: ALPS11049530 / ALPS11480843; Issue ID: MSV-7935.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20544",
-    "publishedDate": "2026-10-05T02:16:53.560",
-    "lastModifiedDate": "2026-10-05T02:16:53.560",
+    "id": "CVE-2026-105060",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Themepoints Logo Showcase logo-showcase allows Stored XSS.This issue affects Logo Showcase: from n/a through 4.0.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105060",
+    "publishedDate": "2026-10-05T09:17:10.863",
+    "lastModifiedDate": "2026-10-05T09:17:10.863",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20543",
-    "description": "In Modem, there is a possible information disclosure due to a logic error. This could lead to local information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01645293; Issue ID: MSV-6761.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20543",
-    "publishedDate": "2026-10-05T02:16:53.410",
-    "lastModifiedDate": "2026-10-05T02:16:53.410",
+    "id": "CVE-2026-105056",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in impleCode eCommerce Product Catalog ecommerce-product-catalog allows Stored XSS.This issue affects eCommerce Product Catalog: from n/a through 3.6.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105056",
+    "publishedDate": "2026-10-05T09:17:10.727",
+    "lastModifiedDate": "2026-10-05T09:17:10.727",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20542",
-    "description": "In apusys, there is a possible memory corruption due to use after free. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11076799; Issue ID: MSV-8143.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20542",
-    "publishedDate": "2026-10-05T02:16:53.270",
-    "lastModifiedDate": "2026-10-05T02:16:53.270",
+    "id": "CVE-2026-105055",
+    "description": "Missing Authorization vulnerability in WP Mailster WP Mailster wp-mailster allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WP Mailster: from n/a through 1.9.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105055",
+    "publishedDate": "2026-10-05T09:17:10.583",
+    "lastModifiedDate": "2026-10-05T09:17:10.583",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20541",
-    "description": "In Modem, there is a possible out of bounds read due to a missing permission check. This could lead to remote denial of service, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01774038; Issue ID: MSV-8911.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20541",
-    "publishedDate": "2026-10-05T02:16:53.140",
-    "lastModifiedDate": "2026-10-05T02:16:53.140",
+    "id": "CVE-2026-104811",
+    "description": "DigitalCanion SA has discovered a vulnerability that allows remote attackers to execute arbitrary code on affected installations of the product. Authentication may be required to exploit this vulnerability.\n\n\n\n\nThe specific flaw exists within the Configuration → Services → Music on Hold functionality of the web portal listening on TCP port 443. The application is intended to allow users to upload WAV audio files but fails to properly validate the uploaded file type. An attacker can exploit this behavior to upload a malicious shared object (.so) instead of a WAV file. When the uploaded file is subsequently processed by the affected component, attacker-controlled code is loaded and executed in the context of the affected process. This can result in remote code execution and potentially full compromise of the underlying Linux system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104811",
+    "publishedDate": "2026-10-05T09:17:10.290",
+    "lastModifiedDate": "2026-10-05T09:17:10.290",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20540",
-    "description": "In Modem, there is a possible out of bounds read due to a missing bounds check. This could lead to remote denial of service, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01774038; Issue ID: MSV-8912.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20540",
-    "publishedDate": "2026-10-05T02:16:53.010",
-    "lastModifiedDate": "2026-10-05T02:16:53.010",
+    "id": "CVE-2026-104810",
+    "description": "This vulnerability allows remote attackers to delete sensitive files on vulnerable installations of Mitel MiVoice Office 400. Authentication is required to exploit this vulnerability.\n\n\n\n\nThe specific flaw exists within the web portal listening on TCP port 443, under Maintenance → File Management → File Browser, which is affected by a directory traversal vulnerability. By exploiting this vulnerability, an authenticated attacker can access and delete files outside of the intended directory, including files belonging to the Mitel application and the underlying Linux system. Deleting critical system or application files can result in a denial-of-service condition affecting the underlying system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104810",
+    "publishedDate": "2026-10-05T09:17:10.153",
+    "lastModifiedDate": "2026-10-05T09:17:10.153",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20539",
-    "description": "In Modem, there is a possible out of bounds read due to a missing bounds check. This could lead to remote denial of service, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01774038; Issue ID: MSV-8913.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20539",
-    "publishedDate": "2026-10-05T02:16:52.883",
-    "lastModifiedDate": "2026-10-05T02:16:52.883",
+    "id": "CVE-2026-104809",
+    "description": "DigitalCanion has discovered a vulnerability that allows an attacker to cause the system to load an attacker-controlled .so file instead of the expected legitimate module. The loading mechanism relies on a predictable module name without adequately verifying the file’s origin or integrity. A malicious shared object using the expected name can therefore be loaded by a privileged process. The module code then executes within the context and privileges of that process. This results in arbitrary code execution and full compromise of the Mitel Linux virtual machine.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104809",
+    "publishedDate": "2026-10-05T09:17:10.007",
+    "lastModifiedDate": "2026-10-05T09:17:10.007",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20538",
-    "description": "In Modem, there is a possible out of bounds read due to a missing permission check. This could lead to remote denial of service, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01774038; Issue ID: MSV-8914.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20538",
-    "publishedDate": "2026-10-05T02:16:52.753",
-    "lastModifiedDate": "2026-10-05T02:16:52.753",
+    "id": "CVE-2026-104808",
+    "description": "DigitalCanion has discovered a stored Cross-Site Scripting (XSS) vulnerability that allows an authenticated malicious user to inject persistent JavaScript or HTML content, resulting in a denial-of-service condition within the web application.\n\n\n\n\nThe specific flaw exists within the web portal listening on TCP port 443, under Configuration → Users → Users List. The vulnerability occurs in the “Microsoft Exchange mailbox” field, which fails to properly validate or sanitize user-supplied input before storing and rendering it.\n\n\n\n\nBy injecting malicious JavaScript into this field, an attacker can cause the payload to execute whenever the affected user properties are accessed. This can prevent access to the affected user properties and result in a denial-of-service condition within the application's user-management functionality.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104808",
+    "publishedDate": "2026-10-05T09:17:09.870",
+    "lastModifiedDate": "2026-10-05T09:17:09.870",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:D/RE:L/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20537",
-    "description": "In aidl, there is a possible memory corruption due to use after free. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11185225; Issue ID: MSV-9024.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20537",
-    "publishedDate": "2026-10-05T02:16:52.623",
-    "lastModifiedDate": "2026-10-05T02:16:52.623",
+    "id": "CVE-2026-104807",
+    "description": "DigitalCanion has discovered a stored Cross-Site Scripting (XSS) vulnerability that allows an authenticated malicious user to inject persistent JavaScript or HTML content into the web application.\n\n\n\n\nThe specific flaw exists within the web portal listening on TCP port 443, under Configuration → Domains, specifically in the “Description” field. The application fails to properly validate or sanitize user-supplied input before storing and subsequently rendering the field.\n\n\n\n\nBy injecting malicious JavaScript into the Description field, an attacker can modify the content and behavior of the affected page when it is viewed by other users. This could allow an attacker to alter the page's appearance, display attacker-controlled content, or construct convincing phishing scenarios within the application's trusted web context.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104807",
+    "publishedDate": "2026-10-05T09:17:09.690",
+    "lastModifiedDate": "2026-10-05T09:17:09.690",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:D/RE:L/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20536",
-    "description": "In aidl, there is a possible memory corruption due to use after free. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11242428; Issue ID: MSV-9038.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20536",
-    "publishedDate": "2026-10-05T02:16:52.507",
-    "lastModifiedDate": "2026-10-05T02:16:52.507",
+    "id": "CVE-2026-104806",
+    "description": "DigitalCanion has discovered a path traversal vulnerability that allows an attacker to access files outside of the intended directory.\n\n\n\n\nThe specific flaw exists within the Maintenance → System Logs functionality of the web management portal listening on TCP port 443. The application fails to properly validate user-supplied file paths, allowing an attacker to manipulate the requested path and traverse the underlying directory structure.\n\n\n\n\nBy exploiting this vulnerability, an attacker can access and download files located outside the intended system logs directory, including potentially sensitive system and application files.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104806",
+    "publishedDate": "2026-10-05T09:17:09.540",
+    "lastModifiedDate": "2026-10-05T09:17:09.540",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:D/RE:L/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20535",
-    "description": "In aidl, there is a possible escalation of privilege due to a missing permission check. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11185216; Issue ID: MSV-9039.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20535",
-    "publishedDate": "2026-10-05T02:16:52.393",
-    "lastModifiedDate": "2026-10-05T02:16:52.393",
+    "id": "CVE-2026-104805",
+    "description": "DigitalCanion has discovered a vulnerability in the backup restoration functionality that allows an attacker with access to the configured backup repository to introduce arbitrary files into the system during restoration.\n\n\n\n\nThe specific flaw exists within the backup restoration mechanism, which fails to properly validate the paths, file types, integrity, and authenticity of files contained within a restored TGZ archive. The application does not perform file-signature verification before extracting the archive, allowing a specially crafted backup to contain attacker-controlled files.\n\n\n\n\nAn attacker with access to the backup SFTP or other configured repository can therefore provide a malicious TGZ archive that, when restored by the system, may place arbitrary files on the underlying Linux system. Depending on the location and permissions of the extracted files, this behavior can potentially be leveraged to achieve arbitrary code execution with root privileges and compromise the underlying virtual machine.\n\n\n\n\nThe absence of enforced backup passwords further reduces the protection provided by the backup mechanism and may facilitate unauthorized access to the repository.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104805",
+    "publishedDate": "2026-10-05T09:17:09.380",
+    "lastModifiedDate": "2026-10-05T09:17:09.380",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:D/RE:M/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20534",
-    "description": "In Modem, there is a possible out of bounds read due to an incorrect bounds check. This could lead to remote denial of service, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01797547; Issue ID: MSV-9155.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20534",
-    "publishedDate": "2026-10-05T02:16:52.273",
-    "lastModifiedDate": "2026-10-05T02:16:52.273",
+    "id": "CVE-2026-104706",
+    "description": "DigitalCanion has discovered a path traversal vulnerability that allows to view or download sensitive system files over the portal https://<ip>:8443 via menus Administration -> View Logs",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104706",
+    "publishedDate": "2026-10-05T09:17:09.167",
+    "lastModifiedDate": "2026-10-05T09:17:09.167",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vulnerability@ncsc.ch"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-20533",
-    "description": "In display, there is a possible escalation of privilege due to an integer overflow. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11296678; Issue ID: MSV-9167.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20533",
-    "publishedDate": "2026-10-05T02:16:52.150",
-    "lastModifiedDate": "2026-10-05T02:16:52.150",
+    "id": "CVE-2026-104675",
+    "description": "Missing Authorization vulnerability in Liquid Web / StellarWP Event Tickets event-tickets allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Event Tickets: from n/a through 5.30.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104675",
+    "publishedDate": "2026-10-05T09:17:09.030",
+    "lastModifiedDate": "2026-10-05T09:17:09.030",
     "vendors": [],
     "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20532",
-    "description": "In apu, there is a possible application crash due to double free. This could lead to local denial of service with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: ALPS11249024; Issue ID: MSV-9168.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20532",
-    "publishedDate": "2026-10-05T02:16:52.033",
-    "lastModifiedDate": "2026-10-05T02:16:52.033",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20531",
-    "description": "In apu, there is a possible memory corruption due to use after free. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: ALPS11249016; Issue ID: MSV-9169.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20531",
-    "publishedDate": "2026-10-05T02:16:51.907",
-    "lastModifiedDate": "2026-10-05T02:16:51.907",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20530",
-    "description": "In display, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11292777; Issue ID: MSV-9195.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20530",
-    "publishedDate": "2026-10-05T02:16:51.780",
-    "lastModifiedDate": "2026-10-05T02:16:51.780",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20529",
-    "description": "In battery, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege if a malicious actor has already obtained the System privilege. User interaction is not needed for exploitation. Patch ID: ALPS11276677; Issue ID: MSV-9217.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20529",
-    "publishedDate": "2026-10-05T02:16:51.640",
-    "lastModifiedDate": "2026-10-05T02:16:51.640",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20528",
-    "description": "In ccci, there is a possible out of bounds write and read due to a missing bounds check. This could lead to local information disclosure, memory corruption, crashes, or privilege escalation if a malicious actor has already obtained the System privilege. User interaction is needed for exploitation. Patch ID: ALPS11428950 (Note: For MT6880, MT6890) / ALPS10563453 (Note: For MT6980D, MT6990, MT6986, MT6986D, MT6813, MT6988) / AUTO00858766 (Note: For MT2735, MT2737); Issue ID: MSV-9893.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20528",
-    "publishedDate": "2026-10-05T02:16:51.520",
-    "lastModifiedDate": "2026-10-05T02:16:51.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20527",
-    "description": "In Modem, there is a possible system crash due to a missing bounds check. This could lead to remote denial of service, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: MOLY01864925 / MOLY01210562; Issue ID: MSV-8303.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20527",
-    "publishedDate": "2026-10-05T02:16:51.397",
-    "lastModifiedDate": "2026-10-05T02:16:51.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-20526",
-    "description": "In Modem, there is a possible out of bounds write due to a missing bounds check. This could lead to remote escalation of privilege, if a UE has connected to a rogue base station controlled by the attacker, with no additional execution privileges needed. User interaction is needed for exploitation. Patch ID: MOLY01898195; Issue ID: MSV-8906.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-20526",
-    "publishedDate": "2026-10-05T02:16:51.283",
-    "lastModifiedDate": "2026-10-05T02:16:51.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
   }
 ]
