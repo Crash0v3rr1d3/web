@@ -1,119 +1,10 @@
 [
   {
-    "id": "CVE-2026-97071",
-    "description": "Incorrect Calculation vulnerability in VillaTheme CURCY woo-multi-currency allows Integer Attacks.This issue affects CURCY: from n/a through 2.2.17.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97071",
-    "publishedDate": "2026-10-05T09:17:13.887",
-    "lastModifiedDate": "2026-10-05T09:17:13.887",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-39721",
-    "description": "Missing Authorization vulnerability in Brainstorm Force Starter Templates astra-sites allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Starter Templates: from n/a through 4.7.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39721",
-    "publishedDate": "2026-10-05T09:17:13.227",
-    "lastModifiedDate": "2026-10-05T09:17:13.227",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19185",
-    "description": "The system-call verifier for i3c_do_ccc() in drivers/i3c/i3c_handlers.c validated the outer struct i3c_ccc_payload, the broadcast ccc.data buffer and the targets.payloads[] array, but did not validate the per-target data buffers those array elements point at. Each struct i3c_ccc_target_payload carries its own data pointer and data_len, and neither was passed through K_SYSCALL_MEMORY() before the payload was handed to z_impl_i3c_do_ccc() and on to the controller driver. The verifier also operated on the caller's live structure rather than a snapshot, so validated fields could be changed by a second user thread between the check and the driver's use — unlike the sibling z_vrfy_i3c_transfer(), which has always copied its message array first.\n\nThe defect is only present in CONFIG_USERSPACE builds, where drivers/i3c/i3c_handlers.c is compiled. An unprivileged user-mode thread that has been granted access to the I3C controller device object — the ordinary way an application lets a user thread talk to I3C peripherals — can issue a direct CCC whose target payload data pointer names an arbitrary kernel address. Controller drivers dereference that pointer directly (for example drivers/i3c/i3c_mcux.c, drivers/i3c/i3c_cdns.c, drivers/i3c/i3c_stm32.c, drivers/i3c/i3c_npcx.c), using rnw to decide direction.\n\nA read CCC therefore causes the kernel-mode driver to write bus-received bytes into an attacker-chosen kernel address for an attacker-chosen length, and a write CCC transmits kernel memory out onto the I3C bus. The result is an out-of-bounds kernel write plus a kernel memory disclosure, i.e. escalation from a user-mode thread to supervisor privilege, defeating the isolation CONFIG_USERSPACE is meant to provide.\n\nThe fix introduces copy_ccc_and_do(), which snapshots the payload, copies the target array into kernel memory with k_usermode_alloc_from_copy() (bounding num_targets to fewer than 32), validates each per-target buffer with K_SYSCALL_MEMORY() according to rnw, and copies the driver-written num_xfer and err fields back to the caller.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19185",
-    "publishedDate": "2026-10-05T09:17:13.077",
-    "lastModifiedDate": "2026-10-05T09:17:13.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19184",
-    "description": "The NXP GAU ADC driver (drivers/adc/adc_mcux_gau_adc.c) validated the caller-supplied sequence->buffer_size, which is expressed in bytes, against the number of active channels, which is a sample count. It then stored that byte count directly in data->results_length and used it in mcux_gau_adc_read_samples() as the number of uint16_t slots available. Because each conversion result occupies sizeof(uint16_t) bytes, a buffer that was accepted as \"large enough\" could be written with up to twice its size in bytes, so every sample past the buffer's midpoint was written out of bounds.\n\nadc_read() and adc_read_async() are Zephyr system calls. The syscall verifier in drivers/adc/adc_handlers.c only confirms that the caller owns buffer_size writable bytes (K_SYSCALL_MEMORY_WRITE); deciding whether that size is sufficient for the requested channels and extra_samplings is delegated entirely to the driver. On a build with CONFIG_USERSPACE=y, a user-mode thread that has been granted the ADC device object could therefore submit a deliberately half-sized buffer and cause the driver's work-queue handler — which runs in supervisor mode, outside the caller's MPU restrictions — to write ADC conversion results past the end of that buffer, at an address and for a length of the caller's choosing.\n\nThe overrun is bounded by the requested sequence: with sequence->options->extra_samplings set, the sampling loop walks the buffer pointer forward across every sampling, so the total overrun can reach the full size of the supplied buffer (kilobytes for a large extra_samplings). The written words are 16-bit ADC conversion results, so the content is only partially attacker-influenced (via the selected analog input, gain and resolution), but the destination and length are fully controlled — sufficient for kernel memory corruption, a crash, or a userspace-to-kernel privilege escalation. Builds without CONFIG_USERSPACE, or on SoCs other than NXP RW61x with the GAU ADC node enabled, are not exposed to the privilege boundary; there the same defect only causes a silent overflow when the application itself passes an undersized buffer.\n\nThe fix replaces the ad-hoc check with the shared adc_sequence_validate_buffer() helper (validating against num_channels * sizeof(uint16_t)), stores buffer_size / sizeof(uint16_t) in results_length, and corrects the loop bound to a post-decrement so exactly the available number of slots may be written.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19184",
-    "publishedDate": "2026-10-05T09:17:12.907",
-    "lastModifiedDate": "2026-10-05T09:17:12.907",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
-        "exploitabilityScore": 2,
-        "impactScore": 5.8,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-105284",
-    "description": "A weakness has been identified in Totolink A3002MU 1.0.0-B20230403.1455. The impacted element is the function sub_40FCFC of the file /bin/boa of the component Authentication Check. Executing a manipulation can lead to improper authorization. The attack may be launched remotely. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105284",
-    "publishedDate": "2026-10-05T09:17:12.350",
-    "lastModifiedDate": "2026-10-05T09:17:12.350",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 10,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-105263",
-    "description": "A security flaw has been discovered in Shaarli up to 0.16.3. The affected element is the function MetadataController of the file application/front/controller/admin/MetadataController.php of the component Admin Metadata Endpoint. Performing a manipulation of the argument url results in server-side request forgery. The attack may be initiated remotely. Upgrading to version 0.16.4 is sufficient to fix this issue. The patch is named 8ca4de8e7c932a684481f5fbb1229fe16de1f4d2. It is advisable to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105263",
-    "publishedDate": "2026-10-05T09:17:12.130",
-    "lastModifiedDate": "2026-10-05T09:17:12.300",
+    "id": "CVE-2026-105610",
+    "description": "A vulnerability was found in chillzhuang SpringBlade up to 5.0.1. The impacted element is an unknown function of the file blade-service/blade-system/src/main/java/org/springblade/system/controller/ParamController.java of the component Parameter Submit Management. The manipulation of the argument initPassword results in improper authorization. It is possible to launch the attack remotely. The exploit has been made public and could be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105610",
+    "publishedDate": "2026-10-06T03:17:01.237",
+    "lastModifiedDate": "2026-10-06T03:17:01.417",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -127,10 +18,10 @@
         "source": "cna@vuldb.com"
       },
       {
-        "score": 5.1,
+        "score": 2,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -138,28 +29,28 @@
     ]
   },
   {
-    "id": "CVE-2026-105254",
-    "description": "A vulnerability was identified in itsourcecode Online Admission System 1.0. Impacted is an unknown function of the file /admin/schoolyear.php. Such manipulation of the argument sy leads to sql injection. The attack can be launched remotely. The exploit is publicly available and might be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105254",
-    "publishedDate": "2026-10-05T09:17:11.947",
-    "lastModifiedDate": "2026-10-05T09:17:11.947",
+    "id": "CVE-2026-105573",
+    "description": "A vulnerability was found in newbee-ltd newbee-mall up to 2.7.5. This impacts an unknown function of the file /jshERP-boot/accountHead/updateAccountHeadAndDetail of the component Shopping Cart Quantity Handler. Performing a manipulation of the argument goodsCount results in business logic errors. The attack can be initiated remotely. The exploit has been made public and could be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105573",
+    "publishedDate": "2026-10-06T03:17:01.033",
+    "lastModifiedDate": "2026-10-06T03:17:01.033",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
+        "impactScore": 1.4,
         "source": "cna@vuldb.com"
       },
       {
         "score": 2.1,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -167,11 +58,69 @@
     ]
   },
   {
-    "id": "CVE-2026-105253",
-    "description": "A vulnerability was determined in itsourcecode Online Admission System Project 1.0. This issue affects some unknown processing of the file /admin/login1.php. This manipulation of the argument User causes sql injection. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105253",
-    "publishedDate": "2026-10-05T09:17:11.753",
-    "lastModifiedDate": "2026-10-05T09:17:11.753",
+    "id": "CVE-2026-105572",
+    "description": "A vulnerability has been found in PickMall Lilishop up to 4.2.4. This affects an unknown function of the file /buyer/trade/receipt of the component Buyer Invoice List. Such manipulation of the argument memberId leads to authorization bypass. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105572",
+    "publishedDate": "2026-10-06T03:17:00.827",
+    "lastModifiedDate": "2026-10-06T03:17:00.827",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105611",
+    "description": "A vulnerability was determined in chillzhuang SpringBlade up to 5.0.1. This affects an unknown function of the file blade-service/blade-system/src/main/java/org/springblade/system/controller/RoleController.java of the component User Detail Endpoint. This manipulation of the argument ID causes improper authorization. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105611",
+    "publishedDate": "2026-10-06T04:17:58.950",
+    "lastModifiedDate": "2026-10-06T04:18:05.067",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105571",
+    "description": "A flaw has been found in PickMall Lilishop up to 4.2.4. The impacted element is an unknown function of the file /buyer/passport/member/bindMobile of the component Mobile Binding. This manipulation of the argument Username causes improper authorization. It is possible to initiate the attack remotely. The exploit has been published and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105571",
+    "publishedDate": "2026-10-06T02:17:04.613",
+    "lastModifiedDate": "2026-10-06T02:17:04.613",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -196,11 +145,11 @@
     ]
   },
   {
-    "id": "CVE-2026-105251",
-    "description": "A vulnerability was detected in vgmstream up to r2117. Affected by this vulnerability is the function ps_find_padding of the file src/coding/psx_decoder.c of the component VAG File Handler. Performing a manipulation results in out-of-bounds read. The attack is possible to be carried out remotely. The patch is named 4b8316652a30d40f99ad43310bed273fd1f8a7a3. It is suggested to install a patch to address this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105251",
-    "publishedDate": "2026-10-05T09:17:11.563",
-    "lastModifiedDate": "2026-10-05T09:17:11.563",
+    "id": "CVE-2026-105487",
+    "description": "A vulnerability was found in yogeshojha reNgine up to 2.2.0. Affected by this vulnerability is the function subdomain_discovery of the file web/reNgine/tasks.py of the component listTargets Endpoint. The manipulation of the argument Name results in os command injection. The attack can be launched remotely. The exploit has been made public and could be used. The pull request to fix this issue awaits acceptance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105487",
+    "publishedDate": "2026-10-06T02:17:04.403",
+    "lastModifiedDate": "2026-10-06T02:17:04.567",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -208,16 +157,16 @@
         "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
         "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 5.3,
+        "score": 2.1,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -225,322 +174,399 @@
     ]
   },
   {
-    "id": "CVE-2026-105069",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Nikki Blight QR Redirector qr-redirector allows Stored XSS.This issue affects QR Redirector: from n/a through 2.0.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105069",
-    "publishedDate": "2026-10-05T09:17:11.423",
-    "lastModifiedDate": "2026-10-05T09:17:11.423",
+    "id": "CVE-2026-105486",
+    "description": "A vulnerability was detected in OSSRS srs up to 7.0-a1. This affects the function systemAPI.Run of the file internal/proxy/api.go of the component System API. Performing a manipulation results in missing authentication. It is possible to initiate the attack remotely. The exploit is now public and may be used. Upgrading to version 8.0-d0 mitigates this issue. The patch is named bb5fde228f4ca5bd26d96368b61f6e0c21df51df. The affected component should be upgraded.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105486",
+    "publishedDate": "2026-10-06T02:17:04.213",
+    "lastModifiedDate": "2026-10-06T02:17:04.213",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 7.3,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-105068",
-    "description": "Insertion of Sensitive Information Into Sent Data vulnerability in Pixelite Events Manager events-manager allows Retrieve Embedded Sensitive Data.This issue affects Events Manager: from n/a through 7.4.5.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105068",
-    "publishedDate": "2026-10-05T09:17:11.280",
-    "lastModifiedDate": "2026-10-05T09:17:11.280",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-105064",
-    "description": "Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in Unlimited Elements Unlimited Elements For Elementor (Free Widgets, Addons, Templates) unlimited-elements-for-elementor allows Parameter Injection.This issue affects Unlimited Elements For Elementor (Free Widgets, Addons, Templates): from n/a through 2.0.22.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105064",
-    "publishedDate": "2026-10-05T09:17:11.140",
-    "lastModifiedDate": "2026-10-05T09:17:11.140",
+    "id": "CVE-2026-105484",
+    "description": "A security vulnerability has been detected in TOTOLINK X6000R 9.4.0cu.652_B20230116. The impacted element is the function firmware_check of the file /cgi-bin/cstecgi.cgi of the component UploadFirmwareFile Handler. Such manipulation of the argument file_name leads to os command injection. The attack may be performed from remote.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105484",
+    "publishedDate": "2026-10-06T02:17:04.040",
+    "lastModifiedDate": "2026-10-06T02:17:04.040",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 10,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104380",
+    "description": "Punk versions from 0.48 before 0.55 for Perl route Extended CONNECT requests to any GET route without an Origin check in ps_serve_one.\n\nOn HTTP/2 and HTTP/3 a WebSocket handshake arrives as an Extended CONNECT, which is matched as a GET and so reaches every GET route, API operation and mount. The Origin check runs only when a websocket route matches. On this transport the handler's status is the handshake response, and a 2xx accepts it.\n\nA cross-origin page can open a WebSocket to any path and learn from its open or error event whether that path returns 2xx.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104380",
+    "publishedDate": "2026-10-06T02:17:03.910",
+    "lastModifiedDate": "2026-10-06T02:17:03.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-104044",
+    "description": "A flaw was found in sssd. A local attacker can trigger a Denial of Service (DoS) by sending a specially crafted Pluggable Authentication Module (PAM) request when passkey authentication is enabled. Due to a missing state validation check in passkey Kerberos handling, the PAM responder dereferences an uninitialized pointer and crashes. This failure disrupts authentication services on the host.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104044",
+    "publishedDate": "2026-10-06T02:17:03.760",
+    "lastModifiedDate": "2026-10-06T02:17:03.760",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.2,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.5,
         "impactScore": 3.6,
-        "source": "audit@patchstack.com"
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-105062",
-    "description": "Missing Authorization vulnerability in Brandtoss WP Admin Audit wp-admin-audit allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WP Admin Audit: from n/a through 1.2.17.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105062",
-    "publishedDate": "2026-10-05T09:17:11.000",
-    "lastModifiedDate": "2026-10-05T09:17:11.000",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-105060",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Themepoints Logo Showcase logo-showcase allows Stored XSS.This issue affects Logo Showcase: from n/a through 4.0.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105060",
-    "publishedDate": "2026-10-05T09:17:10.863",
-    "lastModifiedDate": "2026-10-05T09:17:10.863",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-105056",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in impleCode eCommerce Product Catalog ecommerce-product-catalog allows Stored XSS.This issue affects eCommerce Product Catalog: from n/a through 3.6.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105056",
-    "publishedDate": "2026-10-05T09:17:10.727",
-    "lastModifiedDate": "2026-10-05T09:17:10.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-105055",
-    "description": "Missing Authorization vulnerability in WP Mailster WP Mailster wp-mailster allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WP Mailster: from n/a through 1.9.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105055",
-    "publishedDate": "2026-10-05T09:17:10.583",
-    "lastModifiedDate": "2026-10-05T09:17:10.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104811",
-    "description": "DigitalCanion SA has discovered a vulnerability that allows remote attackers to execute arbitrary code on affected installations of the product. Authentication may be required to exploit this vulnerability.\n\n\n\n\nThe specific flaw exists within the Configuration → Services → Music on Hold functionality of the web portal listening on TCP port 443. The application is intended to allow users to upload WAV audio files but fails to properly validate the uploaded file type. An attacker can exploit this behavior to upload a malicious shared object (.so) instead of a WAV file. When the uploaded file is subsequently processed by the affected component, attacker-controlled code is loaded and executed in the context of the affected process. This can result in remote code execution and potentially full compromise of the underlying Linux system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104811",
-    "publishedDate": "2026-10-05T09:17:10.290",
-    "lastModifiedDate": "2026-10-05T09:17:10.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104810",
-    "description": "This vulnerability allows remote attackers to delete sensitive files on vulnerable installations of Mitel MiVoice Office 400. Authentication is required to exploit this vulnerability.\n\n\n\n\nThe specific flaw exists within the web portal listening on TCP port 443, under Maintenance → File Management → File Browser, which is affected by a directory traversal vulnerability. By exploiting this vulnerability, an authenticated attacker can access and delete files outside of the intended directory, including files belonging to the Mitel application and the underlying Linux system. Deleting critical system or application files can result in a denial-of-service condition affecting the underlying system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104810",
-    "publishedDate": "2026-10-05T09:17:10.153",
-    "lastModifiedDate": "2026-10-05T09:17:10.153",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104809",
-    "description": "DigitalCanion has discovered a vulnerability that allows an attacker to cause the system to load an attacker-controlled .so file instead of the expected legitimate module. The loading mechanism relies on a predictable module name without adequately verifying the file’s origin or integrity. A malicious shared object using the expected name can therefore be loaded by a privileged process. The module code then executes within the context and privileges of that process. This results in arbitrary code execution and full compromise of the Mitel Linux virtual machine.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104809",
-    "publishedDate": "2026-10-05T09:17:10.007",
-    "lastModifiedDate": "2026-10-05T09:17:10.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104808",
-    "description": "DigitalCanion has discovered a stored Cross-Site Scripting (XSS) vulnerability that allows an authenticated malicious user to inject persistent JavaScript or HTML content, resulting in a denial-of-service condition within the web application.\n\n\n\n\nThe specific flaw exists within the web portal listening on TCP port 443, under Configuration → Users → Users List. The vulnerability occurs in the “Microsoft Exchange mailbox” field, which fails to properly validate or sanitize user-supplied input before storing and rendering it.\n\n\n\n\nBy injecting malicious JavaScript into this field, an attacker can cause the payload to execute whenever the affected user properties are accessed. This can prevent access to the affected user properties and result in a denial-of-service condition within the application's user-management functionality.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104808",
-    "publishedDate": "2026-10-05T09:17:09.870",
-    "lastModifiedDate": "2026-10-05T09:17:09.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.9,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:D/RE:L/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104807",
-    "description": "DigitalCanion has discovered a stored Cross-Site Scripting (XSS) vulnerability that allows an authenticated malicious user to inject persistent JavaScript or HTML content into the web application.\n\n\n\n\nThe specific flaw exists within the web portal listening on TCP port 443, under Configuration → Domains, specifically in the “Description” field. The application fails to properly validate or sanitize user-supplied input before storing and subsequently rendering the field.\n\n\n\n\nBy injecting malicious JavaScript into the Description field, an attacker can modify the content and behavior of the affected page when it is viewed by other users. This could allow an attacker to alter the page's appearance, display attacker-controlled content, or construct convincing phishing scenarios within the application's trusted web context.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104807",
-    "publishedDate": "2026-10-05T09:17:09.690",
-    "lastModifiedDate": "2026-10-05T09:17:09.690",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 1.9,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:D/RE:L/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104806",
-    "description": "DigitalCanion has discovered a path traversal vulnerability that allows an attacker to access files outside of the intended directory.\n\n\n\n\nThe specific flaw exists within the Maintenance → System Logs functionality of the web management portal listening on TCP port 443. The application fails to properly validate user-supplied file paths, allowing an attacker to manipulate the requested path and traverse the underlying directory structure.\n\n\n\n\nBy exploiting this vulnerability, an attacker can access and download files located outside the intended system logs directory, including potentially sensitive system and application files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104806",
-    "publishedDate": "2026-10-05T09:17:09.540",
-    "lastModifiedDate": "2026-10-05T09:17:09.540",
+    "id": "CVE-2026-104043",
+    "description": "A flaw was found in SSSD. A local attacker with access to the Name Service Switch (NSS) responder UNIX socket can trigger an integer underflow by sending a specially crafted request with an undersized packet header. This issue causes an out-of-bounds memory read during packet parsing, crashing the responder process and resulting in a Denial of Service (DoS).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104043",
+    "publishedDate": "2026-10-06T02:17:03.607",
+    "lastModifiedDate": "2026-10-06T02:17:03.607",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:A/V:D/RE:L/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104805",
-    "description": "DigitalCanion has discovered a vulnerability in the backup restoration functionality that allows an attacker with access to the configured backup repository to introduce arbitrary files into the system during restoration.\n\n\n\n\nThe specific flaw exists within the backup restoration mechanism, which fails to properly validate the paths, file types, integrity, and authenticity of files contained within a restored TGZ archive. The application does not perform file-signature verification before extracting the archive, allowing a specially crafted backup to contain attacker-controlled files.\n\n\n\n\nAn attacker with access to the backup SFTP or other configured repository can therefore provide a malicious TGZ archive that, when restored by the system, may place arbitrary files on the underlying Linux system. Depending on the location and permissions of the extracted files, this behavior can potentially be leveraged to achieve arbitrary code execution with root privileges and compromise the underlying virtual machine.\n\n\n\n\nThe absence of enforced backup passwords further reduces the protection provided by the backup mechanism and may facilitate unauthorized access to the repository.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104805",
-    "publishedDate": "2026-10-05T09:17:09.380",
-    "lastModifiedDate": "2026-10-05T09:17:09.380",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:U/V:D/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104706",
-    "description": "DigitalCanion has discovered a path traversal vulnerability that allows to view or download sensitive system files over the portal https://<ip>:8443 via menus Administration -> View Logs",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104706",
-    "publishedDate": "2026-10-05T09:17:09.167",
-    "lastModifiedDate": "2026-10-05T09:17:09.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:X/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "vulnerability@ncsc.ch"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104675",
-    "description": "Missing Authorization vulnerability in Liquid Web / StellarWP Event Tickets event-tickets allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Event Tickets: from n/a through 5.30.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104675",
-    "publishedDate": "2026-10-05T09:17:09.030",
-    "lastModifiedDate": "2026-10-05T09:17:09.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104042",
+    "description": "A flaw was found in sssd. A local attacker can cause a Denial of Service (DoS) by sending a crafted Pluggable Authentication Module (PAM) request containing a zero-length authentication token to the responder socket. Due to missing input validation, the service attempts to read beyond buffer boundaries when processing the token, causing the PAM responder to crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104042",
+    "publishedDate": "2026-10-06T02:17:03.470",
+    "lastModifiedDate": "2026-10-06T02:17:03.470",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104041",
+    "description": "A flaw was found in SSSD. An unprivileged local user can repeatedly request lookups for nonexistent entries through the Name Service Switch (NSS) responder. Because the negative cache does not limit the total number of stored entries and only removes expired records when an existing key is rechecked, the cache can grow without bound. This behavior can lead to memory exhaustion, resulting in a Denial of Service (DoS) as the responder becomes unresponsive or terminates.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104041",
+    "publishedDate": "2026-10-06T02:17:03.327",
+    "lastModifiedDate": "2026-10-06T02:17:03.327",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104040",
+    "description": "A flaw was found in SSSD. When configured with the Entra ID identity provider, input lookup names containing single quotes are not properly escaped before being included in Microsoft Graph Open Data Protocol (OData) queries. A low-privileged local user can exploit this flaw by submitting a crafted search request, altering query filters to broaden user or group searches. This can lead to information disclosure by retrieving unintended directory objects, as well as a Denial of Service (DoS) through excessive processing and cache population.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104040",
+    "publishedDate": "2026-10-06T02:17:03.177",
+    "lastModifiedDate": "2026-10-06T02:17:03.177",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104039",
+    "description": "A flaw was found in SSSD. A local user can cause a denial of service (DoS) by disrupting system authentication services. When handling Generic Security Services Application Programming Interface (GSSAPI) authentication in the Pluggable Authentication Module (PAM) responder, cached connection state is freed upon completion without clearing the reference pointer. An attacker can exploit this by sending an additional request over the same connection, causing the service to access invalid memory and unexpectedly terminate.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104039",
+    "publishedDate": "2026-10-06T02:17:03.013",
+    "lastModifiedDate": "2026-10-06T02:17:03.013",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-92821",
+    "description": "A flaw was found in SSSD. When configured to evaluate password expiration warnings before restrictive access rules in LDAP (Lightweight Directory Access Protocol) environments, an expired-password warning terminates rule evaluation early and treats the access request as successful. A remote authenticated user with an expired password using an alternative authentication method, such as SSH public key authentication, can exploit this flaw to bypass access control restrictions and gain unauthorized access to protected systems.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92821",
+    "publishedDate": "2026-10-06T01:16:36.280",
+    "lastModifiedDate": "2026-10-06T01:16:36.280",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-105472",
+    "description": "A weakness has been identified in girishsaraf Online-Appointment-Booking-System up to f427b4757128ca253d33d0cc4e87bbb9c999a4d5. The affected element is an unknown function of the file book.php of the component Booking Handler. This manipulation of the argument Doctor/appointment causes sql injection. The attack is possible to be carried out remotely. The exploit has been made available to the public and could be used for attacks. This product adopts a rolling release strategy to maintain continuous delivery. Therefore, version details for affected or updated releases cannot be specified. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105472",
+    "publishedDate": "2026-10-06T01:16:35.017",
+    "lastModifiedDate": "2026-10-06T01:16:35.017",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104038",
+    "description": "A flaw was found in sssd. A remote attacker can cause a denial of service (DoS) by submitting a certificate that lacks an expected Security Identifier (SID) extension. In deployments configured with SID-based certificate mapping rules, the service fails to verify the presence of the extension before processing it, causing the process to crash during authentication or lookup operations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104038",
+    "publishedDate": "2026-10-06T01:16:34.853",
+    "lastModifiedDate": "2026-10-06T01:16:34.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104037",
+    "description": "A flaw was found in SSSD. A local attacker can exploit this issue by sending a specially crafted request with an invalid packet length to the autofs responder UNIX socket. This causes an integer underflow and an out-of-bounds memory read, which can crash the responder process and result in a denial of service (DoS).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104037",
+    "publishedDate": "2026-10-06T01:16:34.707",
+    "lastModifiedDate": "2026-10-06T01:16:34.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104036",
+    "description": "A flaw was found in SSSD's NFS idmap plugin. When retrieving cached user or group names, the plugin detects if an entry exceeds the destination buffer size but fails to abort before copying data. A local attacker can trigger this vulnerability by requesting identity lookups that resolve to oversized cached entries, resulting in an out-of-bounds write. This flaw primarily leads to a Denial of Service (DoS) by crashing the identity mapping service, and may also corrupt adjacent process memory.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104036",
+    "publishedDate": "2026-10-06T01:16:34.567",
+    "lastModifiedDate": "2026-10-06T01:16:34.567",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 4.7,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104035",
+    "description": "A flaw was found in SSSD. An issue in the Kerberos Credential Manager (KCM) responder allows a local user to cause a Denial of Service (DoS) by maintaining a persistent connection and repeatedly storing and destroying credentials. Because the service fails to release cached objects from memory when credentials are removed, memory consumption grows continuously, ultimately exhausting available memory and rendering the service unresponsive.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104035",
+    "publishedDate": "2026-10-06T01:16:34.420",
+    "lastModifiedDate": "2026-10-06T01:16:34.420",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104034",
+    "description": "A flaw was found in SSSD. A use-after-free vulnerability exists in the Kerberos Credential Manager (KCM) responder during Kerberos ticket-granting ticket (TGT) renewal, where a deferred callback accesses memory that has already been released. An authenticated local user with a renewable Kerberos ticket can trigger this issue on systems configured with KCM renewal, causing the KCM responder service to crash and resulting in a Denial of Service (DoS).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104034",
+    "publishedDate": "2026-10-06T01:16:34.273",
+    "lastModifiedDate": "2026-10-06T01:16:34.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104033",
+    "description": "A flaw was found in SSSD. When configured to enforce account expiration using LDAP (Lightweight Directory Access Protocol) shadow attributes, SSSD fails to treat an expiration value of zero as an expired account. A user with valid credentials for an expired account can exploit this flaw to bypass access controls and authenticate to the system. This allows unauthorized access to persist after the account was intended to be deactivated.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104033",
+    "publishedDate": "2026-10-06T01:16:34.143",
+    "lastModifiedDate": "2026-10-06T01:16:34.143",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104032",
+    "description": "A flaw was found in SSSD. An unprivileged local user can repeatedly request master automount map updates through the autofs responder due to missing authorization checks. This triggers global cache invalidation and forces repeated lookups to backend directory providers, leading to a Denial of Service (DoS) from degraded automount availability and elevated resource consumption.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104032",
+    "publishedDate": "2026-10-06T01:16:33.997",
+    "lastModifiedDate": "2026-10-06T01:16:33.997",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104031",
+    "description": "A flaw was found in SSSD. In configurations where the autofs responder service is enabled, memory allocated during successful request processing is not released until the client connection terminates. A local attacker can exploit this vulnerability by maintaining an open connection and repeatedly submitting valid requests, leading to memory exhaustion and a Denial of Service (DoS).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104031",
+    "publishedDate": "2026-10-06T01:16:33.843",
+    "lastModifiedDate": "2026-10-06T01:16:33.843",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "secalert@redhat.com"
       }
     ]
   }
