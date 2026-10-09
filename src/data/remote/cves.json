@@ -1,351 +1,501 @@
 [
   {
-    "id": "CVE-2026-97032",
-    "description": "HTTP/2 servers could end up crashing due to inadvertently modifying its HPACK encoder concurrently. This happens because the server modifies the HPACK encoder from two goroutines without synchronization: one uses the encoder to encode a HEADERS frame as part of a response sent to a client and the other modifies the encoder's table size when handling a SETTINGS frame containing SETTINGS_HEADER_TABLE_SIZE that a client sends. A malicious client can repeatedly send a request while changing the header table size to crash the server.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97032",
-    "publishedDate": "2026-10-08T23:17:06.213",
-    "lastModifiedDate": "2026-10-08T23:17:06.213",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-97031",
-    "description": "Multiple ECH outer extension references are not permitted under RFC 9849; previously, a client could send a well-crafted packet that could trigger memory exhaustion in the server process by specifying multiple references. We now reject these as malformed and curb the memory amplification vector as a result.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97031",
-    "publishedDate": "2026-10-08T23:17:06.037",
-    "lastModifiedDate": "2026-10-08T23:17:06.037",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-97030",
-    "description": "A trusted template author may have previously written a valid template wherein the use of the 'yield' keyword would not be correctly escaped. We now ensure that valid keyword uses are escaped and non-keyword uses are not escaped.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97030",
-    "publishedDate": "2026-10-08T23:17:05.910",
-    "lastModifiedDate": "2026-10-08T23:17:05.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-96207",
-    "description": "Improper certificate validation in Microsoft Partner Center allows an unauthorized attacker to elevate privileges over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96207",
-    "publishedDate": "2026-10-08T23:17:05.583",
-    "lastModifiedDate": "2026-10-08T23:17:05.583",
+    "id": "CVE-2026-94062",
+    "description": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in Fuelthemes Werkstatt werkstatt allows PHP Local File Inclusion.This issue affects Werkstatt: from n/a through 4.8.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94062",
+    "publishedDate": "2026-10-09T13:17:12.423",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 10,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.8,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-94510",
-    "description": "Authorization bypass through user-controlled key in Microsoft Bookings allows an unauthorized attacker to elevate privileges over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94510",
-    "publishedDate": "2026-10-08T23:17:05.427",
-    "lastModifiedDate": "2026-10-08T23:17:05.427",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:H/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.3,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-94448",
-    "description": "When a JavaScript template literal contains consecutive expressions, the context tracking state was not properly reset upon entering a new expression. We now ensure that template-literal expression entries correctly reset context variables so all subsequent regular expression literals are accurately recognized and escaped.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94448",
-    "publishedDate": "2026-10-08T23:17:05.300",
-    "lastModifiedDate": "2026-10-08T23:17:05.300",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-94447",
-    "description": "Previously, a user operating inside of a malicious Go project that defines a bogus golang.org/toolchain go.sum entry and operates a malicious GOMODPROXY the user chooses to use can bypass the intended checksum. We now ensure that golang.org/toolchain always goes to the network for the canonical checksum.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94447",
-    "publishedDate": "2026-10-08T23:17:05.180",
-    "lastModifiedDate": "2026-10-08T23:17:05.180",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-94444",
-    "description": "Previously, a user operating inside of a malicious Go project that defines a bogus golang.org/fips140 and operates a malicious GOMODPROXY the user chooses to connect to can serve an arbitrary module in its place. We now unpack the trusted ziphash for the bundled golang.org/fips140 module and construct its entry in the GOMODCACHE such that it can be verified by the toolchain.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94444",
-    "publishedDate": "2026-10-08T23:17:05.050",
-    "lastModifiedDate": "2026-10-08T23:17:05.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-94440",
-    "description": "Parsing a multipart form can bypass memory limits and read an arbitrarily long line into memory when the remaining limit at the start of a part is less than 400 bytes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94440",
-    "publishedDate": "2026-10-08T23:17:04.917",
-    "lastModifiedDate": "2026-10-08T23:17:04.917",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-94439",
-    "description": "When an HTTP server handler sends a 2xx response to an HTTP/1 CONNECT request and returns without hijacking the connection, the server improperly continues to read and serve requests from the connection. Since a 2xx response to an HTTP/1 CONNECT converts the connection into a tunnel, the server should not treat the connection as continuing to contain HTTP. The impact of this misbehavior is mostly limited to potential request smuggling, where an intermediate proxy considers the data on the connection to be tunneled and the server considers it to be HTTP.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94439",
-    "publishedDate": "2026-10-08T23:17:04.760",
-    "lastModifiedDate": "2026-10-08T23:17:04.760",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-88131",
-    "description": "Deserialization of untrusted data in Microsoft Dataverse allows an unauthorized attacker to execute code over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-88131",
-    "publishedDate": "2026-10-08T23:17:04.590",
-    "lastModifiedDate": "2026-10-08T23:17:04.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-83947",
-    "description": "Missing authorization in Azure Event Grid allows an authorized attacker to perform spoofing over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-83947",
-    "publishedDate": "2026-10-08T23:17:04.423",
-    "lastModifiedDate": "2026-10-08T23:17:04.423",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-83943",
-    "description": "Exposure of sensitive information to an unauthorized actor in Azure API Center allows an unauthorized attacker to disclose information over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-83943",
-    "publishedDate": "2026-10-08T23:17:04.267",
-    "lastModifiedDate": "2026-10-08T23:17:04.267",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.2,
-        "impactScore": 5.8,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-78669",
-    "description": "A malicious HTTP/2 peer can cause excessive CPU consumption in the client or server by opening a large number of streams and then sending many small SETTINGS frames containing SETTINGS_INITIAL_WINDOW_SIZE values.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78669",
-    "publishedDate": "2026-10-08T23:17:04.010",
-    "lastModifiedDate": "2026-10-08T23:17:04.010",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-78667",
-    "description": "When parsing a Range header containing a large number of small ranges, FileServer(FS), ServeContent, and ServeFile(FS) can consume an excessive amount of CPU.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78667",
-    "publishedDate": "2026-10-08T23:17:03.880",
-    "lastModifiedDate": "2026-10-08T23:17:03.880",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-78663",
-    "description": "The HTTP/2 server can refund connection-level flow control twice for the same data: Once when a client resets a stream (refunding data for any sent-but-unread portion of the stream), and again when a request handler reads the buffered data. A malicious client can exploit this to bypass the configured connection-level flow control limit (MaxReceiveBufferPerConnection). Total buffered data is still limited by the concurrent stream limit and stream-level flow control.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78663",
-    "publishedDate": "2026-10-08T23:17:03.647",
-    "lastModifiedDate": "2026-10-08T23:17:03.647",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-78660",
-    "description": "Historically, we have been rather lax about malformed framing-related headers in our HTTP/2 implementation, as they cannot interfere with HTTP/2 framing. However, this makes it possible for our HTTP/2 implementation to forward responses containing such headers to an HTTP/1 client when acting as a reverse proxy. If the HTTP/1 client also does not behave strictly enough, this can result in response smuggling.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78660",
-    "publishedDate": "2026-10-08T23:17:03.510",
-    "lastModifiedDate": "2026-10-08T23:17:03.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-78659",
-    "description": "When \"Trailer\" headers are sent by a client, the HTTP server internally uses the header values to populate the Request.Trailer map passed to the server handler. Because Request.Trailer is a map, each entry incurs memory overhead. For HTTP/2 servers, a malicious client can exploit this by sending a \"Trailer\" header that declares a large number of fields, causing the server to allocate a disproportionate amount of memory while bypassing Server.MaxHeaderValueCount and Server.MaxHeaderBytes limits. This exploit is not applicable for HTTP/1 servers, which do not support multiplexing a large number of requests over one TCP connection, and whose Server.MaxHeaderBytes are calculated differently.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78659",
-    "publishedDate": "2026-10-08T23:17:03.270",
-    "lastModifiedDate": "2026-10-08T23:17:03.270",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-77900",
-    "description": "Missing authentication for critical function in Azure App Service allows an unauthorized attacker to execute code over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77900",
-    "publishedDate": "2026-10-08T23:17:03.107",
-    "lastModifiedDate": "2026-10-08T23:17:03.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "secure@microsoft.com"
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-69435",
-    "description": "Missing authorization in Azure SRE Agent allows an authorized attacker to elevate privileges over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69435",
-    "publishedDate": "2026-10-08T23:17:02.783",
-    "lastModifiedDate": "2026-10-08T23:17:02.783",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
-        "source": "secure@microsoft.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-56866",
-    "description": "When http.Transport sends an HTTP/1 CONNECT request with a non-empty Request.Body, it writes the body directly to the connection without framing after the request headers. If the server rejects the CONNECT request with a non-2xx keep-alive response, Transport returns the connection to the idle pool. Because CONNECT requests do not have a request body, the server may interpret the trailing body bytes as a subsequent pipelined HTTP/1.1 request on the connection, leaving the pooled connection desynchronized and causing the next caller that reuses it to read the response to the injected request. In reverse proxies (including httputil.ReverseProxy) that forward CONNECT requests through a shared Transport, this can lead to cross-user response poisoning.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56866",
-    "publishedDate": "2026-10-08T23:17:01.620",
-    "lastModifiedDate": "2026-10-08T23:17:01.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-56857",
-    "description": "On Windows, when the target of Root.Mkdir or Root.MkdirAll is a junction pointing to an empty location, the operation can create a directory at the junction target even when that target is located outside the root. This only applies to operations where the last path component is a junction (path/to/junction, but not path/junction/target).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-56857",
-    "publishedDate": "2026-10-08T23:17:01.487",
-    "lastModifiedDate": "2026-10-08T23:17:01.487",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-107802",
-    "description": "SumatraPDF is a multi-format reader for Windows. In 3.6.1 and earlier, src/SelectionTranslate.cpp embeds selected or pasted translation text in quoted Windows command lines using incomplete quote-only escaping. The affected BuildGrokTranslateCmdLineTemp(), BuildClaudeTranslateCmdLineTemp(), and BuildCodexTranslateCmdLineTemp() functions can allow attacker-controlled text to inject model, working-directory, approval, or sandbox-bypass flags when the corresponding agentic CLI backend is installed and used. No broader impact is claimed beyond the advisory-supported conditions. No fixed version is available as of this review.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107802",
-    "publishedDate": "2026-10-08T23:17:00.320",
-    "lastModifiedDate": "2026-10-08T23:17:00.453",
+    "id": "CVE-2026-94061",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Designthemes Whistle - Sports Club whistle-sports-club allows Reflected XSS.This issue affects Whistle - Sports Club: from n/a through 4.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94061",
+    "publishedDate": "2026-10-09T13:17:12.113",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 7.1,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-107738",
-    "description": "SumatraPDF is a multi-format reader for Windows. In 3.6.1 and earlier, ChmFile::GetCharZ() narrows file-controlled unsigned string offsets from /#WINDOWS and /#IVB to signed integers without a lower-bound check. An offset that becomes negative can make the function read before the /#STRINGS buffer, causing deterministic application termination. No broader impact is claimed beyond the advisory-supported conditions. No fixed version is available as of this review.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107738",
-    "publishedDate": "2026-10-08T23:16:59.970",
-    "lastModifiedDate": "2026-10-08T23:17:00.230",
+    "id": "CVE-2026-94060",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Bracketweb Voldor voldor allows Reflected XSS.This issue affects Voldor: from n/a through 1.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94060",
+    "publishedDate": "2026-10-09T13:17:11.880",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94059",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Bracketweb Ogency ogency allows Reflected XSS.This issue affects Ogency: from n/a through 1.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94059",
+    "publishedDate": "2026-10-09T13:17:11.640",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94058",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Bracketweb Treck treck allows Reflected XSS.This issue affects Treck: from n/a through 1.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94058",
+    "publishedDate": "2026-10-09T13:17:11.403",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-103413",
+    "description": "Improper input validation vulnerability in Apache Camel Karavan.\n\n\n\nWhen a deployment was started, Karavan unmarshalled a project's `kubernetes.yaml` and applied every resource it contained to the cluster without restricting the resource kinds, without rejecting security-sensitive pod options, and without pinning the target namespace. An authenticated user of any role could therefore have Karavan apply arbitrary Kubernetes resources within the reach of its service account, including pods requesting hostNetwork, hostPID, hostIPC, hostPath volumes, host ports, privileged containers, privilege escalation or added capabilities.\n\n\n\nThis issue affects Apache Camel Karavan: from 4.0.0 before 4.22.1.\n\n\n\nUsers are recommended to upgrade to version 4.22.1, which fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103413",
+    "publishedDate": "2026-10-09T13:17:07.633",
+    "lastModifiedDate": "2026-10-09T13:17:07.633",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@apache.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-103412",
+    "description": "Improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Apache Camel Karavan.\n\n\n\nA project file name supplied through the project file API was used verbatim as a path segment when the project was written to the working copy for a Git commit, so a name containing `../` sequences caused the file content to be written outside the project directory, to any location writable by the Karavan process. An authenticated user of any role could use this to overwrite application configuration or files on the application classpath and so execute code in the Karavan container.\n\n\n\nThis issue affects Apache Camel Karavan: from 3.18.0 before 4.22.1.\n\n\n\nUsers are recommended to upgrade to version 4.22.1, which fixes the issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103412",
+    "publishedDate": "2026-10-09T13:17:07.453",
+    "lastModifiedDate": "2026-10-09T13:17:07.453",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@apache.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86405",
+    "description": "Improper verification of cryptographic signature vulnerability in Sipay Electronic Money and Payment Services Inc. PrestaShop Virtual POS Module allows Signature Spoofing by Improper Validation.\n\nThis issue affects PrestaShop Virtual POS Module: from 26.8.1 before 26.9.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86405",
+    "publishedDate": "2026-10-09T13:17:11.100",
+    "lastModifiedDate": "2026-10-09T13:21:13.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-103220",
+    "description": "The Affinity by Canva application before 3.3.1 (October 2026 release) did not perform adequate bounds checking when parsing raster image data in Affinity document files, leading to an out-of-bounds read and the dereference of an untrusted pointer. A threat actor could craft an Affinity document that, when opened by a user in Affinity, could result in memory corruption or an application crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103220",
+    "publishedDate": "2026-10-09T13:17:07.330",
+    "lastModifiedDate": "2026-10-09T13:17:07.330",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 3.4,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-101130",
+    "description": "The Affinity by Canva application before 3.3.1 (October 2026 release) did not perform adequate bounds checking when parsing arrays of strings in Affinity document files, leading to a heap buffer over-read. A threat actor could craft an Affinity document that, when opened by a user in Affinity, could disclose the contents of adjacent heap memory in the document's text or result in an application crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-101130",
+    "publishedDate": "2026-10-09T13:17:07.037",
+    "lastModifiedDate": "2026-10-09T13:17:07.037",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.6,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 2.5,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-101094",
+    "description": "The Affinity by Canva application before 3.3.1 (October 2026 release) did not correctly handle incomplete UTF-8 character sequences when parsing text in Affinity document files, leading to a heap buffer over-read. A threat actor could craft an Affinity document that, when opened by a user in Affinity, could disclose the contents of adjacent heap memory in the document's text or result in an application crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-101094",
+    "publishedDate": "2026-10-09T13:17:05.890",
+    "lastModifiedDate": "2026-10-09T13:17:05.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.6,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 2.5,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-96396",
+    "description": "The Affinity by Canva application for macOS before 3.3.1 (October 2026 release) did not safely calculate the size of an image buffer when generating QuickLook thumbnails and previews of Affinity document files, leading to an integer overflow and a heap-based buffer overflow. A threat actor could craft an Affinity document that, when displayed or previewed by a user in Finder, could corrupt heap memory and cause the thumbnail or preview extension to crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96396",
+    "publishedDate": "2026-10-09T13:17:13.033",
+    "lastModifiedDate": "2026-10-09T13:17:13.033",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.4,
+        "impactScore": 3.4,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-96395",
+    "description": "The Affinity by Canva app for macOS before 3.3.1 (October 2026 release) did not perform adequate bounds checking when generating QuickLook thumbnails and previews of Affinity document files, leading to an out-of-bounds heap read. A threat actor could craft an Affinity document that, when displayed or previewed by a user in Finder, could disclose the contents of adjacent heap memory, including memory addresses, in the rendered thumbnail or preview image.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96395",
+    "publishedDate": "2026-10-09T13:17:12.910",
+    "lastModifiedDate": "2026-10-09T13:17:12.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.6,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 2.5,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-96394",
+    "description": "The Affinity by Canva application for macOS before 3.3.1 (October 2026 release) did not validate image dimensions against the size of the pixel data when generating QuickLook thumbnails and previews of Affinity document files, leading to an out-of-bounds heap read. A threat actor could craft an Affinity document that, when displayed or previewed by a user in Finder, could disclose the contents of adjacent heap memory in the rendered thumbnail or preview image, or cause the thumbnail or preview extension to crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96394",
+    "publishedDate": "2026-10-09T13:17:12.793",
+    "lastModifiedDate": "2026-10-09T13:17:12.793",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.9,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.4,
+        "impactScore": 1.4,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-96393",
+    "description": "The Affinity by Canva app before 3.3.1 (October 2026 release) did not perform adequate bounds checking when parsing Affinity document files, leading to an out-of-bounds pointer dereference. A threat actor could craft an Affinity document that, when opened by a user in Affinity, could result in an application crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96393",
+    "publishedDate": "2026-10-09T13:17:12.673",
+    "lastModifiedDate": "2026-10-09T13:17:12.673",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.6,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1,
+        "impactScore": 2.5,
+        "source": "61adb53e-e4b3-47f7-8a93-4717c9e77dc6"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85531",
+    "description": "Improper verification of cryptographic signature vulnerability in Sipay Electronic Money and Payment Services Inc. OpenCart Virtual POS Module allows Signature Spoofing by Improper Validation.\n\nThis issue affects OpenCart Virtual POS Module: from 26.8.2 before 26.9.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85531",
+    "publishedDate": "2026-10-09T13:17:10.957",
+    "lastModifiedDate": "2026-10-09T13:21:13.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-89235",
+    "description": "The Testimonials by BestWebSoft WordPress plugin through 1.0.8 does not sanitise and escape a parameter before using it in a SQL query, allowing unauthenticated attackers to append additional SQL to the query.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-89235",
+    "publishedDate": "2026-10-09T12:17:12.983",
+    "lastModifiedDate": "2026-10-09T13:21:35.470",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 6.8,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4,
+        "source": "contact@wpscan.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-107737",
-    "description": "SumatraPDF is a multi-format reader for Windows. In 3.6.1 and earlier, and in pre-release 3.7.0.20369 when WebView2 is absent or cannot initialize, ParseProtoUrl() accepts the signed host component of an its:// URL and FindHtmlWindowById() uses it directly as an index into gHtmlWindows. Opening a crafted CHM through the IE fallback backend with a negative or otherwise out-of-range window identifier can cause an out-of-bounds pointer read followed by an invalid object callback dereference and process termination. No fixed version is available as of this review.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107737",
-    "publishedDate": "2026-10-08T23:16:59.760",
-    "lastModifiedDate": "2026-10-08T23:16:59.900",
+    "id": "CVE-2026-87846",
+    "description": "The Shipping for Nova Poshta WordPress plugin through 1.19.8 does not perform any authorisation, nonce or ownership checks on one of its AJAX actions available to unauthenticated users, allowing anyone to delete the shipment records of arbitrary orders and to make the store issue the carrier's waybill-deletion request for those orders using the store's own stored API credentials.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87846",
+    "publishedDate": "2026-10-09T12:17:12.860",
+    "lastModifiedDate": "2026-10-09T13:21:35.470",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.7,
-        "version": "CVSS 4.0",
+        "score": 5.3,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "contact@wpscan.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86851",
+    "description": "The Livees Checkout WordPress plugin through 7.0.2 does not perform any capability, nonce or order-key check before acting on request parameters on the order confirmation page, allowing unauthenticated users to change the status of arbitrary orders, store arbitrary data and notes on them, and recover their order keys.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86851",
+    "publishedDate": "2026-10-09T12:17:12.737",
+    "lastModifiedDate": "2026-10-09T13:21:35.470",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "contact@wpscan.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-85348",
+    "description": "The GDPR Data Request Form WordPress plugin through 1.7.1 does not have CSRF protection when updating one of its settings, allowing attackers to change that setting via a forged request granted they can trick a site administrator into performing an action such as clicking on a link.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85348",
+    "publishedDate": "2026-10-09T12:17:12.500",
+    "lastModifiedDate": "2026-10-09T13:21:35.470",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "contact@wpscan.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62042",
+    "description": "Missing Authorization vulnerability in unFocus Projects Scripts n Styles scripts-n-styles allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Scripts n Styles: from n/a through 3.5.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62042",
+    "publishedDate": "2026-10-09T12:17:11.213",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62041",
+    "description": "Missing Authorization vulnerability in Ashok Dudhat WP Event Manager wp-event-manager allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WP Event Manager: from n/a through 3.4.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62041",
+    "publishedDate": "2026-10-09T12:17:11.080",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62040",
+    "description": "Missing Authorization vulnerability in DEV Institute Restrict User Access – Membership Plugin with Force restrict-user-access allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Restrict User Access – Membership Plugin with Force: from n/a through 2.8.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62040",
+    "publishedDate": "2026-10-09T12:17:10.940",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62039",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in bPlugins Html5 Audio Player html5-audio-player allows Stored XSS.This issue affects Html5 Audio Player: from n/a through 2.8.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62039",
+    "publishedDate": "2026-10-09T12:17:10.810",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62036",
+    "description": "Exposure of Sensitive System Information to an Unauthorized Control Sphere vulnerability in AREOI All Bootstrap Blocks all-bootstrap-blocks allows Retrieve Embedded Sensitive Data.This issue affects All Bootstrap Blocks: from n/a through 1.3.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62036",
+    "publishedDate": "2026-10-09T12:17:10.660",
+    "lastModifiedDate": "2026-10-09T13:20:48.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
       }
     ]
   }
