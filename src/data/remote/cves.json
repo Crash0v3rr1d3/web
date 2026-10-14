@@ -1,252 +1,528 @@
 [
   {
-    "id": "CVE-2026-98431",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRDMA/uverbs: Fix mmap_lock/disassociation_lock circular dependency\n\nCommit 51976c6cd786 (\"RDMA/core: Provide rdma_user_mmap_disassociate()\nto disassociate mmap pages\") introduced disassociation_lock to protect\nnew mmap registrations against uverbs_user_mmap_disassociate(), but\ncreated an ABBA deadlock:\n\n  Thread A (mmap / fork):\n    mmap_lock -> disassociation_lock\n\n  Thread B (disassociate):\n    disassociation_lock -> mmap_lock\n\nFix by removing disassociation_lock entirely and using the pre-existing\nhw_destroy_rwsem instead. hw_destroy_rwsem already provides the same\nprotection: rdma_umap_open() and ib_uverbs_mmap() both use\ndown_read_trylock() before registering a new VMA, so holding hw_destroy_rwsem\nin uverbs_user_mmap_disassociate() is sufficient to block new registrations.\ntrylock is used in both mmap paths (not blocking down_read) because\nmmap_lock is already held on entry, and uverbs_user_mmap_disassociate()\nacquires mmap_lock internally — a blocking read would recreate the same\ndeadlock.\n\nThe only caller that was not taking hw_destroy_rwsem for write was\nrdma_user_mmap_disassociate(). Fix it to take the rwsem per-ufile while\niterating under lists_mutex.  This is safe because ib_uverbs_close()\nreleases hw_destroy_rwsem entirely before acquiring lists_mutex, so the\ntwo locks are never held simultaneously.\n\nlockdep warning:\n\n [  776.654252] ======================================================\n [  776.655214] WARNING: possible circular locking dependency detected\n [  776.656167] 6.18.0for-upstream_debug_94e244d9ccab #1 Not tainted\n [  776.657114] ------------------------------------------------------\n [  776.658087] devlink/14824 is trying to acquire lock:\n [  776.658879] ffff88811170c800 (&mm->mmap_lock){++++}-{4:4}, at: uverbs_user_mmap_disassociate+0x168/0x780 [ib_uverbs]\n [  776.660479]\n [  776.660479] but task is already holding lock:\n [  776.661460] ffff888142d92b08 (&file->disassociation_lock){+.+.}-{4:4}, at: uverbs_user_mmap_disassociate+0x39/0x780 [ib_uverbs]\n [  776.663177]\n [  776.663177] which lock already depends on the new lock.\n [  776.663177]\n [  776.664525]\n [  776.664525] the existing dependency chain (in reverse order) is:\n [  776.665724]\n [  776.665724] -> #2 (&file->disassociation_lock){+.+.}-{4:4}:\n [  776.666887]        __mutex_lock+0x16d/0x2330\n [  776.667633]        rdma_umap_open+0x129/0x280 [ib_uverbs]\n [  776.668489]        dup_mmap+0xa40/0x1790\n [  776.669170]        copy_process+0x5dd2/0x6170\n [  776.669933]        kernel_clone+0xb6/0x610\n [  776.670636]        __do_sys_clone+0xb5/0xf0\n [  776.671354]        do_syscall_64+0x70/0x12e0\n [  776.672083]        entry_SYSCALL_64_after_hwframe+0x4b/0x53\n [  776.672940]\n [  776.672940] -> #1 (&mm->mmap_lock/1){+.+.}-{4:4}:\n [  776.673985]        down_write_nested+0x90/0x1e0\n [  776.674751]        dup_mmap+0x201/0x1790\n [  776.675448]        copy_process+0x5dd2/0x6170\n [  776.676180]        kernel_clone+0xb6/0x610\n [  776.676904]        __do_sys_clone+0xb5/0xf0\n [  776.677615]        do_syscall_64+0x70/0x12e0\n [  776.678351]        entry_SYSCALL_64_after_hwframe+0x4b/0x53\n [  776.679239]\n [  776.679239] -> #0 (&mm->mmap_lock){++++}-{4:4}:\n [  776.680253]        __lock_acquire+0x18c6/0x2ec0\n [  776.681018]        lock_acquire+0x10e/0x2e0\n [  776.681742]        down_read+0x95/0x430\n [  776.682395]        uverbs_user_mmap_disassociate+0x168/0x780 [ib_uverbs]\n [  776.683436]        uverbs_destroy_ufile_hw+0x1ae/0x270 [ib_uverbs]\n [  776.684416]        ib_uverbs_remove_one+0x22b/0x420 [ib_uverbs]\n [  776.685371]        remove_client_context+0xa6/0xf0 [ib_core]\n [  776.686342]        disable_device+0x12b/0x240 [ib_core]\n [  776.687249]        __ib_unregister_device+0x269/0x460 [ib_core]\n [  776.688233]        ib_unregister_device+0x21/0x30 [ib_core]\n [  776.689140]        mlx5r_remove+0xd0/0x170 [mlx5_ib]\n [  776.689999]        device_release_driver_internal+0x3b2/0x5\n---truncated---",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98431",
-    "publishedDate": "2026-10-14T14:17:54.887",
-    "lastModifiedDate": "2026-10-14T14:17:54.887",
+    "id": "CVE-2026-96540",
+    "description": "An improper access control vulnerability has been identified in the SonicWall Network Security Manager (NSM) on-prem in export settings, potentially allowing a remote authenticated attacker to obtain sensitive information. This may allow the attacker to escalate privileges to an administrator or to intercept communications of other users of the NSM instance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96540",
+    "publishedDate": "2026-10-14T21:17:39.603",
+    "lastModifiedDate": "2026-10-14T21:17:39.603",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-98430",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRDMA/efa: Keep admin queues alive while IRQ is registered\n\nThe management IRQ handler accesses both the admin completion queue and the\nasync event queue. The driver registered the IRQ before constructing these\nqueues and destroyed them before freeing the IRQ, so the handler's lifetime\nwas not contained by the resources it accesses.\n\nInitialize the queues with interrupts masked, request the IRQ, and then\nswitch to interrupt mode. On removal, reset the device and free the IRQ\nbefore destroying the queues. Also reset the device before destroying the\nqueues if IRQ registration fails, because the device already has their DMA\naddresses.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98430",
-    "publishedDate": "2026-10-14T14:17:54.697",
-    "lastModifiedDate": "2026-10-14T14:17:54.697",
+    "id": "CVE-2026-77427",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. From 3.9.0 until 3.22.0, pristine manual FileRise installations without PERSISTENT_TOKENS_KEY or metadata/persistent_tokens.key can activate a published legacy compatibility key. If an attacker separately obtains ciphertext-bearing account or configuration files, the known fallback key can enable decryption of TOTP secrets or credentials. Docker installations already generated a unique persistent key, and existing installations are not automatically rotated because doing so could make encrypted state unreadable. This issue is fixed in version 3.22.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77427",
+    "publishedDate": "2026-10-14T21:17:39.447",
+    "lastModifiedDate": "2026-10-14T21:17:39.567",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98429",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRDMA/efa: Keep EQ resources alive while IRQ is registered\n\nThe completion IRQ handler accesses the EQ state and DMA buffer. Its IRQ was\nregistered before that state was initialized, while teardown released the\nbuffer before free_irq() synchronized the handler.\n\nInitialize the EQ without arming it, register the IRQ, and then arm it.\nReverse the resource order during teardown by freeing the IRQ before\ndestroying the EQ.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98429",
-    "publishedDate": "2026-10-14T14:17:54.580",
-    "lastModifiedDate": "2026-10-14T14:17:54.580",
+    "id": "CVE-2026-71854",
+    "description": "OpenAEV is an open source platform allowing organizations to plan, schedule and conduct cyber adversary simulation campaign and tests. Prior to version 2.260622.0, on a default installation, the `/api/player/**` lessons endpoints can be called without authentication, and they trust a client-supplied `userId` query parameter without verifying that the caller is that user or a member of the exercise. An unauthenticated client that knows an exercise UUID can read lessons-learned questions and answers (including each answer's author identity) and create or overwrite answers attributed to an arbitrary user. Version 2.260622.0 contains a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71854",
+    "publishedDate": "2026-10-14T21:17:39.177",
+    "lastModifiedDate": "2026-10-14T21:17:39.177",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98428",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nALSA: usb: 6fire: Avoid embedded URBs\n\nThe USB 6fire driver uses URBs embedded in different structs for PCM,\nMIDI and communication, and this is basically a buggy implementation\nnowadays; since a URB is managed with a refcount, this may lead to a\nUAF when the URB is released asynchronously.\n\nFor addressing the problem, this patch converts those embedded URBs to\nones that are properly allocated via usb_alloc_urb().  The\npcm_urb.packets[] is gone, as it's allocated by usb_alloc_urb(), hence\nit's found in urb.iso_frame_desc[] instead.\n\nThe conversions are rather straightforward; each embedded struct urb\nis changed to a pointer, and its callers are updated accordingly.\nThe resource for those structs are released in the common destructor\nfunctions (usb6fire_comm_free(), etc), which are called at both the\ninit error path and the disconnect.\n\nNo functional changes, only compile-tested.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98428",
-    "publishedDate": "2026-10-14T14:17:54.460",
-    "lastModifiedDate": "2026-10-14T14:17:54.460",
+    "id": "CVE-2026-69194",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.21.0, FileRise returns the stored branding.footerHtml value through the unauthenticated public site configuration API without server-side sanitization. The FileRise frontend already sanitizes this value before rendering it into the page, using an allowlist of simple footer tags and safe link handling. The unauthenticated public config API exposed raw admin-provided footer HTML to clients, which is still undesirable and could be unsafe for alternate clients or future render paths. An administrator must first store the malicious footer value. This issue is fixed in version 3.21.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69194",
+    "publishedDate": "2026-10-14T21:17:39.023",
+    "lastModifiedDate": "2026-10-14T21:17:39.143",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 1.7,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98427",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/sched: codel: bound the dropping loop per dequeue call\n\nThe CoDel control law schedules the next drop one interval/sqrt(count)\nafter the previous drop, using the configured interval\n(codel_params.interval). For very small intervals the scheduled step\nrounds down to zero, so the dropping loop in codel_dequeue() never\nadvances and drains the entire backlog under the qdisc lock in one\ncall - an unprivileged user can trigger a soft lockup this way.\n\nFix in the shared codel code used by both codel and fq_codel:\n\n1. Make the control-law step at least 1 tick so the dropping loop\n   always moves forward.\n\n2. Cap the dropping loop at CODEL_MAX_DROPS_PER_DEQUEUE (256) drops\n   per codel_dequeue() call, resyncing drop_next to now when the cap\n   is hit: the catch-up owed to the loop grows with the idle gap and\n   the backlog, which no interval threshold can bound. This is a\n   deliberate behaviour change after long idle gaps.\n\nThe cap applies to fq_codel (4b549a2ef4be) and the mac80211 TXQ path\n(fixed interval, cap only).\n\nThe target sojourn delay (codel_params.target) is not validated: it\ndoes not feed the control law, so a sub-tick value is aggressive\nrather than deadlock-prone.\n\nConditions to recreate the bug:\n  - tc qdisc add dev lo root handle 1: tbf rate 1kbit burst 2kb limit 1000000\n  - tc qdisc add dev lo parent 1:1 handle 10: codel interval 2us target 1ms noecn limit 1000000 (same for fq_codel)\n  - unpatched kernel: tc accepts it; a UDP flood under the 1kbit tbf\n    soft-lockups (watchdog: BUG: soft lockup) while one\n    codel_dequeue() call drops the backlog under the qdisc lock\n  - patched kernel: same setup, at most 256 drops per dequeue call,\n    no soft lockup\n\nTesting: claim reproducer and interval 2us/3us variants run clean;\ntdc qdisc category passes (see the selftests patch).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98427",
-    "publishedDate": "2026-10-14T14:17:54.343",
-    "lastModifiedDate": "2026-10-14T14:17:54.343",
+    "id": "CVE-2026-69193",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.21.0, FileRise tracks failed logins only by the combination of source IP address and username. A remote unauthenticated attacker can rotate usernames to obtain a fresh per-account attempt budget for each name, enabling password spraying from one source beyond the intended limit. Per-user limits still apply and can also produce distinguishable throttling behavior for targeted accounts. The affected surface is AuthModel::getFailedLoginKey(). This issue is fixed in version 3.21.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69193",
+    "publishedDate": "2026-10-14T21:17:38.870",
+    "lastModifiedDate": "2026-10-14T21:17:38.990",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98426",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: mwifiex: fix IRQ leak using wrong index in MSI-X error path\n\nmwifiex_pcie_request_irq() registers each MSI-X vector with a per-index\ndev_id (&card->msix_ctx[i]). On a request_irq() failure the cleanup loop\n\"for (j = 0; j < i; j++)\" frees msix_entries[j].vector but passes the\nfailed index's &card->msix_ctx[i] as the dev_id. free_irq() matches on\n(irq, dev_id), so it fails to find the action registered with\n&card->msix_ctx[j]: the already-requested IRQ j is not freed (leaked) and\nfree_irq() warns about freeing a non-existent IRQ. Use &card->msix_ctx[j].",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98426",
-    "publishedDate": "2026-10-14T14:17:54.220",
-    "lastModifiedDate": "2026-10-14T14:17:54.220",
+    "id": "CVE-2026-69191",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.21.0, FileRise enforces disableFormLogin, disableBasicAuth, and disableOIDCLogin in the client interface but not consistently in the corresponding server-side authentication flows. A user with otherwise valid credentials for a disabled method can call its backend endpoint directly and authenticate despite the administrator's login-method policy. The flaw does not permit credential-free authentication. This issue is fixed in version 3.21.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69191",
+    "publishedDate": "2026-10-14T21:17:38.723",
+    "lastModifiedDate": "2026-10-14T21:17:38.837",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98425",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: mac80211: don't warn when an IBSS has no channel to scan\n\nieee80211_request_ibss_scan() warns when regulatory leaves no\nallowed channel, but that can happen as the regdomain can change\nwhile IBSS is operating, and it can continue to operate briefly\nduring the 60s grace period until it's shut down.\n\nJust remove the warning in this case.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98425",
-    "publishedDate": "2026-10-14T14:17:54.110",
-    "lastModifiedDate": "2026-10-14T14:17:54.110",
+    "id": "CVE-2026-64856",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.20.0, FileRise /api/file/snippet.php does not apply the standard authenticated-session guard before processing short text preview requests. The endpoint still performs FileRise ACL checks, so normal installations do not expose an unauthenticated arbitrary file read, but unauthenticated requests can reach ACL evaluation instead of receiving an immediate 401 response. Only additional unusual proxy-header or ACL misconfiguration is documented as allowing requests to proceed into path and file-content handling. This issue is fixed in version 3.20.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64856",
+    "publishedDate": "2026-10-14T21:17:38.560",
+    "lastModifiedDate": "2026-10-14T21:17:38.680",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98424",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: cfg80211: undo netns switch if renaming the wiphy fails\n\nOnce all the interfaces have been moved, cfg80211_switch_netns()\nmoves the wiphy itself by setting its network namespace and then\nrenaming it, which makes sysfs move it. The rename can fail (but\nonly on allocation failures), leaving things mixed up and hitting\nthe warning there.\n\nIgnoring it isn't great, undo the move and let the change fail\nin this case. If undo fails then WARN, then things would again\nbe stuck in two different network namespaces.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98424",
-    "publishedDate": "2026-10-14T14:17:54.003",
-    "lastModifiedDate": "2026-10-14T14:17:54.003",
+    "id": "CVE-2026-62664",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.19.0, FileRise validates the complete folderName string but does not reject dot-dot path segments before FolderModel::createFolder() constructs and creates the destination. An authenticated low-privileged user with a valid CSRF token and create or owner permission on the parent can submit traversal segments to POST /api/folder/createFolder.php and create directories outside UPLOAD_DIR wherever the web-server account can write. This issue is fixed in version 3.19.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62664",
+    "publishedDate": "2026-10-14T21:17:38.400",
+    "lastModifiedDate": "2026-10-14T21:17:38.523",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98423",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: mac80211_hwsim: don't hand frames to mac80211 while stopping\n\nThe code checks ->started for frames coming from wmediumd, but the\nradio can be stopped after the check and before frame delivery,\ncausing mac80211 to hit the WARN_ON(!local->started).\n\nExpand the mutex for this case and synchronise against it when the\nradio is stopped to avoid being able to hit the warning with hwsim.\n\nDrop the error print that would've complicated the error path, it\nonly triggers for allocation failures (already noisy) and malformed\nframes anyway.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98423",
-    "publishedDate": "2026-10-14T14:17:53.880",
-    "lastModifiedDate": "2026-10-14T14:17:53.880",
+    "id": "CVE-2026-61844",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.18.0, FileRise flattens logical folder paths into metadata filenames by replacing separators and spaces with hyphens, so distinct folders such as team/docs and team-docs can share one metadata file. Because uploader metadata is used to authorize read_own and ownership-restricted edits, a low-privileged user who controls one colliding folder, knows the target basename, and already has read_own access to the target folder can alter the metadata used by that folder, make the victim file appear attacker-owned, read it, and modify it when edit-own permission is also available. This issue is fixed in version 3.18.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61844",
+    "publishedDate": "2026-10-14T21:17:38.137",
+    "lastModifiedDate": "2026-10-14T21:17:38.360",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98422",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: mac80211: reset the AP_VLAN tailroom counter on ifdown\n\nOn ifup, AP_VLAN interfaces get crypto_tx_tailroom_needed_cnt from\nthe AP interface, but it's never decremented again unless the AP is\nalso brought down. Thus, bringing the same AP_VLAN up again will\nincrement the counter again and eventually hit the sanity check:\n\n  WARN_ON_ONCE(sdata->crypto_tx_tailroom_needed_cnt !=\n               master->crypto_tx_tailroom_needed_cnt);\n\nReset it on ifdown to avoid that.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98422",
-    "publishedDate": "2026-10-14T14:17:53.737",
-    "lastModifiedDate": "2026-10-14T14:17:53.737",
+    "id": "CVE-2026-61843",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.18.0, FileRise upload-enabled shared-folder and upload-only links do not reject a destination filename that already exists. An unauthenticated visitor with a valid share token and any configured share password can upload a file with the same name as an existing file and silently replace its content while the original uploader metadata remains. The same replacement gap affects ordinary authenticated uploads through /api/upload/upload.php and authenticated upload-only users who lack edit authority over the existing file. This issue is fixed in version 3.18.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61843",
+    "publishedDate": "2026-10-14T21:17:37.947",
+    "lastModifiedDate": "2026-10-14T21:17:38.090",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98421",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: mac80211: require a peer station for TDLS setup confirm\n\nIt's nonsense for the setup confirm to go to station that\ndoesn't even exist, and it hits a warning when building\nthe frame:\n\n  WARN_ON_ONCE(!sta || !ap_sta)\n\nOnly accept WLAN_TDLS_SETUP_CONFIRM when the station is\nalready there as a TDLS station. Need to copy the call\nto ieee80211_tdls_prep_mgmt_packet() since the existing\nWLAN_TDLS_DISCOVERY_REQUEST already falls through to it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98421",
-    "publishedDate": "2026-10-14T14:17:53.573",
-    "lastModifiedDate": "2026-10-14T14:17:53.573",
+    "id": "CVE-2026-57493",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.16.0, FileRise stores the isAdmin flag in remember-me tokens and restores that stale value during automatic login instead of resolving the account's current role from users.txt. A user who was issued a token while an administrator can retain administrator access after demotion, and token rotation copies the stale privilege into each replacement token. Exploitation requires possession of the pre-demotion remember-me token. This issue is fixed in version 3.16.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57493",
+    "publishedDate": "2026-10-14T21:17:37.800",
+    "lastModifiedDate": "2026-10-14T21:17:37.910",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98420",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nksmbd: follow SMB2 session expiration semantics\n\nksmbd_session_register() destroys valid sessions after ten seconds of\ninactivity whenever a client starts another SessionSetup exchange. This\nconfuses Session.IdleTime with Session.ExpirationTime. Windows can create\nadditional authenticated sessions on an existing connection, so deleting\nthe older session invalidates its tree connects and makes mapped drives\nfail with STATUS_NETWORK_NAME_DELETED.\n\nThe session expiration rules require the server to change a valid session\nto expired only after its credential expiration time passes. A valid or\nexpired session otherwise keeps its connection from being scavenged.\nConnections that have not negotiated a dialect, have no sessions, or have\nonly InProgress sessions are disconnected after an implementation-specific\ntimeout. Use the Windows-compatible 45 second value and run the expiration\ncheck periodically for both TCP and SMB Direct.\n\nKeep zero as an infinite credential expiration time, and count each\nValid-to-Expired transition. Set expired sessions to InProgress when they\nreauthenticate. If authentication fails, remove the session from the\nglobal and per-connection tables immediately, including SMB3 multichannel\nconnections.\n\nRetain protection against abandoned SessionId-zero exchanges by allowing\nonly one InProgress authentication per connection. Additional exchanges\nfail with STATUS_INSUFFICIENT_RESOURCES, and stale InProgress sessions are\nreaped after the same 45 second setup timeout. This bounds the original\nunauthenticated memory-exhaustion path without evicting established\nsessions.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98420",
-    "publishedDate": "2026-10-14T14:17:53.427",
-    "lastModifiedDate": "2026-10-14T14:17:53.427",
+    "id": "CVE-2026-57492",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.16.0, FileRise treats an empty or missing users.txt file as a fresh installation even after setup previously completed. If storage loss, truncation, or another failure empties the user store, an unauthenticated remote caller can detect that setup mode reopened and create the next initial administrator account through the setup flow. The application lacked a durable setup-complete marker independent of the mutable user store. This issue is fixed in version 3.16.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57492",
+    "publishedDate": "2026-10-14T21:17:37.650",
+    "lastModifiedDate": "2026-10-14T21:17:37.770",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98419",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrop_monitor: fix out-of-bounds write in reset_per_cpu_data()\n\nIn reset_per_cpu_data(), al is computed as:\n\n    al = sizeof(struct net_dm_alert_msg);\n    al += dm_hit_limit * sizeof(struct net_dm_drop_point);\n    al += sizeof(struct nlattr);\n\n    skb = genlmsg_new(al, GFP_KERNEL);\n    ...\n    nla = nla_reserve(skb, NLA_UNSPEC, sizeof(struct net_dm_alert_msg));\n    ...\n    msg = nla_data(nla);\n    memset(msg, 0, al);\n\nBecause al includes sizeof(struct nlattr) (the 4-byte attribute header),\ngenlmsg_new() allocates al bytes of tailroom starting at nla.\nHowever, msg points to nla_data(nla), which is located\nsizeof(struct nlattr) bytes past nla. Calling memset(msg, 0, al)\ntherefore writes al bytes starting from msg, exceeding the allocated\nbuffer by sizeof(struct nlattr) (4 bytes) and corrupting\nskb_shared_info.\n\nFix this by letting al represent only the payload length, allocating\nthe skb with genlmsg_new(nla_total_size(al), GFP_KERNEL), and zeroing\nal bytes from msg.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98419",
-    "publishedDate": "2026-10-14T14:17:53.290",
-    "lastModifiedDate": "2026-10-14T14:17:53.290",
+    "id": "CVE-2026-57491",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.16.0, FileRise archive extraction does not apply UploadNamePolicy::isAllowedForWrite() before ZipArchive::extractTo() writes entries into the destination directory. An authenticated user with upload and extract permissions can place a blocked extension such as a PHP-family file inside a ZIP and cause it to be written to disk even when normal uploads reject that filename. Post-extraction metadata pruning does not remove the blocked file, so deployments that execute uploaded content may permit code execution. This issue is fixed in version 3.16.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57491",
+    "publishedDate": "2026-10-14T21:17:37.507",
+    "lastModifiedDate": "2026-10-14T21:17:37.620",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98418",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsched/core: Avoid false migration warning for proxy donors\n\nProxy execution can move a blocked donor's scheduling context to the\nlock owner's CPU even when the donor is migration-disabled. The donor\ndoes not execute there, and its original execution CPU remains recorded\nin wake_cpu.\n\nset_task_cpu() warns unconditionally for migration-disabled tasks, so a\nsubsequent proxy migration or the wakeup path returning the donor home\ntriggers a false positive: moving a blocked scheduling context does not\nviolate the migration-disabled execution context.\n\nFor example, creating a mutex owner on CPU1 and a migration-disabled\nwaiter on CPU0 can trigger the following warning:\n\n  proxy_migrate_repro: donor blocking on CPU0 with migration disabled\n  proxy_migrate_repro: donor moved from CPU0 to CPU1\n  WARNING: kernel/sched/core.c:3389 at set_task_cpu+0x1d3/0x280\n  ...\n  Call Trace:\n   try_to_wake_up+0x43f/0x780\n   __mutex_unlock_slowpath+0x330/0x540\n   owner_fn+0x9f/0xc0 [proxy_migrate_repro]\n  ...\n  proxy_migrate_repro: donor woke on CPU0, task_cpu=0\n  proxy_migrate_repro: completed\n\nExclude blocked proxy donors from the warning. The proxy wakeup path\nrestores an executable placement before clearing the blocked state.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98418",
-    "publishedDate": "2026-10-14T14:17:53.173",
-    "lastModifiedDate": "2026-10-14T14:17:53.173",
+    "id": "CVE-2026-57490",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.16.0, when an administrator has enabled WebDAV, FileRise WebDAV Basic authentication validates only the account username and password through AuthModel::authenticate() and does not enforce the account's configured TOTP factor. An attacker who knows valid primary credentials for a TOTP-enabled account can authenticate to the enabled WebDAV service without supplying the second factor and exercise the account's WebDAV file permissions. The browser login path enforces TOTP, but the separate public/webdav.php authentication callback did not. This issue is fixed in version 3.16.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57490",
+    "publishedDate": "2026-10-14T21:17:37.357",
+    "lastModifiedDate": "2026-10-14T21:17:37.477",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98417",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: xfrm: reject unrepresentable espintcp transport headers\n\nESP-in-TCP can hand xfrm packets whose transport header offset no longer\nfits after the stream parser trims the TCP envelope. The plain transport\nheader reset truncates that offset and triggers the skb warning path.\n\nUse the careful transport-header helper and drop the skb through the\nexisting XFRM error path when the offset cannot be represented.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98417",
-    "publishedDate": "2026-10-14T14:17:53.040",
-    "lastModifiedDate": "2026-10-14T14:17:53.040",
+    "id": "CVE-2026-57489",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.16.0, FileRise deployments with AUTH_BYPASS enabled trust the configured reverse-proxy identity header without verifying that the request originated from FR_TRUSTED_PROXIES. When the backend application port is reachable directly, an unauthenticated attacker can supply X-Remote-User and obtain a session for the asserted account, including an administrator account, without a password or MFA. The flaw is limited to deployments that enable proxy-header authentication and expose an untrusted path to the backend. This issue is fixed in version 3.16.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57489",
+    "publishedDate": "2026-10-14T21:17:37.200",
+    "lastModifiedDate": "2026-10-14T21:17:37.327",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98416",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndmaengine: ti: k3-udma-glue: fix NULL dereference in k3_udma_glue_release_rx_chn()\n\nIf devm_kcalloc() for rx_chn->flows fails in a channel request function,\nthe error path calls k3_udma_glue_release_rx_chn(), which dereferences\nthe NULL rx_chn->flows pointer in k3_udma_glue_release_rx_flow().\n\nSkip the flow release loop in k3_udma_glue_release_rx_chn() when\nrx_chn->flows is not allocated.\n\nFound by Linux Verification Center (linuxtesting.org) with SVACE.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98416",
-    "publishedDate": "2026-10-14T14:17:52.910",
-    "lastModifiedDate": "2026-10-14T14:17:52.910",
+    "id": "CVE-2026-110694",
+    "description": "A vulnerability has been found in OAID Tengine up to 1.12.0. This vulnerability affects the function get_tm_file_model of the file source/serializer/tmfile/tm2_serializer.c of the component tmfile Model Loader. Such manipulation of the argument offset_root leads to out-of-bounds read. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110694",
+    "publishedDate": "2026-10-14T21:17:36.617",
+    "lastModifiedDate": "2026-10-14T21:17:36.617",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98415",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsoc: samsung: exynos-pmu: fix use-after-free of interrupt generator node\n\nThe setup_cpuhp_and_cpuidle() parses the device tree node for the\ninterrupt generation block via of_parse_phandle() and decrements its\nreference count using of_node_put() immediately after fetching the resource\naddress. However, later the intr_gen_node pointer is passed into\nof_syscon_register_regmap().\n\nFix this by declaring intr_gen_node with __free() and removing\nof_node_put().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98415",
-    "publishedDate": "2026-10-14T14:17:52.793",
-    "lastModifiedDate": "2026-10-14T14:17:52.793",
+    "id": "CVE-2026-110689",
+    "description": "A security flaw has been discovered in OpenClaw ClawScan up to 0.1.6. This impacts the function shouldSkipTargetPath of the file internal/runner/runner.go of the component Static Scanner. Performing a manipulation results in protection mechanism failure. Attacking locally is a requirement. The exploit has been released to the public and may be used for attacks. Upgrading to version 0.1.7 will fix this issue. The patch is named 9f6a6fbb9f1137345566d0ab44c73893dfe112fa. The affected component should be upgraded.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110689",
+    "publishedDate": "2026-10-14T21:17:36.433",
+    "lastModifiedDate": "2026-10-14T21:17:36.433",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98414",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmemcg: avoid charging the root memcg from obj_cgroup_charge_pages()\n\nobj_cgroup_charge_pages() resolves the objcg to its memcg and calls\ntry_charge_memcg(), which does not short circuit the root memcg.  That\nmemcg can be the root memcg: obj_cgroup_is_root() reflects the memcg the\nobjcg was created for and is never updated, while memcg_reparent_objcgs()\ndoes redirect objcg->memcg to the parent on rmdir.  An objcg of a dying\nchild of root therefore passes every obj_cgroup_is_root() filter but\nresolves to the root memcg.\n\nFolios keep the objcg they were charged with, so this is easy to reach\nthrough zswap: allocate anon memory in a cgroup, move the task out, remove\nthe cgroup, then write to the root cgroup's memory.reclaim.  The reclaimed\nfolios are charged through the reparented objcg and end up in\nrefill_stock() with the root memcg:\n\n  WARNING: mm/memcontrol.c:2198 at refill_stock+0x644/0x940\n   refill_stock+0x644/0x940\n   try_charge_memcg+0x12d6/0x1570\n   __obj_cgroup_charge+0x35/0xf0\n   obj_cgroup_charge+0x1de/0x210\n   obj_cgroup_charge_zswap+0x83/0x270\n   zswap_store+0x1620/0x2000\n   swap_writeout+0x94c/0x14c0\n   shrink_folio_list+0x3388/0x52b0\n   [...]\n   try_to_free_mem_cgroup_pages+0x30d/0x830\n   user_proactive_reclaim+0x504/0x840\n   memory_reclaim+0x1f/0x30\n\nBeyond the warning, the charge is asymmetric: obj_cgroup_uncharge_pages()\nskips refill_stock() for the root memcg, so the root's page counter grows\nand is never uncharged.  It is not user visible, since memory.current is\nnot exposed on the root, but it is a leak.\n\nUse try_charge(), which returns early for the root memcg, restoring the\nsymmetry with obj_cgroup_uncharge_pages().\n\nThe above sequence was scripted into a standalone reproducer (zswap on,\nswap on a virtio disk, 512MB of anon memory faulted in inside a child of\nthe root cgroup, the task then migrated to the root cgroup, the child\nremoved, followed by \"echo 600M swappiness=max > memory.reclaim\" on the\nroot) and run in a CONFIG_DEBUG_VM=y VM.  It reproduces the splat on the\nfirst zswap store of a reparented folio, with the same call chain as the\nreport.  With this patch applied the splat is gone while the zswap store\ncount over the run is unchanged, so the same path is still exercised. \ncgroup selftests test_zswap, test_kmem and test_memcontrol show no new\nfailures.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98414",
-    "publishedDate": "2026-10-14T14:17:52.673",
-    "lastModifiedDate": "2026-10-14T14:17:52.673",
+    "id": "CVE-2026-110679",
+    "description": "A vulnerability was determined in OpenSIPS up to 3.6.8/4.0.1. The impacted element is the function rtpproxy_offer/rtpproxy_answer of the component rtpproxy. This manipulation causes out-of-bounds read. The attack may be initiated remotely. Upgrading to version 3.6.9 and 4.0.2 is sufficient to resolve this issue. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110679",
+    "publishedDate": "2026-10-14T21:17:36.253",
+    "lastModifiedDate": "2026-10-14T21:17:36.253",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98413",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nselinux: always fill AVC decision in avc_has_perm_noaudit()\n\navc_has_perm_noaudit() is documented to return a copy of the access\ndecision in @avd, but its early return for an empty requested permission\nset leaves the buffer untouched.  All callers pass an uninitialized\nstack variable and afterwards feed it to avc_audit(), and the inode hook\neven stores it in the per-task decision cache.\n\nFill in a deny-all, audit-all decision, similar to avd_init(), so every\ncaller receives a defined value at no cost on the hot path.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98413",
-    "publishedDate": "2026-10-14T14:17:52.547",
-    "lastModifiedDate": "2026-10-14T14:17:52.547",
+    "id": "CVE-2026-110670",
+    "description": "A vulnerability was found in cemtan sar2html 4.0.0. The affected element is the function updateDb of the file sar2html.py of the component Archive Processing. The manipulation of the argument s2host results in sql injection. The attack can be launched remotely. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110670",
+    "publishedDate": "2026-10-14T21:17:36.077",
+    "lastModifiedDate": "2026-10-14T21:17:36.077",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98412",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npower: sequencing: fix NULL-pointer dereference in pwrseq_unit_new()\n\nIf memory allocation fails in pwrseq_unit_setup_deps(), pwrseq_unit_put()\nis called to release the partially initialized unit. However, we've\nnever initialized unit->list and pwrseq_unit_release() will\nunconditionally call list_del() on it. Initialize unit->list right after\nallocating the unit struct.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98412",
-    "publishedDate": "2026-10-14T14:17:52.433",
-    "lastModifiedDate": "2026-10-14T14:17:52.433",
+    "id": "CVE-2026-104110",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.24.0, FileRise Pro /api/pro/portals/get.php returns a configured client portal's full internal record to an unauthenticated caller who knows or guesses the portal slug. The response includes the internal storage folder path, client contact email, form settings, and upload-policy details, while the separate publicMeta.php endpoint intentionally exposes only curated branding data. Exploitation requires the Pro add-on and at least one configured portal. This issue is fixed in version 3.24.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104110",
+    "publishedDate": "2026-10-14T21:17:35.173",
+    "lastModifiedDate": "2026-10-14T21:17:35.293",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98411",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npower: sequencing: fix NULL-pointer dereference in pwrseq_device_register()\n\nIf dev_set_name() fails in pwrseq_device_register(), we jump to the\nerr_put_pwrseq label before initializing pwrseq->targets.\npwrseq_release() will try to iterate over targets unconditionally and\nsubsequently dereference an invalid pointer. Move the call to\ndev_set_name() after the list head is initialized.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98411",
-    "publishedDate": "2026-10-14T14:17:52.323",
-    "lastModifiedDate": "2026-10-14T14:17:52.323",
+    "id": "CVE-2026-104109",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.23.0, FileRise validates archive entry names but extracts them directly into the authorized live destination before validating resolved paths. If that destination already contains a symlink to a directory outside the storage root, an authenticated non-administrator with extract permission who can upload or otherwise place an attacker-controlled ZIP in that folder can place an ordinary archive entry beneath the link. ZipArchive::extractTo() can then overwrite an external file, and post-extraction cleanup can delete that target through the same linked parent, only where the FileRise process has the required filesystem write or removal permission. The advisory does not establish that the attacker can create the prerequisite symlink through FileRise. This issue is fixed in version 3.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104109",
+    "publishedDate": "2026-10-14T21:17:35.030",
+    "lastModifiedDate": "2026-10-14T21:17:35.140",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98410",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwatchdog: da9063: fix suspend/resume handling of HW_RUNNING watchdog\n\nda9063_wdt_suspend() and da9063_wdt_resume() only check watchdog_active(),\nwhen the watchdog is left running by the driver sets\nWDOG_HW_RUNNING in da9063_wdt_probe() but userspace never opens the\ndevice, so WDOG_ACTIVE remains cleared, the wdt_disable() will not be\nexecuted in da9063_wdt_suspend. In this case, the suspend callback is\na no-op and the watchdog keeps counting during system suspend,\nleading to an unexpected system reset.\nCheck WDOG_HW_RUNNING and wdd，can fix this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98410",
-    "publishedDate": "2026-10-14T14:17:52.207",
-    "lastModifiedDate": "2026-10-14T14:17:52.207",
+    "id": "CVE-2026-104108",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.23.0, FileRise maps an authenticated OIDC identity to a local account using mutable preferred_username or email claims and does not require email_verified for email-based naming. An attacker who can obtain provider-issued claims colliding with an existing local username can be logged in as that account, including the built-in administrator, even when automatic provisioning is disabled. Exploitability depends on the configured identity provider allowing the colliding claim. This issue is fixed in version 3.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104108",
+    "publishedDate": "2026-10-14T21:17:34.880",
+    "lastModifiedDate": "2026-10-14T21:17:34.997",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98409",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwatchdog: rtd119x: Avoid division by zero\n\nclk_get_rate() could return 0.  Avoid a division by zero panic.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98409",
-    "publishedDate": "2026-10-14T14:17:52.100",
-    "lastModifiedDate": "2026-10-14T14:17:52.100",
+    "id": "CVE-2026-104107",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. In FileRise 3.22.0, the /api/file/saveFile.php operation accepts dot and dot-dot segments in its attacker-controlled folder input before ACL inheritance evaluates the uncanonicalized string. With an authenticated non-administrator session, a valid CSRF token, and inherited edit permission on a legitimate ancestor, the local filesystem or WebDAV adapter later resolves those segments as path navigation, permitting attacker-controlled file creation outside the authorized folder and, where backend credentials permit, outside the configured WebDAV root. Local storage also created directories before final containment validation and used a prefix comparison that accepted similarly named sibling roots. This issue is fixed in version 3.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104107",
+    "publishedDate": "2026-10-14T21:17:34.727",
+    "lastModifiedDate": "2026-10-14T21:17:34.847",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98408",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwatchdog: rzv2h: Avoid division by zero\n\nclk_get_rate() could return 0.  Avoid a division by zero panic.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98408",
-    "publishedDate": "2026-10-14T14:17:51.990",
-    "lastModifiedDate": "2026-10-14T14:17:51.990",
+    "id": "CVE-2026-104106",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.23.0, FileRise permits an authenticated session with a valid CSRF token to disable TOTP without recent full reauthentication or to begin enrollment when the account currently has no TOTP secret. The enrollment endpoint returns 409 rather than directly overwriting an already configured secret, but it persists and activates a newly generated secret before a TOTP code verifies possession. An attacker controlling an existing authenticated session can therefore disable an existing second factor or enroll one after the account has no configured secret; this is not a direct overwrite of an active authenticator. This issue is fixed in version 3.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104106",
+    "publishedDate": "2026-10-14T21:17:34.583",
+    "lastModifiedDate": "2026-10-14T21:17:34.693",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-98407",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwifi: rsi: fix heap OOB write on key removal\n\nWhen a key is removed (data == NULL), rsi_hal_load_key() runs:\n\n\tmemset(&set_key[FRAME_DESC_SZ], 0, frame_len - FRAME_DESC_SZ);\n\nset_key is a struct rsi_set_key *, so the subscript is scaled by\nsizeof(struct rsi_set_key) (160 bytes): &set_key[FRAME_DESC_SZ] is\nskb->data + 2560, and the memset writes 144 zero bytes starting\n2.4KB past the end of the 160-byte skb data buffer, corrupting\nunrelated heap objects. The intended byte offset would have been\n(u8 *)set_key + FRAME_DESC_SZ.\n\nThe write fires on every DISABLE_KEY callback, so plain disconnects,\nroams and interface teardowns trigger it on real networks.\n\nThe memset is redundant: the whole buffer is zeroed right after\nallocation, so the frame sent to the device is byte-identical\nwithout it. Drop the else branch; normal operation is unaffected.\n\nDiscovered by Atuin - Automated Vulnerability Discovery Engine.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98407",
-    "publishedDate": "2026-10-14T14:17:51.853",
-    "lastModifiedDate": "2026-10-14T14:17:51.853",
+    "id": "CVE-2026-104105",
+    "description": "FileRise is a self-hosted web-based file manager with multi-file upload, editing, and batch operations. Prior to 3.23.0, FileRise verifies that a TOTP code is valid for the accepted time window but does not record that the same account and time step already succeeded. An attacker who has the target account's valid primary credential and captures a TOTP code after its successful use can replay that code from another pending-login session before the window closes. The issue does not by itself disclose the primary credential or TOTP code. This issue is fixed in version 3.23.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104105",
+    "publishedDate": "2026-10-14T21:17:34.430",
+    "lastModifiedDate": "2026-10-14T21:17:34.547",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   }
 ]
