@@ -1,450 +1,630 @@
 [
   {
-    "id": "CVE-2026-111876",
-    "description": "A vulnerability was found in alexpasmantier television up to 0.15.9. Affected by this issue is the function Entry::output of the file television/channels/entry.rs. Performing a manipulation of the argument raw results in command injection. The attack requires a local approach. The reported GitHub issue was closed with the label \"not planned\".",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111876",
-    "publishedDate": "2026-10-18T06:16:57.047",
-    "lastModifiedDate": "2026-10-18T06:16:57.047",
+    "id": "CVE-2026-98434",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsysctl: Check range in  proc_dointvec_ms_jiffies_minmax\n\nAdd the range check to do_proc_int_conv_ms_jiffies_minmax that commit\nd174174c6776 (\"sysctl: replace SYSCTL_INT_CONV_CUSTOM macro with\nfunctions\") incorrectly removed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98434",
+    "publishedDate": "2026-10-18T15:16:53.200",
+    "lastModifiedDate": "2026-10-18T15:16:53.200",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-98433",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: PPC: Book3S HV: fix secure device page leak on uv_page_in() failure\n\nIn kvmppc_svm_page_in(), if uv_page_in() fails after\nkvmppc_uvmem_get_page() has succeeded, the secure device page is never\nreleased.  kvmppc_uvmem_get_page() sets a bit in kvmppc_uvmem_bitmap,\nallocates a kvmppc_uvmem_page_pvt struct, marks the GFN as\nKVMPPC_GFN_UVMEM_PFN, and calls zone_device_page_init() which sets\nrefcount=1 and locks the page.  The subsequent goto out_finalize skips\nthe *mig.dst assignment, so migrate_vma_finalize() is a no-op for the\npage, and none of those resources are ever reclaimed.\n\nEach occurrence permanently consumes one entry from the firmware-bounded\nsecure memory pool (kvmppc_uvmem_bitmap), leaks pvt, and leaves the GFN\nmarked as secure — making it unusable for the lifetime of the VM.\n\nThe twin __kvmppc_svm_page_out() already handles the analogous uv_page_out()\nfailure correctly with unlock_page(dpage); __free_page(dpage).  Apply\nthe same pattern here: unlock_page() followed by put_page(), which\nchains through free_zone_device_folio() into kvmppc_uvmem_folio_free()\nto clear the bitmap bit, free pvt, and reset the GFN state.\n\nReachable whenever uv_page_in() returns an error (e.g. UV pool\nexhaustion) on any POWER9/10 + Ultravisor/PEF system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98433",
+    "publishedDate": "2026-10-18T15:16:53.047",
+    "lastModifiedDate": "2026-10-18T15:16:53.047",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-110024",
+    "description": "@fastify/jwt is a JWT utility plugin for Fastify. In versions prior to 10.2.5, the top-level sign and verify methods replace the globally configured defaults with the per-call options instead of merging them, so passing any per-call option silently drops every global default that the call does not restate, including temporal protections such as token expiration and maximum accepted token age. A token signed this way carries no expiration claim and never expires, and verification stops enforcing a configured maximum age, so stale or never-expiring tokens are accepted. The route-level decorators for signing and verifying already merge options and are not affected. The issue is fixed in @fastify/jwt 10.2.5, and users should upgrade to 10.2.5 or later.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110024",
+    "publishedDate": "2026-10-18T15:16:51.417",
+    "lastModifiedDate": "2026-10-18T15:16:51.417",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 6.8,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-111988",
+    "description": "A security flaw has been discovered in dyad-sh dyad up to 1.16.0. Affected by this issue is some unknown functionality of the component OAuth Callback Handler. Performing a manipulation results in cross-site request forgery. The attack may be initiated remotely. Upgrading to version 1.17.0-beta.1 can resolve this issue. The patch is named 39fbae87b38573616a1a3b152cdb292787bb1109. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111988",
+    "publishedDate": "2026-10-18T15:16:52.483",
+    "lastModifiedDate": "2026-10-18T15:16:52.483",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-111987",
+    "description": "A vulnerability was identified in AUTOMATIC1111 stable-diffusion-webui up to 1.10.1. Affected by this vulnerability is the function read_metadata_from_safetensors of the file modules/sd_models.py of the component Extra-Networks Card Builder. Such manipulation of the argument __metadata__.sshs_model_hash leads to cross site scripting. The attack can be launched remotely. The exploit is publicly available and might be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111987",
+    "publishedDate": "2026-10-18T14:16:54.630",
+    "lastModifiedDate": "2026-10-18T14:16:54.630",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112063",
+    "description": "libstrophe through 0.14.0 contains a stack-based buffer overflow vulnerability in SCRAM_Hi that allows malicious XMPP servers to overflow a 128-byte stack buffer by sending an oversized SCRAM salt. Attackers can send a server-first-message whose s= attribute decodes to more than 124 bytes, aborting the client or overwriting stack memory in NDEBUG builds.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112063",
+    "publishedDate": "2026-10-18T13:16:38.893",
+    "lastModifiedDate": "2026-10-18T13:16:38.893",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112062",
+    "description": "lwIP through 2.2.1 contains a stack out-of-bounds write vulnerability in mdns_handle_response that allows adjacent attackers to corrupt stack memory by sending mDNS responses with invalid domain names. Attackers on the local link can send multicast PTR answers with oversized RDLENGTH or SRV answers with RDLENGTH below 6 during a service search, overflowing a 256-byte stack buffer and crashing the device.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112062",
+    "publishedDate": "2026-10-18T13:16:38.750",
+    "lastModifiedDate": "2026-10-18T13:16:38.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112061",
+    "description": "librtmp (RTMPDump) through 2.6 contains a heap out-of-bounds read vulnerability in AMFProp_Decode that reads an AMF0 strict-array element count before checking that four bytes remain. A malicious RTMP server or man in the middle can send an AMF0 body ending with a strict-array type byte and fewer than four trailing bytes to crash the client.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112061",
+    "publishedDate": "2026-10-18T13:16:38.600",
+    "lastModifiedDate": "2026-10-18T13:16:38.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112060",
+    "description": "librtmp in RTMPDump through 2.6 contains an out-of-bounds read and heap out-of-bounds write vulnerability because AMF3_Decode ignores AMF3 property decode failures. Malicious RTMP servers or man-in-the-middle attackers can send oversized AMF3 string lengths, and with the token option DecodeTEA corrupts heap memory and leaks heap bytes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112060",
+    "publishedDate": "2026-10-18T13:16:38.437",
+    "lastModifiedDate": "2026-10-18T13:16:38.437",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112059",
+    "description": "libLAS through 1.8.1 contains a heap out-of-bounds write vulnerability in the point record reader caused by truncating the schema byte size to 16 bits when sizing the point buffer. Attackers can craft a .las file with a LASSchema variable length record whose schema exceeds 65535 bytes, so tools like lasinfo, las2las, or las2txt write attacker-controlled bytes past the heap buffer, causing memory corruption and crashes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112059",
+    "publishedDate": "2026-10-18T13:16:38.300",
+    "lastModifiedDate": "2026-10-18T13:16:38.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
         "exploitabilityScore": 1.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 1.9,
+        "score": 6.9,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111875",
-    "description": "A vulnerability has been found in David-Crty Databasement up to 1.8.1. Affected by this vulnerability is an unknown functionality of the file app/Http/Requests/Api/V1/SaveScheduledRestoreRequest.php of the component Scheduled Restore. Such manipulation of the argument schema_name leads to missing authorization. The attack can be executed remotely. The exploit has been disclosed to the public and may be used. Upgrading to version 1.8.2 addresses this issue. It is suggested to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111875",
-    "publishedDate": "2026-10-18T06:16:56.840",
-    "lastModifiedDate": "2026-10-18T06:16:57.003",
+    "id": "CVE-2026-112058",
+    "description": "VideoLAN libdvdnav through 7.0.0 contains an out-of-bounds read vulnerability in set_PTT that allows attackers to crash applications by supplying an invalid JumpTT title number checked only by an assert. Attackers can craft a DVD or disc image whose First Play program chain issues JumpTT with title 0 or an oversized number, reading past the heap title table and crashing the player.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112058",
+    "publishedDate": "2026-10-18T13:16:38.167",
+    "lastModifiedDate": "2026-10-18T13:16:38.167",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.7,
+        "score": 5.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 2,
+        "score": 6.8,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111874",
-    "description": "A flaw has been found in OpenCATS 0.10.0. Affected is the function processLogin of the file modules/careers/CareersUI.php of the component Career Portal. This manipulation of the argument applyToJobSubAction causes improper restriction of excessive authentication attempts. Remote exploitation of the attack is possible. A high degree of complexity is needed for the attack. The exploitability is told to be difficult. The exploit has been published and may be used. Patch name: 1cf4fa3ee9054314b023be79d404078645c22ade. It is suggested to install a patch to address this issue. The project maintainer explains: \"Candidates will now need to authenticate each time they access the Career Portal and successfully complete the CAPTCHA as part of that authentication flow. The authenticated candidate identity is now maintained server-side rather than relying on the previous persistent client-side cats…cw cookie mechanism. Application-level rate limiting is deliberately not in scope for this change. In my view, request throttling and brute-force protection of that kind are better applied at the network, reverse-proxy or web-server layer, where they can be configured appropriately for each deployment without OpenCATS having to implement and maintain its own rate-limiting framework. I'll update the online documentation to that effect.\"",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111874",
-    "publishedDate": "2026-10-18T06:16:56.380",
-    "lastModifiedDate": "2026-10-18T06:16:56.767",
+    "id": "CVE-2026-112057",
+    "description": "libdvdnav before 7.0.0 contains a heap out-of-bounds read vulnerability in dvdnav_describe_title_chapters that allows attackers to read beyond the part-of-title array by supplying an oversized vts_ttn value. Attackers can provide a crafted DVD or disc image declaring a larger VMGI title vts_ttn than the title set's entries to crash applications enumerating chapters.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112057",
+    "publishedDate": "2026-10-18T13:16:38.037",
+    "lastModifiedDate": "2026-10-18T13:16:38.037",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.7,
+        "score": 5.5,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112056",
+    "description": "wvWare wv through 1.2.9 contains a heap-based out-of-bounds read vulnerability in wvGetSTSH in stylesheet.c that allows attackers to crash applications by supplying crafted Word stylesheets. Attackers can provide a .doc file with ten or fewer styles or out-of-range style base indexes to read past heap arrays, crashing applications such as AbiWord.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112056",
+    "publishedDate": "2026-10-18T13:16:37.890",
+    "lastModifiedDate": "2026-10-18T13:16:37.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112055",
+    "description": "wvWare wv through 1.2.9 contains a stack-based out-of-bounds read vulnerability in wvGetPAPX_FKP and wvGetCHPX_FKP caused by an unvalidated FKP run count. Attackers can supply a crafted .doc file with a large crun value to read kilobytes past the 512-byte stack buffer, crashing applications like AbiWord.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112055",
+    "publishedDate": "2026-10-18T13:16:37.757",
+    "lastModifiedDate": "2026-10-18T13:16:37.757",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112054",
+    "description": "Schroedinger libschroedinger through 1.0.11 contains a divide by zero vulnerability that allows attackers to crash applications by supplying a zero slice_bytes_denom or slice count in a Dirac stream. Attackers can provide a crafted low-delay picture parsed by schro_decoder_parse_transform_parameters and schro_decoder_parse_lowdelay_transform_data to trigger a SIGFPE and cause denial of service.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112054",
+    "publishedDate": "2026-10-18T13:16:37.620",
+    "lastModifiedDate": "2026-10-18T13:16:37.620",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112053",
+    "description": "Schroedinger libschroedinger through 1.0.11 contains an out-of-bounds read vulnerability that allows attackers to read past a static quantiser table by supplying unvalidated wavelet filter index or transform depth values. Attackers can deliver a crafted low-delay Dirac stream with a wavelet filter index of 7 or more or transform depth of 5 or 6 to crash decoding applications.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112053",
+    "publishedDate": "2026-10-18T13:16:37.470",
+    "lastModifiedDate": "2026-10-18T13:16:37.470",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.8,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112052",
+    "description": "libspatialite through 5.1.0 contains an integer overflow vulnerability in the WKB point and vertex count size guard of ParseWkbLine and related parsers in gg_wkb.c, allowing out-of-bounds reads. Attackers can supply a crafted geometry BLOB with a large point count, for example in a SpatiaLite database file, to crash the process or corrupt heap memory on 32-bit builds.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112052",
+    "publishedDate": "2026-10-18T13:16:37.337",
+    "lastModifiedDate": "2026-10-18T13:16:37.337",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112051",
+    "description": "Xinference through 4.0.1 contains a path traversal vulnerability on Windows that allows unauthenticated attackers to write and delete arbitrary .json files via backslash sequences in model_name. Attackers can register a persisted custom model through POST /v1/model_registrations/{model_type} with names like ..\\..\\evil to overwrite configuration or data files writable by the Xinference process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112051",
+    "publishedDate": "2026-10-18T13:16:37.190",
+    "lastModifiedDate": "2026-10-18T13:16:37.190",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:L",
         "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 2.9,
+        "score": 8.3,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111942",
-    "description": "A weakness has been identified in hrisikeshpal Blood_Bank_Management_System 1.0.0. Impacted is an unknown function of the file /abs.php. This manipulation of the argument Search causes cross site scripting. The attack can be initiated remotely. The exploit has been made available to the public and could be used for attacks. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111942",
-    "publishedDate": "2026-10-18T07:16:53.343",
-    "lastModifiedDate": "2026-10-18T07:16:53.343",
+    "id": "CVE-2026-112050",
+    "description": "Gitify before 7.10.0 contains a login cross-site request forgery vulnerability that allows remote attackers to bind a victim's client to their account because performGitHubWebOAuth() omits OAuth state validation. Attackers can get a gitify://oauth?code= link with their own authorization code opened during a victim's pending login, causing Gitify to display attacker-controlled notifications as the victim's own.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112050",
+    "publishedDate": "2026-10-18T13:16:37.050",
+    "lastModifiedDate": "2026-10-18T13:16:37.050",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 3.1,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112049",
+    "description": "Vita3K before build 4187 contains a path traversal (zip slip) vulnerability in install_archive_content() that allows attackers to write files outside the install directory via crafted .vpk archives. Attackers can embed '..' segments or absolute paths in zip entry names to write attacker-controlled files anywhere writable by Vita3K, potentially enabling host code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112049",
+    "publishedDate": "2026-10-18T13:16:36.913",
+    "lastModifiedDate": "2026-10-18T13:16:36.913",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112048",
+    "description": "libspatialite through 5.1.0 fails to validate the polygon ring count in ParseWkbPolygon, allowing attackers to trigger uncontrolled interior-ring allocation via crafted geometry BLOBs. Attackers can supply a crafted polygon in a SpatiaLite database or ST_GeomFromWKB input to crash the process or corrupt heap memory on 32-bit builds.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112048",
+    "publishedDate": "2026-10-18T13:16:36.770",
+    "lastModifiedDate": "2026-10-18T13:16:36.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112047",
+    "description": "OneUptime 14.0.2 before 14.0.69 contains an incorrect authorization vulnerability that allows authenticated project members to act on clusters outside their scope by exploiting project-wide permission checks. Attackers can call the AI access test, agent reset, kubectl plan approval and incident AI conversation features to learn agent RBAC permissions, disconnect agents, approve kubectl changes, or run commands on unauthorized resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112047",
+    "publishedDate": "2026-10-18T13:16:36.607",
+    "lastModifiedDate": "2026-10-18T13:16:36.720",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
+        "impactScore": 2.5,
+        "source": "disclosure@vulncheck.com"
       },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-96534",
-    "description": "The Modern Events Calendar Lite WordPress plugin before 7.37.0, Modern Event Calendar Pro WordPress plugin before 7.37.0 does not sanitise and escape a parameter before using it in a SQL statement, allowing authenticated users with minimal privileges (Subscriber and above) to perform SQL injection attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96534",
-    "publishedDate": "2026-10-18T07:16:53.680",
-    "lastModifiedDate": "2026-10-18T07:16:53.680",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-111041",
-    "description": "The AI Engine  WordPress plugin before 3.7.9 does not verify that the user performing certain AI media management actions owns or is otherwise allowed to edit the targeted object, allowing users with the Editor role or above to modify, or change the type of, arbitrary posts on the site, including content they are not permitted to edit.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111041",
-    "publishedDate": "2026-10-18T07:16:52.920",
-    "lastModifiedDate": "2026-10-18T07:16:52.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110981",
-    "description": "The WP Photo Album Plus WordPress plugin before 9.2.11.002 does not properly escape a category navigation value before reflecting it into a JavaScript event handler on its gallery breadcrumb links, allowing unauthenticated attackers to inject arbitrary script that executes in the browser of anyone who follows a crafted gallery link and clicks the breadcrumb, including a logged-in administrator.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110981",
-    "publishedDate": "2026-10-18T07:16:52.817",
-    "lastModifiedDate": "2026-10-18T07:16:52.817",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110976",
-    "description": "The AI Engine  WordPress plugin before 3.7.9 does not check that the item passed to one of its media actions belongs to the requesting user before converting it to an attachment and permanently deleting it, allowing users with the Editor role and above to delete arbitrary posts of any type, including content they cannot otherwise delete such as navigation menus, block templates and global styles.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110976",
-    "publishedDate": "2026-10-18T07:16:52.713",
-    "lastModifiedDate": "2026-10-18T07:16:52.713",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110070",
-    "description": "The Modern Events Calendar Lite WordPress plugin before 7.36.4 does not verify that a user is authorized to edit the target post before updating it, allowing authenticated users with the Subscriber role to modify the title, content, and excerpt of arbitrary posts, pages, and custom post types created by other users.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110070",
-    "publishedDate": "2026-10-18T07:16:52.610",
-    "lastModifiedDate": "2026-10-18T07:16:52.610",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110069",
-    "description": "The Modern Events Calendar Lite WordPress plugin before 7.37.0 does not perform capability, nonce, or ownership checks before returning event booking and attendee data, allowing any authenticated user, including Subscribers, to disclose the names, email addresses, transaction IDs and payment amounts of every booking on the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110069",
-    "publishedDate": "2026-10-18T07:16:52.500",
-    "lastModifiedDate": "2026-10-18T07:16:52.500",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110035",
-    "description": "The Salon Booking System  WordPress plugin before 10.31.11 does not restrict one of its REST API endpoints to salon staff, allowing any authenticated user, such as a subscriber, to retrieve every discount coupon configured on the site, including coupons the administrator has chosen to hide from customers, together with their amounts, validity dates and usage limits.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110035",
-    "publishedDate": "2026-10-18T07:16:52.397",
-    "lastModifiedDate": "2026-10-18T07:16:52.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110033",
-    "description": "The Salon Booking System  WordPress plugin before 10.31.11 does not validate a user-supplied image URL before fetching it server-side and writing the response to a publicly accessible location under an attacker-chosen filename, allowing users with the Salon Staff role or higher to force the server to read internal-only resources and disclose them, and to store a malicious SVG that runs arbitrary scripts in the site's origin for anyone who opens it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110033",
-    "publishedDate": "2026-10-18T07:16:52.287",
-    "lastModifiedDate": "2026-10-18T07:16:52.287",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110032",
-    "description": "The Salon Booking System  WordPress plugin before 10.31.11 does not restrict which user account its salon staff roles may edit through the customers management screen, allowing users with the Salon Staff or Salon Worker role to reset any other user's role, including administrators, to a customer and to overwrite arbitrary profile fields on any account, leading to loss of administrative access and potential site lockout.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110032",
-    "publishedDate": "2026-10-18T07:16:52.183",
-    "lastModifiedDate": "2026-10-18T07:16:52.183",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110031",
-    "description": "The Salon Booking System  WordPress plugin before 10.31.11 does not prevent users holding its custom salon staff role from assigning arbitrary capabilities to other accounts when editing a customer, allowing them to escalate any account to administrator and take over the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110031",
-    "publishedDate": "2026-10-18T07:16:52.077",
-    "lastModifiedDate": "2026-10-18T07:16:52.077",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-110026",
-    "description": "The Tasty Recipes Lite  WordPress plugin before 1.2.11 does not correctly check user capabilities when creating, renaming and deleting taxonomy terms, allowing users with a role as low as Contributor to add, rename and permanently delete terms in any taxonomy on the site, including categories, tags and navigation menus.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110026",
-    "publishedDate": "2026-10-18T07:16:51.967",
-    "lastModifiedDate": "2026-10-18T07:16:51.967",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-109937",
-    "description": "The Otter Blocks  WordPress plugin before 3.2.3 does not validate that a user-supplied return URL belongs to the site before using it to build the return destination of a Stripe Checkout session, allowing unauthenticated attackers to redirect victims who complete or cancel checkout to an arbitrary external URL.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109937",
-    "publishedDate": "2026-10-18T07:16:50.927",
-    "lastModifiedDate": "2026-10-18T07:16:50.927",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-87844",
-    "description": "The PickPlugins Product Designer for WooCommerce WordPress plugin through 1.0.40 does not perform any capability check and its nonce verification is inverted, accepting requests with an invalid or absent nonce while rejecting valid ones, and it does not validate the post the data is written to, allowing unauthenticated users to insert design template data into the metadata of any post on the site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87844",
-    "publishedDate": "2026-10-18T07:16:53.560",
-    "lastModifiedDate": "2026-10-18T07:16:53.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-111877",
-    "description": "A vulnerability was determined in dext34-morgan Books4Cash up to a8d3e357db75c07ac5ffbadcbaee2aeb4db3e571. This affects an unknown part of the file search.php. Executing a manipulation of the argument Search can lead to cross site scripting. The attack may be performed from remote. The exploit has been publicly disclosed and may be utilized. The code repository of the project has not been active for many years.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111877",
-    "publishedDate": "2026-10-18T07:16:53.033",
-    "lastModifiedDate": "2026-10-18T07:16:53.033",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111873",
-    "description": "A vulnerability was detected in itsmeravitejak Online-Examination-System up to e6208e630b14657999bbfe4c9912302d2a1e2449. This impacts the function MySQLDB::topicslist of the file exammanger.php of the component AJAX Endpoint. The manipulation of the argument subject results in sql injection. The attack may be launched remotely. The exploit is now public and may be used. This product operates on a rolling release basis, ensuring continuous delivery. Consequently, there are no version details for either affected or updated releases. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111873",
-    "publishedDate": "2026-10-18T05:16:27.920",
-    "lastModifiedDate": "2026-10-18T05:16:27.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111872",
-    "description": "A security vulnerability has been detected in itsmeravitejak Online-Examination-System up to e6208e630b14657999bbfe4c9912302d2a1e2449. This affects the function MySQLDB::valid/MySQLDB::getresults/MySQLDB::noresults/MySQLDB::getExams/MySQLDB::latestExamID/MySQLDB::getreport of the file results.php/include/database.php. The manipulation of the argument id/user/topic leads to sql injection. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used. This product uses a rolling release model to deliver continuous updates. As a result, specific version information for affected or updated releases is not available. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111872",
-    "publishedDate": "2026-10-18T04:16:35.433",
-    "lastModifiedDate": "2026-10-18T04:16:35.433",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111871",
-    "description": "A weakness has been identified in itsmeravitejak Online-Examination-System up to e6208e630b14657999bbfe4c9912302d2a1e2449. The impacted element is an unknown function of the file qsdb/usersdb/brandb/topicsdb/subjectsdb.php. Executing a manipulation of the argument query/qtype/sortname/sortorder can lead to sql injection. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks. This product does not use versioning. This is why information about affected and unaffected releases are unavailable. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111871",
-    "publishedDate": "2026-10-18T04:16:35.227",
-    "lastModifiedDate": "2026-10-18T04:16:35.227",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111870",
-    "description": "A security flaw has been discovered in itsmeravitejak Online-Examination-System up to e6208e630b14657999bbfe4c9912302d2a1e2449. The affected element is the function isAdmin of the file admin/admin.php. Performing a manipulation results in missing authentication. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks. Continious delivery with rolling releases is used by this product. Therefore, no version details of affected nor updated releases are available. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111870",
-    "publishedDate": "2026-10-18T04:16:31.750",
-    "lastModifiedDate": "2026-10-18T04:16:31.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
       {
         "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111869",
-    "description": "A vulnerability was identified in makeplane plane up to 1.4.2. Impacted is an unknown function of the component API Endpoint. Such manipulation of the argument X-Forwarded-For leads to reliance on untrusted inputs in a security decision. It is possible to launch the attack remotely. The exploit is publicly available and might be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111869",
-    "publishedDate": "2026-10-18T03:16:28.970",
-    "lastModifiedDate": "2026-10-18T03:16:30.107",
+    "id": "CVE-2026-112046",
+    "description": "OW2 ASM 9.11 before 9.11.1 contains an infinite loop vulnerability in Label.resolve() caused by 16-bit forward-reference offsets truncating when rewritten methods exceed 64 KB. Attackers can supply crafted class files whose transformed code grows past 65535 bytes, hanging ClassReader.accept() and denying service to build tools, instrumenters, agents, or analyzers.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112046",
+    "publishedDate": "2026-10-18T13:16:36.463",
+    "lastModifiedDate": "2026-10-18T13:16:36.463",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 5.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.5,
+        "score": 6.8,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111997",
-    "description": "ip-address before 10.7.4 allows a denial of service (CPU consumption from quadratic complexity, and application stall) via many % characters in input reaching a function call that uses the Address6 constructor.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111997",
-    "publishedDate": "2026-10-18T01:16:35.463",
-    "lastModifiedDate": "2026-10-18T01:16:35.463",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111868",
-    "description": "A vulnerability was determined in datastax pulsar-jms up to 9.0.3. This issue affects the function decode of the file pulsar-jms/src/main/java/com/datastax/oss/pulsar/jms/messages/PulsarObjectMessage.java. This manipulation causes deserialization. It is possible to initiate the attack remotely. The exploit has been publicly disclosed and may be utilized. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111868",
-    "publishedDate": "2026-10-18T01:16:34.483",
-    "lastModifiedDate": "2026-10-18T01:16:34.483",
+    "id": "CVE-2026-111986",
+    "description": "A vulnerability was determined in AUTOMATIC1111 stable-diffusion-webui up to 1.10.1. Affected is the function get_obj_from_str of the file modules/sd_models.py of the component Model Instantiation. This manipulation of the argument Target causes code injection. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111986",
+    "publishedDate": "2026-10-18T13:16:35.920",
+    "lastModifiedDate": "2026-10-18T13:16:35.920",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -452,7 +632,7 @@
         "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
         "impactScore": 3.4,
         "source": "cna@vuldb.com"
@@ -461,11 +641,21 @@
         "score": 2.1,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
       }
     ]
+  },
+  {
+    "id": "CVE-2026-78497",
+    "description": "JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a query's regular expression by compiling it with string eval.\n\nThe pattern given to test(), match(), or the match and =~ conditions of select() is placed in a `qr'...'` literal and compiled as source text, so a `(?{ ... })` code block in it runs without `use re 'eval'`. Single quotes in the pattern are escaped, but a code block runs in place and needs none.\n\nAn attacker who supplies a query, or text that an application inserts into the pattern of one, can execute arbitrary Perl code in the calling process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78497",
+    "publishedDate": "2026-10-18T12:17:15.350",
+    "lastModifiedDate": "2026-10-18T12:17:15.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
