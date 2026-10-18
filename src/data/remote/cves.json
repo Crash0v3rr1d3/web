@@ -1,5 +1,193 @@
 [
   {
+    "id": "CVE-2026-97859",
+    "description": "Seven Gitea API routes under `/api/v1/users/{username}` (followers, following, following/{target}, starred, subscriptions, keys and gpg_keys) were registered without the `individualPermsChecker` middleware that enforces the visibility of the target user. An authenticated user could therefore read the followers, following list, starred and watched repositories and public SSH and GPG keys of a user with limited or private visibility, whom they could not otherwise see. The issue was fixed in 1.27.3 and 28.0.0 and disclosed with 28.2.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97859",
+    "publishedDate": "2026-10-18T19:16:33.637",
+    "lastModifiedDate": "2026-10-18T19:16:33.637",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-97204",
+    "description": "Deleting a label compared the ID of the repository in the request against the organization ID of organization labels, and the two ID sequences overlap. A user with write access to the issues of a repository could therefore delete the labels of an organization that has the same numeric ID as that repository. Labels are now deleted only within their own repository or organization.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97204",
+    "publishedDate": "2026-10-18T19:16:33.530",
+    "lastModifiedDate": "2026-10-18T19:16:33.530",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-110494",
+    "description": "Adding attachments to a release checked the repository and release of an attachment but not whether it was already linked to an issue or comment. A user with write access to the releases of a repository, who knew the UUID of an attachment in that repository, could link it to a release. This exposed the file name, size and download count of the attachment through the release and allowed the user to rename or delete it.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110494",
+    "publishedDate": "2026-10-18T19:16:33.403",
+    "lastModifiedDate": "2026-10-18T19:16:33.403",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-110324",
+    "description": "The visibility check of Gitea user profiles was applied to GET requests only, while `POST /{username}` (follow and unfollow) required only a signed-in user. Any authenticated user could therefore obtain the full name, location, website and description of a user with a private profile from the response. The issue was fixed in 28.1.0 and disclosed with 28.2.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110324",
+    "publishedDate": "2026-10-18T19:16:33.297",
+    "lastModifiedDate": "2026-10-18T19:16:33.297",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-110311",
+    "description": "Creating a draft release through the API returned an `assets` list that was built from a release without an ID, which matched every attachment that was not linked to a release. A user who could create a draft release in a repository therefore received the metadata (file name, UUID, upload time, size and download count) of issue and comment attachments of repositories they could not read, and of abandoned uploads.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110311",
+    "publishedDate": "2026-10-18T19:16:33.197",
+    "lastModifiedDate": "2026-10-18T19:16:33.197",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-109844",
+    "description": "`GET /api/v1/user/subscriptions` returned the metadata of every repository a user was watching without checking that the user still had access to it. A user who watched a private repository while having access, and later lost it, for example through a team permission downgrade, could still read its name, description, clone URLs, owner and counters. The issue was fixed in 1.27.0 and 28.0.0 and disclosed with 28.2.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109844",
+    "publishedDate": "2026-10-18T19:16:33.090",
+    "lastModifiedDate": "2026-10-18T19:16:33.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-109553",
+    "description": "Gitea resolved the principals of an SSH certificate by searching the content of all stored public keys instead of only principal keys. When Gitea trusts a user certificate authority (`SSH_TRUSTED_USER_CA_KEYS`) and accepts arbitrary principals (`SSH_AUTHORIZED_PRINCIPALS_ALLOW=anything`), a user could register another user's public key line as their own principal, or a holder of a certificate signed by that authority could list it, and then authenticate as the owner of that key through the HTTP signature API and the built-in SSH server. Instances that do not trust a user certificate authority are not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109553",
+    "publishedDate": "2026-10-18T19:16:32.997",
+    "lastModifiedDate": "2026-10-18T19:16:32.997",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-107686",
+    "description": "The Gitea web handlers for adding and removing reactions on issues and comments did not refuse locked issues for users without write access, although the API did. A signed-in user who could read an issue could therefore add or remove reactions on a locked issue and its comments, bypassing the interaction restriction of the lock. Only reactions were affected; no content could be changed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107686",
+    "publishedDate": "2026-10-18T19:16:32.903",
+    "lastModifiedDate": "2026-10-18T19:16:32.903",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-107618",
+    "description": "`POST /{owner}/{repo}/topics` was registered without the sign-in middleware that provides the cross-origin protection, so a request issued by a third-party site was not rejected. A repository administrator who visited a malicious page could have the topics of their repository changed. No other repository settings were reachable through this route.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107618",
+    "publishedDate": "2026-10-18T19:16:32.807",
+    "lastModifiedDate": "2026-10-18T19:16:32.807",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-105964",
+    "description": "The Gitea Actions artifact v4 (Twirp) handlers read the whole request body into memory without a size limit. A user who can run a workflow and obtains the runner token of that run could send an oversized request to the artifact service and exhaust the memory of the server, which terminates the Gitea process. The request body is now limited to 1 MiB.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105964",
+    "publishedDate": "2026-10-18T19:16:32.700",
+    "lastModifiedDate": "2026-10-18T19:16:32.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-105661",
+    "description": "Requesting `/{username}/-/repositories` for an individual user instead of an organization made the organization home handler dereference a nil organization and panic. The request needs no authentication and no special configuration. The server answered with an HTTP 500 error and logged a panic for each request; the fix returns 404 for individual users.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105661",
+    "publishedDate": "2026-10-18T19:16:32.590",
+    "lastModifiedDate": "2026-10-18T19:16:32.590",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-104627",
+    "description": "The Gitea OpenID association callback in the security settings accepted a positive OpenID 2.0 assertion without checking that the signed-in user had started the linking. Because OpenID 2.0 allows unsolicited assertions, an attacker-controlled OpenID provider could attach the attacker's identity to the account of a signed-in victim who opened a crafted link, and the attacker could then sign in as the victim through OpenID login, which does not apply the local TOTP or WebAuthn checks. The callback now requires a time-limited `state` value bound to the user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104627",
+    "publishedDate": "2026-10-18T19:16:32.463",
+    "lastModifiedDate": "2026-10-18T19:16:32.463",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-4457",
+    "description": "The Management Console fails to properly validate input related to the configuration of JDBC user stores. This weakness allows an attacker to supply specially crafted input that can lead to the execution of arbitrary code on the affected server.\n\nSuccessful exploitation of this vulnerability enables an attacker to execute arbitrary code on the server with the privileges of the WSO2 product. This could lead to a full compromise of the system.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-4457",
+    "publishedDate": "2026-10-18T18:16:28.467",
+    "lastModifiedDate": "2026-10-18T18:16:28.467",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-111993",
+    "description": "A flaw has been found in Soarkey StudentManagement up to e08f7f1d5015af407aa4cca0ada3dea189b4937e. Impacted is the function UserDao.login of the file code/src/service/AdminDao.java. This manipulation of the argument Password causes cleartext storage of sensitive information. The attack is restricted to local execution. The exploit has been published and may be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111993",
+    "publishedDate": "2026-10-18T17:16:43.020",
+    "lastModifiedDate": "2026-10-18T17:16:43.020",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.3,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-111992",
+    "description": "A vulnerability was detected in itsmeravitejak Online-Examination-System up to e6208e630b14657999bbfe4c9912302d2a1e2449. This issue affects the function Exam::startExam of the file exam.php of the component Exam Module. The manipulation of the argument topicid results in sql injection. The attack can be executed remotely. The exploit is now public and may be used. This product implements a rolling release for ongoing delivery, which means version information for affected or updated releases is unavailable. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111992",
+    "publishedDate": "2026-10-18T17:16:41.987",
+    "lastModifiedDate": "2026-10-18T17:16:41.987",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-98868",
     "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndm-pcache: reject a kset that overruns its segment\n\ncache_replay(), the writeback worker and the GC worker read a kset of\nget_kset_onmedia_size() bytes and advance the position by it. A forged\nkey_num makes that size exceed the segment's remaining space, so the\nadvance walks past the segment and trips the cache_pos_advance() BUG_ON.\n\nReject a kset whose on-media size exceeds cache_seg_remain() before use.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-98868",
@@ -95,156 +283,6 @@
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-98859",
     "publishedDate": "2026-10-18T16:17:40.363",
     "lastModifiedDate": "2026-10-18T16:17:40.363",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98858",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nio_uring: fix task_work add use-after-free with SQPOLL\n\nFor SQPOLL, the sqpoll thread runs task_work off its own list and\ndoesn't need to be told about it, so it can pop and complete a request\nas soon as mpscq_push() has published it. If that was the last request\nholding the ring alive, io_ring_exit_work() then frees the ctx, stops\nthe thread, and with it the tctx, while io_req_normal_work_add() is\nstill looking at both after the push:\n\n  BUG: KASAN: slab-use-after-free in io_req_normal_work_add+0x439/0x510\n  Read of size 4 at addr ff11000000ca0000 by task repro/55\n  (...)\n  BUG: KASAN: slab-use-after-free in queue_work_on+0x25/0x70\n  Write of size 8 at addr ff11000000c3bd00 by task repro/55\n\nHold an RCU read lock across the add, like io_req_local_work_add() already\ndoes, and have io_ring_exit_work() wait for a grace period for SQPOLL rings\nas well before freeing the ctx.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98858",
-    "publishedDate": "2026-10-18T16:17:40.257",
-    "lastModifiedDate": "2026-10-18T16:17:40.257",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98857",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipvs: bound LBLCR and LBLC cache growth\n\nip_vs_lblcr_new() and ip_vs_lblc_new() create cache entries for\nevery previously unseen destination address. The table max_size only\ntells the periodic collector to reclaim entries after the cache has\nalready exceeded the limit. It does not reclaim entries that the\nattacker continues to use.\n\nReject new cache entries once either table reaches max_size * 3 / 2.\nThe extra headroom lets the periodic collector catch up while the\nexisting scheduler fallback continues to use the selected destination\nwhen cache creation fails. New traffic therefore stays serviceable\nwithout growing the tables further.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98857",
-    "publishedDate": "2026-10-18T16:17:40.150",
-    "lastModifiedDate": "2026-10-18T16:17:40.150",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98856",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nkprobes: Skip disarmed probes when checking optkprobe overlap\n\nOn x86, an optkprobe at A replaces five bytes with a jump. If a disabled\nprobe B is at A+2, get_optimized_kprobe() stops at B when arming a new\nprobe C at A+4. It leaves A optimized:\n\n              A    A+1  A+2  A+3  A+4\n  A's jump  | e9 | d0 | d1 | d2 | d3 |\n  after C   | e9 | d0 | d1 | d2 | cc |\n\nThe INT3 for C overwrites the last byte of A's jump displacement, so\nexecution can jump to the wrong address. B can have prepared optinsns\nwhile disarmed, but has no jump to unoptimize.\n\nContinue past disarmed and unprepared probes to find the active optimized\nprobe before arming a probe in its jump.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98856",
-    "publishedDate": "2026-10-18T16:17:40.050",
-    "lastModifiedDate": "2026-10-18T16:17:40.050",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98855",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nof/overlay: put property on deadprops only after changeset add succeeds\n\nadd_changeset_property() links a new property of a not-yet-live\ntarget node into the node's deadprops list before handing it to\nof_changeset_add_property(). If that fails, the error path frees the\nproperty but leaves the freed pointer linked in deadprops, and\nof_node_release() frees it a second time when the aborted overlay's\nnode is released.\n\nRecord the changeset entry first and link the property into deadprops\nonly on success. of_changeset_add_property() never looks at the\nnode's property lists, so the order of the two steps is otherwise\nimmaterial, and the error path frees a property that nothing\nreferences.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98855",
-    "publishedDate": "2026-10-18T16:17:39.937",
-    "lastModifiedDate": "2026-10-18T16:17:39.937",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98854",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nof/overlay: only treat a positive changeset id as registered\n\nof_overlay_fdt_apply() stores the idr_alloc() return value in\novcs->id before checking it. On failure the stored id is negative,\nfree_overlay_changeset()'s \"if (ovcs->id)\" check passes, idr_remove()\nis called with a negative id and list_del() runs on ovcs->ovcs_list,\nwhich is not initialized until after the id allocation. An allocation\nfailure at that point dereferences NULL.\n\nMake free_overlay_changeset() treat only a strict-positive id as\nregistered. The rest of the function already copes with a\npartially-initialized ovcs, so the error path stays a plain\ngoto err_free_ovcs.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98854",
-    "publishedDate": "2026-10-18T16:17:39.833",
-    "lastModifiedDate": "2026-10-18T16:17:39.833",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98853",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: gso: limit recursive IP-in-IP segmentation\n\nIP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()\nfor each nested IP header. encap_level tracks header bytes, not callback\ndepth, so a deep chain can exhaust the kernel stack. Making\ninet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP\nGSO/TSO later made the path reachable. The IPv6 stackable path was\nintroduced separately and uses the same guard.\n\nCount IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once\nper top-level GSO operation and preserved across GRE/UDP context changes.\nUse the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first\nfive entries pass, and the sixth returns -EINVAL before dispatching\nanother GSO callback.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98853",
-    "publishedDate": "2026-10-18T16:17:39.733",
-    "lastModifiedDate": "2026-10-18T16:17:39.733",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98852",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: extend IPv6 exthdr detection of tunneled packets\n\nCommit c4336a07eb6b (\"net: correctly handle tunneled traffic on IPV6_CSUM\nGSO fallback\") split skb_gso_has_extension_hdr() into mutually exclusive\nbranches on skb->encapsulation. This did not yet address all paths:\n\n1. With skb->encapsulation set, the outer header is not checked. IPv6\n   tunnels such as ip6_gre and ip6_tunnel add an outer Destination\n   Options header by default (encap_limit). Their GSO packets skip\n   software GSO, then skb_csum_hwoffload_help() sees the outer extension\n   header and calls skb_checksum_help() on the GSO skb, which warns and\n   drops it.\n\n2. Tunnels over IPv6 without an outer transport header, such as\n   ip6_tunnel, leave skb->transport_header at the inner transport\n   header. skb_network_header_len() then spans the outer IPv6, tunnel\n   and inner IP headers, a false positive.\n\n3. UDP tunnels without an inner network header, such as SCTP-in-UDP or\n   PSP, have no inner IPv6 header to check. Decide on the outer header\n   alone.\n\n4. Directly dereferencing inner_ip_hdr(skb)->version without\n   skb_header_pointer() is unsafe.\n\nInstead, check ipv6_ext_hdr(nexthdr) on the outer IPv6 header and, if\nset, on the inner IPv6 header. Read the headers with skb_header_pointer().\nKeep the skb_network_header_len() check when !skb->encapsulation to also\ncatch encapsulated packets without skb->encapsulation (e.g., virtio).\n\nUse the same helper in skb_csum_hwoffload_help(). Its open coded test\nhas the false positive of (2) and ignores the inner header.\n\nBackground: checksum offload of tunneled packets invariants:\n\nNon-GSO skb:\n- If the inner packet is CHECKSUM_PARTIAL, Local Checksum Offload computes\n  the outer checksum in software and the device offloads only the inner L4\n  checksum.\n- If the inner packet is CHECKSUM_NONE (e.g., SCTP-in-UDP, ESP-in-UDP,\n  Remote Checksum Offload), the device offloads the outer UDP or GRE\n  checksum instead.\n\nGSO skb:\n- A device with NETIF_F_GSO_UDP_TUNNEL_CSUM or NETIF_F_GSO_GRE_CSUM\n  computes both inner and outer checksums per segment.\n  The outer checksum is seeded with only the pseudo-header checksum.\n\nA NETIF_F_IPV6_CSUM device must parse through the outer headers to\nreach the inner ones.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98852",
-    "publishedDate": "2026-10-18T16:17:39.593",
-    "lastModifiedDate": "2026-10-18T16:17:39.593",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98851",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nft_flow_offload: drop flowtable reference on init error path\n\nnft_flow_offload_init() bumps the flowtable use count with\nnft_use_inc() before calling nf_ct_netns_get().  When the latter\nfails, the error is returned as-is and the reference is leaked.\n\nThe upper layers do not balance it either: nf_tables_newexpr()\nclears expr->ops when the expression init callback fails, so the\nnft_expr_more() iteration in nft_rule_expr_deactivate() and\nnf_tables_rule_destroy() stops right before the failed expression\nand its ->destroy callback, which would drop the reference, never\nruns.\n\nEach failed rule addition therefore leaks one flowtable reference\nand the flowtable can no longer be removed: NFT_MSG_DELFLOWTABLE\nkeeps reporting -EBUSY even though no rule references it.\n\nSave the nf_ct_netns_get() return value and undo the nft_use_inc()\nwhen it fails, restoring the inc/dec pairing within\nnft_flow_offload_init() itself.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98851",
-    "publishedDate": "2026-10-18T16:17:39.490",
-    "lastModifiedDate": "2026-10-18T16:17:39.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98850",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/packet: prevent TX_RING byte count overflow\n\ntpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds\neach valid packet length to the signed int len_sum. Userspace can\nrecycle completed frames concurrently, so a single blocking send call\nis not bounded by the ring size.\n\nAfter enough successful transmissions len_sum wraps into the negative\nrange. In particular, 65536 65535-byte frames followed by a 65007-byte\nframe produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats\nthat as an impossible return and triggers a BUG. On systems configured\nto panic on oops, a CAP_NET_RAW holder can panic the host kernel.\n\nStop before the next frame would make the byte count exceed INT_MAX.\nThe positive short count leaves that frame pending for a later send\ncall.\n\nA two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build\nof Linux 7.3-rc4. With this change, the same reproducer returned the\nexpected positive short count without an oops.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98850",
-    "publishedDate": "2026-10-18T16:17:39.390",
-    "lastModifiedDate": "2026-10-18T16:17:39.390",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98849",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npfcp: fix socket lifetime on netdevice registration failure\n\npfcp_newlink() creates the UDP socket before register_netdevice().\nIf registration fails after pfcp_dev_init() succeeds, the core calls\npfcp_dev_uninit(), which releases the socket and clears pfcp->sk.\nThe newlink error path then releases it again, causing a NULL pointer\ndereference. This was observed with failslab fault injection:\n\n  FAULT_INJECTION: forcing a failure.\n  kobject: kobject_add_internal failed for pfcp0 (error: -12 parent: net)\n  BUG: KASAN: null-ptr-deref in udp_tunnel_sock_release+0x1c/0x50\n  Read of size 8 at addr 0000000000000120 by task ip/1037\n  Call trace:\n   show_stack+0x18/0x24 (C)\n   dump_stack_lvl+0x78/0x90\n   print_report+0x468/0x5cc\n   kasan_report+0xa4/0xf0\n   __asan_load8+0x7c/0xd0\n   udp_tunnel_sock_release+0x1c/0x50\n   pfcp_newlink+0x128/0x184\n   rtnl_newlink+0x848/0xe44\n   rtnetlink_rcv_msg+0x468/0x514\n   netlink_rcv_skb+0xc0/0x1f0\n   rtnetlink_rcv+0x18/0x24\n   netlink_unicast+0x4b8/0x558\n   netlink_sendmsg+0x2b8/0x584\n   ...\n\nReturn from pfcp_del_sock() if pfcp->sk is NULL.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98849",
-    "publishedDate": "2026-10-18T16:17:39.283",
-    "lastModifiedDate": "2026-10-18T16:17:39.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98848",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrtc: ac100: Assign .num before accessing .hws\n\nCommit f316cdff8d67 (\"clk: Annotate struct clk_hw_onecell_data with\n__counted_by\") annotated the hws member of 'struct clk_hw_onecell_data'\nwith __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)\nabout the number of elements in .hws[], so that it can warn when .hws[]\nis accessed out of bounds. As noted in that change, the __counted_by\nmember must be initialized with the number of elements before the first\narray access happens, otherwise there will be a warning from each access\nprior to the initialization because the number of elements is zero.\nThis occurs in ac100_rtc_register_clks() due to .num being assigned only\nafter every clkout clock has been stored in .hws[]. With\nCONFIG_UBSAN_BOUNDS and a compiler that implements __counted_by (GCC\n15.1+ or Clang 20.1+), this triggers an array-index-out-of-bounds report\nduring probe, and with CONFIG_UBSAN_TRAP the first store traps.\n\nInitialize .num with AC100_CLKOUT_NUM, the number of elements .hws[] was\nallocated with, right after the allocation. That is the value the loop\ncounter ends up at on the success path anyway, so the provider's\nbehaviour is unchanged.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98848",
-    "publishedDate": "2026-10-18T16:17:39.163",
-    "lastModifiedDate": "2026-10-18T16:17:39.163",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98847",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrtc: spear: initialize IRQ state before requesting alarm IRQ\n\ndevm_request_irq() enables the interrupt before it returns, so the handler\nmay run while probe is still initializing the device. Initialize the MMIO\naddress and spinlock before requesting the alarm IRQ.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98847",
-    "publishedDate": "2026-10-18T16:17:39.047",
-    "lastModifiedDate": "2026-10-18T16:17:39.047",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98846",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsctp: check RCV_SHUTDOWN after the sendmsg connect wait\n\nsctp_wait_for_connect() drops the socket lock while it sleeps. An\nout-of-the-blue ABORT can then be processed from the socket backlog and\nunlink the association. If a concurrent shutdown(fd, SHUT_RD) sets\nRCV_SHUTDOWN, the waiter breaks with err == 0 before checking\nasoc->base.dead. Its final sctp_association_put() can then free the\nassociation, leaving sctp_sendmsg_to_asoc() to continue with a dangling\npointer.\n\nCheck RCV_SHUTDOWN along with the wait error in sctp_sendmsg_to_asoc()\nbefore using the association again. The check only accesses the socket,\nso it needs no additional association reference. Return the existing\n-ESRCH so that sctp_sendmsg() skips freeing a new association that may\nalready have been destroyed.\n\nKeep sctp_wait_for_connect() unchanged to preserve its behavior for the\nconnect() caller.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98846",
-    "publishedDate": "2026-10-18T16:17:38.947",
-    "lastModifiedDate": "2026-10-18T16:17:38.947",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98845",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntpm: Disable TPM on null key name mismatch\n\nThe null key name check exists to protect against TPM reset attacks, so\na mismatch should stop the device from serving further requests.\nCurrently it does not disable the chip when it finds a mismatch.\n\nThe mismatch is logged:\n\n    tpm tpm0: null key integrity check failed\n\nbut the chip keeps serving commands:\n\n    / # tpm2_getcap -c properties-fixed\n    TPM_PT_FAMILY_INDICATOR:\n      as UINT32:                0x08322e3000\n      as string:                \"2.0\"\n    ...\n\ntpm2_load_null() where the null key name check is run sets the chip as\ndisabled only if the rc is non zero. When the mismatch is seen, rc is\nzero at that point and it returns success. The other issue is that the\ncaller expects the null key handle to be populated when the function\nreturns 0 which it does here without writing the handle and proceeds\nassuming the null key handle is valid.\n\nDuring the test, I noticed that tpm2_start_auth_session() uses the\nuninitialized stack value as the key handle since tpm2_load_null()\nreturns 0 despite the integrity failure and proceeds with\nTPM2_CC_START_AUTH_SESS with this value as salt key handle.\n\nSet rc to -ENODEV on the mismatch. The error path then disables the chip\nand returns the correct code to the caller.\n\nTested in QEMU with swtpm and CONFIG_TCG_TPM2_HMAC=y by making\nTPM2_CC_CONTEXT_LOAD fail with TPM2_RC_INTEGRITY and changing the name\nof the re-created null key. The chip is now disabled on the mismatch.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98845",
-    "publishedDate": "2026-10-18T16:17:38.833",
-    "lastModifiedDate": "2026-10-18T16:17:38.833",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-98844",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfs: clear post-EOF pagecache when extending a file via write\n\nFix netfs to erase the contents of a hole created after the EOF by an\nordinary write if dirty data has been previously left there by writes\nthrough an mmapped region.  Neither the buffered nor the unbuffered/DIO\nwrite path clears that stale pagecache.\n\nZero the tail of the folio straddling the EOF before an extending\nwrite.  That is the only folio that can hold data written past the EOF\nthrough an mmap, as pages wholly beyond the EOF can't be faulted in.\nThe folio is zeroed rather than dropped so a concurrent extending write\ncan't lose data.\n\nBoth write paths downgrade the i_rwsem to shared, so extending writes\ncan run concurrently and the i_size read by the caller may be stale by\nthe time the folio is locked.  Re-read i_size under the folio lock and\nclamp the zeroed range up to it, so a racing write that already put\ndata into the folio isn't clobbered.\n\nWait for any writeback on the folio to finish before zeroing it so that\nthe pagecache isn't modified while it may still be read by the transport\nduring transmission.  Honour IOCB_NOWAIT by returning -EAGAIN rather\nthan blocking on the folio lock, on writeback, or in folio_mkclean()'s\nrmap walk when the folio is mapped.\n\ntruncate_pagecache() can't be used here: it must be called with the\ni_rwsem held exclusively, but these write paths only hold it shared,\nand it would block unconditionally, breaking IOCB_NOWAIT.\n\nCallers that hold i_rwsem exclusively for the whole resize (truncate,\nsetattr, fallocate, clone) exclude any genuine concurrent buffered\nwriter, so staleness can instead be decided from the folio's dirty\nstate, as pagecache_isize_extended() already does for filesystems that\nserialise writes against truncate/setattr via a single i_rwsem.\nExport netfs_clear_stale_post_isize() helper to handle such case.\n\nThe helper is required by the CIFS client to fix generic/363.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98844",
-    "publishedDate": "2026-10-18T16:17:38.720",
-    "lastModifiedDate": "2026-10-18T16:17:38.720",
     "vendors": [],
     "products": [],
     "cvssScores": []
