@@ -1,659 +1,250 @@
 [
   {
-    "id": "CVE-2026-98434",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsysctl: Check range in  proc_dointvec_ms_jiffies_minmax\n\nAdd the range check to do_proc_int_conv_ms_jiffies_minmax that commit\nd174174c6776 (\"sysctl: replace SYSCTL_INT_CONV_CUSTOM macro with\nfunctions\") incorrectly removed.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98434",
-    "publishedDate": "2026-10-18T15:16:53.200",
-    "lastModifiedDate": "2026-10-18T15:16:53.200",
+    "id": "CVE-2026-98868",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndm-pcache: reject a kset that overruns its segment\n\ncache_replay(), the writeback worker and the GC worker read a kset of\nget_kset_onmedia_size() bytes and advance the position by it. A forged\nkey_num makes that size exceed the segment's remaining space, so the\nadvance walks past the segment and trips the cache_pos_advance() BUG_ON.\n\nReject a kset whose on-media size exceeds cache_seg_remain() before use.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98868",
+    "publishedDate": "2026-10-18T16:17:41.320",
+    "lastModifiedDate": "2026-10-18T16:17:41.320",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-98433",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: PPC: Book3S HV: fix secure device page leak on uv_page_in() failure\n\nIn kvmppc_svm_page_in(), if uv_page_in() fails after\nkvmppc_uvmem_get_page() has succeeded, the secure device page is never\nreleased.  kvmppc_uvmem_get_page() sets a bit in kvmppc_uvmem_bitmap,\nallocates a kvmppc_uvmem_page_pvt struct, marks the GFN as\nKVMPPC_GFN_UVMEM_PFN, and calls zone_device_page_init() which sets\nrefcount=1 and locks the page.  The subsequent goto out_finalize skips\nthe *mig.dst assignment, so migrate_vma_finalize() is a no-op for the\npage, and none of those resources are ever reclaimed.\n\nEach occurrence permanently consumes one entry from the firmware-bounded\nsecure memory pool (kvmppc_uvmem_bitmap), leaks pvt, and leaves the GFN\nmarked as secure — making it unusable for the lifetime of the VM.\n\nThe twin __kvmppc_svm_page_out() already handles the analogous uv_page_out()\nfailure correctly with unlock_page(dpage); __free_page(dpage).  Apply\nthe same pattern here: unlock_page() followed by put_page(), which\nchains through free_zone_device_folio() into kvmppc_uvmem_folio_free()\nto clear the bitmap bit, free pvt, and reset the GFN state.\n\nReachable whenever uv_page_in() returns an error (e.g. UV pool\nexhaustion) on any POWER9/10 + Ultravisor/PEF system.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98433",
-    "publishedDate": "2026-10-18T15:16:53.047",
-    "lastModifiedDate": "2026-10-18T15:16:53.047",
+    "id": "CVE-2026-98867",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndm-pcache: bound the logical key offset from persistent memory\n\ncache_key_decode() takes a key's logical off from the cache device and\nlater indexes req_key_tree->subtrees[] by it in get_subtree(). An off\npast the device forms a subtree pointer outside the array, which\nrb_insert() writes through during replay.\n\nReject a key of zero length, or whose off+len (computed in 64 bits)\nexceeds the device size, before it is used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98867",
+    "publishedDate": "2026-10-18T16:17:41.220",
+    "lastModifiedDate": "2026-10-18T16:17:41.220",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-110024",
-    "description": "@fastify/jwt is a JWT utility plugin for Fastify. In versions prior to 10.2.5, the top-level sign and verify methods replace the globally configured defaults with the per-call options instead of merging them, so passing any per-call option silently drops every global default that the call does not restate, including temporal protections such as token expiration and maximum accepted token age. A token signed this way carries no expiration claim and never expires, and verification stops enforcing a configured maximum age, so stale or never-expiring tokens are accepted. The route-level decorators for signing and verifying already merge options and are not affected. The issue is fixed in @fastify/jwt 10.2.5, and users should upgrade to 10.2.5 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110024",
-    "publishedDate": "2026-10-18T15:16:51.417",
-    "lastModifiedDate": "2026-10-18T15:16:51.417",
+    "id": "CVE-2026-98866",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsched/cache: Introduce task_struct->sched_cache_grp to fix UAF\n\nAdd a sched_cache_grp pointer to task_struct so that scheduler code\ncan access the cache group directly via the task, without going\nthrough mm->sched_cache_grp.  This decouples the scheduler's hot-path\naccesses from the mm_struct.\n\nEach task holds its own refcount on the sched_cache_group, separate\nfrom the reference held by its mm_struct.  The reference is acquired\nin copy_mm() (fork) and exec_mmap() (exec), and released in exit_mm().\nThis fixes the use-after-free when account_mm_sched() reaches the group\nthrough a task whose mm is being switched, as reported by Hyunwoo:\n\n  https://lore.kernel.org/lkml/apPb-Dr4nPYuHQOK@v4bel/\n\nConvert all scheduler code in fair.c and exit.c to use\np->sched_cache_grp instead of p->mm->sched_cache_grp.\n\nKeep the fork/exec/exit reference management out of the generic mm\npaths: add sched_cache_fork(), sched_cache_fork_cleanup(),\nsched_cache_exec_mmap() and sched_cache_exit_mm() in\nkernel/sched/cache_sched.c (with empty stubs for !CONFIG_SCHED_CACHE),\nso fs/exec.c, kernel/fork.c and kernel/exit.c each call one helper\ninstead of open-coding the refcounting under #ifdef.  Also add\nsched_cache_group_get() and task_cache_group_get().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98866",
+    "publishedDate": "2026-10-18T16:17:41.117",
+    "lastModifiedDate": "2026-10-18T16:17:41.117",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-111988",
-    "description": "A security flaw has been discovered in dyad-sh dyad up to 1.16.0. Affected by this issue is some unknown functionality of the component OAuth Callback Handler. Performing a manipulation results in cross-site request forgery. The attack may be initiated remotely. Upgrading to version 1.17.0-beta.1 can resolve this issue. The patch is named 39fbae87b38573616a1a3b152cdb292787bb1109. It is advisable to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111988",
-    "publishedDate": "2026-10-18T15:16:52.483",
-    "lastModifiedDate": "2026-10-18T15:16:52.483",
+    "id": "CVE-2026-98865",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsched_ext: Don't run ops.dequeue() with a DSQ lock held\n\nops.dequeue() is invoked with the source user DSQ's lock still held on\nthe consume and move paths (scx_consume_dispatch_q(),\nmove_task_between_dsqs()). A BPF scheduler which locks the source user\nDSQ from ops.dequeue() - e.g. by iterating it with bpf_iter_scx_dsq -\nself-deadlocks.\n\nops.dequeue() can only call the \"any\" kfuncs and none of them can lock a\nbuiltin DSQ, so the global and bypass paths can't deadlock; however,\nall DSQ locks share one lockdep class, so iterating any user DSQ from\nops.dequeue() on those paths trips the recursion check.\n\nMove the invocation after the DSQ unlock on all three paths.\nSCX_TASK_IN_CUSTODY is cleared under the lock serializing the transfer\nso that the callback is invoked exactly once.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98865",
+    "publishedDate": "2026-10-18T16:17:40.973",
+    "lastModifiedDate": "2026-10-18T16:17:40.973",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-111987",
-    "description": "A vulnerability was identified in AUTOMATIC1111 stable-diffusion-webui up to 1.10.1. Affected by this vulnerability is the function read_metadata_from_safetensors of the file modules/sd_models.py of the component Extra-Networks Card Builder. Such manipulation of the argument __metadata__.sshs_model_hash leads to cross site scripting. The attack can be launched remotely. The exploit is publicly available and might be used. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111987",
-    "publishedDate": "2026-10-18T14:16:54.630",
-    "lastModifiedDate": "2026-10-18T14:16:54.630",
+    "id": "CVE-2026-98864",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsched_ext: Wait for SCX_OPSS_DISPATCHING before reenqueueing a task\n\nebf1ccff79c4 (\"sched_ext: Fix ops.dequeue() semantics\") moved the final\nops_state store in scx_dispatch_enqueue() after the DSQ unlock so that the\ncustody update and ops.dequeue() precede it. A task can thus be found on a\nDSQ while still SCX_OPSS_DISPATCHING.\n\nThe dequeue and core-sched pick paths wait for the state to clear in\nops_dequeue() but the reenqueue paths don't. A reenqueue in that window runs\nops.enqueue() and sets SCX_OPSS_QUEUED before the dispatch has completed.\nThe dispatcher's final store then overwrites it with SCX_OPSS_NONE and\nfinish_dispatch() drops every later dispatch of the task.\n\nWait for SCX_OPSS_DISPATCHING to clear before dequeueing a task for\nreenqueue, the same way ops_dequeue() does.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98864",
+    "publishedDate": "2026-10-18T16:17:40.877",
+    "lastModifiedDate": "2026-10-18T16:17:40.877",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112063",
-    "description": "libstrophe through 0.14.0 contains a stack-based buffer overflow vulnerability in SCRAM_Hi that allows malicious XMPP servers to overflow a 128-byte stack buffer by sending an oversized SCRAM salt. Attackers can send a server-first-message whose s= attribute decodes to more than 124 bytes, aborting the client or overwriting stack memory in NDEBUG builds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112063",
-    "publishedDate": "2026-10-18T13:16:38.893",
-    "lastModifiedDate": "2026-10-18T13:16:38.893",
+    "id": "CVE-2026-98863",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nKVM: x86: Re-pend GET_NESTED_STATE_PAGES if getting said pages fails\n\nRe-pend GET_NESTED_STATE_PAGES before exiting to userspace if getting the\nnested pages fails in the KVM_RUN path.  If userspace re-runs the vCPU, and\nvmcs02 holds valid PFNs from the *previous* run of L2, then KVM could\nre-enter L2 with stale, unpinned PFNs mapped into e.g. the vAPIC page.\n\nNote, both SVM and VMX (as of commit 11722439fb20 (\"KVM: nVMX: Ensure\nKVM_REQ_GET_NESTED_STATE_PAGES is cleared on VM-Exit\") ensure the request\nis cleared on VM-Exit (including the \"forced\" case), i.e. there is no risk\nof double-mapping due to emulated VMLAUNCH/VMRESUME/VMRUN *and* the request\ntrying to map the nested pages.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98863",
+    "publishedDate": "2026-10-18T16:17:40.780",
+    "lastModifiedDate": "2026-10-18T16:17:40.780",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112062",
-    "description": "lwIP through 2.2.1 contains a stack out-of-bounds write vulnerability in mdns_handle_response that allows adjacent attackers to corrupt stack memory by sending mDNS responses with invalid domain names. Attackers on the local link can send multicast PTR answers with oversized RDLENGTH or SRV answers with RDLENGTH below 6 during a service search, overflowing a 256-byte stack buffer and crashing the device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112062",
-    "publishedDate": "2026-10-18T13:16:38.750",
-    "lastModifiedDate": "2026-10-18T13:16:38.750",
+    "id": "CVE-2026-98862",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\naudit: fix exe mark UAF in kill_rules()\n\nkill_rules() removes mixed AUDIT_DIR and AUDIT_EXE rules when an audit\ntree is pruned. It drops entry->rule.exe before removing the rule from\nthe RCU-visible filter lists.\n\nAfter a rule has been installed with AUDIT_ADD_RULE, which requires\nCAP_AUDIT_CONTROL, removing the watched directory can race with another\ntask that is still evaluating the rule. In that case, fsnotify can free\nthe executable mark before the reader reaches audit_mark_compare(),\ncausing a use-after-free.\n\nKASAN reports:\n\n    BUG: KASAN: slab-use-after-free in audit_mark_compare+0x8d/0xa0\n\nUnlink the published rules from the RCU-visible lists and retain them\non tree->rules for cleanup. If any rule has an executable mark, wait for\na single RCU grace period before removing the marks and scheduling the\nentries for freeing. Otherwise, call_rcu() already provides the required\ndeferred freeing without a synchronous wait.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98862",
+    "publishedDate": "2026-10-18T16:17:40.677",
+    "lastModifiedDate": "2026-10-18T16:17:40.677",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112061",
-    "description": "librtmp (RTMPDump) through 2.6 contains a heap out-of-bounds read vulnerability in AMFProp_Decode that reads an AMF0 strict-array element count before checking that four bytes remain. A malicious RTMP server or man in the middle can send an AMF0 body ending with a strict-array type byte and fewer than four trailing bytes to crash the client.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112061",
-    "publishedDate": "2026-10-18T13:16:38.600",
-    "lastModifiedDate": "2026-10-18T13:16:38.600",
+    "id": "CVE-2026-98861",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nfprobe: Use guard(rcu_sched_notrace) and check rcu_is_watching()\n\nunregister_fprobe() and unregister_fprobe_async() (used by BPF\nkprobe-multi) rely on standard RCU grace periods (synchronize_rcu()\nand call_rcu()) to wait until in-flight fprobe handlers complete before\nfreeing the fprobe.\n\nHowever, if an fprobe handler executes while RCU is not watching (such\nas in the idle loop or nohz_full extended quiescent states), standard\nRCU does not track preemption-disabled sections. Consequently,\nsynchronize_rcu() does not wait for those executions, which can lead\nto a use-after-free if the fprobe is freed immediately after\nunregistration. Ensure handlers exit early when !rcu_is_watching().\n\nFurthermore, fprobe_fgraph_entry() and fprobe_ftrace_entry() previously\nused guard(rcu)() and rcu_read_lock(), which invoke lockdep on every\nhit under CONFIG_PROVE_LOCKING. This adds overhead and can cause lockdep\nrecursion if probed functions interact with lockdep.\n\nSince rhltable_lookup() and rhl_for_each_entry_rcu() use\nrcu_dereference_all_check() (which checks rcu_read_lock_any_held()),\nholding preemption disabled via rcu_read_lock_sched_notrace() is fully\nvalid and sufficient so long as rcu_is_watching() is true.\n\nDefine and use guard(rcu_sched_notrace)() across fprobe_ftrace_entry(),\nfprobe_fgraph_entry(), and fprobe_return(). This eliminates fast-path\nrcu_read_lock() and lockdep overhead while guaranteeing safe grace\nperiod synchronization.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98861",
+    "publishedDate": "2026-10-18T16:17:40.573",
+    "lastModifiedDate": "2026-10-18T16:17:40.573",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112060",
-    "description": "librtmp in RTMPDump through 2.6 contains an out-of-bounds read and heap out-of-bounds write vulnerability because AMF3_Decode ignores AMF3 property decode failures. Malicious RTMP servers or man-in-the-middle attackers can send oversized AMF3 string lengths, and with the token option DecodeTEA corrupts heap memory and leaks heap bytes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112060",
-    "publishedDate": "2026-10-18T13:16:38.437",
-    "lastModifiedDate": "2026-10-18T13:16:38.437",
+    "id": "CVE-2026-98860",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nHID: bpf: cast size to ssize_t when checking hid_bpf_hw_request\n\nAs reported by Sashiko:\nIf a transport driver encounters a hardware error and returns a negative\nerror code such as -EPIPE, ret is implicitly promoted to size_t when\ncompared against size. This causes the negative error code to evaluate\nas a large positive number, making the (ret > size) condition true.\n\nThis silently converts the hardware error into a success return value\nand copies the unmodified buffer back, which could leave BPF programs\noperating on uninitialized or stale data.\n\nFix this by casting size into ssize_t to return the actual negative\nerror code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98860",
+    "publishedDate": "2026-10-18T16:17:40.470",
+    "lastModifiedDate": "2026-10-18T16:17:40.470",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112059",
-    "description": "libLAS through 1.8.1 contains a heap out-of-bounds write vulnerability in the point record reader caused by truncating the schema byte size to 16 bits when sizing the point buffer. Attackers can craft a .las file with a LASSchema variable length record whose schema exceeds 65535 bytes, so tools like lasinfo, las2las, or las2txt write attacker-controlled bytes past the heap buffer, causing memory corruption and crashes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112059",
-    "publishedDate": "2026-10-18T13:16:38.300",
-    "lastModifiedDate": "2026-10-18T13:16:38.300",
+    "id": "CVE-2026-98859",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nHID: multitouch: stop the release timer from being rearmed on remove\n\nmt_remove() quiesces the sticky-finger timer before stopping the\nhardware:\n\n    timer_delete_sync(&td->release_timer);\n\n    sysfs_remove_group(&hdev->dev.kobj, &mt_attribute_group);\n    hid_hw_stop(hdev);\n\ntimer_delete_sync() waits for a running callback and dequeues the timer,\nbut it does not stop the timer from being armed again. The transport is\nstill delivering reports at that point, and the report path rearms it:\n\n    if (app->quirks & MT_QUIRK_STICKY_FINGERS) {\n        if (td->mt_io_flags & MT_IO_SLOTS_MASK)\n            mod_timer(&td->release_timer,\n                      jiffies + msecs_to_jiffies(100));\n\nA report that arrives after timer_delete_sync() has returned therefore\nleaves the timer queued. td is allocated with devm_kzalloc() against\nhdev->dev, so it is freed when the driver is unbound, after mt_remove()\nreturns. When the timer fires afterwards, mt_expired_timeout()\ndereferences the freed td:\n\n    struct mt_device *td = timer_container_of(td, t, release_timer);\n    struct hid_device *hdev = td->hdev;\n\n    if (test_and_set_bit_lock(MT_IO_FLAGS_RUNNING, &td->mt_io_flags))\n\nSimply moving the teardown after hid_hw_stop() does not fix this on its\nown, because mt_expired_timeout() calls mt_release_contacts(), which\nwalks hdev->inputs; the timer still has to be quiesced before\nhid_hw_stop() tears the input devices down.\n\nUse timer_shutdown_sync() instead, which additionally makes any later\nmod_timer() a no-op, so neither ordering constraint has to be traded off\nagainst the other. This is the final-teardown pattern the function was\nintroduced for, and hid-wiimote already uses it for the same reason.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98859",
+    "publishedDate": "2026-10-18T16:17:40.363",
+    "lastModifiedDate": "2026-10-18T16:17:40.363",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112058",
-    "description": "VideoLAN libdvdnav through 7.0.0 contains an out-of-bounds read vulnerability in set_PTT that allows attackers to crash applications by supplying an invalid JumpTT title number checked only by an assert. Attackers can craft a DVD or disc image whose First Play program chain issues JumpTT with title 0 or an oversized number, reading past the heap title table and crashing the player.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112058",
-    "publishedDate": "2026-10-18T13:16:38.167",
-    "lastModifiedDate": "2026-10-18T13:16:38.167",
+    "id": "CVE-2026-98858",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nio_uring: fix task_work add use-after-free with SQPOLL\n\nFor SQPOLL, the sqpoll thread runs task_work off its own list and\ndoesn't need to be told about it, so it can pop and complete a request\nas soon as mpscq_push() has published it. If that was the last request\nholding the ring alive, io_ring_exit_work() then frees the ctx, stops\nthe thread, and with it the tctx, while io_req_normal_work_add() is\nstill looking at both after the push:\n\n  BUG: KASAN: slab-use-after-free in io_req_normal_work_add+0x439/0x510\n  Read of size 4 at addr ff11000000ca0000 by task repro/55\n  (...)\n  BUG: KASAN: slab-use-after-free in queue_work_on+0x25/0x70\n  Write of size 8 at addr ff11000000c3bd00 by task repro/55\n\nHold an RCU read lock across the add, like io_req_local_work_add() already\ndoes, and have io_ring_exit_work() wait for a grace period for SQPOLL rings\nas well before freeing the ctx.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98858",
+    "publishedDate": "2026-10-18T16:17:40.257",
+    "lastModifiedDate": "2026-10-18T16:17:40.257",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112057",
-    "description": "libdvdnav before 7.0.0 contains a heap out-of-bounds read vulnerability in dvdnav_describe_title_chapters that allows attackers to read beyond the part-of-title array by supplying an oversized vts_ttn value. Attackers can provide a crafted DVD or disc image declaring a larger VMGI title vts_ttn than the title set's entries to crash applications enumerating chapters.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112057",
-    "publishedDate": "2026-10-18T13:16:38.037",
-    "lastModifiedDate": "2026-10-18T13:16:38.037",
+    "id": "CVE-2026-98857",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipvs: bound LBLCR and LBLC cache growth\n\nip_vs_lblcr_new() and ip_vs_lblc_new() create cache entries for\nevery previously unseen destination address. The table max_size only\ntells the periodic collector to reclaim entries after the cache has\nalready exceeded the limit. It does not reclaim entries that the\nattacker continues to use.\n\nReject new cache entries once either table reaches max_size * 3 / 2.\nThe extra headroom lets the periodic collector catch up while the\nexisting scheduler fallback continues to use the selected destination\nwhen cache creation fails. New traffic therefore stays serviceable\nwithout growing the tables further.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98857",
+    "publishedDate": "2026-10-18T16:17:40.150",
+    "lastModifiedDate": "2026-10-18T16:17:40.150",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112056",
-    "description": "wvWare wv through 1.2.9 contains a heap-based out-of-bounds read vulnerability in wvGetSTSH in stylesheet.c that allows attackers to crash applications by supplying crafted Word stylesheets. Attackers can provide a .doc file with ten or fewer styles or out-of-range style base indexes to read past heap arrays, crashing applications such as AbiWord.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112056",
-    "publishedDate": "2026-10-18T13:16:37.890",
-    "lastModifiedDate": "2026-10-18T13:16:37.890",
+    "id": "CVE-2026-98856",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nkprobes: Skip disarmed probes when checking optkprobe overlap\n\nOn x86, an optkprobe at A replaces five bytes with a jump. If a disabled\nprobe B is at A+2, get_optimized_kprobe() stops at B when arming a new\nprobe C at A+4. It leaves A optimized:\n\n              A    A+1  A+2  A+3  A+4\n  A's jump  | e9 | d0 | d1 | d2 | d3 |\n  after C   | e9 | d0 | d1 | d2 | cc |\n\nThe INT3 for C overwrites the last byte of A's jump displacement, so\nexecution can jump to the wrong address. B can have prepared optinsns\nwhile disarmed, but has no jump to unoptimize.\n\nContinue past disarmed and unprepared probes to find the active optimized\nprobe before arming a probe in its jump.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98856",
+    "publishedDate": "2026-10-18T16:17:40.050",
+    "lastModifiedDate": "2026-10-18T16:17:40.050",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112055",
-    "description": "wvWare wv through 1.2.9 contains a stack-based out-of-bounds read vulnerability in wvGetPAPX_FKP and wvGetCHPX_FKP caused by an unvalidated FKP run count. Attackers can supply a crafted .doc file with a large crun value to read kilobytes past the 512-byte stack buffer, crashing applications like AbiWord.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112055",
-    "publishedDate": "2026-10-18T13:16:37.757",
-    "lastModifiedDate": "2026-10-18T13:16:37.757",
+    "id": "CVE-2026-98855",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nof/overlay: put property on deadprops only after changeset add succeeds\n\nadd_changeset_property() links a new property of a not-yet-live\ntarget node into the node's deadprops list before handing it to\nof_changeset_add_property(). If that fails, the error path frees the\nproperty but leaves the freed pointer linked in deadprops, and\nof_node_release() frees it a second time when the aborted overlay's\nnode is released.\n\nRecord the changeset entry first and link the property into deadprops\nonly on success. of_changeset_add_property() never looks at the\nnode's property lists, so the order of the two steps is otherwise\nimmaterial, and the error path frees a property that nothing\nreferences.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98855",
+    "publishedDate": "2026-10-18T16:17:39.937",
+    "lastModifiedDate": "2026-10-18T16:17:39.937",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112054",
-    "description": "Schroedinger libschroedinger through 1.0.11 contains a divide by zero vulnerability that allows attackers to crash applications by supplying a zero slice_bytes_denom or slice count in a Dirac stream. Attackers can provide a crafted low-delay picture parsed by schro_decoder_parse_transform_parameters and schro_decoder_parse_lowdelay_transform_data to trigger a SIGFPE and cause denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112054",
-    "publishedDate": "2026-10-18T13:16:37.620",
-    "lastModifiedDate": "2026-10-18T13:16:37.620",
+    "id": "CVE-2026-98854",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nof/overlay: only treat a positive changeset id as registered\n\nof_overlay_fdt_apply() stores the idr_alloc() return value in\novcs->id before checking it. On failure the stored id is negative,\nfree_overlay_changeset()'s \"if (ovcs->id)\" check passes, idr_remove()\nis called with a negative id and list_del() runs on ovcs->ovcs_list,\nwhich is not initialized until after the id allocation. An allocation\nfailure at that point dereferences NULL.\n\nMake free_overlay_changeset() treat only a strict-positive id as\nregistered. The rest of the function already copes with a\npartially-initialized ovcs, so the error path stays a plain\ngoto err_free_ovcs.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98854",
+    "publishedDate": "2026-10-18T16:17:39.833",
+    "lastModifiedDate": "2026-10-18T16:17:39.833",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112053",
-    "description": "Schroedinger libschroedinger through 1.0.11 contains an out-of-bounds read vulnerability that allows attackers to read past a static quantiser table by supplying unvalidated wavelet filter index or transform depth values. Attackers can deliver a crafted low-delay Dirac stream with a wavelet filter index of 7 or more or transform depth of 5 or 6 to crash decoding applications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112053",
-    "publishedDate": "2026-10-18T13:16:37.470",
-    "lastModifiedDate": "2026-10-18T13:16:37.470",
+    "id": "CVE-2026-98853",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: gso: limit recursive IP-in-IP segmentation\n\nIP-in-IP GSO can re-enter inet_gso_segment() or ipv6_gso_segment()\nfor each nested IP header. encap_level tracks header bytes, not callback\ndepth, so a deep chain can exhaust the kernel stack. Making\ninet_gso_segment() stackable introduced unbounded IPv4 nesting; IPIP\nGSO/TSO later made the path reachable. The IPv6 stackable path was\nintroduced separately and uses the same guard.\n\nCount IPv4 and IPv6 GSO handler entries in skb_gso_cb, initialized once\nper top-level GSO operation and preserved across GRE/UDP context changes.\nUse the existing IP_TUNNEL_RECURSION_LIMIT for both handlers. The first\nfive entries pass, and the sixth returns -EINVAL before dispatching\nanother GSO callback.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98853",
+    "publishedDate": "2026-10-18T16:17:39.733",
+    "lastModifiedDate": "2026-10-18T16:17:39.733",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112052",
-    "description": "libspatialite through 5.1.0 contains an integer overflow vulnerability in the WKB point and vertex count size guard of ParseWkbLine and related parsers in gg_wkb.c, allowing out-of-bounds reads. Attackers can supply a crafted geometry BLOB with a large point count, for example in a SpatiaLite database file, to crash the process or corrupt heap memory on 32-bit builds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112052",
-    "publishedDate": "2026-10-18T13:16:37.337",
-    "lastModifiedDate": "2026-10-18T13:16:37.337",
+    "id": "CVE-2026-98852",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: extend IPv6 exthdr detection of tunneled packets\n\nCommit c4336a07eb6b (\"net: correctly handle tunneled traffic on IPV6_CSUM\nGSO fallback\") split skb_gso_has_extension_hdr() into mutually exclusive\nbranches on skb->encapsulation. This did not yet address all paths:\n\n1. With skb->encapsulation set, the outer header is not checked. IPv6\n   tunnels such as ip6_gre and ip6_tunnel add an outer Destination\n   Options header by default (encap_limit). Their GSO packets skip\n   software GSO, then skb_csum_hwoffload_help() sees the outer extension\n   header and calls skb_checksum_help() on the GSO skb, which warns and\n   drops it.\n\n2. Tunnels over IPv6 without an outer transport header, such as\n   ip6_tunnel, leave skb->transport_header at the inner transport\n   header. skb_network_header_len() then spans the outer IPv6, tunnel\n   and inner IP headers, a false positive.\n\n3. UDP tunnels without an inner network header, such as SCTP-in-UDP or\n   PSP, have no inner IPv6 header to check. Decide on the outer header\n   alone.\n\n4. Directly dereferencing inner_ip_hdr(skb)->version without\n   skb_header_pointer() is unsafe.\n\nInstead, check ipv6_ext_hdr(nexthdr) on the outer IPv6 header and, if\nset, on the inner IPv6 header. Read the headers with skb_header_pointer().\nKeep the skb_network_header_len() check when !skb->encapsulation to also\ncatch encapsulated packets without skb->encapsulation (e.g., virtio).\n\nUse the same helper in skb_csum_hwoffload_help(). Its open coded test\nhas the false positive of (2) and ignores the inner header.\n\nBackground: checksum offload of tunneled packets invariants:\n\nNon-GSO skb:\n- If the inner packet is CHECKSUM_PARTIAL, Local Checksum Offload computes\n  the outer checksum in software and the device offloads only the inner L4\n  checksum.\n- If the inner packet is CHECKSUM_NONE (e.g., SCTP-in-UDP, ESP-in-UDP,\n  Remote Checksum Offload), the device offloads the outer UDP or GRE\n  checksum instead.\n\nGSO skb:\n- A device with NETIF_F_GSO_UDP_TUNNEL_CSUM or NETIF_F_GSO_GRE_CSUM\n  computes both inner and outer checksums per segment.\n  The outer checksum is seeded with only the pseudo-header checksum.\n\nA NETIF_F_IPV6_CSUM device must parse through the outer headers to\nreach the inner ones.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98852",
+    "publishedDate": "2026-10-18T16:17:39.593",
+    "lastModifiedDate": "2026-10-18T16:17:39.593",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112051",
-    "description": "Xinference through 4.0.1 contains a path traversal vulnerability on Windows that allows unauthenticated attackers to write and delete arbitrary .json files via backslash sequences in model_name. Attackers can register a persisted custom model through POST /v1/model_registrations/{model_type} with names like ..\\..\\evil to overwrite configuration or data files writable by the Xinference process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112051",
-    "publishedDate": "2026-10-18T13:16:37.190",
-    "lastModifiedDate": "2026-10-18T13:16:37.190",
+    "id": "CVE-2026-98851",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nft_flow_offload: drop flowtable reference on init error path\n\nnft_flow_offload_init() bumps the flowtable use count with\nnft_use_inc() before calling nf_ct_netns_get().  When the latter\nfails, the error is returned as-is and the reference is leaked.\n\nThe upper layers do not balance it either: nf_tables_newexpr()\nclears expr->ops when the expression init callback fails, so the\nnft_expr_more() iteration in nft_rule_expr_deactivate() and\nnf_tables_rule_destroy() stops right before the failed expression\nand its ->destroy callback, which would drop the reference, never\nruns.\n\nEach failed rule addition therefore leaks one flowtable reference\nand the flowtable can no longer be removed: NFT_MSG_DELFLOWTABLE\nkeeps reporting -EBUSY even though no rule references it.\n\nSave the nf_ct_netns_get() return value and undo the nft_use_inc()\nwhen it fails, restoring the inc/dec pairing within\nnft_flow_offload_init() itself.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98851",
+    "publishedDate": "2026-10-18T16:17:39.490",
+    "lastModifiedDate": "2026-10-18T16:17:39.490",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112050",
-    "description": "Gitify before 7.10.0 contains a login cross-site request forgery vulnerability that allows remote attackers to bind a victim's client to their account because performGitHubWebOAuth() omits OAuth state validation. Attackers can get a gitify://oauth?code= link with their own authorization code opened during a victim's pending login, causing Gitify to display attacker-controlled notifications as the victim's own.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112050",
-    "publishedDate": "2026-10-18T13:16:37.050",
-    "lastModifiedDate": "2026-10-18T13:16:37.050",
+    "id": "CVE-2026-98850",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/packet: prevent TX_RING byte count overflow\n\ntpacket_snd() drains every SEND_REQUEST frame in a TX ring and adds\neach valid packet length to the signed int len_sum. Userspace can\nrecycle completed frames concurrently, so a single blocking send call\nis not bounded by the ring size.\n\nAfter enough successful transmissions len_sum wraps into the negative\nrange. In particular, 65536 65535-byte frames followed by a 65007-byte\nframe produce 0xfffffdef, or -EIOCBQUEUED. sock_sendmsg_nosec() treats\nthat as an impossible return and triggers a BUG. On systems configured\nto panic on oops, a CAP_NET_RAW holder can panic the host kernel.\n\nStop before the next frame would make the byte count exceed INT_MAX.\nThe positive short count leaves that frame pending for a later send\ncall.\n\nA two-thread TPACKET_V2 reproducer triggered the BUG on an arm64 build\nof Linux 7.3-rc4. With this change, the same reproducer returned the\nexpected positive short count without an oops.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98850",
+    "publishedDate": "2026-10-18T16:17:39.390",
+    "lastModifiedDate": "2026-10-18T16:17:39.390",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 2.3,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112049",
-    "description": "Vita3K before build 4187 contains a path traversal (zip slip) vulnerability in install_archive_content() that allows attackers to write files outside the install directory via crafted .vpk archives. Attackers can embed '..' segments or absolute paths in zip entry names to write attacker-controlled files anywhere writable by Vita3K, potentially enabling host code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112049",
-    "publishedDate": "2026-10-18T13:16:36.913",
-    "lastModifiedDate": "2026-10-18T13:16:36.913",
+    "id": "CVE-2026-98849",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npfcp: fix socket lifetime on netdevice registration failure\n\npfcp_newlink() creates the UDP socket before register_netdevice().\nIf registration fails after pfcp_dev_init() succeeds, the core calls\npfcp_dev_uninit(), which releases the socket and clears pfcp->sk.\nThe newlink error path then releases it again, causing a NULL pointer\ndereference. This was observed with failslab fault injection:\n\n  FAULT_INJECTION: forcing a failure.\n  kobject: kobject_add_internal failed for pfcp0 (error: -12 parent: net)\n  BUG: KASAN: null-ptr-deref in udp_tunnel_sock_release+0x1c/0x50\n  Read of size 8 at addr 0000000000000120 by task ip/1037\n  Call trace:\n   show_stack+0x18/0x24 (C)\n   dump_stack_lvl+0x78/0x90\n   print_report+0x468/0x5cc\n   kasan_report+0xa4/0xf0\n   __asan_load8+0x7c/0xd0\n   udp_tunnel_sock_release+0x1c/0x50\n   pfcp_newlink+0x128/0x184\n   rtnl_newlink+0x848/0xe44\n   rtnetlink_rcv_msg+0x468/0x514\n   netlink_rcv_skb+0xc0/0x1f0\n   rtnetlink_rcv+0x18/0x24\n   netlink_unicast+0x4b8/0x558\n   netlink_sendmsg+0x2b8/0x584\n   ...\n\nReturn from pfcp_del_sock() if pfcp->sk is NULL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98849",
+    "publishedDate": "2026-10-18T16:17:39.283",
+    "lastModifiedDate": "2026-10-18T16:17:39.283",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.7,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112048",
-    "description": "libspatialite through 5.1.0 fails to validate the polygon ring count in ParseWkbPolygon, allowing attackers to trigger uncontrolled interior-ring allocation via crafted geometry BLOBs. Attackers can supply a crafted polygon in a SpatiaLite database or ST_GeomFromWKB input to crash the process or corrupt heap memory on 32-bit builds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112048",
-    "publishedDate": "2026-10-18T13:16:36.770",
-    "lastModifiedDate": "2026-10-18T13:16:36.770",
+    "id": "CVE-2026-98848",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrtc: ac100: Assign .num before accessing .hws\n\nCommit f316cdff8d67 (\"clk: Annotate struct clk_hw_onecell_data with\n__counted_by\") annotated the hws member of 'struct clk_hw_onecell_data'\nwith __counted_by, which informs the bounds sanitizer (UBSAN_BOUNDS)\nabout the number of elements in .hws[], so that it can warn when .hws[]\nis accessed out of bounds. As noted in that change, the __counted_by\nmember must be initialized with the number of elements before the first\narray access happens, otherwise there will be a warning from each access\nprior to the initialization because the number of elements is zero.\nThis occurs in ac100_rtc_register_clks() due to .num being assigned only\nafter every clkout clock has been stored in .hws[]. With\nCONFIG_UBSAN_BOUNDS and a compiler that implements __counted_by (GCC\n15.1+ or Clang 20.1+), this triggers an array-index-out-of-bounds report\nduring probe, and with CONFIG_UBSAN_TRAP the first store traps.\n\nInitialize .num with AC100_CLKOUT_NUM, the number of elements .hws[] was\nallocated with, right after the allocation. That is the value the loop\ncounter ends up at on the success path anyway, so the provider's\nbehaviour is unchanged.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98848",
+    "publishedDate": "2026-10-18T16:17:39.163",
+    "lastModifiedDate": "2026-10-18T16:17:39.163",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112047",
-    "description": "OneUptime 14.0.2 before 14.0.69 contains an incorrect authorization vulnerability that allows authenticated project members to act on clusters outside their scope by exploiting project-wide permission checks. Attackers can call the AI access test, agent reset, kubectl plan approval and incident AI conversation features to learn agent RBAC permissions, disconnect agents, approve kubectl changes, or run commands on unauthorized resources.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112047",
-    "publishedDate": "2026-10-18T13:16:36.607",
-    "lastModifiedDate": "2026-10-18T13:16:36.720",
+    "id": "CVE-2026-98847",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrtc: spear: initialize IRQ state before requesting alarm IRQ\n\ndevm_request_irq() enables the interrupt before it returns, so the handler\nmay run while probe is still initializing the device. Initialize the MMIO\naddress and spinlock before requesting the alarm IRQ.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98847",
+    "publishedDate": "2026-10-18T16:17:39.047",
+    "lastModifiedDate": "2026-10-18T16:17:39.047",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-112046",
-    "description": "OW2 ASM 9.11 before 9.11.1 contains an infinite loop vulnerability in Label.resolve() caused by 16-bit forward-reference offsets truncating when rewritten methods exceed 64 KB. Attackers can supply crafted class files whose transformed code grows past 65535 bytes, hanging ClassReader.accept() and denying service to build tools, instrumenters, agents, or analyzers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112046",
-    "publishedDate": "2026-10-18T13:16:36.463",
-    "lastModifiedDate": "2026-10-18T13:16:36.463",
+    "id": "CVE-2026-98846",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsctp: check RCV_SHUTDOWN after the sendmsg connect wait\n\nsctp_wait_for_connect() drops the socket lock while it sleeps. An\nout-of-the-blue ABORT can then be processed from the socket backlog and\nunlink the association. If a concurrent shutdown(fd, SHUT_RD) sets\nRCV_SHUTDOWN, the waiter breaks with err == 0 before checking\nasoc->base.dead. Its final sctp_association_put() can then free the\nassociation, leaving sctp_sendmsg_to_asoc() to continue with a dangling\npointer.\n\nCheck RCV_SHUTDOWN along with the wait error in sctp_sendmsg_to_asoc()\nbefore using the association again. The check only accesses the socket,\nso it needs no additional association reference. Return the existing\n-ESRCH so that sctp_sendmsg() skips freeing a new association that may\nalready have been destroyed.\n\nKeep sctp_wait_for_connect() unchanged to preserve its behavior for the\nconnect() caller.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98846",
+    "publishedDate": "2026-10-18T16:17:38.947",
+    "lastModifiedDate": "2026-10-18T16:17:38.947",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-111986",
-    "description": "A vulnerability was determined in AUTOMATIC1111 stable-diffusion-webui up to 1.10.1. Affected is the function get_obj_from_str of the file modules/sd_models.py of the component Model Instantiation. This manipulation of the argument Target causes code injection. The attack can be initiated remotely. The exploit has been publicly disclosed and may be utilized. The project was informed of the problem early through an issue report but has not responded yet.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111986",
-    "publishedDate": "2026-10-18T13:16:35.920",
-    "lastModifiedDate": "2026-10-18T13:16:35.920",
+    "id": "CVE-2026-98845",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntpm: Disable TPM on null key name mismatch\n\nThe null key name check exists to protect against TPM reset attacks, so\na mismatch should stop the device from serving further requests.\nCurrently it does not disable the chip when it finds a mismatch.\n\nThe mismatch is logged:\n\n    tpm tpm0: null key integrity check failed\n\nbut the chip keeps serving commands:\n\n    / # tpm2_getcap -c properties-fixed\n    TPM_PT_FAMILY_INDICATOR:\n      as UINT32:                0x08322e3000\n      as string:                \"2.0\"\n    ...\n\ntpm2_load_null() where the null key name check is run sets the chip as\ndisabled only if the rc is non zero. When the mismatch is seen, rc is\nzero at that point and it returns success. The other issue is that the\ncaller expects the null key handle to be populated when the function\nreturns 0 which it does here without writing the handle and proceeds\nassuming the null key handle is valid.\n\nDuring the test, I noticed that tpm2_start_auth_session() uses the\nuninitialized stack value as the key handle since tpm2_load_null()\nreturns 0 despite the integrity failure and proceeds with\nTPM2_CC_START_AUTH_SESS with this value as salt key handle.\n\nSet rc to -ENODEV on the mismatch. The error path then disables the chip\nand returns the correct code to the caller.\n\nTested in QEMU with swtpm and CONFIG_TCG_TPM2_HMAC=y by making\nTPM2_CC_CONTEXT_LOAD fail with TPM2_RC_INTEGRITY and changing the name\nof the re-created null key. The chip is now disabled on the mismatch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98845",
+    "publishedDate": "2026-10-18T16:17:38.833",
+    "lastModifiedDate": "2026-10-18T16:17:38.833",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-78497",
-    "description": "JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a query's regular expression by compiling it with string eval.\n\nThe pattern given to test(), match(), or the match and =~ conditions of select() is placed in a `qr'...'` literal and compiled as source text, so a `(?{ ... })` code block in it runs without `use re 'eval'`. Single quotes in the pattern are escaped, but a code block runs in place and needs none.\n\nAn attacker who supplies a query, or text that an application inserts into the pattern of one, can execute arbitrary Perl code in the calling process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78497",
-    "publishedDate": "2026-10-18T12:17:15.350",
-    "lastModifiedDate": "2026-10-18T12:17:15.350",
+    "id": "CVE-2026-98844",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfs: clear post-EOF pagecache when extending a file via write\n\nFix netfs to erase the contents of a hole created after the EOF by an\nordinary write if dirty data has been previously left there by writes\nthrough an mmapped region.  Neither the buffered nor the unbuffered/DIO\nwrite path clears that stale pagecache.\n\nZero the tail of the folio straddling the EOF before an extending\nwrite.  That is the only folio that can hold data written past the EOF\nthrough an mmap, as pages wholly beyond the EOF can't be faulted in.\nThe folio is zeroed rather than dropped so a concurrent extending write\ncan't lose data.\n\nBoth write paths downgrade the i_rwsem to shared, so extending writes\ncan run concurrently and the i_size read by the caller may be stale by\nthe time the folio is locked.  Re-read i_size under the folio lock and\nclamp the zeroed range up to it, so a racing write that already put\ndata into the folio isn't clobbered.\n\nWait for any writeback on the folio to finish before zeroing it so that\nthe pagecache isn't modified while it may still be read by the transport\nduring transmission.  Honour IOCB_NOWAIT by returning -EAGAIN rather\nthan blocking on the folio lock, on writeback, or in folio_mkclean()'s\nrmap walk when the folio is mapped.\n\ntruncate_pagecache() can't be used here: it must be called with the\ni_rwsem held exclusively, but these write paths only hold it shared,\nand it would block unconditionally, breaking IOCB_NOWAIT.\n\nCallers that hold i_rwsem exclusively for the whole resize (truncate,\nsetattr, fallocate, clone) exclude any genuine concurrent buffered\nwriter, so staleness can instead be decided from the folio's dirty\nstate, as pagecache_isize_extended() already does for filesystems that\nserialise writes against truncate/setattr via a single i_rwsem.\nExport netfs_clear_stale_post_isize() helper to handle such case.\n\nThe helper is required by the CIFS client to fix generic/363.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-98844",
+    "publishedDate": "2026-10-18T16:17:38.720",
+    "lastModifiedDate": "2026-10-18T16:17:38.720",
     "vendors": [],
     "products": [],
     "cvssScores": []
