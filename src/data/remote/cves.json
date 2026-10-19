@@ -1,30 +1,50 @@
 [
   {
-    "id": "CVE-2025-13173",
-    "description": "Tokens associated with user sessions are not revoked when the corresponding user session is terminated, unless another SSO request is initiated. This occurs when the session-bound token feature is enabled with token binding validation and the \"Revoke token upon user logout\" option is not active. The software fails to automatically invalidate session-bound tokens upon user session termination.\n\nThis vulnerability exists when token binding validation is enabled. As a result, a malicious actor possessing a valid session-bound token could exploit this condition to maintain unauthorized access to applications and resources even after the associated user session has ended, potentially leading to the exposure of sensitive user data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-13173",
-    "publishedDate": "2026-10-19T17:16:59.183",
-    "lastModifiedDate": "2026-10-19T17:16:59.183",
+    "id": "CVE-2026-112895",
+    "description": "Pillow is a Python imaging library. From 5.1.0 until 13.0.0, Pillow can exhaust resources while parsing an existing PDF during an append operation. PdfParser follows page-tree child references without cycle or duplication tracking and follows previous-trailer chains with only an exact repeated-offset guard, so deep or cyclic page trees and long chains of unique trailer offsets can exhaust the Python stack. Repeated non-cyclic /Kids references can also cause super-linear CPU and memory use. An attacker can supply such a PDF to an application that calls Image.save with PDF append enabled. This can raise an uncaught RecursionError or consume excessive CPU and memory before output is written, causing denial of service. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112895",
+    "publishedDate": "2026-10-19T22:17:09.620",
+    "lastModifiedDate": "2026-10-19T22:17:09.620",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.7,
-        "source": "ed10eef1-636d-4fbe-9993-6890dfa878f8"
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111064",
-    "description": "AIOHTTP is an asynchronous HTTP client/server framework for asyncio and Python. Prior to 3.14.4, keepalive timeout handling is absent during the initial portion of a request. An attacker can keep an idle connection open indefinitely before sending any request data, consuming server connection capacity. This issue is fixed in version 3.14.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111064",
-    "publishedDate": "2026-10-19T17:17:03.377",
-    "lastModifiedDate": "2026-10-19T17:17:03.377",
+    "id": "CVE-2026-112894",
+    "description": "Pillow is a Python imaging library. From 5.1.0 until 13.0.0, Pillow takes quadratic time to reserve PDF object identifiers when saving many frames with save_all enabled. PdfParser.next_object_id() repeatedly rebuilds and scans all previously reserved identifiers for every object. An attacker can supply a multi-frame image, including a small APNG with a large declared frame count, to an application that converts it to a multipage PDF. This can consume excessive CPU and deny service. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112894",
+    "publishedDate": "2026-10-19T22:17:09.483",
+    "lastModifiedDate": "2026-10-19T22:17:09.483",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112893",
+    "description": "Pillow is a Python imaging library. From 10.0.0 until 13.0.0, Pillow can free an invalid glyph pointer during FreeType rendering with an active stroker. If FT_Load_Glyph fails, cleanup may call FT_Done_Glyph on an uninitialized or stale glyph variable. An attacker can supply a malformed font as untrusted bytes to an application that draws text with a nonzero stroke width, forcing the glyph-load failure path. This can corrupt memory or crash the process. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112893",
+    "publishedDate": "2026-10-19T22:17:09.350",
+    "lastModifiedDate": "2026-10-19T22:17:09.350",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -40,48 +60,28 @@
     ]
   },
   {
-    "id": "CVE-2025-13591",
-    "description": "The authentication endpoint of WSO2 Identity Server fails to provide a consistent system response when a username does not exist in the system, allowing attackers to differentiate between valid and invalid usernames. This difference in responses can be leveraged to enumerate existing user accounts.\n\nSuccessful exploitation enables an attacker to discover valid usernames within the system, significantly increasing the risk of subsequent attacks such as brute force attacks on user credentials, social engineering attacks, and information leakage. The discovered usernames can be used to craft targeted phishing emails or other social engineering campaigns.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-13591",
-    "publishedDate": "2026-10-19T17:16:59.413",
-    "lastModifiedDate": "2026-10-19T17:16:59.413",
+    "id": "CVE-2026-112361",
+    "description": "A vulnerability has been found in Dolibarr up to 23.0.2. The impacted element is an unknown function of the file htdocs/document.php of the component CSP. Such manipulation leads to protection mechanism failure. The attack can be executed remotely. Upgrading to version 24.0.0 is sufficient to resolve this issue. The name of the patch is 9f9ffa288d4ad2632c1d5dd88272c699a592f4ec. You should upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112361",
+    "publishedDate": "2026-10-19T22:17:06.400",
+    "lastModifiedDate": "2026-10-19T22:17:06.540",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
+        "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "ed10eef1-636d-4fbe-9993-6890dfa878f8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-112193",
-    "description": "A vulnerability was detected in Webkul Aureus ERP up to 1.6.0. Impacted is an unknown function of the file plugins/webkul/security/src/Filament/Resources/UserResource/Schemas/UserForm.php. Performing a manipulation of the argument Password results in weak password requirements. Remote exploitation of the attack is possible. The complexity of an attack is rather high. The exploitability is considered difficult. The exploit is now public and may be used. The vendor was contacted early about this disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112193",
-    "publishedDate": "2026-10-19T17:17:14.340",
-    "lastModifiedDate": "2026-10-19T17:17:14.490",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 2.9,
+        "score": 5.3,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -89,19 +89,79 @@
     ]
   },
   {
-    "id": "CVE-2026-111063",
-    "description": "AIOHTTP is an asynchronous HTTP client/server framework for asyncio and Python. Prior to 3.14.4, the Secure attribute for a shared cookie is not enforced. An attacker can consequently cause a shared cookie marked Secure to be sent with an unencrypted request. This issue is fixed in version 3.14.4.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111063",
-    "publishedDate": "2026-10-19T17:17:03.237",
-    "lastModifiedDate": "2026-10-19T17:17:03.237",
+    "id": "CVE-2026-112261",
+    "description": "A flaw was found in GIMP. Opening a crafted XCF that selects a path and then fails to load that path can cause a use-after-free in the main process, leading to a crash and potentially arbitrary code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112261",
+    "publishedDate": "2026-10-19T22:17:05.767",
+    "lastModifiedDate": "2026-10-19T22:17:05.767",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112258",
+    "description": "A flaw was found in GIMP. The XCF loader can leave a dangling pointer in the linked-channels list when a linked channel is later destroyed via a selection property. Opening a crafted XCF file can cause a use-after-free in the main GIMP process, leading to a crash and potentially arbitrary code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112258",
+    "publishedDate": "2026-10-19T22:17:05.543",
+    "lastModifiedDate": "2026-10-19T22:17:05.543",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112257",
+    "description": "A flaw was found in GIMP. The PSD thumbnail resource loader performs a BGR-to-RGB channel swap with a fixed 3-byte stride and does not verify that the JPEG thumbnail is RGB. A crafted grayscale PSD thumbnail can cause a heap out-of-bounds read and write in the plug-in process, leading to a crash and potentially arbitrary code execution when the victim browses or opens the file.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112257",
+    "publishedDate": "2026-10-19T22:17:05.420",
+    "lastModifiedDate": "2026-10-19T22:17:05.420",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112892",
+    "description": "Pillow is a Python imaging library. From 4.1.0 until 13.0.0, Pillow's MSP RLE decoder can expand a small file into an unbounded in-memory buffer. The decoder writes run-length output to BytesIO without limiting expansion to the declared image size. An attacker can supply a crafted MSP image to an application that loads its pixels. This can exhaust memory and deny service even when the declared pixel count passes the decompression-bomb check. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112892",
+    "publishedDate": "2026-10-19T22:17:09.210",
+    "lastModifiedDate": "2026-10-19T22:17:09.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "security-advisories@github.com"
@@ -109,403 +169,262 @@
     ]
   },
   {
-    "id": "CVE-2026-14511",
-    "description": "IBM MQ 9.4.5.0 through 9.4.5.1 could allow an authenticated user to cause a denial of service by sending a specially crafted message that crashes consuming applications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14511",
-    "publishedDate": "2026-10-19T17:17:20.110",
-    "lastModifiedDate": "2026-10-19T17:17:20.110",
+    "id": "CVE-2026-112891",
+    "description": "Pillow is a Python imaging library. From 9.2.0 until 13.0.0, Pillow performs quadratic copying when saving a GIF with a long comment. _get_global_header() repeatedly copies portions of comment data while assembling the global header, including comments retained from an untrusted input image. An attacker can supply an image with a large GIF comment to an application that saves it as GIF. This can consume excessive CPU and delay or deny service. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112891",
+    "publishedDate": "2026-10-19T22:17:08.640",
+    "lastModifiedDate": "2026-10-19T22:17:08.640",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
-        "version": "CVSS 3.1",
+        "score": 6.9,
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-10572",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service or potentially execute arbitrary code due to a heap buffer overflow when processing MQPUT operations with malformed message options.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10572",
-    "publishedDate": "2026-10-19T17:17:01.440",
-    "lastModifiedDate": "2026-10-19T17:17:01.440",
+    "id": "CVE-2026-112406",
+    "description": "Pillow is a Python imaging library. From 5.1.0 until 13.0.0, Pillow can enter an infinite loop while rewriting PDF pages. PdfParser.rewrite_pages() follows Parent relationships without detecting a cycle in the page tree. An attacker can supply a cyclic PDF to an application that appends an image to that PDF. This can hold the worker at full CPU and deny service. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112406",
+    "publishedDate": "2026-10-19T22:17:08.153",
+    "lastModifiedDate": "2026-10-19T22:17:08.153",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112360",
+    "description": "A security vulnerability has been detected in Netis EAP930 1.250905.115454. This issue affects the function return200 of the file /cgi-bin/debug of the component CGI Endpoint. The manipulation of the argument SIGNATURE leads to backdoor. The attack may be initiated remotely. A high degree of complexity is needed for the attack. The exploitability is assessed as difficult. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112360",
+    "publishedDate": "2026-10-19T22:17:06.217",
+    "lastModifiedDate": "2026-10-19T22:17:06.217",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 1.3,
+        "impactScore": 6,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 7.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112405",
+    "description": "Pillow is a Python imaging library. From 12.0.0 until 13.0.0, Pillow's Image.merge() can dereference a null image8 plane. Validation skips the first input band, allowing a 32-bit integer or floating-point image backed by image32 storage to be merged as a narrower multiband image. A crafted IPTC file can reach this path when an application opens and loads it, or a caller can invoke Image.merge() directly with such a first band. This causes a native process crash. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112405",
+    "publishedDate": "2026-10-19T22:17:08.027",
+    "lastModifiedDate": "2026-10-19T22:17:08.027",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112404",
+    "description": "Pillow is a Python imaging library. From 8.1.0 until 13.0.0, Pillow's TIFF tile and RGBA decode paths can read beyond row data produced by libtiff. In _decodeTile and the RGBA unpacker path, when Pillow and libtiff interpret duplicated PhotometricInterpretation or BitsPerSample tags differently, Pillow does not verify that the required input row fits inside the row libtiff produced, while the strip path has this validation. Loading pixels from such a crafted TIFF can expose adjacent heap data in output pixels or crash the process. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112404",
+    "publishedDate": "2026-10-19T22:17:07.900",
+    "lastModifiedDate": "2026-10-19T22:17:07.900",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 8.8,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "psirt@us.ibm.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-10574",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service or potentially execute arbitrary code due to a heap buffer overflow when processing MQPUT or MQPUT1 operations with malformed message handle properties.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10574",
-    "publishedDate": "2026-10-19T17:17:01.780",
-    "lastModifiedDate": "2026-10-19T17:17:01.780",
+    "id": "CVE-2026-105815",
+    "description": "TP-Link Tapo\nC210 V3.60 may expose shared credential material and cryptographic metadata\nthrough unauthenticated DS JSON API requests. The exposed shared credential can\nbe accepted by the Streamd Digest authentication mechanism as an administrative\npassword, allowing an unauthenticated adjacent-network attacker to establish\nencrypted media sessions without knowledge of the device account\npassword.  \n\n\n\n\n\n\n\n\n\nSuccessful\nexploitation may disclose credential and cryptographic material and allow\nunauthorized access to encrypted media sessions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105815",
+    "publishedDate": "2026-10-19T22:17:03.153",
+    "lastModifiedDate": "2026-10-19T22:17:03.153",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
-        "version": "CVSS 3.1",
+        "score": 7.1,
+        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "psirt@us.ibm.com"
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
       }
     ]
   },
   {
-    "id": "CVE-2026-10743",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service or corrupt memory due to improper validation of buffer sizes in MQOPEN operations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-10743",
-    "publishedDate": "2026-10-19T17:17:02.107",
-    "lastModifiedDate": "2026-10-19T17:17:02.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-11828",
-    "description": "IBM MQ could allow a remote attacker with queue manager control or man-in-the-middle access on unencrypted channels to cause a denial of service in client applications using asynchronous message consumption due to improper validation of queue name length values.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11828",
-    "publishedDate": "2026-10-19T17:17:16.130",
-    "lastModifiedDate": "2026-10-19T18:17:05.817",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-11829",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service due to improper validation of offset values in MQOPEN requests.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11829",
-    "publishedDate": "2026-10-19T17:17:16.457",
-    "lastModifiedDate": "2026-10-19T17:17:16.457",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-11831",
-    "description": "IBM MQ could allow an authenticated attacker to cause a limited denial of service and obtain very limited information about process memory layout due to an out-of-bounds read when processing a specially crafted client request.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-11831",
-    "publishedDate": "2026-10-19T17:17:16.790",
-    "lastModifiedDate": "2026-10-19T17:17:16.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12148",
-    "description": "IBM MQ Operator could allow an authenticated attacker to cause a denial of service or potentially execute arbitrary code due to unrestricted Java deserialization in the MQ Classes for Java.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12148",
-    "publishedDate": "2026-10-19T17:17:17.120",
-    "lastModifiedDate": "2026-10-19T17:17:17.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12155",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service by sending specially crafted multicast status messages that trigger a NULL pointer dereference.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12155",
-    "publishedDate": "2026-10-19T17:17:17.447",
-    "lastModifiedDate": "2026-10-19T17:17:17.447",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12343",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service due to improper validation of RFH2 message header fields in queued publish/subscribe operations.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12343",
-    "publishedDate": "2026-10-19T17:17:17.773",
-    "lastModifiedDate": "2026-10-19T18:17:06.140",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12350",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service by sending a specially crafted asynchronous consume request that crashes the queue manager agent process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12350",
-    "publishedDate": "2026-10-19T17:17:18.107",
-    "lastModifiedDate": "2026-10-19T17:17:18.107",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-10149",
-    "description": "The SCIM endpoint does not sufficiently validate authorization for federated users when performing operations against the local user store. This occurs when a local and a federated user share the same username, allowing a federated user to perform actions intended for a local user, including arbitrary operations.\n\nA malicious actor authenticated as a federated user may perform arbitrary operations on local user accounts via the SCIM 2.0 or SCIM 1.1 endpoints when local and federated users share the same username. This could lead to user account takeover. Deployments that do not support user self-registration are considered medium severity.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-10149",
-    "publishedDate": "2026-10-19T17:16:59.007",
-    "lastModifiedDate": "2026-10-19T17:16:59.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 4.2,
-        "source": "ed10eef1-636d-4fbe-9993-6890dfa878f8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12660",
-    "description": "IBM MQ Web Console could allow an authenticated administrator to write files outside the intended directory due to improper path validation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12660",
-    "publishedDate": "2026-10-19T17:17:18.440",
-    "lastModifiedDate": "2026-10-19T17:17:18.440",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 1.4,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12665",
-    "description": "IBM MQ could allow a remote attacker to execute arbitrary code due to a stack buffer overflow when processing TLS certificates with malformed distinguished names during channel connection establishment.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12665",
-    "publishedDate": "2026-10-19T17:17:18.773",
-    "lastModifiedDate": "2026-10-19T17:17:18.773",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.9,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12669",
-    "description": "IBM MQ could allow an authenticated attacker to trigger a minor out-of-bounds read when sending malformed compressed data, though the data is not disclosed and the request is rejected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12669",
-    "publishedDate": "2026-10-19T17:17:19.110",
-    "lastModifiedDate": "2026-10-19T17:17:19.110",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12727",
-    "description": "IBM MQ could allow an authenticated attacker to cause potential process instability due to an off-by-one buffer overflow when processing specially crafted object names.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12727",
-    "publishedDate": "2026-10-19T17:17:19.770",
-    "lastModifiedDate": "2026-10-19T17:17:19.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "psirt@us.ibm.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-12670",
-    "description": "IBM MQ could allow an authenticated attacker to cause a denial of service through a specially crafted message that triggers excessive memory operations during character set conversion.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-12670",
-    "publishedDate": "2026-10-19T17:17:19.440",
-    "lastModifiedDate": "2026-10-19T17:17:19.440",
+    "id": "CVE-2026-105814",
+    "description": "TP-Link Tapo\nC210 V3.60 contains an authentication bypass vulnerability in the DS JSON API.\nA crafted JSON request containing both a protected operation and public\nonboarding-related fields may cause module-level authorization checks to be\napplied inconsistently, allowing protected camera operations, including\npan-tilt-zoom control, to be executed without a valid authenticated\nsession. \n\n\n\n\n\nSuccessful\nexploitation may allow an unauthenticated attacker on the adjacent network to\nperform protected camera operations, including pan-tilt-zoom (PTZ) control,\nwithout a valid authenticated session. This could result in unauthorized\nmanipulation of camera functionality.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105814",
+    "publishedDate": "2026-10-19T22:17:03.027",
+    "lastModifiedDate": "2026-10-19T22:17:03.027",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 5.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 3.6,
-        "source": "psirt@us.ibm.com"
+        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
       }
     ]
   },
   {
-    "id": "CVE-2025-7203",
-    "description": "The Management Console and product files expose sensitive data, including remote log server credentials, truststore passwords, and keystore passwords, in plain text. This occurs because the system does not sufficiently protect or obscure these credentials when the remote logging feature is enabled.\n\nAn attacker with administrative access to the Management Console or direct access to product files can retrieve these sensitive credentials. This allows for potential manipulation of log entries and compromise of the integrity and confidentiality of the remote log server.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-7203",
-    "publishedDate": "2026-10-19T17:17:00.157",
-    "lastModifiedDate": "2026-10-19T17:17:00.157",
+    "id": "CVE-2026-112403",
+    "description": "Pillow is a Python imaging library. Prior to 13.0.0, Pillow's JPEG decoder can write a full-width scanline into a buffer sized for a requested draft scale. ImagingJpegDecode does not verify libjpeg's actual output width and component count after scaling is requested, and an 8-bit lossless SOF3 JPEG decoded by a build linked to libjpeg-turbo 3.x can ignore the requested downscaling geometry. An attacker can supply such a JPEG to an application that uses draft() or thumbnail() to request downscaling. This can corrupt heap memory, crash the process, or potentially allow code execution. Older libjpeg-turbo 2.x and IJG builds reject the SOF3 input. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112403",
+    "publishedDate": "2026-10-19T22:17:07.770",
+    "lastModifiedDate": "2026-10-19T22:17:07.770",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "ed10eef1-636d-4fbe-9993-6890dfa878f8"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-107188",
-    "description": "A user can upload export reports with any file contents and specify any contents. JSP code can be uploaded, JSPX can be specified as the file extension, and anyone can browse to the uploaded file, leading to command execution. The authentication bypass vulnerability can be chained with this vulnerability to run code on the server without authentication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107188",
-    "publishedDate": "2026-10-19T17:17:01.080",
-    "lastModifiedDate": "2026-10-19T17:17:01.080",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.6,
-        "version": "CVSS 3.1",
+        "score": 9.2,
+        "version": "CVSS 4.0",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 5.8,
-        "source": "cve@rapid7.com"
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111862",
-    "description": "Rank Math SEO PRO for WordPress is affected by a supply-chain compromise in a subset of version 3.0.123 packages downloaded or updated between October 15, 2026 at 20:02 UTC and October 16, 2026 at 07:12 UTC. Rank Math states that the affected plugin files contained malware that could compromise a website if the plugin was activated and directs sites that activated an affected package to treat the website as compromised. The malware may establish persistent access, communicate with rank1cdn[.]com, recreate hidden backdoors on page visits, and expose WordPress credentials, database credentials, API keys, and other secrets accessible to the web server. Rank Math identifies three malicious wp_options keys, hidden PHP backdoors, unauthorized administrator accounts, a fake WordPress core file, PHP-executable .cache files, and a system cron marker as incident indicators. Only packages obtained during the vendor-confirmed window are claimed as affected; version 3.0.123 alone is not sufficient to establish compromise. Rank Math removed the affected files and released version 3.0.124 as the clean replacement.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111862",
-    "publishedDate": "2026-10-19T17:17:04.507",
-    "lastModifiedDate": "2026-10-19T17:17:04.507",
+    "id": "CVE-2024-54657",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54657",
+    "publishedDate": "2026-10-19T22:17:02.547",
+    "lastModifiedDate": "2026-10-19T22:17:02.547",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54656",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54656",
+    "publishedDate": "2026-10-19T22:17:02.500",
+    "lastModifiedDate": "2026-10-19T22:17:02.500",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54655",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54655",
+    "publishedDate": "2026-10-19T22:17:02.450",
+    "lastModifiedDate": "2026-10-19T22:17:02.450",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54654",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54654",
+    "publishedDate": "2026-10-19T22:17:02.400",
+    "lastModifiedDate": "2026-10-19T22:17:02.400",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54653",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54653",
+    "publishedDate": "2026-10-19T22:17:02.350",
+    "lastModifiedDate": "2026-10-19T22:17:02.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54652",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54652",
+    "publishedDate": "2026-10-19T22:17:02.300",
+    "lastModifiedDate": "2026-10-19T22:17:02.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54651",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54651",
+    "publishedDate": "2026-10-19T22:17:02.250",
+    "lastModifiedDate": "2026-10-19T22:17:02.250",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54650",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54650",
+    "publishedDate": "2026-10-19T22:17:02.207",
+    "lastModifiedDate": "2026-10-19T22:17:02.207",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2024-54649",
+    "description": "Rejected reason: This candidate was in a CNA pool that was not assigned to any issues.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2024-54649",
+    "publishedDate": "2026-10-19T22:17:02.150",
+    "lastModifiedDate": "2026-10-19T22:17:02.150",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   }
 ]
