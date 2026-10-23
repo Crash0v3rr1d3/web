@@ -1,497 +1,50 @@
 [
   {
-    "id": "CVE-2026-114614",
-    "description": "Authlib is a Python library which builds OAuth and OpenID Connect servers. From 0.13 until 1.8.0, authlib.common.security.is_secure_transport() uses a textual prefix comparison for loopback HTTP exemptions, so a URL whose userinfo begins with a loopback host can be accepted even when its parsed host is an external non-loopback system. An external party able to supply a URL to OIDC RP-Initiated Logout registration, authorization-server metadata validation, or another call site can bypass the TLS-required guard and cause cleartext redirection or acceptance of cleartext endpoints. The issue does not bypass redirect URI exact matching and does not by itself forge tokens or authenticate users. The vulnerable authlib.common.security.is_secure_transport() implementation in authlib/common/security.py misinterprets the userinfo component before OIDC RP-Initiated Logout dynamic client registration and other consumers enforce transport security. This issue is fixed in version 1.8.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-114614",
-    "publishedDate": "2026-10-22T21:17:16.683",
-    "lastModifiedDate": "2026-10-22T21:17:16.683",
+    "id": "CVE-2026-58497",
+    "description": "Uni-CLI gives people and agents one command interface for websites, browsers, desktop applications, local tools, and MCP. Prior to version 0.225.2, Uni-CLI exposed the legacy JSON-RPC-over-HTTP MCP transport on loopback without validating browser Origin headers before routing requests. A malicious web page could send a CORS simple POST request, such as text/plain, to the local /mcp endpoint and deliver a JSON-RPC body to the dispatcher. If the user had started the local MCP HTTP transport, that page could drive tools/call requests against the user's local Uni-CLI server. The Streamable HTTP transport already enforced this browser-to-localhost boundary. The legacy stateless HTTP path did not, so the two HTTP transports had drifted. This issue is about the browser-to-localhost boundary; it does not change Uni-CLI's local-code-execution trust model. This issue has been patched in version 0.225.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58497",
+    "publishedDate": "2026-10-23T15:17:34.257",
+    "lastModifiedDate": "2026-10-23T15:17:34.257",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2.6,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.2,
-        "impactScore": 1.4,
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-114583",
-    "description": "tarfile.tar_filter could be bypassed using crafted link entries, including symlinks with empty or directory-like names, to redirect later archive members outside the intended extraction directory. This allowed a malicious tar archive to cause tarfile.extractall() with filter=\"tar\" to write files outside the destination directory, subject to the permissions of the extracting process.\n\nThis is the tarfile.tar_filter counterpart of CVE-2026-7774, which covered tarfile.data_filter.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-114583",
-    "publishedDate": "2026-10-22T21:17:16.543",
-    "lastModifiedDate": "2026-10-22T21:17:16.543",
+    "id": "CVE-2026-55486",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 25.08 to before version 26.05, the IIIF Auth 2.0 endpoints auth/login and auth/token in AuthorizationFlowResource accept an origin query parameter without validation and then (1) embed it into the Content-Security-Policy: frame-ancestors response header and (2) embed it into an HTML response body as a JavaScript single-quoted postMessage argument. Because the attacker controls both the login and token calls that initiate the flow, the unescaped value yields reflected XSS. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55486",
+    "publishedDate": "2026-10-23T15:17:33.657",
+    "lastModifiedDate": "2026-10-23T15:17:33.657",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@python.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-114625",
-    "description": "VeloCloud Orchestrator (VCO) on-prem has a security issue where this issue may allow a remote attacker to access privileged internal functionality and impact the VCO host. Successful exploitation may compromise the confidentiality, integrity, and availability of the orchestrator and data managed by the orchestrator.\n\nOn an affected system, any authenticated user can gain operator privileges and masquerade as a local \"superuser operator\" user. This includes access to functionality that is intended for internal use only and which is not intended to be remotely accessible.\n\nHosted, including Dedicated, versions of VCO were impacted and have already been patched.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-114625",
-    "publishedDate": "2026-10-22T21:17:16.870",
-    "lastModifiedDate": "2026-10-22T21:17:16.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
+        "score": 9.3,
         "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "psirt@arista.com"
-      },
-      {
-        "score": 9.4,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@arista.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115417",
-    "description": "Memory allocation with excessive size value in the MQTT 3.1.1 compatibility adapter in AWS aws-c-mqtt before 0.16.2 might allow a remote actor to cause a denial of service of the client application.\n\n\n\nTo remediate this issue, users should upgrade to aws-c-mqtt 0.16.2 or later, or to an AWS Common Runtime or AWS IoT Device SDK release that bundles it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115417",
-    "publishedDate": "2026-10-22T21:17:17.633",
-    "lastModifiedDate": "2026-10-22T21:17:17.633",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 8.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115509",
-    "description": "Jitsu Console before 2.14.0-beta.41 Cross-Workspace Authorization Bypass via sources/state API",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115509",
-    "publishedDate": "Thu, 22 Oct 2026 20:17:07 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-115508",
-    "description": "Crawl4AI 0.7.0 before 0.9.5 contains an inefficient regular expression complexity vulnerability in the Docker API server that allows authenticated API clients to supply unbounded regular expressions in /crawl request bodies. Attackers can submit catastrophic-backtracking patterns via RegexExtractionStrategy.custom, RegexChunking.patterns or JsonCss, JsonXPath and JsonLxml schema regex fields against a crafted page to freeze the entire server, including /health.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115508",
-    "publishedDate": "2026-10-22T20:17:06.910",
-    "lastModifiedDate": "2026-10-22T20:17:06.910",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "impactScore": 5.8,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-115507",
-    "description": "Vikunja 2.2.0 before 2.7.1 contains an HTML injection vulnerability in CreateConversationalHeader in pkg/notifications/mail.go that interpolates display names and task and project titles raw into email anchors. Authenticated users can craft titles or display names that close the anchor and inject phishing links into task-comment and task-mention notification emails sent to project members.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115507",
-    "publishedDate": "2026-10-22T20:17:06.767",
-    "lastModifiedDate": "2026-10-22T20:17:06.767",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.5,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115506",
-    "description": "libexpat through 2.9.0 contains a denial of service vulnerability because billion laughs protection in accountingDiffTolerated() in xmlparse.c detects entity amplification too late. Attackers can supply a moderately sized XML document with a large DTD and nested entity expansions to consume tens of seconds of CPU per parse.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115506",
-    "publishedDate": "2026-10-22T20:17:06.620",
-    "lastModifiedDate": "2026-10-22T20:17:06.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115505",
-    "description": "libsmb2 before 6.3 contains integer overflow vulnerabilities in the DCE/RPC NDR decoder in lib/dcerpc.c that allow heap out-of-bounds reads and writes. A malicious SMB server or machine-in-the-middle on unsigned connections can send crafted NetrShareEnum replies with wrapping actual_count or max_count values when clients call smb2_share_enum_async(), corrupting heap memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115505",
-    "publishedDate": "2026-10-22T20:17:06.470",
-    "lastModifiedDate": "2026-10-22T20:17:06.470",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.2,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115504",
-    "description": "CFITSIO through 4.7.0 contains an out-of-bounds write vulnerability in ffgcls2() in getcols.c that trusts attacker-controlled heap descriptor lengths for variable-length string columns. Attackers can supply a crafted FITS file that overflows a fixed 28,800-byte stack buffer and the caller's string array, enabling arbitrary code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115504",
-    "publishedDate": "2026-10-22T20:17:06.313",
-    "lastModifiedDate": "2026-10-22T20:17:06.313",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115503",
-    "description": "Ghidra before 12.2 contains an improper handling of highly compressed data vulnerability in ExtensionUtils.unzipToInstallationFolder() that allows attackers to exhaust disk space. Attackers can persuade users to install a crafted zip bomb extension archive that expands without size limits, causing later writes by Ghidra and other applications to fail.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115503",
-    "publishedDate": "2026-10-22T20:17:06.173",
-    "lastModifiedDate": "2026-10-22T20:17:06.173",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115398",
-    "description": "Ghidra before 12.2 contains a resource allocation without limits vulnerability in FileSystemIndexHelper used by TarFileSystem and ZipFileSystem, which store unbounded archive entries. Attackers can persuade a user to open or batch-import a crafted TAR or ZIP archive with excessive entries to exhaust the Java heap and hang the session.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115398",
-    "publishedDate": "2026-10-22T20:17:06.033",
-    "lastModifiedDate": "2026-10-22T20:17:06.033",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-112332",
-    "description": "Motor.NET before 0.19.0 contains an uncaught exception vulnerability in JsonNetDeserializer.Deserialize that allows a remote attacker who can publish to a consumed queue or topic to crash the service permanently by sending structurally valid JSON that does not match the handler's expected type. Attackers can exploit the fact that JsonSerializationException is not caught alongside JsonReaderException and InvalidCastException, causing TypedConsumerService.SingleMessageConsumeAsync to treat the error as CriticalFailure and call StopApplication, which combined with the unacknowledged message being redelivered on restart results in a permanent crash-loop.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112332",
-    "publishedDate": "2026-10-22T20:17:05.890",
-    "lastModifiedDate": "2026-10-22T20:17:05.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-112331",
-    "description": "Motor.NET before 0.19.0 contains a denial-of-service vulnerability that allows a remote attacker who can produce records to a consumed topic to crash the service permanently by sending a single crafted record. By setting the content-type header to application/cloudevents+json and omitting required CloudEvent attributes (id, source, type), the attacker triggers an ArgumentException in KafkaMessageConsumer.SingleMessageHandlingAsync that is treated as fatal, causing the host to stop and re-process the same poison record on every restart, resulting in a permanent crash-loop.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112331",
-    "publishedDate": "2026-10-22T20:17:05.750",
-    "lastModifiedDate": "2026-10-22T20:17:05.750",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-112330",
-    "description": "Motor.NET before 0.19.0 contains a denial of service vulnerability that allows a remote attacker who can publish to a consumed queue to crash the service permanently by sending a message with crafted cloudEvents headers. Attackers can supply an invalid cloudEvents:motorversion, a single double-quote header value, or an unparsable typed attribute such as cloudEvents:time to trigger an unhandled exception in ExtractCloudEvent that is treated as fatal, causing the application to stop and the unacknowledged message to be redelivered on restart, resulting in a permanent crash-loop.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112330",
-    "publishedDate": "2026-10-22T20:17:05.580",
-    "lastModifiedDate": "2026-10-22T20:17:05.580",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115419",
-    "description": "The A2A server component in Amazon Strands Agents SDK for Python before 1.43.0 and Amazon Strands Agents SDK for TypeScript before 1.5.0 does not properly isolate conversation state between callers. An authenticated remote user could read other tenants' conversation history and add persistent instructions that alter model behavior for subsequent callers via HTTP requests to the A2A endpoint using a different context_id.\n\n\n\nTo mitigate this issue, users should upgrade to strands-agents 1.43.0 (Python) or @strands-agents/sdk 1.5.0 (TypeScript).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115419",
-    "publishedDate": "2026-10-22T21:17:17.790",
-    "lastModifiedDate": "2026-10-22T21:17:17.790",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95721",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95721",
-    "publishedDate": "2026-10-22T19:18:08.843",
-    "lastModifiedDate": "2026-10-22T19:18:08.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.3,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:L/I:N/A:L",
-        "exploitabilityScore": 0.8,
-        "impactScore": 2.5,
-        "source": "security-alert@hpe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95720",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95720",
-    "publishedDate": "2026-10-22T19:18:08.620",
-    "lastModifiedDate": "2026-10-22T19:18:08.620",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 3.6,
-        "source": "security-alert@hpe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95719",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95719",
-    "publishedDate": "2026-10-22T19:18:08.323",
-    "lastModifiedDate": "2026-10-22T19:18:08.323",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 3.6,
-        "source": "security-alert@hpe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95718",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95718",
-    "publishedDate": "2026-10-22T19:18:08.090",
-    "lastModifiedDate": "2026-10-22T19:18:08.090",
+    "id": "CVE-2026-55465",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 22.04 to before version 26.05, the unauthenticated REST endpoint GET /api/v1/index/{solrField}/spatial/search concatenates the user-supplied region query parameter directly into a Solr query string with no escaping, no local-param stripping, and no runtime schema enforcement (the OpenAPI @Schema(pattern=...) annotation is documentation-only at the JAX-RS layer). An attacker can inject Solr local-param syntax ({!parent ...}, {!join ...}) and boolean operators to make access-restricted georeferenced records match the query, bypassing the access-condition filter. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55465",
+    "publishedDate": "2026-10-23T15:17:33.500",
+    "lastModifiedDate": "2026-10-23T15:17:33.500",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -499,39 +52,19 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "security-alert@hpe.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-95717",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95717",
-    "publishedDate": "2026-10-22T19:18:07.863",
-    "lastModifiedDate": "2026-10-22T19:18:07.863",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security-alert@hpe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95716",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95716",
-    "publishedDate": "2026-10-22T19:18:07.723",
-    "lastModifiedDate": "2026-10-22T19:18:07.723",
+    "id": "CVE-2026-55463",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 4.11.0 to before version 26.05, several Jakarta WebSocket endpoints in goobi-viewer-core (DownloadTaskEndpoint, CampaignEndpoint, AutocompleteEndpoint, UserEndpoint) accept connections without verifying that the associated HttpSession belongs to a logged-in user, and none validate the Origin header against an allowlist. An unauthenticated attacker can therefore connect to these endpoints; through CampaignEndpoint this allows polluting the in-process crowdsourcing page-lock map and broadcasting forged lock messages, disrupting reviewers' work. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55463",
+    "publishedDate": "2026-10-23T15:17:33.360",
+    "lastModifiedDate": "2026-10-23T15:17:33.360",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -539,70 +72,439 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-alert@hpe.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-95715",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95715",
-    "publishedDate": "2026-10-22T19:18:07.580",
-    "lastModifiedDate": "2026-10-22T19:18:07.580",
+    "id": "CVE-2026-55459",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 25.01 to before version 26.05, AuthenticationEndpoint.verifyOpenIdToken builds its verifier as JWT.require(algorithm).withIssuer(issuer).build() and does not enforce the aud claim during cryptographic validation. The aud check is performed manually afterwards via a single string-equality call, which only handles single-string aud values. In a multi-RP IdP setup, a token whose single-string aud matches the viewer's client ID but was issued for a different relying party passes the check and authenticates the attacker as the token's sub. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55459",
+    "publishedDate": "2026-10-23T15:17:33.207",
+    "lastModifiedDate": "2026-10-23T15:17:33.207",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.9,
-        "source": "security-alert@hpe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95714",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95714",
-    "publishedDate": "2026-10-22T19:18:07.453",
-    "lastModifiedDate": "2026-10-22T19:18:07.453",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.9,
-        "source": "security-alert@hpe.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-95713",
-    "description": "No description provided",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95713",
-    "publishedDate": "2026-10-22T19:18:07.313",
-    "lastModifiedDate": "2026-10-22T19:18:07.313",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7,
+        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 2.2,
-        "impactScore": 4.7,
-        "source": "security-alert@hpe.com"
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55457",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. Prior to version 26.05, Configuration.getWebApiToken returns the empty string when webapi.authorization.token is not configured. AuthorizationFilter compares the supplied token against this default without first checking that the configured token is non-empty. A request to any @AuthorizationBinding-protected endpoint with an empty ?token= value is therefore accepted. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55457",
+    "publishedDate": "2026-10-23T15:17:33.060",
+    "lastModifiedDate": "2026-10-23T15:17:33.060",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55444",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. Prior to version 26.05, the legacy RSS servlet (RssResolver, GET /rss/) accepts the q and filterQuery parameters and concatenates them into Solr queries without validation. The servlet predates the REST API layer and lacks the input validation present in GET /api/v1/records/rss. q forms the main query body (wrapped only in literal parentheses); filterQuery is passed directly as a Solr fq. An unauthenticated attacker can inject Solr boolean operators to break out of the wrapping and render the trailing access-condition filter-query suffix optional, so that access-restricted records are included in the generated RSS feed. The q and filterQuery parameters are the same underlying vulnerability in the same servlet; q (the main query body) has the broader scope. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55444",
+    "publishedDate": "2026-10-23T15:17:32.910",
+    "lastModifiedDate": "2026-10-23T15:17:32.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55442",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 23.03 to before version 26.05, SolrTools.cleanUpQuery() strips Solr local-parameter syntax ({!...}) from user-supplied query strings before they reach Solr. Its regex can be bypassed by wrapping the local parameter in a second pair of curly braces ({{!...}}): the outer braces are stripped, the inner {!...} survives intact, and a valid Solr local parameter is forwarded. The flaw is in the shared sanitizer, so it affects any endpoint that routes user input through cleanUpQuery. The double-brace bypass applies from v23.10 (the greedy \\{(.+)\\} regex); a related bare-!join rewrap path is present. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55442",
+    "publishedDate": "2026-10-23T15:17:32.730",
+    "lastModifiedDate": "2026-10-23T15:17:32.730",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55222",
+    "description": "Isar is an integration system for automated root filesystem generation. In versions 0.11 and newer, /etc/apt/trusted.gpg.d is created manually during bootstrap setup to be able to deploy local keys. By that, the directory is owned by the calling user (the one that executes Isar) instead of root. If the calling user's id is identical to one of an unprivileged user inside the image, this user is able to alter existing keys and deploy new ones, silently breaking the apt repo integrity protection. The issue is has no impact on those images that use an immutable rootfs, or if apt is never invoked. Changing only the keys does not trigger an exploit, it's just one step in a chain. An attacker would also have to manipulate a remote repo or intercept non-secure communication with it. This issue has been patched via commit 29e84ed.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55222",
+    "publishedDate": "2026-10-23T15:17:32.563",
+    "lastModifiedDate": "2026-10-23T15:17:32.563",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 1.4,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-54668",
+    "description": "Kitodo.Production is a workflow management tool for mass digitization and is part of the Kitodo Digital Library Suite. Prior to version 3.9.2, org.kitodo.production.helper.XMLUtils exposes several XML parsing helpers that construct a JAXP parser with the default, non-secure configuration. The methods parseXMLString(String), getNumberOfEADElements(String, String) and checkIfXmlIsWellFormed(String) build a DocumentBuilderFactory / XMLInputFactory / SAXParserFactory via newInstance() and parse the attacker-supplied string without disabling DOCTYPE declarations or external entity resolution. These helpers sit directly on the EAD-import path: an authenticated user who uploads an EAD/XML file through the \"Create process\" file-upload dialog has the uploaded bytes parsed by these methods. A crafted document with an external entity therefore yields XML External Entity (XXE) injection: local file disclosure and outbound SSRF requests from the server. This issue has been patched in version 3.9.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54668",
+    "publishedDate": "2026-10-23T15:17:32.427",
+    "lastModifiedDate": "2026-10-23T15:17:32.427",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-53942",
+    "description": "Conda Organization Infrastructure is a centralized location for infrastructure codes. Prior to commit 9c0f238, a GitHub Actions Pwn Request vulnerability appears to remain present in conda/conda. The affected workflow is .github/workflows/update.yml. It is triggered by issue_comment events containing @conda-bot render or @conda-bot recreate. For the render path, the workflow obtains the pull request head repository and branch from the PR API, checks out that PR-controlled repository/ref using secrets.SYNC_TOKEN, and then runs conda/actions/template-files@7f6830b1428a9bd47f0b068892c77eae95207037. The external template-files action reads its default configuration and templates from the checked-out working directory. In the confirmed finding, that action uses an unsandboxed Jinja2 environment to render attacker-controlled template content. This creates a Pwn Request chain in which an untrusted PR/comment path can reach template rendering in a privileged token context. This issue has been patched via commit 9c0f238.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-53942",
+    "publishedDate": "2026-10-23T15:17:32.157",
+    "lastModifiedDate": "2026-10-23T15:17:32.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-49442",
+    "description": "Cacti is an open source performance and fault management framework. Prior to version 1.2.31, a User Enumeration vulnerability allows an attacker to identify valid usernames on the Cacti service. When a user attempts to log in, the application returns slightly different error messages depending on whether the provided username exists in the system. When username exists on Cacti, in the response, they see Access Denied! Login failed. When it does not exist on Cacti, they see Access Denied! Login Failed. The only difference between the responses is the capitalization of the letter \"f\" in the word failed. This issue has been patched in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49442",
+    "publishedDate": "2026-10-23T15:17:32.003",
+    "lastModifiedDate": "2026-10-23T15:17:32.003",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46652",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 24.03 to before version 26.05, ExternalFilesDownloader.getFilename() extracts the destination filename from a server-supplied Content-Disposition response header and passes it directly to Path.resolve() without stripping directory components. This allows for a malicious HTTP server that the viewer fetches from to supply an absolute path or ../ traversal sequences as the filename, writing attacker-controlled content to an arbitrary path writable by the Tomcat process. When targeting the deployed web-application directory, this yields remote code execution as the tomcat OS user. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46652",
+    "publishedDate": "2026-10-23T15:17:31.593",
+    "lastModifiedDate": "2026-10-23T15:17:31.593",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46651",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. From version 24.03 to before version 26.05, the DownloadTaskEndpoint WebSocket endpoint (/tasks/download/monitor.socket) in goobi-viewer-core accepts download requests from unauthenticated users. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46651",
+    "publishedDate": "2026-10-23T15:17:31.453",
+    "lastModifiedDate": "2026-10-23T15:17:31.453",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46531",
+    "description": "Cacti is an open source performance and fault management framework. From version 1.2.27 to before version 1.2.31, Cacti contains an authenticated stored second-order SQL injection in the automation tree rule item handler. A user holding the Automation realm (default General Administration role) can persist an arbitrary SQL fragment in the automation_tree_rule_items.field column. The fragment is later concatenated directly into a SELECT ... AS source FROM ... clause in lib/api_automation.php :: create_all_header_nodes() and executed when an administrator triggers automation via the standard graphs.php?action=actions&drp_action=8 (\"Apply Automation Rules\") bulk action. The result of the injected SELECT is written into graph_tree_items.title and rendered in the Cacti tree UI, providing a direct exfiltration channe. This issue has been patched in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46531",
+    "publishedDate": "2026-10-23T15:17:31.317",
+    "lastModifiedDate": "2026-10-23T15:17:31.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46347",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. Prior to version 26.05, when a password reset link is visited, the application generates a replacement password in a predictable way and emails it to the account holder. The insufficient entropy allows the password to be brute-forced by an attacker who can approximate the server-side generation time. Exploiting this finding in isolation requires the victim to have triggered the reset themselves and the attacker to infer the server time from network or email metadata. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46347",
+    "publishedDate": "2026-10-23T15:17:31.180",
+    "lastModifiedDate": "2026-10-23T15:17:31.180",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-46346",
+    "description": "The Goobi viewer is a web application that allows digitised material to be displayed in a web browser. Prior to version 26.05, the password reset token is predictably based on the time of the reset request. An attacker who knows the target's email address can request a reset and then brute-force the token. Exploiting this finding alone forces an unauthorized password reset on any account. This issue has been patched in version 26.05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-46346",
+    "publishedDate": "2026-10-23T15:17:31.030",
+    "lastModifiedDate": "2026-10-23T15:17:31.030",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-39902",
+    "description": "Cacti is an open source performance and fault management framework. Prior to version 1.2.31, the prior blocklist ([;&| `$\\\\n\\r]) omitted single-quote, double-quote, redirect operators, subshell parens and braces. An authenticated admin could save an input_string` containing single-quote, redirect operator, or subshell parens, and pass the check. This issue has been patched in version 1.2.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-39902",
+    "publishedDate": "2026-10-23T15:17:30.873",
+    "lastModifiedDate": "2026-10-23T15:17:30.873",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-115478",
+    "description": "obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. From 1.0.1 until 1.31.4, `create_entity`, `link_entities`, `rename_entity`, `unlink_entities` and `delete_entity` regenerate memory notes from SQLite at the computed `memory/<type>/<name>.md` path without reliably preserving note ownership or the consistency of a failed lifecycle operation. During shared materialization, a hand-authored note or an orphan left by a different entity whose name sanitized to the same path could have its entire body overwritten on the next write naming that type and name, with non-owned frontmatter preserved. `rename_entity` also seeded the destination path with a direct atomic write without validating ownership and could overwrite a foreign note there. Separately, several tools mutated SQLite before fallible filesystem work: `create_entity` and `link_entities` inserted the row or relation before materialization; `rename_entity` updated the entity, including a retired status, before updating its note; `unlink_entities` removed a relation before rematerializing the source note; and `delete_entity`'s cascade removed the target and its relations before rematerializing neighbouring notes. A later filesystem failure could therefore leave a row or relation changed and the memory graph inconsistent with the notes on disk even when the operation failed. An authorized caller with the required memory-tool permissions could, without intending to, destroy the body of a vault note outside the entity being written; `delete_entity` additionally requires its deletion permission and destructive confirmation, which this memory flaw does not bypass. Snapshots-before-write through `restore_note` mitigate the overwrite only where snapshots are enabled and the note had previously been written through obsidian-tc. This issue is fixed in version 1.31.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115478",
+    "publishedDate": "2026-10-23T15:17:30.023",
+    "lastModifiedDate": "2026-10-23T15:17:30.147",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-115477",
+    "description": "obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. From 1.13.0 until 1.31.4, on a Streamable HTTP deployment with `auth.jwtSecret` configured and a 2026-07-28-era client declaring `elicitation.form` support, a dispatch-gated tool call offered an `inputRequired` confirmation could still complete after the human declined or cancelled, or the elicitation response was omitted or malformed, provided the client echoed the validly bound `requestState` on resubmission. The server trusted an authentic, call-bound state as proof of approval even though that state was minted before the `elicitation/create` leg was asked and proved only that the resubmission belonged to the same call. A client behaving incorrectly or under an attacker's control could therefore execute dispatch-gated destructive vault operations without the human's approval, while still requiring the caller's ordinary tool permissions. Only tools marked `destructive: true` or requiring a scope with a human-in-the-loop floor were reachable through this bypass. The sixteen handler-side conditionally gated tools, including `write_note` overwrite and `move_note`, did not read elicitation state on the modern wire and let neither approval nor decline through that path. Affected deployments using stdio or leaving `auth.jwtSecret` unset instead used the CLI `elicit_token` fallback and did not offer this `requestState` round trip. The fix does not prevent a malicious client from reporting a fabricated approval, because the server cannot verify that the client displayed the form or that a human saw it. This issue is fixed in version 1.31.4.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115477",
+    "publishedDate": "2026-10-23T15:17:29.840",
+    "lastModifiedDate": "2026-10-23T15:17:29.967",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112333",
+    "description": "GFI Archiver before 15.14 contains a stored cross-site scripting vulnerability in the MailInsights scheduled report configuration that allows authenticated attackers to inject arbitrary web script or HTML via the report name parameter to /Archiver/MailInsights.aspx. The injected payload is stored by ReportScheduling.btnSaveReport_Click() without output encoding and is executed in the browser of the user who created the scheduled report when they subsequently view the MailInsights page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112333",
+    "publishedDate": "2026-10-23T15:17:24.487",
+    "lastModifiedDate": "2026-10-23T15:17:24.603",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-106765",
+    "description": "An issue in @rog0x/mcp-docker-tools 1.0.1 allows a remote attacker to execute arbitrary code via the handleImageList function.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106765",
+    "publishedDate": "2026-10-23T15:17:23.333",
+    "lastModifiedDate": "2026-10-23T15:17:23.333",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-106764",
+    "description": "An issue in @rog0x/mcp-git-tools 1.0.1 allows a remote attacker to execute arbitrary code via the resolveBaseBranch function.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106764",
+    "publishedDate": "2026-10-23T15:17:23.203",
+    "lastModifiedDate": "2026-10-23T15:17:23.203",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-106763",
+    "description": "An issue in @justice8096/sagemath-mcp-server 1.0.1 allows a remote attacker to execute arbitrary code via the escapeShellString and sanitizeCode functions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106763",
+    "publishedDate": "2026-10-23T15:17:23.063",
+    "lastModifiedDate": "2026-10-23T15:17:23.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-102786",
+    "description": "Joomla Extension - phoca.cz - Authenticated stored cross-site scripting through HTML attribute injection in Phoca Gallery 4.5.0 - 6.1.5",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-102786",
+    "publishedDate": "2026-10-23T15:17:22.807",
+    "lastModifiedDate": "2026-10-23T15:17:22.807",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@joomla.org"
       }
     ]
   }
