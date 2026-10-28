@@ -1,200 +1,30 @@
 [
   {
-    "id": "CVE-2026-50571",
-    "description": "WebSub is a W3C recommendation produced by the Social Web Working Group. In recommendation REC-websub-20180123, the intent-verification protocol requires a subscriber to echo the `hub.challenge` value, also exposed as `hub_challenge` by some frameworks, but does not require safe response media typing or disabled MIME sniffing. An attacker can initiate a subscription to obtain a callback URL and redirect a victim browser to a crafted verification request containing HTML or JavaScript. Subscribers that return the challenge as `text/html` can execute the reflected content in the subscriber origin, using a victim's existing session to read private data or perform actions, exposing `localStorage` or `sessionStorage` and browser permissions granted to that origin. An alternative uses the verification response as an attacker-controlled same-origin script resource to bypass `script-src 'self'`; this can remain possible with `application/octet-stream` when MIME sniffing is allowed. Safe media typing and `X-Content-Type-Options: nosniff` are both needed to address the described scenarios. WebSub Rocks demonstrated reflection, but the advisory does not establish practical impact on that demonstration site.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50571",
-    "publishedDate": "2026-10-27T23:17:05.687",
-    "lastModifiedDate": "2026-10-27T23:17:05.687",
+    "id": "CVE-2026-118384",
+    "description": "GNU mtools through 4.0.49 has an out-of-bounds write in parse_vses in vfat.c.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118384",
+    "publishedDate": "2026-10-28T03:17:14.757",
+    "lastModifiedDate": "2026-10-28T03:17:14.757",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.7,
+        "score": 6.1,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 4.2,
+        "source": "cve@mitre.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-58257",
-    "description": "GRR is a resource management and reservation application. Prior to the advisory-reported fixed version 4.5.0, the database restoration feature fails to enforce or validate file paths. A user with administrator privileges can manipulate the input to read or delete arbitrary files on the server, causing sensitive file disclosure and denial of service through file deletion. The impact is amplified when the server runs with elevated privileges. The advisory reports this issue as fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58257",
-    "publishedDate": "2026-10-27T23:17:06.280",
-    "lastModifiedDate": "2026-10-27T23:17:06.280",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58256",
-    "description": "GRR is a resource management and reservation application. Prior to the advisory-reported fixed version 4.5.0, an administrator can inject malicious PHP through LDAP connector configuration parameters such as `ldap_filter`, poisoning `/personnalisation/config_ldap.inc.php` and permitting remote code execution. The administrator must first successfully connect to an LDAP server, which can be attacker-controlled, and then submit malicious input on the subsequent connector settings page. The advisory reports this issue as fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58256",
-    "publishedDate": "2026-10-27T23:17:06.140",
-    "lastModifiedDate": "2026-10-27T23:17:06.140",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58255",
-    "description": "Cronicle is a multi-server task scheduler and runner, with a web based front-end UI. Prior to 0.9.121, a non-administrator user or scoped API key with `create_events` and `run_events` privileges can inject top-level `uid` and `gid` fields through `/api/app/create_event` or `/api/app/update_event`. In `lib/api.js`, `requireValidEventData` uses `validateOptionalParams` as a partial allow-list that silently passes unknown keys, storing the injected fields verbatim. In `lib/job.js`, `launchJob` copies the whole event into the job, and a plugin `uid` overrides the event `uid` only when the plugin defines one. The default `shellplug` and `urlplug` plugins do not define a `uid`, so the event-controlled identity survives into child-process launch. On a root-daemon installation, this lets a low-privileged user run jobs as arbitrary users, including root, bypassing the otherwise administrator-only run-as-user control. This API-side event injection is distinct from the job-output `uid`/`gid` injection addressed by CVE-2026-39401. This issue is fixed in version 0.9.121.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58255",
-    "publishedDate": "2026-10-27T23:17:05.990",
-    "lastModifiedDate": "2026-10-27T23:17:05.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-58205",
-    "description": "GRR is a resource management and reservation application. Prior to version 4.5.0, `maj.php` reflects the `forcemaj` parameter without adequate escaping when installation files remain accessible. Removal of these files is not automatic. An attacker can craft a URL that executes arbitrary JavaScript in a victim's browser when the victim accesses it. This reflected cross-site scripting can enable phishing, redirection to malicious sites, cookie theft and session hijacking because the authentication cookie is not `HttpOnly`. This issue is fixed in version 4.5.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58205",
-    "publishedDate": "2026-10-27T23:17:05.840",
-    "lastModifiedDate": "2026-10-27T23:17:05.840",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-22063",
-    "description": "The private keys of eight eMudhra intermediate CA certificates have been compromised. eMudhra revoked the eight affected intermediate certificates on October 18, 2026. While this is not a software vulnerability, CVE-2026-22063 has been assigned to track relevant changes in impacted NetApp products.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-22063",
-    "publishedDate": "2026-10-27T23:17:05.303",
-    "lastModifiedDate": "2026-10-27T23:17:05.303",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-alert@netapp.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-97045",
-    "description": "In childTextNodesAreLiteral, walking up the tree previously stopped at the nearest foreign ancestor once an HTML integration point was found. However, that integration point may itself be a descendant of an element that was foster-parented into a foreign namespace (such as <mglyph> or <malignmark> fostered under <mtext>), causing a parser to resolve the subtree in a different foreign namespace upon re-parsing the rendered output. Continue walking the full ancestor chain and verify that every transition from a non-empty namespace occurs at an HTML integration point before emitting literal text.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97045",
-    "publishedDate": "2026-10-27T22:19:22.613",
-    "lastModifiedDate": "2026-10-27T22:19:22.613",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-112155",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112155",
-    "publishedDate": "2026-10-27T23:16:57.263",
-    "lastModifiedDate": "2026-10-27T23:16:57.263",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-111467",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111467",
-    "publishedDate": "2026-10-27T23:16:57.097",
-    "lastModifiedDate": "2026-10-27T23:16:57.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-18326",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18326",
-    "publishedDate": "2026-10-27T23:17:05.240",
-    "lastModifiedDate": "2026-10-27T23:17:05.240",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-111479",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111479",
-    "publishedDate": "2026-10-27T23:16:57.160",
-    "lastModifiedDate": "2026-10-27T23:16:57.160",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-12534",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-12534",
-    "publishedDate": "2026-10-27T23:16:56.480",
-    "lastModifiedDate": "2026-10-27T23:16:56.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-111563",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111563",
-    "publishedDate": "2026-10-27T23:16:57.210",
-    "lastModifiedDate": "2026-10-27T23:16:57.210",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-58496",
-    "description": "Thor Vector Graphics (ThorVG) is a production-ready vector graphics engine. Prior to 1.0.7, the `SFNT/TTF` font loader's `SfntLoader::gen` function in `tvgSfntLoader.cpp` reads `data[0] through data[3]` to identify the font type without first checking that the input buffer contains at least four bytes. Loading an undersized font directly from memory through public APIs such as `tvg::Text::load` causes an out-of-bounds read. Loading through a file path using `mmap` can mask the read because of page alignment; the memory-loading API directly exposes it. Depending on memory layout, a malformed short font may crash the consuming application or disclose adjacent heap memory. This issue is fixed in version 1.0.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58496",
-    "publishedDate": "2026-10-27T23:17:06.420",
-    "lastModifiedDate": "2026-10-27T23:17:06.420",
+    "id": "CVE-2026-118274",
+    "description": "A vulnerability has been found in a2ui-project a2ui up to 0.10.6. Affected by this issue is some unknown functionality of the file renderers/web_core/src/v0_9/rendering/generic-binder.ts of the component Binder. The manipulation leads to resource consumption. The attack can be initiated remotely. The exploit has been disclosed to the public and may be used. The identifier of the patch is c97f4a02d3fea33ce3e9de5cf3fd0e3b8f3a4f0e. To fix this issue, it is recommended to deploy a patch.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118274",
+    "publishedDate": "2026-10-28T03:17:13.110",
+    "lastModifiedDate": "2026-10-28T03:17:13.110",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -202,49 +32,217 @@
         "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 2.8,
         "impactScore": 1.4,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-78661",
-    "description": "When coalescing adjacent text nodes in addText and fosterParent, appending to an existing TextNode's Data via string concatenation (n.Data += text) reallocated and copied the accumulated string on every token. Inputs containing many short text runs separated by ignored end tags (such as \"a</x>\") caused O(n^2) allocations and byte copies. Accumulate coalesced text in per-node byte slices during parsing and materialize Data strings once at the end of parse.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78661",
-    "publishedDate": "2026-10-27T22:18:05.930",
-    "lastModifiedDate": "2026-10-27T22:18:05.930",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-62765",
-    "description": "Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62765",
-    "publishedDate": "2026-10-27T22:17:29.267",
-    "lastModifiedDate": "2026-10-27T22:17:29.380",
+    "id": "CVE-2026-118273",
+    "description": "A flaw has been found in a2ui-project a2ui up to 0.10.6. Affected by this vulnerability is the function DataModel.set of the file renderers/web_core/src/v0_9/state/data-model.ts. Executing a manipulation can lead to resource consumption. It is possible to launch the attack remotely. The exploit has been published and may be used. This patch is called 82789191ce551f4d7a095d273773fb24bd764c9d. A patch should be applied to remediate this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118273",
+    "publishedDate": "2026-10-28T03:17:12.933",
+    "lastModifiedDate": "2026-10-28T03:17:12.933",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 4.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "secure@microsoft.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-57203",
-    "description": "Asterisk is an open source private branch exchange and telephony toolkit. Prior to Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3, `ast_loggrabber` executes a `Python script` from the world-writable `/tmp` directory. An attacker already authorized to open a shell session on the Asterisk server may place a malicious script there and gain elevated privileges or execute code when an administrator runs `ast_loggrabber` as a user with elevated privileges. This issue is fixed in Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57203",
-    "publishedDate": "2026-10-27T22:17:27.890",
-    "lastModifiedDate": "2026-10-27T22:17:27.890",
+    "id": "CVE-2026-107745",
+    "description": "The AI Engine – The Chatbot, AI Framework & MCP for WordPress plugin for WordPress is vulnerable to limited media file deletion due to insufficient file path validation in the upload_file function in all versions up to, and including, 3.8.4 This makes it possible for authenticated attackers, with subscriber-level access and above, to delete arbitrary media files on the server. This requires the administrator to have enabled the Public API option, and exploitation depends on the hourly cleanup_files task running after the malicious upload.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107745",
+    "publishedDate": "2026-10-28T03:17:09.037",
+    "lastModifiedDate": "2026-10-28T03:17:09.037",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-109209",
+    "description": "The All-in-One Video Gallery – Video Player & Galleries for YouTube, Vimeo & Self-Hosted Videos plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'custom_fields[embedcode]' parameter in all versions up to, and including, 4.9.7 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The sanitization bypass is possible because the save_meta_data() handler returns early when $_POST['post_type'] is absent — a condition always true during XML-RPC requests — and the plugin unconditionally grants Subscribers the publish_aiovg_videos capability, making this exploitable by any authenticated user via a single wp.newPost XML-RPC call.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109209",
+    "publishedDate": "2026-10-28T03:17:09.183",
+    "lastModifiedDate": "2026-10-28T03:17:09.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-111314",
+    "description": "The affiliate-toolkit – Multi-Network Affiliate & Amazon Product Display plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'atkp_product_producturl' parameter in all versions up to, and including, 3.9.2 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Exploitation by unauthenticated attackers requires that the plugin's AJAX loading / AJAX handler option is enabled (atkp_options::get_ajax_loading_enabled() || get_ajax_handler_enabled()) and the attacker knows a product id to render. On a default installation, where that is not configured, the vulnerability requires attackers with contributor-level access and above.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111314",
+    "publishedDate": "2026-10-28T03:17:09.817",
+    "lastModifiedDate": "2026-10-28T03:17:09.817",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-97019",
+    "description": "The AMP for WP – Accelerated Mobile Pages plugin for WordPress is vulnerable to Stored Cross-Site Scripting via 'headline-*' Shortcode Attribute in all versions up to, and including, 1.1.17 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. A Subscriber-level user can store a malicious shortcode in their biographical info field; because WordPress core's wp_filter_kses() only strips HTML tags and not shortcode syntax, and because AMP content sanitizers run before do_shortcode() processes the archive description, the synthesized markup is never post-sanitized.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-97019",
+    "publishedDate": "2026-10-28T03:17:16.317",
+    "lastModifiedDate": "2026-10-28T03:17:16.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-109999",
+    "description": "The AI Marketing Expert — AI Email Marketing, AI Content Generator, SEO Analyzer, AI Workflow Automation, Social Media & Ai Chatbot plugin for WordPress is vulnerable to Stored DOM-Based Cross-Site Scripting via the 'name' parameter in all versions up to, and including, 1.2.8 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Exploitation requires only that the chatbot module is active with at least one configured bot; the attacker stores the payload via three unauthenticated REST calls, and the JavaScript widget auto-poll then delivers it to any administrator who opens wp-admin/index.php.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109999",
+    "publishedDate": "2026-10-28T03:17:09.630",
+    "lastModifiedDate": "2026-10-28T03:17:09.630",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-109974",
+    "description": "The All-in-One Video Gallery – Video Player & Galleries for YouTube, Vimeo & Self-Hosted Videos plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'more_link' parameter in all versions up to, and including, 4.9.7 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109974",
+    "publishedDate": "2026-10-28T03:17:09.490",
+    "lastModifiedDate": "2026-10-28T03:17:09.490",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-84999",
+    "description": "The Pie Register Premium plugin for WordPress is vulnerable to Unrestricted File Type Upload in all versions up to, and including, 3.8.4.0 via the piereg_file_upload function. This is due to the plugin performing file type validation via wp_check_filetype and wp_check_filetype_and_ext but never checking whether those validation calls produced errors before move_uploaded_file() is called, combined with no nonce or capability check on the AJAX handler. This makes it possible for unauthenticated attackers to upload files of dangerous types (e.g. PHP scripts) that may be executable, which makes remote code execution possible. The server returns the generated destination filename in the response, giving the attacker the exact path needed to trigger the uploaded file.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-84999",
+    "publishedDate": "2026-10-28T03:17:16.157",
+    "lastModifiedDate": "2026-10-28T03:17:16.157",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-107625",
+    "description": "The Ultimate Member – User Profile, Registration, Login, Member Directory, Content Restriction & Membership Plugin plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'user_url' parameter in all versions up to, and including, 2.14.0 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Successful exploitation requires a visitor to click the attacker's Website URL link on their public Ultimate Member profile, a condition that is trivially met since the redirect-confirmation onclick handler is enabled by default on all new installations.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107625",
+    "publishedDate": "2026-10-28T03:17:08.890",
+    "lastModifiedDate": "2026-10-28T03:17:08.890",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-115624",
+    "description": "GROWI contains a missing authorization check vulnerability in its collaborative editing feature. By exploiting this vulnerability, a user with read-only permission, including a guest user, or a user in pending, suspended, or invited status may modify page drafts.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115624",
+    "publishedDate": "2026-10-28T03:17:11.780",
+    "lastModifiedDate": "2026-10-28T03:17:11.897",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -252,19 +250,19 @@
         "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "vultures@jpcert.or.jp"
       }
     ]
   },
   {
-    "id": "CVE-2026-57199",
-    "description": "Asterisk is an open source private branch exchange and telephony toolkit. Prior to Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3, `app_sms.c` copies externally controlled `SMS` lengths into `fixed in-struct buffers` without sufficient bounds checks, allowing an attacker to corrupt memory or crash Asterisk. The administrator must explicitly use the `SMS` dialplan application, which is useful when routing calls to or from `analog devices`, and must not have ensured that data passed to the application is valid. This issue is fixed in Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57199",
-    "publishedDate": "2026-10-27T22:17:27.723",
-    "lastModifiedDate": "2026-10-27T22:17:27.723",
+    "id": "CVE-2026-109848",
+    "description": "GROWI contains an authorization bypass vulnerability in its tag update API and the page update API due to improper use of a user-controlled key. By exploiting this vulnerability, an attacker who can log in to the product may obtain the contents of pages without the required read permission and save them to pages that the attacker can edit.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109848",
+    "publishedDate": "2026-10-28T03:17:09.333",
+    "lastModifiedDate": "2026-10-28T03:17:09.440",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -272,79 +270,146 @@
         "score": 2.3,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "vultures@jpcert.or.jp"
       }
     ]
   },
   {
-    "id": "CVE-2026-57192",
-    "description": "Asterisk is an open source private branch exchange and telephony toolkit. Prior to Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3, an authenticated attacker may cause a heap buffer overflow through an out-of-bounds write in the `Codec2` decoder caused by a `floor/ceil sample-count mismatch`. The `codec_codec2` module must be loaded and `Codec2` must be configured on the attacked endpoint. The attacker must pass SIP authentication by username/password or `source IP address matching`, establish a call using `Codec2`, and send carefully crafted `Codec2` audio packets. This issue is fixed in Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57192",
-    "publishedDate": "2026-10-27T22:17:27.567",
-    "lastModifiedDate": "2026-10-27T22:17:27.567",
+    "id": "CVE-2026-105272",
+    "description": "GROWI contains an authorization bypass vulnerability in its page viewing and commenting functionality due to improper use of a user-controlled key. By exploiting this vulnerability, an authenticated attacker may obtain the contents and comments of pages without the required read permission.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105272",
+    "publishedDate": "2026-10-28T03:17:08.717",
+    "lastModifiedDate": "2026-10-28T03:17:08.840",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6,
+        "score": 2.3,
         "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "vultures@jpcert.or.jp"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118272",
+    "description": "A vulnerability was detected in a2ui-project a2ui up to 0.10.6. Affected is the function DataContext.dispatchExpressionError of the file renderers/web_core/src/v0_9/rendering/data-context.ts of the component Error Handler. Performing a manipulation results in information exposure through error message. It is possible to initiate the attack remotely. The exploit is now public and may be used. The patch is named 8f149a1c7b0ce1fa8e93ac3adfa5fda960faeb01. It is suggested to install a patch to address this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118272",
+    "publishedDate": "2026-10-28T02:17:07.497",
+    "lastModifiedDate": "2026-10-28T02:17:07.497",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-57191",
-    "description": "Asterisk is an open source private branch exchange and telephony toolkit. Prior to Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3, an unbounded `sscanf` in `res_pjsip_pubsub` when parsing the `MWI NOTIFY` `Message-Account` field may allow an unauthenticated attacker to send a carefully crafted packet that causes a stack buffer overflow and corrupts the underlying transport, permanently disabling all SIP functionality. An Asterisk restart is required to restore full operation. This issue is fixed in Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57191",
-    "publishedDate": "2026-10-27T22:17:27.390",
-    "lastModifiedDate": "2026-10-27T22:17:27.390",
+    "id": "CVE-2026-118271",
+    "description": "A security vulnerability has been detected in a2ui-project a2ui up to 0.10.6. This impacts an unknown function of the file renderers/web_core/src/v0_9/rendering/data-context.ts of the component data-context Resolver. Such manipulation leads to resource consumption. The attack may be performed from remote. The exploit has been disclosed publicly and may be used. The name of the patch is eb314e14fabd29cfb4a74e1202afc4fe2081efa2. Applying a patch is advised to resolve this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118271",
+    "publishedDate": "2026-10-28T02:17:07.300",
+    "lastModifiedDate": "2026-10-28T02:17:07.300",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.2,
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security-advisories@github.com"
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-57190",
-    "description": "Asterisk is an open source private branch exchange and telephony toolkit. Prior to Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3, the `PostgreSQL` and `TDS/MSSQL` Channel Event Log backends `cel_pgsql` and `cel_tds` may permit arbitrary SQL execution when untrusted data is set in the CEL `eventtype` column by the `CELGenUserEvent` dialplan application. The `cel_pgsql` or `cel_tds` backend must be loaded and configured, and the administrator must call `CELGenUserEvent` in the dialplan without ensuring that only valid data is passed to the application. This issue is fixed in Asterisk 20.20.1, 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 20.7-cert11, 22.8-cert3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57190",
-    "publishedDate": "2026-10-27T22:17:27.197",
-    "lastModifiedDate": "2026-10-27T22:17:27.197",
+    "id": "CVE-2026-106013",
+    "description": "The Jupiter X Core plugin for WordPress is vulnerable to Authentication Bypass via the Twitter/X Social Login handler in all versions up to and including 4.61.0. The vulnerability exists within the verify_twitter_callback function because after exchanging the visitor's oauth_verifier for their access token, the handler never calls setOauthToken() to reassign the returned credentials to the TwitterOAuth client, causing the subsequent account/verify_credentials API call to remain signed with the site operator's stored Access Token and Access Token Secret rather than the authenticating visitor's token. This causes the X API to return the profile of the X application owner instead of the signing-in visitor, and the plugin then resolves and authenticates a WordPress account solely by matching that owner's email address via wp_set_auth_cookie(), allowing unauthenticated attackers to gain authenticated access as the WordPress user whose email corresponds to the X app owner, who is typically the site administrator.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106013",
+    "publishedDate": "2026-10-28T02:17:01.303",
+    "lastModifiedDate": "2026-10-28T02:17:01.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:H/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-57186",
-    "description": "Asterisk is an open source private branch exchange and telephony toolkit. From 21.0.0-pre1 until Asterisk 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 22.8-cert3, the `chan_ooh323` `Q.931 party-number parser` lacks the `CVE-2022-37325` fix because that fix was never forward-ported from Asterisk 20 to later versions. Malformed Q.931 elements in an `OOH323 request` can therefore crash Asterisk. This issue affects Asterisk versions greater than 20. The `chan_ooh323` addon channel driver must be explicitly compiled and installed, which is not the default, and its port must be publicly reachable. This issue is fixed in Asterisk 21.12.3, 22.10.1, 23.4.1 and Certified Asterisk 22.8-cert3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-57186",
-    "publishedDate": "2026-10-27T22:17:26.990",
-    "lastModifiedDate": "2026-10-27T22:17:26.990",
+    "id": "CVE-2026-118378",
+    "description": "Tabularis before 0.28.0 contains an SQL injection vulnerability in its SQLite driver that allows MCP clients to execute stacked statements by supplying a crafted table_name to the describe_table tool. Attackers, including AI agents steered by untrusted content, can close the quoted PRAGMA argument and append statements to read, modify, or drop SQLite data, bypassing read-only mode and write approval.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118378",
+    "publishedDate": "2026-10-28T03:17:14.570",
+    "lastModifiedDate": "2026-10-28T03:17:14.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118377",
+    "description": "mews/pos through 2.0.0 contains an insufficient verification of data authenticity vulnerability that allows unauthenticated attackers to forge payment results by submitting unverified callbacks. GarantiPos, PayForPos and InterPos 3D Pay and 3D Host handlers skip check3DHash(), letting attackers post tampered status, amount or order ID fields to complete orders without paying.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118377",
+    "publishedDate": "2026-10-28T03:17:14.410",
+    "lastModifiedDate": "2026-10-28T03:17:14.410",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -352,79 +417,193 @@
         "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118128",
-    "description": "A vulnerability has been found in a2aproject a2a-js up to 1.1.0. Impacted is the function ResultManager.applyStatusUpdate of the file src/server/result_manager.ts of the component Task Status Update Handler. Such manipulation leads to race condition. The attack may be launched remotely. Upgrading to version 1.2.0 is recommended to address this issue. The name of the patch is 7b87c9480bfa643f9d2b2eaf06988b3d3a95de25. It is recommended to upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118128",
-    "publishedDate": "2026-10-27T23:16:58.687",
-    "lastModifiedDate": "2026-10-27T23:16:58.687",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 2.5,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.9,
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-85898",
-    "description": "Access of resource using incompatible type ('type confusion') in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85898",
-    "publishedDate": "2026-10-27T21:19:34.117",
-    "lastModifiedDate": "2026-10-27T21:31:20.490",
+    "id": "CVE-2026-118376",
+    "description": "WeKnora before 0.8.2 contains a server-side request forgery vulnerability in isRestrictedIP() that misclassifies NAT64-prefixed IPv6 addresses as public. Authenticated attackers can supply URLs resolving to NAT64 encodings of internal addresses via web_fetch or URL-based knowledge import to reach internal services or cloud metadata endpoints.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118376",
+    "publishedDate": "2026-10-28T03:17:14.230",
+    "lastModifiedDate": "2026-10-28T03:17:14.360",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 5.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "secure@microsoft.com"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-83831",
-    "description": "Double free in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-83831",
-    "publishedDate": "2026-10-27T21:19:08.030",
-    "lastModifiedDate": "2026-10-27T21:31:20.477",
+    "id": "CVE-2026-118375",
+    "description": "llama.cpp b8841 before b11865 contains an out-of-bounds write vulnerability in the ggml-rpc RDMA transport rdma_recv() function that allows unauthenticated peers to overflow the rpc-server stack. Attackers advertising RDMA capabilities in the HELLO message can send up to 256 KiB into a 1-byte stack variable in rpc_serve_client(), crashing the server or potentially executing code.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118375",
+    "publishedDate": "2026-10-28T03:17:14.077",
+    "lastModifiedDate": "2026-10-28T03:17:14.077",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
         "impactScore": 5.9,
-        "source": "secure@microsoft.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.2,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118374",
+    "description": "LibreSSL ocspcheck through 4.4.0 contains a memory exhaustion vulnerability that allows malicious OCSP responders to exhaust memory by sending unbounded HTTP responses. Attackers controlling the responder or intercepting plain HTTP AIA OCSP traffic can stream endless headers or body data to http_head_read() and http_body_read(), denying certificate status checks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118374",
+    "publishedDate": "2026-10-28T03:17:13.923",
+    "lastModifiedDate": "2026-10-28T03:17:13.923",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118373",
+    "description": "LibreSSL ocspcheck through 4.4.0 contains a cleartext transmission vulnerability because url2host() discards the OCSP URL scheme and http_alloc() only selects TLS for port 443. On-path network attackers can read OCSP requests sent to https responder URLs on non-443 ports, exposing certificate serial numbers, issuer hashes, and nonces.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118373",
+    "publishedDate": "2026-10-28T03:17:13.770",
+    "lastModifiedDate": "2026-10-28T03:17:13.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118372",
+    "description": "LibreSSL ocspcheck through 4.4.0 contains a CRLF injection vulnerability that allows attackers to inject HTTP headers by embedding CR/LF sequences in a certificate's AIA OCSP URI path. Because url2host() copies the path without rejecting control characters and http_open() places it in the POST request line, attackers can inject headers or split OCSP requests sent to the responder host.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118372",
+    "publishedDate": "2026-10-28T03:17:13.607",
+    "lastModifiedDate": "2026-10-28T03:17:13.607",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118371",
+    "description": "LibreSSL through 4.4.0 contains a CRLF injection vulnerability in the libcrypto OCSP_sendreq_new() and OCSP_parse_url() functions, which write unvalidated request paths into the OCSP POST request line. Attackers can embed carriage return and line feed characters in a certificate's Authority Information Access OCSP URI to inject HTTP headers or split requests sent to responders and proxies.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118371",
+    "publishedDate": "2026-10-28T03:17:13.443",
+    "lastModifiedDate": "2026-10-28T03:17:13.443",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   }
