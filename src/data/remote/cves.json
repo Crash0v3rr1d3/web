@@ -1,320 +1,79 @@
 [
   {
-    "id": "CVE-2026-103093",
-    "description": "ServiceNow has remediated a sandbox escape security issue that was identified in the ServiceNow AI Platform. This vulnerability could enable an authenticated user with the admin role to bypass Rhino sandbox restrictions and execute arbitrary code on the underlying host operating system, potentially enabling further unintended access. \n\n\n\nServiceNow deployed an update to hosted instances, and ServiceNow provided the update to our partners and self-hosted customers. We are not currently aware of malicious exploitation against ServiceNow instances. We recommend customers promptly apply appropriate updates or upgrade to a patched release if they have not already done so.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103093",
-    "publishedDate": "2026-10-29T19:17:15.113",
-    "lastModifiedDate": "2026-10-29T19:17:15.113",
+    "id": "CVE-2026-112347",
+    "description": "Kirki plugin for WordPress before 6.4.1 contains a broken object-level access control vulnerability in its page REST API, where the PUT /wp-json/kirki/v1/pages/{page_id} route and the save_page_data, duplicate, and delete handlers in PageController.php rely only on a coarse role-to-access middleware check without performing a per-object WordPress capability check. A user with Kirki edit access, granted to the Editor role by default, can exploit this flaw to modify the title, slug, and publication status of any non-trashed post of any post type, including custom post types and WooCommerce products they do not own, exposing private or draft content or removing published content by manipulating the unrestricted post_status field.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112347",
+    "publishedDate": "2026-10-30T14:16:37.903",
+    "lastModifiedDate": "2026-10-30T14:16:37.903",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.4,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@servicenow.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118782",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, node-forge accepted a PKCS#12 MAC or PKCS#12 password-based encryption iteration count of zero or less. pki.pbe.generatePkcs12Key() then returned a constant key independent of the password and salt, allowing crafted PKCS#12 input processed by forge.pkcs12.pkcs12FromAsn1() to bypass password-based integrity checks. Predictable encryption keys and IVs also affected PKCS#12 PBE using pbeWithSHAAnd3-KeyTripleDES-CBC or pbewithSHAAnd40BitRC2-CBC, including shrouded key bags, encrypted SafeContents, and PKCS#8 ENCRYPTED PRIVATE KEY input processed independently by forge.pki.decryptPrivateKeyInfo(). PBES2/PBKDF2-encrypted content is unaffected. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118782",
-    "publishedDate": "2026-10-29T19:17:20.983",
-    "lastModifiedDate": "2026-10-29T19:17:20.983",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
+        "score": 7.6,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6877",
-    "description": "ServiceNow has addressed a domain separation bypass security issue that was identified in the ServiceNow SR – CSM – Task Plan Templates Store application. This vulnerability could enable an authenticated user with a specific role to create records in domains they do not have access to, potentially leading to unauthorized data creation across domain boundaries. \n\nWe are not currently aware of malicious exploitation against ServiceNow instances. We recommend customers promptly apply appropriate updates or upgrade to a patched release if they have not already done so.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6877",
-    "publishedDate": "2026-10-29T19:17:26.647",
-    "lastModifiedDate": "2026-10-29T19:17:26.647",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.7,
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@servicenow.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118781",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the affected implementation used BigInteger.prototype.modInverse(), bnModInverse(), lib/jsbn.js, RSA public exponent e to process the relevant input or security decision. node-forge's bundled jsbn implementation entered an infinite loop when BigInteger.prototype.modInverse() received a negative value or modulus. An attacker who could control the RSA public exponent passed to key generation, or a direct modInverse() operand, could block the Node.js event loop at full CPU. Parsed DER, PEM, JWK, PKCS#12, X.509, and TLS values are unsigned and cannot trigger this issue. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118781",
-    "publishedDate": "2026-10-29T19:17:20.843",
-    "lastModifiedDate": "2026-10-29T19:17:20.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.9,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 1.4,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118780",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the affected implementation used pki.verifyCertificateChain(), pki.createCaStore(), duplicate subject names to process the relevant input or security decision. node-forge modified the CA store while trying certificates that shared a subject name during pki.verifyCertificateChain(). A failed chain verification could permanently remove trusted CA certificates from the store, causing later valid chains to fail and creating a persistent availability impact for applications that reused the store. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118780",
-    "publishedDate": "2026-10-29T19:17:20.703",
-    "lastModifiedDate": "2026-10-29T19:17:20.703",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118779",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the affected implementation used pem.decode(), lib/pem.js, missing END line to process the relevant input or security decision. node-forge used polynomial-time regular expressions in pem.decode(), including when searching for a matching END line and parsing encapsulated headers. An unauthenticated attacker able to supply PEM input to any high-level parser could consume excessive CPU with a long malformed message and cause denial of service. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118779",
-    "publishedDate": "2026-10-29T19:17:20.560",
-    "lastModifiedDate": "2026-10-29T19:17:20.560",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118778",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the affected implementation used forge.tls.createConnection(), c.session.serverCertificate, RSA key exchange to process the relevant input or security decision. node-forge's TLS client checked the wrong property when deciding whether a server certificate was missing. A malicious TLS server or on-path peer could omit the Certificate message and reach code that dereferenced the absent certificate, causing an uncaught exception and terminating the connection or process. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118778",
-    "publishedDate": "2026-10-29T19:17:20.420",
-    "lastModifiedDate": "2026-10-29T19:17:20.420",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118777",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the forge.http client stored cookie names and paths from Set-Cookie response headers in ordinary JavaScript objects. A malicious server could use the cookie name __proto__ so that the attacker-controlled cookie path was written as a property on Object.prototype, or use inherited names such as constructor to modify Object. An empty cookie value could use the removal path to delete an inherited Object.prototype property. Applications using forge.http directly or through forge.xhr are affected; applications that do not use forge.http are unaffected. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118777",
-    "publishedDate": "2026-10-29T19:17:20.283",
-    "lastModifiedDate": "2026-10-29T19:17:20.283",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-103094",
-    "description": "ServiceNow has remediated an information disclosure vulnerability that was identified in the ServiceNow AI Platform. This vulnerability could cause a user's plaintext password to be persisted in a system table, potentially exposing that password to a user who otherwise would not be entitled to view it.\n\n\n\n\n\nServiceNow remediated the vulnerability through security updates that address the unintended persistence of plaintext credentials. We are not currently aware of malicious exploitation against ServiceNow instances. We recommend customers promptly apply appropriate updates or upgrade to a patched release if they have not already done so.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103094",
-    "publishedDate": "2026-10-29T19:17:15.267",
-    "lastModifiedDate": "2026-10-29T19:17:15.267",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
+        "score": 7.2,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "psirt@servicenow.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-58120",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58120",
-    "publishedDate": "2026-10-29T19:17:23.920",
-    "lastModifiedDate": "2026-10-29T19:17:23.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-58119",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58119",
-    "publishedDate": "2026-10-29T19:17:23.863",
-    "lastModifiedDate": "2026-10-29T19:17:23.863",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-58118",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-58118",
-    "publishedDate": "2026-10-29T19:17:23.787",
-    "lastModifiedDate": "2026-10-29T19:17:23.787",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-118776",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the affected implementation used decipher.finish(), CBC and ECB modes, PKCS#7 padding to process the relevant input or security decision. node-forge validated only the final byte of PKCS#7 padding during CBC and ECB decryption and accepted zero, oversized, or mismatched padding bytes. Malformed ciphertext could consequently be accepted and up to four plaintext blocks could be silently removed, causing an integrity failure in applications that treated successful decryption as proof of valid padding. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118776",
-    "publishedDate": "2026-10-29T19:17:20.147",
-    "lastModifiedDate": "2026-10-29T19:17:20.147",
+    "id": "CVE-2026-119542",
+    "description": "A flaw was found in the Ickle query parser in Infinispan. A query containing deeply nested predicates can cause recursive parsing to exhaust the Java thread stack and throw an uncaught StackOverflowError. An authenticated user with BULK_READ permission who can submit a cache query may trigger the issue, potentially affecting availability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119542",
+    "publishedDate": "2026-10-30T14:16:45.330",
+    "lastModifiedDate": "2026-10-30T14:16:45.457",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118775",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, asn1.oidToDer() in lib/asn1.js did not range-check the first two arcs of an OID. An application that accepted an untrusted OID string, checked or authorized that string, and then encoded it with asn1.oidToDer() could emit DER representing a different, trusted OID from the one that was checked. DER parsing is not affected. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118775",
-    "publishedDate": "2026-10-29T19:17:20.007",
-    "lastModifiedDate": "2026-10-29T19:17:20.007",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-118774",
-    "description": "Forge (also called node-forge) is a native implementation of Transport Layer Security in JavaScript. Prior to 1.4.1, the affected implementation used certificate.verify(child), _verifySignature(), lib/x509.js to process the relevant input or security decision. node-forge selected RSA padding and RSASSA-PSS parameters from the issuer certificate rather than the child certificate being verified. A child labeled as RSASSA-PSS could therefore be accepted with a PKCS#1 v1.5 signature when the issuer used PKCS#1 v1.5. The signature still had to be produced with the trusted issuer's private key, so this did not permit certificate identity forgery, but it could bypass policies that require a declared signature scheme. This issue is fixed in version 1.4.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118774",
-    "publishedDate": "2026-10-29T19:17:19.863",
-    "lastModifiedDate": "2026-10-29T19:17:19.863",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-119251",
-    "description": "A malicious actor with local access and high privileges could exploit an Improper Access Control vulnerability found in WiFiman Desktop for macOS to escalate privileges on the host device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119251",
-    "publishedDate": "2026-10-29T19:17:21.480",
-    "lastModifiedDate": "2026-10-29T19:17:21.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.7,
+        "score": 4.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.8,
-        "impactScore": 5.9,
-        "source": "fe490ce8-0395-4072-90d8-2707e1bdf984"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-118773",
-    "description": "Glob matches files using patterns the shell uses. From 9.0.0 until 14.0.2, abort branches in src/walker.ts, including GlobUtil.walkCB(), GlobUtil.walkCB2(), GlobUtil.walkCBSync(), and GlobUtil.walkCB2Sync(), invoke the callbacks without returning. After AbortSignal or AbortSignal.timeout() rejects or emits an error, execution can continue into processor.processPatterns(), readdirCB(), and recursive traversal. The issue affects glob() and globStream() when applications expose attacker-influenced patterns or directory trees and rely on cancellation as a traversal budget. Repeated timed-out requests can stack background filesystem operations and CPU work, degrading worker throughput or service availability; no confidentiality or integrity impact was observed. This issue is fixed in 14.0.2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118773",
-    "publishedDate": "2026-10-29T19:17:19.720",
-    "lastModifiedDate": "2026-10-29T19:17:19.720",
+    "id": "CVE-2026-91912",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Use of Hard-coded Cryptographic Key vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Information disclosure.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91912",
+    "publishedDate": "2026-10-30T14:17:10.617",
+    "lastModifiedDate": "2026-10-30T14:17:10.617",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security-advisories@github.com"
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
+        "exploitabilityScore": 2,
+        "impactScore": 4.7,
+        "source": "security_alert@emc.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-119250",
-    "description": "A malicious actor with local access and low privileges could exploit an External Control of File Name or Path vulnerability found in WiFiman Desktop for macOS to execute arbitrary commands with root privileges on the host device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119250",
-    "publishedDate": "2026-10-29T19:17:21.363",
-    "lastModifiedDate": "2026-10-29T19:17:21.363",
+    "id": "CVE-2026-119528",
+    "description": "A flaw was found in GIMP. The PSD plug-in’s image resource header loader uses an incorrect destination size when copying a converted resource name into a fixed stack buffer. Opening a crafted PSD file can cause a stack-based buffer overflow, leading to a crash and potentially arbitrary code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119528",
+    "publishedDate": "2026-10-30T14:16:45.143",
+    "lastModifiedDate": "2026-10-30T14:16:45.273",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -322,89 +81,319 @@
         "score": 7.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 1.8,
         "impactScore": 5.9,
-        "source": "fe490ce8-0395-4072-90d8-2707e1bdf984"
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-119249",
-    "description": "A malicious actor with access to the network could exploit a Binding to an Unrestricted IP Address vulnerability found in WiFiman Desktop for macOS to obtain information about the host device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119249",
-    "publishedDate": "2026-10-29T19:17:21.237",
-    "lastModifiedDate": "2026-10-29T19:17:21.237",
+    "id": "CVE-2026-91913",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Command execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91913",
+    "publishedDate": "2026-10-30T14:17:10.757",
+    "lastModifiedDate": "2026-10-30T14:17:10.757",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 8.8,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "fe490ce8-0395-4072-90d8-2707e1bdf984"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security_alert@emc.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-60111",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-60111",
-    "publishedDate": "2026-10-29T18:17:33.777",
-    "lastModifiedDate": "2026-10-29T18:17:33.777",
+    "id": "CVE-2026-111498",
+    "description": "OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Resource Locking vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to Protection mechanism bypass.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111498",
+    "publishedDate": "2026-10-30T14:16:37.463",
+    "lastModifiedDate": "2026-10-30T14:16:37.463",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 0.5,
+        "impactScore": 4.2,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-86715",
+    "description": "Plaintext storage of a password vulnerability in Crypttech Crypto and Informatics Technologies Industry and Trade Inc. Vatos DLP allows Use of Known Domain Credentials.\n\nThis issue affects Vatos DLP: from 1.1.176 before 1.1.243.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86715",
+    "publishedDate": "2026-10-30T14:17:10.313",
+    "lastModifiedDate": "2026-10-30T14:17:10.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 5.2,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-111499",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Incorrect Permission Assignment for Critical Resource vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Protection mechanism bypass.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111499",
+    "publishedDate": "2026-10-30T14:16:37.623",
+    "lastModifiedDate": "2026-10-30T14:16:37.623",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.6,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-91914",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Authentication Bypass by Spoofing vulnerability. An unauthenticated attacker with adjacent network access could potentially exploit this vulnerability, leading to Session theft.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91914",
+    "publishedDate": "2026-10-30T14:17:10.900",
+    "lastModifiedDate": "2026-10-30T14:17:10.900",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-111500",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains a Missing Authentication for Critical Function vulnerability. An unauthenticated attacker with adjacent network access could potentially exploit this vulnerability, leading to Server-side request forgery.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111500",
+    "publishedDate": "2026-10-30T14:16:37.760",
+    "lastModifiedDate": "2026-10-30T14:16:37.760",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-115683",
+    "description": "A race condition in Epiphany allows a malicious website to bypass the TLS/SSL certificate warning page.\n\nEpiphany registers the main-world script message handler \"tlsErrorPage\" so its internal TLS error page can implement \"Accept Risk and Proceed\". The handler was registered immediately before loading the error page, leaving a brief window where the previously loaded untrusted origin could still call window.webkit.messageHandlers.tlsErrorPage.postMessage(...). The only authorization check compares a numeric WebKit page id that increments predictably; an attacker can burst-guess ids and approve a certificate exception with no user click.\n\nIf a victim visits malicious site A that redirects to site B with an invalid certificate, site A can, for a few milliseconds, disable TLS certificate error warnings for host B until Epiphany is restarted, enabling man-in-the-middle or site spoofing for that host.\n\nUpstream report: https://gitlab.gnome.org/GNOME/epiphany/-/work_items/2978\nProof of concept: https://beford.net/poc/ssl_poc.html\nFix: https://gitlab.gnome.org/GNOME/epiphany/-/merge_requests/2245 (register handlers on LOAD_COMMITTED). No fixed release tagged yet; reporter and maintainer describe all current versions as affected. Maintainer notes the risky registration timing dates to commit 1da1caed (Epiphany 45.x era); before that the handlers were always registered and similarly reachable from web content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115683",
+    "publishedDate": "2026-10-30T14:16:39.373",
+    "lastModifiedDate": "2026-10-30T14:16:39.373",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.2,
+        "source": "patrick@puiterwijk.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-91915",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection') vulnerability. A high privileged attacker with adjacent network access could potentially exploit this vulnerability, leading to Script injection.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91915",
+    "publishedDate": "2026-10-30T14:17:11.063",
+    "lastModifiedDate": "2026-10-30T14:17:11.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.9,
+        "impactScore": 5.9,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-91917",
+    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Input Validation vulnerability. A low privileged attacker with adjacent network access could potentially exploit this vulnerability, leading to Code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91917",
+    "publishedDate": "2026-10-30T13:20:53.097",
+    "lastModifiedDate": "2026-10-30T13:20:53.097",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.9,
+        "source": "security_alert@emc.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-87768",
+    "description": "DateTime::Lite versions before 0.8.1 for Perl allow CPU exhaustion via a per-day loop when adding seconds.\n\n_normalize_leap_seconds crosses day boundaries one day at a time, so add(seconds => $n) on an object with a non-floating time zone takes about |$n|/86400 iterations, and nothing limits $n. The XS implementation and the pure-Perl fallback both have the loop.\n\nAn attacker who controls the number of seconds added can keep the process busy for as long as they choose.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87768",
+    "publishedDate": "2026-10-30T13:20:15.910",
+    "lastModifiedDate": "2026-10-30T13:20:15.910",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-51912",
-    "description": "OpenBMB XAgent v1.0.0 contains directory traversal vulnerability in main-upload_file-the-preserved-live-upload-file-witness-directly-reaches (ToolServer/ToolServerNode/main.py:46).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-51912",
-    "publishedDate": "2026-10-29T18:17:32.783",
-    "lastModifiedDate": "2026-10-29T18:17:32.783",
+    "id": "CVE-2026-75882",
+    "description": "An improper access control vulnerability in ESET Endpoint Encryption and ESET Full Disk Encryption allow attacker with standard user permissions access a device interface belonging to a privileged kernel driver and send specially crafted requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75882",
+    "publishedDate": "2026-10-30T13:20:06.177",
+    "lastModifiedDate": "2026-10-30T13:20:06.177",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.5,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security@eset.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-64860",
+    "description": "Rejected reason: Further research determined the issue is not a vulnerability.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64860",
+    "publishedDate": "2026-10-30T13:19:38.980",
+    "lastModifiedDate": "2026-10-30T13:19:38.980",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-51905",
-    "description": "TransformerOptimus SuperAGI v0.0.14 is vulnerable to Incorrect Access Control in get_agent_execution_configuration in superagi/controllers/agent_execution_config.py. A remote authenticated attacker from one organization can read another organization's agent execution configuration by supplying the victim agent_id and agent_execution_id to /agent_executions_configs/details/agent_id/{agent_id}/agent_execution_id/{agent_execution_id}. The endpoint lacks an organization ownership check on the selected agent and execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-51905",
-    "publishedDate": "2026-10-29T18:17:32.660",
-    "lastModifiedDate": "2026-10-29T18:17:32.660",
+    "id": "CVE-2026-13576",
+    "description": "CallBackery versions before 0.62.0 for Perl store user passwords as unsalted HMAC-SHA1 hashes.\n\nPasswords are hashed with hmac_sha1_sum() from Mojo::Util with no key, a single fast SHA-1 HMAC. There is no salt, so equal passwords give equal hashes, and no work factor slows down guessing.\n\nAn attacker who obtains the user table can recover passwords by fast offline guessing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13576",
+    "publishedDate": "2026-10-30T13:18:32.900",
+    "lastModifiedDate": "2026-10-30T13:18:32.900",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-51903",
-    "description": "SuperAGI v0.0.14 contains an improper access control vulnerability in get_agent_by_latest_execution in superagi/controllers/agent_execution.py. A remote authenticated attacker from one organization can retrieve latest execution and agent metadata for another organization's project through /agentexecutions/get/latest/agent/project/{project_id} by supplying a victim project_id.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-51903",
-    "publishedDate": "2026-10-29T18:17:32.547",
-    "lastModifiedDate": "2026-10-29T18:17:32.547",
+    "id": "CVE-2026-119038",
+    "description": "Business::GoCardless versions before 1.01 for Perl complete redirect flows without checking the session token, letting a leaked redirect flow ID create payments against another customer's mandate.\n\nconfirm_resource takes no session token from the caller. It reads the redirect flow back from the GoCardless API and completes it with the token from that response, so the check that the flow is completed by the session that started it always passes. It then creates the requested payment or subscription against the flow's mandate. Since version 1.00, a flow that already has a mandate is returned as confirmed without being completed again, so the same ID creates a new payment on every call.\n\nA remote attacker who obtains another customer's redirect flow ID can create payments or subscriptions against that customer's mandate.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119038",
+    "publishedDate": "2026-10-30T13:18:32.783",
+    "lastModifiedDate": "2026-10-30T13:18:32.783",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-51902",
-    "description": "SuperAGI up to v0.0.14 contains an improper access control vulnerability. The agent controller endpoint /api/agents/get/project/{project_id} allows authenticated users from one organization to retrieve the complete list of agents belonging to a different organization's project. The endpoint accepts a project_id parameter but does not verify that the project belongs to the authenticated user's organization.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-51902",
-    "publishedDate": "2026-10-29T18:17:32.417",
-    "lastModifiedDate": "2026-10-29T18:17:32.417",
+    "id": "CVE-2026-119037",
+    "description": "Business::GoCardless versions before 1.01 for Perl accept forged webhooks when a configured webhook secret is undef or empty.\n\nsignature_valid uses each configured secret as the HMAC key, and nothing rejects undef or an empty string, both of which Digest::SHA treats as an empty key. A secret read from an unset environment variable, or an empty entry in a list of rotated secrets, is used as is.\n\nA remote attacker can sign a forged webhook with an empty key and have it accepted as sent by GoCardless.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119037",
+    "publishedDate": "2026-10-30T13:18:32.670",
+    "lastModifiedDate": "2026-10-30T13:18:32.670",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-51863",
-    "description": "DB-GPT v0.7.5 and 0.8.0 contains directory traversal in use_example_file (packages/dbgpt-app/src/dbgpt_app/openapi/api_v1/examples_api.py:129). A remote attacker can use the validated exploitation path to write files outside the intended workspace or storage boundary.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-51863",
-    "publishedDate": "2026-10-29T18:17:32.293",
-    "lastModifiedDate": "2026-10-29T18:17:32.293",
+    "id": "CVE-2026-119036",
+    "description": "Business::GoCardless versions before 1.01 for Perl allow memory exhaustion by flattening legacy webhook payloads before checking their signature.\n\nA webhook body with a top-level \"payload\" key is verified as a legacy webhook. To rebuild the signed string, the payload is flattened into one key and value pair per leaf, each key carrying the full path to that leaf, and the pairs are then encoded, sorted and joined. A long key holding a long array costs memory proportional to the key length times the array length.\n\nA remote attacker can exhaust memory in the process receiving webhooks with a single request that carries no valid signature.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119036",
+    "publishedDate": "2026-10-30T13:18:32.553",
+    "lastModifiedDate": "2026-10-30T13:18:32.553",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-118996",
+    "description": "CallBackery versions before 0.62.0 for Perl send users their own password hash and the admin-only user note via getUserConfig.\n\ngetUserConfig() returns the caller's whole cbuser row, including the stored password hash and the note field that the user interface shows only to administrators. getTableData() and getAllFieldValues() in the user management plugins also return the note to users without the admin right.\n\nA non-administrator can read the notes administrators keep about them, and an attacker who obtains a session token can get that user's password hash and crack it offline.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118996",
+    "publishedDate": "2026-10-30T13:18:32.430",
+    "lastModifiedDate": "2026-10-30T13:18:32.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-118995",
+    "description": "CallBackery versions before 0.62.0 for Perl accept unintended values in form fields checked by createRxValidator.\n\ncreateRxValidator() is documented to anchor the supplied pattern at both ends, but builds /^${rx}$/ without grouping the pattern. An alternation such as yes|no then accepts any value starting with yes or ending with no, and $ also accepts a value with one trailing newline.\n\nAn authenticated user can submit values the pattern was meant to reject, which an application may then write into generated configuration files.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118995",
+    "publishedDate": "2026-10-30T13:18:32.320",
+    "lastModifiedDate": "2026-10-30T13:18:32.320",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-118994",
+    "description": "CallBackery versions before 0.62.0 for Perl allow log injection via newlines in the login name.\n\nlogin() writes the login name to the application log without escaping control characters. The login RPC method needs no authentication, so a name containing a newline followed by text in the log record format adds a forged record.\n\nAn unauthenticated attacker can forge log records, such as a successful administrator login from an address of their choosing.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118994",
+    "publishedDate": "2026-10-30T13:18:32.213",
+    "lastModifiedDate": "2026-10-30T13:18:32.213",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-118993",
+    "description": "CallBackery versions before 0.62.0 for Perl allow denial of service via the request path interpolated as a regular expression under CGI, FastCGI and PSGI.\n\nThe before_dispatch hook installed by startup() removes PATH_INFO from the end of the request URI with a substitution that interpolates PATH_INFO unquoted. Under CGI, FastCGI and PSGI both values come from the request, so the client chooses both the pattern and the string it is matched against.\n\nA short unauthenticated request with a backreference in the path backtracks exponentially and can keep a worker process busy for minutes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118993",
+    "publishedDate": "2026-10-30T13:18:32.100",
+    "lastModifiedDate": "2026-10-30T13:18:32.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-118992",
+    "description": "CallBackery versions before 0.62.0 for Perl allow OS command execution via sqlite3 shell commands in a restored configuration backup.\n\nrestoreConfigBlob() feeds the database dump in a backup to the sqlite3 command-line shell. The shell runs lines starting with a dot as its own commands, so .shell or .system in the dump runs an OS command and .load loads native code.\n\nAnyone who can supply a backup to be restored can run arbitrary commands as the application user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118992",
+    "publishedDate": "2026-10-30T13:18:31.990",
+    "lastModifiedDate": "2026-10-30T13:18:31.990",
     "vendors": [],
     "products": [],
     "cvssScores": []
