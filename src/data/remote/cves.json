@@ -1,27 +1,197 @@
 [
   {
-    "id": "CVE-2026-112347",
-    "description": "Kirki plugin for WordPress before 6.4.1 contains a broken object-level access control vulnerability in its page REST API, where the PUT /wp-json/kirki/v1/pages/{page_id} route and the save_page_data, duplicate, and delete handlers in PageController.php rely only on a coarse role-to-access middleware check without performing a per-object WordPress capability check. A user with Kirki edit access, granted to the Editor role by default, can exploit this flaw to modify the title, slug, and publication status of any non-trashed post of any post type, including custom post types and WooCommerce products they do not own, exposing private or draft content or removing published content by manipulating the unrestricted post_status field.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112347",
-    "publishedDate": "2026-10-30T14:16:37.903",
-    "lastModifiedDate": "2026-10-30T14:16:37.903",
+    "id": "CVE-2026-95673",
+    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2026-92243. Reason: This candidate is a reservation duplicate of CVE-2026-92243. Notes: All CVE users should reference CVE-2026-92243 instead of this candidate. All references and descriptions in this candidate have been removed to prevent accidental usage.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-95673",
+    "publishedDate": "2026-10-30T20:17:29.200",
+    "lastModifiedDate": "2026-10-30T20:17:29.200",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-61850",
+    "description": "Kargo manages and automates the promotion of software artifacts. From 0.6.0 until 1.8.14, 1.9.9, and 1.10.8, two authorization flaws in the `project-scoped RBAC API` let an authenticated user with delegated permission to manage a Project's `Roles` or `ServiceAccounts` confer permissions exceeding the user's own. A user authorized to edit `Roles` can create, replace, or add rules granting permissions not held by the user; a user authorized to edit a Role's ServiceAccount can bind an identity, including the user's own, to a more powerful Role. A Kargo Role comprises a `ServiceAccount, Role, and RoleBinding` in the Project namespace. Changes are written using the API server's broadly privileged credentials after only a coarse resource-kind edit check, rather than checking each permission being conferred. This permits escalation to Project-administrator access, disclosure of `Project Secrets` and credentials, and modification or deletion of Project resources. Stolen Git, container-registry, or Helm-registry credentials can extend confidentiality and integrity impacts to those external systems. Escalation remains limited to Projects where the attacker already has RBAC-management delegation and does not itself grant cluster-wide or cross-Project access. Default non-administrator roles do not permit these operations; exploitation requires an `administrator-created custom role` granting the relevant permissions and control of an account assigned that role. This issue is fixed in versions 1.8.14, 1.9.9, and 1.10.8.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-61850",
+    "publishedDate": "2026-10-30T20:17:11.380",
+    "lastModifiedDate": "2026-10-30T20:17:11.530",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.6,
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55598",
+    "description": "PinePods is a complete, self-hosted podcast management system written in Rust. Prior to 0.9.0, an authenticated user can subscribe to an attacker-controlled RSS feed through `POST /api/data/add_podcast` in `rust-api/src/handlers/podcasts.rs`. `get_podcast_values` and `add_episodes` in `rust-api/src/database.rs` parse the feed with `feed-rs` and store the `<enclosure url>` verbatim in `Episodes.episodeurl` without destination host/IP validation. `POST /api/data/download_podcast` invokes `spawn_download_podcast_episode` and `download_episode_and_wait()` in `rust-api/src/services/tasks.rs`, which sends a `reqwest` GET to the stored URL and saves and records the response in `DownloadedEpisodes` for later retrieval. The `estimate_duration_from_audio_url_async()` path in `rust-api/src/database.rs` also sends an unvalidated HEAD during feed add/refresh. Default redirect following permits an initially external enclosure URL to redirect to an internal target. A low-privilege user can make server-side GET/HEAD requests to reachable loopback, private-network and cloud metadata services and read downloaded internal responses, enabling internal-service enumeration, confidential-data disclosure and possible metadata credential theft. Episode downloading requires server downloads to be enabled, which is the default; self-service signup is supported. This issue is fixed in version 0.9.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55598",
+    "publishedDate": "2026-10-30T20:17:10.063",
+    "lastModifiedDate": "2026-10-30T20:17:10.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:L",
+        "exploitabilityScore": 3.1,
+        "impactScore": 5.3,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62302",
+    "description": "MyTube is a self-hosted downloader and player for several video websites. Prior to version 1.10.3, `server.ts` calls `registerStaticRoutes` and `registerCloudRoutes` before `registerApiRoutes`, where `authMiddleware` and `roleBasedAuthMiddleware` are mounted. Because Express processes middleware in registration order, `staticRoutes.ts` and `cloudRoutes.ts` remain outside the authentication stack even when `loginEnabled=true`. Unauthenticated clients can access local videos through `/videos/*`, thumbnails through `/images/*` and `/images-small/*`, avatars through `/avatars/*`, subtitles through `/subtitles/*`, cloud thumbnail caches through `/api/cloud/thumbnail-cache/*`, and cloud signed URLs or redirects through `/cloud/videos/:filename` and `/cloud/images/:filename`. The frontend login wall does not protect direct media requests. Cloud routes return 404 when cloud storage is unconfigured, but that is not an authentication rejection; protected API routes correctly return 401. Combined with hidden-video path leaks, the flaw permits unauthenticated downloads of hidden media. Default loginEnabled=false single-user deployments have no authentication boundary to bypass. This issue is fixed in version 1.10.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62302",
+    "publishedDate": "2026-10-30T20:17:12.063",
+    "lastModifiedDate": "2026-10-30T20:17:12.063",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62301",
+    "description": "MyTube is a self-hosted downloader and player for several video websites. Prior to version 1.10.3, backend video access does not enforce the visitor role's intended public-only restriction when `loginEnabled=true` and a visitor password is configured. The frontend filter in `VideoContext.tsx` is only client-side, `roleBasedAuthMiddleware.ts` allows all visitor GET requests, and `storageService/videos.ts` performs `getVideos()` and `getVideoById(id)` queries without checking the caller's role or `visibility`. A visitor can enumerate `/api/videos` or request `/api/videos/:id` to retrieve hidden `visibility`=0 records, exposing titles, `sourceUrl` values, `videoPath` values, subtitle paths and `thumbnailPath` values. The `serveMountVideo()` path also serves mounted video files without `visibility` checks. Leaked paths work against unauthenticated `/videos/*` and `/subtitles/*` routes, allowing media downloads without credentials. The RSS visitor feed already filters `visibility`=1 content and is not the affected query path. Default loginEnabled=false single-user deployments are unaffected by this role-boundary issue because all callers are owner-equivalent. This issue is fixed in version 1.10.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62301",
+    "publishedDate": "2026-10-30T20:17:11.910",
+    "lastModifiedDate": "2026-10-30T20:17:11.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-55493",
+    "description": "HotCRP is conference review software. Starting with 2.101, the `cmt:` search term checks whether a comment is visible to the searching user but fails to check whether the commenter's identity should be visible. A `cmt:USER` search can therefore match a paper with a visible comment authored by USER even when the comment is supposed to be anonymous. An authenticated user with access to the search can infer the author of an anonymous comment, compromising reviewer anonymity. Comments that the user cannot see remain excluded from search results. The advisory prose identifies 3.3 as fixed, its affected-version metadata excludes 3.3, and the verified repository tag 3.3 already contains the identity-check fix; however, its patched-version metadata instead lists 3.3.1. This fixed-version source conflict remains unresolved.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-55493",
+    "publishedDate": "2026-10-30T20:17:09.920",
+    "lastModifiedDate": "2026-10-30T20:17:09.920",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62284",
+    "description": "OSAC operator is a Kubernetes operator. In the affected revision identified as 8220502, the `console-proxy` `RemoteConfigResolver` parses Kubernetes Secret kubeconfig data with `clientcmd.RESTConfigFromKubeConfig` without sanitizing the resulting `rest.Config`. An attacker who can create or modify a Secret labeled `osac.openshift.io/remote-cluster-kubeconfig`: \"true\" in a namespace where the proxy's RoleBinding grants Secret read access can supply `users[].user.exec`. When `rest.TransportFor` builds the HTTP transport for an upstream WebSocket connection, client-go invokes that exec credential plugin, spawning an arbitrary process as the osac-`console-proxy` service account inside the pod. Attacker-controlled `clusters[].server` also enables server-side request forgery from the proxy pod. Remote and auto VM cluster modes are affected, with auto the default; exclusively `local` mode does not read kubeconfig Secrets and is unaffected. The credential-plugin execution path is patched in commit 7e4222b; that patch does not address the described server-address SSRF path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62284",
+    "publishedDate": "2026-10-30T20:17:11.727",
+    "lastModifiedDate": "2026-10-30T20:17:11.727",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94175",
+    "description": "Unauthenticated Cross Site Scripting (XSS) in All In One Login <= 2.4.1 versions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94175",
+    "publishedDate": "2026-10-30T19:20:19.250",
+    "lastModifiedDate": "2026-10-30T19:22:27.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
-        "impactScore": 4.7,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-90888",
+    "description": "Unauthenticated PHP Object Injection in LeadSnap <= 1.25 versions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90888",
+    "publishedDate": "2026-10-30T19:20:18.680",
+    "lastModifiedDate": "2026-10-30T19:22:27.173",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7005",
+    "description": "WIT SynApps Runtime through 1.4.11 contains a browser-mediated cross-origin request forgery vulnerability that allows attackers to supply an arbitrary target address during controller onboarding, causing the victim's browser to issue discovery requests to attacker-specified hosts at paths such as /easy/GUI/Skins/Default/SiteLogo and /easy/GUI/Skins/Default/Identity. Attackers can leverage the victim's browser reachability to probe loopback addresses, local hostnames, or internal-only network hosts and initiate the enrollment flow against REDY instances, crossing IT/OT segmentation boundaries through a sanctioned application path.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7005",
+    "publishedDate": "2026-10-30T19:19:13.937",
+    "lastModifiedDate": "2026-10-30T20:17:19.433",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 7.2,
+        "score": 5.3,
         "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -29,71 +199,69 @@
     ]
   },
   {
-    "id": "CVE-2026-119542",
-    "description": "A flaw was found in the Ickle query parser in Infinispan. A query containing deeply nested predicates can cause recursive parsing to exhaust the Java thread stack and throw an uncaught StackOverflowError. An authenticated user with BULK_READ permission who can submit a cache query may trigger the issue, potentially affecting availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119542",
-    "publishedDate": "2026-10-30T14:16:45.330",
-    "lastModifiedDate": "2026-10-30T14:16:45.457",
+    "id": "CVE-2026-7004",
+    "description": "WIT SynApps Runtime through 1.4.11 contains a pre-authentication reflected cross-site scripting vulnerability that allows unauthenticated attackers to inject and execute arbitrary JavaScript by submitting a crafted LINK query parameter to the /System/Session-1 endpoint. Attackers can exploit this flaw to harvest credentials, manipulate the login flow, access browser-visible data, and perform same-origin requests to controller endpoints, including an origin-switch primitive against the internal controller in Cloud RIA scenarios.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7004",
+    "publishedDate": "2026-10-30T19:19:13.797",
+    "lastModifiedDate": "2026-10-30T19:23:25.493",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 6.1,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
         "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-7003",
+    "description": "WIT SynApps Runtime through 1.4.11 contains a hardcoded credentials vulnerability that allows unauthenticated attackers to recover static OAuth clientId and clientSecret values embedded in JavaScript delivered to the frontend, such as in parameters.js. Attackers can extract these exposed application credentials to reproduce the application portion of the REDY authentication flow at the /web/api/v1/auth/token endpoint, undermining confidential-client assurance for the OAuth implementation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-7003",
+    "publishedDate": "2026-10-30T19:19:13.647",
+    "lastModifiedDate": "2026-10-30T19:23:25.493",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91912",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Use of Hard-coded Cryptographic Key vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Information disclosure.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91912",
-    "publishedDate": "2026-10-30T14:17:10.617",
-    "lastModifiedDate": "2026-10-30T14:17:10.617",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
+        "source": "disclosure@vulncheck.com"
+      },
       {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2,
-        "impactScore": 4.7,
-        "source": "security_alert@emc.com"
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-119528",
-    "description": "A flaw was found in GIMP. The PSD plug-in’s image resource header loader uses an incorrect destination size when copying a converted resource name into a fixed stack buffer. Opening a crafted PSD file can cause a stack-based buffer overflow, leading to a crash and potentially arbitrary code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119528",
-    "publishedDate": "2026-10-30T14:16:45.143",
-    "lastModifiedDate": "2026-10-30T14:16:45.273",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91913",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability. A low privileged attacker with remote access could potentially exploit this vulnerability, leading to Command execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91913",
-    "publishedDate": "2026-10-30T14:17:10.757",
-    "lastModifiedDate": "2026-10-30T14:17:10.757",
+    "id": "CVE-2026-78527",
+    "description": "Contributor PHP Object Injection in GS Testimonial Slider <= 3.3.10 versions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-78527",
+    "publishedDate": "2026-10-30T19:19:12.177",
+    "lastModifiedDate": "2026-10-30T19:22:27.173",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -104,298 +272,218 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 2.8,
         "impactScore": 5.9,
-        "source": "security_alert@emc.com"
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111498",
-    "description": "OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Resource Locking vulnerability. A high privileged attacker with local access could potentially exploit this vulnerability, leading to Protection mechanism bypass.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111498",
-    "publishedDate": "2026-10-30T14:16:37.463",
-    "lastModifiedDate": "2026-10-30T14:16:37.463",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.7,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:H",
-        "exploitabilityScore": 0.5,
-        "impactScore": 4.2,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-86715",
-    "description": "Plaintext storage of a password vulnerability in Crypttech Crypto and Informatics Technologies Industry and Trade Inc. Vatos DLP allows Use of Known Domain Credentials.\n\nThis issue affects Vatos DLP: from 1.1.176 before 1.1.243.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-86715",
-    "publishedDate": "2026-10-30T14:17:10.313",
-    "lastModifiedDate": "2026-10-30T14:17:10.313",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111499",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Incorrect Permission Assignment for Critical Resource vulnerability. A low privileged attacker with local access could potentially exploit this vulnerability, leading to Protection mechanism bypass.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111499",
-    "publishedDate": "2026-10-30T14:16:37.623",
-    "lastModifiedDate": "2026-10-30T14:16:37.623",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91914",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Authentication Bypass by Spoofing vulnerability. An unauthenticated attacker with adjacent network access could potentially exploit this vulnerability, leading to Session theft.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91914",
-    "publishedDate": "2026-10-30T14:17:10.900",
-    "lastModifiedDate": "2026-10-30T14:17:10.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-111500",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains a Missing Authentication for Critical Function vulnerability. An unauthenticated attacker with adjacent network access could potentially exploit this vulnerability, leading to Server-side request forgery.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111500",
-    "publishedDate": "2026-10-30T14:16:37.760",
-    "lastModifiedDate": "2026-10-30T14:16:37.760",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-115683",
-    "description": "A race condition in Epiphany allows a malicious website to bypass the TLS/SSL certificate warning page.\n\nEpiphany registers the main-world script message handler \"tlsErrorPage\" so its internal TLS error page can implement \"Accept Risk and Proceed\". The handler was registered immediately before loading the error page, leaving a brief window where the previously loaded untrusted origin could still call window.webkit.messageHandlers.tlsErrorPage.postMessage(...). The only authorization check compares a numeric WebKit page id that increments predictably; an attacker can burst-guess ids and approve a certificate exception with no user click.\n\nIf a victim visits malicious site A that redirects to site B with an invalid certificate, site A can, for a few milliseconds, disable TLS certificate error warnings for host B until Epiphany is restarted, enabling man-in-the-middle or site spoofing for that host.\n\nUpstream report: https://gitlab.gnome.org/GNOME/epiphany/-/work_items/2978\nProof of concept: https://beford.net/poc/ssl_poc.html\nFix: https://gitlab.gnome.org/GNOME/epiphany/-/merge_requests/2245 (register handlers on LOAD_COMMITTED). No fixed release tagged yet; reporter and maintainer describe all current versions as affected. Maintainer notes the risky registration timing dates to commit 1da1caed (Epiphany 45.x era); before that the handlers were always registered and similarly reachable from web content.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115683",
-    "publishedDate": "2026-10-30T14:16:39.373",
-    "lastModifiedDate": "2026-10-30T14:16:39.373",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.2,
-        "source": "patrick@puiterwijk.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91915",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection') vulnerability. A high privileged attacker with adjacent network access could potentially exploit this vulnerability, leading to Script injection.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91915",
-    "publishedDate": "2026-10-30T14:17:11.063",
-    "lastModifiedDate": "2026-10-30T14:17:11.063",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 0.9,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91917",
-    "description": "Dell OpenManage Enterprise, versions prior to 4.8.0, contains an Improper Input Validation vulnerability. A low privileged attacker with adjacent network access could potentially exploit this vulnerability, leading to Code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91917",
-    "publishedDate": "2026-10-30T13:20:53.097",
-    "lastModifiedDate": "2026-10-30T13:20:53.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.1,
-        "impactScore": 5.9,
-        "source": "security_alert@emc.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-87768",
-    "description": "DateTime::Lite versions before 0.8.1 for Perl allow CPU exhaustion via a per-day loop when adding seconds.\n\n_normalize_leap_seconds crosses day boundaries one day at a time, so add(seconds => $n) on an object with a non-floating time zone takes about |$n|/86400 iterations, and nothing limits $n. The XS implementation and the pure-Perl fallback both have the loop.\n\nAn attacker who controls the number of seconds added can keep the process busy for as long as they choose.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87768",
-    "publishedDate": "2026-10-30T13:20:15.910",
-    "lastModifiedDate": "2026-10-30T13:20:15.910",
+    "id": "CVE-2026-73322",
+    "description": "Incorrect Authorization vulnerability in the single-stage query engine of Apache Pinot.\n\nWhen broker access control is enabled, the single-stage query engine authorizes only the table named in the query's FROM clause. The lookup() transform function identifies its dimension table with a string literal argument rather than through the FROM clause, so that table was never included in the authorization check. An authenticated user who is authorized for at least one table can therefore read columns from any dimension table in the cluster, including tables they have no access to, and can retrieve arbitrary rows of it by supplying primary key values directly. Per-principal row-level security filters configured on the dimension table are likewise not applied.\n\nThe multi-stage query engine is not affected.\n\nThis issue affects Apache Pinot: through 1.5.1\n\nUsers are recommended to upgrade to version 1.6.0, which fixes this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73322",
+    "publishedDate": "2026-10-30T19:19:10.747",
+    "lastModifiedDate": "2026-10-30T19:23:54.487",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-75882",
-    "description": "An improper access control vulnerability in ESET Endpoint Encryption and ESET Full Disk Encryption allow attacker with standard user permissions access a device interface belonging to a privileged kernel driver and send specially crafted requests.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-75882",
-    "publishedDate": "2026-10-30T13:20:06.177",
-    "lastModifiedDate": "2026-10-30T13:20:06.177",
+    "id": "CVE-2026-73186",
+    "description": "Subscriber PHP Object Injection in Enable Media Replace <= 4.2.2 versions.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-73186",
+    "publishedDate": "2026-10-30T19:19:10.123",
+    "lastModifiedDate": "2026-10-30T19:22:27.173",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.5,
-        "version": "CVSS 4.0",
+        "score": 8.8,
+        "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-66026",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66026",
+    "publishedDate": "2026-10-30T19:18:33.970",
+    "lastModifiedDate": "2026-10-30T19:18:33.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-66025",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-66025",
+    "publishedDate": "2026-10-30T19:18:33.903",
+    "lastModifiedDate": "2026-10-30T19:18:33.903",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-62331",
+    "description": "praktor is a multi-agent Claude Code orchestrator with Telegram input and output, Docker isolation, and a Mission Control UI. Prior to 0.9.1, both Telegram upload sites in `internal/telegram/bot.go` concatenate the attacker-controlled document filename into a destination path without sanitization, and `path.Join` collapses parent-directory traversal. A remote Telegram user who can message the bot can therefore write outside `uploads/` within the persistent agent workspace mounted at `/workspace/agent`. Because `allow_from: []` permits all senders by default, no prior authentication or privilege is required in that configuration. The attacker can plant or overwrite `CLAUDE.md`, instruction, skill, hook, or configuration files that the Claude agent reads and operates on across later runs, turning a document upload into stored instruction injection. The demonstrated arbitrary-write scope is the persistent agent workspace volume, not an unrestricted host-filesystem write. This issue is fixed in version 0.9.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62331",
+    "publishedDate": "2026-10-30T19:18:33.450",
+    "lastModifiedDate": "2026-10-30T20:17:12.210",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:H/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62303",
+    "description": "Pistache is a high-performance REST toolkit written in C++. From 0.0.5 through 0.4.26, `SegmentTreeNode::sanitizeResource()` in `src/server/router.cc` uses `std::regex_replace()` with the `//+` expression to collapse consecutive slashes. With libstdc++, a path containing tens of thousands of consecutive slash characters can recurse deeply enough to exhaust the stack and crash the process. `Router::route()`, `Router::addRoute()` and `Router::removeRoute()` reach this normalization. Unauthenticated remote exploitation is conditional on a deployment allowing sufficiently long request paths, such as by increasing `Endpoint::Options::maxRequestSize()` above the default 4096-byte limit or forwarding long paths through a front end. Direct router API use is also affected when attacker-controlled route or resource strings reach the normalizer. Native builds reproduced a crash around 24,000 consecutive slashes, although the exact threshold depends on the stack and standard library; the demonstrated failure is stack exhaustion rather than uninitialized-memory use. A source fix replaces recursive regular-expression normalization with an iterative pass, but no containing repository release was verified as of time of publication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62303",
+    "publishedDate": "2026-10-30T19:18:33.217",
+    "lastModifiedDate": "2026-10-30T19:39:14.897",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-62298",
+    "description": "mouse07410/asn1c is an ASN.1 compiler. Prior to 1.2.5, `OPEN TYPE` decoding can dereference an unallocated member pointer and crash the consuming program. `OPEN_TYPE_aper_get` in `OPEN_TYPE_aper.c`, `OPEN_TYPE_ber_get` in `OPEN_TYPE_ber.c`, `OPEN_TYPE_oer_get` in `OPEN_TYPE_oer.c`, and `OPEN_TYPE_uper_get` in `OPEN_TYPE_uper.c` share the pattern: a conditional null check on `*memb_ptr2` resets presence only when the member exists, but execution then unconditionally computes an inner value from that pointer and a member offset. If the `OPEN TYPE` member has not been allocated, the null-pointer arithmetic and subsequent read cause a segmentation fault. The advisory demonstrates UPER and APER crashes for `E2connectionUpdateAcknowledge`, notes that `E2AP` uses APER, and provides a BER reproducer; OER is also explicitly identified as affected. This issue is fixed in version 1.2.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62298",
+    "publishedDate": "2026-10-30T19:18:33.027",
+    "lastModifiedDate": "2026-10-30T19:39:14.897",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 0,
+        "version": "CVSS 4.0",
+        "severity": "NONE",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "security@eset.com"
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-64860",
-    "description": "Rejected reason: Further research determined the issue is not a vulnerability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-64860",
-    "publishedDate": "2026-10-30T13:19:38.980",
-    "lastModifiedDate": "2026-10-30T13:19:38.980",
+    "id": "CVE-2026-62264",
+    "description": "PDF Reader MCP is a Model Context Protocol server for reading PDF documents. In versions 2.2.0 and later prior to 3.0.1, when `MCP_TRANSPORT=http` enables the opt-in HTTP server, `@sylphx/pdf-reader-mcp` reads `MCP_API_KEY` and logs that `X-API-Key` authentication is enabled but never validates the `X-API-Key` header on incoming requests. The `/mcp` endpoint consequently accepts unauthenticated clients. With the default bind address of `0.0.0.0`, any client able to reach the port can invoke every PDF tool and read any PDF the server process can open on the host, despite the misleading authentication-enabled startup log. URL-based sources additionally permit limited server-side request forgery; private and loopback destinations are blocked by default unless `--allow-private-ips` is set. The default `stdio` transport is unaffected. This issue is fixed in version 3.0.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62264",
+    "publishedDate": "2026-10-30T19:18:32.827",
+    "lastModifiedDate": "2026-10-30T19:39:14.897",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-13576",
-    "description": "CallBackery versions before 0.62.0 for Perl store user passwords as unsalted HMAC-SHA1 hashes.\n\nPasswords are hashed with hmac_sha1_sum() from Mojo::Util with no key, a single fast SHA-1 HMAC. There is no salt, so equal passwords give equal hashes, and no work factor slows down guessing.\n\nAn attacker who obtains the user table can recover passwords by fast offline guessing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13576",
-    "publishedDate": "2026-10-30T13:18:32.900",
-    "lastModifiedDate": "2026-10-30T13:18:32.900",
+    "id": "CVE-2026-62162",
+    "description": "Hydra is a layer-two scalability solution for Cardano. Prior to 2.1.0, the `Claim` branch in `hydra-plutus/validators/deposit.ak` checks only that `datum.head_id` matches the attacker-controlled `redeemer.currencySymbol` and that the transaction is valid before the deposit deadline. It neither requires spending the Head state-token UTxO in the same transaction nor constrains outputs. After a deposit made through `POST /commit` is confirmed, any third party able to build a Cardano transaction can observe and consume the pending deposit UTxO before its deadline and redirect the assets to an arbitrary address. A standalone deposit spend invokes no Head validator, bypassing its safety checks; historical head-ID binding and the Aiken rewrite retained this missing invariant. The default deadline is three times depositPeriod, so the described attack applies to pending deposits before that deadline. This issue is fixed in version 2.1.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62162",
+    "publishedDate": "2026-10-30T19:18:32.630",
+    "lastModifiedDate": "2026-10-30T19:39:14.897",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-119038",
-    "description": "Business::GoCardless versions before 1.01 for Perl complete redirect flows without checking the session token, letting a leaked redirect flow ID create payments against another customer's mandate.\n\nconfirm_resource takes no session token from the caller. It reads the redirect flow back from the GoCardless API and completes it with the token from that response, so the check that the flow is completed by the session that started it always passes. It then creates the requested payment or subscription against the flow's mandate. Since version 1.00, a flow that already has a mandate is returned as confirmed without being completed again, so the same ID creates a new payment on every call.\n\nA remote attacker who obtains another customer's redirect flow ID can create payments or subscriptions against that customer's mandate.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119038",
-    "publishedDate": "2026-10-30T13:18:32.783",
-    "lastModifiedDate": "2026-10-30T13:18:32.783",
+    "id": "CVE-2026-62160",
+    "description": "Daptin is a GraphQL/JSON-API headless CMS. Prior to 0.12.26, the global `LanguageMiddleware` in `server/language.go` passes the raw `Accept-Language` header from `LanguageMiddlewareFunc` through `GetLanguagePreference` to `golang.org/x/text/language.ParseAcceptLanguage` without a size or shape filter. The guard for CVE-2022-32149 counts hyphens but not underscores, even though the internal parser normalizes underscores to hyphens. Long lists of underscore-separated language subtags longer than eight characters bypass the guard. These subtags fail the `len <= 8` length check in `golang.org/x/text/internal/language/parse.go`, causing repeated `gobble` operations to move the entire remaining buffer through `runtime.memmove`. With many invalid subtags, this repeated buffer movement takes quadratic work. Unauthenticated requests to the public landing page or `/api` can consume disproportionate CPU, with a 256 KiB header already causing seconds of processing and larger input permitted by the default 1 MiB header ceiling. `resource.CheckErr` also logs the entire invalid header, amplifying cost, while normal successful HTTP responses can conceal the denial-of-service traffic. Repeated requests can saturate server CPU. This issue is fixed in version 0.12.26.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62160",
+    "publishedDate": "2026-10-30T19:18:32.473",
+    "lastModifiedDate": "2026-10-30T20:17:11.587",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-119037",
-    "description": "Business::GoCardless versions before 1.01 for Perl accept forged webhooks when a configured webhook secret is undef or empty.\n\nsignature_valid uses each configured secret as the HMAC key, and nothing rejects undef or an empty string, both of which Digest::SHA treats as an empty key. A secret read from an unset environment variable, or an empty entry in a list of rotated secrets, is used as is.\n\nA remote attacker can sign a forged webhook with an empty key and have it accepted as sent by GoCardless.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119037",
-    "publishedDate": "2026-10-30T13:18:32.670",
-    "lastModifiedDate": "2026-10-30T13:18:32.670",
+    "id": "CVE-2026-62122",
+    "description": "Missing Authorization vulnerability in Arraytics Booktics booktics allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Booktics: from n/a through 1.0.31.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62122",
+    "publishedDate": "2026-10-30T19:18:32.210",
+    "lastModifiedDate": "2026-10-30T19:22:27.173",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-119036",
-    "description": "Business::GoCardless versions before 1.01 for Perl allow memory exhaustion by flattening legacy webhook payloads before checking their signature.\n\nA webhook body with a top-level \"payload\" key is verified as a legacy webhook. To rebuild the signed string, the payload is flattened into one key and value pair per leaf, each key carrying the full path to that leaf, and the pairs are then encoded, sorted and joined. A long key holding a long array costs memory proportional to the key length times the array length.\n\nA remote attacker can exhaust memory in the process receiving webhooks with a single request that carries no valid signature.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119036",
-    "publishedDate": "2026-10-30T13:18:32.553",
-    "lastModifiedDate": "2026-10-30T13:18:32.553",
+    "id": "CVE-2026-62121",
+    "description": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in Unlimited Elements Unlimited Elements For Elementor (Free Widgets, Addons, Templates) unlimited-elements-for-elementor allows PHP Local File Inclusion.This issue affects Unlimited Elements For Elementor (Free Widgets, Addons, Templates): from n/a through 2.0.26.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62121",
+    "publishedDate": "2026-10-30T19:18:32.057",
+    "lastModifiedDate": "2026-10-30T19:22:27.173",
     "vendors": [],
     "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-118996",
-    "description": "CallBackery versions before 0.62.0 for Perl send users their own password hash and the admin-only user note via getUserConfig.\n\ngetUserConfig() returns the caller's whole cbuser row, including the stored password hash and the note field that the user interface shows only to administrators. getTableData() and getAllFieldValues() in the user management plugins also return the note to users without the admin right.\n\nA non-administrator can read the notes administrators keep about them, and an attacker who obtains a session token can get that user's password hash and crack it offline.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118996",
-    "publishedDate": "2026-10-30T13:18:32.430",
-    "lastModifiedDate": "2026-10-30T13:18:32.430",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-118995",
-    "description": "CallBackery versions before 0.62.0 for Perl accept unintended values in form fields checked by createRxValidator.\n\ncreateRxValidator() is documented to anchor the supplied pattern at both ends, but builds /^${rx}$/ without grouping the pattern. An alternation such as yes|no then accepts any value starting with yes or ending with no, and $ also accepts a value with one trailing newline.\n\nAn authenticated user can submit values the pattern was meant to reject, which an application may then write into generated configuration files.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118995",
-    "publishedDate": "2026-10-30T13:18:32.320",
-    "lastModifiedDate": "2026-10-30T13:18:32.320",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-118994",
-    "description": "CallBackery versions before 0.62.0 for Perl allow log injection via newlines in the login name.\n\nlogin() writes the login name to the application log without escaping control characters. The login RPC method needs no authentication, so a name containing a newline followed by text in the log record format adds a forged record.\n\nAn unauthenticated attacker can forge log records, such as a successful administrator login from an address of their choosing.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118994",
-    "publishedDate": "2026-10-30T13:18:32.213",
-    "lastModifiedDate": "2026-10-30T13:18:32.213",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-118993",
-    "description": "CallBackery versions before 0.62.0 for Perl allow denial of service via the request path interpolated as a regular expression under CGI, FastCGI and PSGI.\n\nThe before_dispatch hook installed by startup() removes PATH_INFO from the end of the request URI with a substitution that interpolates PATH_INFO unquoted. Under CGI, FastCGI and PSGI both values come from the request, so the client chooses both the pattern and the string it is matched against.\n\nA short unauthenticated request with a backreference in the path backtracks exponentially and can keep a worker process busy for minutes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118993",
-    "publishedDate": "2026-10-30T13:18:32.100",
-    "lastModifiedDate": "2026-10-30T13:18:32.100",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-118992",
-    "description": "CallBackery versions before 0.62.0 for Perl allow OS command execution via sqlite3 shell commands in a restored configuration backup.\n\nrestoreConfigBlob() feeds the database dump in a backup to the sqlite3 command-line shell. The shell runs lines starting with a dot as its own commands, so .shell or .system in the dump runs an OS command and .load loads native code.\n\nAnyone who can supply a backup to be restored can run arbitrary commands as the application user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118992",
-    "publishedDate": "2026-10-30T13:18:31.990",
-    "lastModifiedDate": "2026-10-30T13:18:31.990",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "audit@patchstack.com"
+      }
+    ]
   }
 ]
