@@ -1,139 +1,10 @@
 [
   {
-    "id": "CVE-2026-103985",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.231, the profile form exposes the only_assigned_tickets permission to its non-admin owner, and UsersController::profileSave() adds or removes User::PERM_ONLY_ASSIGNED_TICKETS without checking that the editor is an administrator. A restricted agent can uncheck the option, or submit an ordinary profile save that omits it, to remove the administrator-imposed restriction. The agent can then read and modify conversations assigned to other agents in every mailbox they already belong to. This issue is fixed in version 1.8.231.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103985",
-    "publishedDate": "2026-11-06T17:17:10.887",
-    "lastModifiedDate": "2026-11-06T18:17:38.903",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-123962",
-    "description": "In FreedomBox before 26.15, unprivileged user accounts can read/write files for which they lack permissions by setting the authorized_keys file to be a symlink. NOTE: FreedomBox is a Debian Pure Blend, which means that it distributes its software through Debian repositories.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123962",
-    "publishedDate": "2026-11-06T17:17:25.483",
-    "lastModifiedDate": "2026-11-06T17:17:25.483",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.5,
-        "impactScore": 5.9,
-        "source": "cve@mitre.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-122193",
-    "description": "OS command injection in the example SSM document provisioning script in Trusted Remote Execution (REX) before 2026-07-28 might allow an authenticated remote user who is permitted to invoke the Rex-RO or Rex-RW SSM document to execute arbitrary commands as root on the managed instance, bypassing Cedar policy enforcement.\n\n\n\nTo remediate this issue, users should delete any Rex-RO and Rex-RW SSM documents created from the example script, in each account and Region where it was run.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-122193",
-    "publishedDate": "2026-11-06T17:17:20.313",
-    "lastModifiedDate": "2026-11-06T18:18:01.247",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-103984",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.231, when limit_user_customer_visibility is enabled, the load_customer_info AJAX action performs a global lookup using an attacker-controlled customer email and checks only whether the agent can access a separately supplied mailbox. A non-admin agent can name an accessible mailbox and retrieve an unrelated customer's rendered profile without invoking CustomerPolicy::view(). The response can expose names, email addresses, phone numbers, company and job information, postal addresses, social profiles, websites, and confidential internal agent notes. This issue is fixed in version 1.8.231.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-103984",
-    "publishedDate": "2026-11-06T17:17:10.710",
-    "lastModifiedDate": "2026-11-06T18:17:38.747",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85743",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.230, multiple outbound paths in Helper::downloadRemoteFile(), Helper::checkPort(), Helper::sanitizeRemoteUrl(), MailboxesController.php, and ModulesController.php do not consistently enforce a sink-level restricted-host policy. An authenticated administrator, or another authenticated user permitted to change mailbox connection settings or trigger module update or installation paths, can supply attacker-controlled URLs or hosts. The independent download and port-test sinks can reach encoded or otherwise uncovered loopback and internal addresses. The redirect-validation bypass additionally requires a configured whitelist that permits the original and final hosts while a restricted internal host appears only as an intermediate redirect hop. No unauthenticated SSRF path is established. The server can consequently contact loopback and internal services, provide a blind internal port oracle, and retrieve internal HTTP responses into application-controlled download sinks. This issue is fixed in version 1.8.230.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85743",
-    "publishedDate": "2026-11-06T17:20:02.567",
-    "lastModifiedDate": "2026-11-06T17:20:02.567",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.2,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.3,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-85744",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.227, the conversation_merge action records a failed authorization check for the target conversation in response['msg'] and then clears that value inside the source-conversation loop. An authenticated agent can merge a conversation they control into a target conversation in a mailbox they cannot access. The operation injects threads, attachments, and audit records into the unauthorized target and deletes the source conversation, but it does not disclose the target's existing contents. This issue is fixed in version 1.8.227.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85744",
-    "publishedDate": "2026-11-06T17:20:02.770",
-    "lastModifiedDate": "2026-11-06T17:20:02.770",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62850",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.225, the administrative tools.php maintenance endpoint is reachable without an appropriate authentication or access-control boundary. Response differences for attacker-controlled path values disclose whether arbitrary directories and files exist on the server. The same endpoint validates application-key and database-password candidates without rate limiting, per-session throttling, or a CAPTCHA, allowing unrestricted guessing attempts against application secrets. This issue is fixed in version 1.8.225.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62850",
-    "publishedDate": "2026-11-06T17:18:33.157",
-    "lastModifiedDate": "2026-11-06T17:18:33.157",
+    "id": "CVE-2026-27356",
+    "description": "Missing Authorization vulnerability in ibericode MC4WP mailchimp-for-wp allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects MC4WP: from n/a through 4.14.1.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-27356",
+    "publishedDate": "2026-11-06T23:17:22.153",
+    "lastModifiedDate": "2026-11-06T23:17:22.290",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -141,19 +12,79 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "security-advisories@github.com"
+        "source": "audit@patchstack.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-62852",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.226, RealtimeConvNewThread checks only general mailbox access and does not apply the conversation-level restriction for users configured to see only assigned conversations. A restricted authenticated user can subscribe to predictable conv.<conversation_id> Polycast channels for other conversations in the same mailbox. New event payloads can expose complete replies, internal notes, recipient addresses, conversation state, assignee data, attachment names, and attachment URLs containing valid download tokens. This issue is fixed in version 1.8.226.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62852",
-    "publishedDate": "2026-11-06T17:18:33.537",
-    "lastModifiedDate": "2026-11-06T17:18:33.537",
+    "id": "CVE-2026-123471",
+    "description": "Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in myCred myCred mycred allows Code Injection.This issue affects myCred: from n/a through 4.0.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123471",
+    "publishedDate": "2026-11-06T23:17:21.790",
+    "lastModifiedDate": "2026-11-06T23:17:21.913",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-122670",
+    "description": "Missing Authorization vulnerability in WP SYNTEX Polylang polylang allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Polylang: from n/a through 3.9.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-122670",
+    "publishedDate": "2026-11-06T23:17:21.630",
+    "lastModifiedDate": "2026-11-06T23:17:21.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.5,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-120851",
+    "description": "Missing Authorization vulnerability in PublishPress PublishPress Revisions revisionary allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects PublishPress Revisions: from n/a through 4.2.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120851",
+    "publishedDate": "2026-11-06T23:17:21.460",
+    "lastModifiedDate": "2026-11-06T23:17:21.587",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-120845",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in WPMU DEV Smush Image Compression and Optimization wp-smushit allows Stored XSS.This issue affects Smush Image Compression and Optimization: from n/a through 4.3.5.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120845",
+    "publishedDate": "2026-11-06T23:17:21.260",
+    "lastModifiedDate": "2026-11-06T23:17:21.400",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -161,59 +92,376 @@
         "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.3,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-119519",
+    "description": "Missing Authorization vulnerability in WProyal Royal Elementor Addons royal-elementor-addons allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Royal Elementor Addons: from n/a through 1.7.1068.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119519",
+    "publishedDate": "2026-11-06T23:17:21.100",
+    "lastModifiedDate": "2026-11-06T23:17:21.217",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118786",
+    "description": "Improper input validation in non-secure-callable (NSC)\nveneer functions of the NXP MCUXpresso SDK rpmsg-lite multicore example\n(multicore_examples/rpmsg_lite_pingpong_tzm) up to releases 26.06.00-lts and\n26.09.00 may allow a non-secure caller to supply unvalidated pointers and size\nvalues, potentially resulting in disclosure of secure-world memory to the\nnon-secure domain, or denial of service. All software versions starting from\n26.06.01-lts and 26.12.00-pvw1 have fixed this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118786",
+    "publishedDate": "2026-11-06T23:17:20.970",
+    "lastModifiedDate": "2026-11-06T23:17:20.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:L",
+        "exploitabilityScore": 2.5,
+        "impactScore": 4.2,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118785",
+    "description": "Improper handling of non-secure-world input in NSC veneer\nfunctions of NXP MCUXpresso SDK TrustZone-M examples (trustzone_examples),\naffecting versions through 26.06.00-lts and 26.09.00-pvw2, may allow a\nnon-secure caller to supply unvalidated pointers or untrusted data, causing a\ntiming side-channel, TOCTOU condition, or format-string misuse, potentially\nresulting in secure-world memory disclosure or denial of service. All software\nversions starting from 26.06.01-lts and 26.09.00 have fixed this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118785",
+    "publishedDate": "2026-11-06T23:17:20.840",
+    "lastModifiedDate": "2026-11-06T23:17:20.840",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:H",
+        "exploitabilityScore": 1.4,
+        "impactScore": 5.2,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-109469",
+    "description": "Authorization bypass through user-controlled key in Entra Device Registration allows an unauthorized attacker to elevate privileges over a network.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109469",
+    "publishedDate": "2026-11-06T23:17:20.557",
+    "lastModifiedDate": "2026-11-06T23:17:20.707",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "secure@microsoft.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-107931",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107931",
+    "publishedDate": "2026-11-06T23:17:20.460",
+    "lastModifiedDate": "2026-11-06T23:17:20.460",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-94619",
+    "description": "FileGator is a multi-user file manager. Prior to 7.15.0, POST /upload in backend/Controllers/UploadController.php uses the request-supplied resumableFilename as an unnamespaced key in shared temporary storage. In a multi-user deployment configured with distinct per-user home directories, a low-privileged user with upload permission can set resumableTotalChunks and resumableTotalSize to zero so the assembly loop writes no data, after which the handler reads a pre-existing temporary file with that name, stores it in the attacker's home directory, and removes it. The same filename path can append data when chunks are supplied, allowing disclosure, modification, or deletion of another user's transient object, including a pending archive or the login rate-limit lockfile, while Tmpfs path sanitization limits the primitive to the temporary directory. This issue is fixed in version 7.15.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94619",
+    "publishedDate": "2026-11-06T22:18:00.300",
+    "lastModifiedDate": "2026-11-06T22:18:00.300",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:L/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 4.7,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-94618",
+    "description": "FileGator is a multi-user file manager. Prior to 7.15.0, GET /batchdownload in backend/Controllers/DownloadController.php uses batchDownloadStart() to stream a shared temporary archive selected by the request-supplied uniqid without checking that the current session created it. In deployments with distinct per-user home directories, a valid user with read, download, and batchdownload permissions who obtains another user's active archive id can cross that boundary and retrieve the victim's batch archive. The archive lifetime and id-acquisition requirement limit exploitation, but a successful replay also deletes the victim's pending archive. This issue is fixed in version 7.15.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-94618",
+    "publishedDate": "2026-11-06T22:18:00.133",
+    "lastModifiedDate": "2026-11-06T22:18:00.133",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:N/A:L",
+        "exploitabilityScore": 1.2,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-77442",
+    "description": "Ryot is a self-hosted personal tracking application. Prior to 10.4.0, the createOrUpdateUserIntegration GraphQL mutation in crates/services/user/src/integration_operations.rs allows a low-privileged authenticated user to supply another user's integrationId to create_or_update_user_integration() without an ownership check. SeaORM treats the supplied primary key as an update target, and the operation assigns the caller's user_id while replacing the targeted integration's provider_specifics and other configuration, which can transfer ownership, overwrite configuration, or disable the victim's integration. Exploitation requires obtaining the victim's non-brute-forceable integration id, and the vulnerable update does not disclose existing stored credential values. This issue is fixed in version 10.4.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-77442",
+    "publishedDate": "2026-11-06T22:17:59.750",
+    "lastModifiedDate": "2026-11-06T22:17:59.750",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-69128",
+    "description": "Chartbrew is an open-source web application that can connect directly to databases and APIs and use the data to create charts. In 5.2.2, the AI SQL blocklist omitted sibling PostgreSQL filesystem functions and failed to match double-quoted identifier forms of denied functions. The vulnerable surface is the AI query tool's PostgreSQL SQL-validation blocklist. A team Owner or Admin uses an AI-enabled PostgreSQL connection whose database role can call server-side file functions and causes generated SQL to use an unlisted sibling function or a double-quoted denied function. Unlisted sibling functions remain allowed, and double-quoted function identifiers bypass the denylist regular expressions and reach PostgreSQL. AI features must be enabled and the user must have elevated Chartbrew privileges. A PostgreSQL superuser or pg_read_server_files role can resolve absolute paths to files readable by the PostgreSQL OS user, while a non-superuser is limited to the source-stated PGDATA-relative scope. This vulnerability is fixed in 5.2.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-69128",
+    "publishedDate": "2026-11-06T22:17:59.570",
+    "lastModifiedDate": "2026-11-06T22:17:59.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.6,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:H/UI:N/VC:N/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68935",
+    "description": "Chartbrew is an open-source web application for creating charts from databases and APIs. In versions 4.8.5 through 5.2.2, API connection creation and update operations accept the internal  allowPrivateHost  field from user input. An authenticated user with permission to manage API connections can enable this field to bypass private and reserved-network destination restrictions. An upgrade migration also enables the override on pre-existing API connections. The per-connection setting takes precedence over  CB_ALLOW_PRIVATE_NETWORK_CALLS , so disabling that instance option does not protect connections with the override enabled. Successful exploitation allows requests to internal HTTP services reachable from the Chartbrew server, potentially disclosing information or triggering unauthorized actions depending on the target service. Recognized cloud metadata endpoints remain separately blocked. This issue is fixed in version 5.2.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68935",
+    "publishedDate": "2026-11-06T22:17:59.390",
+    "lastModifiedDate": "2026-11-06T22:17:59.523",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
+        "impactScore": 6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-68933",
+    "description": "Chartbrew is an open-source web application that can connect directly to databases and APIs and use the data to create charts. Prior to 5.2.3, public dashboard passwords were stored in plaintext, accepted through a URL query parameter, and checked without effective attempt throttling. The vulnerable surface is public password-protected dashboard storage and validation routes. An unauthenticated attacker targets a public password-protected dashboard and repeatedly submits candidate passwords or obtains password-bearing server or proxy logs. Unlimited online guesses enable brute force, while cleartext storage and URL transport expose the secret in application storage and server or proxy access logs. The target must be a public dashboard with password protection enabled. Even failed attempts reveal chart count and configuration without the password; a recovered password grants access to the protected dashboard and its chart data. This vulnerability is fixed in 5.2.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-68933",
+    "publishedDate": "2026-11-06T22:17:59.220",
+    "lastModifiedDate": "2026-11-06T22:17:59.350",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
         "impactScore": 3.6,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-62855",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.225, the administrator-only App Logs viewer accepts Laravel-encrypted folder and file parameters whose constructed path is checked only as a raw string. An administrator who also knows the APP_KEY can supply traversal segments that the filesystem normalizes outside storage/logs. The /app-logs/app route can then read local files accessible to the PHP worker, including environment files, source files, credentials, tokens, and operating-system files. This issue is fixed in version 1.8.225.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62855",
-    "publishedDate": "2026-11-06T17:18:33.877",
-    "lastModifiedDate": "2026-11-06T18:18:17.450",
+    "id": "CVE-2026-59104",
+    "description": "UgCS server before 6.2 contains an authentication bypass in the HCI protocol login handler (LoginHandler) exposed on TCP port 3334. When the user database contains exactly one user (the default single-operator installation), a LoginRequest with empty userLogin and userPassword fields is interpreted as \\\"use the only user\\\" rather than as invalid credentials, and the server returns a fully authenticated session. Because the service listens on all interfaces (0.0.0.0) without TLS by default, an unauthenticated remote attacker with network access to port 3334 can obtain an authenticated session without knowing any credential and then issue privileged commands, including commanding connected drones and uploading flight routes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-59104",
+    "publishedDate": "2026-11-06T22:17:59.043",
+    "lastModifiedDate": "2026-11-06T22:17:59.043",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.4,
+        "score": 9.8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 0.7,
-        "impactScore": 3.6,
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "a6d3dc9e-0591-4a13-bce7-0f5b31ff6158"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-50240",
+    "description": "A flaw was found in OpenShift Pipelines-as-Code (PAC). PAC does not verify whether the creator of a Repository custom resource has permission to create PipelineRuns. A namespace user with only Repository and Secret create/delete permissions can cause PAC to execute attacker-controlled PipelineRuns as the auto-provisioned pipeline ServiceAccount, which carries ClusterRole/edit by default. This results in namespace-scoped privilege escalation, enabling Secret read, resource creation/modification/deletion, and potential supply chain injection in CI/CD namespaces.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-50240",
+    "publishedDate": "2026-11-06T22:17:58.757",
+    "lastModifiedDate": "2026-11-06T22:17:58.917",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "secalert@redhat.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-48057",
+    "description": "Botan is a C++ cryptography library. Prior to 3.13.0, Botan's X.509 Distinguished Name decoder flattens the Attribute-Value Assertions in each Relative Distinguished Name and loses multi-value RDN grouping before DN name-constraint enforcement. An attacker controlling a name-constrained intermediate CA can issue a certificate with a multi-value RDN whose first Common Name matches the permitted constraint and whose second Common Name is attacker-chosen, causing the constraint check to accept the flattened first value. If the certificate contains no subjectAlternativeName extension, the second Common Name can then be accepted as a hostname; Botan does not fall back to Common Name hostname matching when any subjectAlternativeName is present. The exposure is limited to deployments using DN name constraints, which are uncommon outside internal PKIs, and to certificates without a subjectAlternativeName. This issue is fixed in version 3.13.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48057",
+    "publishedDate": "2026-11-06T22:17:53.833",
+    "lastModifiedDate": "2026-11-06T22:17:53.833",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:H/UI:N/VC:N/VI:L/VA:N/SC:N/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
         "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-106128",
-    "description": "Prototype Pollution in @progress/kendo-vue-common in Progress Software Kendo UI for Vue versions 0.4.0 through 9.2.0 allows a high-privileged attacker who can control a field path processed by components such as the Scheduler to modify the prototype of built-in objects, resulting in a limited impact on confidentiality, integrity, and availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106128",
-    "publishedDate": "2026-11-06T17:17:11.640",
-    "lastModifiedDate": "2026-11-06T17:17:11.640",
+    "id": "CVE-2026-47738",
+    "description": "liboqs: Uninitialized function-pointer dereference in OQS_KEM_encaps_derand for NTRU KEMs",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-47738",
+    "publishedDate": "Fri, 06 Nov 2026 22:17:51 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-44519",
+    "description": "liboqs: Missing value barrier in FO implicit rejection path (FrodoKEM, NTRU, and others)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44519",
+    "publishedDate": "Fri, 06 Nov 2026 22:17:51 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-123791",
+    "description": "A vulnerability was detected in OpenBMB Internet of Agents up to 9d78e88e47160eb42ee1ee8538c05e1c2c47877a. This affects the function _primary_field_query of the file common/utils/milvus_utils.py of the component Agent Registry. The manipulation of the argument key results in improper neutralization of special elements in data query logic. The attack may be launched remotely. The exploit is now public and may be used. This product operates on a rolling release basis, ensuring continuous delivery. Consequently, there are no version details for either affected or updated releases. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123791",
+    "publishedDate": "2026-11-06T22:17:50.903",
+    "lastModifiedDate": "2026-11-06T22:17:51.070",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.1,
+        "score": 7.3,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 0.7,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
         "impactScore": 3.4,
-        "source": "security@progress.com"
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-62851",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.226, the search-by-number shortcut in ConversationsController::search() resolves a user-controlled ticket number without applying the mailbox filter or view policy used by the normal search path. An authenticated non-admin agent who is a member of at least one mailbox can request /search with a hash-prefixed ticket number and use the 302 Location header to confirm that a conversation exists in a different mailbox the agent cannot access and learn its internal conversation and folder identifiers. The destination conversation remains protected, so this issue does not disclose message content, attachments, or customer data. This issue is fixed in version 1.8.226.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62851",
-    "publishedDate": "2026-11-06T17:18:33.353",
-    "lastModifiedDate": "2026-11-06T17:18:33.353",
+    "id": "CVE-2026-123788",
+    "description": "A security vulnerability has been detected in chenyme grok2api up to 3.1.6. The impacted element is an unknown function of the file backend/internal/transport/http/inference/voice_ws_handler.go of the component STT Billing. The manipulation leads to enforcement of behavioral workflow. The attack may be initiated remotely. Upgrading to version 3.1.7 is sufficient to resolve this issue. The identifier of the patch is 7ad0f791f0a9eb5a0ddfe38ac4dfcef01e19a6d4. Upgrading the affected component is recommended.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123788",
+    "publishedDate": "2026-11-06T22:17:50.683",
+    "lastModifiedDate": "2026-11-06T22:17:50.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-119800",
+    "description": "Ryot is a self-hosted personal tracking application. Prior to 10.5.6, the collectionContents GraphQL query implemented by collection_contents() in crates/services/collection/src/content_operations.rs accepts a caller-controlled CollectionContentsInput.collection_id and returns a collection without checking whether the authenticated user owns it, collaborates on it, or may view it. The caller's user id is used only to annotate the response, allowing any authenticated user who obtains another collection's id to read the owner's identity, collection name and description, reviews, and complete item list across the tenant boundary. This issue is fixed in version 10.5.6.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119800",
+    "publishedDate": "2026-11-06T22:17:50.480",
+    "lastModifiedDate": "2026-11-06T22:17:50.480",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -229,273 +477,23 @@
     ]
   },
   {
-    "id": "CVE-2026-106127",
-    "description": "Prototype Pollution in the setter utility (@progress/kendo-react-common) in Progress Software KendoReact versions 3.5.0 through 16.0.0 allows a high-privileged attacker who can control a field path passed to the utility, directly or through components such as the Form, Scheduler, and Gantt, to modify the prototype of built-in objects, resulting in a limited impact on confidentiality, integrity, and availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106127",
-    "publishedDate": "2026-11-06T17:17:11.497",
-    "lastModifiedDate": "2026-11-06T18:17:40.630",
+    "id": "CVE-2026-104267",
+    "description": "Botan is a C++ cryptography library. From 2.7.0 until 3.13.0, Botan's Scrypt implementation on 32-bit platforms computes required memory with unchecked multiplication, allowing attacker-controlled Scrypt parameters to wrap the allocation size and create a buffer smaller than the algorithm subsequently writes. The issue affects systems that enable Scrypt and accept arbitrary parameters from a hostile source, including applications that decrypt attacker-supplied encrypted private keys. A triggering parameter set can cause approximately four gigabytes of Scrypt output to be written past the allocated heap buffer, immediately crashing the process and causing denial of service. Arbitrary code execution is not demonstrated and appears difficult, but cannot be excluded from the overwrite primitive. This issue is fixed in version 3.13.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104267",
+    "publishedDate": "2026-11-06T22:17:50.303",
+    "lastModifiedDate": "2026-11-06T22:17:50.303",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
         "score": 4.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 0.7,
-        "impactScore": 3.4,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62856",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox application. Prior to version 1.8.226, the  polycast/receive  endpoint fails to escape SQL LIKE wildcards in supplied channel names, while channel authorization applies only to names with specific prefixes. An unauthenticated attacker with a guest session and valid CSRF token can submit a wildcard channel name to retrieve matching notification events intended for other users. Notification payload generation lacks a corresponding access check, exposing conversation message content, identifiers, URLs, and notification HTML across users and mailboxes. This issue is fixed in version 1.8.226.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62856",
-    "publishedDate": "2026-11-06T17:18:34.047",
-    "lastModifiedDate": "2026-11-06T17:18:34.047",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-        "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106144",
-    "description": "Prototype Pollution in the Scheduler component (@progress/kendo-angular-scheduler and @progress/kendo-angular-common) in Progress Software Kendo UI for Angular versions prior to 25.1.0 allows a high-privileged attacker who can control a field path processed by the Scheduler to modify the prototype of built-in objects, resulting in a limited impact on confidentiality, integrity, and availability.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106144",
-    "publishedDate": "2026-11-06T17:17:12.650",
-    "lastModifiedDate": "2026-11-06T18:17:41.693",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 0.7,
-        "impactScore": 3.4,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106143",
-    "description": "Cross-Site Scripting (XSS) in the Editor component (@progress/kendo-vue-editor) in Progress Software Kendo UI for Vue versions 2.7.1 through 10.0.0 allows a low-privileged attacker who can supply Editor content to execute arbitrary JavaScript in another user's browser via an unsafe URL entered in the Insert Link or Insert Image dialog, which runs when the user clicks the resulting link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106143",
-    "publishedDate": "2026-11-06T17:17:12.510",
-    "lastModifiedDate": "2026-11-06T17:17:12.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106142",
-    "description": "Cross-Site Scripting (XSS) in the Editor component (@progress/kendo-react-editor) in Progress Software KendoReact versions 2.7.0 through 16.1.0 allows a low-privileged attacker who can supply Editor content to execute arbitrary JavaScript in another user's browser via a link with an unsafe URL in the Editor content, which runs when the user clicks the link.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106142",
-    "publishedDate": "2026-11-06T17:17:12.367",
-    "lastModifiedDate": "2026-11-06T18:17:41.463",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106141",
-    "description": "Cross-Site Scripting (XSS) in the Editor component (@progress/kendo-angular-editor) in Progress Software Kendo UI for Angular versions prior to 25.3.0 allows a low-privileged attacker who can supply Editor content to execute arbitrary JavaScript in another user's browser via a link or image with an unsafe URL in the Editor content, which runs when the user interacts with it.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106141",
-    "publishedDate": "2026-11-06T17:17:12.213",
-    "lastModifiedDate": "2026-11-06T17:17:12.213",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106136",
-    "description": "Cross-Site Scripting (XSS) in the Chat component (@progress/kendo-react-conversational-ui) in Progress Software KendoReact versions 0.6.0 through 16.1.0 allows a low-privileged attacker who can supply Chat messages to execute arbitrary JavaScript in the origin of the application via an unsafe URL in an openUrl quick action, which runs when a user clicks the action.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106136",
-    "publishedDate": "2026-11-06T17:17:12.077",
-    "lastModifiedDate": "2026-11-06T18:17:41.253",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-62854",
-    "description": "FreeScout is a self-hosted help desk and shared mailbox. Prior to 1.8.225, a user who can edit a mailbox signature can combine a scriptable file uploaded through /uploads/upload with nested tag fragments that bypass Helper::stripDangerousTags(). The resulting external script is served from the same origin, so the script-src 'self' policy permits it when another user opens the affected mailbox reply editor or new-ticket page. The script executes with the victim's FreeScout privileges and can read visible data and perform same-origin actions. This issue is fixed in version 1.8.225.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-62854",
-    "publishedDate": "2026-11-06T17:18:33.700",
-    "lastModifiedDate": "2026-11-06T17:18:33.700",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.6,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 4.7,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106134",
-    "description": "Cross-Site Scripting (XSS) in the Menu component (@progress/kendo-react-layout) in Progress Software KendoReact versions 1.3.0 through 16.1.0 allows a low-privileged attacker who can influence the Menu item data to execute arbitrary JavaScript in the origin of the application via an unsafe URL in a Menu item, which runs when a user selects the item.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106134",
-    "publishedDate": "2026-11-06T17:17:11.783",
-    "lastModifiedDate": "2026-11-06T18:17:40.793",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-106135",
-    "description": "Cross-Site Scripting (XSS) in the Chat component (@progress/kendo-angular-conversational-ui) in Progress Software Kendo UI for Angular versions prior to 25.3.0 allows a low-privileged attacker who can supply Chat messages to execute arbitrary JavaScript in another user's browser via an unsafe URL in an openUrl quick action, which runs when the user clicks the action.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106135",
-    "publishedDate": "2026-11-06T17:17:11.930",
-    "lastModifiedDate": "2026-11-06T18:17:40.940",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-122053",
-    "description": "The Symfony Serializer component ObjectNormalizer treats any attribute name containing . (and, from Symfony 6.4, [) as a writable property path, allowing untrusted input to modify properties of nested objects and bypass their #[Ignore] metadata attribute in Symfony versions 5.4.41 prior to 5.4.56, 6.4.9 prior to 6.4.50, 7.0.9 prior to 7.1.0, 7.1.2 prior to 7.4.23, and 8.x prior to 8.1.11.\nObjectNormalizer::isAllowedAttribute() accepts such names, and setAttributeValue() hands the name straight to PropertyAccessor::setValue(), which parses it as a property path and traverses into the nested object. A payload key such as customer.admin writes to $order->customer->admin. The #[Ignore] metadata attribute is only consulted when the nested object is denormalized in its own right, never when it is reached through a path. #[Groups] restrictions are not bypassed: the path is only accepted when no groups are passed in the context, and then groups restrict nothing. When the root class carries neither #[Ignore] nor #[Groups], no allowlist applies and every key of the payload is let through. Because PropertyAccessor also resolves a path segment against public methods, a segment matching a public method name invokes that method with the attacker’s value.Applications that bind untrusted input to objects are affected, including controllers using #[MapRequestPayload] or #[MapQueryString], whose default normalizer is ObjectNormalizer. With OBJECT_TO_POPULATE, as used for partial updates, the traversal reaches an already hydrated entity graph, and the modified field may be persisted.\n\nThe fix accepts a property path only when the class metadata declares an attribute of that exact name. Declared paths keep working unchanged, and a path in the payload with no matching declaration is ignored.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-122053",
-    "publishedDate": "2026-11-06T17:17:20.123",
-    "lastModifiedDate": "2026-11-06T17:17:20.123",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:L/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "596c5446-0ce5-4ba2-aa66-48b3b757a647"
+        "source": "security-advisories@github.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-104656",
-    "description": "Improper neutralization of input in the sessions grid in Progress Telerik Fiddler Everywhere 8.3.0 and earlier allows an attacker to execute backend IPC commands by convincing a user to open a specially crafted SAZ file.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104656",
-    "publishedDate": "2026-11-06T17:17:11.210",
-    "lastModifiedDate": "2026-11-06T18:17:39.253",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.5,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-104657",
-    "description": "Missing integrity verification in the Progress Software Fiddler Download and Setup Skill on Linux, macOS, and Windows which allows an attacker to compromise or influence a release component and execute attacker-controlled code when a user runs the skill. On macOS, the skill stages the package at a predictable path and installs it with administrator privileges, which may allow code execution with root privileges after user approval. A local process may also replace the staged macOS package while the skill waits for approval.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104657",
-    "publishedDate": "2026-11-06T17:17:11.353",
-    "lastModifiedDate": "2026-11-06T18:17:39.410",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.9,
-        "source": "security@progress.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-90436",
-    "description": "** UNSUPPORTED WHEN ASSIGNED ** Deserialization of an inbound SOAP fault in Apache Axis 1.x allows unauthenticated remote class instantiation. When a SOAP <Fault> carries a <detail><exceptionName> element, Axis loads the named class and, if a String <data> element is also present, instantiates it through its String constructor before checking that it is an AxisFault. Loading alone runs the class's static initializer. With a suitable class on the application's classpath this leads to remote code execution. The fault is parsed while the engine resolves the target service, before any per-service handler chain runs, so authentication handlers configured on a service do not protect against it. This affects all Apache Axis 1.x versions through 1.4.\n\n\n\nAs Axis 1 has been EOL we recommend you migrate to a different SOAP engine, such as Apache Axis 2/Java. Alternatively you could use a build of Axis with the patch from https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd applied. The Apache Axis project does not expect to create an Axis 1.x release fixing this problem.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-90436",
-    "publishedDate": "2026-11-06T16:18:59.763",
-    "lastModifiedDate": "2026-11-06T16:18:59.763",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
