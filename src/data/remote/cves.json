@@ -1,275 +1,146 @@
 [
   {
-    "id": "CVE-2026-120531",
-    "description": "The Subscribe2 – Form, Email Subscribers & Newsletters plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the ‘data[ip]’ parameter in all versions up to, and including, 10.47 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120531",
-    "publishedDate": "2026-11-07T22:16:36.090",
-    "lastModifiedDate": "2026-11-07T22:16:36.217",
+    "id": "CVE-2026-114713",
+    "description": "The labeled-response module in UnrealIRCd 6.0.0 before 6.2.7.1 does not escape the IRCv3 \"label\" message tag when echoing it into replies, which allows any user on a network with two or more linked servers to inject server-to-server commands that are executed with server authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-114713",
+    "publishedDate": "2026-11-08T03:16:33.410",
+    "lastModifiedDate": "2026-11-08T03:16:36.987",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.2,
+        "score": 8.6,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:N",
         "exploitabilityScore": 3.9,
+        "impactScore": 4,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-124422",
+    "description": "SunEditor from 3.0.0 before 3.4.0 contains a stored cross-site scripting vulnerability in html.clean() that rebuilds iframes from data-se-iframe-holder-attrs JSON without filtering srcdoc or uppercase SRC keys. Attackers can inject crafted HTML through paste, html.set, or html.insert to execute script in the host page origin when victims load or paste the content.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124422",
+    "publishedDate": "2026-11-08T02:16:57.460",
+    "lastModifiedDate": "2026-11-08T02:16:57.460",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-99284",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: skbuff: propagate shared-frag marker in skb_zerocopy()\n\nskb_zerocopy() moves frag descriptors from @from into @to and takes a\nreference on each frag, but it does not copy skb_shinfo(from)->flags into\nskb_shinfo(to)->flags.  A destination skb holding the same page-cache\nbacked frags as the source therefore reports skb_has_shared_frag() as\nfalse.\n\nThat breaks the invariant relied on by later in-place writers.  ESP input\nchecks skb_has_shared_frag() before deciding whether an uncloned\nnonlinear skb can skip skb_cow_data(); with the marker lost, an skb that\nskb_zerocopy() built for nfnetlink_queue or for an openvswitch upcall is\ndecrypted in place, letting an unprivileged user write into the page\ncache of a root-owned read-only file.\n\nPropagate SKBFL_SHARED_FRAG when frag descriptors are copied, as done for\nthe other frag-transfer helpers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-99284",
-    "publishedDate": "2026-11-07T21:17:00.603",
-    "lastModifiedDate": "2026-11-07T21:17:00.603",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-99283",
-    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: conntrack: tcp: use UNACK timeout for non-closing RST packets\n\nCommit be0502a3f2e9 (\"netfilter: conntrack: tcp: only close if RST\nmatches exact sequence\") keeps an established conntrack entry in\nESTABLISHED when an in-window RST does not match the expected sequence\nnumber exactly, so the endpoint can validate the RST with a challenge\nACK.\n\nThe timeout selection nevertheless uses the CLOSE timeout for every RST\npacket.  The bug is that timeout selection is based on the packet type,\nnot on the state transition result: even when RST validation keeps\nnew_state in ESTABLISHED, the timeout is still forced to\nTCP_CONNTRACK_CLOSE.\n\nLinux TCP independently rate limits challenge ACKs per socket.  A second\nnon-exact RST can therefore arrive after the first challenge ACK has\nrestored the timeout but before the rate limit expires.  The second RST\nlowers the timeout to 10 seconds again while the endpoint suppresses the\nsecond challenge ACK, allowing the conntrack entry to expire while both\nTCP endpoints remain established.\n\nUsing the ESTABLISHED timeout for such RSTs would avoid this short\nexpiration window, but it could also retain stale entries for the\nfive-day default because conntrack cannot reliably match the endpoint's\nexact TCP state.\n\nUse the UNACK timeout for RST packets that leave the conntrack entry in\nTCP_CONNTRACK_ESTABLISHED.  Exact-match RSTs and accepted RST packet\ntrains still fall through to timeouts[new_state], which preserves the\nCLOSE timeout when conntrack accepts the RST as closing the flow.\n\nThis avoids the aggressive 10-second expiration window for non-exact\nRSTs while preserving the short timeout for RSTs that conntrack accepts\nas closing the flow.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-99283",
-    "publishedDate": "2026-11-07T21:17:00.477",
-    "lastModifiedDate": "2026-11-07T21:17:00.477",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-124060",
-    "description": "A vulnerability was detected in TOTOLINK CA300-PoE 6.2c.884. Affected by this issue is the function UploadCustomModule of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument File results in buffer overflow. The attack may be launched remotely. The exploit is now public and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124060",
-    "publishedDate": "2026-11-07T21:17:00.150",
-    "lastModifiedDate": "2026-11-07T21:17:00.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124059",
-    "description": "A security vulnerability has been detected in TOTOLINK CA300-PoE 6.2c.884. Affected by this vulnerability is the function setWiFiWdsAddConfig of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument ApCliKeyStr leads to buffer overflow. The attack may be initiated remotely. The exploit has been disclosed publicly and may be used.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124059",
-    "publishedDate": "2026-11-07T19:17:28.480",
-    "lastModifiedDate": "2026-11-07T19:17:28.653",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124058",
-    "description": "A weakness has been identified in TOTOLINK CA300-PoE 6.2c.884. Affected is the function setWiFiRepeaterConfig of the file /cgi-bin/cstecgi.cgi. Executing a manipulation of the argument ApCliKeyStr can lead to buffer overflow. The attack can be launched remotely. The exploit has been made available to the public and could be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124058",
-    "publishedDate": "2026-11-07T19:17:28.263",
-    "lastModifiedDate": "2026-11-07T19:17:28.427",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124258",
-    "description": "Missing Authorization vulnerability in ThemeGrill User Registration user-registration allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects User Registration: from n/a through 5.3.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124258",
-    "publishedDate": "2026-11-07T18:17:21.830",
-    "lastModifiedDate": "2026-11-07T19:17:28.707",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
       {
         "score": 5.3,
-        "version": "CVSS 3.1",
+        "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-124057",
-    "description": "A security flaw has been discovered in TOTOLINK CA300-PoE 6.2c.884. This impacts the function setWiFiMultipleConfig of the file /cgi-bin/cstecgi.cgi. Performing a manipulation of the argument Key1Str1 results in buffer overflow. The attack can be initiated remotely. The exploit has been released to the public and may be used for attacks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124057",
-    "publishedDate": "2026-11-07T18:17:21.607",
-    "lastModifiedDate": "2026-11-07T18:17:21.780",
+    "id": "CVE-2026-123616",
+    "description": "imgproxy from 3.3.0 before 4.0.16 contains an unbounded memory allocation vulnerability in the ICO loader that fails to validate the data_size field. Attackers can supply a crafted 23-byte ICO file declaring a ~4GB data_size to trigger memory exhaustion and worker crashes without authentication.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123616",
+    "publishedDate": "2026-11-08T02:16:57.307",
+    "lastModifiedDate": "2026-11-08T02:16:57.307",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 9.1,
+        "score": 7.5,
         "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-123992",
-    "description": "A flaw has been found in DataEase up to 2.10.27. Affected by this issue is the function StaticResourceServer.validateSvgContent of the file core/core-backend/src/main/java/io/dataease/visualization/server/StaticResourceServer.java of the component SVG Handler. Executing a manipulation can lead to cross site scripting. It is possible to launch the attack remotely. The exploit has been published and may be used. Upgrading to version 2.10.28 can resolve this issue. This patch is called 0709fe98d6608c3507daee3e92cf433e7ff61370. You should upgrade the affected component. The vendor confirms: \"The reported tab/entity-based URL bypass is covered by our previously implemented SVG security hardening. The fix replaces the blacklist-based checks with namespace-aware element and attribute allowlists, restricts permitted references to document-local fragments, and applies a restrictive Content Security Policy to uploaded SVG responses.\"",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123992",
-    "publishedDate": "2026-11-07T18:17:21.367",
-    "lastModifiedDate": "2026-11-07T18:17:21.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.1,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-123472",
-    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in eLightUp Meta Box – WordPress Custom Fields Framework meta-box allows Stored XSS.This issue affects Meta Box – WordPress Custom Fields Framework: from n/a through 5.15.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123472",
-    "publishedDate": "2026-11-07T18:17:21.077",
-    "lastModifiedDate": "2026-11-07T18:17:21.207",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-123461",
-    "description": "Missing Authorization vulnerability in PluginUs.Net FOX woocommerce-currency-switcher allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects FOX: from n/a through 1.5.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123461",
-    "publishedDate": "2026-11-07T18:17:20.810",
-    "lastModifiedDate": "2026-11-07T19:17:27.397",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-120836",
-    "description": "Missing Authorization vulnerability in eLightUp Meta Box – WordPress Custom Fields Framework meta-box allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Meta Box – WordPress Custom Fields Framework: from n/a through 5.15.3.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120836",
-    "publishedDate": "2026-11-07T18:17:18.603",
-    "lastModifiedDate": "2026-11-07T19:17:21.657",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "audit@patchstack.com"
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-119522",
-    "description": "Missing Authorization vulnerability in ThemeGrill User Registration user-registration allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects User Registration: from n/a through 5.3.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119522",
-    "publishedDate": "2026-11-07T18:17:16.130",
-    "lastModifiedDate": "2026-11-07T19:17:21.323",
+    "id": "CVE-2026-123615",
+    "description": "imgproxy 3.3.0 before 4.0.17 contains an out-of-bounds heap read and write in the ICO loader's BMP header reconstruction (vips_foreign_load_ico_header in vips/icoload.c) when an ICO entry declares a tiny data size, causing unvalidated header fields to be read and written past the allocated buffer. Unauthenticated remote attackers can supply a crafted ICO image to corrupt adjacent heap chunk metadata, triggering a glibc abort that crashes the worker.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123615",
+    "publishedDate": "2026-11-08T02:16:57.147",
+    "lastModifiedDate": "2026-11-08T02:16:57.147",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123614",
+    "description": "imgproxy from 4.0.0 before 4.0.16 contains an integer overflow in the ICO loader that allows remote attackers to trigger a heap buffer overflow via a crafted data_size value. Attackers can submit a crafted ICO image whose data_size wraps the allocation in vips/icoload.c, corrupting heap memory to crash the process or achieve code execution.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123614",
+    "publishedDate": "2026-11-08T02:16:56.983",
+    "lastModifiedDate": "2026-11-08T02:16:56.983",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123613",
+    "description": "Rustls from 0.23.13 before 0.23.45 accepts TLS 1.3 handshake messages at the wrong encryption level when they follow a key-changing message in the same record, because Deframer::aligned does not enforce RFC 8446 record-boundary alignment. A peer or on-path attacker can pack a plaintext EncryptedExtensions with the ServerHello, which rustls accepts unencrypted.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123613",
+    "publishedDate": "2026-11-08T02:16:56.780",
+    "lastModifiedDate": "2026-11-08T02:16:56.780",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -280,91 +151,245 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "audit@patchstack.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-123991",
-    "description": "A vulnerability was detected in DataEase up to 2.10.27. Affected by this vulnerability is the function WhitelistUtils.endsWithAny of the file WhitelistUtils.java of the component Authentication Filter. Performing a manipulation of the argument File results in unrestricted upload. It is possible to initiate the attack remotely. The exploit is now public and may be used. Upgrading to version 2.10.28 addresses this issue. It is advisable to upgrade the affected component. The vendor confirms: \"This issue has been addressed by enforcing authentication on the standalone static-resource upload endpoint independently of the URI suffix whitelist.\"",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123991",
-    "publishedDate": "2026-11-07T17:16:34.420",
-    "lastModifiedDate": "2026-11-07T17:16:34.583",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.5,
+        "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-123990",
-    "description": "A security vulnerability has been detected in DataEase up to 2.10.27/3.1.0. Affected is the function ExtWhere2Str.extWhere2sqlOjb of the file engine/trans/ExtWhere2Str.java of the component Chart Data Handler. Such manipulation of the argument operator leads to sql injection. The attack may be performed from remote. The exploit has been disclosed publicly and may be used. Upgrading to version 3.2.0 is able to address this issue. Upgrading the affected component is advised. The vendor confirms: \"The fix validates the complete compound operator and uses fixed AND / OR keywords instead of concatenating user-controlled logic into SQL.\"",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123990",
-    "publishedDate": "2026-11-07T17:16:34.163",
-    "lastModifiedDate": "2026-11-07T17:16:34.357",
+    "id": "CVE-2026-123612",
+    "description": "rustls 0.23.44 and 0.23.45 contain an information disclosure vulnerability that sends application data buffered before the handshake completes to the client-facing server when Encrypted Client Hello is rejected. Because start_traffic() queues plaintext from ClientConnection::writer() before sending the ech_required alert, the authenticated public_name server receives data intended for the inner server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123612",
+    "publishedDate": "2026-11-08T02:16:56.597",
+    "lastModifiedDate": "2026-11-08T02:16:56.597",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
+        "score": 2.3,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 0.8,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.5,
+        "score": 4.6,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:H/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "disclosure@vulncheck.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-124318",
-    "description": "Treeio through 2.0 contains an insecure deserialization vulnerability in UpdateRecord.get_format_strings and ModuleSetting.loads that allows staff users to execute code via unverified pickle data. Attackers can store a crafted base64 pickle payload in an UpdateRecord format_strings field through the Django admin, executing Python code as the web server user when news feeds render.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124318",
-    "publishedDate": "2026-11-07T15:17:16.270",
-    "lastModifiedDate": "2026-11-07T15:17:16.270",
+    "id": "CVE-2026-123611",
+    "description": "rustls before 0.23.46 contains a key exchange downgrade vulnerability that allows network attackers to poison the per-server-name key-exchange group record via an unauthenticated ServerHello. Attackers can answer one connection with a ServerHello selecting X25519, causing later ClientHellos to send only classical shares and lose post-quantum confidentiality.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123611",
+    "publishedDate": "2026-11-08T02:16:56.440",
+    "lastModifiedDate": "2026-11-08T02:16:56.440",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.2,
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123610",
+    "description": "rustls before 0.23.46 contains an uncontrolled memory allocation flaw in its optional Brotli certificate decompression, which limits decompressed output size but accepts an input-selected large history window. Malicious peers can send a certificate with a five-byte Brotli header requesting up to 1 GiB before authentication, aborting Brotli-enabled clients or client-authenticating servers whose allocator cannot satisfy the request.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123610",
+    "publishedDate": "2026-11-08T02:16:56.267",
+    "lastModifiedDate": "2026-11-08T02:16:56.267",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123609",
+    "description": "Rustls before 0.23.46 and 0.24.0-dev.1 before 0.24.0-dev.2 contains an information disclosure vulnerability where derived Debug formatting of client session values exposes secret key material. Custom ClientSessionStore implementations that log Tls12ClientSessionValue or Tls13ClientSessionValue can leak TLS 1.2 master secrets or TLS 1.3 resumption PSKs to log readers.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123609",
+    "publishedDate": "2026-11-08T02:16:56.083",
+    "lastModifiedDate": "2026-11-08T02:16:56.083",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 0.3,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 4.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:H/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123608",
+    "description": "Hickory DNS hickory-proto from 0.3.1 before 0.26.1 contains a denial of service vulnerability in BinEncoder that allows remote attackers to exhaust CPU through quadratic-time name compression. Attackers can send malicious DNS messages with many records that add many candidate labels and trigger repeated linear scans during encoding, amplifying CPU exhaustion.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123608",
+    "publishedDate": "2026-11-08T02:16:55.927",
+    "lastModifiedDate": "2026-11-08T02:16:55.927",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123607",
+    "description": "Hickory DNS hickory-proto 0.25.0-alpha.3 through 0.25.2 and hickory-net before 0.26.1 contain an unbounded loop vulnerability in DnssecDnsHandle NSEC3 closest-encloser proof validation when the SOA owner is not an ancestor of the QNAME. Upstream attackers can return NoData or NXDomain responses with a cross-zone SOA record to panic debug builds or exhaust memory in release builds.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123607",
+    "publishedDate": "2026-11-08T02:16:55.747",
+    "lastModifiedDate": "2026-11-08T02:16:55.747",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123606",
+    "description": "The hickory-dns recursor in hickory-recursor 0.25.0-alpha.3 through 0.25.2 and hickory-resolver 0.26.0-alpha.1 before 0.26.2 iterates every out-of-bailiwick NS target lacking glue in a referral without any per-query work budget. Remote attackers can serve such referrals to force A and AAAA lookups per target, amplifying traffic against remote servers or exhausting recursor resources.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123606",
+    "publishedDate": "2026-11-08T02:16:55.583",
+    "lastModifiedDate": "2026-11-08T02:16:55.583",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123605",
+    "description": "Hickory DNS hickory-proto 0.1 through 0.25.0-alpha.3 and hickory-net before 0.26.2 contain a DNSSEC validation bypass because the validator verifies an RRSIG against the DNSKEY of whatever name appears in its Signer's Name field without checking that this name is the zone containing the RRset. Attackers controlling any secure zone can produce valid signatures over arbitrary records in unrelated zones, which resolvers, recursors, and clients using DnssecDnsHandle accept as authenticated.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123605",
+    "publishedDate": "2026-11-08T02:16:55.423",
+    "lastModifiedDate": "2026-11-08T02:16:55.423",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
         "impactScore": 5.9,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 8.6,
+        "score": 8.7,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -372,11 +397,127 @@
     ]
   },
   {
-    "id": "CVE-2026-124317",
-    "description": "libexpat through 2.10.0 contains an out-of-bounds read vulnerability in unknown_toUtf8() and unknown_toUtf16() in xmltok.c when handling application-registered unknown encodings. Attackers can supply a document ending in a truncated multibyte sequence so the convert callback reads past the parse buffer, leaking adjacent memory or crashing applications.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124317",
-    "publishedDate": "2026-11-07T15:17:16.080",
-    "lastModifiedDate": "2026-11-07T15:17:16.220",
+    "id": "CVE-2026-123604",
+    "description": "Hickory DNS hickory-resolver 0.26.0-beta.1 before 0.26.2 contains an unbounded retry loop in NameServerPool::try_send, which re-queues truncated (TC) responses without checking the answering transport or counting iterations. A malicious authoritative server returning TC=1 on every transport keeps the resolver spinning on a persistent TCP connection until the 5-second request deadline expires, causing resource exhaustion.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123604",
+    "publishedDate": "2026-11-08T02:16:55.273",
+    "lastModifiedDate": "2026-11-08T02:16:55.273",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123603",
+    "description": "hickory-proto and hickory-resolver 0.26.0 before 0.26.2, hickory-server 0.25.0-alpha.1 before 0.26.2, and hickory-recursor 0.25.0-alpha.3 through 0.26.0-alpha.1 fail to canonicalize IPv4-mapped IPv6 addresses when checking deny_answers, deny_server, or AccessControlSet rules. Attackers can use IPv4-mapped addresses to evade answer filtering, trigger queries to denied nameservers, or reach hickory-server library deployments on dual-stack IPv6 sockets from denied clients.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123603",
+    "publishedDate": "2026-11-08T02:16:55.117",
+    "lastModifiedDate": "2026-11-08T02:16:55.117",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123602",
+    "description": "The Hickory DNS recursor in all versions of hickory-recursor and in hickory-resolver 0.26.0-beta.1 before 0.26.2 (recursor feature) is vulnerable to ghost domain names attacks because it reuses child-side apex NS RRsets cached from zone NS queries for iterative resolution. By repeatedly querying a zone's NS records, an attacker keeps the stale RRset cached indefinitely, letting name servers whose delegation the parent revoked keep answering for the zone.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123602",
+    "publishedDate": "2026-11-08T02:16:54.960",
+    "lastModifiedDate": "2026-11-08T02:16:54.960",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.2,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123601",
+    "description": "Hickory DNS hickory-proto 0.25.0 through 0.26.0-alpha.1 and hickory-net 0.26.0-beta.1 before 0.26.2 invert the relational operators in the wrap-around branch of find_covering_record() in nsec3.rs, so the last NSEC3 record in a zone's hash ring covers every hash except its owner. Attackers able to inject DNS responses can replay that NSEC3 record and its RRSIG to forge DNSSEC-validated negative responses denying legitimate names.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123601",
+    "publishedDate": "2026-11-08T02:16:54.797",
+    "lastModifiedDate": "2026-11-08T02:16:54.797",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 4.2,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.3,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-123600",
+    "description": "Hickory DNS hickory-proto 0.25.0-alpha.3 through 0.25.2 and hickory-net 0.26.0-alpha.1 before 0.26.2 contain a DNSSEC validation flaw in DnssecDnsHandle that accepts NSEC3-signed NODATA responses for zone-apex queries as secure without an NSEC3 record matching the hashed QNAME. On-path attackers or malicious authoritative servers can replay a validly signed non-apex NSEC3 with the zone's signed SOA to serve an authenticated (AD=1) denial of any apex RRtype for the negative-cache TTL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123600",
+    "publishedDate": "2026-11-08T02:16:54.640",
+    "lastModifiedDate": "2026-11-08T02:16:54.640",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -384,7 +525,7 @@
         "score": 4.8,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
         "exploitabilityScore": 2.2,
         "impactScore": 2.5,
         "source": "disclosure@vulncheck.com"
@@ -393,7 +534,7 @@
         "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -401,28 +542,28 @@
     ]
   },
   {
-    "id": "CVE-2026-124316",
-    "description": "Frappe ERPNext before 15.121.4 and 16.x before 16.36.0 contains a missing authorization vulnerability in the whitelisted erpnext.buying.utils.get_linked_material_requests method lacking document or company permission checks. Authenticated users, including portal users or users without roles, can supply item codes to retrieve open Purchase-type Material Requests belonging to other companies.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124316",
-    "publishedDate": "2026-11-07T15:17:15.873",
-    "lastModifiedDate": "2026-11-07T15:17:16.023",
+    "id": "CVE-2026-123599",
+    "description": "Hickory DNS hickory-proto before 0.26.0-beta.1 and hickory-net before 0.26.2 contain a DNSSEC validation bypass because verify_rrsets() ignores DNS class when partitioning RRsets, so non-IN records skip signature verification yet are marked secure when the IN records verify. Attackers able to supply DNS responses can include forged CH or HS class records, including DS records, to authenticate any DNSKEY and forge child zone responses.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123599",
+    "publishedDate": "2026-11-08T02:16:54.480",
+    "lastModifiedDate": "2026-11-08T02:16:54.480",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 3.7,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
         "impactScore": 1.4,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.3,
+        "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -430,86 +571,28 @@
     ]
   },
   {
-    "id": "CVE-2026-124315",
-    "description": "Frappe ERPNext before 15.121.4 and 16.x before 16.36.0 contains a missing authorization vulnerability in the whitelisted get_bom_items and get_bom_diff methods that skip BOM read permission checks. Any authenticated user, including portal or no-role users, can call get_bom_items with a BOM name to retrieve every raw material, quantity, rate and cost.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124315",
-    "publishedDate": "2026-11-07T15:17:15.693",
-    "lastModifiedDate": "2026-11-07T15:17:15.820",
+    "id": "CVE-2026-123598",
+    "description": "The validating recursor in Hickory DNS hickory-recursor 0.25.0 through 0.26.0-alpha.1, hickory-resolver 0.26.0-alpha.1 before 0.26.2, and hickory-net 0.26.0-beta.1 before 0.26.2 caches DNSSEC-bogus answers using the untrusted, attacker-supplied record TTL (capped at 24 hours) instead of a short validation-failure TTL. A remote attacker who spoofs a single authoritative response with an invalid signature and a long TTL can keep the bogus result cached for up to 24 hours.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123598",
+    "publishedDate": "2026-11-08T02:16:54.327",
+    "lastModifiedDate": "2026-11-08T02:16:54.327",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 3.7,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124314",
-    "description": "Frappe ERPNext before 15.121.4 and 16.x before 16.36.0 contains a missing authorization vulnerability in erpnext.crm.utils.get_open_activities that exposes ToDo and Event records. Any authenticated user, including portal or no-role users, can supply arbitrary ref_doctype and ref_docname values to enumerate activities and private calendar event details.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124314",
-    "publishedDate": "2026-11-07T15:17:15.503",
-    "lastModifiedDate": "2026-11-07T15:17:15.640",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124313",
-    "description": "Frappe ERPNext before 15.121.4 and 16.x before 16.36.0 contains a missing authorization vulnerability in the whitelisted get_linked_payments_for_doc method. Any authenticated user, including portal users, can supply arbitrary company, doctype, and docname values to read Payment Ledger Entry allocation data for other companies' invoices and vouchers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124313",
-    "publishedDate": "2026-11-07T15:17:15.313",
-    "lastModifiedDate": "2026-11-07T15:17:15.450",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.8,
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.2,
         "impactScore": 1.4,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.3,
+        "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -517,28 +600,28 @@
     ]
   },
   {
-    "id": "CVE-2026-124312",
-    "description": "Fraunhofer HHI VVdeC through 3.2.1 contains a heap out-of-bounds read vulnerability that allows attackers to crash the decoder by supplying a collocated picture of different resolution. Attackers can craft a VVC bitstream enabling TMVP with a smaller collocated reference picture, causing getColInfo to read past the colMotion allocation when error concealment is enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124312",
-    "publishedDate": "2026-11-07T15:17:15.147",
-    "lastModifiedDate": "2026-11-07T15:17:15.147",
+    "id": "CVE-2026-123597",
+    "description": "Hickory DNS hickory-proto 0.25.0-alpha.1 through 0.26.0-alpha.1 and hickory-net before 0.26.2 contain a logic bug in DnssecDnsHandle's DS-fetch path that caches transient DS lookup errors as Bogus DNSSEC validation verdicts. An attacker who induces a SERVFAIL, REFUSED, or timeout response to a child-zone DS sub-query causes the validator to return SERVFAIL for all names under that zone until the cache entry's TTL expires.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123597",
+    "publishedDate": "2026-11-08T02:16:54.170",
+    "lastModifiedDate": "2026-11-08T02:16:54.170",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.7,
+        "score": 3.7,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1,
-        "impactScore": 3.6,
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.7,
+        "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -546,28 +629,28 @@
     ]
   },
   {
-    "id": "CVE-2026-124311",
-    "description": "Fraunhofer HHI VVdeC through 3.2.1 contains a NULL pointer dereference vulnerability in InterPrediction::xPredInterBlk that allows attackers to crash the decoder by switching SPS to enable reference wrap-around. Attackers can supply a crafted VVC bitstream activating a new SPS with sps_ref_wraparound_enabled_flag set, causing reads from missing PIC_RECON_WRAP buffers and denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124311",
-    "publishedDate": "2026-11-07T15:17:14.983",
-    "lastModifiedDate": "2026-11-07T15:17:14.983",
+    "id": "CVE-2026-123596",
+    "description": "Hickory DNS hickory-proto through 0.26.0-alpha.1 and hickory-net 0.26.0-beta.1 before 0.26.2 contain a DNSSEC validation flaw in the validating recursor's NSEC handler that accepts parent-side ancestor-delegation NSEC records as proof of nonexistence for names below the zone cut. An on-path attacker, rogue parent nameserver, or attacker winning a port and TXID race can deliver one forged NXDOMAIN response built from genuinely signed parent NSEC records, causing authenticated denial of existing child-zone names cached for the negative TTL.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123596",
+    "publishedDate": "2026-11-08T02:16:54.020",
+    "lastModifiedDate": "2026-11-08T02:16:54.020",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.5,
+        "score": 8.8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.8,
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -575,28 +658,28 @@
     ]
   },
   {
-    "id": "CVE-2026-124310",
-    "description": "Fraunhofer HHI VVdeC before 3.2.1 contains an out-of-bounds read vulnerability that allows attackers to crash the decoder by supplying bitstreams with overlapping slice CTU coverage. Attackers can code a CTU in a second slice so a bi-predicted BDOF coding unit carries a negative reference index, causing Slice::getRefPic to read outside m_apcRefPicList and crash decoding.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124310",
-    "publishedDate": "2026-11-07T15:17:14.827",
-    "lastModifiedDate": "2026-11-07T15:17:14.827",
+    "id": "CVE-2026-123595",
+    "description": "Hickory DNS hickory-proto 0.25 through 0.26.0-alpha.1 and hickory-net 0.26.0-beta.1 before 0.26.2 contain a DNSSEC validation flaw in the validating recursor's NSEC3 handler, which matches the closest encloser by hash alone without checking the type bitmap and so accepts parent-side ancestor-delegation NSEC3 records as proof of nonexistence. An attacker who delivers one response built from genuinely signed parent NSEC3 records can cause NXDOMAIN or NODATA to be cached with AD=1, denying resolution of existing names at and below the zone cut.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123595",
+    "publishedDate": "2026-11-08T02:16:53.863",
+    "lastModifiedDate": "2026-11-08T02:16:53.863",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 8.8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.9,
+        "score": 8.7,
         "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -604,28 +687,28 @@
     ]
   },
   {
-    "id": "CVE-2026-124309",
-    "description": "Fraunhofer HHI VVdeC before 3.2.1 contains a heap out-of-bounds read vulnerability in SEIReader::xParseSEIScalableNesting that allows attackers to read past heap allocations by casting the SEI wrapper object instead of its payload. Attackers can supply a crafted VVC bitstream with a scalable nesting SEI containing a nested buffering period SEI to crash the decoder or copy adjacent heap memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124309",
-    "publishedDate": "2026-11-07T15:17:14.653",
-    "lastModifiedDate": "2026-11-07T15:17:14.653",
+    "id": "CVE-2026-123594",
+    "description": "Hickory DNS hickory-proto through 0.26.0-alpha.1 and hickory-net 0.26.0-beta.1 before 0.26.2 contain an NSEC validation flaw that returns a secure proof for NXDOMAIN responses when the covering NSEC's Next Domain Name is a strict descendant of the query name, which actually proves the name exists as an empty non-terminal. On-path attackers can flip the unsigned rcode of a genuine signed NODATA response from NOERROR to NXDOMAIN, causing validators to accept forged nonexistence of the name.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123594",
+    "publishedDate": "2026-11-08T02:16:53.710",
+    "lastModifiedDate": "2026-11-08T02:16:53.710",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
+        "score": 4.8,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.5,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 6.9,
+        "score": 6.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
