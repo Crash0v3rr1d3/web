@@ -1,50 +1,150 @@
 [
   {
-    "id": "CVE-2026-115819",
-    "description": "One-byte buffer overflow in wide scanf %s and %[ conversions",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115819",
-    "publishedDate": "Wed, 11 Nov 2026 15:36:38 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-67546",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.75, the same POST /api/mcp/fetch-tools endpoint (any authenticated user, lowest role) also accepts the stdio transport, which spawns the attacker-supplied command with attacker-supplied args and an environment merged over os.environ. The process executes on the shared backend host before MCP protocol validation fails — so side effects fire regardless of whether the command speaks MCP. This is a distinct weakness class and exploit primitive from the SSRF (Advisory 2) on the same endpoint, and needs a different fix (role gating / opt-in trust boundary rather than egress controls). This issue has been patched in version 0.0.75.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67546",
+    "publishedDate": "2026-11-11T22:17:29.533",
+    "lastModifiedDate": "2026-11-11T22:17:29.673",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-124686",
-    "description": "JavaScript Code Injection through kendo.init() in Kendo UI for jQuery",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124686",
-    "publishedDate": "Wed, 11 Nov 2026 15:27:32 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-67545",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.73, the HTTP workflow node in Heym makes outbound HTTP requests to user-supplied URLs without validation of the target host or IP address. If a workflow author has already configured an HTTP node that targets internal addresses such as cloud metadata endpoints or private network hosts, and exposed the workflow with anonymous execution, an unauthenticated attacker can trigger the preconfigured SSRF sink. The same project has comprehensive SSRF protection in its MCP integration, which is absent from the HTTP node. This issue has been patched in version 0.0.73.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67545",
+    "publishedDate": "2026-11-11T22:17:29.360",
+    "lastModifiedDate": "2026-11-11T22:17:29.497",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-105440",
-    "description": "Switch Engine (EXOS) JSON-RPC Authorization Bypass Allows Read-Only Users to Disclose Sensitive Information",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-105440",
-    "publishedDate": "Wed, 11 Nov 2026 15:23:47 +0000",
-    "lastModifiedDate": "",
+    "id": "CVE-2026-67544",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.71, Heym's workflow engine accepts an arbitrary Python code string in the playwrightCode field of a Playwright node. This string is written to a temporary .py file and executed directly by the backend process via subprocess.Popen([sys.executable, script_path]) with no sandboxing, AST validation, or role gate. Any authenticated user — including a freshly registered account — can achieve full remote code execution (RCE) on the backend host, running as the service process user (observed as root in the default Docker deployment). This issue has been patched in version 0.0.71.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67544",
+    "publishedDate": "2026-11-11T22:17:29.180",
+    "lastModifiedDate": "2026-11-11T22:17:29.323",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-89326",
-    "description": "Origin Validation Error vulnerability in Apache XML Graphics Batik: the external resource same-origin check does not compare the URL protocol\n\n\n\nThis issue affects Apache XML Graphics Batik: through 1.19.\n\n\n\nUsers are recommended to upgrade to version 1.20, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-89326",
-    "publishedDate": "2026-11-11T15:17:25.313",
-    "lastModifiedDate": "2026-11-11T15:17:25.313",
+    "id": "CVE-2026-67543",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.70, heym hardens one untrusted-code path but not its sibling. The Python tool executor (python_tool_executor.py) treats user code as untrusted and mandates a Docker sandbox (no network, read-only fs, non-root, no docker socket), failing closed. The skill executor (skill_python_executor.py) runs skill Python via a local backend subprocess with no Docker isolation — only a 512 MB RLIMIT and a 7-key env denylist — so a skill executes inside the backend execution context, with filesystem access, network egress, and non-denylisted environment variables that should not be exposed to untrusted/shared skills. In the shipped Docker config (backend runs as root + /var/run/docker.sock mounted), this escalates to host root. This issue has been patched in version 0.0.70.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67543",
+    "publishedDate": "2026-11-11T22:17:28.997",
+    "lastModifiedDate": "2026-11-11T22:17:29.140",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security-advisories@github.com"
+      }
+    ]
   },
   {
-    "id": "CVE-2026-85632",
-    "description": "Missing authentication for critical function and Improper validation of integrity check value vulnerability in Sipay Electronic Money and Payment Services Inc. WooCommerce Virtual POS Module allows Authentication Bypass and Application API Message Manipulation via Man-in-the-Middle.\n\nThis issue affects WooCommerce Virtual POS Module: from 26.8.3 before 26.9.1.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85632",
-    "publishedDate": "2026-11-11T15:17:25.163",
-    "lastModifiedDate": "2026-11-11T15:17:25.163",
+    "id": "CVE-2026-67542",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.70, POST /api/mcp/fetch-tools is reachable by any authenticated user (lowest role; no admin/workflow association) and fetches an attacker-supplied URL through the sse and streamable_http transports with no scheme / private-IP / allowlist / redirect guard. The transport error is reflected in the HTTP 422 response, giving a semi-blind SSRF oracle, and the attacker also controls the outbound request headers. This issue has been patched in version 0.0.70.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67542",
+    "publishedDate": "2026-11-11T22:17:28.813",
+    "lastModifiedDate": "2026-11-11T22:17:28.960",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 4.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67541",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.70, team-member management (add / remove / update) is gated only on team membership, not on the team creator/admin role — and TeamMember has no role column. Any non-creator member can seat an attacker account into the team; because credential team-shares are scoped only by TeamMember.user_id, the newly-added attacker can then decrypt every credential shared into that team (provider API keys, OAuth tokens. This issue has been patched in version 0.0.70.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67541",
+    "publishedDate": "2026-11-11T22:17:28.620",
+    "lastModifiedDate": "2026-11-11T22:17:28.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-67540",
+    "description": "Heym builds and runs agentic systems and business-process automations on self-hosted infrastructure. Prior to version 0.0.70, get_workflow_template / get_node_template fetches a template by ID with no visibility / author / shared_with predicate, so any authenticated user can read (and use) any other tenant's private (visibility=specific_users) template — including its full node/edge graph and the email addresses it was shared with. The list endpoint enforces visibility correctly; the single-item get/use paths do not. This issue has been patched in version 0.0.70.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-67540",
+    "publishedDate": "2026-11-11T22:17:28.433",
+    "lastModifiedDate": "2026-11-11T22:17:28.577",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126229",
+    "description": "A authorization bypass through user-controlled key vulnerability in Fortinet FortiAnalyzer 8.0.0 through 8.0.1, FortiAnalyzer 7.6.0 through 7.6.7, FortiAnalyzer 7.4.0 through 7.4.11, FortiAnalyzer 7.2 all versions, FortiAnalyzer Cloud 8.0.1, FortiAnalyzer Cloud 7.6.0 through 7.6.7, FortiAnalyzer Cloud 7.4.1 through 7.4.11, FortiAnalyzer Cloud 7.2 all versions, FortiManager 8.0.0 through 8.0.1, FortiManager 7.6.0 through 7.6.7, FortiManager 7.4.0 through 7.4.11, FortiManager 7.2 all versions, FortiManager Cloud 8.0.1, FortiManager Cloud 7.6.0 through 7.6.7, FortiManager Cloud 7.4.1 through 7.4.11, FortiManager Cloud 7.2 all versions may allow an authenticated administrator to access to other VDOMs via specially crafted HTTP requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126229",
+    "publishedDate": "2026-11-11T22:17:21.447",
+    "lastModifiedDate": "2026-11-11T22:17:21.447",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -52,148 +152,19 @@
         "score": 9.1,
         "version": "CVSS 3.1",
         "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "iletisim@usom.gov.tr"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-82014",
-    "description": "Any authenticated user, including a Viewer, could change the preferences of any team, such as its home dashboard, theme and timezone, through an undocumented endpoint with no access control, and so redirect every member of that team to a dashboard of their choice (missing authorization).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-82014",
-    "publishedDate": "2026-11-11T15:17:25.020",
-    "lastModifiedDate": "2026-11-11T15:17:25.020",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "security@grafana.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-71395",
-    "description": "unsafe deserialization in hyphenation loading vulnerability in Apache XML Graphics FOP.\n\n\n\nThis issue affects Apache XML Graphics FOP: through 2.11.\n\n\n\nUsers are recommended to upgrade to version 2.12, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-71395",
-    "publishedDate": "2026-11-11T15:17:24.763",
-    "lastModifiedDate": "2026-11-11T15:17:24.763",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-44929",
-    "description": "Server-Side Request Forgery (SSRF) vulnerability in Apache XML Graphics Batik.\n\n\n\nThis issue affects Apache XML Graphics Batik: through 1.19.\n\n\n\nUsers are recommended to upgrade to version 1.20, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-44929",
-    "publishedDate": "2026-11-11T15:17:23.290",
-    "lastModifiedDate": "2026-11-11T15:17:23.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-14242",
-    "description": "A user with the Editor role could delete, move, push or pull Git Sync managed resources in folders where they only had view access, by creating a provisioning job through the jobs resource API, which skipped the folder permission checks (incorrect authorization).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14242",
-    "publishedDate": "2026-11-11T15:17:22.850",
-    "lastModifiedDate": "2026-11-11T15:17:22.850",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@grafana.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-13721",
-    "description": "A user with edit access to one folder could modify, move or delete Git Sync provisioned resources in folders where they only had view access, through the provisioning files API (incorrect authorization).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-13721",
-    "publishedDate": "2026-11-11T15:17:22.700",
-    "lastModifiedDate": "2026-11-11T15:17:22.700",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@grafana.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-126325",
-    "description": "A critical remote code execution (RCE) vulnerability has been reported in PTC Windchill and PTC FlexPLM. The vulnerability may be exploited through the deserialization of untrusted data.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126325",
-    "publishedDate": "2026-11-11T15:17:22.510",
-    "lastModifiedDate": "2026-11-11T15:17:22.510",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.2,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.3,
         "impactScore": 6,
-        "source": "0b655efc-079c-4cb9-9e8d-164871239f4e"
-      },
-      {
-        "score": 9.2,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:Y/R:X/V:X/RE:M/U:Amber",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "0b655efc-079c-4cb9-9e8d-164871239f4e"
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-124746",
-    "description": "A flaw was found in BusyBox. An integer overflow occurs in the volume_id component when calculating buffer boundaries while probing filesystem metadata. An attacker can exploit this vulnerability by providing a specially crafted filesystem image on an attached storage device. When probed by utilities such as blkid, findfs, or mount, the application crashes, resulting in a Denial of Service (DoS) that prevents the system from resolving or mounting storage devices.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124746",
-    "publishedDate": "2026-11-11T15:17:19.570",
-    "lastModifiedDate": "2026-11-11T15:17:19.697",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "secalert@redhat.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-123710",
-    "description": "A flaw was found in Red Hat Quay. An unauthenticated client can obtain an anonymous registry token with an audience it controls, present that token to the service key rotation endpoint, and install its own approved signing key with no expiry. Registry tokens signed with that key are accepted for any repository, allowing read and write access to private images and replacement of repository tags.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123710",
-    "publishedDate": "2026-11-11T15:17:18.340",
-    "lastModifiedDate": "2026-11-11T15:17:18.480",
+    "id": "CVE-2026-126262",
+    "description": "A improper neutralization of special elements used in an sql command ('sql injection') vulnerability in Fortinet FortiAnalyzer 8.0.0 through 8.0.1, FortiAnalyzer 7.6.0 through 7.6.7, FortiAnalyzer 7.4.0 through 7.4.11, FortiAnalyzer 7.2.0 through 7.2.12, FortiManager 8.0.0, FortiManager 7.6.0 through 7.6.7, FortiManager 7.4.0 through 7.4.11, FortiManager 7.2.0 through 7.2.12 may allow an unauthenticated attacker who has access to the oftp port to execute code or command on the system via crafted OFTP packets.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126262",
+    "publishedDate": "2026-11-11T22:17:26.343",
+    "lastModifiedDate": "2026-11-11T22:17:26.343",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -204,198 +175,328 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
         "impactScore": 5.9,
-        "source": "secalert@redhat.com"
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-119618",
-    "description": "Concurrent Execution using Shared Resource with Improper Synchronization vulnerability in Apache HTTP Server's mod_http2 in assign_headers() can lead to RCE.\n\nThis issue affects Apache HTTP Server: from 2.4.55 through 2.4.70.\nAffected releases of mod_h2 from GitHub: from 2.0.8 through 2.0.42.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119618",
-    "publishedDate": "2026-11-11T15:17:15.900",
-    "lastModifiedDate": "2026-11-11T15:17:15.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-111024",
-    "description": "A user with the Viewer or Editor role could bypass folder permissions on Git Sync managed resources through the repository files API: a Viewer could read files in folders they could not access, and an Editor could create, modify, move or delete provisioned dashboards and folders there (incorrect authorization).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111024",
-    "publishedDate": "2026-11-11T15:17:14.630",
-    "lastModifiedDate": "2026-11-11T15:17:14.630",
+    "id": "CVE-2026-121528",
+    "description": "A improper certificate validation vulnerability in Fortinet FortiOS 7.6.0 through 7.6.4, FortiOS 7.4.0 through 7.4.9, FortiOS 7.2.0 through 7.2.13 may allow a remote and unauthenticated attacker to perform a Man-in-the-Middle attack on the communication channel between the SSLVPN web portal and the backend destination website.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-121528",
+    "publishedDate": "2026-11-11T22:17:11.250",
+    "lastModifiedDate": "2026-11-11T22:17:11.250",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security@grafana.com"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.9,
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-111000",
-    "description": "A user with the Editor role who can edit a folder can move it, through the folders resource API, under a folder they administer, and so gain Admin on the moved folder and its contents, including the right to change their permissions. The legacy folder move API refuses the same move (improper privilege management).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-111000",
-    "publishedDate": "2026-11-11T15:17:14.503",
-    "lastModifiedDate": "2026-11-11T15:17:14.503",
+    "id": "CVE-2026-126259",
+    "description": "A missing authentication for critical function vulnerability in Fortinet FortiOS 8.0.0, FortiOS 7.6.0 through 7.6.7, FortiOS 7.4.0 through 7.4.12, FortiOS 7.2.0 through 7.2.13 may allow an unauthenticated attacker with HA FGSP + standalone-config-sync, or autoscale to execute command as super admin via crafted HA packets.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126259",
+    "publishedDate": "2026-11-11T22:17:26.200",
+    "lastModifiedDate": "2026-11-11T22:17:26.200",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126263",
+    "description": "A improper neutralization of special elements used in an sql command ('sql injection') vulnerability in Fortinet FortiMail 8.0.0 through 8.0.1, FortiMail 7.6.0 through 7.6.4, FortiMail 7.4.0 through 7.4.6 may allow an authenticated attacker to execute unauthorized code or commands via specifically crafted requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126263",
+    "publishedDate": "2026-11-11T22:17:26.520",
+    "lastModifiedDate": "2026-11-11T22:17:26.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126255",
+    "description": "A path traversal: '../filedir' vulnerability in Fortinet FortiOS 8.0.0 through 8.0.1, FortiOS 7.6.0 through 7.6.7, FortiOS 7.4.0 through 7.4.12, FortiOS 7.2.0 through 7.2.13, FortiPAM 1.6 all versions, FortiPAM 1.5 all versions, FortiPAM 1.4 all versions, FortiPAM 1.3 all versions, FortiPAM 1.2 all versions, FortiPAM 1.1 all versions, FortiPAM 1.0 all versions may allow an unauthenticated attacker to bypass authentication via specially crafted credentials.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126255",
+    "publishedDate": "2026-11-11T22:17:25.623",
+    "lastModifiedDate": "2026-11-11T22:17:25.623",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "security@grafana.com"
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-110992",
-    "description": "A user who can create Git Sync provisioning jobs (the Editor role by default) could delete or move files outside the configured repository path with a job that references a resource whose source path contains ../ sequences (path traversal). With a local filesystem repository on versions before 13.0.4 and 13.1.1, this reached files on the Grafana host.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110992",
-    "publishedDate": "2026-11-11T15:17:14.370",
-    "lastModifiedDate": "2026-11-11T15:17:14.370",
+    "id": "CVE-2026-126256",
+    "description": "A out-of-bounds read vulnerability in Fortinet FortiOS 8.0.0 through 8.0.1, FortiOS 7.6.0 through 7.6.7, FortiOS 7.4 all versions, FortiOS 7.2 all versions, FortiOS 7.0 all versions may allow a remote privileged attacker to execute arbitrary code or command via crafted paquets.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126256",
+    "publishedDate": "2026-11-11T22:17:25.783",
+    "lastModifiedDate": "2026-11-11T22:17:25.783",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-121527",
+    "description": "A execution with unnecessary privileges vulnerability in Fortinet FortiClientEMS 7.4.3 through 7.4.7, FortiClientEMS 7.4.0 through 7.4.1, FortiClientEMS 7.2 all versions may allow an authenticated local attacker with admin privileges to gain root shell access via CLI commands.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-121527",
+    "publishedDate": "2026-11-11T22:17:11.113",
+    "lastModifiedDate": "2026-11-11T22:17:11.113",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.7,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 0.8,
+        "impactScore": 5.9,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126254",
+    "description": "A numeric truncation error vulnerability in Fortinet FortiOS 8.0.0 through 8.0.1, FortiOS 7.6.0 through 7.6.7, FortiOS 7.4.0 through 7.4.12, FortiOS 7.2.0 through 7.2.13 may allow a configured ibgp neighbor to send malicious/malformed attributes to all connected routers via a specially crafted request",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126254",
+    "publishedDate": "2026-11-11T22:17:25.490",
+    "lastModifiedDate": "2026-11-11T22:17:25.490",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.6,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:N/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 5.8,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126258",
+    "description": "A stack-based buffer overflow vulnerability in Fortinet FortiOS 8.0.0, FortiOS 7.6.7 may allow an unauthenticated attacker with wad port access to crash proxy or ZTNA sessions via crafted HTTP or HTTPS requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126258",
+    "publishedDate": "2026-11-11T22:17:26.073",
+    "lastModifiedDate": "2026-11-11T22:17:26.073",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "security@grafana.com"
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-110289",
-    "description": "A user with the Organization Admin role could point the server or token URL of a Git Sync connection at a loopback or internal address, and Grafana would then send the connection's OAuth client secret and tokens, or requests signed with the GitHub App private key, to that address (server-side request forgery).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110289",
-    "publishedDate": "2026-11-11T15:17:14.230",
-    "lastModifiedDate": "2026-11-11T15:17:14.230",
+    "id": "CVE-2026-126257",
+    "description": "A use of hard-coded password vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an unauthenticated attacker to bypass credential validation in certain circumstances outside of the attacker's control and gain unauthorized access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126257",
+    "publishedDate": "2026-11-11T22:17:25.930",
+    "lastModifiedDate": "2026-11-11T22:17:25.930",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.5,
+        "score": 9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 6,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-121526",
+    "description": "A url redirection to untrusted site ('open redirect') vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an unauthenticated attacker to perform an open redirect attack via crafted HTTP requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-121526",
+    "publishedDate": "2026-11-11T22:17:10.970",
+    "lastModifiedDate": "2026-11-11T22:17:10.970",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
         "impactScore": 2.7,
-        "source": "security@grafana.com"
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-109163",
-    "description": "Stack-based buffer overflow vulnerability in Apache HTTP Server's mod_vhost_alias (after CVE-2026-63292)\n\n\n\nThis issue affects Apache HTTP Server: 2.4.69.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109163",
-    "publishedDate": "2026-11-11T15:17:14.097",
-    "lastModifiedDate": "2026-11-11T15:17:14.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-107509",
-    "description": "A user with the Viewer role can make Grafana allocate an unbounded amount of memory, and crash it, with a single SQL Expression query that casts a value to a very large BINARY length (memory allocation with excessive size value).",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107509",
-    "publishedDate": "2026-11-11T15:17:13.943",
-    "lastModifiedDate": "2026-11-11T15:17:13.943",
+    "id": "CVE-2026-126253",
+    "description": "A authentication bypass by primary weakness vulnerability in Fortinet FortiOS 8.0.0 through 8.0.1, FortiOS 7.6.0 through 7.6.7, FortiOS 7.4.0 through 7.4.12, FortiOS 7.2.0 through 7.2.13 may allow an unauthenticated attacker to broadcast LSA via specially crafted request",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126253",
+    "publishedDate": "2026-11-11T22:17:25.347",
+    "lastModifiedDate": "2026-11-11T22:17:25.347",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.5,
+        "score": 9.3,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security@grafana.com"
+        "impactScore": 5.8,
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-106023",
-    "description": "NULL pointer dereference vulnerability in Apache HTTP Server's mod_md during HTTP request processing.\n\n\n\nThis issue affects Apache HTTP Server: from 2.4.30 through 2.4.69.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-106023",
-    "publishedDate": "2026-11-11T15:17:13.460",
-    "lastModifiedDate": "2026-11-11T15:17:13.460",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-102589",
-    "description": "When independent Grafana instances share the same [rendering] renderer_token, an image renderer key issued by one instance is accepted by the others, so a user on one instance could act as the user with the same ID on another (origin validation error). This affects instances with the renderAuthJWT feature toggle enabled, the default from Grafana 13.0.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-102589",
-    "publishedDate": "2026-11-11T15:17:12.447",
-    "lastModifiedDate": "2026-11-11T15:17:12.447",
+    "id": "CVE-2026-126252",
+    "description": "A improper neutralization of special elements used in an sql command ('sql injection') vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an authenticated attacker to execute unauthorized code or commands via http requests",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126252",
+    "publishedDate": "2026-11-11T22:17:25.220",
+    "lastModifiedDate": "2026-11-11T22:17:25.220",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 8.3,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
-        "exploitabilityScore": 1.6,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "exploitabilityScore": 2.8,
         "impactScore": 5.5,
-        "source": "security@grafana.com"
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-49236",
-    "description": "Server-Side Request Forgery (SSRF) vulnerability in Apache XML Graphics Batik. SVG color-profile xml:base bypasses Batik external resource same-origin checks\n\n\n\nThis issue affects Apache XML Graphics Batik: through 1.19.\n\n\n\nUsers are recommended to upgrade to version 1.20, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-49236",
-    "publishedDate": "2026-11-11T14:17:43.253",
-    "lastModifiedDate": "2026-11-11T14:17:43.253",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-48479",
-    "description": "Use of uninitialized or invalid state in AMD Graphics Driver could allow a local attacker to write out of bounds, potentially resulting in loss of integrity or denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-48479",
-    "publishedDate": "2026-11-11T14:17:41.107",
-    "lastModifiedDate": "2026-11-11T14:17:41.107",
+    "id": "CVE-2026-126251",
+    "description": "A incorrect authorization vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an attacker to bypass authentication and gain unauthorized access.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126251",
+    "publishedDate": "2026-11-11T22:17:25.087",
+    "lastModifiedDate": "2026-11-11T22:17:25.087",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "psirt@amd.com"
+        "score": 9.1,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.2,
+        "source": "psirt@fortinet.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-40853",
-    "description": "A Cross-Site Scripting via Unencoded Font Metadata in Apache Batik SVGFont.\n\n\n\nThis issue affects Apache XML Graphics Batik: through 1.19.\n\n\n\nUsers are recommended to upgrade to version 1.20, which fixes the issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-40853",
-    "publishedDate": "2026-11-11T14:17:40.903",
-    "lastModifiedDate": "2026-11-11T14:17:40.903",
+    "id": "CVE-2026-126250",
+    "description": "A incorrect authorization vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an unauthenticated attacker to cause a denial of service via HTTP requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126250",
+    "publishedDate": "2026-11-11T22:17:24.960",
+    "lastModifiedDate": "2026-11-11T22:17:24.960",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 4.2,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126248",
+    "description": "A insufficiently protected credentials vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an unauthenticated attacker to obtain sensitive information via HTTPS requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126248",
+    "publishedDate": "2026-11-11T22:17:24.693",
+    "lastModifiedDate": "2026-11-11T22:17:24.693",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "psirt@fortinet.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126246",
+    "description": "A null pointer dereference vulnerability in Fortinet FortiAuthenticator 8.0.0 through 8.0.3, FortiAuthenticator 6.6.0 through 6.6.10 may allow an unauthenticated attacker to perform a denial of service attack via http requests.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126246",
+    "publishedDate": "2026-11-11T22:17:24.423",
+    "lastModifiedDate": "2026-11-11T22:17:24.423",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "psirt@fortinet.com"
+      }
+    ]
   }
 ]
