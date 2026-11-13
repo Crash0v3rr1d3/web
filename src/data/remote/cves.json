@@ -1,50 +1,307 @@
 [
   {
-    "id": "CVE-2026-127030",
-    "description": "Freeradius: stack buffer overflow via unchecked eap-fast sessionticket length",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127030",
-    "publishedDate": "Thu, 12 Nov 2026 16:21:52 +0000",
+    "id": "CVE-2026-127277",
+    "description": "Linksys EA8100 SMB Service service_smbd.sh initialization",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127277",
+    "publishedDate": "Fri, 13 Nov 2026 00:30:22 +0000",
     "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-127029",
-    "description": "Freeradius: stack-based buffer overflow via unbounded eap-sim identity length",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127029",
-    "publishedDate": "Thu, 12 Nov 2026 16:21:48 +0000",
+    "id": "CVE-2026-127916",
+    "description": "MCUboot image hash span is not bounded against the slot, allowing a read past the flash area during image validation",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127916",
+    "publishedDate": "Fri, 13 Nov 2026 00:23:09 +0000",
     "lastModifiedDate": "",
     "vendors": [],
     "products": [],
     "cvssScores": []
   },
   {
-    "id": "CVE-2026-91007",
-    "description": "The user-mode syscall verifiers for the charger driver API in drivers/charger/charger_handlers.c did not inspect the prop argument before copying union charger_propval across the user/kernel boundary. Two members of that union are function pointers — status_notification (CHARGER_PROP_STATUS_NOTIFICATION) and online_notification (CHARGER_PROP_ONLINE_NOTIFICATION), declared in include/zephyr/drivers/charger.h — and z_vrfy_charger_set_prop() forwarded the caller-supplied union verbatim to the driver's set_property callback for any property. z_vrfy_charger_get_prop() had the mirror defect and copied the stored kernel callback address back out to user memory.\n\nWith CONFIG_USERSPACE enabled, any user-mode thread that has been granted a charger device object could call charger_set_prop() with CHARGER_PROP_STATUS_NOTIFICATION or CHARGER_PROP_ONLINE_NOTIFICATION and an arbitrary pointer value. Drivers that implement these properties — drivers/charger/charger_max20335.c, drivers/charger/charger_pf1550.c and drivers/charger/charger_bq2518x.c — store the pointer in device data and later invoke it from their interrupt work handlers, which run in supervisor mode, on any charger state change such as a cable plug/unplug.\n\nThe result is a control-flow hijack at kernel privilege from an unprivileged thread, defeating the isolation that CONFIG_USERSPACE is meant to provide; the read path additionally disclosed a kernel code address to user mode, and clearing a notifier installed by a supervisor thread let user mode suppress charger notifications. Supervisor-mode callers of charger_set_prop()/charger_get_prop() are unaffected.\n\nThe fix makes both verifiers reject the two notifier properties outright — including when the supplied callback is NULL, since the notifiers are device state — and adds a BUILD_ASSERT on CHARGER_PROP_COMMON_COUNT so that new properties force a re-review of the union's user-mode safety.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91007",
-    "publishedDate": "2026-11-12T16:19:21.250",
-    "lastModifiedDate": "2026-11-12T16:19:21.370",
+    "id": "CVE-2026-127915",
+    "description": "TLV iterator does not bound each entry against the declared TLV area in MCUboot bootutil",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127915",
+    "publishedDate": "Fri, 13 Nov 2026 00:23:07 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16664",
+    "description": "Unchecked serial-recovery image index causes out-of-bounds slot-table read in MCUboot Zephyr port",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16664",
+    "publishedDate": "Fri, 13 Nov 2026 00:23:05 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16659",
+    "description": "Pre-authentication NULL pointer dereference in MCUboot serial-recovery image upload (encrypted-image builds)",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16659",
+    "publishedDate": "Fri, 13 Nov 2026 00:23:03 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16671",
+    "description": "Out-of-bounds stack write in MCUboot split-image validation with SHA-384/SHA-512 builds",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16671",
+    "publishedDate": "Fri, 13 Nov 2026 00:23:02 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-16662",
+    "description": "Uninitialised bootloader stack disclosed into the measured-boot attestation record via a short EXPECTED_HASH TLV in MCUboot",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16662",
+    "publishedDate": "Fri, 13 Nov 2026 00:23:00 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-128091",
+    "description": "AES key schedule not cleared by the TinyCrypt AES-CTR backend in MCUboot bootutil",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128091",
+    "publishedDate": "Fri, 13 Nov 2026 00:22:58 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-127928",
+    "description": "AES image key left on the stack after serial-recovery encrypted-image handling in MCUboot",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127928",
+    "publishedDate": "Fri, 13 Nov 2026 00:22:56 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-93335",
+    "description": "Vault Community Edition and Vault Enterprise did not consistently apply explicit ACL policy deny rules to request paths that differ only by a trailing slash. This may allow an authenticated user who holds a broader delete permission on system configuration paths to disable a secrets engine, auth method, or audit device that a more specific deny rule was intended to protect. This vulnerability (CVE-2026-93335) is fixed in Vault Community Edition 2.2.2 and Vault Enterprise 2.2.2, 1.21.14, and 1.19.25.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-93335",
+    "publishedDate": "2026-11-13T00:20:19.023",
+    "lastModifiedDate": "2026-11-13T00:20:19.023",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.8,
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "vulnerabilities@zephyrproject.org"
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 1.2,
+        "impactScore": 5.2,
+        "source": "security@hashicorp.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-70642",
-    "description": "ToolJet before 3.21.94, fixed in commit e5f387a, contains an authorization bypass vulnerability in the app environments init endpoint that allows authenticated users to read app version metadata belonging to other workspaces. Attackers can send GET requests to /api/app-environments/init with an editing_version_id from another workspace to retrieve the version name, description, status, current environment ID, and app ID, because the lookup is not scoped to the caller's organization.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70642",
-    "publishedDate": "2026-11-12T16:19:13.593",
-    "lastModifiedDate": "2026-11-12T16:19:13.593",
+    "id": "CVE-2026-93333",
+    "description": "Vault's audit devices did not validate the contents of a configured audit log prefix and did not consistently enforce the server-level setting that restricts audit log prefixing. This may allow a privileged operator to inject content into audit logs, potentially leading to forged or misleading audit records. This vulnerability (CVE-2026-93333) is fixed in Vault Community Edition 2.2.2 and Vault Enterprise 2.2.2, 1.21.14, and 1.19.25.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-93333",
+    "publishedDate": "2026-11-13T00:20:18.883",
+    "lastModifiedDate": "2026-11-13T00:20:18.883",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 2.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 1.2,
+        "impactScore": 1.4,
+        "source": "security@hashicorp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-92735",
+    "description": "HashiCorp Vault and Vault Enterprise are vulnerable to an issue in the integrated storage join process that may allow an unauthenticated attacker with network access to a new, uninitialized node to cause that node to send credentials from its server environment to an attacker-controlled server. This vulnerability (CVE-2026-92735) is fixed in Vault Community Edition 2.2.2 and Vault Enterprise 2.2.2, 1.21.14, and 1.19.25.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92735",
+    "publishedDate": "2026-11-13T00:20:18.723",
+    "lastModifiedDate": "2026-11-13T00:20:18.723",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "security@hashicorp.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-128067",
+    "description": "Pillow is a Python imaging library. From 2.3.0 through 12.3.0, Pillow applications that save compressed TIFF images through libtiff can pass attacker-controlled image geometry tags to the encoder while allocating its row buffer from the actual image dimensions. The affected TiffImagePlugin._save path allows ImageWidth, ImageLength, or SamplesPerPixel from exif=, tiffinfo=, or a source TIFF IFD to make libtiff consume a larger scanline than the buffer supplied by ImagingLibTiffEncode. This can read heap memory into the generated TIFF or crash the process. When TIFF Predictor 2 is enabled, libtiff can rewrite the oversized scanline in place and corrupt memory beyond the buffer. A carried-over PlanarConfiguration value of 2 instead makes libtiff use a shorter scanline and can produce an undecodable output file, but is not established to cause the out-of-bounds access. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128067",
+    "publishedDate": "2026-11-13T00:20:14.710",
+    "lastModifiedDate": "2026-11-13T00:20:14.853",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.4,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-128066",
+    "description": "Pillow is a Python imaging library. From 1.0 through 12.3.0, ImageFileDirectory_v2.load() in src/PIL/TiffImagePlugin.py retains a separate bytes object for each out-of-line IFD tag value without limiting the total data read or preventing distinct tags from referencing the same file region. A small crafted TIFF or EXIF-bearing JPEG, PNG, WebP, or MPO can therefore cause memory use quadratic in the input size. TIFF and some JPEG paths trigger parsing during Image.open(), while other formats are exposed when EXIF is requested, including through getexif() or ImageOps.exif_transpose(). The declared pixel dimensions do not bound this metadata allocation, so decompression-bomb checks do not prevent process memory exhaustion. This issue is fixed in version 13.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128066",
+    "publishedDate": "2026-11-13T00:20:14.457",
+    "lastModifiedDate": "2026-11-13T00:20:14.613",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-128065",
+    "description": "@grpc/grpc-js implements the core functionality of gRPC purely in JavaScript, without a C++ addon. From 1.14.0 through 1.14.1, XdsServer in @grpc/grpc-js-xds can acknowledge Route and VirtualHost resources while failing to apply their RBACPerRoute override configurations. The override parser is not registered under the override message type, override maps are stored under a type URL instead of the configured HTTP filter name, and VirtualHost override maps are not read. When experimental RBAC is enabled and a trusted xDS control plane supplies a broad top-level ALLOW policy with a stricter matching override, affected servers evaluate RPCs under the broad policy and can accept requests that should be denied. This issue is fixed in version 1.14.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128065",
+    "publishedDate": "2026-11-13T00:20:14.313",
+    "lastModifiedDate": "2026-11-13T00:20:14.313",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.9,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-127275",
+    "description": "A vulnerability was determined in Linksys EA8100 1.0.3.216940. This issue affects the function SetRemoteSetting/SetUnsecuredWiFiWarning of the file ui_server.lua of the component JNAP API. This manipulation of the argument isEnabled/enabled causes missing authentication. It is possible to initiate the attack remotely. The exploit has been publicly disclosed and may be utilized. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127275",
+    "publishedDate": "2026-11-13T00:20:14.083",
+    "lastModifiedDate": "2026-11-13T00:20:14.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-127274",
+    "description": "A vulnerability was found in Linksys EA8100 1.0.3.216940. This vulnerability affects unknown code of the file /jnap/core/CheckAdminPassword. The manipulation results in improper restriction of excessive authentication attempts. The attack may be performed from remote. The attack requires a high level of complexity. It is stated that the exploitability is difficult. The exploit has been made public and could be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127274",
+    "publishedDate": "2026-11-13T00:20:13.870",
+    "lastModifiedDate": "2026-11-13T00:20:14.030",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-127273",
+    "description": "A vulnerability has been found in Linksys EA8100 1.0.3.216940. This affects the function GetWANStatus/GetWANStatus3/IsAdminPasswordDefault of the component JNAP API. The manipulation leads to missing authentication. The attack is possible to be carried out remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127273",
+    "publishedDate": "2026-11-13T00:20:13.633",
+    "lastModifiedDate": "2026-11-13T00:20:13.810",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-127212",
+    "description": "Dokploy before 0.31.1 contains a missing ownership check vulnerability in the readAppMonitoring tRPC procedure that allows authenticated attackers to access container metrics belonging to other organizations by supplying an arbitrary appName. Attackers can query getApplicationStats with any application name, including the fixed \"dokploy\" control-plane service name, to read CPU, memory, network I/O, and block I/O metrics for containers they do not own on self-hosted multi-tenant instances.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127212",
+    "publishedDate": "2026-11-13T00:20:13.437",
+    "lastModifiedDate": "2026-11-13T00:20:13.580",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -69,316 +326,138 @@
     ]
   },
   {
-    "id": "CVE-2026-70641",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority as a duplicate of CVE-2026-82873.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-70641",
-    "publishedDate": "2026-11-12T16:19:12.957",
-    "lastModifiedDate": "2026-11-12T16:19:12.957",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-19809",
-    "description": "The user-mode system call verifier z_vrfy_charger_get_prop() in drivers/charger/charger_handlers.c declares an uninitialized union charger_propval k_val on the kernel (privileged) stack, passes it to the charger driver back end via z_impl_charger_get_prop(), and then copies the full sizeof(union charger_propval) back into the calling user thread's buffer with k_usermode_to_copy(). That discloses kernel stack contents on two paths:\n\nOn error. The copy-out ignores the driver's return code. In-tree back ends return an error without writing through the value pointer for properties they do not implement: charger_gpio_get_prop() returns -ENOTSUP unconditionally, and bq24190_get_prop() has a default: return -ENOTSUP; arm that never touches val. The whole union is then stack residue.\nOn success. A back end writes only the one union member the requested property selects (for example sbs_charger.c writes the one-byte val->present for CHARGER_PROP_PRESENT and returns 0), yet the handler still copies the whole union, so every byte beyond that member is uninitialized.\n\nThe handler is compiled only when CONFIG_USERSPACE=y and is reachable by any user-mode thread that has been granted access to a charger device object. K_SYSCALL_DRIVER_CHARGER() validates only the device object and its API pointer, not the property identifier, so an unprivileged thread can choose prop freely: an unimplemented property forces the error path, a narrow one the success path, and the call can be repeated at will.\n\nEach call discloses up to the size of the union (12 bytes on a 32-bit target, 16 bytes on 64-bit targets where the function-pointer members widen it) of supervisor-stack memory. The bytes are residue of earlier kernel-side frames on the thread's privileged stack and can contain kernel object addresses and saved return addresses, which an unprivileged thread cannot otherwise observe and which help defeat address-layout assumptions when exploiting a separate memory-safety defect. There is no integrity or availability impact.\n\nTwo commits fix it, and both are needed. 5054384e983c skips the copy-out when the back end reports an error. c31cac727d02 zeroes the union before the driver call, so the bytes copied out on success are driver-written data or zeros. A tree carrying only the first still leaks on every successful call.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19809",
-    "publishedDate": "2026-11-12T16:19:08.810",
-    "lastModifiedDate": "2026-11-12T16:19:09.000",
+    "id": "CVE-2026-126982",
+    "description": "A type allow-list bypass in the BSON serialization library of the MongoDB C# Driver allows a type-restriction check to be circumvented when polymorphic data is deserialized into loosely typed members. An unauthorized party who can supply or plant BSON/JSON data that the application later deserializes can cause the application process to instantiate .NET types outside the intended allow-list and populate them with unauthorized party-controlled values. In applications that contain a suitable gadget type, this can lead to arbitrary code execution in the context of the application, with corresponding loss of confidentiality, integrity, and availability. No special privileges beyond the ability to introduce data the application reads are required.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126982",
+    "publishedDate": "2026-11-13T00:20:13.250",
+    "lastModifiedDate": "2026-11-13T00:20:13.250",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.3,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 1.4,
-        "source": "vulnerabilities@zephyrproject.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-127145",
-    "description": "SOGo before 5.12.13 SSRF via Web Calendar Subscriptions",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127145",
-    "publishedDate": "Thu, 12 Nov 2026 16:19:08 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-127141",
-    "description": "SOGo before 5.12.13 contains a denial of service vulnerability that allows authenticated attackers to exhaust all worker processes by configuring an auxiliary IMAP mail account pointing to a controlled host that accepts a TCP connection but never sends an IMAP greeting response. Attackers can issue concurrent GET requests to the mail view of this account to hold workers indefinitely without an effective timeout, occupying every SOGo worker and denying service to all users for approximately five minutes until the watchdog kills and respawns the stuck workers.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127141",
-    "publishedDate": "2026-11-12T16:19:08.230",
-    "lastModifiedDate": "2026-11-12T16:19:08.563",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-127135",
-    "description": "SOGo before 5.12.13 contains a Sieve script injection vulnerability that allows authenticated users to inject arbitrary Sieve directives by inserting unescaped notification address values into a generated Sieve script. Attackers can embed Sieve redirect or discard statements within the notificationAddress preference to bypass the administrator-configured forwarding-domain constraint and redirect or discard incoming mail.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127135",
-    "publishedDate": "2026-11-12T16:19:08.030",
-    "lastModifiedDate": "2026-11-12T16:19:08.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-127131",
-    "description": "SOGo before 5.12.13 contains a missing rate limiting vulnerability in its web login TOTP verification that allows attackers who already possess a victim's password to brute-force the second-factor code without triggering any lockout. Attackers can send repeated POST requests to /SOGo/connect with wrong verification codes at high speed since failed TOTP attempts never increment the failed-login counter and SOGoMaximumFailedLoginCount does not apply, enabling indefinite guessing across 30-second code windows to bypass two-factor authentication.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127131",
-    "publishedDate": "2026-11-12T16:19:07.807",
-    "lastModifiedDate": "2026-11-12T16:19:07.980",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.1,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-127121",
-    "description": "SOGo before 5.12.13 contains an improper cryptographic signature verification vulnerability that allows remote attackers to replace a victim's contact S/MIME certificate by sending a spoofed multipart/signed message with a mismatched signature and an impersonated From address. Attackers can deliver a crafted CMS signedData object containing their own self-signed certificate, which SOGo's UIxMailView stores on the contact card without validating signature authenticity or certificate identity, enabling subsequent encrypted communications to be decrypted with the attacker's private key.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127121",
-    "publishedDate": "2026-11-12T16:19:07.587",
-    "lastModifiedDate": "2026-11-12T16:19:07.747",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-127111",
-    "description": "SOGo before 5.12.13 contains an improper restriction of excessive authentication attempts vulnerability that allows unauthenticated attackers to reset account passwords by repeatedly guessing secret-question answers via the passwordRecoveryCheck endpoint without lockout or rate limiting. Attackers can submit unlimited candidate answers to obtain a valid recovery JWT, then use it to change the account password without the old credential and log in via the connect endpoint, achieving full account takeover on accounts without TOTP enabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127111",
-    "publishedDate": "2026-11-12T16:19:07.260",
-    "lastModifiedDate": "2026-11-12T16:19:07.527",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.1,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-127109",
-    "description": "A code injection vulnerability in promzard’s template-loading functionality allows an attacker who can control property names in the context object (ctx) to execute arbitrary code with the privileges of the Node.js process. The library inserts context property names into a generated function’s parameter list without validation or escaping and evaluates the resulting source using `vm.runInThisContext()`. A crafted property name can escape the parameter list and inject JavaScript code, even when the template file is fully trusted.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127109",
-    "publishedDate": "2026-11-12T16:19:07.097",
-    "lastModifiedDate": "2026-11-12T16:19:07.097",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-126330",
-    "description": "Docker Sandboxes can silently republish a sandbox service after an operator removes its automatically assigned host-port mapping. The daemon removes the active binding but retains the original publication request, allowing a later port change or sandbox restart to publish the service again on a new host port. An attacker able to reach the restored endpoint may regain access to the service. Both TCP and UDP mappings are affected. Exposure is limited to the original bind address, which defaults to loopback. The issue is fixed in version 0.53.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126330",
-    "publishedDate": "2026-11-12T16:19:04.810",
-    "lastModifiedDate": "2026-11-12T16:19:04.810",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.4,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:A/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@docker.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-126329",
-    "description": "Docker Sandboxes reuses existing state and configuration directories without verifying their ownership. If sbx or sandboxd is run as root with HOME or, on Linux, XDG_STATE_HOME pointing to an attacker-controlled location, a local unprivileged user can substitute control-plane sockets and configuration trusted by the root process, potentially executing commands as root. Exploitation requires a privileged invocation with an attacker-influenced environment. The issue affects Linux and macOS and is fixed in version 0.53.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126329",
-    "publishedDate": "2026-11-12T16:19:04.663",
-    "lastModifiedDate": "2026-11-12T16:19:04.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "security@docker.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-6467",
-    "description": "PostgreSQL extension script schema mishandling executes arbitrary SQL",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6467",
-    "publishedDate": "Thu, 12 Nov 2026 15:17:51 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-6460",
-    "description": "Type confusion in PostgreSQL allows an object creator to execute arbitrary code as the operating system user running the database, via ALTER ... SET DATA TYPE primarily.  Other DDL attack routes exist, such as \"ALTER TABLE ... ADD COLUMN; ROLLBACK; ALTER TABLE ... ADD COLUMN\".  The system had inadequate tracking of typed values, and values were not self-identifying.  Stale values could appear in data dictionary entries, PL/pgSQL variables, and many other parts of the system.  PostgreSQL Versions before PostgreSQL 18.7, 17.12, 16.16, 15.20, and 14.25 are affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-6460",
-    "publishedDate": "2026-11-12T15:17:51.597",
-    "lastModifiedDate": "2026-11-12T15:17:51.597",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
         "impactScore": 5.9,
-        "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007"
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-18447",
-    "description": "Type confusion in PostgreSQL SQL-language functions allows an object creator to execute arbitrary code as the operating system user running the database, via an output parameter of type \"any\".  Versions before PostgreSQL 18.7, 17.12, 16.16, 15.20, and 14.25 are affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-18447",
-    "publishedDate": "2026-11-12T15:17:51.127",
-    "lastModifiedDate": "2026-11-12T15:17:51.127",
+    "id": "CVE-2026-126839",
+    "description": "A deserialization type-restriction control in the BSON serialization component can be bypassed because the check used to recognize a class of compiler-generated types relies on an overly permissive heuristic rather than a precise identification. An unauthorized party able to supply BSON content that an application later deserializes into a loosely typed member can cause types outside the intended allow-list to be constructed and populated with unauthorized party-supplied values inside the consuming application. This can lead to unexpected object state and errors in downstream application logic. No elevated privileges beyond the ability to place unauthorized party-influenced content in the deserialization path are required.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126839",
+    "publishedDate": "2026-11-13T00:20:13.080",
+    "lastModifiedDate": "2026-11-13T00:20:13.080",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 8.8,
+        "score": 4.2,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.5,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 2.3,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126792",
+    "description": "A memory-safety flaw in the key-management request-building component of the library can lead to an out-of-bounds write on the heap. A fixed-size output buffer is used under an assumption about cryptographic key size that is never validated, so when the library is embedded by a caller that supplies its own cryptographic callback implementation, data larger than the buffer can be written past its end. Exploitation requires the ability to control the embedding application's in-process key-management provider configuration, a high-privilege position. The demonstrated impact is memory corruption resulting in abnormal termination of the client process.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126792",
+    "publishedDate": "2026-11-13T00:20:12.877",
+    "lastModifiedDate": "2026-11-13T00:20:12.877",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:N/I:L/A:H",
+        "exploitabilityScore": 0.5,
+        "impactScore": 4.2,
+        "source": "cna@mongodb.com"
+      },
+      {
+        "score": 5.7,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:H/UI:N/VC:N/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@mongodb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126367",
+    "description": "@grpc/grpc-js implements the core functionality of gRPC purely in JavaScript, without a C++ addon. Before 1.13.2, and from 1.14.0 through 1.14.1, the @grpc/grpc-js-xds SafeRegexValueMatcher and PathSafeRegexValueMatcher add start and end anchors without grouping a supplied top-level alternation. An expression intended to match one of several complete values can therefore match a prefix, substring, or suffix. The affected matchers are used for route selection, xDS credential identity matching, and RBAC URL path, principal name, server name, and header rules. An ALLOW policy using an alternation can consequently accept a method, certificate identity, or header value outside the intended set, while a DENY policy becomes broader rather than permissive. This issue is fixed in versions 1.13.2 and 1.14.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126367",
+    "publishedDate": "2026-11-13T00:20:12.563",
+    "lastModifiedDate": "2026-11-13T00:20:12.563",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.5,
+        "source": "security-advisories@github.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-126366",
+    "description": "MessagePack for Ruby is an implementation of the MessagePack binary serialization format. Prior to 1.8.7, the Java-platform msgpack gem for JRuby allocated arrays and byte buffers directly from attacker-controlled array32, str32, and bin32 declared sizes before confirming that corresponding elements or bytes were available. A short MessagePack header could therefore trigger a very large allocation or sustained heap growth when an application decoded untrusted input through MessagePack.unpack or MessagePack::Unpacker, potentially exhausting the shared JVM heap. map32 and declared counts at or above 2^31 did not use the affected allocation behavior. This issue is fixed in version 1.8.7.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126366",
+    "publishedDate": "2026-11-13T00:20:12.397",
+    "lastModifiedDate": "2026-11-13T00:20:12.397",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.9,
-        "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "security-advisories@github.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-16240",
-    "description": "Use of externally-controlled format string in PostgreSQL pg_basebackup allows an attacker having already compromised a server to achieve disclosure from pg_basebackup memory, via backup manifest bytes.  The vulnerability does not return the improperly-read bytes back to the attacker's server, so a successful attack would need separate implementation-specific secrets for that.  Integrity impact is unlikely; in particular, the applicable formatter does not support %n.  Versions before PostgreSQL 18.7, 17.12, 16.16, 15.20, and 14.25 are affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16240",
-    "publishedDate": "2026-11-12T15:17:50.170",
-    "lastModifiedDate": "2026-11-12T15:17:50.170",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-16237",
-    "description": "Improper protection in PostgreSQL INSERT ... ON CONFLICT on auto-updatable views allows an attacker having INSERT and UPDATE privileges on the view to read and modify every row in the view's base table, via iterated INSERT ... ON CONFLICT DO UPDATE.  This bypasses the view's WHERE condition, whether or not the view is a security_barrier view.  Versions before PostgreSQL 18.7, 17.12, 16.16, 15.20, and 14.25 are affected.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16237",
-    "publishedDate": "2026-11-12T15:17:50.030",
-    "lastModifiedDate": "2026-11-12T15:17:50.030",
+    "id": "CVE-2026-126365",
+    "description": "Astro is a web framework for content-driven websites. Prior to @astrojs/prism 4.1.2, and from @astrojs/markdoc 0.3.0 until 2.1.2, runHighlighterWithAstro() returned code unchanged when Prism had no grammar for the requested language, and callers inserted that result as raw HTML. A code block labeled with an unsupported language could therefore render embedded HTML and script instead of displaying it as text. The Prism component was affected when applications supplied untrusted code with an unsupported or attacker-controlled lang, and the @astrojs/markdoc prism() extension was affected for less-trusted content authors even when Markdoc's ordinary HTML rendering was disabled. This issue is fixed in @astrojs/prism 4.1.2 and @astrojs/markdoc 2.1.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126365",
+    "publishedDate": "2026-11-13T00:20:12.243",
+    "lastModifiedDate": "2026-11-13T00:20:12.243",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -386,109 +465,11 @@
         "score": 5.4,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 2.5,
-        "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.3,
+        "impactScore": 2.7,
+        "source": "security-advisories@github.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-14661",
-    "description": "External control of file name in PostgreSQL dblink and CREATE/ALTER SUBSCRIPTION allows a user to achieve persistent denial of service, via appending invalid data to a chosen file.  Specifically, the \"sslkeylogfile\" connection parameter appends data, in NSS keylog format, to a file of the user's choosing.  This \"sslkeylogfile\" mechanism cannot add arbitrary bytes.  Within major version 18, minor versions before PostgreSQL 18.7 are affected.  Versions before PostgreSQL 18 are also affected if libpq version 18 or later is installed and in use by the server.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14661",
-    "publishedDate": "2026-11-12T15:17:49.890",
-    "lastModifiedDate": "2026-11-12T15:17:49.890",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.1,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 5.2,
-        "source": "f86ef6dc-4d3a-42ad-8f28-e6d5547a5007"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-126998",
-    "description": "A security flaw has been discovered in JeecgBoot up to 3.9.5. This vulnerability affects the function OpenApiController.call of the file /openapi/call of the component Authentication Filter. The manipulation results in server-side request forgery. The attack can be executed remotely. The exploit has been released to the public and may be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126998",
-    "publishedDate": "2026-11-12T15:17:49.497",
-    "lastModifiedDate": "2026-11-12T15:17:49.823",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-126997",
-    "description": "A vulnerability was identified in JeecgBoot up to 3.9.6. This affects the function RestTemplate.exchange of the file org/jeecg/modules/airag/flow/c/a.class of the component flow-run Endpoint. The manipulation leads to server-side request forgery. Remote exploitation of the attack is possible. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126997",
-    "publishedDate": "2026-11-12T15:17:49.220",
-    "lastModifiedDate": "2026-11-12T15:17:49.437",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-126996",
-    "description": "SakanaAI text-to-LoRA Checkpoint Loading model_loading.py get_tokenizer path traversal",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126996",
-    "publishedDate": "Thu, 12 Nov 2026 15:17:48 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-123790",
-    "description": "Unauthenticated Path Traversal in ComfyUI-Easy-Use Allows Remote Code Execution",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-123790",
-    "publishedDate": "Thu, 12 Nov 2026 15:17:46 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   }
 ]
