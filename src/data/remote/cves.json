@@ -1,5 +1,132 @@
 [
   {
+    "id": "CVE-2026-129456",
+    "description": "In FRRouting, bgpd accepts a Tunnel Encapsulation attribute (type 23) whose outer TLV length does not match the length of the attribute: the mismatch is only logged and the attribute is processed anyway. A BGP neighbor can send UPDATE messages carrying such an attribute that put the reference count of the attribute's interned sub-TLV chain out of balance, so that the chain is freed while routes stored by bgpd (Adj-RIB-In entries and RIB paths) still point to it. When those routes are later replaced, withdrawn or cleared, for example when the session goes down, bgpd reads the freed memory, decrements a reference count inside it and frees it a second time. In the reporter's build without AddressSanitizer this ended in an assertion failure in bgpd's memory accounting, aborting bgpd and dropping all BGP sessions on the router, and the neighbor can repeat it each time bgpd restarts. Because freed heap memory is written to and freed again, consequences beyond a crash cannot be ruled out. An established BGP session is required. bgpd processes attribute 23 from every neighbor, including eBGP neighbors, unless it is explicitly discarded, although RFC 9012 requires it to be filtered on eBGP sessions by default. The issue was reproduced with \"soft-reconfiguration inbound\" configured for the neighbor, and the reporter observed that the crash does not occur on every attempt.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129456",
+    "publishedDate": "2026-11-14T20:17:40.060",
+    "lastModifiedDate": "2026-11-14T20:17:40.060",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:N/R:A/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "57a55968-44ac-464c-a794-6ba3baad09c4"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2015-10149",
+    "description": "Dancer versions before 1.3400 for Perl pass unvalidated session ids from the session cookie to the session engine.\n\nread_session_id returns the cookie value as the session id without checking its characters, and Dancer hands it to the session engine to load the session.\n\nA remote attacker may cause path traversal or injection in a session engine that uses the id in a file path, cache command or query without checking it.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2015-10149",
+    "publishedDate": "2026-11-14T20:17:39.203",
+    "lastModifiedDate": "2026-11-14T23:16:46.923",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-129447",
+    "description": "Kroki before 0.36.0 contains a reflected cross-site scripting vulnerability in the /dbml/svg endpoint that allows unauthenticated attackers to inject javascript: hyperlinks by supplying crafted DBML table url, headercolor, or TableGroup color settings. Attackers can send a crafted SVG link that, when opened and the table header clicked, executes attacker JavaScript in the Kroki origin.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129447",
+    "publishedDate": "2026-11-14T18:17:21.100",
+    "lastModifiedDate": "2026-11-14T18:17:21.100",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.1,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 2.7,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129267",
+    "description": "A vulnerability was found in sergix44 XBackBone up to 3.8.2. Impacted is the function MediaController::getRawById of the file app/Controllers/MediaController.php. The manipulation results in cross site scripting. It is possible to launch the attack remotely. The exploit has been made public and could be used. The pull request to fix this issue awaits acceptance.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129267",
+    "publishedDate": "2026-11-14T18:17:20.077",
+    "lastModifiedDate": "2026-11-14T18:17:21.050",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.5,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.1,
+        "impactScore": 1.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129264",
+    "description": "sox_ng VOC Decoder voc.c read_samples_voc out-of-bounds write",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129264",
+    "publishedDate": "Sat, 14 Nov 2026 17:16:53 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-129262",
+    "description": "A weakness has been identified in Wuxi Wubang Security Software Wubang Five-in-One Safety Production Management Information System up to 3.5. Affected by this vulnerability is the function DiyFileUpload of the file /ws.asmx. This manipulation causes unrestricted upload. Remote exploitation of the attack is possible. The exploit has been made available to the public and could be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129262",
+    "publishedDate": "2026-11-14T17:16:52.833",
+    "lastModifiedDate": "2026-11-14T17:16:52.990",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.3,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.5,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
     "id": "CVE-2026-129261",
     "description": "A vulnerability was found in Kingston FURY CTRL RGB Control Software up to 2.0.66.0. The impacted element is an unknown function in the library NTIOLib_X64.sys of the component IOCTL Handler. Performing a manipulation results in exposed ioctl with insufficient access control. The attack is only possible with local access.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-129261",
@@ -30,32 +157,33 @@
   },
   {
     "id": "CVE-2026-129260",
-    "description": "A security vulnerability has been detected in Mereithhh VanBlog up to 0.54.0. This vulnerability affects the function fs.readFileSync of the file local.provider.ts of the component Custom Page Handler. The manipulation of the argument path leads to path traversal. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used. Upgrading to version test-20261013 is able to resolve this issue. The identifier of the patch is d63aa163f10b6dc1080e2368fe8e71aa95b765cb. Upgrading the affected component is advised.",
+    "description": "Mereithhh VanBlog Custom local.provider.ts fs.readFileSync path traversal",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-129260",
-    "publishedDate": "2026-11-14T16:17:04.297",
-    "lastModifiedDate": "2026-11-14T16:17:04.450",
+    "publishedDate": "Sat, 14 Nov 2026 16:17:04 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:L/A:L",
-        "exploitabilityScore": 2.3,
-        "impactScore": 3.7,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:L/SI:L/SA:L/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-127115",
+    "description": "BuddyForms &lt;= 2.10.6 - Unauthenticated Stored Cross-Site Scripting via 'title' Attribute of [bf_login_form] Shortcode",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127115",
+    "publishedDate": "Sat, 14 Nov 2026 16:17:04 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-120687",
+    "description": "Lightbox &amp; Modal Popup WordPress Plugin &lt;= 2.8.7 - Unauthenticated Stored DOM-Based Cross-Site Scripting via Image Alt Attribute in .wp-caption Containers",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120687",
+    "publishedDate": "Sat, 14 Nov 2026 16:17:03 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
   },
   {
     "id": "CVE-2026-116753",
@@ -76,36 +204,6 @@
         "source": "security@wordfence.com"
       }
     ]
-  },
-  {
-    "id": "CVE-2026-127115",
-    "description": "The BuddyForms plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'buddyforms_form_content' parameter in all versions up to, and including, 2.10.6 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. This is exploitable when a form configured with the public_submit option is published — a condition met by the plugin's bundled Post Simple template out of the box.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127115",
-    "publishedDate": "2026-11-14T16:17:04.130",
-    "lastModifiedDate": "2026-11-14T16:17:04.253",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 2.7,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-120687",
-    "description": "Lightbox &amp; Modal Popup WordPress Plugin &lt;= 2.8.7 - Unauthenticated Stored DOM-Based Cross-Site Scripting via Image Alt Attribute in .wp-caption Containers",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120687",
-    "publishedDate": "Sat, 14 Nov 2026 15:32:26 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
   },
   {
     "id": "CVE-2026-110531",
@@ -158,32 +256,13 @@
   },
   {
     "id": "CVE-2026-129258",
-    "description": "A vulnerability was identified in Tenda AC18 15.03.05.05_multi/15.03.05.19 Build 6318. Affected by this vulnerability is an unknown functionality of the file /cgi-bin/upgrade of the component Firmware Upgrade Handler. Such manipulation of the argument upgradeFile leads to insufficient verification of data authenticity. The attack may be launched remotely. The exploit is publicly available and might be used.",
+    "description": "Tenda AC18 Firmware Upgrade upgrade data authenticity",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-129258",
-    "publishedDate": "2026-11-14T15:16:58.257",
-    "lastModifiedDate": "2026-11-14T15:16:58.433",
+    "publishedDate": "Sat, 14 Nov 2026 15:16:58 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 2.3,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.5,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
     "id": "CVE-2011-10042",
@@ -217,23 +296,52 @@
   },
   {
     "id": "CVE-2026-18053",
-    "description": "MemberDash &lt;= 1.8.7 - Authenticated (Subscriber+) Privilege Escalation to Administrator via Edit Profile 'id' Parameter",
+    "description": "The MemberDash plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 1.8.7. This is due to a mass-assignment vulnerability in the `user_account_manager()` function's edit_profile branch, where all submitted `$_POST` fields are iterated and directly assigned to the current member object via the `MS_Model` `__set()` magic method with no field allowlist and no capability or ownership check on the submitted `id` parameter. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject an arbitrary user ID via the `id` parameter — overwriting any WordPress user's email address and password, including the site administrator's — and subsequently use those modified credentials to gain full administrative access to the site.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-18053",
-    "publishedDate": "Sat, 14 Nov 2026 13:17:22 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-11-14T13:17:22.990",
+    "lastModifiedDate": "2026-11-14T13:17:23.103",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 8.8,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-129433",
-    "description": "Dokploy before 0.31.1 OS Command Injection via Compose Backup serviceName",
+    "description": "Dokploy before 0.31.1 contains an OS command injection vulnerability in getComposeContainerCommand() that allows authenticated organization members to execute shell commands via the serviceName parameter. Attackers can store serviceName values with shell metacharacters through backup.create or backup.update tRPC procedures, executing commands as root when scheduled backups run and taking over the host via the mounted Docker socket.",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-129433",
-    "publishedDate": "Sat, 14 Nov 2026 13:17:22 +0000",
-    "lastModifiedDate": "",
+    "publishedDate": "2026-11-14T13:17:22.820",
+    "lastModifiedDate": "2026-11-14T13:17:22.940",
     "vendors": [],
     "products": [],
-    "cvssScores": []
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 9.4,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
   },
   {
     "id": "CVE-2026-129432",
@@ -266,61 +374,23 @@
   },
   {
     "id": "CVE-2026-129431",
-    "description": "Ettercap through 0.8.5.1 contains a heap out-of-bounds read vulnerability in dissector_socks() in src/dissectors/ec_socks.c that allows network-adjacent attackers to read heap memory via unchecked SOCKS5 username/password lengths. Attackers can send a crafted SOCKS5 authentication packet observed by Ettercap to read up to 255 bytes past the heap buffer, disclosing memory printed and logged as captured credentials.",
+    "description": "Ettercap through 0.8.5.1 Heap Out-of-Bounds Read via SOCKS5 Dissector",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-129431",
-    "publishedDate": "2026-11-14T13:17:22.533",
-    "lastModifiedDate": "2026-11-14T13:17:22.533",
+    "publishedDate": "Sat, 14 Nov 2026 13:17:22 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
     "id": "CVE-2026-129430",
-    "description": "Axeloz Filesharing before 2.14.3 contains a stored cross-site scripting vulnerability that allows authenticated users to inject script by storing raw HTML or javascript: Markdown links in bundle descriptions. Recipients viewing the public bundle preview page execute the script via Alpine x-html, letting attackers steal the owner_token from localStorage and issue owner-scoped requests against victim bundles.",
+    "description": "axeloz filesharing before 2.14.3 Stored XSS via Bundle Description Markdown Links",
     "link": "https://cvefeed.io/vuln/detail/CVE-2026-129430",
-    "publishedDate": "2026-11-14T13:17:22.387",
-    "lastModifiedDate": "2026-11-14T13:17:22.387",
+    "publishedDate": "Sat, 14 Nov 2026 13:17:22 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   },
   {
     "id": "CVE-2026-129429",
@@ -413,124 +483,6 @@
         "version": "CVSS 4.0",
         "severity": "LOW",
         "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-120522",
-    "description": "The Cloud Storage Manager for Fluent Forms – Google Drive, Dropbox, OneDrive, S3 Uploads plugin for WordPress is vulnerable to Arbitrary File Write in all versions up to, and including, 1.2.0. This is due to missing authorization checks on the `connection/{driver}/save` and `/download/single-file` REST endpoints, combined with insufficient path validation in the Google Drive `downloadFile()` function, where the Google Drive metadata `name` value is concatenated into a local path without `basename()`, `sanitize_file_name()`, or canonical path validation. This makes it possible for unauthenticated attackers to store attacker-controlled Google Drive credentials, trigger a download of an attacker-owned file whose provider-returned filename contains path traversal, and write attacker-controlled content outside the intended `downloads` directory. When the written file has a PHP extension and lands in a web-accessible location, this can lead to remote code execution.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120522",
-    "publishedDate": "2026-11-14T13:17:20.403",
-    "lastModifiedDate": "2026-11-14T13:17:20.520",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.8,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.9,
-        "source": "security@wordfence.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2025-71465",
-    "description": "kolkov/angular-editor before 3.0.3 XSS via refreshView()",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-71465",
-    "publishedDate": "Sat, 14 Nov 2026 13:17:20 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2025-71464",
-    "description": "kolkov/angular-editor before 3.0.4 XSS via toggleEditorMode()",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2025-71464",
-    "publishedDate": "Sat, 14 Nov 2026 13:17:19 +0000",
-    "lastModifiedDate": "",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-129427",
-    "description": "Stored XSS via avatar upload chained with an authentication bypass in /Attachments leads to ATO\nin Cervantes version v1.3-beta could allow an attacker to execute arbitrary code in another user's browser with elevated privileges",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129427",
-    "publishedDate": "2026-11-14T12:17:44.720",
-    "lastModifiedDate": "2026-11-14T12:17:44.830",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.8,
-        "source": "772f0079-75c2-41ca-913e-d9072716578b"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-129251",
-    "description": "A vulnerability was detected in hrshadhin CloudSchool up to 3.0.1. This affects an unknown function of the file app/Http/Controllers/Backend/EventController.php of the component Event Description Handler. The manipulation of the argument data results in cross site scripting. It is possible to launch the attack remotely. The exploit is now public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129251",
-    "publishedDate": "2026-11-14T12:17:44.520",
-    "lastModifiedDate": "2026-11-14T12:17:44.670",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 2.4,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 0.9,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 1.9,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-129250",
-    "description": "A security vulnerability has been detected in Edimax BR6478ACV2 1.23. The impacted element is the function formPPTPSetup of the file webs. The manipulation of the argument pptpUserName leads to buffer overflow. It is possible to initiate the attack remotely. The exploit has been disclosed publicly and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129250",
-    "publishedDate": "2026-11-14T12:17:44.240",
-    "lastModifiedDate": "2026-11-14T12:17:44.480",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.9,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
-        "exploitabilityScore": 3.1,
-        "impactScore": 6,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 8.6,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
