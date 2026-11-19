@@ -1,709 +1,462 @@
 [
   {
-    "id": "CVE-2026-132560",
-    "description": "A flaw has been found in MemTensor memmy-agent up to 1.1.1. This impacts an unknown function of the file /api/v1/memory/logs of the component Memory HTTP Service. This manipulation causes information disclosure. The attack is restricted to local execution. The exploit has been published and may be used. Patch name: 421ce6cb33861255d34c3887d39aced009b3ce9b. It is suggested to install a patch to address this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132560",
-    "publishedDate": "2026-11-19T01:16:49.277",
-    "lastModifiedDate": "2026-11-19T01:16:49.453",
+    "id": "CVE-2026-92613",
+    "description": "In Eclipse iceoryx-rs, versions 0.0.11 to 0.0.13 and 0.1.0 as well as on the latest main branch.\n\n\n\n`SampleReceiver::<T>::take()` and `Sample::<T>::deref()` are safe functions that hand the caller a `&T` pointing at a chunk written by another iceoryx process, but the subscriber path neither requires `T: ShmSend` nor verifies that the received chunk is at least `size_of::<T>()` bytes / `align_of::<T>()`-aligned. A peer process that publishes an undersized chunk, or any chunk at all when the subscriber chose a pointer-bearing `T`, drives a `#![forbid(unsafe_code)]` subscriber into out-of-bounds reads of adjacent shared-memory chunks or dereference of a publisher-controlled pointer.\n\n\n\nResolution:\n\n\n\nIt will not be fixed since this is a known limitation in iceoryx as it is the users responsibility to specify the same data type on sender and receiver side.\n\n\n\n[iceoryx2](https://github.com/eclipse-iceoryx/iceoryx2) is the successor of iceoryx-rs where the API is designed to prevent this by default.\n\n\n\nIt is strongly recommended to migrate to iceoryx2 which is actively maintained and receives security support.\n\n\n\nThe iceoryx-rs package has officially reached End-of-life and will not receive any features, bugfixes or security fixes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-92613",
+    "publishedDate": "2026-11-19T10:17:29.493",
+    "lastModifiedDate": "2026-11-19T10:17:29.493",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.3,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.8,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 1.9,
+        "score": 1,
         "version": "CVSS 4.0",
         "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:H/AT:P/PR:H/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "cna@vuldb.com"
+        "source": "emo@eclipse.org"
       }
     ]
   },
   {
-    "id": "CVE-2026-132286",
-    "description": "A security vulnerability has been detected in yangzongzhuan RuoYi up to 4.8.3. The impacted element is an unknown function of the file ruoyi-admin/src/main/java/com/ruoyi/web/controller/system/SysLoginController.java of the component User Registration Endpoint. The manipulation of the argument deptId/status/userId/createBy leads to improper input validation. Remote exploitation of the attack is possible. The exploit has been disclosed publicly and may be used. The identifier of the patch is d7ad977c9ca64e9b081c893ec56fe08f51f66698. It is recommended to apply a patch to fix this issue.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132286",
-    "publishedDate": "2026-11-19T01:16:49.057",
-    "lastModifiedDate": "2026-11-19T01:16:49.220",
+    "id": "CVE-2026-85776",
+    "description": "The WP Duplicate – WordPress Migration Plugin plugin for WordPress is vulnerable to Missing Authorization in versions up to, and including, 1.1.11. This is due to a missing capability check and missing nonce check on the start_zip_creation, start_zip_download, local_sync_get_init_root_files, and local_sync_get_files_by_key AJAX actions in the start_zip_creation_dev() and sibling functions. This makes it possible for authenticated attackers, with subscriber-level access and above, to overwrite the plugin's prod_site_url setting so it points at an attacker-controlled host and enumerate arbitrary server directories, which when combined with a subsequent administrator-triggered sync results in an unsigned attacker-supplied ZIP archive being fetched, extracted via a WordPress-independent bridge deployed under the web root, resulting in remote code execution on the affected site.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-85776",
+    "publishedDate": "2026-11-19T10:17:29.313",
+    "lastModifiedDate": "2026-11-19T10:17:29.450",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.3,
+        "score": 7.5,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.6,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-14492",
+    "description": "The WP Duplicate – WordPress Migration Plugin plugin for WordPress is vulnerable to Remote Code Execution in all versions up to, and including, 1.1.11 via the save_single_batch_file function. This is due to a PHP type-juggling authentication bypass via loose != comparison with no is_string() guard, combined with unsanitized base64-decoded path construction in save_single_batch_file() lacking any directory traversal containment. This makes it possible for authenticated attackers, with custom-level access and above, to execute code on the server. Exploitation requires that the site owner has completed the plugin's initial setup so that the site_type and prod_key_random_id options are non-empty, though any non-empty secret value is bypassable via the type-juggling flaw.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14492",
+    "publishedDate": "2026-11-19T10:17:28.927",
+    "lastModifiedDate": "2026-11-19T10:17:29.050",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-91139",
-    "description": "Deco BE65 firmware contains a cryptographic weakness in the local web-management authentication flow due to the use of insufficient RSA key sizes. The /login?form=auth endpoint returns a 512-bit RSA public key and sequence value. \n\nSuccessful exploitation may compromise the cryptographic protections applied to local web-management authentication traffic.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91139",
-    "publishedDate": "2026-11-19T00:17:48.350",
-    "lastModifiedDate": "2026-11-19T00:17:48.350",
+    "id": "CVE-2026-14491",
+    "description": "The WP Duplicate – WordPress Migration Plugin plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 1.1.11 via the 'file_name' parameter. This makes it possible for unauthenticated attackers to read the contents of arbitrary files on the server, which can contain sensitive information. The authentication bypass requires submitting the JSON boolean `true` as the `prod_key_random_id` value, which coerces against any non-empty stored secret so that the loose `!=` comparison evaluates to false, skipping the rejection branch entirely without knowledge of the secret.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-14491",
+    "publishedDate": "2026-11-19T10:17:28.757",
+    "lastModifiedDate": "2026-11-19T10:17:28.893",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:P/PR:N/UI:N/VC:H/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-91138",
-    "description": "The Deco BE65 v3 firmware contains a shared hard-coded password hash for the root account in /etc/shadow. Where the corresponding credential is accepted by a production authentication path, an attacker with existing unprivileged shell access may recover or otherwise obtain the plaintext password and use it to escalate privileges. \n\nSuccessful exploitation may grant root-level access to the affected device.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-91138",
-    "publishedDate": "2026-11-19T00:17:48.197",
-    "lastModifiedDate": "2026-11-19T00:17:48.197",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:H/SC:H/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "f23511db-6c3e-4e32-a477-6aa17d310630"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132778",
-    "description": "GPAC before 26.07.0 contains an uncontrolled recursion vulnerability in gf_sg_proto_field_is_sftime_offset() in src/scenegraph/vrml_proto.c that allows attackers to crash MP4Box via crafted files. Attackers can supply an MP4 file whose BIFS scene contains cyclic PROTO IS relations, causing unbounded recursion that exhausts the stack and causes denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132778",
-    "publishedDate": "2026-11-19T00:17:47.800",
-    "lastModifiedDate": "2026-11-19T00:17:47.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
+        "score": 7.5,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-132777",
-    "description": "GPAC MP4Box before 26.07.0 contains a use-after-free vulnerability in Conditional_execute() because SetupConditional() stores a BIFS decoder pointer that gf_sm_load_run_isom() later frees without clearing. Attackers can supply a crafted MP4 file with a BIFS Conditional node processed with -nstatx to crash MP4Box and potentially corrupt the heap.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132777",
-    "publishedDate": "2026-11-19T00:17:47.633",
-    "lastModifiedDate": "2026-11-19T00:17:47.757",
+    "id": "CVE-2026-126631",
+    "description": "A flaw was found in OpenSCAP. This vulnerability allows for information disclosure when performing offline scans of untrusted filesystem images, such as container images or virtual machine (VM) disks. Because the scanner does not properly restrict symbolic link (symlink) resolution to the target image's root directory, an attacker can supply a crafted image containing links pointing to files on the host system. When the scan runs, typically with elevated privileges, OpenSCAP follows these links to read sensitive host files and expose their contents in the scan report or manipulate compliance results.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-126631",
+    "publishedDate": "2026-11-19T10:17:28.410",
+    "lastModifiedDate": "2026-11-19T10:17:28.567",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.6,
+        "score": 7.1,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:H/I:L/A:N",
         "exploitabilityScore": 1.8,
         "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "secalert@redhat.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-132776",
-    "description": "GPAC MP4Box before 26.07.0 contains a use-after-free vulnerability in the XMT loader that allows attackers to crash the process by supplying crafted XMT files. Attackers can assign a second node to an SFNode command field so xmt_node_end() frees a forward-referenced child still cached in peeked_nodes, triggering a crash during DEF lookup in xmt_find_node().",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132776",
-    "publishedDate": "2026-11-19T00:17:47.473",
-    "lastModifiedDate": "2026-11-19T00:17:47.590",
+    "id": "CVE-2026-110728",
+    "description": "The AIKTP plugin for WordPress is vulnerable to Authorization Bypass via Predictable Token in all versions up to, and including, 5.0.7. The vulnerability exists because the plugin's sync token (`aiktpz_token`) is generated using PHP's non-cryptographic `uniqid()` function — producing a wall-clock-derived value with approximately one million microsecond candidates per uncertain generation second — while the unauthenticated, unthrottled REST endpoint `/wp-json/aiktp/checkToken` (registered with `permission_callback => __return_true`) acts as a public brute-force oracle for the token; simultaneously, the capability checks in `check_valid_token` and its wrappers (`verify_aiktp_token_with_edit_capability`, `verify_aiktp_token_with_upload_capability`) inspect only a server-side stored Administrator account (option `aiktp_author`) rather than the actual REST caller, meaning possession of the token alone grants Administrator-equivalent authority to any external request. This makes it possible for unauthenticated attackers to recover the sync token and then invoke `POST /wp-json/aiktp/createpost` to publish arbitrary posts attributed to a site Administrator, `POST /wp-json/aiktp/doUpdatePostWithImageURL` to overwrite the body content of any existing post, and `POST /wp-json/aiktp/doUploadImageToWP` to import remote media and attach it as the featured image of any post. Additionally, when the `aiktpz_token` option has never been initialized, the `checkToken` oracle returns success for an empty token submission due to a loose comparison in `check_valid_token`, providing a zero-effort bypass that requires no brute-forcing whatsoever.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110728",
+    "publishedDate": "2026-11-19T10:17:26.953",
+    "lastModifiedDate": "2026-11-19T10:17:28.020",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132775",
-    "description": "GPAC before 26.07.0 contains a use-after-free vulnerability in xmt_node_end() that allows attackers to corrupt memory by attaching nodes from unrelated proto sub-graphs to field-replace commands. Attackers can supply a crafted XMT scene buffering such a command in a Conditional node, causing gf_node_try_destroy() to access the freed node, crashing MP4Box and corrupting the heap.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132775",
-    "publishedDate": "2026-11-19T00:17:47.310",
-    "lastModifiedDate": "2026-11-19T00:17:47.430",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132774",
-    "description": "Attendize through 2.8.0 contains a cross-account authorization bypass vulnerability in EventAttendeesController::postMessageAttendees() that allows authenticated organisers to message other accounts' attendees by supplying a foreign event_id. Attackers, including self-registered organisers, can post to the attendees message endpoint for another event to send arbitrary emails to all attendees, enabling phishing and impersonation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132774",
-    "publishedDate": "2026-11-19T00:17:47.157",
-    "lastModifiedDate": "2026-11-19T00:17:47.157",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
       {
         "score": 5.3,
-        "version": "CVSS 4.0",
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 1.4,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-132773",
-    "description": "Attendize through 2.8.0 contains an authorization bypass vulnerability in EventOrdersController::postCancelOrder() that allows authenticated organisers to cancel attendees belonging to other accounts' events. Attackers can cancel one of their own orders while supplying foreign attendee IDs, which Attendee::findFromSelection() loads unfiltered, invalidating tickets for any event on the installation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132773",
-    "publishedDate": "2026-11-19T00:17:46.997",
-    "lastModifiedDate": "2026-11-19T00:17:46.997",
+    "id": "CVE-2026-99320",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nipv6: raw: fix use-after-free in rawv6_send_hdrinc()\n\nrawv6_send_hdrinc() caches the route before handing the skb to\nl3mdev_ip6_out(). The VRF output path may replace skb->dst and release\nthe original route, leaving the cached pointer stale.\n\nThe function later dereferences that pointer for statistics accounting\nand as the output device passed to NF_HOOK(). Its RCU read-side critical\nsection starts after l3mdev_ip6_out(), so it cannot prevent the old route\nfrom being reclaimed in between.\n\nReload the route from the current skb destination after\nl3mdev_ip6_out() returns.\n\nKASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route\nallocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and\nthe related RCU callback queued from vrf_l3_out().",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-99320",
+    "publishedDate": "2026-11-19T09:18:18.910",
+    "lastModifiedDate": "2026-11-19T09:18:18.910",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-132043",
+    "description": "In Eclipse Yasson versions 3.0 to 3.0.5, a race condition (CWE-362) exists in the handling of @JsonbNumberFormat. Yasson creates one java.text.NumberFormat instance per annotated property and shares it across all threads that use the same Jsonb instance. NumberFormat is not thread-safe, and the deserializer called parse() on it without synchronization. When multiple threads deserialize concurrently, a thread can receive a numeric value that belongs to another thread's input, receive an incorrect value, or fail with an exception. A remote attacker who can send concurrent requests to an application that deserializes untrusted JSON this way may cause incorrect data to be processed or cause another user's value to be returned. Exploitation requires that the application use @JsonbNumberFormat with a shared Jsonb instance and that the attacker win a timing race. This issue is fixed in version 3.0.6 by synchronizing access to the shared NumberFormat instances.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132043",
+    "publishedDate": "2026-11-19T09:17:43.620",
+    "lastModifiedDate": "2026-11-19T09:17:43.620",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "emo@eclipse.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-101167",
+    "description": "Missing Authorization vulnerability in Dataprom Bilişim Teknolojileri LTD. ŞTİ. DataPer Access Control and Security Systems allows Privilege Escalation.\n\nThis issue affects DataPer Access Control and Security Systems: before v14.15(2026/11).",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-101167",
+    "publishedDate": "2026-11-19T09:17:37.090",
+    "lastModifiedDate": "2026-11-19T09:17:37.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
         "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
+        "impactScore": 3.6,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129048",
+    "description": "Improper Control of Generation of Code ('Code Injection') vulnerability in Jacob N. Breetvelt WP Photo Album Plus wp-photo-album-plus allows Remote Code Inclusion.This issue affects WP Photo Album Plus: from n/a through 9.3.06.003.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129048",
+    "publishedDate": "2026-11-19T08:17:11.650",
+    "lastModifiedDate": "2026-11-19T08:17:11.763",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.9,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.1,
+        "impactScore": 6,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129030",
+    "description": "Exposure of Sensitive System Information to an Unauthorized Control Sphere vulnerability in Mamunur Rashid ShopBuilder – Elementor WooCommerce Builder Addons shopbuilder allows Retrieve Embedded Sensitive Data.This issue affects ShopBuilder – Elementor WooCommerce Builder Addons: from n/a through 3.4.3.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129030",
+    "publishedDate": "2026-11-19T08:17:11.507",
+    "lastModifiedDate": "2026-11-19T08:17:11.620",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129014",
+    "description": "Missing Authorization vulnerability in DynamiApps Frontend Admin by DynamiApps acf-frontend-form-element allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Frontend Admin by DynamiApps: from n/a through 3.30.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129014",
+    "publishedDate": "2026-11-19T08:17:11.367",
+    "lastModifiedDate": "2026-11-19T08:17:11.473",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.5,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129013",
+    "description": "Missing Authorization vulnerability in Deepen Bajracharya Video Conferencing with Zoom video-conferencing-with-zoom-api allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Video Conferencing with Zoom: from n/a through 4.6.12.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129013",
+    "publishedDate": "2026-11-19T08:17:11.223",
+    "lastModifiedDate": "2026-11-19T08:17:11.337",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129001",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Gabe Livan Asset CleanUp: Page Speed Booster wp-asset-clean-up allows Reflected XSS.This issue affects Asset CleanUp: Page Speed Booster: from n/a through 1.4.0.6.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129001",
+    "publishedDate": "2026-11-19T08:17:11.080",
+    "lastModifiedDate": "2026-11-19T08:17:11.193",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
       {
         "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-128999",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Saphali Saphali Woocommerce Lite saphali-woocommerce-lite allows Stored XSS.This issue affects Saphali Woocommerce Lite: from n/a through 2.0.2.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128999",
+    "publishedDate": "2026-11-19T08:17:10.913",
+    "lastModifiedDate": "2026-11-19T08:17:11.043",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.7,
+        "source": "audit@patchstack.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-112163",
+    "description": "Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Kayaport Ödeme Kuruluşu A.Ş. BulutTahsilat – Virtual POS Infrastructure allows Cross-Site Scripting (XSS).\n\nThis issue affects BulutTahsilat – Virtual POS Infrastructure: through 2026-11-05.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-112163",
+    "publishedDate": "2026-11-19T08:17:07.317",
+    "lastModifiedDate": "2026-11-19T08:17:07.317",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 1.4,
+        "source": "iletisim@usom.gov.tr"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-19609",
+    "description": "Cross-site scripting in the embedded co-browsing feature in Unblu inc. Unblu Spark 7.0 through 7.57.9 and 8.0 before 8.40.2, on on-premises and cloud deployments, allows an unauthenticated remote attacker in the visitor role to execute arbitrary JavaScript in the browser of an agent taking part in the attacker's co-browsing session, via manipulated synchronized page attributes of the co-browsed page.\n\n\n\nThe JavaScript runs in the context and under the identity of the agent's session in the Agent Desk or the Single Conversation Desk.\n\n\n\nExploitation requires an agent to join an embedded co-browsing session with the attacker. Mobile co-apping isn't affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19609",
+    "publishedDate": "2026-11-19T07:17:12.243",
+    "lastModifiedDate": "2026-11-19T07:17:12.243",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "vulnerability@ncsc.ch"
       }
     ]
   },
   {
-    "id": "CVE-2026-132772",
-    "description": "GPAC MP4Box before 26.07.0 contains a use-after-free vulnerability in the XMT parser that leaves parser->command_buffer pointing into a freed InputSensor node. Attackers can supply a crafted XMT scene file triggering a parse error so xmt_node_start() writes NULL into freed memory, corrupting the heap and crashing MP4Box.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132772",
-    "publishedDate": "2026-11-19T00:17:46.837",
-    "lastModifiedDate": "2026-11-19T00:17:46.957",
+    "id": "CVE-2026-132825",
+    "description": "Ruby before 3.3.14, 3.4.13, and 4.0.10 has a heap-based buffer overflow during case conversion. One byte can be written outside a buffer for, for example, ISO-8859-1 or Windows-1252.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132825",
+    "publishedDate": "2026-11-19T07:17:11.740",
+    "lastModifiedDate": "2026-11-19T07:17:11.740",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 6.6,
+        "score": 7.4,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 1.4,
+        "impactScore": 5.9,
+        "source": "cve@mitre.org"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-110462",
+    "description": "The Comelit 1456B Multi-User Gateway, in firmware versions up to and including 2.10.0, allows a user authenticated to the web interface with the Installer role to export a system configuration backup. The resulting backup file contains the configured passwords for all privileged roles",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110462",
+    "publishedDate": "2026-11-19T07:17:09.183",
+    "lastModifiedDate": "2026-11-19T07:17:09.183",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.6,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "db4dfee8-a97e-4877-bfae-eba6d14a2166"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-110461",
+    "description": "The Comelit 1456B Multi-User Gateway, in firmware versions up to and including 2.10.0, is configured with static default passwords for multiple privileged roles. None of these passwords are required to be changed during initial configuration, and they remain at their default values unless the administrator changes them manually. An attacker with network access to the device can authenticate using these default credentials and gain administrative control.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-110461",
+    "publishedDate": "2026-11-19T07:17:08.770",
+    "lastModifiedDate": "2026-11-19T07:17:08.770",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "db4dfee8-a97e-4877-bfae-eba6d14a2166"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-129446",
+    "description": "The WPO365 | SEAMLESS WORDPRESS + MICROSOFT INTEGRATION (WPO365 | LOGIN) WordPress plugin before 45.4 does not ensure the signature validated on a SAML response covers the element the user identity is read from, allowing unauthenticated attackers to forge a response via signature wrapping and log in as any user, including administrators, when they can supply a single artifact signed by the configured identity provider.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129446",
+    "publishedDate": "2026-11-19T06:16:53.870",
+    "lastModifiedDate": "2026-11-19T06:16:53.870",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-121852",
+    "description": "The AppPresser  WordPress plugin before 5.0.0 does not properly escape the contents of its debug log when displaying it in the admin dashboard, and decodes escape sequences after sanitising input, allowing unauthenticated users to perform Stored XSS attacks against administrators when debug logging is enabled.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-121852",
+    "publishedDate": "2026-11-19T06:16:53.413",
+    "lastModifiedDate": "2026-11-19T06:16:53.413",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-117678",
+    "description": "Inefficient Algorithmic Complexity vulnerability in benoitc idna allows an attacker who controls a hostname passed to the library to exhaust CPU via an over-long xn-- label. idna:ulabel/1 in src/idna.erl hands every ASCII label that starts with xn-- to punycode:decode/1 without applying check_label_length/1, the 63-octet DNS label limit. punycode:decode/1 in src/punycode.erl builds its output with list appends in insert/4, so its cost grows super-linearly with the label length. A label of a few kilobytes keeps a scheduler busy for seconds to minutes before the label is rejected as invalid punycode.\n\nEvery decode entry point reaches this path: decode/1, decode/2, to_unicode/1 and from_ascii/1. The encode path reaches it as well, because alabel/1 calls ulabel/1 on an ASCII xn-- label before its own length check, so encode/1, encode/2 and to_ascii/1 are affected for such input.\n\nThis issue affects idna: from 0.5.0 before 8.0.0.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-117678",
+    "publishedDate": "2026-11-19T06:16:53.153",
+    "lastModifiedDate": "2026-11-19T06:16:53.153",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
       {
         "score": 6.9,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-132771",
-    "description": "GPAC before 26.07.0 contains a use-after-free vulnerability in ReplaceDEFNode that allows attackers to crash MP4Box by triggering access to a partly freed child list. Attackers can supply a crafted XMT scene file whose InputSensor command buffer cascades prototype sub-graph deletion during gf_sg_vrml_parent_destroy, causing denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132771",
-    "publishedDate": "2026-11-19T00:17:46.670",
-    "lastModifiedDate": "2026-11-19T00:17:46.790",
+    "id": "CVE-2026-109555",
+    "description": "The WP STAGING and WP STAGING Pro plugins for WordPress are vulnerable to PHP Object Injection in all versions up to, and including, 4.17.0 and 6.17.0, respectively, via deserialization of untrusted input during database restore and staging reset. This is due to the database importer treating attacker-controlled text beginning with {WPSTG_BINARY} as trusted internal binary data and decoding its hexadecimal suffix into serialized bytes. This makes it possible for authenticated attackers, with Subscriber-level access and above, to plant a malicious serialized object in their own profile. When an Administrator later performs an ordinary database-including restore or staging reset containing that value, and the restored profile metadata is loaded, either during the restore or in a later request, a built-in POP chain can be used to execute arbitrary code on the server. Additional built-in gadget chains allow arbitrary local file read in both WP STAGING and WP STAGING Pro and arbitrary file deletion in WP STAGING Pro. The attacker does not require Administrator credentials or a copy of a backup, but exploitation does require the later privileged restore or reset.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-109555",
+    "publishedDate": "2026-11-19T06:16:52.890",
+    "lastModifiedDate": "2026-11-19T06:16:53.100",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.5,
+        "score": 8,
         "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 2.1,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-132770",
-    "description": "GPAC MP4Box before 26.07.0 contains a NULL pointer dereference vulnerability in xmt_parse_proto() in loader_xmt.c that allows attackers to crash the process via a redefined ProtoDeclare name. Attackers can supply a crafted XMT file with a duplicate ProtoDeclare name, causing gf_sg_proto_new() to return NULL and crashing MP4Box during import.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132770",
-    "publishedDate": "2026-11-19T00:17:46.500",
-    "lastModifiedDate": "2026-11-19T00:17:46.627",
+    "id": "CVE-2026-108687",
+    "description": "The SAML SSO Login  WordPress plugin through 1.5.2 does not verify that the SAML assertion whose signature it validates is the same assertion it reads the user identity from, allowing unauthenticated attackers who hold a validly signed assertion for any identity to authenticate as any existing user, including an administrator, through XML signature wrapping.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-108687",
+    "publishedDate": "2026-11-19T06:16:51.880",
+    "lastModifiedDate": "2026-11-19T06:16:51.880",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132769",
-    "description": "GPAC before 26.07.0 contains a type confusion vulnerability in xmt_parse_script_field() that allows attackers to trigger a heap out-of-bounds read via duplicate Script field names with conflicting types. Attackers can craft an XMT file that, when imported with MP4Box, causes gf_sg_vrml_mf_reset() to treat a single-value field as multi-value, crashing the application.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132769",
-    "publishedDate": "2026-11-19T00:17:46.337",
-    "lastModifiedDate": "2026-11-19T00:17:46.457",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.1,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.2,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132768",
-    "description": "GPAC MP4Box before 26.07.0 contains a use-after-free vulnerability in xmt_find_node() in loader_xmt.c that leaves freed forward-referenced nodes cached in parser->peeked_nodes. Attackers can supply a crafted XMT file with a node targeted by an SFCommandBuffer command, triggering a later DEF lookup on the freed node and crashing MP4Box.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132768",
-    "publishedDate": "2026-11-19T00:17:46.173",
-    "lastModifiedDate": "2026-11-19T00:17:46.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132767",
-    "description": "GPAC before 26.07.0 contains a NULL pointer dereference vulnerability in xmt_parse_command() in loader_xmt.c that allows attackers to crash MP4Box via unchecked field lookups. Attackers can supply a crafted XMT scene whose atIndexField names a non-existent node field, causing a NULL read during import and denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132767",
-    "publishedDate": "2026-11-19T00:17:46.020",
-    "lastModifiedDate": "2026-11-19T00:17:46.133",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132766",
-    "description": "GPAC before 26.07.0 contains a use-after-free vulnerability in MP4Box because gf_sg_reset frees DEF'd proto sub-graph nodes without removing them from the GF_Proto node_code list. Attackers can supply a crafted XMT scene with nested PROTOs so gf_sg_proto_del unregisters freed nodes during teardown, crashing MP4Box and corrupting the heap.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132766",
-    "publishedDate": "2026-11-19T00:17:45.857",
-    "lastModifiedDate": "2026-11-19T00:17:45.977",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132765",
-    "description": "GPAC MP4Box through 26.07.0 contains a use-after-free vulnerability in gf_node_try_destroy because Conditional node commands keep raw pointers to target nodes freed by gf_sg_reset(). Attackers can supply a crafted XMT scene processed with -info or -add to trigger heap use-after-free, crashing the process and corrupting heap memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132765",
-    "publishedDate": "2026-11-19T00:17:45.690",
-    "lastModifiedDate": "2026-11-19T00:17:45.810",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132764",
-    "description": "GPAC before 26.07.0 contains a use-after-free vulnerability in the XMT loader that leaves ROUTE commands of a discarded node queued after being freed by gf_sg_command_del(). Attackers can supply a crafted XMT scene file imported with MP4Box so xmt_resolve_routes() writes to freed memory, corrupting the heap and crashing the process.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132764",
-    "publishedDate": "2026-11-19T00:17:45.527",
-    "lastModifiedDate": "2026-11-19T00:17:45.643",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132763",
-    "description": "GPAC before 26.07.0 contains an integer underflow vulnerability in gf_xml_sax_peek_node() that allows attackers to write a zero byte outside the heap line buffer via crafted XML attribute values. Attackers can supply a crafted XMT file with a ROUTE or command referencing an undefined node, imported with MP4Box, to crash the process and corrupt memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132763",
-    "publishedDate": "2026-11-19T00:17:45.360",
-    "lastModifiedDate": "2026-11-19T00:17:45.483",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132762",
-    "description": "GPAC MP4Box before 26.07.0 contains a divide by zero vulnerability in DumpTrackInfo() in applications/mp4box/filedump.c that fails to check the media timescale for zero. Attackers can supply a crafted MP4 file with a zero media timescale to make MP4Box -infon raise SIGFPE and crash, causing denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132762",
-    "publishedDate": "2026-11-19T00:17:45.190",
-    "lastModifiedDate": "2026-11-19T00:17:45.317",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132761",
-    "description": "GPAC before 26.07.0 contains a use-after-free vulnerability in gf_node_try_destroy that allows attackers to crash MP4Box by supplying crafted XMT scene files. Commands created inside a PROTO scope keep a raw pointer to a freed prototype sub-scene graph, which is read during teardown, causing denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132761",
-    "publishedDate": "2026-11-19T00:17:45.030",
-    "lastModifiedDate": "2026-11-19T00:17:45.150",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132760",
-    "description": "GPAC before 26.07.0 contains a NULL pointer dereference vulnerability in gf_isom_get_meta() in src/isomedia/meta.c that reads file->moov->trackList without checking the moov box exists. Attackers can supply a crafted ISOBMFF file with malformed AV1 configuration data that leaves moov unset, crashing MP4Box -infon and causing denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132760",
-    "publishedDate": "2026-11-19T00:17:44.867",
-    "lastModifiedDate": "2026-11-19T00:17:44.983",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132759",
-    "description": "GPAC MP4Box before 26.07.0 contains a use-after-free vulnerability because gf_node_free() frees nodes without detaching routes that still reference them via FromNode. Attackers can supply a crafted XMT scene with nested PROTO graphs so gf_sg_route_del() accesses freed memory, crashing MP4Box and potentially corrupting the heap.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132759",
-    "publishedDate": "2026-11-19T00:17:44.677",
-    "lastModifiedDate": "2026-11-19T00:17:44.817",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 4.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-132758",
-    "description": "GPAC MP4Box before 26.07.0 contains a NULL pointer dereference vulnerability in xmt_node_end() that allows attackers to crash the application through an unmatched closing ProtoDeclare element. Attackers can supply a crafted XMT-A scene file with a mismatched closing ProtoDeclare or ExternProtoDeclare element, causing a dereference of a NULL parsing_proto pointer and denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-132758",
-    "publishedDate": "2026-11-19T00:17:44.513",
-    "lastModifiedDate": "2026-11-19T00:17:44.633",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
+    "cvssScores": []
   }
 ]
