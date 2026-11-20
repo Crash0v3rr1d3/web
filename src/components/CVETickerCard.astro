@@ -77,6 +77,7 @@ const processedCves = cves.map((entry) => {
 </style>
 
 <script>
+    import { tickerItem } from "@/lib/safe-dom";
     const container = document.getElementById("cve-ticker");
 
     if (container) {
@@ -100,14 +101,15 @@ const processedCves = cves.map((entry) => {
             const div = document.createElement("div");
             div.className =
                 "flex flex-col border-l-2 border-neutral-700 pl-2 cve-item";
-            div.innerHTML = `
-        <a href="${cve.link}" target="_blank" rel="noopener noreferrer" class="group flex flex-col hover:border-l-orange-500 transition-colors">
-          <div class="flex justify-between w-full">
-            <span class="font-bold text-white group-hover:text-orange-400 transition-colors" style="font-family: 'Iceland', cursive;">${cve.id}</span>
-          </div>
-          <span class="text-neutral-400 group-hover:text-neutral-300 whitespace-nowrap overflow-hidden text-ellipsis transition-colors">${cve.desc}</span>
-        </a>
-      `;
+            div.append(
+                tickerItem({
+                    href: cve.link,
+                    hoverBorder: "hover:border-l-orange-500",
+                    hoverText: "group-hover:text-orange-400",
+                    title: cve.id,
+                    body: cve.desc,
+                }),
+            );
 
             // Clear loading state if present
             const loadingMessage = container.querySelector(".animate-pulse");
