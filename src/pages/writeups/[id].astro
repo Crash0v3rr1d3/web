@@ -39,7 +39,10 @@ function getAdjacentWriteups(currentId: string, writeupList: Writeup[]) {
 }
 
 const { id } = Astro.params;
-const allWriteups = await getCollection("writeups");
+// Oldest -> newest by pubDate (id as tiebreak) so prev = older, next = newer; drafts excluded.
+const allWriteups = (await getCollection("writeups", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf() || a.id.localeCompare(b.id)
+);
 
 if (!id) {
   throw new Error("id is missing");

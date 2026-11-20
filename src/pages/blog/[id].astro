@@ -36,7 +36,10 @@ function getAdjacentPosts(currentId: string, postList: Posts[]) {
 }
 
 const { id } = Astro.params;
-const allPosts = await getCollection("blog");
+// Oldest -> newest by pubDate (id as tiebreak) so prev = older, next = newer; drafts excluded.
+const allPosts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf() || a.id.localeCompare(b.id)
+);
 
 if (!id) {
   throw new Error("id is missing");

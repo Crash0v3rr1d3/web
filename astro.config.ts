@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
-import { rehypeHeadingIds } from '@astrojs/markdown-remark'
+import { rehypeHeadingIds, unified } from '@astrojs/markdown-remark'
 import sitemap from "@astrojs/sitemap";
-import robotsTxt from "astro-robots-txt";
 import UnoCSS from "@unocss/astro";
 import icon from "astro-icon";
 import solidJs from "@astrojs/solid-js";
@@ -50,12 +49,6 @@ export default defineConfig({
   site: "https://crash0v3rr1d3.com",
   integrations: [
     sitemap(),
-    robotsTxt({
-      sitemap: [
-        "https://crash0v3rr1d3.com/sitemap-index.xml",
-        "https://crash0v3rr1d3.com/sitemap-0.xml",
-      ],
-    }),
     solidJs({
       include: ['**/solid/*.tsx', '**/solid/*.jsx']
     }),
@@ -67,7 +60,11 @@ export default defineConfig({
     mdx(),
     react(),
   ],
+  // Astro 7: keep pre-v7 whitespace collapsing so inline spacing renders as before.
+  compressHTML: true,
   markdown: {
+    // Astro 7 defaults to the Satteri processor; our remark/rehype plugins need unified.
+    processor: unified(),
     syntaxHighlight: false,
     // shikiConfig: {
     //   theme: 'everforest-dark',
