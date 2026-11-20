@@ -1,5 +1,6 @@
 // uno.config.ts
-import { defineConfig, presetAttributify, presetTypography, presetUno, transformerDirectives} from "unocss";
+import { readFileSync } from "node:fs";
+import { defineConfig, presetAttributify, presetUno, transformerDirectives} from "unocss";
 import presetAnimate from 'unocss-preset-animate';
 
 export default defineConfig({
@@ -59,8 +60,12 @@ export default defineConfig({
   presets: [
     presetUno(),
     presetAttributify(),
-    presetTypography(),
     presetAnimate as any,
+  ],
+  // Legacy `.prose` styles (see src/styles/prose.css). Preflights are emitted
+  // before utilities, so classes like max-w-none still override them.
+  preflights: [
+    { getCSS: () => readFileSync(new URL("./src/styles/prose.css", import.meta.url), "utf8") },
   ],
   transformers: [
     transformerDirectives(),
