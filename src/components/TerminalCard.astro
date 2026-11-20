@@ -131,11 +131,15 @@ import Card from "./Card/index.astro";
         output.scrollTop = output.scrollHeight;
     }
 
+    function escapeHtml(s: string) {
+      return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+    }
+
     function printInput(val: string) {
         const output = document.getElementById("terminal-output")!;
         const el = document.createElement("div");
         el.className = "flex gap-2 text-white";
-        el.innerHTML = `<span class="text-primary-400 select-none">❯</span><span>${val}</span>`;
+        el.innerHTML = `<span class="text-primary-400 select-none">❯</span><span>${escapeHtml(val)}</span>`;
         output.appendChild(el);
     }
 
@@ -152,12 +156,12 @@ import Card from "./Card/index.astro";
 
         printInput(val);
 
-        if (val in COMMANDS) {
+        if (Object.hasOwn(COMMANDS, val)) {
             const lines = COMMANDS[val]();
             printLines(lines);
         } else {
             printLines([
-                `<span class="text-red-400">command not found: ${val}</span>`,
+                `<span class="text-red-400">command not found: ${escapeHtml(val)}</span>`,
                 'Type <span class="text-white">help</span> for available commands.',
             ]);
         }

@@ -80,50 +80,65 @@ try {
   </main>
 </Layout>
 
-<script define:vars={{ victims: allVictims }}>
-  const searchInput = document.getElementById('search');
-  const groupFilter = document.getElementById('group-filter');
-  const tableBody = document.getElementById('victim-table-body');
-  const totalCount = document.getElementById('total-count');
-  const noResults = document.getElementById('no-results');
+<!-- Victim data comes from ransomware leak sites (attacker-controlled): embed as inert JSON with "<" escaped, render with textContent only. -->
+<script type="application/json" id="victims-data" set:html={JSON.stringify(allVictims).replace(/</g, "\\u003c")} />
 
-  function renderTable(filteredData) {
+<script>
+  const dataEl = document.getElementById('victims-data');
+  let victims: any[] = [];
+  try { victims = JSON.parse(dataEl?.textContent || '[]'); } catch {}
+
+  const searchInput = document.getElementById('search') as HTMLInputElement;
+  const groupFilter = document.getElementById('group-filter') as HTMLSelectElement;
+  const tableBody = document.getElementById('victim-table-body')!;
+  const totalCount = document.getElementById('total-count')!;
+  const noResults = document.getElementById('no-results')!;
+
+  function el(tag: string, className: string, text?: string) {
+    const e = document.createElement(tag);
+    e.className = className;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function renderTable(filteredData: any[]) {
+    tableBody.replaceChildren();
     if (filteredData.length === 0) {
-      tableBody.innerHTML = '';
       noResults.classList.remove('hidden');
       totalCount.textContent = '0';
       return;
     }
-    
+
     noResults.classList.add('hidden');
-    totalCount.textContent = filteredData.length;
-    
-    tableBody.innerHTML = filteredData.slice(0, 100).map(v => `
-      <tr class="border-t border-neutral-800 hover:bg-neutral-800/30 transition-colors group">
-        <td class="p-4 text-white font-medium font-['Iceland'] text-lg">${v.victim}</td>
-        <td class="p-4">
-          <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded font-mono uppercase">
-            ${v.group}
-          </span>
-        </td>
-        <td class="p-4 text-neutral-400 text-xs">${v.discovered ? v.discovered.split(' ')[0] : 'N/A'}</td>
-        <td class="p-4 text-right">
-          <a href="/ransomlive/victim/${encodeURIComponent(v.victim.replace(/\//g, '-'))}" class="text-xs text-neutral-500 hover:text-white border border-neutral-700 hover:border-white px-3 py-1 rounded transition-all">
-            View Intel
-          </a>
-        </td>
-      </tr>
-    `).join('');
+    totalCount.textContent = String(filteredData.length);
+
+    for (const v of filteredData.slice(0, 100)) {
+      const victim = String(v.victim ?? '');
+      const tr = el('tr', 'border-t border-neutral-800 hover:bg-neutral-800/30 transition-colors group');
+      tr.append(el('td', "p-4 text-white font-medium font-['Iceland'] text-lg", victim));
+
+      const groupTd = el('td', 'p-4');
+      groupTd.append(el('span', 'text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded font-mono uppercase', String(v.group ?? '')));
+      tr.append(groupTd);
+
+      tr.append(el('td', 'p-4 text-neutral-400 text-xs', v.discovered ? String(v.discovered).split(' ')[0] : 'N/A'));
+
+      const actionTd = el('td', 'p-4 text-right');
+      const a = el('a', 'text-xs text-neutral-500 hover:text-white border border-neutral-700 hover:border-white px-3 py-1 rounded transition-all', 'View Intel') as HTMLAnchorElement;
+      a.href = `/ransomlive/victim/${encodeURIComponent(victim.replace(/\//g, '-'))}`;
+      actionTd.append(a);
+      tr.append(actionTd);
+
+      tableBody.append(tr);
+    }
 
     if (filteredData.length > 100) {
-        const moreRow = document.createElement('tr');
-        moreRow.className = "border-t border-neutral-800";
-        moreRow.innerHTML = `
-            <td colspan="4" class="p-4 text-center text-neutral-600 text-[10px] italic">
-                Showing top 100 of ${filteredData.length} matches. Refine your search for more.
-            </td>
-        `;
-        tableBody.appendChild(moreRow);
+      const moreRow = el('tr', 'border-t border-neutral-800');
+      const td = el('td', 'p-4 text-center text-neutral-600 text-[10px] italic',
+        `Showing top 100 of ${filteredData.length} matches. Refine your search for more.`) as HTMLTableCellElement;
+      td.colSpan = 4;
+      moreRow.append(td);
+      tableBody.append(moreRow);
     }
   }
 
@@ -132,7 +147,7 @@ try {
     const selectedGroup = groupFilter.value;
 
     const filtered = victims.filter(v => {
-      const matchSearch = v.victim.toLowerCase().includes(searchTerm);
+      const matchSearch = String(v.victim ?? '').toLowerCase().includes(searchTerm);
       const matchGroup = selectedGroup === '' || v.group === selectedGroup;
       return matchSearch && matchGroup;
     });

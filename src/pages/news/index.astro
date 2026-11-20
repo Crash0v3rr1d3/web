@@ -186,6 +186,7 @@ for (const item of items) {
 </Layout>
 
 <script>
+    import { safeUrl } from "@/lib/safe-dom";
     import { NEWS_SOURCES, NEWS_EXCLUDE } from "@/consts";
     import {
         dayLabel,
@@ -260,7 +261,7 @@ for (const item of items) {
         li.dataset.search = `${item.title} ${item.excerpt}`.toLowerCase();
 
         const link = li.querySelector('[data-slot="link"]') as HTMLAnchorElement;
-        link.href = item.link;
+        link.href = safeUrl(item.link);
 
         const badge = li.querySelector('[data-slot="badge"]') as HTMLSpanElement;
         badge.textContent = source.name;

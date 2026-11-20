@@ -65,6 +65,7 @@ const processedCerts = certs.slice(0, 15).map((item) => {
 </style>
 
 <script>
+    import { tickerItem } from "@/lib/safe-dom";
   const container = document.getElementById("cert-ticker");
 
   if (container) {
@@ -88,15 +89,16 @@ const processedCerts = certs.slice(0, 15).map((item) => {
       const div = document.createElement("div");
       div.className =
         "flex flex-col border-l-2 border-neutral-700 pl-2 cert-item";
-      div.innerHTML = `
-        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="group flex flex-col hover:border-l-green-500 transition-colors">
-          <div class="flex justify-between w-full">
-            <span class="font-bold text-white group-hover:text-green-400 transition-colors" style="font-family: 'Iceland', cursive;">${item.cert}</span>
-            <span class="text-[8px] text-neutral-600 group-hover:text-green-500 transition-colors">${item.region}</span>
-          </div>
-          <span class="text-neutral-400 group-hover:text-neutral-300 whitespace-nowrap overflow-hidden text-ellipsis transition-colors">${item.title}</span>
-        </a>
-      `;
+      div.append(
+        tickerItem({
+          href: item.link,
+          hoverBorder: "hover:border-l-green-500",
+          hoverText: "group-hover:text-green-400",
+          title: item.cert,
+          badge: item.region,
+          body: item.title,
+        }),
+      );
 
       // Clear loading state if present
       const loadingMessage = container.querySelector(".animate-pulse");
