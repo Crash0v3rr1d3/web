@@ -1,438 +1,50 @@
 [
   {
-    "id": "CVE-2026-107942",
-    "description": "Improper Content Security Policy (CSP) nonce implementation in HCL BigFix MCM allows a remote attacker to reduce the effectiveness of the Content Security Policy protection mechanism via an orphaned nonce value in the style-src directive of the CSP header without a corresponding nonce attribute on any <style> or <script> element.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107942",
-    "publishedDate": "2026-11-20T23:16:57.537",
-    "lastModifiedDate": "2026-11-20T23:16:57.537",
+    "id": "CVE-2026-128361",
+    "description": "Improper Input Validation vulnerability in phoenixframework phoenix (Phoenix.Presence) allows an attacker who can join a channel to cause a denial of service via a non-string presence key.\n\ntrack/3,4 accepts any term as the presence key, such as a JSON object taken from a join payload. The key is converted with to_string/1 only later, in Phoenix.Presence.group/1, which raises Protocol.UndefinedError on a map. group/1 runs whenever presences are listed and when each presence diff is broadcast, together with the application's fetch/2, which can likewise raise on an unexpected key. Once such a key is tracked, every process that lists presences on the topic crashes, typically each channel that joins it, and presence diffs for the topic are lost.\n\nFrom 1.7.0 the diff runs in a Task.Supervisor.async task linked to the tracker shard, and Phoenix.Presence.handle_info/2 has no clause for its failure. The shard then terminates, taking down every channel and LiveView process tracked on it and erasing presence state for all its topics. Repeated joins exhaust the restart intensity and take down the application supervisor.\n\nThis issue affects phoenix: from 1.2.0 before 1.5.16, from 1.6.0-rc.0 before 1.6.18, from 1.7.0-rc.0 before 1.7.25, and from 1.8.0-rc.0 before 1.8.17.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128361",
+    "publishedDate": "2026-11-21T11:16:38.787",
+    "lastModifiedDate": "2026-11-21T11:16:38.787",
     "vendors": [],
     "products": [],
     "cvssScores": [
-      {
-        "score": 3.1,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
-        "source": "psirt@hcl.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-19030",
-    "description": "Observable Discrepancy vulnerability in Drupal CAPTCHA for Drupal 7 allows unauthenticated attackers to test login credentials despite CAPTCHA protection.\n\nWhen CAPTCHA is enabled on Drupal login forms, normal form validation can still run after a missing or incorrect CAPTCHA response. This may expose credential validation feedback and allow an attacker to distinguish invalid credentials from valid credentials paired with a failed CAPTCHA.\n\n\n\nThis issue affects CAPTCHA for Drupal 7: from 7.x-1.0 through 7.x-1.7.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-19030",
-    "publishedDate": "2026-11-20T23:16:59.727",
-    "lastModifiedDate": "2026-11-20T23:16:59.727",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mlhess@drupal.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-16132",
-    "description": "A stored cross-site scripting (XSS) vulnerability exists in the Icon API: Menu submodule of the Drupal 7 Icon API module. When a menu item is configured with the Title Wrapper option enabled, the value of the Title Wrapper Class field is output directly into an HTML attribute without sanitization or escaping. A user with the \"administer menu icons\" permission can inject a payload such as `title\" onmouseover=\"alert(document.cookie)` that is rendered verbatim on every page displaying the affected menu item, executing arbitrary JavaScript in the browser of any user who interacts with the menu link. This can lead to session theft, account hijacking, and further attacks against site users.\n\nThis issue affects Icon API 7.1.0.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-16132",
-    "publishedDate": "2026-11-20T23:16:59.577",
-    "lastModifiedDate": "2026-11-20T23:16:59.577",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "mlhess@drupal.org"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124213",
-    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. ConsultIDs: CVE-2026-125822. Reason: This candidate is a reservation duplicate of CVE-2026-125822. Notes: All CVE users should reference CVE-2026-125822 instead of this candidate. All references and descriptions in this candidate have been removed to prevent accidental usage.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124213",
-    "publishedDate": "2026-11-20T23:16:57.877",
-    "lastModifiedDate": "2026-11-20T23:16:57.877",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-134163",
-    "description": "probe-image-size 7.4.0 contains a regular expression denial of service vulnerability in lib/common/svg_header.js that allows remote unauthenticated attackers to block the event loop via crafted SVG doctypes. Attackers can supply SVGs with an unclosed internal subset followed by many ']' characters to trigger quadratic backtracking in probe.sync, probe(stream) or probe(url), causing repeated event loop stalls.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134163",
-    "publishedDate": "2026-11-20T23:16:57.960",
-    "lastModifiedDate": "2026-11-20T23:16:57.960",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134164",
-    "description": "probe-image-size before 7.5.0 contains an algorithmic-complexity denial of service vulnerability in lib/exif_utils.js that allows remote unauthenticated attackers to exhaust CPU by supplying self-referencing EXIF IFDs. Attackers can submit a crafted 9.6 KB JPEG with repeated ExifIFD and InteropIFD pointers to block the Node.js event loop for about 23 seconds.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134164",
-    "publishedDate": "2026-11-20T23:16:58.120",
-    "lastModifiedDate": "2026-11-20T23:16:58.120",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134165",
-    "description": "probe-image-size before 7.5.0 contains an unbounded memory allocation vulnerability in lib/parse_stream/avif.js that allows remote attackers to exhaust memory via attacker-declared ftyp or meta box sizes. Attackers can supply an AVIF stream or URL to probe(url) or probe(stream) declaring a huge box length, forcing the parser to buffer all received bytes and causing denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134165",
-    "publishedDate": "2026-11-20T23:16:58.263",
-    "lastModifiedDate": "2026-11-20T23:16:58.263",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134166",
-    "description": "probe-image-size before 7.5.0 contains an unbounded memory buffering vulnerability in parseExif in lib/parse_stream/webp.js that allows remote attackers to exhaust memory via an attacker-declared EXIF chunk length. Attackers can supply a WebP stream or URL to probe(url) or probe(stream) declaring a huge EXIF length after VP8X, causing unbounded buffering and process memory exhaustion.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134166",
-    "publishedDate": "2026-11-20T23:16:58.413",
-    "lastModifiedDate": "2026-11-20T23:16:58.413",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134167",
-    "description": "devpi-web before 5.2.0 contains an unauthenticated path traversal vulnerability in the +doc documentation route because docs_file_exists and docs_file_path in doczip.py never confine relpath to the documentation directory. Attackers can request a relpath with a leading // or percent-encoded .. segments to read server files, including the keyfs sqlite database holding password hashes.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134167",
-    "publishedDate": "2026-11-20T23:16:58.563",
-    "lastModifiedDate": "2026-11-20T23:16:58.563",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134168",
-    "description": "devpi-server before 6.21.0 contains a path traversal vulnerability that allows authenticated users to write files outside the +files storage root by naming a user and index '..'. Attackers can self-register a '..' user, create a '..' index, and upload release files with attacker-chosen filenames and contents into a parent of the server directory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134168",
-    "publishedDate": "2026-11-20T23:16:58.720",
-    "lastModifiedDate": "2026-11-20T23:16:58.720",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134169",
-    "description": "Qwik City before 1.20.3 (@builder.io/qwik-city) and @qwik.dev/router before 2.0.0-rc.4 contain an improperly controlled object modification vulnerability in formToObj that allows unauthenticated attackers to overwrite built-in function properties. Attackers can send a form POST with nested field names traversing inherited members of string values, breaking Object.prototype.hasOwnProperty.call process-wide until server restart.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134169",
-    "publishedDate": "2026-11-20T23:16:58.873",
-    "lastModifiedDate": "2026-11-20T23:16:58.873",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134170",
-    "description": "Cesanta Mongoose 7.22 before 7.24 with the built-in TLS stack contains an out-of-bounds read in mg_timegm() that allows remote attackers to crash the process via crafted X.509 certificate validity months. Attackers can present a certificate with month '00' or out-of-range values during the handshake, before signature verification, causing an unchecked dm array index and denial of service.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134170",
-    "publishedDate": "2026-11-20T23:16:59.037",
-    "lastModifiedDate": "2026-11-20T23:16:59.167",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.9,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
       {
         "score": 8.2,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-134171",
-    "description": "Cesanta Mongoose 7.21 before 7.24 contains an out-of-bounds read vulnerability in rx_ip6() checksum validation that allows remote unauthenticated attackers to read past received packets by sending IPv6 extension headers. Attackers can send a single IPv6 TCP or ICMPv6 packet with extension headers, causing tcp6csum_ok() and icmp6csum_ok() to use the full payload length and read adjacent receive-buffer memory.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134171",
-    "publishedDate": "2026-11-20T23:16:59.247",
-    "lastModifiedDate": "2026-11-20T23:16:59.373",
+    "id": "CVE-2026-129344",
+    "description": "Uncaught Exception vulnerability in phoenixframework phoenix allows an unauthenticated attacker to cause a denial of service via a client-selected legacy serializer on binary channel broadcasts.\n\nWhen an application broadcasts {:binary, data} payloads on a channel topic, any client that connects without a vsn parameter, or with vsn=1.0.0, and joins that topic makes those broadcasts fail. Phoenix.Channel.Server.send/4 encodes each broadcast with every subscriber's own serializer inside the PubSub dispatch loop, calling fastlane!/1 with no rescue, and the negotiated Phoenix.Socket.V1.JSONSerializer raises Protocol.UndefinedError on a binary payload. Every binary broadcast on the topic then crashes the broadcasting process and skips every subscriber dispatched after the attacker. For broadcasts arriving from other nodes the loop runs in the PubSub adapter worker, whose repeated crashes restart the PubSub supervisor and empty the node's subscription registry while sockets stay connected.\n\nThis issue affects phoenix: from 1.5.7 before 1.5.16, from 1.6.0-rc.0 before 1.6.18, from 1.7.0-rc.0 before 1.7.25, and from 1.8.0-rc.0 before 1.8.17.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129344",
+    "publishedDate": "2026-11-21T11:16:39.077",
+    "lastModifiedDate": "2026-11-21T11:16:39.077",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 6.9,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134172",
-    "description": "audio-separator before 0.47.2 contains an insecure deserialization vulnerability that allows attackers to execute code by supplying malicious Demucs .th model files loaded via torch.load with weights_only=False. Local users writing to the shared /tmp/audio-separator-models/ default directory, or attackers controlling unverified model download sources, can execute code when victims run Demucs separation.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134172",
-    "publishedDate": "2026-11-20T23:16:59.420",
-    "lastModifiedDate": "2026-11-20T23:16:59.420",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "exploitabilityScore": 1.8,
-        "impactScore": 5.9,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.5,
+        "score": 8.2,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "6b3ad84c-e1a6-4bf7-a703-f496b71e49db"
       }
     ]
   },
   {
-    "id": "CVE-2026-79790",
-    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-79790",
-    "publishedDate": "2026-11-20T23:16:59.900",
-    "lastModifiedDate": "2026-11-20T23:16:59.900",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-134136",
-    "description": "OceanWP WordPress Theme before 4.2.9 contains a stored cross-site scripting vulnerability in the oceanwp_edd_terms_list() function in inc/edd/edd-helpers.php, which allows authenticated users with EDD download category creation permissions to inject malicious JavaScript by crafting a category name that breaks out of an unescaped HTML title attribute. Attackers can create a category name containing an event-handler payload that executes in the browser of visitors who interact with the category link on the public EDD archive page, potentially compromising an administrator's session if they view the affected page while authenticated.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134136",
-    "publishedDate": "2026-11-20T22:17:50.873",
-    "lastModifiedDate": "2026-11-20T22:17:50.873",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.8,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:H/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 1.7,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 4.8,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133937",
-    "description": "A flaw has been found in highlight highlight.js up to 11.12.0. The affected element is the function hljs.highlight of the file src/languages/livescript.js of the component Language Grammar Handler. Executing a manipulation of the argument text can lead to inefficient regular expression complexity. The attack can be launched remotely. The exploit has been published and may be used. The pull request to fix this issue awaits acceptance.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133937",
-    "publishedDate": "2026-11-20T22:17:50.543",
-    "lastModifiedDate": "2026-11-20T22:17:50.703",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133836",
-    "description": "A vulnerability has been found in hankcs HanLP up to 2.1.6. The affected element is the function RNNLanguageModel.load_language_model of the file hanlp/layers/embeddings/contextual_string_embedding.py. Such manipulation of the argument model_file leads to deserialization. The attack may be performed from remote. The exploit has been disclosed to the public and may be used. Upgrading to version 2.1.7 is sufficient to fix this issue. The name of the patch is 6962907e37dfa467fa6dee164b5b1d0a904b24db. The affected component should be upgraded.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133836",
-    "publishedDate": "2026-11-20T22:17:50.343",
-    "lastModifiedDate": "2026-11-20T22:17:50.493",
+    "id": "CVE-2022-4998",
+    "description": "A vulnerability was identified in kanishka-linux reminiscence 0.3 on Windows. This issue affects the function convert_html_pdf_with_chromium of the file pages/dbaccess.py of the component Chromium HTML-to-PDF Conversion Pipeline. Such manipulation of the argument url_name leads to os command injection. The attack can be launched remotely. The exploit is publicly available and might be used. The project was informed of the problem early through an issue report but has not responded yet.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2022-4998",
+    "publishedDate": "2026-11-21T11:16:37.420",
+    "lastModifiedDate": "2026-11-21T11:16:38.437",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -457,90 +69,11 @@
     ]
   },
   {
-    "id": "CVE-2026-133835",
-    "description": "A flaw has been found in hankcs HanLP up to 2.1.6. Impacted is the function uncompress of the file hanlp/utils/io_util.py of the component TAR Archive Extraction Handler. This manipulation causes path traversal. The attack is possible to be carried out remotely. The exploit has been published and may be used. Upgrading to version 2.1.7 is recommended to address this issue. Patch name: feb0f82d12762cf4e687b9926efd90c672857780. You should upgrade the affected component.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133835",
-    "publishedDate": "2026-11-20T22:17:50.137",
-    "lastModifiedDate": "2026-11-20T22:17:50.290",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.3,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 5.5,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-128113",
-    "description": "Rejected reason: ** REJECT ** DO NOT USE THIS CANDIDATE NUMBER. Reason: This candidate was issued in error. Notes: All references and descriptions in this candidate have been removed to prevent accidental usage.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-128113",
-    "publishedDate": "2026-11-20T22:17:48.843",
-    "lastModifiedDate": "2026-11-20T22:17:48.843",
-    "vendors": [],
-    "products": [],
-    "cvssScores": []
-  },
-  {
-    "id": "CVE-2026-54038",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.9, GET /api/permissions/search-principals passes the q parameter to JavaScript RegExp construction and MongoDB regex queries in packages/data-schemas/src/methods/userGroup.ts findGroupsByNamePattern and searchPrincipals without escaping metacharacters. An authenticated user with people-picker permission can submit a catastrophic-backtracking pattern that blocks the Node.js event loop and makes the service unresponsive to concurrent users; invalid patterns can also produce server errors. This issue is fixed in version 0.8.9.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54038",
-    "publishedDate": "2026-11-20T21:17:38.030",
-    "lastModifiedDate": "2026-11-20T21:17:38.030",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-54026",
-    "description": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, POST /api/messages/:conversationId authorizes req.params.conversationId in api/server/middleware/validateMessageReq.js but persists attacker-controlled req.body.conversationId through api/server/routes/messages.js. An authenticated attacker can use an owned conversation in the URL while naming a victim conversation in the body, causing an attacker-controlled message to be stored in the victim conversation. This issue is fixed in version 0.8.6.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-54026",
-    "publishedDate": "2026-11-20T21:17:37.743",
-    "lastModifiedDate": "2026-11-20T21:17:37.743",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 6.5,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 3.6,
-        "source": "security-advisories@github.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134126",
-    "description": "WPC Smart Messages for WooCommerce plugin before 4.3.6 contains a missing authorization vulnerability that allows authenticated attackers with Contributor or Author privileges to disclose arbitrary post meta and private product data by supplying attacker-controlled id and key attributes to the [wpcsm_product_field] and [wpcsm_product_data] shortcodes without any capability or protected-meta checks. Attackers can embed these shortcodes in a published post to exfiltrate sensitive order data such as billing email, phone, and address stored as post meta, as well as private or draft product descriptions and purchase notes, exposing confidential customer and business information to unauthenticated site visitors.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134126",
-    "publishedDate": "2026-11-20T21:17:36.977",
-    "lastModifiedDate": "2026-11-20T21:17:36.977",
+    "id": "CVE-2026-87092",
+    "description": "The Unlimited Elements For Elementor plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 2.0.26 via the getFileContentByUrl function. This makes it possible for authenticated attackers, with contributor-level access and above, to read the contents of arbitrary files on the server, which can contain sensitive information. The nonce protecting the get_addon_output_data AJAX endpoint is emitted on the Elementor editor page, which is accessible to Contributors, making the endpoint reachable by any authenticated user at that privilege level or above.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-87092",
+    "publishedDate": "2026-11-21T10:16:52.870",
+    "lastModifiedDate": "2026-11-21T10:16:53.010",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -551,74 +84,445 @@
         "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.8,
         "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 7.1,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
+        "source": "security@wordfence.com"
       }
     ]
   },
   {
-    "id": "CVE-2026-133697",
-    "description": "A vulnerability has been found in continuedev continue up to 2.1.0. This vulnerability affects the function LocalPlatformClient.resolveFQSNs of the file core/config/yaml/LocalPlatformClient.ts of the component Config Resolution. Such manipulation of the argument Name leads to information disclosure. Local access is required to approach this attack. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133697",
-    "publishedDate": "2026-11-20T21:17:35.637",
-    "lastModifiedDate": "2026-11-20T21:17:35.790",
+    "id": "CVE-2026-133964",
+    "description": "A security vulnerability has been detected in Bytebase DBHub up to 2.0.0. Impacted is the function escapeHatchFunctionKeywords of the file src/utils/allowed-keywords.ts of the component Read Only Mode. The manipulation of the argument tool leads to incomplete blacklist. Remote exploitation of the attack is possible. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133964",
+    "publishedDate": "2026-11-21T10:16:52.633",
+    "lastModifiedDate": "2026-11-21T10:16:52.807",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 2.8,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 1.3,
-        "impactScore": 1.4,
-        "source": "cna@vuldb.com"
-      },
-      {
-        "score": 2.4,
-        "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "cna@vuldb.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133696",
-    "description": "A flaw has been found in continuedev continue up to 2.1.0. This affects the function DataLogger.logDevData of the file core/data/log.ts of the component Dev Data Logging. This manipulation causes information disclosure. The attack can be initiated remotely. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133696",
-    "publishedDate": "2026-11-20T21:17:35.440",
-    "lastModifiedDate": "2026-11-20T21:17:35.590",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
+        "score": 6.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
+        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
         "score": 5.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-133367",
+    "description": "The WPC Frequently Bought Together for WooCommerce plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'variation' parameter in all versions up to, and including, 8.0.2 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The nonce protecting the woobt_add_all_to_cart AJAX handler is emitted to all unauthenticated visitors via wp_localize_script, effectively nullifying the nonce as an authentication barrier and making the handler reachable without any login.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133367",
+    "publishedDate": "2026-11-21T10:16:52.467",
+    "lastModifiedDate": "2026-11-21T10:16:52.587",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-131609",
+    "description": "The Germanized for WooCommerce plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'billing_address.first_name (Store API checkout) → stored on parent order; withdrawal get_first_name() fallback' parameter in all versions up to, and including, 4.1.8 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The payload is planted via an unauthenticated guest checkout order's billing first name through the WooCommerce Store API, with execution triggered by a subsequent unauthenticated withdrawal request submission whose nonce is publicly available on the /withdraw-from-contract/ page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-131609",
+    "publishedDate": "2026-11-21T10:16:52.293",
+    "lastModifiedDate": "2026-11-21T10:16:52.430",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-127133",
+    "description": "The Stream – Activity Log & Audit Trail plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'group-name' parameter in all versions up to, and including, 4.5.0 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. This requires BuddyPress to be active with its Groups component enabled and default group-creation permissions in place, allowing any logged-in member to create groups.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-127133",
+    "publishedDate": "2026-11-21T10:16:52.130",
+    "lastModifiedDate": "2026-11-21T10:16:52.253",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-124214",
+    "description": "The WP Data Access – App Builder for Tables, Forms, Dashboards, Charts & Maps plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'HyperlinkObject.label (percent-encoded)' parameter in all versions up to, and including, 5.5.92 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. This requires the WordPress site to have a published Anonymous-access Registration Form app configured against a table with a HyperlinkObject column, and a legacy Data Project list using a $$link$$ Dynamic Hyperlink against that same column; given this configuration, any unauthenticated visitor can plant the payload.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124214",
+    "publishedDate": "2026-11-21T10:16:51.960",
+    "lastModifiedDate": "2026-11-21T10:16:52.087",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-122230",
+    "description": "The Thim Kit for Elementor – Pre-built Templates & Widgets for Elementor plugin for WordPress is vulnerable to Stored DOM-Based Cross-Site Scripting via the 'comment' parameter in all versions up to, and including, 1.4.8 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Exploitation requires that the Post Comment widget is used with the Text Reveal entrance animation (Elementor class 'ekit--fx-word-reveal') on a Single Post template, and the comment widget must be within the initial viewport; once the first comment by an attacker is approved, or if comment moderation is disabled, subsequent payloads fire automatically for every visitor who loads the affected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-122230",
+    "publishedDate": "2026-11-21T10:16:51.800",
+    "lastModifiedDate": "2026-11-21T10:16:51.930",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-120743",
+    "description": "The Simply Schedule Appointments plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'payment_method' parameter in all versions up to, and including, 1.6.13.4 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The stored payload is only rendered when an administrator navigates to the hidden support page (/wp-admin/admin.php?ssa-support-admin=1) and triggers the 'Fix appointment durations' action, a condition reliably engineered by the attacker by smuggling a '+1 day' suffix in the start_date field to create a persistent duration mismatch that routes the malicious booking through the vulnerable echo path. Successful exploitation additionally requires an action by an administrator — the attacker cannot trigger the vulnerability on their own.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120743",
+    "publishedDate": "2026-11-21T10:16:51.640",
+    "lastModifiedDate": "2026-11-21T10:16:51.763",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.7,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 1.6,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-120526",
+    "description": "The WCFM Membership – WooCommerce Memberships for Multivendor Marketplace plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'wcfm_membership_registration_form[store_name]' parameter in all versions up to, and including, 2.12.0 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The nonce required to reach the registration endpoint is publicly emitted on the /vendor-register/ page, making the endpoint fully reachable by unauthenticated attackers without any prior authentication or privilege escalation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120526",
+    "publishedDate": "2026-11-21T10:16:51.477",
+    "lastModifiedDate": "2026-11-21T10:16:51.607",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-120119",
+    "description": "The HUSKY – Products Filter for WooCommerce Professional plugin for WordPress is vulnerable to time-based SQL Injection via the 'link (inner 'woof_text' query parameter)' parameter in all versions up to, and including, 1.4.7 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query. This makes it possible for authenticated attackers, with subscriber-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database. The exploit requires a valid product_messenger nonce, which is issued by the woof_redraw_woof AJAX endpoint to any visitor when the shortcode's by_only attribute is set — an attribute that can itself be forced via the attacker-controlled woof_shortcode request parameter, making the nonce trivially obtainable by any logged-in user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-120119",
+    "publishedDate": "2026-11-21T10:16:51.307",
+    "lastModifiedDate": "2026-11-21T10:16:51.440",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-119608",
+    "description": "The Hustle – Email Marketing, Lead Generation, Optins, Popups plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'import_file' parameter in all versions up to, and including, 7.8.14.4 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. This requires an administrator to have first delegated the hustle_edit_module capability to a lower-privileged role via the plugin's built-in Permissions screen; without that delegation, the import endpoint rejects non-Administrator users at the capability check.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119608",
+    "publishedDate": "2026-11-21T10:16:51.140",
+    "lastModifiedDate": "2026-11-21T10:16:51.270",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-119216",
+    "description": "The Stream – Activity Log & Audit Trail plugin for WordPress is vulnerable to Stored DOM-Based Cross-Site Scripting via the 'display_name' parameter in all versions up to, and including, 4.4.0 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. This is only exploitable on sites with 50 or fewer total users, as above that threshold the user filter uses an AJAX endpoint that returns entity-encoded labels and is not affected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119216",
+    "publishedDate": "2026-11-21T10:16:50.970",
+    "lastModifiedDate": "2026-11-21T10:16:51.107",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-119114",
+    "description": "The WP Fastest Cache – WordPress Cache Plugin plugin for WordPress is vulnerable to arbitrary directory deletion due to insufficient file path validation in the singleDeleteCache function in all versions up to, and including, 1.5.4 This makes it possible for unauthenticated attackers to delete arbitrary files on the server, which can easily lead to remote code execution when the right file is deleted (such as wp-config.php). Successful exploitation requires either the Custom Permalinks plugin or the GeoDirectory plugin to be co-installed, as these provide the necessary mechanism to write a traversal-bearing permalink value into the database that WP Fastest Cache then consumes without validation.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119114",
+    "publishedDate": "2026-11-21T10:16:50.800",
+    "lastModifiedDate": "2026-11-21T10:16:50.930",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.4,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.2,
+        "impactScore": 5.2,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-119061",
+    "description": "The VikBooking Hotel Booking Engine & PMS plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'vbf<field_id>' parameter in all versions up to, and including, 1.8.20 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-119061",
+    "publishedDate": "2026-11-21T10:16:50.637",
+    "lastModifiedDate": "2026-11-21T10:16:50.767",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118061",
+    "description": "The VikBooking Hotel Booking Engine & PMS plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the 'inquiry (array keys)' parameter in all versions up to, and including, 1.8.20 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The endpoint's only access gate is a CSRF token that is publicly emitted on the unauthenticated inquiry page, making the injection reachable by any unauthenticated visitor without any precondition beyond loading that public page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118061",
+    "publishedDate": "2026-11-21T10:16:50.470",
+    "lastModifiedDate": "2026-11-21T10:16:50.600",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-118049",
+    "description": "The Tutor LMS – eLearning and online course solution plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 4.2.0 This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for authenticated attackers, with subscriber-level access and above, to permanently delete any comment they authored anywhere on the site — including regular post comments and lesson comments — along with all replies to those comments authored by any other user, including Administrators and Instructors.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-118049",
+    "publishedDate": "2026-11-21T10:16:50.300",
+    "lastModifiedDate": "2026-11-21T10:16:50.433",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 8.1,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H",
+        "exploitabilityScore": 2.8,
+        "impactScore": 5.2,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-116757",
+    "description": "The Tutor LMS – eLearning and online course solution plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the '_tutor_profile_bio' parameter in all versions up to, and including, 4.2.0 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with subscriber-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. The injected anchor payload uses a full-viewport invisible overlay (position:fixed; width:100vw; height:100vh; opacity:0) so that any click on the public profile page triggers the tutor-copy-text handler, which passes a browser-decoded data-text value to tutor_toast() where it is parsed as live HTML by jQuery.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-116757",
+    "publishedDate": "2026-11-21T10:16:50.133",
+    "lastModifiedDate": "2026-11-21T10:16:50.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.4,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.1,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-107632",
+    "description": "The Unbounce Landing Pages plugin for WordPress is vulnerable to Stored Cross-Site Scripting in versions up to, and including, 1.1.6. This is due to insufficient input sanitization and output escaping on the proxy error message that is persisted to the 'ub-proxy-error-message' option: unauthenticated attacker-controlled REQUEST_URI data is concatenated into the error string in UBHTTP::stream_request_curl()/stream_request_wp_remote() and stored via update_option(), then later echoed inside a <textarea> on the Unbounce Pages Diagnostics admin page without any escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user (an administrator viewing the Diagnostics screen) accesses an injected page.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-107632",
+    "publishedDate": "2026-11-21T10:16:49.960",
+    "lastModifiedDate": "2026-11-21T10:16:50.090",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-104013",
+    "description": "The WP Compress – Instant Performance & Speed Optimization plugin for WordPress is vulnerable to Directory Traversal in all versions up to, and including, 7.26.00 via the 'css' parameter parameter. This makes it possible for unauthenticated attackers to read the contents of arbitrary files on the server, which can contain sensitive information. Exploiting the file read requires a preparatory unauthenticated request that plants a boundary directory by injecting a path traversal sequence into a cookie listed in WPC_CACHE_COOKIES (such as pll_language, present in the default list), meaning the plugin's cookie-cache feature must be enabled with at least one tracked cookie name configured.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-104013",
+    "publishedDate": "2026-11-21T10:16:49.547",
+    "lastModifiedDate": "2026-11-21T10:16:49.917",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.9,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-133963",
+    "description": "A vulnerability was determined in MaysWind AriaNg-Native up to 1.3.14. Affected by this issue is the function shell.openPath of the file main/ipc/main-process.js of the component IPC Handler. This manipulation of the argument dir causes improper input validation. The attack can be initiated remotely. Upgrading to version 1.3.15 can resolve this issue. Patch name: ac5a4bcf102f605b160f19fcc9fbaec67f9596d7. You should upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133963",
+    "publishedDate": "2026-11-21T09:16:40.173",
+    "lastModifiedDate": "2026-11-21T09:16:40.387",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-125054",
+    "description": "The SiteOrigin CSS plugin for WordPress is vulnerable to Stored DOM-Based Cross-Site Scripting via the 'class' parameter in all versions up to, and including, 1.6.9 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Successful exploitation requires a Contributor-level or higher attacker to store a crafted class attribute value in a post, which then fires when a user with the edit_theme_options capability opens the Visual Inspector on the affected post and clicks anywhere in the preview iframe. Exploitation by unauthenticated attackers requires that a third-party plugin providing wp_kses_post()-filtered unauthenticated front-end submission is installed and configured, and a moderator approves the submission. On a default installation, where that is not configured, the vulnerability requires attackers with contributor-level access and above.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-125054",
+    "publishedDate": "2026-11-21T09:16:38.957",
+    "lastModifiedDate": "2026-11-21T09:16:40.123",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-96991",
+    "description": "The SchemaEngine AI – AI Schema Markup, Reviews & Rich Snippets for SEO plugin for WordPress is vulnerable to Stored Cross-Site Scripting via Comment Content via WebPage JSON-LD Description in all versions up to, and including, 3.1.3 due to insufficient input sanitization and output escaping. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. Exploitation requires that the target page renders a core/latest-comments block with the displayExcerpt option enabled, causing comment content to be incorporated into the WebPage JSON-LD description output in wp_head.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-96991",
+    "publishedDate": "2026-11-21T08:16:40.353",
+    "lastModifiedDate": "2026-11-21T08:16:40.477",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.2,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "exploitabilityScore": 3.9,
+        "impactScore": 2.7,
+        "source": "security@wordfence.com"
       }
     ]
   }
