@@ -1,110 +1,30 @@
 [
   {
-    "id": "CVE-2026-133120",
-    "description": "@fastify/express is a compatibility layer that lets Express middleware run inside the Fastify web framework. In versions before 4.0.10, the plugin passes Express a request URL that does not always match the path Fastify's router dispatched, so path-scoped Express middleware can be skipped while the route handler still runs. Several request forms trigger the mismatch, including percent-decoding that rewrites a backslash to a slash or double-decodes an encoded percent sign, and a request target that begins with an asterisk, so the middleware and the handler disagree on the path or on parameter and query values. An unauthenticated client can therefore reach a handler that an authentication, authorization, or rate-limiting middleware was meant to protect, with no special configuration required. The issue is fixed in @fastify/express 4.0.10, and users should upgrade to 4.0.10 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133120",
-    "publishedDate": "2026-11-21T17:16:40.170",
-    "lastModifiedDate": "2026-11-21T17:16:40.170",
+    "id": "CVE-2026-134544",
+    "description": "jprocms Expression Language validateParam os command injection",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134544",
+    "publishedDate": "Sat, 21 Nov 2026 23:45:46 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-129850",
-    "description": "@fastify/express is a compatibility layer that lets Express middleware run inside the Fastify web framework. In versions 4.0.0 through 4.0.9, when Fastify routing is configured to be case-insensitive, the router folds the request path to lower case in a way that maps certain non-ASCII Unicode characters to ASCII letters, but @fastify/express matches Express mount paths against the decoded path without applying the same folding. The two disagree, so a request that spells a letter of a mount path with an equivalent Unicode character is routed to the protected handler while the path-scoped middleware mounted on that path never matches and is skipped. An unauthenticated client can therefore reach a handler that an authentication, authorization, or rate-limiting middleware was meant to protect, though only when the application enables case-insensitive routing and the mount path contains an affected letter. The issue is fixed in @fastify/express 4.0.10, and users should upgrade to 4.0.10 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129850",
-    "publishedDate": "2026-11-21T17:16:40.043",
-    "lastModifiedDate": "2026-11-21T17:16:40.043",
+    "id": "CVE-2026-134543",
+    "description": "jprocms Database Backup StrUtil.format os command injection",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134543",
+    "publishedDate": "Sat, 21 Nov 2026 23:30:53 +0000",
+    "lastModifiedDate": "",
     "vendors": [],
     "products": [],
-    "cvssScores": [
-      {
-        "score": 7.4,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
+    "cvssScores": []
   },
   {
-    "id": "CVE-2026-129504",
-    "description": "@fastify/express is a compatibility layer that lets Express middleware run inside the Fastify web framework. In versions 4.0.0 through 4.0.9, the plugin joins a path-scoped middleware's mount path to the Fastify plugin prefix by string concatenation, so when the plugin prefix ends with a slash or the mount path omits its leading slash, the resulting Express mount path does not line up with the route the Fastify router serves. Express then fails to match and passes the request on while the Fastify router still dispatches the route, so the middleware is silently skipped. An application that uses path-scoped Express middleware for authentication or authorization inside a prefixed plugin can expose protected routes to unauthenticated clients, with no crafted request and no non-default option required, and string, array, and regular-expression mount paths are all affected. The issue is fixed in @fastify/express 4.0.10, and users should upgrade to 4.0.10 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-129504",
-    "publishedDate": "2026-11-21T17:16:39.920",
-    "lastModifiedDate": "2026-11-21T17:16:39.920",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-124626",
-    "description": "@fastify/express is a compatibility layer that lets Express middleware run inside the Fastify web framework. In versions 4.0.5 through 4.0.9, the plugin matches path-scoped Express middleware with a matcher that requires a non-empty value for a dynamic segment, while Fastify's router accepts an empty parameter or wildcard value. When a route and an Express middleware mount share a dynamic pattern, a request with an empty segment matches the Fastify route and runs the handler while the middleware mounted on that pattern is skipped, so on a scoped mount an unauthenticated request can reach a protected handler. No special configuration is required, and the practical impact depends on what the empty value selects in the application. The issue is fixed in @fastify/express 4.0.10, and users should upgrade to 4.0.10 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-124626",
-    "publishedDate": "2026-11-21T17:16:39.777",
-    "lastModifiedDate": "2026-11-21T17:16:39.777",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133867",
-    "description": "@fastify/express is a compatibility layer that lets Express middleware run inside the Fastify web framework. In versions 4.0.7 through 4.0.9, the plugin does not rewrite regular-expression mount paths to account for a parameterized plugin prefix, so when middleware is mounted with a regular expression inside a plugin registered under a parameterized prefix, the Express matcher treats the prefix parameter as literal text and never matches the real request path. As a result, Express silently skips that middleware while Fastify still runs the route handler, so an application that relies on regular-expression mounted middleware for authentication or authorization inside a parameterized-prefix plugin exposes protected routes to unauthenticated clients. No special configuration is required beyond a parameterized prefix and a regular-expression mount. The issue is fixed in @fastify/express 4.0.10, and users should upgrade to 4.0.10 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133867",
-    "publishedDate": "2026-11-21T17:16:40.663",
-    "lastModifiedDate": "2026-11-21T17:16:40.663",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133312",
-    "description": "@fastify/rate-limit is the rate-limiting plugin for the Fastify web framework. Starting in version 11.1.0, the plugin documented a manual flow for limiting failed login attempts that peeks at the limiter, runs the password check, and consumes a slot only on failure. Because the peek and the consume are two separate store operations with the password check in between, concurrent requests can all pass the peek before any slot is consumed, so in versions 11.1.0 through 11.2.2 a burst of requests runs far more failed attempts than the configured limit, and the sequential path also allowed one attempt more than configured. The default per-request limiter is not affected. The issue is fixed in @fastify/rate-limit 11.3.0, which makes the manual flow atomic by reserving a slot in a single operation and refunding it only on success, and users should upgrade to 11.3.0 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133312",
-    "publishedDate": "2026-11-21T17:16:40.540",
-    "lastModifiedDate": "2026-11-21T17:16:40.540",
+    "id": "CVE-2026-134540",
+    "description": "A security vulnerability has been detected in ggml-org llama.cpp 0.7.0-dev. This affects the function common_sampler_init of the file common/sampling.cpp of the component llama-server. Such manipulation of the argument grammar_triggers[].type leads to improper input validation. It is possible to launch the attack remotely. The exploit has been disclosed publicly and may be used. Upgrading to version b12405 mitigates this issue. The name of the patch is 9f26fe11c73c7e74a5e99e7f1b6370ad8e1cb22d. It is advisable to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134540",
+    "publishedDate": "2026-11-21T23:16:55.030",
+    "lastModifiedDate": "2026-11-21T23:16:55.180",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -112,76 +32,16 @@
         "score": 5.3,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
         "exploitabilityScore": 3.9,
         "impactScore": 1.4,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133273",
-    "description": "@fastify/swagger-ui is the plugin that serves Swagger UI documentation for Fastify applications. In versions 2.1.0 through 6.1.4, the authentication hooks that applications register to protect the documentation are applied to every route the plugin adds except the bundled static asset instance. When the option that serves bundled UI files from a local directory is enabled, that instance exposes every file in the directory without credentials, so a specification file an operator meant to keep behind the documentation login becomes reachable by an unauthenticated client who knows or guesses its name. Access is read-only and limited to files in that directory. The issue is fixed in @fastify/swagger-ui 6.1.5, which applies the same authentication hooks to the static asset route, and users should upgrade to 6.1.5 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133273",
-    "publishedDate": "2026-11-21T17:16:40.413",
-    "lastModifiedDate": "2026-11-21T17:16:40.413",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 3.7,
-        "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
-        "exploitabilityScore": 2.2,
-        "impactScore": 1.4,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133250",
-    "description": "@fastify/middie is the middleware engine for the Fastify web framework. In versions up to and including 9.3.7, middie matches path-scoped middleware against its own reading of the request path, which can differ from the path Fastify's router uses to dispatch the request. When the two disagree, the router can route a request to a handler covered by a middleware mount while middie skips that middleware, so an unauthenticated client reaches a handler that an authentication, authorization, or rate-limiting middleware was meant to protect, with no special configuration required. The mismatch is triggered by empty parameter or wildcard values, request targets that do not begin with a slash, and literal percent characters in a mount path. The issue is fixed in @fastify/middie 9.3.8, and users should upgrade to 9.3.8 or later.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133250",
-    "publishedDate": "2026-11-21T17:16:40.293",
-    "lastModifiedDate": "2026-11-21T17:16:40.293",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 9.1,
-        "version": "CVSS 3.1",
-        "severity": "CRITICAL",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 5.2,
-        "source": "ce714d77-add3-4f53-aff5-83d477b104bb"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-133988",
-    "description": "A security vulnerability has been detected in Chaterm up to 0.12.2 on Windows. The affected element is an unknown function of the file resources/app-update.yml of the component Auto-Update Mechanism. Such manipulation leads to download of code without integrity check. It is possible to launch the attack remotely. This attack is characterized by high complexity. The exploitability is described as difficult. The vendor was contacted early about this disclosure but did not respond in any way.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133988",
-    "publishedDate": "2026-11-21T17:16:40.793",
-    "lastModifiedDate": "2026-11-21T17:16:41.033",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L",
-        "exploitabilityScore": 2.2,
-        "impactScore": 3.4,
         "source": "cna@vuldb.com"
       },
       {
-        "score": 6.3,
+        "score": 5.5,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "cna@vuldb.com"
@@ -189,11 +49,341 @@
     ]
   },
   {
-    "id": "CVE-2026-134242",
-    "description": "Parse Server 2.5.0 before 8.6.121 and 9.0.0 before 9.11.1-alpha.1 does not handle a failure to serialize an object after a beforeSave trigger, leaving the request unsettled and terminating the server process. A remote attacker able to update an object in a class with a beforeSave trigger can send a dot notation key below a non-object field, such as a timestamp, to crash the server for all clients.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134242",
-    "publishedDate": "2026-11-21T17:16:41.093",
-    "lastModifiedDate": "2026-11-21T17:16:41.227",
+    "id": "CVE-2026-134536",
+    "description": "A weakness has been identified in Drakeling Labs Operation Harsh Doorstop up to 0.14.2.1 Build 19523588. The impacted element is the function LaunchURL of the component Workshop Configuration. This manipulation causes unrestricted upload. It is possible to initiate the attack remotely. Upgrading to version 0.14.2.2 Build 26092794 is sufficient to resolve this issue. Upgrading the affected component is advised.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134536",
+    "publishedDate": "2026-11-21T23:16:54.830",
+    "lastModifiedDate": "2026-11-21T23:16:54.983",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134534",
+    "description": "A security flaw has been discovered in Skyvern-AI Skyvern 1.0.56. The affected element is the function classify_url of the file skyvern/forge/sdk/browser_egress_policy.py. The manipulation results in server-side request forgery. The attack may be performed from remote. Upgrading to version 1.0.57 is sufficient to fix this issue. The patch is identified as 10b8d829c2750ebf62f2b70dec0e288297e752dd. It is recommended to upgrade the affected component.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134534",
+    "publishedDate": "2026-11-21T23:16:54.593",
+    "lastModifiedDate": "2026-11-21T23:16:54.780",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.1,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-115589",
+    "description": "Rejected reason: This CVE ID has been rejected or withdrawn by its CVE Numbering Authority.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-115589",
+    "publishedDate": "2026-11-21T23:16:54.263",
+    "lastModifiedDate": "2026-11-21T23:16:54.263",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-134541",
+    "description": "Surya2Developer Online Shopping System GET Parameter product.php sql injection",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134541",
+    "publishedDate": "Sat, 21 Nov 2026 23:15:16 +0000",
+    "lastModifiedDate": "",
+    "vendors": [],
+    "products": [],
+    "cvssScores": []
+  },
+  {
+    "id": "CVE-2026-134533",
+    "description": "A vulnerability was identified in Skyvern-AI Skyvern 1.0.56. Impacted is the function classify_url of the file skyvern/forge/sdk/browser_egress_policy.py. The manipulation leads to server-side request forgery. The attack is possible to be carried out remotely. Upgrading to version 1.0.57 is recommended to address this issue. The identifier of the patch is 10b8d829c2750ebf62f2b70dec0e288297e752dd. Upgrading the affected component is recommended.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134533",
+    "publishedDate": "2026-11-21T20:16:35.870",
+    "lastModifiedDate": "2026-11-21T20:16:36.027",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.1,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 5.1,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134009",
+    "description": "A vulnerability was detected in liukuo362573 YiShaAdmin up to ba04d5072885447553e372bb87e372b55a90780c. Impacted is the function SqlServerPageSql/OraclePageSql/MySqlPageSql/ of the file YiSha.Data/YiSha.Data/Extension/DatabasePageExtension.cs of the component Pagination Sorting. The manipulation of the argument sort results in sql injection. It is possible to launch the attack remotely. The exploit is now public and may be used. This product takes the approach of rolling releases to provide continious delivery. Therefore, version details for affected and updated releases are not available. The patch is identified as 19b0bdffc9587bff291bac81586953277abe5b84. Applying a patch is advised to resolve this issue.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134009",
+    "publishedDate": "2026-11-21T20:16:34.790",
+    "lastModifiedDate": "2026-11-21T20:16:35.820",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134007",
+    "description": "A security vulnerability has been detected in itsourcecode Banking Management System 1.0. This issue affects some unknown processing of the file manage_handover.php. The manipulation of the argument ID leads to sql injection. It is possible to initiate the attack remotely. The exploit has been disclosed publicly and may be used.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134007",
+    "publishedDate": "2026-11-21T19:16:32.577",
+    "lastModifiedDate": "2026-11-21T19:16:32.737",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.1,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134006",
+    "description": "A weakness has been identified in Moonshot AI Kimi Code up to 2.7.2. This vulnerability affects the function guardToolExecution of the file packages/agent-core-v2/src/features/plan/planService.ts of the component Plan Mode Permission Guard. Executing a manipulation can lead to improper authorization. The attack requires local access. The exploit has been made available to the public and could be used for attacks. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134006",
+    "publishedDate": "2026-11-21T19:16:32.353",
+    "lastModifiedDate": "2026-11-21T19:16:32.520",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 5.3,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+        "exploitabilityScore": 1.8,
+        "impactScore": 3.4,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 1.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-125294",
+    "description": "The Nexter Blocks Pro plugin for WordPress is vulnerable to Privilege Escalation in all versions up to, and including, 5.0.10 via the `tpgb_ajax_register_user()` function. This is due to a byte-level denylist on the `tpgb_acf_key[]` and `tpgb_acf[]` parameters that fails to block Unicode look-alike characters — such as U+1E87 and U+00E7 in a key like `ẇp_çapabilities` — whose UTF-8 byte sequences do not match any ASCII-based pattern check, while the database's default accent-insensitive collation (`utf8mb4_unicode_ci` / `utf8mb4_0900_ai_ci`) treats the decorated key as equivalent to the canonical `wp_capabilities` row, causing `update_user_meta()` to overwrite the newly registered user's role with `administrator`. This makes it possible for unauthenticated attackers to register a new account bearing the full Administrator role, gaining complete control over the WordPress site including the ability to install plugins, modify files, and execute arbitrary code. The nonce required by the handler is publicly emitted on any page containing the tp-login-register block, making the full exploit chain — nonce retrieval, a single crafted registration POST, and the plugin's own `autologin` flow — trivially reachable on any default install where user registration is enabled. Successful exploitation causes the attacker's own account to receive the complete Administrator role.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-125294",
+    "publishedDate": "2026-11-21T19:16:31.403",
+    "lastModifiedDate": "2026-11-21T19:16:32.307",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 9.8,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 5.9,
+        "source": "security@wordfence.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-133993",
+    "description": "A security flaw has been discovered in D-Link DIR-600L 2.17b02. This affects the function FUN_0040efb0 of the file gena.cgi of the component GENA Subscription Handler. Performing a manipulation of the argument service results in stack-based buffer overflow. The attack is possible to be carried out remotely. The exploit has been released to the public and may be used for attacks.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133993",
+    "publishedDate": "2026-11-21T18:16:54.277",
+    "lastModifiedDate": "2026-11-21T18:16:54.423",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 10,
+        "version": "CVSS 3.1",
+        "severity": "CRITICAL",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 6,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 9.3,
+        "version": "CVSS 4.0",
+        "severity": "CRITICAL",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-133990",
+    "description": "A vulnerability was identified in Cockpit-HQ Cockpit up to 2.14.1. Affected by this issue is some unknown functionality of the file cron.php of the component Web Worker. Such manipulation of the argument token leads to missing authentication. The attack can be executed remotely. The attack requires a high level of complexity. The exploitation is known to be difficult. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-133990",
+    "publishedDate": "2026-11-21T18:16:53.430",
+    "lastModifiedDate": "2026-11-21T18:16:54.223",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 4.8,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+        "exploitabilityScore": 2.2,
+        "impactScore": 2.5,
+        "source": "cna@vuldb.com"
+      },
+      {
+        "score": 2.9,
+        "version": "CVSS 4.0",
+        "severity": "LOW",
+        "vector": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N/E:P/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "cna@vuldb.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134461",
+    "description": "Web-Token jwt-framework and jwt-library before 3.4.10, 4.0.0 before 4.0.7, and 4.1.0 before 4.1.7 contain an uncontrolled resource consumption vulnerability in PBES2AESKW::unwrapKey(), which passes the attacker-controlled p2c JWE header value to hash_pbkdf2() without an upper bound. Unauthenticated attackers can send a JWE using a PBES2-HS*+A*KW algorithm with a huge p2c iteration count to force lengthy PBKDF2 computations and exhaust server CPU.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134461",
+    "publishedDate": "2026-11-21T17:17:11.627",
+    "lastModifiedDate": "2026-11-21T17:17:11.627",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134460",
+    "description": "web-token jwt-framework 1.2.0 before 3.4.10, jwt-experimental before 3.4.10, 4.0.x before 4.0.7, and 4.1.x before 4.1.7 contain a missing integrity check in the experimental Chacha20Poly1305 key-encryption algorithm, which discards the Poly1305 tag in encryptKey() and calls openssl_decrypt() without it in decryptKey(). Attackers on the token path can modify the encrypted content encryption key undetected.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134460",
+    "publishedDate": "2026-11-21T17:17:11.473",
+    "lastModifiedDate": "2026-11-21T17:17:11.473",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 3.7,
+        "version": "CVSS 3.1",
+        "severity": "LOW",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 1.4,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 6.3,
+        "version": "CVSS 4.0",
+        "severity": "MEDIUM",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134459",
+    "description": "web-token jwt-framework and jwt-library before 3.4.10, 4.0.x before 4.0.7, and 4.1.x before 4.1.7 contain a padding oracle in RSACrypt::decryptWithRSA15() because RSA1_5 decryption lacks implicit rejection, so invalid padding, wrong CEK length, and valid padding take measurably different time. Remote attackers can submit adaptively crafted JWE encrypted_key values and measure these timing differences to recover the wrapped content encryption key.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134459",
+    "publishedDate": "2026-11-21T17:17:11.317",
+    "lastModifiedDate": "2026-11-21T17:17:11.317",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -201,7 +391,7 @@
         "score": 5.9,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
         "exploitabilityScore": 2.2,
         "impactScore": 3.6,
         "source": "disclosure@vulncheck.com"
@@ -210,7 +400,7 @@
         "score": 8.2,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -218,28 +408,28 @@
     ]
   },
   {
-    "id": "CVE-2026-134243",
-    "description": "Parse Server before 8.6.122 and 9.0.0 before 9.11.1-alpha.2 does not prevent dot notation keys from changing a field that a beforeSave trigger keeps constant or reverts, affecting Object, Array, GeoPoint, Polygon, Bytes (on MongoDB), and ACL fields on create and update. A client allowed to write the object can modify such a field, such as a constant role list, to bypass Cloud Code authorization checks.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134243",
-    "publishedDate": "2026-11-21T17:16:41.297",
-    "lastModifiedDate": "2026-11-21T17:16:41.427",
+    "id": "CVE-2026-134458",
+    "description": "web-token jwt-framework and jwt-library before 3.4.12, 4.0.x before 4.0.8, 4.1.x before 4.1.10, and 4.2.x before 4.2.4, and jwt-encryption-algorithm-ecdh-es through 3.2.10, have a ConcatKDF::generate() that performs a single SHA-256 round, deriving at most 32 bytes for ECDH-ES and ECDH-SS direct key agreement. Anyone holding a JWE using A256CBC-HS512 can decrypt it under an all-zero AES key, while A192CBC-HS384 content keys have only 64-bit strength.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134458",
+    "publishedDate": "2026-11-21T17:17:11.147",
+    "lastModifiedDate": "2026-11-21T17:17:11.147",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 3.1,
+        "score": 5.9,
         "version": "CVSS 3.1",
-        "severity": "LOW",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 1.4,
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.2,
+        "impactScore": 3.6,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 2.3,
+        "score": 8.2,
         "version": "CVSS 4.0",
-        "severity": "LOW",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -247,57 +437,86 @@
     ]
   },
   {
-    "id": "CVE-2026-134244",
-    "description": "SiYuan 3.8.0 before 3.8.10 contains an information disclosure vulnerability in LAN sync that allows adjacent unauthenticated attackers to obtain device metadata by advertising a counterfeit peer with a replayed discovery tag. The client sends the sync scope ID, device name, OS, app version, and TLS client certificate to /peer-sync/v1/session/open before validating the server proof.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134244",
-    "publishedDate": "2026-11-21T17:16:41.477",
-    "lastModifiedDate": "2026-11-21T17:16:41.610",
+    "id": "CVE-2026-134457",
+    "description": "Hysteria 2.5.0 before 2.8.2 contains a memory allocation vulnerability when sniffing is enabled, allowing authenticated users to trigger out-of-memory conditions. Attackers with a valid password can forward a crafted QUIC packet with a huge crypto length, causing the server to exhaust memory and crash.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134457",
+    "publishedDate": "2026-11-21T17:17:10.997",
+    "lastModifiedDate": "2026-11-21T17:17:10.997",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 4.3,
+        "score": 6.5,
         "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
         "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
+        "impactScore": 3.6,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 5.3,
+        "score": 7.1,
         "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134456",
+    "description": "Hysteria 2.5.0 before 2.9.2 contains a denial of service vulnerability in the HTTP sniff implementation that fails to limit header size. Attackers can continuously send excessively large HTTP headers without terminating them, exhausting server memory and causing out-of-memory crashes.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134456",
+    "publishedDate": "2026-11-21T17:17:10.850",
+    "lastModifiedDate": "2026-11-21T17:17:10.850",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 7.5,
+        "version": "CVSS 3.1",
+        "severity": "HIGH",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 3.9,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 8.7,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134455",
+    "description": "Hysteria 1.0.0 before 2.9.2 contains a denial of service vulnerability in FragUDPMessage where UDP fragmentation fails to handle headers larger than the maximum datagram payload size. Authenticated clients can advertise a small max_datagram_frame_size and trigger a UDP response, causing a slice bounds panic that crashes the server.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134455",
+    "publishedDate": "2026-11-21T17:17:10.700",
+    "lastModifiedDate": "2026-11-21T17:17:10.700",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134245",
-    "description": "SiYuan 3.8.0 before 3.8.10 contains an incorrect authorization vulnerability in the serveAssets route that allows unauthenticated attackers to read password-protected document assets via name collisions. Attackers can request GET /assets/<name> when a visible document references the same relative asset name, retrieving the protected file's contents on public-publish instances with Basic Auth disabled.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134245",
-    "publishedDate": "2026-11-21T17:16:41.657",
-    "lastModifiedDate": "2026-11-21T17:16:41.787",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+        "exploitabilityScore": 2.8,
         "impactScore": 3.6,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 8.7,
+        "score": 7.1,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -305,173 +524,28 @@
     ]
   },
   {
-    "id": "CVE-2026-134246",
-    "description": "SiYuan 3.6.0 before 3.6.2 and 3.7.3 before 3.8.10 contains a missing authorization vulnerability in the /api/block/getDOMText endpoint, which renders caller-supplied DOM without checking publish access for referenced image paths. When publish authentication is disabled, anonymous visitors can submit DOM referencing a known unpublished, non-encrypted asset path to retrieve its already-cached OCR text.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134246",
-    "publishedDate": "2026-11-21T17:16:41.833",
-    "lastModifiedDate": "2026-11-21T17:16:41.973",
+    "id": "CVE-2026-134454",
+    "description": "Hysteria from 2.0.0 before 2.9.2 contains an ACL bypass vulnerability that allows authenticated clients to reach blocked UDP destinations by reusing an established UDP session. Attackers can open a session to an allowed destination, then send later packets to localhost or private-network addresses to access internal-only UDP services.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134454",
+    "publishedDate": "2026-11-21T17:17:10.550",
+    "lastModifiedDate": "2026-11-21T17:17:10.550",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.5,
+        "score": 7.4,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134247",
-    "description": "SiYuan 3.8.0 before 3.8.10 contains an incorrect authorization vulnerability that allows anonymous attackers to read indexed asset text referenced only by publish-disabled attribute-view rows. Attackers can request /api/asset/getDocAssets on a public host document to obtain the leaked asset path, then query /api/search/getAssetContentByPath to retrieve the confidential file's full indexed text.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134247",
-    "publishedDate": "2026-11-21T17:16:42.027",
-    "lastModifiedDate": "2026-11-21T17:16:42.153",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134248",
-    "description": "SiYuan 3.6.0 before 3.8.10 contains an information disclosure vulnerability that allows authenticated Readers to read protected documents through block-reference footnote resolution in Markdown export. Attackers can request copyStdMarkdown for a public document referencing a hidden, disabled, or password-protected document to disclose its body text without the publish password.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134248",
-    "publishedDate": "2026-11-21T17:16:42.197",
-    "lastModifiedDate": "2026-11-21T17:16:42.323",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:L",
         "exploitabilityScore": 3.1,
-        "impactScore": 4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.3,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:H/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134249",
-    "description": "SiYuan before 3.8.10 contains an authentication bypass vulnerability that allows unauthenticated attackers to gain Administrator role by spoofing X-Forwarded-For through a loopback-trusted reverse proxy. Attackers can send requests with Host set to localhost and X-Forwarded-For set to 127.0.0.1 to read private note-history contents via the /history/*path route when no lock-screen password is set.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134249",
-    "publishedDate": "2026-11-21T17:16:42.373",
-    "lastModifiedDate": "2026-11-21T17:16:42.500",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 7.5,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-        "exploitabilityScore": 3.9,
-        "impactScore": 3.6,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.7,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134250",
-    "description": "Grav Form plugin 1.1.0 before 9.1.40 contains a stored cross-site scripting vulnerability in Form::uploadFiles(), which sanitizes SVG only when a file's last extension is .svg and accepts markup under unrecognized extensions. Anonymous attackers can upload files like drawing.svg.foo through public any-type upload forms, running script in an administrator's session when opened, enabling super-admin creation on Grav 2.x with Admin2.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134250",
-    "publishedDate": "2026-11-21T17:16:42.550",
-    "lastModifiedDate": "2026-11-21T17:16:42.550",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 1.6,
-        "impactScore": 5.8,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 8.8,
-        "version": "CVSS 4.0",
-        "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134251",
-    "description": "Grav API plugin from 1.0.16 before 1.1.11 contains an authorization bypass vulnerability that allows scoped API key holders to override page permission rules because checks read the owning account's authority instead of the key's scopes. Attackers can use keys minted on super-admin accounts to edit, delete or read pages that deny those actions, or use media-scoped keys to change media on read-only pages.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134251",
-    "publishedDate": "2026-11-21T17:16:42.700",
-    "lastModifiedDate": "2026-11-21T17:16:42.827",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
+        "impactScore": 3.7,
         "source": "disclosure@vulncheck.com"
       },
       {
         "score": 5.3,
         "version": "CVSS 4.0",
         "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:L/SC:L/SI:L/SA:L/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
@@ -479,11 +553,40 @@
     ]
   },
   {
-    "id": "CVE-2026-134253",
-    "description": "Grav API plugin from 1.0.0 before 1.1.4 contains a remote code execution vulnerability that allows publishers with media and page write rights to write theme template files through the blueprint-upload endpoint. Attackers can upload a file into a theme's Twig templates folder and include it from sandboxed page Twig to execute commands as the web-server user.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134253",
-    "publishedDate": "2026-11-21T17:16:42.870",
-    "lastModifiedDate": "2026-11-21T17:16:43.000",
+    "id": "CVE-2026-134453",
+    "description": "Dockhand before 1.0.50 contains an improper access control vulnerability that allows authenticated unprivileged users to read restricted data by querying API endpoints lacking RBAC checks. Attackers can access /api/users, /api/license, and /api/hawser/connect to obtain user emails and roles, the full license key, and environment details, while an invalid license grants all users admin rights.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134453",
+    "publishedDate": "2026-11-21T17:17:10.400",
+    "lastModifiedDate": "2026-11-21T17:17:10.400",
+    "vendors": [],
+    "products": [],
+    "cvssScores": [
+      {
+        "score": 6.5,
+        "version": "CVSS 3.1",
+        "severity": "MEDIUM",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "exploitabilityScore": 2.8,
+        "impactScore": 3.6,
+        "source": "disclosure@vulncheck.com"
+      },
+      {
+        "score": 7.1,
+        "version": "CVSS 4.0",
+        "severity": "HIGH",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "exploitabilityScore": null,
+        "impactScore": null,
+        "source": "disclosure@vulncheck.com"
+      }
+    ]
+  },
+  {
+    "id": "CVE-2026-134452",
+    "description": "Dockhand before 1.0.57 merges stack secret environment variables into the environment used to spawn docker compose during stack deploys without filtering reserved keys such as PATH. An authenticated attacker with stacks:edit permission can set PATH to a directory containing a malicious binary and trigger a deploy, executing arbitrary commands as the Dockhand server process user.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134452",
+    "publishedDate": "2026-11-21T17:17:10.250",
+    "lastModifiedDate": "2026-11-21T17:17:10.250",
     "vendors": [],
     "products": [],
     "cvssScores": [
@@ -508,144 +611,28 @@
     ]
   },
   {
-    "id": "CVE-2026-134254",
-    "description": "Admidio from 5.0.0 before 5.0.18 contains a path traversal vulnerability in DocumentsService::renameFile() that allows authenticated users to move files outside adm_my_files by supplying an unvalidated adm_new_name value. Attackers with folder upload permission can submit ../ sequences to file_rename_save to write files and create directories in arbitrary writable locations, including the web root.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134254",
-    "publishedDate": "2026-11-21T17:16:43.050",
-    "lastModifiedDate": "2026-11-21T17:16:43.183",
+    "id": "CVE-2026-134451",
+    "description": "Dockhand before 1.0.57 contains a privilege escalation vulnerability that allows non-admin users with settings:edit permission to modify OIDC provider configuration due to an improper permission check. Attackers can send a PUT request to /api/auth/oidc/<provider-id> setting adminClaim to their own OIDC group, gaining full admin access on their next OIDC login.",
+    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134451",
+    "publishedDate": "2026-11-21T17:17:10.100",
+    "lastModifiedDate": "2026-11-21T17:17:10.100",
     "vendors": [],
     "products": [],
     "cvssScores": [
       {
-        "score": 7.1,
+        "score": 8.1,
         "version": "CVSS 3.1",
         "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:L",
+        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
         "exploitabilityScore": 2.8,
-        "impactScore": 4.2,
+        "impactScore": 5.2,
         "source": "disclosure@vulncheck.com"
       },
       {
-        "score": 7.1,
+        "score": 8.6,
         "version": "CVSS 4.0",
         "severity": "HIGH",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134255",
-    "description": "Admidio from 5.0.17 before 5.0.18 contains a stored cross-site scripting vulnerability that allows authenticated users to inject JavaScript by saving a crafted value in their STREET profile field. Attackers can break out of the unencoded title attribute in members_assignment_data.php with an onmouseover handler that executes in the session of role managers hovering over the address icon.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134255",
-    "publishedDate": "2026-11-21T17:16:43.230",
-    "lastModifiedDate": "2026-11-21T17:16:43.360",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 5.4,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 2.7,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134256",
-    "description": "Admidio from 5.0.17 before 5.0.18 contains a missing authorization vulnerability that allows authenticated regular users to upload images into the announcements module by abusing the CKEditor upload handler. Attackers can send id=ann_description to ckeditor_upload_handler.php to store images under adm_my_files/announcements/images and retrieve them via show_image.php, abusing the application as an image host.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134256",
-    "publishedDate": "2026-11-21T17:16:43.413",
-    "lastModifiedDate": "2026-11-21T17:16:43.540",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.3,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
-        "exploitabilityScore": 2.8,
-        "impactScore": 1.4,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.3,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134257",
-    "description": "Admidio before 5.0.18 contains an insufficient session expiration vulnerability that allows attackers to keep account access after a forgot-password reset because User::setPassword() deletes sessions using the visitor ID instead of the reset user's usr_id. Attackers already holding a victim's session or remember-me cookie can continue using it after the victim resets the password, keeping authenticated access to the account.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134257",
-    "publishedDate": "2026-11-21T17:16:43.587",
-    "lastModifiedDate": "2026-11-21T17:16:43.707",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 4.6,
-        "version": "CVSS 3.1",
-        "severity": "MEDIUM",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:N",
-        "exploitabilityScore": 2.1,
-        "impactScore": 2.5,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 5.1,
-        "version": "CVSS 4.0",
-        "severity": "MEDIUM",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-        "exploitabilityScore": null,
-        "impactScore": null,
-        "source": "disclosure@vulncheck.com"
-      }
-    ]
-  },
-  {
-    "id": "CVE-2026-134258",
-    "description": "Admidio 5.0.0 before 5.0.18 contains a path traversal vulnerability in the Documents & Files renameFile() action that allows authenticated users with folder upload rights to move files outside adm_my_files by supplying ../ sequences in adm_new_name. Attackers can relocate an uploaded SVG containing script to the web root, where it is served inline and executes stored cross-site scripting against administrators for account takeover.",
-    "link": "https://cvefeed.io/vuln/detail/CVE-2026-134258",
-    "publishedDate": "2026-11-21T17:16:43.747",
-    "lastModifiedDate": "2026-11-21T17:16:43.870",
-    "vendors": [],
-    "products": [],
-    "cvssScores": [
-      {
-        "score": 8.7,
-        "version": "CVSS 3.1",
-        "severity": "HIGH",
-        "vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N",
-        "exploitabilityScore": 2.3,
-        "impactScore": 5.8,
-        "source": "disclosure@vulncheck.com"
-      },
-      {
-        "score": 9.3,
-        "version": "CVSS 4.0",
-        "severity": "CRITICAL",
-        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:P/VC:H/VI:H/VA:N/SC:H/SI:H/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
         "exploitabilityScore": null,
         "impactScore": null,
         "source": "disclosure@vulncheck.com"
